@@ -1,0 +1,3 @@
+interface CourseRecommendation {
+    course: string;
+}
