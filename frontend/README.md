@@ -13,7 +13,7 @@ pnpm install
 
 ## Development Server
 
-Start the development server on `http://localhost:3000`:
+Start the frontend development server on `http://localhost:3000`:
 
 ```bash
 # pnpm
