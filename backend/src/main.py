@@ -19,6 +19,7 @@ import google.generativeai as palm
 # internal classes
 import util
 from eda import ExplatoryDataAnalysis
+from recommendation import Recommendation
 
 
 def init_palm_data():
@@ -134,12 +135,6 @@ def main() -> None:
     encoder_for_concepts = dict([(v, k) for v, k in zip(concept_id_list, range(len(concept_id_list)))])
     decoder_for_concepts = dict([(v, k) for k, v in encoder_for_concepts.items()])
 
-    # Necessary to understand which role the concept belongs to
-    digit_counts = {digit: 0 for digit in range(1, 11)}
-    for concept_id in concept_id_list:
-        role_id = util.get_role_id(concept_id)
-        digit_counts[role_id] += 1
-
     # Udemy Courses and Concepts Embeddings List - PALM
     palm_course_emb_list, palm_concepts_emb_list = get_emb_lists(udemy_courses_df, roadmap_concepts_df, model="palm")
 
@@ -189,24 +184,11 @@ def main() -> None:
 
     print(total_match)
 
-    # Role Recommendation for User
-
     user_concept_id_set = set(user_concept_id_list)
-    user_digit_counts = {digit: 0 for digit in range(1, 11)}
-    for concept_id in user_concept_id_set:
-        role_id = util.get_role_id(concept_id)
-        user_digit_counts[role_id] += 1
 
-    ratio_dict = {digit: user_digit_counts[digit] / digit_counts[digit] for digit in digit_counts.keys()}
-    recom_role_id = max(ratio_dict, key=ratio_dict.get)
+    recommendation = Recommendation(udemy_courses_df, roadmap_concepts_df)
 
-    print(digit_counts)
-    print(user_digit_counts)
-    print(ratio_dict)
-    print("Role id with the maximum ratio:", recom_role_id)
-
-    print("Recommended Role-{} with percentage: {}".format(recom_role_id, ratio_dict[recom_role_id] * 100))
-    print("Recommended Role: " + roadmaps_df.loc[recom_role_id]["name"])
+    recom_role_id = recommendation.recommend_role(concept_id_list, user_concept_id_set)
 
     # Course Recommendation for User
 
