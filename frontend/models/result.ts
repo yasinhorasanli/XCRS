@@ -1,4 +1,3 @@
-
 export interface RecommendationResult {
     recommendations: RoleRecommendation[];
 }
