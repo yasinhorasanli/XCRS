@@ -18,10 +18,30 @@ const myResult = ref<RecommendationResult>();
         <div class="w-80 space-y-4" v-else>
             <h2 class="text-2xl my-4  font-semibold">My result</h2>
             <table class="table">
-                <tr>
+                <tbody>
+                    <tr v-for="row in myResult.recommendations" :key="row.role">
+                        <tr> 
+                            <td>Role</td>
+                            <td>{{ row.role }}</td>  
+                        </tr> 
+                        <tr>
+                            <td>Explanation</td>
+                            <td>{{ row.explanation }}</td> 
+                        </tr>
+                        <tr>    
+                            <td>Courses</td>
+                            <tr v-for="course in row.courses">
+                                <tr>Title: {{ course.course }}</tr>
+                                <tr>Url: {{ course.url }}</tr>
+                                <tr>Explanation: {{ course.explanation }}</tr>
+                            </tr>
+                        </tr>                      
+                    </tr>                    
+                </tbody>
+                <!-- <tr>
                     <td>Role</td>
-                    <td v-text="myResult.recommendations"></td>
-                </tr>
+                    <td v-text="myResult.recommendations[0].role"></td>
+                </tr> -->
             </table>
             <!-- <div class="space-x-4">
                 <span>Role:</span>
