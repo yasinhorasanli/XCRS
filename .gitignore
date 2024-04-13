@@ -1,5 +1,6 @@
 .vscode/
 backend/src/test.py
+embedding-generation/palm_api_key.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
