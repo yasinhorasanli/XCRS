@@ -1,0 +1,1131 @@
+{
+    "fileName": "devops",
+    "name": "devops",
+    "type": "directory",
+    "children": [
+        {
+            "id": "100",
+            "fileName": "language",
+            "name": "language",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "python.md",
+                    "name": "python",
+                    "type": "file",
+                    "content": "\nPython is a multi-paradigm language. Being an interpreted language, code is executed as soon as it is written and the Python syntax allows for writing code in functional, procedural or object-oriented programmatic ways. Python is frequently recommended as the first language new coders should learn, because of its focus on readability, consistency, and ease of use. This comes with some downsides, as the language is not especially performant in most production tasks.\n\nVisit the following resources to learn more:\n\n- [Visit Dedicated Python Roadmap](/python)\n- [Python Website](https://www.python.org/)\n- [Python Getting Started](https://www.python.org/about/gettingstarted/)\n- [Automate the Boring Stuff](https://automatetheboringstuff.com/)\n- [W3Schools - Python Tutorial ](https://www.w3schools.com/python/)\n- [Python Crash Course](https://ehmatthes.github.io/pcc/)\n- [Codecademy - Learn Python 3](https://www.codecademy.com/learn/learn-python-3)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "ruby.md",
+                    "name": "ruby",
+                    "type": "file",
+                    "content": "\nRuby is a high-level, interpreted programming language that blends Perl, Smalltalk, Eiffel, Ada, and Lisp. Ruby focuses on simplicity and productivity along with a syntax that reads and writes naturally. Ruby supports procedural, object-oriented and functional programming and is dynamically typed.\n\nVisit the following resources to learn more:\n\n- [Ruby Website](https://www.ruby-lang.org/en/)\n- [Learn Ruby in 20 minutes](https://www.ruby-lang.org/en/documentation/quickstart/)\n- [Learn Ruby | Codecademy](https://www.codecademy.com/learn/learn-ruby)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "javascript.md",
+                    "name": "javascript",
+                    "type": "file",
+                    "content": "\nJavaScript allows you to add interactivity to your pages. Common examples that you may have seen on the websites are sliders, click interactions, popups and so on. Apart from being used on the frontend in browsers, there is Node.js which is an open-source, cross-platform, back-end JavaScript runtime environment that runs on the V8 engine and executes JavaScript code outside a web browser.\n\nVisit the following resources to learn more:\n\n- [Visit Dedicated JavaScript Roadmap](/javascript)\n- [W3Schools – JavaScript Tutorial](https://www.w3schools.com/js/)\n- [The Modern JavaScript Tutorial](https://javascript.info/)\n- [Codecademy - Learn JavaScript](https://www.codecademy.com/learn/introduction-to-javascript)\n- [JavaScript Crash Course for Beginners](https://youtu.be/hdI2bqOjy3c)\n- [Node.js Crash Course](https://www.youtube.com/watch?v=fBNz5xF-Kx4)\n- [Node.js Tutorial for Beginners](https://www.youtube.com/watch?v=TlB_eWDSMt4)\n- [W3Schools – Node.js Tutorial](https://www.w3schools.com/nodejs/)\n- [What is NPM?](https://www.w3schools.com/nodejs/nodejs_npm.asp)\n- [Official Documentation](https://nodejs.dev/en/learn/)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "go.md",
+                    "name": "go",
+                    "type": "file",
+                    "content": "\nGo is an open source programming language supported by Google. Go can be used to write cloud services, CLI tools, used for API development, and much more.\n\nVisit the following resources to learn more:\n\n- [Visit Dedicated Go Roadmap](/golang)\n- [A Tour of Go – Go Basics](https://go.dev/tour/welcome/1)\n- [Go Reference Documentation](https://go.dev/doc/)\n- [Learn Go | Boot.dev](https://boot.dev/learn/learn-golang)\n- [Go by Example - annotated example programs](https://gobyexample.com/)\n- [Learn Go | Codecademy](https://www.codecademy.com/learn/learn-go)\n- [W3Schools Go Tutorial ](https://www.w3schools.com/go/)\n- [Making a RESTful JSON API in Go](https://thenewstack.io/make-a-restful-json-api-go/)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "rust.md",
+                    "name": "rust",
+                    "type": "file",
+                    "content": "\nRust is a modern systems programming language focusing on safety, speed, and concurrency. It accomplishes these goals by being memory safe without using garbage collection.\n\nVisit the following resources to learn more:\n\n- [The Rust Programming Language - online book](https://doc.rust-lang.org/book/)\n- [Rust by Example - collection of runnable examples](https://doc.rust-lang.org/stable/rust-by-example/index.html)\n- [The Rust Programming Book - Video Version](https://youtube.com/playlist?list=PLai5B987bZ9CoVR-QEIN9foz4QCJ0H2Y8)\n- [Comprehensive Rust by Google - Learn Rust in 4 Days](https://google.github.io/comprehensive-rust/)\n- [Microsoft Learn Course](https://learn.microsoft.com/en-us/training/paths/rust-first-steps/)\n- [Quick Rust Guide](https://sivanaikk.github.io/rust/)\n- [Rust Katas - Small, interactive Rust exercises](https://rustlings.cool/)"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nIt doesn't matter what language you pick, but it is important to learn at least one. You will be able to use that language to write automation scripts.\n\n- [Guide to Picking a Language for DevOps](https://cs.fyi/guide/programming-language-for-devops)\n"
+                }
+            ]
+        },
+        {
+            "id": "101",
+            "fileName": "operating-systems",
+            "name": "operating systems",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "103",
+                    "fileName": "windows.md",
+                    "name": "windows",
+                    "type": "file",
+                    "content": "\nWindows is a graphical user interface (GUI) based operating system developed by Microsoft. It is a hybrid kernel-based proprietary operating system. According to a survey, till April 2022, windows is the most popular operating system in the world with a 75% market share.\n\nVisit the following resources to learn more:\n\n- [Windows Official Site](http://microsoft.com/windows)\n- [Windows Documentation for Developers](https://learn.microsoft.com/en-us/windows/)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\n**An Operating system serves as a bridge between a computer's user and its hardware. An operating system's function is to offer a setting in which a user can conveniently and effectively run programmes.**\nIn simple terms we can say that and Operating System (OS) is an interface between a computer user and computer hardware.\nAn OS permits software programmes to communicate with a computer's hardware, The **kernel** is the name of Piece of software that houses the fundamental elements of **Operating System.**\n\nVisit the following resources to learn more:\n\n- [All you need to know about OS.](https://www.javatpoint.com/os-tutorial)\n- [Learn Operating Systems](https://www.tutorialspoint.com/operating_system/os_overview.htm)\n- [Operating Systems tutorials.](https://www.geeksforgeeks.org/introduction-of-operating-system-set-1/)\n- [What are Operating Systems?](https://www.youtube.com/watch?v=pVzRTmdd9j0)\n- [Operating Systems!](https://www.youtube.com/watch?v=vBURTt97EkA&list=PLBlnK6fEyqRiVhbXDGLXDk_OQAeuVcp2O)\n"
+                },
+                {
+                    "fileName": "linux",
+                    "name": "linux",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "ubuntu.md",
+                            "name": "ubuntu",
+                            "type": "file",
+                            "content": "\nDebian is a free and open-source Linux distribution developed by the Debian Project, an all volunteer software community organization. Debian is the upstream distribution of Ubuntu.\n\nUbuntu is a free and open-source Linux distribution based on Debian. Ubuntu is available in three versions Desktop, Server and Core.\n\nVisit the following resources to learn more:\n\n- [Debian Website](https://www.debian.org/)\n- [Ubuntu Website](https://ubuntu.com/)\n- [Learn the ways of Linux-fu, for free](https://linuxjourney.com/)\n- [Linux Operating System - Crash Course for Beginners](https://www.youtube.com/watch?v=ROjZy1WbCIA)\n- [The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php)\n- [r/linuxupskillchallenge](https://www.reddit.com/r/linuxupskillchallenge/)\n- [Introduction to Linux - Full Course for Beginners](https://www.youtube.com/watch?v=sWbUDq4S6Y8&pp=ygUTVWJ1bnR1IGNyYXNoIGNvdXJzZQ%3D%3D)\n- [Linux Fundamentals](https://academy.hackthebox.com/course/preview/linux-fundamentals)"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "suse-linux.md",
+                            "name": "suse linux",
+                            "type": "file",
+                            "content": "\nopenSUSE is a free to use Linux distribution aimed to promote the use of Linux everywhere. openSUSE is released in two versions Leap and Tumbleweed\n\nVisit the following resources to learn more:\n\n- [openSUSE Linux Website](https://www.opensuse.org/)\n- [openSUSE Documentation](https://en.opensuse.org/Main_Page)\n- [Unofficial openSUSE Getting Started Guide](https://opensuse-guide.org/)\n"
+                        },
+                        {
+                            "id": "102",
+                            "fileName": "rhel.md",
+                            "name": "rhel",
+                            "type": "file",
+                            "content": "\nRed Hat Enterprise Linux (RHEL) is a popular distribution of the Linux operating system that is designed for enterprise-level use. It is developed and maintained by Red Hat, Inc., and it is available under a subscription-based model.\n\nThere are several distributions of Linux that are based on RHEL, or that have been derived from RHEL in some way. These distributions are known as RHEL derivatives. Some examples of RHEL derivatives include: AlmaLinux, CentOS, CloudLinux, Oracle Linux, and Scientific Linux.\n\nRHEL derivatives are often used in enterprise environments because they offer the stability and reliability of RHEL, but with the added benefit of being free or lower-cost alternatives.\n\nVisit the following resources to learn more:\n\n- [Red Hat Enterprise Linux Website](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux)\n- [RHEL Documentation](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/)\n- [RHEL Getting Started Guides](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/get-started)\n- [What is Red Hat Enterprise Linux (RHEL) - Red Hat](https://www.redhat.com/en/topics/linux/what-is-rhel)\n- [Learn Linux 101](https://developer.ibm.com/series/learn-linux-101/)"
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": ""
+                        }
+                    ]
+                },
+                {
+                    "fileName": "unix",
+                    "name": "unix",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "free-bsd.md",
+                            "name": "free bsd",
+                            "type": "file",
+                            "content": "\nFreeBSD is a free and open-source Unix-like operating system including many features such as preemptive multitasking, memory protection, virtual memory, and multi-user facilities.\n\nVisit the following resources to learn more:\n\n- [FreeBSD Website](https://www.freebsd.org/)\n- [Official FreeBSD Documentation](https://docs.freebsd.org/en/)\n- [FreeBSD Handbook](https://docs.freebsd.org/en/books/handbook/)\n- [FreeBSD Resources for Newbies ](https://www.freebsd.org/projects/newbies/)\n"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "open-bsd.md",
+                            "name": "open bsd",
+                            "type": "file",
+                            "content": "\nOpenBSD is a free and open-source Unix-like operating system, focussed on portability, standardization, correctness, proactive security and integrated cryptography. The popular software application [OpenSSH](https://www.openssh.com/) is developed by from OpenBSD\n\nVisit the following resources to learn more:\n\n- [OpenBSD Website](https://www.openbsd.org/)\n- [Official OpenBSD Documentation](https://man.openbsd.org/search)\n- [OpenBSD Handbook](https://www.openbsdhandbook.com/)\n- [OpenBSD Installation Guide](https://www.openbsd.org/faq/faq4.html)\n"
+                        },
+                        {
+                            "id": "102",
+                            "fileName": "net-bsd.md",
+                            "name": "net bsd",
+                            "type": "file",
+                            "content": "\nNetBSD is a free, fast, secure, and highly portable Unix-like Open Source operating system. It is available for a wide range of platforms, from large-scale servers and powerful desktop systems to handheld and embedded devices.\n\nVisit the following resources to learn more:\n\n- [NetBSD Website](https://netbsd.org/)\n- [Official NetBSD Documentation](https://netbsd.org/docs/)\n- [NetBSD Guide](https://netbsd.org/docs/guide/en/index.html)\n"
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "102",
+            "fileName": "live-in-terminal",
+            "name": "live in terminal",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "102",
+                    "fileName": "editors.md",
+                    "name": "editors",
+                    "type": "file",
+                    "content": "\nEditors are tools that allow you to create or edit files on your file system.\n\n## Vim\n\nVim is a highly configurable text editor built to make creating and changing any kind of text very efficient. It is included as \"vi\" with most UNIX systems and with Apple OS X.\n\nVim ships with `vimtutor` that is a tutor designed to describe enough of the Vim commands that you will be able to easily use Vim as an all-purpose editor.\n\nVisit the following resources to learn more:\n\n- [Vim](https://www.vim.org)\n- [Vim help files](https://vimhelp.org/)\n- [Vim Tips Wiki](https://vim.fandom.com/wiki/Vim_Tips_Wiki)\n- [Vim Adventures](https://vim-adventures.com/)\n- [GNU Nano](https://www.nano-editor.org/)\n- [GNU Nano Manual](https://www.nano-editor.org/dist/latest/nano.html)\n- [PowerShell Documentation](https://learn.microsoft.com/en-us/powershell/)\n- [GNU Emacs](https://www.gnu.org/software/emacs/)\n- [GNU Emacs Documentation](https://www.gnu.org/software/emacs/documentation.html)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "process-monitoring.md",
+                    "name": "process monitoring",
+                    "type": "file",
+                    "content": "\nA process is an instance of a computer program that is being executed. Each process is identified by a unique number called a process ID (PID). A process is a running program. The operating system tracks processes through the use of process identifiers. A process identifier (PID) is a unique number that identifies a specific process. A PID is automatically assigned to each process when it is created on the system.\n\nThere are several linux commands that can be used to monitor processes. The most common ones are:\n\n- `ps` - report a snapshot of the current processes.\n- `top` - display Linux processes.\n- `htop` - interactive process viewer.\n- `atop` - advanced interactive monitor to view the load on a Linux system.\n- `lsof` - list open files.\n\nThe `ps` utility displays a header line, followed by lines containing information about all of your processes that have controlling terminals.\n\n- [ps Documentation](https://man7.org/linux/man-pages/man1/ps.1.html)\n- [ps Cheat Sheet](https://www.sysadmin.md/ps-cheatsheet.html)\n- [Linux Crash Course - The ps Command](https://www.youtube.com/watch?v=wYwGNgsfN3I)\n\nThe `top` program periodically displays a sorted list of system processes. The default sorting key is pid, but other keys can be used instead. Various output options are available.\n\n- [top Documentation](https://man7.org/linux/man-pages/man1/top.1.html)\n- [top Cheat Sheet](https://gist.github.com/ericandrewlewis/4983670c508b2f6b181703df43438c37)\n\nhtop is a cross-platform ncurses-based process. It is similar to top, but allows you to scroll vertically and horizontally, and interact using a pointing device (mouse). You can observe all processes running on the system, along with their command line arguments, as well as view them in a tree format, select multiple processes and act on them all at once.\n\n- [htop Documentation](https://www.man7.org/linux/man-pages/man1/htop.1.html)\n- [htop Cheat Sheet](https://www.maketecheasier.com/power-user-guide-htop/)\n\nLsof lists on its standard output file information about files opened by processes.\n\n- [lsof Cheat Sheet](https://neverendingsecurity.wordpress.com/2015/04/13/lsof-commands-cheatsheet/)\n- [lsof Documentation](https://man7.org/linux/man-pages/man8/lsof.8.html)\n- [Linux Crash Course - The lsof Command](https://www.youtube.com/watch?v=n9nZ1ellaV0)"
+                },
+                {
+                    "id": "104",
+                    "fileName": "performance-monitoring.md",
+                    "name": "performance monitoring",
+                    "type": "file",
+                    "content": "\nThere are many tools available to monitor the performance of your application. Some of the most popular are:\n\n- `nmon` - A system monitor tool for Linux and AIX systems.\n- `iostat` - A tool that reports CPU statistics and input/output statistics for devices, partitions and network filesystems.\n- `sar` - A system monitor command used to report on various system loads, including CPU activity, memory/paging, device load, network.\n- `vmstat` - A tool that reports virtual memory statistics.\n\nNmon is a fully interactive performance monitoring command-line utility tool for Linux. It is a benchmark tool that displays performance about the cpu, memory, network, disks, file system, nfs, top processes, resources, and power micro-partition.\n\n- [nmon Documentation](https://www.ibm.com/docs/en/aix/7.2?topic=n-nmon-command)\n- [nmon Command Guide](https://www.geeksforgeeks.org/linux-nmon/)\n\nThe iostat command in Linux is used for monitoring system input/output statistics for devices and partitions. It monitors system input/output by observing the time the devices are active in relation to their average transfer rates. The iostat produce reports may be used to change the system configuration to raised balance the input/output between the physical disks.\n\n- [iostat Documentation](https://man7.org/linux/man-pages/man1/iostat.1.html)\n- [iostat Command Guide](https://www.geeksforgeeks.org/iostat-command-in-linux-with-examples/)\n\nShort for **S**ystem **A**ctivity **R**eport, `sar` is a command line tool for Unix and Unix-like operating systems that shows a report of different information about the usage and activity of resources in the operating system.\n\n- [SAR command in Linux to monitor system performance](https://www.geeksforgeeks.org/sar-command-linux-monitor-system-performance/)\n- [SAR Man Page](https://man7.org/linux/man-pages/man1/sar.1.html)\n- [SAR Man Page 2](https://linux.die.net/man/1/sar)\n- [Sar tutorial for beginners](https://linuxhint.com/sar_linux_tutorial/)\n\nShort for **V**irtual **m**emory **stat**istic reporter, `vmstat` is a command line tool for Unix and Unix-like operating systems that reports various information about the operating system such as memory, paging, processes, I/O, CPU and disk usage.\n\n- [vmstat command in Linux with Examples](https://www.geeksforgeeks.org/vmstat-command-in-linux-with-examples/)\n- [Linux commands: exploring virtual memory with vmstat](https://www.redhat.com/sysadmin/linux-commands-vmstat)\n- [VMstat Man Page](https://man7.org/linux/man-pages/man8/vmstat.8.html)\n- [vmstat tutorial](https://phoenixnap.com/kb/vmstat-command)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "networking-tools.md",
+                    "name": "networking tools",
+                    "type": "file",
+                    "content": "\nNetworking tools are used to troubleshoot network issues. They are also used to monitor network traffic and to test network connectivity. Some of the most common networking tools are:\n\n- `traceroute` - Traces the route taken by packets over an IP network.\n- `ping` - sends echo request packets to a host to test the Internet connection.\n- `mtr` - Combines the functionality of `traceroute` and `ping` into a single diagnostic tool.\n- `nmap` - Scans hosts for open ports.\n- `netstat` - Displays network connections, routing tables, interface statistics, masquerade connections, and multicast memberships.\n- `ufw` and `firewalld` - Firewall management tools.\n- `iptables` and `nftables` - Firewall management tools.\n- `tcpdump` - Dumps traffic on a network.\n- `dig` - DNS lookup utility.\n- `scp` - Secure copy.\n\n`traceroute` command is a command in Linux that prints the route a network packet takes from its source (e.g. your computer) to the destination host (e.g., roadmap.sh). It is quite valuable in investigating slow network connections as it can help us spot the slow leg of the network packet journey through the internet.\n\n- [How to Run Traceroute in Linux](https://linuxhint.com/run_traceroute_linux/)\n- [Traceroute command in Linux with examples](https://www.geeksforgeeks.org/traceroute-command-in-linux-with-examples/)\n\n`ping` (**P**acket **In**ternet **G**roper) command is used to check the network connectivity between host and server/host. This command takes as input the IP address or the URL and sends a data packet to the specified address with the message “PING” and get a response from the server/host this time is recorded which is called latency.\n\n- [What is ping command?](https://linuxize.com/post/linux-ping-command/)\n- [ping command with examples](https://www.geeksforgeeks.org/ping-command-in-linux-with-examples/)\n\n`mtr` combines the functionality of the traceroute and ping programs in a single network diagnostic tool.\n\n- [Javatpoint: Linux mtr Command](https://www.javatpoint.com/linux-mtr)\n- [mtr Linux command](https://www.tutorialspoint.com/unix_commands/mtr.htm)\n- [How to traceroute use mtr command in Linux](https://www.devopsroles.com/how-to-traceroute-use-mtr-command-in-linux/)\n\nNMAP stands for Network Mapper and is an open-source tool used to explore and audit the network's security, such as checking firewalls and scanning ports.\n\n- [NMAP Official Manual Book](https://nmap.org/book/man.html)\n- [What is Nmap and How to Use it](https://www.freecodecamp.org/news/what-is-nmap-and-how-to-use-it-a-tutorial-for-the-greatest-scanning-tool-of-all-time/)\n\nNetstat is a command line utility to display all the network connections on a system. It displays all the tcp, udp and unix socket connections. Apart from connected sockets it also displays listening sockets that are waiting for incoming connections.\n\n- [netstat command in Linux with Examples](https://www.tutorialspoint.com/unix_commands/netstat.htm)\n- [Netstat Tutorial](http://www.c-jump.com/CIS24/Slides/Networking/html_utils/netstat.html)\n- [Netstat Commands - Network Administration Tutorial](https://www.youtube.com/watch?v=bxFwpm4IobU)\n- [Linux Command Line Tutorial For Beginners - netstat command](https://www.youtube.com/watch?v=zGNcvBaN5wE)\n\nUFW, or _uncomplicated firewall_, is command-line based utility for managing firewall rules in Arch Linux, Debian and Ubuntu. It's aim is to make firewall configuration as simple as possible. It is a frontend for the `iptables` firewalling tool.\n\n- [ufw Documentation](https://manpages.ubuntu.com/manpages/trusty/man8/ufw.8.html)\n- [Basic Introduction to UFW](https://www.linux.com/training-tutorials/introduction-uncomplicated-firewall-ufw/)\n- [UFW Essentials](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands)\n\nIPtables is a command-line firewall utility that uses policy chains to allow or block traffic that will be enforced by the linux kernel’s netfilter framework. Iptables packet filtering mechanism is organized into three different kinds of structures: tables, chains and targets.\n\n- [Iptables tutorial](https://www.hostinger.in/tutorials/iptables-tutorial)\n- [Beginners to Advanced Guide Iptables](https://erravindrapawadia.medium.com/iptables-tutorial-beginners-to-advanced-guide-to-linux-firewall-839e10501759)\n\n`tcpdump` is a command line tool used for analysing network traffic passing through your system. It can be used to capture and filter packets and display them in a human-readable format. The captured information can be analysed at a later date as well.\n\n- [tcpdump Documentation](https://www.tcpdump.org/manpages/tcpdump.1.html)\n- [Basic Introduction to Tcpdump](https://opensource.com/article/18/10/introduction-tcpdump)\n- [50 ways to isolate traffic with Tcpdump](https://danielmiessler.com/study/tcpdump/)\n- [Interpreting Tcpdump output and data](https://www.youtube.com/watch?v=7bsQP9sKHrs)\n\n`dig` command stands for **D**omain **I**nformation **G**roper. It is used for retrieving information about DNS name servers. It is mostly used by network administrators for verifying and troubleshooting DNS problems and to perform DNS lookups. It replaces older tools such as `nslookup` and the `host`.\n\n- [What is dig command?](https://www.geeksforgeeks.org/dig-command-in-linux-with-examples/)\n- [More on dig](https://linuxize.com/post/how-to-use-dig-command-to-query-dns-in-linux/)\n- [What is host command?](https://www.geeksforgeeks.org/host-command-in-linux-with-examples/)\n- [What is nslookup command?](https://www.geeksforgeeks.org/nslookup-command-in-linux-with-examples/)\n- [What is DNS?](https://www.cloudflare.com/en-gb/learning/dns/what-is-dns/)\n\n`SCP` is an acronym for Secure Copy Protocol.It is a command line utility that allows the user to securely copy files and directories between two locations usually between unix or linux systems.The protocol ensures the transmission of files is encrypted to prevent anyone with suspicious intentions from getting sensitive information.`SCP` uses encryption over an `SSH` (Secure Shell) connection, this ensures that the data being transferred is protected from suspicious attacks.\n\n- [SCP Linux Command](https://www.freecodecamp.org/news/scp-linux-command-example-how-to-ssh-file-transfer-from-remote-to-local/)\n- [10 SCP command examples](https://www.tecmint.com/scp-commands-examples/)\n- [SCP command explained](https://phoenixnap.com/kb/linux-scp-command)\n"
+                },
+                {
+                    "id": "106",
+                    "fileName": "text-manipulation.md",
+                    "name": "text manipulation",
+                    "type": "file",
+                    "content": "\nSome of the most common commands you will use in the terminal are text manipulation commands. These commands allow you to search, replace, and manipulate text in files and streams. Here are some of the most common commands you will use:\n\n- `awk` - A programming language designed for text processing and typically used as a data extraction and reporting tool.\n- `sed` - A stream editor for filtering and transforming text.\n- `grep` - A command-line utility for searching plain-text data sets for lines that match a regular expression.\n- `sort` - A command-line utility for sorting lines of text files.\n- `cut` - A command-line utility for cutting sections from each line of files.\n- `uniq` - A command-line utility for reporting or omitting repeated lines.\n- `cat` - A command-line utility for concatenating files and printing on the standard output.\n- `echo` - A command-line utility for displaying a line of text.\n- `fmt` - A command-line utility for simple optimal text formatting.\n- `tr` - A command-line utility for translating or deleting characters.\n- `nl` - A command-line utility for numbering lines of files.\n- `wc` - A command-line utility for printing newline, word, and byte counts for files.\n\n`awk` is a general-purpose scripting language used for manipulating data or text and generating reports in the Linux world. It is mostly used for pattern scanning and processing. It searches one or more files to see if they contain lines that match the specified patterns and then performs the associated actions.\n\n- [What is AWK? How to use it?](https://www.geeksforgeeks.org/awk-command-unixlinux-examples/)\n- [How AWK works?](https://linuxize.com/post/awk-command/)\n- [Linux Crash Course - awk](https://www.youtube.com/watch?v=oPEnvuj9QrI)\n\n`sed`(**S**tream **Ed**itor) command in UNIX can perform lots of functions on file like searching, finding and replacing, insertion or deletion. By using SED you can edit files even without opening them in editors like [VI Editor](https://www.redhat.com/sysadmin/introduction-vi-editor).\n\n- [What is SED? with examples](https://www.geeksforgeeks.org/sed-command-in-linux-unix-with-examples/)\n- [Detailed Manual](https://www.gnu.org/software/sed/manual/sed.html)\n- [Linux Crash Course - The sed Command](https://www.youtube.com/watch?v=nXLnx8ncZyE&t=218s)\n\nThe `grep` command (**g**lobal search for **r**egular **e**xpression and **p**rint out) searches file(s) for a particular pattern of characters, and displays all lines that contain that pattern. It can be used with other commands like `ps` making it more useful.\n\n- [What is Grep? with examples](https://www.geeksforgeeks.org/grep-command-in-unixlinux/)\n- [Detailed Manual](https://www.gnu.org/software/grep/manual/grep.html)\n- [Linux Crash Course - The grep Command](https://www.youtube.com/watch?v=Tc_jntovCM0)\n\n`sort` command is used to sort the contents of a file in a particular order. By default, it sorts a file assuming the contents are in ASCII. But it also can also be used to sort numerically by using appropriate options.\n\n- [Sort command with examples](https://www.geeksforgeeks.org/sort-command-linuxunix-examples/)\n- [Options](<https://en.wikipedia.org/wiki/Sort_(Unix)>)\n- [Linux Tutorials|sort command GeeksforGeeks](https://www.youtube.com/watch?v=fEx5rnbDKO4)\n\nThe cut utility cuts out selected portions of each line (as specified by list) from each file and writes them to the standard output.\n\n- [cut Documentation](https://man7.org/linux/man-pages/man1/cut.1.html)\n- [cut Cheat Sheet](https://bencane.com/2012/10/22/cheat-sheet-cutting-text-with-cut/)\n\nThe uniq utility reads the specified input_file comparing adjacent lines, and writes a copy of each unique input line to the output_file.\n\n- [uniq Documentation](https://man7.org/linux/man-pages/man1/uniq.1.html)\n- [uniq Cheat Sheet](https://www.geeksforgeeks.org/uniq-command-in-linux-with-examples/)\n\n`cat` (concatenate) command is very frequently used in Linux. It reads data from the file and gives its content as output. It helps us to create, view, and concatenate files.\n\n- [Cat Command with examples](https://www.tecmint.com/13-basic-cat-command-examples-in-linux/)\n- [Options](<https://en.wikipedia.org/wiki/Cat_(Unix)>)\n- [Linux Tutorials|cat command|GeeksforGeeks](https://www.youtube.com/watch?v=exj5WMUJ11g)\n\n`echo` is a built-in command in Linux used to display lines of text/string that are passed as an argument. It is mostly used in shell scripts and batch files to output status text or `ENV` variables to the screen or a file.\n\n- [Echo command with Examples](https://www.tecmint.com/echo-command-in-linux/)\n- [Linux Crash Course - The echo Command](https://www.youtube.com/watch?v=S_ySzMHxMjw)\n\n`fmt` command is for formatting and optimizing contents in text files. It will be really useful when it comes to beautify large text files by setting uniform column width and spaces.\n\n- [Fmt command with Examples](https://www.devopsroles.com/fmt-command-in-linux-with-example/)\n\nThe tr utility copies the standard input to the standard output with substitution or deletion of selected characters.\n\n- [tr Documentation](https://linuxcommand.org/lc3_man_pages/tr1.html)\n- [tr Cheat Sheet](https://linuxopsys.com/topics/tr-command-in-linux)\n\nThe nl utility reads lines from the named file or the standard input if the file argument is omitted, applies a configurable line numbering filter operation and writes the result to the standard output.\n\n- [nl Documentation](https://man7.org/linux/man-pages/man1/nl.1.html)\n- [nl Cheat Sheet](https://www.geeksforgeeks.org/nl-command-in-linux-with-examples/)\n\nThe wc utility displays the number of lines, words, and bytes contained in each input file, or standard input (if no file is specified) to the standard output.\n\n- [wc Documentation](https://linux.die.net/man/1/wc)\n- [wc Cheat Sheet](https://onecompiler.com/cheatsheets/wc)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nA terminal is simply a text-based interface to the computer, it is use to interact with your computer system via CLI (command line interface)\n\nVisit the following resources to learn more:\n\n- [What is CLI?](https://en.wikipedia.org/wiki/Command-line_interface)\n"
+                },
+                {
+                    "fileName": "scripting",
+                    "name": "scripting",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "bash-scripting.md",
+                            "name": "bash scripting",
+                            "type": "file",
+                            "content": "\n- [Bash Scripting Tutorial](https://www.freecodecamp.org/news/bash-scripting-tutorial-linux-shell-script-and-command-line-for-beginners/)"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "powershell.md",
+                            "name": "powershell",
+                            "type": "file",
+                            "content": "\n- [PowerShell Documentation](https://learn.microsoft.com/en-us/powershell/)"
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "103",
+            "fileName": "version-control-systems",
+            "name": "version control systems",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "git.md",
+                    "name": "git",
+                    "type": "file",
+                    "content": "\n[Git](https://git-scm.com/) is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.\n\nVisit the following resources to learn more:\n\n- [Git & GitHub Crash Course For Beginners](https://www.youtube.com/watch?v=SWYqp7iY_Tc)\n- [Learn Git with Tutorials, News and Tips - Atlassian](https://www.atlassian.com/git)\n- [Git Cheat Sheet](https://cs.fyi/guide/git-cheatsheet)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nVersion control/source control systems allow developers to track and control changes to code over time. These services often include the ability to make atomic revisions to code, branch/fork off of specific points, and to compare versions of code. They are useful in determining the who, what, when, and why code changes were made.\n\nVisit the following resources to learn more:\n\n- [Git](https://git-scm.com/)\n- [What is Version Control?](https://www.atlassian.com/git/tutorials/what-is-version-control)\n"
+                }
+            ]
+        },
+        {
+            "id": "104",
+            "fileName": "vcs-hosting",
+            "name": "vcs hosting",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "github.md",
+                    "name": "github",
+                    "type": "file",
+                    "content": "\nGitHub is a provider of Internet hosting for software development and version control using Git. It offers the distributed version control and source code management functionality of Git, plus its own features.\n\nVisit the following resources to learn more:\n\n- [GitHub Website](https://github.com)\n- [GitHub Documentation](https://docs.github.com/en/get-started/quickstart)\n- [How to Use Git in a Professional Dev Team](https://ooloo.io/project/github-flow)\n- [What is GitHub?](https://www.youtube.com/watch?v=w3jLJU7DT5E)\n- [Git vs. GitHub: Whats the difference?](https://www.youtube.com/watch?v=wpISo9TNjfU)\n- [Git and GitHub for Beginners](https://www.youtube.com/watch?v=RGOj5yH7evk)\n- [Git and GitHub - CS50 Beyond 2019](https://www.youtube.com/watch?v=eulnSXkhE7I)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "gitlab.md",
+                    "name": "gitlab",
+                    "type": "file",
+                    "content": "\nGitLab is a provider of internet hosting for software development and version control using Git. It offers the distributed version control and source code management functionality of Git, plus its own features.\n\nVisit the following resources to learn more:\n\n- [GitLab Website](https://gitlab.com/)\n- [GitLab Documentation](https://docs.gitlab.com/)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "bitbucket.md",
+                    "name": "bitbucket",
+                    "type": "file",
+                    "content": "\nBitbucket is a Git based hosting and source code repository service that is Atlassian's alternative to other products like GitHub, GitLab etc\n\nBitbucket offers hosting options via Bitbucket Cloud (Atlassian's servers), Bitbucket Server (customer's on-premise) or Bitbucket Data Centre (number of servers in customers on-premise or cloud environment)\n\nVisit the following resources to learn more:\n\n- [Bitbucket Website](https://bitbucket.org/product)\n- [A brief overview of Bitbucket](https://bitbucket.org/product/guides/getting-started/overview#a-brief-overview-of-bitbucket)\n- [Getting started with Bitbucket](https://bitbucket.org/product/guides/basics/bitbucket-interface)\n- [Using Git with Bitbucket Cloud](https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud)\n- [Bitbucket tutorial | How to use Bitbucket Cloud](https://www.youtube.com/watch?v=M44nEyd_5To)\n- [Bitbucket Tutorial | Bitbucket for Beginners](https://www.youtube.com/watch?v=i5T-DB8tb4A)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nWhen working on a team, you often need a remote place to put your code so others can access it, create their own branches, and create or review pull requests. These services often include issue tracking, code review, and continuous integration features. A few popular choices are GitHub, GitLab, BitBucket, and AWS CodeCommit.\n\nVisit the following resources to learn more:\n\n- [GitHub](https://github.com/features/)\n- [GitLab](https://about.gitlab.com/)\n- [BitBucket](https://bitbucket.org/product/guides/getting-started/overview)\n- [How to choose the best source code repository](https://bitbucket.org/product/code-repository)\n"
+                }
+            ]
+        },
+        {
+            "id": "105",
+            "fileName": "setting-up-x",
+            "name": "setting up x",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "reverse-proxy.md",
+                    "name": "reverse proxy",
+                    "type": "file",
+                    "content": "\nA Reverse Proxy server is a type of proxy server that typically sits behind the firewall in a private network and directs client requests to the appropriate backend server. It provides an additional level of security by hiding the server related details like `IP Address` to clients. It is also known as **server side proxy**.\n\n**Common Uses:**\n\n- Load balancing\n- Web acceleration\n- Security and anonymity\n\nVisit the following resources to learn more:\n\n- [What is Reverse Proxy?](https://www.cloudflare.com/en-gb/learning/cdn/glossary/reverse-proxy/)\n- [NGINX documentation](https://www.nginx.com/resources/glossary/reverse-proxy-server/)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "caching-server.md",
+                    "name": "caching server",
+                    "type": "file",
+                    "content": "\nA cache server is a **dedicated network server** or service acting as a server that saves Web pages or other Internet content locally. By placing previously requested information in temporary storage, or cache, a cache server both speeds up access to data and reduces demand on an enterprise's bandwidth.\n\nVisit the following resources to learn more:\n\n- [What is Caching?](https://www.cloudflare.com/en-gb/learning/cdn/what-is-caching/)\n- [What is Cache Server?](https://networkencyclopedia.com/cache-server/)\n- [Site Cache vs Browser Cache vs Server Cache](https://wp-rocket.me/blog/different-types-of-caching/)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "forward-proxy.md",
+                    "name": "forward proxy",
+                    "type": "file",
+                    "content": "\nForward Proxy, often called proxy server is a server that sits in front of a group of **client machines**. When those computers make requests to sites and services on the Internet, the proxy server intercepts those requests and then communicates with web servers on behalf of those clients, like a middleman.\n\n**Common Uses:**\n\n- To block access to certain content\n- To protect client identity online\n- To provide restricted internet to organizations\n\nVisit the following resources to learn more:\n\n- [What is Forward Proxy?](https://www.fortinet.com/resources/cyberglossary/proxy-server)\n- [Forward vs Reverse Proxy](https://oxylabs.io/blog/reverse-proxy-vs-forward-proxy)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "load-balancer.md",
+                    "name": "load balancer",
+                    "type": "file",
+                    "content": "\nLoad Balancer acts as the **traffic cop** sitting in front of your servers and routing client requests across all servers capable of fulfilling those requests in a manner that maximizes speed and capacity utilization and ensures that no one server is overworked. If one of the servers goes down, the load balancer redirects traffic to the remaining online servers.\n\nVisit the following resources to learn more:\n\n- [What is Load Balancing?](https://www.nginx.com/resources/glossary/load-balancing/)\n- [Load Balancing concepts and algorithms](https://www.cloudflare.com/en-gb/learning/performance/what-is-load-balancing/)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "firewall.md",
+                    "name": "firewall",
+                    "type": "file",
+                    "content": "\nFirewall is a **network security device** that monitors and filters incoming and outgoing network traffic based on an organization’s previously established security policies. It is a barrier that sits between a private internal network and the public Internet. A firewall’s main purpose is to allow non-threatening traffic in and to keep dangerous traffic out.\n\nVisit the following resources to learn more:\n\n- [What is Firewall?](https://www.checkpoint.com/cyber-hub/network-security/what-is-firewall/)\n- [Types of Firewall](https://www.cisco.com/c/en_in/products/security/firewalls/what-is-a-firewall.html)\n- [ Introduction of Firewall in Computer Network](https://www.geeksforgeeks.org/introduction-of-firewall-in-computer-network/)\n- [ What is Firewall in Computer Network?](https://www.geeksforgeeks.org/introduction-of-firewall-in-computer-network/)\n- [Why do we need Firewalls?](https://www.tutorialspoint.com/what-is-a-firewall-and-why-do-you-need-one)\n- [ Firewalls and Network Security - SimpliLearn](https://www.youtube.com/watch?v=9GZlVOafYTg)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "nginx.md",
+                    "name": "nginx",
+                    "type": "file",
+                    "content": "\nNGINX is a powerful web server and uses a non-threaded, event-driven architecture that enables it to outperform Apache if configured correctly. It can also do other important things, such as load balancing, HTTP caching, or be used as a reverse proxy.\n\nVisit the following resources to learn more:\n\n- [Official Website](https://nginx.org/)\n- [NGINX Explained in 100 Seconds](https://www.youtube.com/watch?v=JKxlsvZXG7c)\n"
+                },
+                {
+                    "id": "106",
+                    "fileName": "apache.md",
+                    "name": "apache",
+                    "type": "file",
+                    "content": "\nApache is a free, open-source HTTP server, available on many operating systems, but mainly used on Linux distributions. It is one of the most popular options for web developers, as it accounts for over 30% of all the websites, as estimated by W3Techs.\n\nVisit the following resources to learn more:\n\n- [Apache Server Website](https://httpd.apache.org/)\n- [What is Apache Web Server?](https://www.youtube.com/watch?v=kaaenHXO4t4)\n"
+                },
+                {
+                    "id": "107",
+                    "fileName": "tomcat.md",
+                    "name": "tomcat",
+                    "type": "file",
+                    "content": "\nTomcat is an open source implementation of the Jakarta Servlet, Jakarta Server Pages, Jakarta Expression Language, Jakarta WebSocket, Jakarta Annotations and Jakarta Authentication specifications. These specifications are part of the Jakarta EE platform.\n\nVisit the following resources to learn more:\n\n- [Tomcat Website](https://tomcat.apache.org/)\n- [Official Documentation(Tomcat 10.0)](https://tomcat.apache.org/tomcat-10.0-doc/index.html)\n- [Apache Tomcat](https://www.youtube.com/c/ApacheTomcatOfficial)\n"
+                },
+                {
+                    "id": "108",
+                    "fileName": "iis.md",
+                    "name": "iis",
+                    "type": "file",
+                    "content": "\nInternet Information Services (IIS) for Windows® Server is a flexible, secure and manageable Web server for hosting anything on the Web.\n\nVisit the following resources to learn more:\n\n- [Official Website](https://www.iis.net/)\n- [Learn Windows Web Server IIS](https://www.youtube.com/watch?v=1VdxPWwtISA)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": ""
+                }
+            ]
+        },
+        {
+            "id": "107",
+            "fileName": "cloud-providers",
+            "name": "cloud providers",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "aws.md",
+                    "name": "aws",
+                    "type": "file",
+                    "content": "\nAmazon Web Services has been the market leading cloud computing platform since 2011, ahead of Azure and Google Cloud. AWS offers over 200 services with data centers located all over the globe.\n\nAWS service is an online platform that provides scalable and cost-effective cloud computing solutions. It is broadly adopted cloud platform that offers several on-demand operations like compute power, database storage, content delivery and so on.\n\nVisit the following resources to learn more:\n\n- [AWS Website](https://aws.amazon.com/)\n- [AWS Documentation](https://docs.aws.amazon.com/)\n- [Sign up for AWS](https://portal.aws.amazon.com/billing/signup)\n- [How to learn AWS](https://cs.fyi/guide/how-to-learn-aws/)\n- [AWS Ramp Up Guide](https://d1.awsstatic.com/training-and-certification/ramp-up_guides/Ramp-Up_Guide_CloudPractitioner.pdf)\n- [Cloud Practitioner Essentials](https://explore.skillbuilder.aws/learn/course/external/view/elearning/134/aws-cloud-practitioner-essentials)\n- [AWS Guide by SimpliLearn](https://www.simplilearn.com/tutorials/aws-tutorial/what-is-aws)\n- [AWS Tutorial for Beginners](https://www.youtube.com/watch?v=k1RI5locZE4&t=129s)\n- [AWS Course for Beginners](https://www.coursera.org/learn/aws-cloud-technical-essentials?specialization=aws-devops)\n- [DevOps on AWS Course ](https://www.coursera.org/specializations/aws-devops?#courses)\n- [AWS Practitioner ](https://youtu.be/SOTamWNgDKc)"
+                },
+                {
+                    "id": "101",
+                    "fileName": "google-cloud.md",
+                    "name": "google cloud",
+                    "type": "file",
+                    "content": "\nGoogle Cloud is Google's cloud computing service offering, providing over 150 products/services to choose from. It consists of a set of physical assets, such as computers and hard disk drives, and virtual resources, such as virtual machines(VMs), that are contained in Google's data centers. It runs on the same infrastructure that Google uses internally for its end-user products, such as Search, Gmail, Google Drive, and YouTube.\n\nVisit the following resources to learn more:\n\n- [Google Cloud Website](https://cloud.google.com/)\n- [Official Documentation](https://cloud.google.com/docs)\n- [Google Cloud Get Started Guide](https://cloud.google.com/docs/get-started/)\n- [Coursera Complete Course for Google Cloud ](https://www.coursera.org/professional-certificates/cloud-engineering-gcp#courses)\n- [Google Cloud by Edureka on You-Tube](https://www.youtube.com/watch?v=IUU6OR8yHCc)\n- [5 Tips to Become a Google Cloud Certified Professional Architect](https://thenewstack.io/5-tips-to-become-a-google-cloud-certified-professional-architect/)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "azure.md",
+                    "name": "azure",
+                    "type": "file",
+                    "content": "\nMicrosoft Azure is a cloud computing service operated by Microsoft. Azure currently provides more than 200 products and cloud services.\n\nVisit the following resources to learn more:\n\n- [Azure Website](https://azure.microsoft.com/en-us/)\n- [Official Documentation](https://docs.microsoft.com/en-us/azure/)\n- [Azure Get Started Guide](https://azure.microsoft.com/en-ca/get-started/#explore-azure)\n- [Get to know Azure](https://azure.microsoft.com/en-us/explore/)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "heroku.md",
+                    "name": "heroku",
+                    "type": "file",
+                    "content": "\nHeroku is a cloud platform as a service subsidiary of Salesforce. Heroku officially supports Node.js, Ruby, Java, PHP, Python, Go, Scala and Clojure, along with any language that runs on Linux via a third-party build pack.\n\nVisit the following resources to learn more:\n\n- [Heroku Website](https://www.heroku.com/)\n- [Official Documentation](https://devcenter.heroku.com/)\n- [Heroku Get Started Guide](https://devcenter.heroku.com/start)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "albaba-cloud.md",
+                    "name": "albaba cloud",
+                    "type": "file",
+                    "content": "\nAlibaba Cloud is a cloud computing service, offering over 100 products and services with data centers in 24 regions and 74 availability zones around the world.\n\nVisit the following resources to learn more:\n\n- [Alibaba Cloud Website](https://www.alibabacloud.com/)\n- [Official Documentation](https://www.alibabacloud.com/help/en/)\n- [Alibaba Cloud Getting Started Guide](https://www.alibabacloud.com/getting-started)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "digital-ocean.md",
+                    "name": "digital ocean",
+                    "type": "file",
+                    "content": "\nDigitalOcean is a cloud computing service offering products and services in Compute, Storage, Managed Databases, Containers & Images and Networking.\n\nVisit the following resources to learn more:\n\n- [DigitalOcean Website](https://www.digitalocean.com/)\n- [Official Documentation](https://docs.digitalocean.com/products/)\n- [DigitalOcean Get Started Guide](https://docs.digitalocean.com/products/getting-started/)\n"
+                },
+                {
+                    "id": "106",
+                    "fileName": "linode.md",
+                    "name": "linode",
+                    "type": "file",
+                    "content": "\nLinode is a cloud computing service owned by Akamai Technologies. Linode positions itself as an alternative to AWS, GCP and Azure by offering core services without complexity for most workloads.\n\nVisit the following resources to learn more:\n\n- [Linode Website](https://www.linode.com/)\n- [Official Documentation](https://www.linode.com/docs/)\n- [Linode Getting Started Guide](https://www.linode.com/docs/guides/getting-started/)\n"
+                },
+                {
+                    "id": "107",
+                    "fileName": "vultr.md",
+                    "name": "vultr",
+                    "type": "file",
+                    "content": "\nVultr is an infrastructure focussed cloud computing service, available in 25 locations worldwide. Vultur compute offers 100% SSD and high performance Intel vCPUs.\n\nVisit the following resources to learn more:\n\n- [Vultr Website](https://www.vultr.com/)\n- [Official Documentation](https://www.vultr.com/docs/)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nCloud providers provide a layer of APIs to abstract infrastructure and provision it based on security and billing boundaries. The cloud runs on servers in data centers, but the abstractions cleverly give the appearance of interacting with a single \"platform\" or large application. The ability to quickly provision, configure and secure resources with cloud providers has been key to both the tremendous success, and complexity, of modern DevOps.\n\nVisit the following resources to learn more:\n\n- [Cloud service provider](https://www.techtarget.com/searchitchannel/definition/cloud-service-provider-cloud-provider)\n- [What are Cloud Providers?](https://www.redhat.com/en/topics/cloud-computing/what-are-cloud-providers)\n"
+                }
+            ]
+        },
+        {
+            "id": "108",
+            "fileName": "networking-protocols",
+            "name": "networking protocols",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "osi-model.md",
+                    "name": "osi model",
+                    "type": "file",
+                    "content": "\nOpen Systems Interconnection (OSI) model is a **conceptual** model consists of 7 layers, that was proposed to standardize the communication between devices over the network. It was the first standard model for network communications, adopted by all major computer and telecommunication companies in the early 1980s.\n\nVisit the following resources to learn more:\n\n- [What is OSI Model?](https://www.cloudflare.com/en-gb/learning/ddos/glossary/open-systems-interconnection-model-osi/)\n- [OSI Model](https://www.youtube.com/watch?v=dV8mjZd1OtU)\n- [What is TCP/IP Model?](https://www.geeksforgeeks.org/tcp-ip-model/)\n- [OSI vs TCP/IP Model](https://www.youtube.com/watch?v=F5rni9fr1yE)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "dns.md",
+                    "name": "dns",
+                    "type": "file",
+                    "content": "\nDNS (**D**omain **N**ame **S**ystem) is the phonebook of the Internet. Humans access information online through domain names, like nytimes.com or espn.com. Web browsers interact through Internet Protocol (IP) addresses. DNS translates domain names to IP addresses so browsers can load Internet resources.\n\nVisit the following resources to learn more:\n\n- [What is DNS?](https://www.cloudflare.com/en-gb/learning/dns/what-is-dns/)\n- [HOw DNS works (comic)](https://howdns.works/)\n- [DNS and How does it Work?](https://www.youtube.com/watch?v=Wj0od2ag5sk)\n- [DNS Records](https://www.youtube.com/watch?v=7lxgpKh_fRY)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "http.md",
+                    "name": "http",
+                    "type": "file",
+                    "content": "\nHTTP is the `TCP/IP` based application layer communication protocol which standardizes how the client and server communicate with each other. It defines how the content is requested and transmitted across the internet.\n\nVisit the following resources to learn more:\n\n- [Everything you need to know about HTTP](https://cs.fyi/guide/http-in-depth)\n- [What is HTTP?](https://www.cloudflare.com/en-gb/learning/ddos/glossary/hypertext-transfer-protocol-http/)\n- [An overview of HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview)\n- [HTTP/3 From A To Z: Core Concepts](https://www.smashingmagazine.com/2021/08/http3-core-concepts-part1/)\n- [HTTP Crash Course & Exploration](https://www.youtube.com/watch?v=iYM2zFP3Zn0)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "https.md",
+                    "name": "https",
+                    "type": "file",
+                    "content": "\nHTTPS (**H**ypertext **T**ransfer **P**rotocol **S**ecure) is the secure version of HTTP, which is the primary protocol used to send data between a web browser and a website.\n\n`HTTPS = HTTP + SSL/TLS`\n\nVisit the following resources to learn more:\n\n- [What is HTTPS?](https://www.cloudflare.com/en-gb/learning/ssl/what-is-https/)\n- [Why HTTPS Matters](https://developers.google.com/web/fundamentals/security/encrypt-in-transit/why-https)\n- [Enabling HTTPS on Your Servers](https://developers.google.com/web/fundamentals/security/encrypt-in-transit/enable-https)\n- [How HTTPS works (comic)](https://howhttps.works/)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "ftp.md",
+                    "name": "ftp",
+                    "type": "file",
+                    "content": "\nFile Transfer Protocol(FTP) is `TCP/IP` based application layer communication protocol that helps transferring files between local and remote file systems over the network. To transfer a file, 2 TCP connections(control connection and data connection) are used in parallel.\n\nVisit the following resources to learn more:\n\n- [What is FTP?](https://www.geeksforgeeks.org/file-transfer-protocol-ftp-in-application-layer/)\n- [FTP vs SFTP vs FTPS](https://www.fortinet.com/resources/cyberglossary/file-transfer-protocol-ftp-meaning)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "ssl-tls.md",
+                    "name": "ssl tls",
+                    "type": "file",
+                    "content": "\nSecure Sockets Layer (SSL) and Transport Layer Security (TLS) are cryptographic protocols used to provide security in internet communications. These protocols encrypt the data that is transmitted over the web, so anyone who tries to intercept packets will not be able to interpret the data. One difference that is important to know is that SSL is now deprecated due to security flaws, and most modern web browsers no longer support it. But TLS is still secure and widely supported, so preferably use TLS.\n\nVisit the following resources to learn more:\n\n- [Cloudflare - What is SSL?](https://www.cloudflare.com/learning/ssl/what-is-ssl/)\n- [Cloudflare - What is TLS?](https://www.cloudflare.com/en-gb/learning/ssl/transport-layer-security-tls/)\n- [Wikipedia - SSL/TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security)\n- [SSH vs SSL vs TLS](https://www.youtube.com/watch?v=k3rFFLmQCuY)\n"
+                },
+                {
+                    "id": "106",
+                    "fileName": "ssh.md",
+                    "name": "ssh",
+                    "type": "file",
+                    "content": "\nThe SSH (**S**ecure **Sh**ell) is a network communication protocol that enables two computers to communicate over an insecure network. It is a secure alternative to the non-protected login protocols (such as telnet, rlogin) and insecure file transfer methods (such as FTP). It is mostly used for secure Remote Login and File Transfer.\n\n`SFTP = FTP + SSH`\n\nVisit the following resources to learn more:\n\n- [SSH Intro](https://www.baeldung.com/cs/ssh-intro)\n- [What is SSH?](https://www.ssh.com/academy/ssh/protocol)\n- [SFTP using SSH](https://www.goanywhere.com/blog/how-sftp-works)\n"
+                },
+                {
+                    "id": "107",
+                    "fileName": "emails",
+                    "name": "emails",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "white-grey-listing.md",
+                            "name": "white grey listing",
+                            "type": "file",
+                            "content": "\nWhite listing is a process of adding an email to an approved sender list, so emails from that sender are never moved to the spam folder. This tells an email server to move messages to the inbox directly.\n\n`Greylisting` is a method of protecting e-mail users against spam. A mail transfer agent (MTA) using greylisting will \"temporarily reject\" any email from a sender it does not recognize. If the mail is legitimate, the originating server will try again after a delay, and the email will be accepted if sufficient time has elapsed.\n\nVisit the following resources to learn more:\n\n- [Basic Introduction to whitelisting](https://www.cblohm.com/blog/education-marketing-trends/what-is-email-whitelisting/)\n- [Detailed Introduction to greylisting](<https://en.wikipedia.org/wiki/Greylisting_(email)>)\n"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "smtp.md",
+                            "name": "smtp",
+                            "type": "file",
+                            "content": "\nEmail is emerging as one of the most valuable services on the internet today. Most internet systems use SMTP as a method to transfer mail from one user to another. SMTP is a push protocol and is used to send the mail whereas POP (post office protocol) or IMAP (internet message access protocol) are used to retrieve those emails at the receiver’s side.\n\nSMTP is an application layer protocol. The client who wants to send the mail opens a TCP connection to the SMTP server and then sends the mail across the connection. The SMTP server is an always-on listening mode. As soon as it listens for a TCP connection from any client, the SMTP process initiates a connection through port 25. After successfully establishing a TCP connection the client process sends the mail instantly.\n\nVisit the following resources to learn more:\n\n- [What is Simple Mail Transfer Protocol (SMTP)?](https://www.geeksforgeeks.org/simple-mail-transfer-protocol-smtp/)\n"
+                        },
+                        {
+                            "id": "102",
+                            "fileName": "imaps.md",
+                            "name": "imaps",
+                            "type": "file",
+                            "content": "\nIMAP (port 143) or IMAPS (port 993) allows you to access your email wherever you are, from any device. When you read an email message using IMAP, you aren't actually downloading or storing it on your computer; instead, you're reading it from the email service. As a result, you can check your email from different devices, anywhere in the world: your phone, a computer, a friend's computer.\n\nIMAP only downloads a message when you click on it, and attachments aren't automatically downloaded. This way you're able to check your messages a lot more quickly than POP.\n\nVisit the following resources to learn more:\n\n- [Wikipedia: Internet Message Access Protocol](https://en.wikipedia.org/wiki/Internet_Message_Access_Protocol)\n- [What is IMAP and How To Use It | Email Tutorial](https://www.youtube.com/watch?v=cfXabGOA2s8)\n"
+                        },
+                        {
+                            "id": "103",
+                            "fileName": "pop3s.md",
+                            "name": "pop3s",
+                            "type": "file",
+                            "content": "\nPOP3 (port 110) or POP3s (port 995) stands for The Post Office Protocol. It's an Internet standard protocol used by local email software clients to retrieve emails from a remote mail server over a TCP/IP connection.\n\nEmail servers hosted by Internet service providers also use POP3 to receive and hold emails intended for their subscribers. Periodically, these subscribers will use email client software to check their mailbox on the remote server and download any emails addressed to them.\n\nOnce the email client has downloaded the emails, they are usually deleted from the server, although some email clients allow users to specify that mails be copied or saved on the server for a period of time.\n\nVisit the following resources to learn more:\n\n- [What is POP3?](https://www.techtarget.com/whatis/definition/POP3-Post-Office-Protocol-3)\n"
+                        },
+                        {
+                            "id": "104",
+                            "fileName": "dmarc.md",
+                            "name": "dmarc",
+                            "type": "file",
+                            "content": "\nDMARC stands for Domain-based Message Authentication, Reporting, and Conformance, is an authentication method on the email that is built to protect domain email from invalid email addresses or commonly known as email spoofing, email attacks, phishing, scams, and other threat activities.\n\nVisit the following resources to learn more:\n\n- [DMARC Official Website](https://dmarc.org/)\n"
+                        },
+                        {
+                            "id": "105",
+                            "fileName": "spf.md",
+                            "name": "spf",
+                            "type": "file",
+                            "content": "\nSender Policy Framework (SPF) is used to authenticate the sender of an email. With an SPF record in place, Internet Service Providers can verify that a mail server is authorized to send email for a specific domain. An SPF record is a DNS TXT record containing a list of the IP addresses that are allowed to send email on behalf of your domain.\n\nVisit the following resources to learn more:\n\n- [What is a DNS SPF record?](https://www.cloudflare.com/learning/dns/dns-records/dns-spf-record/)\n- [SPF Overview](https://www.youtube.com/watch?v=WFPYrAr1boU)\n"
+                        },
+                        {
+                            "id": "106",
+                            "fileName": "domain-keys.md",
+                            "name": "domain keys",
+                            "type": "file",
+                            "content": "\nDomainKeys Identified Mail (DKIM) is an email authentication method designed to detect forged sender addresses in email (email spoofing), a technique often used in phishing and email spam.\n\nVisit the following resources to learn more:\n\n- [DomainKeys Identified Mail](https://www.brainkart.com/article/DomainKeys-Identified-Mail_8493/)\n"
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": "\nElectronic mail, commonly shortened to “email,” is a communication method that uses electronic devices to deliver messages across computer networks. \"Email\" refers to both the delivery system and individual messages that are sent and received.\n\nVisit the following resources to learn more:\n\n- [What is an email?](https://www.cloudflare.com/learning/email-security/what-is-email/)\n"
+                        }
+                    ]
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nAs a DevOps engineer you will need to understand the basics of networking protocols, how they work, and how they are used in the real world. To get you started, you should learn about, [TCP/IP](https://en.wikipedia.org/wiki/Internet_protocol_suite), [HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol), [HTTPS](https://en.wikipedia.org/wiki/HTTPS), [FTP](https://en.wikipedia.org/wiki/File_Transfer_Protocol), [SSH](https://en.wikipedia.org/wiki/Secure_Shell), [SMTP](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol), [DNS](https://en.wikipedia.org/wiki/Domain_Name_System), [DHCP](https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol), [NTP](https://en.wikipedia.org/wiki/Network_Time_Protocol).\n\nHere are some of the resources to learn about SSH:\n\n- [SSH Intro](https://www.baeldung.com/cs/ssh-intro)\n- [What is SSH?](https://www.ssh.com/academy/ssh/protocol)\n- [SFTP using SSH](https://www.goanywhere.com/blog/how-sftp-works)\n- [OpenSSH Full Guide](https://www.youtube.com/watch?v=ys5zh7kexve)\n\nVisit the following to learn about SSL/TLS:\n\n- [Cloudflare - What is SSL?](https://www.cloudflare.com/learning/ssl/what-is-ssl/)\n- [Cloudflare - What is TLS?](https://www.cloudflare.com/en-gb/learning/ssl/transport-layer-security-tls/)\n- [Wikipedia - SSL/TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security)\n- [SSH vs SSL vs TLS](https://www.youtube.com/watch?v=k3rFFLmQCuY)\n\nLearn about HTTP and HTTPS:\n\n- [Everything you need to know about HTTP](https://cs.fyi/guide/http-in-depth)\n- [What is HTTP?](https://www.cloudflare.com/en-gb/learning/ddos/glossary/hypertext-transfer-protocol-http/)\n- [An overview of HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview)\n- [HTTP/3 From A To Z: Core Concepts](https://www.smashingmagazine.com/2021/08/http3-core-concepts-part1/)\n- [HTTP Crash Course & Exploration](https://www.youtube.com/watch?v=iYM2zFP3Zn0)\n- [What is HTTPS?](https://www.cloudflare.com/en-gb/learning/ssl/what-is-https/)\n- [Why HTTPS Matters](https://developers.google.com/web/fundamentals/security/encrypt-in-transit/why-https)\n- [Enabling HTTPS on Your Servers](https://developers.google.com/web/fundamentals/security/encrypt-in-transit/enable-https)\n- [How HTTPS works (comic)](https://howhttps.works/)\n\nHere are some resources to learn about DNS:\n\n- [What is DNS?](https://www.cloudflare.com/en-gb/learning/dns/what-is-dns/)\n- [HOw DNS works (comic)](https://howdns.works/)\n- [DNS and How does it Work?](https://www.youtube.com/watch?v=Wj0od2ag5sk)\n- [DNS Records](https://www.youtube.com/watch?v=7lxgpKh_fRY)"
+                }
+            ]
+        },
+        {
+            "id": "109",
+            "fileName": "serverless",
+            "name": "serverless",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "cloudflare.md",
+                    "name": "cloudflare",
+                    "type": "file",
+                    "content": "\n- [Cloudflare Documentation](https://developers.cloudflare.com/)"
+                },
+                {
+                    "id": "101",
+                    "fileName": "aws-lambda.md",
+                    "name": "aws lambda",
+                    "type": "file",
+                    "content": "\n- [AWS Lambda Introduction](https://docs.aws.amazon.com/lambda/latest/operatorguide/intro.html)"
+                },
+                {
+                    "id": "102",
+                    "fileName": "azure-functions.md",
+                    "name": "azure functions",
+                    "type": "file",
+                    "content": "\n- [Azure Functions Overview](https://learn.microsoft.com/en-us/azure/azure-functions/functions-overview)"
+                },
+                {
+                    "id": "103",
+                    "fileName": "gcp-functions.md",
+                    "name": "gcp functions",
+                    "type": "file",
+                    "content": "Google Cloud Functions is a serverless execution environment for building and connecting cloud services. With Cloud Functions you write simple, single-purpose functions that are attached to events emitted from your cloud infrastructure and services. Your function is triggered when an event being watched is fired. Your code executes in a fully managed environment. There is no need to provision any infrastructure or worry about managing any servers.\n\nYou can write Cloud Functions using a number of supported programming languages. You can take your function and run it in any standard runtime environment for one of the supported languages, which makes both portability and local testing a breeze.\n\nCloud Functions offers two product versions: Cloud Functions (1st gen), the original version, and Cloud Functions (2nd gen), a new version built on Cloud Run and Eventarc to provide an enhanced feature set. See Cloud Functions version comparison for more information."
+                },
+                {
+                    "id": "104",
+                    "fileName": "vercel.md",
+                    "name": "vercel",
+                    "type": "file",
+                    "content": "Vercel is a cloud platform that enables developers to deploy and host websites and web applications. It focuses on providing a seamless and efficient experience for developers to deploy their projects with minimal configuration and effort. Vercel supports various frontend frameworks and languages, making it a versatile choice for web development projects.\n\nKey features of Vercel include:\n\nServerless Functions: Vercel allows you to deploy serverless functions, which are small, single-purpose functions that can be executed in response to events. This enables developers to build serverless applications without managing servers.\n\nContinuous Deployment: Vercel supports automatic deployments from popular version control systems like Git. Whenever you push changes to your repository, Vercel can automatically build and deploy the updated version of your application.\n\nGlobal CDN (Content Delivery Network): Vercel leverages a global CDN to distribute your application's assets and content to servers located around the world. This helps in reducing latency and improving the overall performance of your web application.\n\nCustom Domains: You can easily configure custom domains for your Vercel deployments, allowing you to use your own domain name for the hosted application.\n\nEnvironment Variables: Vercel allows you to manage environment variables for your projects, which is useful for storing sensitive information like API keys securely.\n\nCollaboration: Vercel provides collaboration features, allowing multiple team members to work on a project and deploy changes seamlessly.\n\nIntegration with Frameworks: Vercel has built-in support for various frontend frameworks such as Next.js, Nuxt.js, and more, making it easy to deploy projects built with these technologies.\n\nAnalytics and Monitoring: Vercel provides analytics and monitoring tools to help developers track the performance of their applications and identify areas for improvement.\n\nOverall, Vercel is designed to simplify the deployment and hosting process for developers, making it an attractive option for those who want a quick and efficient way to get their web projects online."
+                },
+                {
+                    "id": "105",
+                    "fileName": "netlify.md",
+                    "name": "netlify",
+                    "type": "file",
+                    "content": "Netlify is a cloud computing platform that provides a variety of services for web developers. It is specifically designed to simplify the process of deploying and managing modern web projects. Some key features and offerings of Netlify include:\n\nContinuous Deployment: Netlify supports continuous deployment, allowing developers to connect their projects to a Git repository (such as GitHub or GitLab). Whenever changes are pushed to the repository, Netlify automatically builds and deploys the updated version of the application.\n\nServerless Functions: Netlify enables the creation and deployment of serverless functions. These functions are small, single-purpose pieces of code that can be executed in response to events, providing a scalable and cost-effective way to add backend functionality to a web application.\n\nGlobal Content Delivery Network (CDN): Netlify uses a global CDN to distribute your website's assets to servers located around the world. This helps reduce latency and ensures fast loading times for users in different geographical locations.\n\nCustom Domains: Netlify allows developers to easily configure custom domain names for their deployed projects, enabling the use of branded or personalized URLs.\n\nForms Handling: Netlify includes form handling capabilities, making it easy to collect and process form submissions on your website without the need for a separate backend server.\n\nPrerendering and Asset Optimization: Netlify automatically optimizes and prerenders websites, improving performance and search engine optimization (SEO) by delivering prebuilt static pages.\n\nIdentity and Authentication: Netlify provides user authentication services, allowing developers to easily add secure user authentication and authorization to their applications.\n\nCollaboration and Team Features: Netlify offers collaboration features, allowing multiple team members to work on a project concurrently. It supports role-based access control and facilitates collaborative development.\n\nMonitoring and Analytics: Netlify provides insights into website performance, traffic, and other analytics to help developers monitor and optimize their projects.\n\nIntegration Ecosystem: Netlify integrates well with popular static site generators (such as Hugo, Jekyll, and Gatsby) and supports various frontend frameworks and languages.\n\nNetlify is known for its developer-friendly approach, ease of use, and the ability to quickly deploy and scale web applications. It is particularly popular among developers working on static or Jamstack (JavaScript, APIs, and Markup) websites"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\n- [What is Serverless?](https://www.redhat.com/en/topics/cloud-native-apps/what-is-serverless)"
+                }
+            ]
+        },
+        {
+            "id": "110",
+            "fileName": "infrastructure-provisioning",
+            "name": "infrastructure provisioning",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "aws-cdk.md",
+                    "name": "aws cdk",
+                    "type": "file",
+                    "content": "\nThe AWS Cloud Development Kit (AWS CDK) is an open-source software development framework used to provision cloud infrastructure resources in a safe, repeatable manner through AWS CloudFormation. AWS CDK offers the flexibility to write infrastructure as code in popular languages like JavaScript, TypeScript, Python, Java, C#, and Go.\n\nVisit the following resources to learn more:\n\n- [AWS CDK Website](https://aws.amazon.com/cdk/)\n- [Official Documentation](https://docs.aws.amazon.com/cdk/index.html)\n- [What is the AWS CDK?](https://docs.aws.amazon.com/cdk/v2/guide/home.html)\n- [AWS SDK Getting Started Guide](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html)\n- [AWS CDK Examples](https://github.com/aws-samples/aws-cdk-examples)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "cloudformation.md",
+                    "name": "cloudformation",
+                    "type": "file",
+                    "content": "\nCloudFormation is the AWS service that helps to define collections of AWS resources. CloudFormation lets you model, provision, and manage AWS and third-party resources by treating infrastructure as code.\n\nVisit the following resources to learn more:\n\n- [AWS CloudFormation Website](https://aws.amazon.com/cloudformation/)\n- [Official Documentation](https://docs.aws.amazon.com/cloudformation/index.html)\n- [AWS CloudFormation Getting Started Guide](https://aws.amazon.com/cloudformation/getting-started/)\n- [CloudFormation Sample Templates](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-sample-templates.html)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "pulumi.md",
+                    "name": "pulumi",
+                    "type": "file",
+                    "content": "\nPulumi is an open source Infrastructure as Code tool that can be written in TypeScript, JavaScript, Python, Go, .NET, Java, and YAML to model cloud infrastructure.\n\nVisit the following resources to learn more:\n\n- [Pulumi Website](https://www.pulumi.com/)\n- [Official Documentation](https://www.pulumi.com/docs/)\n- [Pulumi Getting Started Guide](https://www.pulumi.com/docs/get-started/)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "terraform.md",
+                    "name": "terraform",
+                    "type": "file",
+                    "content": "\nTerraform is an extremely popular open source Infrastructure as Code (IaC) tool that can be used with many different cloud and service provider APIs. Terraform focuses on an immutable approach to infrastructure, with a terraform state file center to tracking the status of your real world infrastructure.\n\nVisit the following resources to learn more:\n\n- [Terraform Website](https://www.terraform.io/)\n- [Terraform Documentation](https://www.terraform.io/docs)\n- [Terraform Tutorials](https://learn.hashicorp.com/terraform)\n- [Intro to Terraform Video](https://www.youtube.com/watch?v=h970ZBgKINg&ab_channel=HashiCorp)\n- [Terraform CDK Website](https://www.terraform.io/cdktf)\n- [What is the CDKTF?](https://www.terraform.io/cdktf/concepts/cdktf-architecture)\n- [CDKTF Getting Started Guide](https://learn.hashicorp.com/tutorials/terraform/cdktf-install?in=terraform/cdktf)\n- [CDKTF Examples](https://www.terraform.io/cdktf/examples)\n- [How to Scale Your Terraform Infrastructure](https://thenewstack.io/how-to-scale-your-terraform-infrastructure/)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nTools in this category are used to provision infrastructure in cloud providers. This includes DNS, networking, security policies, servers, containers, and a whole host of vendor-specific constructs. In this category, the use of cloud provider-agnostic tooling is strongly encouraged. These skills can be applied across most cloud providers, and the more specific domain-specific languages tend to have less reach.\n"
+                }
+            ]
+        },
+        {
+            "id": "111",
+            "fileName": "configuration-management",
+            "name": "configuration management",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "ansible.md",
+                    "name": "ansible",
+                    "type": "file",
+                    "content": "\nAnsible is an open-source configuration management, application deployment and provisioning tool that uses its own declarative language in YAML. Ansible is agentless, meaning you only need remote connections via SSH or Windows Remote Management via Powershell in order to function\n\nVisit the following resources to learn more:\n\n- [Ansible Website](https://www.ansible.com/)\n- [Official Documentation](https://docs.ansible.com/)\n- [Ansible Getting Started Guide](https://www.ansible.com/resources/get-started)\n- [Ansible Full Course for Beginners](https://www.youtube.com/watch?v=9Ua2b06oAr4)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "chef.md",
+                    "name": "chef",
+                    "type": "file",
+                    "content": "\nEmerging in 2009, [Chef](https://en.wikipedia.org/wiki/Progress_Chef) (now known as Progress Chef) is one of the earliest configuration management tools to gain popularity. Chef \"Recipes\" are written in Ruby, in a primarily [declarative](https://en.wikipedia.org/wiki/Declarative_programming) style.\n\nChef requires that a client is installed on a server being managed. This client polls a Chef-Server regularly, to determine what its configuration should be. Chef-Solo is also available, a version of Chef that allows provisioning of a single node by running chef locally.\n\nA key tenet of Chef recipe design is the concept of [idempotence](https://en.wikipedia.org/wiki/Idempotence). All Chef recipes should be runnable multiple times and produce the same result - this is especially necessary in cases where the client/server model listed above is in use. This pattern of configuration management is highly influential for future declarative tools like Terraform and Cloud Formation.\n\nVisit the following resources to learn more:\n\n- [Chef Website](https://www.chef.io/products/chef-infra)\n- [Chef Tutorial](https://www.tutorialspoint.com/chef/index.htm)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "puppet.md",
+                    "name": "puppet",
+                    "type": "file",
+                    "content": "\nPuppet, an automated administrative engine for your Linux, Unix, and Windows systems, performs administrative tasks (such as adding users, installing packages, and updating server configurations) based on a centralized specification.\n\nVisit the following resources to learn more:\n\n- [Puppet Website](https://puppet.com/)\n- [Official Documentation](https://puppet.com/docs)\n- [Introduction to Puppet](https://puppet.com/docs/puppet/6/puppet_overview.html)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nConfiguration management is a systems engineering process for establishing consistency of a product’s attributes throughout its life. In the technology world, configuration management is an IT management process that tracks individual configuration items of an IT system. IT systems are composed of IT assets that vary in granularity. An IT asset may represent a piece of software, or a server, or a cluster of servers. The following focuses on configuration management as it directly applies to IT software assets and software asset CI/CD.\n\nSoftware configuration management is a systems engineering process that tracks and monitors changes to a software systems configuration metadata. In software development, configuration management is commonly used alongside version control and CI/CD infrastructure. This post focuses on its modern application and use in agile CI/CD software environments.\n\nVisit the following resources to learn more:\n\n- [What is configuration management?](https://www.atlassian.com/microservices/microservices-architecture/configuration-management)\n"
+                }
+            ]
+        },
+        {
+            "id": "112",
+            "fileName": "ci-cd",
+            "name": "ci cd",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "gitlab-ci.md",
+                    "name": "gitlab ci",
+                    "type": "file",
+                    "content": "\nGitLab offers a CI/CD service that can be used as a SaaS offering or self-managed using your own resources. You can use GitLab CI with any GitLab hosted repository, or any BitBucket Cloud or GitHub repository in the GitLab Premium self-managed, GitLab Premium SaaS and higher tiers.\n\nVisit the following resources to learn more:\n\n- [GitLab Website](https://gitlab.com/)\n- [GitLab Documentation](https://docs.gitlab.com/)\n- [Get Started with GitLab CI](https://docs.gitlab.com/ee/ci/quick_start/)\n- [Learn GitLab Tutorials](https://docs.gitlab.com/ee/tutorials/)\n- [GitLab CI/CD Examples](https://docs.gitlab.com/ee/ci/examples/)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "jenkins.md",
+                    "name": "jenkins",
+                    "type": "file",
+                    "content": "\nJenkins is an open-source CI/CD automation server. Jenkins is primarily used for building projects, running tests, static code analysis and deployments.\n\nVisit the following resources to learn more:\n\n- [Jenkins Website](https://www.jenkins.io/)\n- [Official Jenkins Handbook](https://www.jenkins.io/doc/book/)\n- [Jenkins Getting Started Guide](https://www.jenkins.io/doc/pipeline/tour/getting-started/)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "github-actions.md",
+                    "name": "github actions",
+                    "type": "file",
+                    "content": "\nAutomate, customize, and execute your software development workflows right in your repository with GitHub Actions. You can discover, create, and share actions to perform any job you'd like, including CI/CD, and combine actions in a completely customized workflow.\n\nVisit the following resources to learn more:\n\n- [GitHub Actions Documentation](https://docs.github.com/en/actions)\n- [Learn GitHub Actions](https://docs.github.com/en/actions/learn-github-actions)\n- [GitHub Actions - Supercharge your GitHub Flow](https://youtu.be/cP0I9w2coGU)\n- [Automate your Workflow with GitHub Actions](https://www.youtube.com/watch?v=nyKZTKQS_EQ)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "travis-ci.md",
+                    "name": "travis ci",
+                    "type": "file",
+                    "content": "\nTravis CI is a CI/CD service that is primarily used for building and testing projects that are hosted on BitBucket and GitHub. Open source projects can utilize Travis CI for free.\n\nVisit the following resources to learn more:\n\n- [Travis CI Website](https://www.travis-ci.com/)\n- [Travis CI Documentation](https://docs.travis-ci.com/)\n- [Travis CI Tutorial](https://docs.travis-ci.com/user/tutorial/)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "teamcity.md",
+                    "name": "teamcity",
+                    "type": "file",
+                    "content": "\nTeamCity is a CI/CD service provided by JetBrains. TeamCity can be used as a SaaS offering or self-managed using your own resources.\n\nVisit the following resources to learn more:\n\n- [TeamCity Website](https://www.jetbrains.com/teamcity/)\n- [Official Documentation](https://www.jetbrains.com/help/teamcity/teamcity-documentation.html)\n- [TeamCity Tutorials](https://www.jetbrains.com/teamcity/tutorials/)\n- [TeamCity Learning Portal](https://www.jetbrains.com/teamcity/learn/)\n"
+                },
+                {
+                    "id": "106",
+                    "fileName": "azure-devops-services.md",
+                    "name": "azure devops services",
+                    "type": "file",
+                    "content": "\nAzure DevOps is developed by Microsoft as a full scale application lifecycle management and CI/CD service. Azure DevOps provides developer services for allowing teams to plan work, collaborate on code development, and build and deploy applications.\n\nVisit the following resources to learn more:\n\n- [Azure DevOps Website](https://azure.microsoft.com/en-us/services/devops/#overview)\n- [Official Documentation](https://docs.microsoft.com/en-us/azure/devops/?view=azure-devops&viewFallbackFrom=vsts)\n- [Azure DevOps Getting Started Guide](https://docs.microsoft.com/en-us/azure/devops/user-guide/sign-up-invite-teammates?view=azure-devops)\n"
+                },
+                {
+                    "id": "107",
+                    "fileName": "circle-ci.md",
+                    "name": "circle ci",
+                    "type": "file",
+                    "content": "\nCircleCI is a CI/CD service that can be integrated with GitHub, BitBucket and GitLab repositories. The service that can be used as a SaaS offering or self-managed using your own resources.\n\nVisit the following resources to learn more:\n\n- [CircleCI Website](https://circleci.com/)\n- [CircleCI Documentation](https://circleci.com/docs)\n- [Configuration Tutorial](https://circleci.com/docs/config-intro)\n"
+                },
+                {
+                    "id": "108",
+                    "fileName": "drone.md",
+                    "name": "drone",
+                    "type": "file",
+                    "content": "\nDrone is a CI/CD service offering by [Harness](https://harness.io/). Each build runs on an isolated Docker container, and Drone integrates with many popular source code management repositories like GitHub, BitBucket and GitLab\n\nVisit the following resources to learn more:\n\n- [Drone Website](https://www.drone.io/)\n- [Official Documentation](https://docs.drone.io/)\n- [Drone Getting Started Guide](https://docs.drone.io/server/overview/)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nCI/CD is a method to frequently deliver apps to customers by introducing automation into the stages of app development. The main concepts attributed to CI/CD are continuous integration, continuous delivery, and continuous deployment. CI/CD is a solution to the problems integrating new code can cause for development and operations teams.\n\nSpecifically, CI/CD introduces ongoing automation and continuous monitoring throughout the lifecycle of apps, from integration and testing phases to delivery and deployment. Taken together, these connected practices are often referred to as a \"CI/CD pipeline\" and are supported by development and operations teams working together in an agile way with either a DevOps or site reliability engineering (SRE) approach.\n\nVisit the following resources to learn more:\n\n- [CI vs CD](https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment)\n- [What is CI/CD?](https://www.redhat.com/en/topics/devops/what-is-ci-cd)\n- [CI/CD Pipeline: A Gentle Introduction](https://semaphoreci.com/blog/cicd-pipeline)\n- [DevOps CI/CD Explained in 100 Seconds](https://www.youtube.com/watch?v=scEDHsr3APg)\n"
+                }
+            ]
+        },
+        {
+            "id": "113",
+            "fileName": "secret-management",
+            "name": "secret management",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "vault.md",
+                    "name": "vault",
+                    "type": "file",
+                    "content": "\nVault is a tool for securely storing and managing secrets, such as passwords, API keys, and other sensitive information. It is developed and maintained by Hashicorp and is available as open-source software.\n\nVault is designed to be highly scalable and flexible, with a wide range of features for managing secrets, including:\n\n- Encryption: Vault uses encryption algorithms and protocols, such as AES and RSA, to securely store secrets.\n- Access controls: Vault supports role-based access controls and multi-factor authentication to ensure that only authorized users or systems can access secrets.\n- Secret rotation: Vault supports automatic secret rotation, allowing secrets to be regularly rotated to reduce the risk of unauthorized access.\n- Auditing: Vault provides auditing capabilities, allowing administrators to track and monitor access to secrets.\n\nVault is commonly used in DevOps environments to securely store and manage secrets, and it is often used in conjunction with other tools, such as Kubernetes and Helm, to automate the deployment and management of cloud-native applications.\n\nVisit the following resources to learn more:\n\n- [Vault - Official Website](https://www.vaultproject.io/)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "sops.md",
+                    "name": "sops",
+                    "type": "file",
+                    "content": "\nSOPS (Secrets OPerationS) is an open-source tool for securely storing and managing secrets, such as passwords, API keys, and other sensitive information. It is developed and maintained by Mozilla and is available as a command-line tool and as a library for integration into other applications.\n\nSOPS is designed to be easy to use and highly secure, with a range of features for managing secrets, including:\n\n- Encryption: SOPS uses encryption algorithms and protocols, such as AES and RSA, to securely store secrets.\n- Access controls: SOPS supports role-based access controls and multi-factor authentication to ensure that only authorized users or systems can access secrets.\n- Secret rotation: SOPS supports automatic secret rotation, allowing secrets to be regularly rotated to reduce the risk of unauthorized access.\n- Auditing: SOPS provides auditing capabilities, allowing administrators to track and monitor access to secrets.\n\nSOPS is commonly used in DevOps environments to securely store and manage secrets, and it is often used in conjunction with other tools, such as Kubernetes and Helm, to automate the deployment and management of cloud-native applications.\n\nVisit the following resources to learn more:\n\n- [Mozilla SOPS - Official Website](https://github.com/mozilla/sops)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "sealed-secrets.md",
+                    "name": "sealed secrets",
+                    "type": "file",
+                    "content": "\nSealed Secrets is a tool for securely storing and managing secrets in a Kubernetes environment. It is developed and maintained by Bitnami and is available as open-source software.\n\nIn a Sealed Secrets workflow, secrets are encrypted using a public key and stored as sealed secrets in a Git repository. The sealed secrets can then be deployed to a Kubernetes cluster, where they are decrypted using a private key and made available to the applications and infrastructure that need them.\n\nSealed Secrets is designed to be highly secure and easy to use, with a range of features for managing secrets, including:\n\n- Encryption: Sealed Secrets uses encryption algorithms and protocols, such as RSA, to securely store secrets.\n- Access controls: Sealed Secrets supports role-based access controls and multi-factor authentication to ensure that only authorized users or systems can access secrets.\n- Secret rotation: Sealed Secrets supports automatic secret rotation, allowing secrets to be regularly rotated to reduce the risk of unauthorized access.\n- Auditing: Sealed Secrets provides auditing capabilities, allowing administrators to track and monitor access to secrets.\n\nSealed Secrets is commonly used in Kubernetes environments to securely store and manage secrets, and it is often used in conjunction with other tools, such as Helm, to automate the deployment and management of cloud-native applications.\n\nVisit the following resources to learn more:\n\n- [Sealed Secrets - Bitnami](https://github.com/bitnami-labs/sealed-secrets)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "cloud-specific-tools.md",
+                    "name": "cloud specific tools",
+                    "type": "file",
+                    "content": "\nThere are several cloud-specific tools for securely storing and managing secrets, such as:\n\n- AWS Secrets Manager: AWS Secrets Manager is a service provided by Amazon Web Services (AWS) for securely storing and managing secrets. It provides features such as automatic secret rotation and integration with other AWS services.\n- Google Cloud Secret Manager: Google Cloud Secret Manager is a service provided by Google Cloud for securely storing and managing secrets. It provides features such as automatic secret rotation and integration with other Google Cloud services.\n- Azure Key Vault: Azure Key Vault is a service provided by Microsoft Azure for securely storing and managing secrets. It provides features such as automatic secret rotation and integration with other Azure services.\n\nThese cloud-specific tools are designed to be used in conjunction with cloud-based applications and infrastructure and are typically integrated with other cloud services, such as container orchestration platforms and continuous delivery pipelines.\n\nVisit the following resources to learn more:\n\n- [AWS Secrets Manager - Amazon Web Services](https://aws.amazon.com/secrets-manager/)\n- [Google Cloud Secret Manager - Google Cloud](https://cloud.google.com/secret-manager)\n- [Azure Key Vault - Microsoft Azure](https://azure.microsoft.com/en-us/services/key-vault/)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nSecret management is an important aspect of DevOps, as it involves securely storing and managing sensitive information, such as passwords, API keys, and other secrets, that are used by applications and infrastructure.\n\nThere are several ways to manage secrets in a cloud environment:\n\n- Secret stores: A secret store is a specialized database or service that is designed to securely store and manage secrets. Examples of secret stores include Hashicorp Vault, AWS Secrets Manager, and Google Cloud Secret Manager.\n- Encryption: Secrets can be encrypted using a variety of encryption algorithms and protocols, such as AES, RSA, and PGP. Encrypted secrets can be stored in a variety of locations, such as a file system, a database, or a cloud storage service.\n- Access controls: Access to secrets should be restricted to only those users or systems that need them, using techniques such as role-based access controls, multi-factor authentication, and least privilege principles.\n\nEffective secret management is essential for maintaining the security and integrity of a DevOps environment. It is important to regularly review and update secret management practices to ensure that secrets are being stored and managed securely.\n\nVisit the following resources to learn more:\n\n- [How to Manage Secrets in Web Applications?](https://cs.fyi/guide/secret-management-best-practices)\n- [Secrets management guide — approaches, open source tools, commercial products, challenges and questions](https://medium.com/@burshteyn/secrets-management-guide-approaches-open-source-tools-commercial-products-challenges-db560fd0584d)\n- [Secret Management Architectures: Finding the balance between security and complexity](https://medium.com/slalom-technology/secret-management-architectures-finding-the-balance-between-security-and-complexity-9e56f2078e54)\n"
+                }
+            ]
+        },
+        {
+            "id": "114",
+            "fileName": "infrastructure-monitoring",
+            "name": "infrastructure monitoring",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "prometheus.md",
+                    "name": "prometheus",
+                    "type": "file",
+                    "content": "\nPrometheus is a free software application used for event monitoring and alerting. It records real-time metrics in a time series database built using a HTTP pull model, with flexible queries and real-time alerting.\n\nVisit the following resources to learn more:\n\n- [Prometheus Website](https://prometheus.io/)\n- [Official Documentation](https://prometheus.io/docs/introduction/overview/)\n- [Getting Started with Prometheus](https://prometheus.io/docs/tutorials/getting_started/)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "datadog.md",
+                    "name": "datadog",
+                    "type": "file",
+                    "content": "\nDatadog is a monitoring and analytics platform for large-scale applications. It encompasses infrastructure monitoring, application performance monitoring, log management, and user-experience monitoring. Datadog aggregates data across your entire stack with 400+ integrations for troubleshooting, alerting, and graphing.\n\nVisit the following resources to learn more:\n\n- [Datadog Website](https://www.datadoghq.com/)\n- [Official Documentation](https://docs.datadoghq.com/)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "grafana.md",
+                    "name": "grafana",
+                    "type": "file",
+                    "content": "\nGrafana is the open-source platform for monitoring and observability. It allows you to query, visualize, alert on and understand your metrics no matter where they are stored.\n\nVisit the following resources to learn more:\n\n- [Grafana Website](https://grafana.com/)\n- [Grafana Official Documentation](https://grafana.com/docs/)\n- [Grafana Community](https://community.grafana.com/)\n- [Grafana Webinars and Videos](https://grafana.com/videos/)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "zabbix.md",
+                    "name": "zabbix",
+                    "type": "file",
+                    "content": "\nZabbix is an enterprise-class open source monitoring solution for network monitoring and application monitoring of millions of metrics.\n\nVisit the following resources to learn more:\n\n- [Zabbix Website](https://www.zabbix.com/)\n- [Official Documentation](https://www.zabbix.com/manuals)\n- [Zabbix Roadmap](https://www.zabbix.com/roadmap)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nMonitoring refers to the practice of making the performance and status of infrastructure visible. This section contains common tools used for monitoring.\n\nThis is a very vendor-heavy space - use caution when studying materials exclusively from a given product or project, as there are many conflicting opinions and strategies in use. There is no single solution for the most substantially complex internet-facing applications, so understanding the pros and cons of these tools will be useful in helping you plan how to monitor a system for a given goal.\n\nVisit the following resources to learn more:\n\n- [Best Practices to Optimize Infrastructure Monitoring within DevOps Teams](https://thenewstack.io/best-practices-to-optimize-infrastructure-monitoring-within-devops-teams/)\n- [Seven Steps to Effective Cloud Native Infrastructure Monitoring](https://thenewstack.io/seven-steps-to-effective-cloud-native-infrastructure-monitoring/)\n"
+                }
+            ]
+        },
+        {
+            "id": "115",
+            "fileName": "application-monitoring",
+            "name": "application monitoring",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "jaeger.md",
+                    "name": "jaeger",
+                    "type": "file",
+                    "content": "\nJaeger is an open source, end-to-end distributed tracing system that enables us to monitor and troubleshoot transactions in complex distributed systems.\n\nVisit the following resources to learn more:\n\n- [Jaeger Website](https://www.jaegertracing.io/)\n- [Official Documentation](https://www.jaegertracing.io/docs/1.37/)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "new-relic.md",
+                    "name": "new relic",
+                    "type": "file",
+                    "content": "\nNew Relic is where dev, ops, security and business teams solve software–performance problems with data.\n\nVisit the following resources to learn more:\n\n- [New Relic Website](https://newrelic.com/)\n- [Official Documentation](https://docs.newrelic.com/)\n- [New Relic Developer Hub](https://developer.newrelic.com/)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "datadog.md",
+                    "name": "datadog",
+                    "type": "file",
+                    "content": "\nDatadog is a monitoring and analytics platform for large-scale applications. It encompasses infrastructure monitoring, application performance monitoring, log management, and user-experience monitoring. Datadog aggregates data across your entire stack with 400+ integrations for troubleshooting, alerting, and graphing.\n\nVisit the following resources to learn more:\n\n- [Datadog Website](https://www.datadoghq.com/)\n- [Official Documentation](https://docs.datadoghq.com/)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "open-telemetry.md",
+                    "name": "open telemetry",
+                    "type": "file",
+                    "content": "\nOpenTelemetry is a collection of tools, APIs, and SDKs. Use it to instrument, generate, collect, and export telemetry data (metrics, logs, and traces) to help you analyze your software’s performance and behavior.\n\nVisit the following resources to learn more:\n\n- [OpenTelemetry Website](https://opentelemetry.io/)\n- [Official Documentation](https://opentelemetry.io/docs/)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "app-dynamics.md",
+                    "name": "app dynamics",
+                    "type": "file",
+                    "content": "\nAppDynamics is a full-stack application performance management (APM) and IT operations analytics (ITOA) company based in San Francisco. The company focuses on managing the performance and availability of applications across cloud computing environments, IT infrastructure, network architecture, digital user experience design, application security threat detection, observability, and data centers.\n\nVisit the following resources to learn more:\n\n- [AppDynamics Website](https://www.appdynamics.com/)\n- [Official Resources](https://www.appdynamics.com/resources)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nApplication monitoring refers to the practice of making the status and performance of a given _application_ visible. This may include details such as stacktraces, error logs, and the line of code implicated in a given failure. When combined with Infrastructure monitoring, this can provide a complete picture of what is happening in your system, and why.\n\nVisit the following resources to learn more:\n\n- [Applying Basic vs. Advanced Monitoring Techniques](https://thenewstack.io/applying-basic-vs-advanced-monitoring-techniques/)\n- [Why Legacy Apps Need Your Monitoring Love, Too](https://thenewstack.io/why-legacy-apps-need-your-monitoring-love-too/)\n"
+                }
+            ]
+        },
+        {
+            "id": "116",
+            "fileName": "logs-management",
+            "name": "logs management",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "elastic-stack.md",
+                    "name": "elastic stack",
+                    "type": "file",
+                    "content": "\nElastic Stack is a group of open source products comprised of Elasticsearch, Kibana, Beats, and Logstash and more that help store, search, analyze, and visualize data from various source, in different format, in real-time.\n\n- `Elastic Search` - Search and analytics engine\n- `Logstash/fluentd` - Data processing pipeline\n- `Kibana` - Dashboard to visualize data\n\nVisit the following resources to learn more:\n\n- [Elastic Stack Website](https://www.elastic.co/elastic-stack/)\n- [Official Docs](https://www.elastic.co/guide/index.html)\n- [Elastic Stack features](https://www.elastic.co/elastic-stack/features)\n- [Logstash vs Fluentd](https://logz.io/blog/fluentd-logstash/)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "loki.md",
+                    "name": "loki",
+                    "type": "file",
+                    "content": "\nLoki is a horizontally scalable, highly available, multi-tenant log aggregation system inspired by Prometheus. It is designed to be very cost-effective and easy to operate. It does not index the contents of the logs, but rather a set of labels for each log stream.\n\nVisit the following resources to learn more:\n\n- [Loki Website](https://grafana.com/oss/loki/)\n- [Official Documentation](https://grafana.com/docs/loki/latest/?pg=oss-loki&plcmt=quick-links)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "graylog.md",
+                    "name": "graylog",
+                    "type": "file",
+                    "content": "\nGraylog is a leading centralized log management solution for capturing, storing, and enabling real-time analysis of terabytes of machine data.\n\nVisit the following resources to learn more:\n\n- [Graylog Website](https://www.graylog.org/)\n- [Official Documentation](https://docs.graylog.org/)\n- [Product Videos](https://www.graylog.org/resources-videos)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "splunk.md",
+                    "name": "splunk",
+                    "type": "file",
+                    "content": "\nThe Splunk platform removes the barriers between data and action, empowering observability, IT and security teams to ensure their organizations are secure, resilient and innovative.\n\nVisit the following resources to learn more:\n\n- [Splunk Website](https://www.splunk.com/)\n- [Official Documentation](https://docs.splunk.com/Documentation)\n- [Splunk Videos](https://www.splunk.com/en_us/resources/videos.html)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "papertrail.md",
+                    "name": "papertrail",
+                    "type": "file",
+                    "content": "\nPapertrail is a leading centralized log management solution for capturing, storing, and enabling real-time analysis of terabytes of machine data.\n\nVisit the following resources to learn more:\n\n- [Papertrail Website](https://www.papertrail.com/)\n- [Official Guides](https://www.papertrail.com/solution/guides/)\n- [Official Blog](https://www.papertrail.com/blog/)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nLog management is the process of handling log events generated by all software applications and infrastructure on which they run. It involves log collection, aggregation, parsing, storage, analysis, search, archiving, and disposal, with the ultimate goal of using the data for troubleshooting and gaining business insights, while also ensuring the compliance and security of applications and infrastructure.\n\nVisit the following resources to learn more:\n\n- [Introduction to Logs Management](https://sematext.com/guides/log-management)\n- [Log Management: What DevOps Teams Need to Know](https://devops.com/log-management-what-devops-teams-need-to-know/)\n- [Logging for Kubernetes: What to Log and How to Log It](https://thenewstack.io/logging-for-kubernetes-what-to-log-and-how-to-log-it/)\n"
+                }
+            ]
+        },
+        {
+            "id": "117",
+            "fileName": "containers",
+            "name": "containers",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "docker-swarm.md",
+                    "name": "docker swarm",
+                    "type": "file",
+                    "content": "\nA Docker Swarm is a group of either physical or virtual machines that are running the Docker application and that have been configured to join together in a cluster. Once a group of machines have been clustered together, you can still run the Docker commands that you're used to, but they will now be carried out by the machines in your cluster. The activities of the cluster are controlled by a swarm manager, and machines that have joined the cluster are referred to as nodes.\n\nVisit the following resources to learn more:\n\n- [Official Website](https://www.docker.com/)\n- [Docker Swarm Documentation](https://docs.docker.com/engine/swarm/)\n- [Docker Swarm Tutorial for Beginners](https://www.youtube.com/watch?v=Tm0Q5zr3FL4)\n- [Tutorial: Manage Docker Swarm with Portainer](https://thenewstack.io/tutorial-manage-docker-swarm-with-portainer/)\n- [Tutorial: Create a Docker Swarm with Persistent Storage Using GlusterFS](https://thenewstack.io/tutorial-create-a-docker-swarm-with-persistent-storage-using-glusterfs/)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "gke-eks-aks.md",
+                    "name": "gke eks aks",
+                    "type": "file",
+                    "content": "\n## GKE - Google Kubernetes Engine\n\nGKE is a managed Kubernetes service that lets you deploy, manage, and scale containerized applications on Google Cloud.\n\n## EKS - Amazon Elastic Kubernetes Service\n\nAmazon Elastic Kubernetes Service (Amazon EKS) is a fully managed Kubernetes service from AWS.\n\n## AKS - Azure Kubernetes Service\n\nAzure Kubernetes Service (AKS) manages your hosted Kubernetes environment, making it quick and easy to deploy and manage containerized applications without container orchestration expertise.\n\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "ecs-fargate.md",
+                    "name": "ecs fargate",
+                    "type": "file",
+                    "content": "\nECS is a container orchestration service that allows you to run Docker containers on a cluster of EC2 instances. ECS is a good choice if you want to run Docker containers on EC2 instances and have full control over the underlying infrastructure.\n\nFargate is a serverless container orchestration service that allows you to run Docker containers without having to manage servers, clusters, or any other infrastructure. Fargate is a good choice if you want to run Docker containers without having to manage servers or clusters.\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "docker.md",
+                    "name": "docker",
+                    "type": "file",
+                    "content": "\nDocker is a platform for working with containerized applications. Among its features are a daemon and client for managing and interacting with containers, registries for storing images, and a desktop application to package all these features together.\n\nVisit the following resources to learn more:\n\n- [Docker Documentation](https://docs.docker.com/)\n- [Docker Tutorial](https://www.youtube.com/watch?v=RqTEHSBrYFw)\n- [Docker simplified in 55 seconds](https://youtu.be/vP_4DlOH1G4)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "lxc.md",
+                    "name": "lxc",
+                    "type": "file",
+                    "content": "\nLXC is a well-known Linux container runtime that consists of tools, templates, and library and language bindings. It's pretty low level, very flexible and covers just about every containment feature supported by the upstream kernel.\n\nVisit the following resources to learn more:\n\n- [LXC Website](https://linuxcontainers.org/)\n- [LXC Documentation](https://linuxcontainers.org/lxc/documentation/)\n- [Getting started with LXC containers](https://www.youtube.com/watch?v=CWmkSj_B-wo)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nContainers are a construct in which [cgroups](https://en.wikipedia.org/wiki/Cgroups), [namespaces](https://en.wikipedia.org/wiki/Linux_namespaces), and [chroot](https://en.wikipedia.org/wiki/Chroot) are used to fully encapsulate and isolate a process. This encapsulated process, called a container image, shares the kernel of the host with other containers, allowing containers to be significantly smaller and faster than virtual machines.\n\nThese images are designed for portability, allowing for full local testing of a static image, and easy deployment to a container management platform.\n\nVisit the following resources to learn more:\n\n- [What are Containers?](https://cloud.google.com/learn/what-are-containers)\n- [What is a Container?](https://www.docker.com/resources/what-container/)\n- [What are Containers?](https://www.youtube.com/playlist?list=PLawsLZMfND4nz-WDBZIj8-nbzGFD4S9oz)\n- [Articles about Containers - The New Stack](https://thenewstack.io/category/containers/)\n"
+                }
+            ]
+        },
+        {
+            "id": "118",
+            "fileName": "artifcats",
+            "name": "artifcats",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "artifactory.md",
+                    "name": "artifactory",
+                    "type": "file",
+                    "content": "\n- [Artifactory Website](https://jfrog.com/artifactory/)"
+                },
+                {
+                    "id": "101",
+                    "fileName": "nexus.md",
+                    "name": "nexus",
+                    "type": "file",
+                    "content": "\n- [Repository Management Basics](https://learn.sonatype.com/courses/nxrm-admin-100/)\n- [Nexus Installation and Configuration](https://learn.sonatype.com/courses/nxrm-config-100/)\n- [Nexus Repository Security Essentials](https://learn.sonatype.com/courses/nxrm-sec-100/)\n- [Nexus Best Practices](https://help.sonatype.com/repomanager3/nexus-repository-best-practices)"
+                },
+                {
+                    "id": "102",
+                    "fileName": "cloud-smith.md",
+                    "name": "cloud smith",
+                    "type": "file",
+                    "content": "Cloudsmith is a cloud-native, hosted, package management service with deep focus on providing the best universal support for all native package and container technologies."
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": ""
+                }
+            ]
+        },
+        {
+            "id": "119",
+            "fileName": "gitops",
+            "name": "gitops",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "argo-cd.md",
+                    "name": "argo cd",
+                    "type": "file",
+                    "content": "\nArgo CD is a continuous delivery tool for Kubernetes that is based on the GitOps methodology. It is used to automate the deployment and management of cloud-native applications by continuously synchronizing the desired application state with the actual application state in the production environment.\n\nIn an Argo CD workflow, changes to the application are made by committing code or configuration changes to a Git repository. Argo CD monitors the repository and automatically deploys the changes to the production environment using a continuous delivery pipeline. The pipeline is triggered by changes to the Git repository and is responsible for building, testing, and deploying the changes to the production environment.\n\nArgo CD is designed to be a simple and efficient way to manage cloud-native applications, as it allows developers to make changes to the system using familiar tools and processes and it provides a clear and auditable history of all changes to the system. It is often used in conjunction with tools such as Helm to automate the deployment and management of cloud-native applications.\n\nVisit the following resources to learn more:\n\n- [Argo CD - Argo Project](https://argoproj.github.io/docs/argo-cd/)\n- [ArgoCD Tutorial for Beginners](https://www.youtube.com/watch?v=MeU5_k9ssrs)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "flux-cd.md",
+                    "name": "flux cd",
+                    "type": "file",
+                    "content": "\nFlux CD is a continuous delivery tool for Kubernetes that is based on the GitOps methodology. It is used to automate the deployment and management of cloud-native applications by continuously synchronizing the desired application state with the actual application state in the production environment.\n\nIn a Flux CD workflow, changes to the application are made by committing code or configuration changes to a Git repository. Flux CD monitors the repository and automatically deploys the changes to the production environment using a continuous delivery pipeline. The pipeline is triggered by changes to the Git repository and is responsible for building, testing, and deploying the changes to the production environment.\n\nFlux CD is designed to be a simple and efficient way to manage cloud-native applications, as it allows developers to make changes to the system using familiar tools and processes and it provides a clear and auditable history of all changes to the system. It is often used in conjunction with tools such as Helm to automate the deployment and management of cloud-native applications.\n\nVisit the following resources to learn more:\n\n- [Flux CD Docs](https://docs.fluxcd.io/)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nGitOps is a methodology for managing cloud-native applications and infrastructure using Git as the source of truth. It is based on the idea that all changes to the system, whether they are related to code, configuration, or infrastructure, should be made using Git and that Git should be used to automate the deployment and management of those changes.\n\nIn a GitOps workflow, changes to the system are made by committing code or configuration changes to a Git repository. These changes are then automatically deployed to the production environment using a continuous delivery pipeline. The pipeline is triggered by changes to the Git repository and is responsible for building, testing, and deploying the changes to the production environment.\n\nGitOps is designed to be a more efficient and agile way of managing cloud-native environments, as it allows developers to make changes to the system using familiar tools and processes and it provides a clear and auditable history of all changes to the system. It is often used in conjunction with tools such as Kubernetes and Helm to automate the deployment and management of cloud-native applications.\n\nVisit the following resources to learn more:\n\n- [Guide to GitOps](https://www.weave.works/technologies/gitops/)\n"
+                }
+            ]
+        },
+        {
+            "id": "120",
+            "fileName": "service-mesh",
+            "name": "service mesh",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "istio.md",
+                    "name": "istio",
+                    "type": "file",
+                    "content": "\nIstio is an open source service mesh platform that provides a way to control how microservices share data with one another. It includes APIs that let Istio integrate into any logging platform, telemetry, or policy system. Istio is designed to run in a variety of environments: on-premise, cloud-hosted, in Kubernetes containers, in services running on virtual machines, and more.\n\nVisit the following resources to learn more:\n\n- [What is Istio?](https://www.redhat.com/en/topics/microservices/what-is-istio)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "consul.md",
+                    "name": "consul",
+                    "type": "file",
+                    "content": "\nConsul is a service mesh solution providing a full featured control plane with service discovery, configuration, and segmentation functionality. Each of these features can be used individually as needed, or they can be used together to build a full service mesh. Consul requires a data plane and supports both a proxy and native integration model. Consul ships with a simple built-in proxy so that everything works out of the box, but also supports 3rd party proxy integrations such as Envoy.\n\nVisit the following resources to learn more:\n\n- [What is Consul?](https://www.consul.io/docs/intro)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "linkerd.md",
+                    "name": "linkerd",
+                    "type": "file",
+                    "content": "\nLinkerd is an open source service mesh designed to be deployed into a variety of container schedulers and frameworks such as Kubernetes. It became the original “service mesh” when its creator Buoyant first coined the term in 2016. Like Twitter’s Finagle, on which it was based, Linkerd was first written in Scala and designed to be deployed on a per-host basis. Linkerd is one of the first products to be associated with the term service mesh and supports platforms such as Docker and Kubernetes.\n\nVisit the following resources to learn more:\n\n- [Linkerd Website](https://linkerd.io/)\n- [Linkerd Documentation](https://linkerd.io/2.11/overview/)\n- [What is Linkerd?](https://www.techtarget.com/searchitoperations/definition/Linkerd)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "envoy.md",
+                    "name": "envoy",
+                    "type": "file",
+                    "content": "\nOriginally created at Lyft, Envoy is a high-performance data plane designed for service mesh architectures. Lyft open sourced it and donated it to the CNCF, where it is now one of the CNCF’s graduated open source projects. Envoy is a self contained process that is designed to run alongside every application server. All of the Envoys form a transparent communication mesh in which each application sends and receives messages to and from localhost and is unaware of the network topology.\n\nVisit the following resources to learn more:\n\n- [Envoy Website](https://www.envoyproxy.io/)\n- [Envoy Documentation](https://www.envoyproxy.io/docs/envoy/latest/start/start)\n- [What is Envoy?](https://www.envoyproxy.io/docs/envoy/latest/intro/what_is_envoy)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nA service mesh, like the open source project Istio, is a way to control how different parts of an application share data with one another. Unlike other systems for managing this communication, a service mesh is a dedicated infrastructure layer built right into an app. This visible infrastructure layer can document how well (or not) different parts of an app interact, so it becomes easier to optimize communication and avoid downtime as an app grows.\n\nVisit the following resources to learn more:\n\n- [Whats a service mesh?](https://www.redhat.com/en/topics/microservices/what-is-a-service-mesh)\n- [The latest news about service mesh (TNS)](https://thenewstack.io/category/service-mesh/)\n"
+                }
+            ]
+        },
+        {
+            "id": "121",
+            "fileName": "cloud-design-patterns",
+            "name": "cloud design patterns",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "availability.md",
+                    "name": "availability",
+                    "type": "file",
+                    "content": "\nAvailability is the percentage of time that a system is functional and working as intended, generally referred to as uptime. Availability can be affected by hardware or software errors, infrastructure problems, malicious attacks, and system load. Many cloud providers typically offer their users a service level agreement (SLA) that specifies the exact percentages of promised uptime/downtime. Availability is related to reliability in this sense. For example, a company might promise 99.99% uptime for their services.\n\nTo achieve high levels of uptime, it is important to eliminate single points of failure so that a single device failure does not disrupt the entire service. High availability in the cloud is often achieved by creating clusters. Clusters are groups of devices (such as servers) that all have access to the same shared storage and function as one single server to provide uninterrupted availability. This way, if one server goes down, the others are able to pick up the load until it comes back online. Clusters can range from two servers to even multiple buildings of servers.\n\nVisit the following resources to learn more:\n\n- [How High Availability Works in the Cloud](https://codster.io/en/blog/high-availability-in-the-cloud/)\n- [Techniques for Achieving High Availability](https://www.sqlservercentral.com/articles/cloud-computing-basics-achieving-high-availability-2)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "data-management.md",
+                    "name": "data management",
+                    "type": "file",
+                    "content": "\nData management is the key element of cloud applications, and influences most of the quality attributes. Data is typically hosted in different locations and across multiple servers for reasons such as performance, scalability or availability, and this can present a range of challenges. For example, data consistency must be maintained, and data will typically need to be synchronized across different locations.\n\nAdditionally data should be protected at rest, in transit, and via authorized access mechanisms to maintain security assurances of confidentiality, integrity, and availability. Refer to the Azure Security Benchmark Data Protection Control for more information.\n\nVisit the following resources to learn more:\n\n- [Data management patterns](https://docs.microsoft.com/en-us/azure/architecture/patterns/category/data-management)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "design-and-implementation.md",
+                    "name": "design and implementation",
+                    "type": "file",
+                    "content": "\nGood design encompasses factors such as consistency and coherence in component design and deployment, maintainability to simplify administration and development, and reusability to allow components and subsystems to be used in other applications and in other scenarios. Decisions made during the design and implementation phase have a huge impact on the quality and the total cost of ownership of cloud hosted applications and services.\n\nVisit the following resources to learn more:\n\n- [Design and implementation patterns](https://docs.microsoft.com/en-us/azure/architecture/patterns/category/design-implementation)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "management-and-monitoring.md",
+                    "name": "management and monitoring",
+                    "type": "file",
+                    "content": "\nDevOps management and monitoring entails overseeing the entire development process from planning, development, integration and testing, deployment, and operations. It involves a complete and real-time view of the status of applications, services, and infrastructure in the production environment. Features such as real-time streaming, historical replay, and visualizations are critical components of application and service monitoring.\n\nVisit the following resources to learn more:\n\n- [Management and Monitoring Get Started Guide](https://www.atlassian.com/devops/devops-tools/devops-monitoring)\n"
+                }
+            ]
+        },
+        {
+            "fileName": "index.md",
+            "name": "index",
+            "type": "file",
+            "content": ""
+        }
+    ]
+}
