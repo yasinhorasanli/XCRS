@@ -9,20 +9,25 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
 import google.generativeai as palm
+import voyageai
+
 
 # internal classes
 import util
 from eda import ExplatoryDataAnalysis
 from recommendation import Recommendation
 
+palm_api_key = open("../../embedding-generation/api_keys/palm_api_key.txt").read().strip()
+voyage_api_key = open("../../embedding-generation/api_keys/voyage_api_key.txt").read().strip()
+voyage = voyageai.Client(api_key=voyage_api_key)
+palm.configure(api_key=palm_api_key)
 
-def init_palm_data():
+def init_data():
     global udemy_courses_df, roadmap_concepts_df, roadmap_concepts_df, roadmaps_df
 
-    save_dir = "../../embedding-generation/data/"
-    emb_model_name = "embedding-gecko-001"
-    udemy_courses_df = pd.read_csv(save_dir + "udemy_courses_final.csv")
-    roadmap_nodes_df = pd.read_csv(save_dir + "roadmap_nodes_final.csv")
+    df_path = "../../embedding-generation/data/"
+    udemy_courses_df = pd.read_csv(df_path + "udemy_courses_final.csv")
+    roadmap_nodes_df = pd.read_csv(df_path + "roadmap_nodes_final.csv")
     roadmap_concepts_df = roadmap_nodes_df[roadmap_nodes_df["type"] == "concept"].copy()
     roadmap_concepts_df.reset_index(inplace=True)
 
@@ -46,8 +51,12 @@ def init_palm_data():
     return (udemy_courses_df, roadmap_nodes_df, roadmap_concepts_df, roadmaps_df)
 
 
-def embed_fn(text):
+def palm_embed_fn(text):
     return palm.generate_embeddings(model="models/embedding-gecko-001", text=text)["embedding"]
+
+
+def voyage_embed_fn(self, text):
+    return voyage.embed([text], model=self.model_name).embeddings[0]
 
 
 def get_emb_lists(courses_df: pd.DataFrame, concepts_df: pd.DataFrame, model: str):
@@ -91,27 +100,31 @@ def create_user_embeddings(took_and_liked: str, took_and_neutral: str, took_and_
 
     print(user_courses_df)
 
-    # Embedding Generation for User Data
-
-    palm_api_key = "AIzaSyDJNptL0HcFZEIXhJu3wUSiR1FHvEgOvw0"
-
-    palm.configure(api_key=palm_api_key)
-    model = "models/embedding-gecko-001"
-
-    user_courses_df["palm_emb"] = user_courses_df["courses"].apply(embed_fn)
-
-    # User Courses X Roadmap Concepts Similarity Calculation
-
     encoder_for_user_courses = dict([(v, k) for v, k in zip(user_courses_df["courses"], range(len(user_courses_df)))])
     decoder_for_user_courses = dict([(v, k) for k, v in encoder_for_user_courses.items()])
 
+    # Embedding Generation for User Data
+
     # user_courses_df['palm_emb'] = user_courses_df.apply(convert_to_float, axis=1)
-    user_emb_list = user_courses_df["palm_emb"].values
-    user_emb_list = np.vstack(user_emb_list)
 
-    print(user_emb_list.shape)
+    user_courses_df["palm_emb"] = user_courses_df["courses"].apply(palm_embed_fn)
+    user_emb_list_palm = user_courses_df["palm_emb"].values
+    user_emb_list_palm = np.vstack(user_emb_list_palm)
+    print(user_emb_list_palm.shape)
 
-    return user_courses_df, user_emb_list, encoder_for_user_courses, decoder_for_user_courses
+
+    user_courses_df["voyage_emb"] = user_courses_df["courses"].apply(voyage_embed_fn)
+    user_emb_list_voyage = user_courses_df["voyage_emb"].values
+    user_emb_list_voyage = np.vstack(user_emb_list_voyage)
+    print(user_emb_list_voyage.shape)
+
+    return (
+        user_courses_df,
+        encoder_for_user_courses,
+        decoder_for_user_courses,
+        user_emb_list_palm,
+        user_emb_list_voyage
+    )
 
 
 def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list, palm_concepts_emb_list):
@@ -156,10 +169,13 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
 
 def main() -> None:
     # LOAD DATA FOR PALM
-    udemy_courses_df, roadmap_nodes_df, roadmap_concepts_df, roadmaps_df = init_palm_data()
+    udemy_courses_df, roadmap_nodes_df, roadmap_concepts_df, roadmaps_df = init_data()
 
-    global decoder_for_courses, encoder_for_concepts, decoder_for_concepts, sim_mat_course_X_concept, sim_mat_concept_X_course, palm_concepts_emb_list, palm_course_emb_list, concept_id_list, course_id_list
+    global decoder_for_courses, encoder_for_concepts, decoder_for_concepts
     # TODO: Why did you use encoder_for_concepts here?
+    global course_id_list, concept_id_list
+    global course_emb_list_palm, concept_emb_list_palm, course_X_concept_palm, concept_X_course_palm
+    global course_emb_list_voyage, concept_emb_list_voyage, course_X_concept_voyage, concept_X_course_voyage
 
     # Encoders/Decoders for Courses and Concepts
     course_id_list = udemy_courses_df["id"]
@@ -171,52 +187,26 @@ def main() -> None:
     decoder_for_concepts = dict([(v, k) for k, v in encoder_for_concepts.items()])
 
     # Udemy Courses and Concepts Embeddings List - PALM
-    palm_course_emb_list, palm_concepts_emb_list = get_emb_lists(udemy_courses_df, roadmap_concepts_df, model="palm")
+    course_emb_list_palm, concept_emb_list_palm = get_emb_lists(udemy_courses_df, roadmap_concepts_df, model="palm")
 
     # Similarity Matrix between Courses and Concepts
-    sim_mat_course_X_concept = cosine_similarity(palm_course_emb_list, palm_concepts_emb_list)
-    sim_mat_concept_X_course = sim_mat_course_X_concept.transpose()
+    course_X_concept_palm = cosine_similarity(course_emb_list_palm, concept_emb_list_palm)
+    concept_X_course_palm = course_X_concept_palm.transpose()
 
     # EXAMPLE
     # course_id = decoder_for_courses[max_sim_for_row_df.iloc[19]['x']]
     # concept_id = decoder_for_concepts[max_sim_for_row_df.iloc[19]['y']]
 
     # TODO: anotherModel
-    voyage_course_emb_list,  voyage_concepts_emb_list = get_emb_lists(udemy_courses_df, roadmap_concepts_df, model='voyage')
-    voyage_sim_mat_course_X_concept = cosine_similarity(voyage_course_emb_list, voyage_concepts_emb_list)
-    voyage_sim_mat_concept_X_course = voyage_sim_mat_course_X_concept.transpose()
-    # user1_took = "Physics , Intr. to Information Systems, Intr.to Comp.Eng.and Ethics, Mathematics I, Linear Algebra, Engineering Mathematics, Digital Circuits, Data Structures, Introduction to Electronics, Basics of Electrical Circuits, Object Oriented Programming, Computer Organization, Logic Circuits Laboratory, Numerical Methods, Formal Languages and Automata, Analysis of Algorithms I, Probability and Statistics, Microcomputer Lab., Database Systems, Microprocessor Systems, Computer Architecture, Computer Operating Systems, Analysis of Algorithms II, Signal&Systems for Comp.Eng."
+    course_emb_list_voyage, concept_emb_list_voyage = get_emb_lists(udemy_courses_df, roadmap_concepts_df, model="voyage")
+    course_X_concept_voyage = cosine_similarity(course_emb_list_voyage, concept_emb_list_voyage)
+    concept_X_course_voyage = course_X_concept_voyage.transpose()
 
+    # user1_took = "Physics , Intr. to Information Systems, Intr.to Comp.Eng.and Ethics, Mathematics I, Linear Algebra, Engineering Mathematics, Digital Circuits, Data Structures, Introduction to Electronics, Basics of Electrical Circuits, Object Oriented Programming, Computer Organization, Logic Circuits Laboratory, Numerical Methods, Formal Languages and Automata, Analysis of Algorithms I, Probability and Statistics, Microcomputer Lab., Database Systems, Microprocessor Systems, Computer Architecture, Computer Operating Systems, Analysis of Algorithms II, Signal&Systems for Comp.Eng."
     # user1_took_and_liked = "Digital Circuits , Data Structures , Introduction to Electronics, Microprocessor Systems , Computer Architecture"
     # user1_took_and_neutral = "Mathematics I, Linear Algebra, Engineering Mathematics, Basics of Electrical Circuits, Object Oriented Programming, Computer Organization, Logic Circuits Laboratory, Analysis of Algorithms I, Probability and Statistics, Microcomputer Lab., Database Systems, Computer Operating Systems, Analysis of Algorithms II, Signal&Systems for Comp.Eng."
     # user1_took_and_disliked = "Physics, Intr. to Information Systems, Intr.to Comp.Eng.and Ethics, Numerical Methods, Formal Languages and Automata"
     # user1_curious = "Embedded Softwares, Web Development"
-
-    # user_courses_df, user_emb_list, encoder_for_user_courses, decoder_for_user_courses = create_user_embeddings(
-    #     user1_took_and_liked, user1_took_and_neutral, user1_took_and_disliked, user1_curious
-    # )
-
-    # user_concept_id_set = before_recommendation(
-    #     user_courses_df, decoder_for_user_courses, user_emb_list, palm_concepts_emb_list
-    # )
-
-    # recommendation = Recommendation(
-    #     udemy_courses_df, roadmap_concepts_df, sim_mat_concept_X_course, encoder_for_concepts
-    # )
-
-    # recom_role_id = recommendation.recommend_role(concept_id_list, user_concept_id_set)
-
-    # recom_course_id_list = recommendation.recommend_courses(concept_id_list, user_concept_id_set)
-
-    # recom_courses_df = udemy_courses_df[udemy_courses_df["id"].isin(recom_course_id_list)]
-
-    # recom_courses_title_list = recom_courses_df["title"].tolist()
-    # recom_courses_url_list = recom_courses_df["url"].tolist()
-
-    # print(recom_courses_title_list)
-    # print(recom_courses_url_list)
-
-    # recommendation.generate_explainations(concept_id_list, user_concept_id_set)
 
 
 # if __name__ == '__main__':
@@ -259,27 +249,63 @@ recommendation_data = [
         "role": "Role A",
         "explanation": "Explanation for Role A",
         "courses": [
-            {"course": "Course 1", "url": "Url 1", "explanation": "Explanation for Course 1"},
-            {"course": "Course 2", "url": "Url 2", "explanation": "Explanation for Course 2"},
-            {"course": "Course 3", "url": "Url 3", "explanation": "Explanation for Course 3"},
+            {
+                "course": "Course 1",
+                "url": "Url 1",
+                "explanation": "Explanation for Course 1",
+            },
+            {
+                "course": "Course 2",
+                "url": "Url 2",
+                "explanation": "Explanation for Course 2",
+            },
+            {
+                "course": "Course 3",
+                "url": "Url 3",
+                "explanation": "Explanation for Course 3",
+            },
         ],
     },
     {
         "role": "Role B",
         "explanation": "Explanation for Role B",
         "courses": [
-            {"course": "Course 4", "url": "Url 4", "explanation": "Explanation for Course 4"},
-            {"course": "Course 5", "url": "Url 5", "explanation": "Explanation for Course 5"},
-            {"course": "Course 6", "url": "Url 6", "explanation": "Explanation for Course 6"},
+            {
+                "course": "Course 4",
+                "url": "Url 4",
+                "explanation": "Explanation for Course 4",
+            },
+            {
+                "course": "Course 5",
+                "url": "Url 5",
+                "explanation": "Explanation for Course 5",
+            },
+            {
+                "course": "Course 6",
+                "url": "Url 6",
+                "explanation": "Explanation for Course 6",
+            },
         ],
     },
     {
         "role": "Role C",
         "explanation": "Explanation for Role C",
         "courses": [
-            {"course": "Course 7", "url": "Url 7", "explanation": "Explanation for Course 7"},
-            {"course": "Course 8", "url": "Url 8", "explanation": "Explanation for Course 8"},
-            {"course": "Course 9", "url": "Url 9", "explanation": "Explanation for Course 9"},
+            {
+                "course": "Course 7",
+                "url": "Url 7",
+                "explanation": "Explanation for Course 7",
+            },
+            {
+                "course": "Course 8",
+                "url": "Url 8",
+                "explanation": "Explanation for Course 8",
+            },
+            {
+                "course": "Course 9",
+                "url": "Url 9",
+                "explanation": "Explanation for Course 9",
+            },
         ],
     },
 ]
@@ -288,40 +314,60 @@ recommendation_data = [
 @app.post("/recommendations/")
 async def get_recommendations(request: RecommendationRequest):
 
-    user_courses_df, user_emb_list, encoder_for_user_courses, decoder_for_user_courses = create_user_embeddings(
-        request.took_and_liked, request.took_and_neutral, request.took_and_disliked, request.curious
+    user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list_palm, user_emb_list_voyage = create_user_embeddings(
+        request.took_and_liked,
+        request.took_and_neutral,
+        request.took_and_disliked,
+        request.curious,
     )
 
-    user_concept_id_set = before_recommendation(
-        user_courses_df, decoder_for_user_courses, user_emb_list, palm_concepts_emb_list
-    )
 
+    # PALM RECOMMENDATION
+    user_concept_id_set_palm = before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list_palm, concept_emb_list_palm)
     recommendation = Recommendation(
-        udemy_courses_df, roadmap_concepts_df, sim_mat_concept_X_course, encoder_for_concepts
+        udemy_courses_df,
+        roadmap_concepts_df,
+        concept_X_course_palm,
+        encoder_for_concepts,
+        "palm_emb",
     )
+    recom_role_id_palm = recommendation.recommend_role(concept_id_list, user_concept_id_set_palm)
+    recom_course_id_list_palm = recommendation.recommend_courses(concept_id_list, user_concept_id_set_palm)
+    #####################
 
-    recom_role_id = recommendation.recommend_role(concept_id_list, user_concept_id_set)
+    # VOYAGE RECOMMENDATION
+    user_concept_id_set_voyage = before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list_voyage, concept_emb_list_voyage)
+    recommendation = Recommendation(
+        udemy_courses_df,
+        roadmap_concepts_df,
+        concept_X_course_voyage,
+        encoder_for_concepts,
+        "voyage_emb",
+    )
+    recom_role_id_voyage = recommendation.recommend_role(concept_id_list, user_concept_id_set_voyage)
+    recom_course_id_list_voyage = recommendation.recommend_courses(concept_id_list, user_concept_id_set_voyage)
+    #####################
 
-    recom_course_id_list = recommendation.recommend_courses(concept_id_list, user_concept_id_set)
-
-    recom_courses_df = udemy_courses_df[udemy_courses_df["id"].isin(recom_course_id_list)]
+    recom_courses_df = udemy_courses_df[udemy_courses_df["id"].isin(recom_course_id_list_palm)]
     recom_courses_title_list = recom_courses_df["title"].tolist()
     udemy_prefix = "www.udemy.com"
     recom_courses_url_list = [udemy_prefix + url for url in recom_courses_df["url"].tolist()]
     recom_courses_title_url_zipped = zip(
-        recom_courses_df["title"].tolist(), [udemy_prefix + url for url in recom_courses_df["url"].tolist()]
+        recom_courses_df["title"].tolist(),
+        [udemy_prefix + url for url in recom_courses_df["url"].tolist()],
     )
 
     print(recom_courses_title_list)
     print(recom_courses_url_list)
 
-    courses = [
-        CourseRecommendation(course=title, url=url, explanation="same for all now")
-        for title, url in recom_courses_title_url_zipped
-    ]
+    courses = [CourseRecommendation(course=title, url=url, explanation="same for all now") for title, url in recom_courses_title_url_zipped]
 
     role_recommendations = [
-        RoleRecommendation(role=roadmaps_df.loc[recom_role_id]["name"], explanation="Explanation...", courses=courses)
+        RoleRecommendation(
+            role=roadmaps_df.loc[recom_role_id_palm]["name"],
+            explanation="Explanation...",
+            courses=courses,
+        )
     ]
 
     print(role_recommendations)

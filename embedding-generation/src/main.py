@@ -4,7 +4,7 @@ import os
 import json
 
 # internal classes
-import util
+import src.util as util
 from embedding_generator import EmbeddingGenerator
 
 df_path = "../data/"
