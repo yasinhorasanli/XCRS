@@ -1,6 +1,13 @@
 .vscode/
 backend/src/test.py
-embedding-generation/palm_api_key.txt
+embedding-generation/api_keys/
+embedding-generation/test.ipynb
+embedding-generation/data/voyage_emb/
+embedding-generation/data/palm_emb/
+embedding-generation/data/udemy_courses_final.csv
+embedding-generation/data/roadmap_nodes_final.csv
+embedding-generation/data/udemy_courses_final.csv
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
