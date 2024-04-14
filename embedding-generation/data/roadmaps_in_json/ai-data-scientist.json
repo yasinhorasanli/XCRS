@@ -1,0 +1,196 @@
+{
+    "fileName": "ai-data-scientist",
+    "name": "ai data scientist",
+    "type": "directory",
+    "children": [
+        {
+            "id": "100",
+            "fileName": "mathematics",
+            "name": "mathematics",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "linear-algebra-calculus-mathematical-analysis.md",
+                    "name": "linear algebra calculus mathematical analysis",
+                    "type": "file",
+                    "content": "\n- [Mathematics for Machine Learning Specialization](https://imp.i384100.net/baqMYv)\n\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "differential-calculus.md",
+                    "name": "differential calculus",
+                    "type": "file",
+                    "content": "\n- [Algebra and Differential Calculus for Data Science](https://imp.i384100.net/LX5M7M)\n\n"
+                }
+            ]
+        },
+        {
+            "id": "101",
+            "fileName": "statistics",
+            "name": "statistics",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "statistics-clt.md",
+                    "name": "statistics clt",
+                    "type": "file",
+                    "content": "\n- [Introduction to Statistics](https://imp.i384100.net/3eRv4v)\n\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "hypothesis-testing.md",
+                    "name": "hypothesis testing",
+                    "type": "file",
+                    "content": "\n- [Introduction to Statistical Analysis: Hypothesis Testing](https://imp.i384100.net/vN0JAA)\n\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "probability-sampling.md",
+                    "name": "probability sampling",
+                    "type": "file",
+                    "content": "\n- [Probability and Statistics: To p or not to p?](https://imp.i384100.net/daDM6Q)\n\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "ab-testing.md",
+                    "name": "ab testing",
+                    "type": "file",
+                    "content": "\n- [Practitioner’s Guide to Statistical Tests](https://vkteam.medium.com/practitioners-guide-to-statistical-tests-ed2d580ef04f#1e3b)\n- [Step by Step Process for Planning an A/B Test](https://towardsdatascience.com/step-by-step-for-planning-an-a-b-test-ef3c93143c0b)"
+                },
+                {
+                    "id": "104",
+                    "fileName": "increasing-test-sensitivity.md",
+                    "name": "increasing test sensitivity",
+                    "type": "file",
+                    "content": "\n- [Minimum Detectable Effect (MDE)](https://splitmetrics.com/resources/minimum-detectable-effect-mde/)\n- [Improving the Sensitivity of Online Controlled Experiments: Case Studies at Netflix](https://kdd.org/kdd2016/papers/files/adp0945-xieA.pdf)\n- [Improving the Sensitivity of Online Controlled Experiments by Utilizing Pre-Experiment Data](https://exp-platform.com/Documents/2013-02-CUPED-ImprovingSensitivityOfControlledExperiments.pdf)\n- [How Booking.com increases the power of online experiments with CUPED](https://booking.ai/how-booking-com-increases-the-power-of-online-experiments-with-cuped-995d186fff1d)\n- [Improving Experimental Power through Control Using Predictions as Covariate — CUPAC](https://doordash.engineering/2020/06/08/improving-experimental-power-through-control-using-predictions-as-covariate-cupac/)\n- [Improving the Sensitivity of Online Controlled Experiments: Case Studies at Netflix](https://www.researchgate.net/publication/305997925_Improving_the_Sensitivity_of_Online_Controlled_Experiments_Case_Studies_at_Netflix)\n\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "ratio-metrics.md",
+                    "name": "ratio metrics",
+                    "type": "file",
+                    "content": "\n- [Applying the Delta Method in Metric Analytics: A Practical Guide with Novel Ideas](https://arxiv.org/pdf/1803.06336.pdf)\n- [Approximations for Mean and Variance of a Ratio](https://www.stat.cmu.edu/~hseltman/files/ratio.pdf)\n\n"
+                }
+            ]
+        },
+        {
+            "id": "102",
+            "fileName": "econometrics",
+            "name": "econometrics",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "prerequisities-of-econometrics.md",
+                    "name": "prerequisities of econometrics",
+                    "type": "file",
+                    "content": "\n- [10 Fundamental Theorems for Econometrics](https://bookdown.org/ts_robinson1994/10EconometricTheorems/)\n\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "regression-time-series-fitting-distributions.md",
+                    "name": "regression time series fitting distributions",
+                    "type": "file",
+                    "content": "\n- [10 Fundamental Theorems for Econometrics](https://bookdown.org/ts_robinson1994/10EconometricTheorems/)\n- [Dougherty Intro to Econometrics 4th edition](https://www.academia.edu/33062577/Dougherty_Intro_to_Econometrics_4th_ed_small)\n- [Econometrics: Methods and Applications](https://imp.i384100.net/k0krYL)\n- [Kaggle - Learn Time Series](https://www.kaggle.com/learn/time-series)\n- [Time series Basics : Exploring traditional TS](https://www.kaggle.com/code/jagangupta/time-series-basics-exploring-traditional-ts#Hierarchical-time-series)\n- [How to Create an ARIMA Model for Time Series Forecasting in Python](https://machinelearningmastery.com/arima-for-time-series-forecasting-with-python)\n- [11 Classical Time Series Forecasting Methods in Python](https://machinelearningmastery.com/time-series-forecasting-methods-in-python-cheat-sheet/)\n- [Blockchain.com Data Scientist TakeHome Test](https://github.com/stalkermustang/bcdc_ds_takehome)\n- [Linear Regression for Business Statistics](https://imp.i384100.net/9g97Ke)\n\n"
+                }
+            ]
+        },
+        {
+            "id": "103",
+            "fileName": "coding",
+            "name": "coding",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "python.md",
+                    "name": "python",
+                    "type": "file",
+                    "content": "\n- [Kaggle — Python](https://www.kaggle.com/learn/python)\n- [Google's Python Class](https://developers.google.com/edu/python)\n\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "data-structures-algorithms.md",
+                    "name": "data structures algorithms",
+                    "type": "file",
+                    "content": "\n- [Learn Algorithms](https://leetcode.com/explore/learn/)\n- [Leetcode - Study Plans](https://leetcode.com/studyplan/)\n- [Algorithms Specialization](https://imp.i384100.net/5gqv4n)"
+                },
+                {
+                    "id": "102",
+                    "fileName": "sql.md",
+                    "name": "sql",
+                    "type": "file",
+                    "content": "\n- [SQL Tutorial](https://www.sqltutorial.org/)\n\n"
+                }
+            ]
+        },
+        {
+            "id": "104",
+            "fileName": "exploratory-data-analysis-(eda)",
+            "name": "exploratory data analysis (eda)",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "data-understanding-data-analysis-visualization.md",
+                    "name": "data understanding data analysis visualization",
+                    "type": "file",
+                    "content": "\n- [Exploratory Data Analysis With Python and Pandas](https://imp.i384100.net/AWAv4R)\n- [Exploratory Data Analysis for Machine Learning](https://imp.i384100.net/GmQMLE)\n- [Exploratory Data Analysis with Seaborn](https://imp.i384100.net/ZQmMgR)\n\n"
+                }
+            ]
+        },
+        {
+            "id": "105",
+            "fileName": "machine-learning",
+            "name": "machine learning",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "classic-advanced-machine-learning.md",
+                    "name": "classic advanced machine learning",
+                    "type": "file",
+                    "content": "\n- [Open Machine Learning Course](https://mlcourse.ai/book/topic01/topic01_intro.html)\n- [Coursera: Machine Learning Specialization](https://imp.i384100.net/oqGkrg)\n- [Pattern Recognition and Machine Learning by Christopher Bishop](https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf)\n- [Repository of notes, code and notebooks in Python for the book Pattern Recognition and Machine Learning by Christopher Bishop](https://github.com/gerdm/prml)\n\n"
+                }
+            ]
+        },
+        {
+            "id": "106",
+            "fileName": "deep-learning",
+            "name": "deep learning",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "fully-connected-nn-cnn-rnn-lstm-transformers-transfer-learning.md",
+                    "name": "fully connected nn cnn rnn lstm transformers transfer learning",
+                    "type": "file",
+                    "content": "\n- [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/)\n- [Attention is All you Need](https://arxiv.org/pdf/1706.03762.pdf)\n- [Deep Learning Book](https://www.deeplearningbook.org/)\n- [Deep Learning Specialization](https://imp.i384100.net/Wq9MV3)\n\n"
+                }
+            ]
+        },
+        {
+            "id": "107",
+            "fileName": "mlops",
+            "name": "mlops",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "deployment-models-ci-cd.md",
+                    "name": "deployment models ci cd",
+                    "type": "file",
+                    "content": "\n- [Machine Learning Engineering for Production (MLOps) Specialization](https://imp.i384100.net/nLA5mx)\n\n"
+                }
+            ]
+        },
+        {
+            "fileName": "index.md",
+            "name": "index",
+            "type": "file",
+            "content": ""
+        }
+    ]
+}

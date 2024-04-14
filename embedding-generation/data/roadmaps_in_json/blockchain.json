@@ -1,0 +1,1008 @@
+{
+    "fileName": "blockchain",
+    "name": "blockchain",
+    "type": "directory",
+    "children": [
+        {
+            "id": "100",
+            "fileName": "blockchain-basics",
+            "name": "blockchain basics",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "what-is-blockchain.md",
+                    "name": "what is blockchain",
+                    "type": "file",
+                    "content": "\nA blockchain is a decentralized, distributed, and oftentimes public, digital ledger consisting of records called blocks that is used to record transactions across many computers so that any involved block cannot be altered retroactively, without the alteration of all subsequent blocks.\n\nVisit the following resources to learn more:\n\n- [Blockchain Explained](https://www.investopedia.com/terms/b/blockchain.asp)\n- [What is decentralization?](https://aws.amazon.com/blockchain/decentralization-in-blockchain/)\n- [How does a blockchain work?](https://youtu.be/SSo_EIwHSd4)\n- [What Is a Blockchain? | Blockchain Basics for Developers](https://youtu.be/4ff9esY_4aU)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "decentralization.md",
+                    "name": "decentralization",
+                    "type": "file",
+                    "content": "\nIn blockchain, decentralization refers to the transfer of control and decision-making from a centralized entity (individual, organization, or group thereof) to a distributed network. Decentralized networks strive to reduce the level of trust that participants must place in one another, and deter their ability to exert authority or control over one another in ways that degrade the functionality of the network.\n\nVisit the following resources to learn more:\n\n- [What is decentralization?](https://aws.amazon.com/blockchain/decentralization-in-blockchain/)\n- [What is Decentralization in Blockchain?](https://www.blockchain-council.org/blockchain/what-is-decentralization-in-blockchain/)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "why-blockchain-matters.md",
+                    "name": "why blockchain matters",
+                    "type": "file",
+                    "content": "\nThe nature of blockchain allows for trustless systems to be built on top of it. Users don’t rely on a centralized group of people, such as a bank, to make decisions and allow transactions to flow through. Because the system is decentralized, users know that transactions will never be denied for non-custodial reasons.\n\nThis decentralization enables use-cases that were previously impossible, such as parametric insurance, decentralized finance, and decentralized organizations (DAOs), among a few. This allows developers to build products that provide immediate value without having to go through a bureaucratic process of applications, approvals, and general red tape.\n\nVisit the following resources to learn more:\n\n- [Why Blockchain?](https://www.blockchain.education/blockchain101/blockchain)\n- [What Is The Blockchain And Why Does It Matter?](https://www.forbes.com/sites/theyec/2020/05/18/what-is-the-blockchain-and-why-does-it-matter/)\n- [Web3/Crypto: Why Bother?](https://continuations.com/post/671863718643105792/web3crypto-why-bother)\n- [Why is Blockchain Important and Why Does it Matter](https://www.simplilearn.com/tutorials/blockchain-tutorial/why-is-blockchain-important)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "blockchain-structure.md",
+                    "name": "blockchain structure",
+                    "type": "file",
+                    "content": "\nThe blockchain gets its name from its underlying structure. The blockchain is organized as a series of “blocks” that are “chained” together.\n\nUnderstanding blockchain security requires understanding how the blockchain is put together. This requires knowing what the blocks and chains of blockchain are and why they are designed the way that they are.\n\nVisit the following resources to learn more:\n\n- [Blockchain Architecture Basics: Components, Structure, Benefits & Creation](https://mlsdev.com/blog/156-how-to-build-your-own-blockchain-architecture)\n- [Blockchain Architecture 101: Components, Structure, and Benefits](https://komodoplatform.com/en/academy/blockchain-architecture-101/)\n- [Blockchain structure](https://resources.infosecinstitute.com/topic/blockchain-structure/)\n- [Blockchain Basics | Coursera](https://www.coursera.org/lecture/blockchain-basics/blockchain-structure-5rj9Z)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "basic-blockchain-operations.md",
+                    "name": "basic blockchain operations",
+                    "type": "file",
+                    "content": "\nOperations in a decentralized networks are the responsibility of the peer participants and their respective computational nodes. These are specific for each type of blockchain.\n\nVisit the following resources to learn more:\n\n- [Blockchain Basics: Structure, Operations, and the Bitcoin Blockchain](https://www.mlq.ai/blockchain-basics/)\n- [How Bitcoin blockchain actually work (Video)](https://www.youtube.com/watch?v=bBC-nXj3Ng4)\n- [Bitcoin blockchain transactions | Bitcoin Developer](https://developer.bitcoin.org/reference/transactions.html)\n- [Ethereum blockchain transactions | ethereum.org](https://ethereum.org/en/developers/docs/transactions/)\n- [Blockchain Basics | Coursera](https://www.coursera.org/lecture/blockchain-basics/basic-operations-OxILB)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "applications-and-uses.md",
+                    "name": "applications and uses",
+                    "type": "file",
+                    "content": "\nBlockchain applications go far beyond cryptocurrency and bitcoin. With its ability to create more transparency and fairness while also saving businesses time and money, the technology is impacting a variety of sectors in ways that range from how contracts are enforced to making government work more efficiently.\n\nVisit the following resources to learn more:\n\n- [Blockchain Use Cases and Applications by Industry](https://consensys.net/blockchain-use-cases/)\n- [Top 10 Real-World Applications Of Blockchain Technology](https://www.blockchain-council.org/blockchain/top-10-real-world-applications-of-blockchain-technology/)\n- [Ethereum blockchain transactions | ethereum.org](https://ethereum.org/en/developers/docs/transactions/)\n- [E34 Blockchain Applications and Real-World Use Cases Disrupting the Status Quo](https://builtin.com/blockchain/blockchain-applications)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nA blockchain is a decentralized, distributed, and oftentimes public, digital ledger consisting of records called blocks that is used to record transactions across many computers so that any involved block cannot be altered retroactively, without the alteration of all subsequent blocks.\n\nVisit the following resources to learn more:\n\n- [Introduction to Blockchain](https://www.blockchain.education/blockchain101/blockchain)\n- [Blockchain Explained](https://www.investopedia.com/terms/b/blockchain.asp)\n- [How does a blockchain work?](https://youtu.be/SSo_EIwHSd4)\n- [What Is a Blockchain? | Blockchain Basics for Developers](https://youtu.be/4ff9esY_4aU)\n- [An Elementary and Slightly Distilled Introduction to Blockchain](https://markpetherbridge.co.uk/blog/an-elementary-and-slightly-distilled-introduction-to-blockchain/)"
+                }
+            ]
+        },
+        {
+            "id": "101",
+            "fileName": "blockchain-general-knowledge",
+            "name": "blockchain general knowledge",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "storage.md",
+                    "name": "storage",
+                    "type": "file",
+                    "content": "\nUnlike a centralized server operated by a single company or organization, decentralized storage systems consist of a peer-to-peer network of user-operators who hold a portion of the overall data, creating a resilient file storage sharing system.\n\nVisit the following resources to learn more:\n\n- [Blockchain Storage](https://www.techtarget.com/searchstorage/definition/blockchain-storage)\n- [Decentralized Storage](https://ethereum.org/en/developers/docs/storage/)\n- [How IPFS works](https://docs.ipfs.tech/concepts/how-ipfs-works/)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "mining-and-incentive-models.md",
+                    "name": "mining and incentive models",
+                    "type": "file",
+                    "content": "\nMining is the process of adding transaction details to the Blockchain, like sender address, hash value, etc. The Blockchain contains all the history of the transactions that have taken place in the past for record purposes and it is stored in such a manner that, it can’t be manipulated.\n\nAn Incentive is basically a reward given to a Blockchain Miner for speeding up the transactions and making correct decisions while processing the complete transaction securely.\n\nVisit the following resources to learn more:\n\n- [Blockchain Incentives to Miners](https://www.geeksforgeeks.org/blockchain-incentives-to-miners/)\n- [Ethereum Consensus Mechanisms](https://ethereum.org/en/developers/docs/consensus-mechanisms/)\n- [Solana Staking Rewards](https://docs.solana.com/implemented-proposals/staking-rewards)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "decentralization-vs-trust.md",
+                    "name": "decentralization vs trust",
+                    "type": "file",
+                    "content": "\nBlockchains, cryptocurrency, smart contracts, and oracles have emerged as new technologies for coordinating social and economic activities in a more secure, transparent, and accessible manner. Most importantly, these technologies are revealing the power of cryptographic guarantees—what we often call cryptographic truth—in restoring users’ trust in everyday interactions.\n\nVisit the following resources to learn more:\n\n- [What Crypto Is Really About](https://blog.chain.link/what-crypto-is-really-about/)\n- [Ethereum Consensus Mechanisms](https://ethereum.org/en/developers/docs/consensus-mechanisms/)\n- [The Superiority of Cryptographic Truth](https://youtu.be/AEtBPbmIRKQ)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "blockchain-forking.md",
+                    "name": "blockchain forking",
+                    "type": "file",
+                    "content": "\nA fork happens whenever a community makes a change to the blockchain’s protocol, or basic set of rules.\n\nVisit the following resources to learn more:\n\n- [Blockchain Fork](<https://en.wikipedia.org/wiki/Fork_(blockchain)>)\n- [What is a fork?](https://www.coinbase.com/learn/crypto-basics/what-is-a-fork)\n- [What Is a Hard Fork?](https://www.investopedia.com/terms/h/hard-fork.asp)\n- [Blockchain Forking](https://www.youtube.com/watch?v=bu1gcyyfz7w)"
+                },
+                {
+                    "id": "104",
+                    "fileName": "cryptocurrencies.md",
+                    "name": "cryptocurrencies",
+                    "type": "file",
+                    "content": "\nA cryptocurrency, crypto-currency, or crypto is a digital currency designed to work as a medium of exchange through a blockchain, which is not reliant on any central authority, such as a government or bank, to uphold or maintain it.\n\nVisit the following resources to learn more:\n\n- [What Is Cryptocurrency?](https://www.investopedia.com/terms/c/cryptocurrency.asp)\n- [Cryptocurrency: What It Is and How It Works](https://www.nerdwallet.com/article/investing/cryptocurrency)\n- [How Cryptocurrency actually works.](https://youtu.be/rYQgy8QDEBI)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "cryptowallets.md",
+                    "name": "cryptowallets",
+                    "type": "file",
+                    "content": "\nA cryptocurrency wallet is an application that functions as a wallet for your cryptocurrency.\n\nVisit the following resources to learn more:\n\n- [What is a Cryptocurrency Wallet?](https://www.investopedia.com/terms/b/bitcoin-wallet.asp)\n- [What is a Crypto Wallet? A Beginner’s Guide](https://crypto.com/university/crypto-wallets)\n"
+                },
+                {
+                    "id": "106",
+                    "fileName": "cryptography.md",
+                    "name": "cryptography",
+                    "type": "file",
+                    "content": "\nCryptography, or cryptology, is the practice and study of techniques for secure communication in the presence of adversarial behavior.\n\nVisit the following resources to learn more:\n\n- [Cryptography](https://en.wikipedia.org/wiki/Cryptography)\n- [What is Cryptography](https://www.synopsys.com/glossary/what-is-cryptography.html)\n- [Asymmetric Encryption - Simply explained](https://youtu.be/AQDCe585Lnc)\n- [What is Cryptography?](https://www.youtube.com/watch?v=6_Cxj5WKpIw)\n- [Learn Cryptography](https://www.youtube.com/watch?v=trHox1bN5es)\n"
+                },
+                {
+                    "id": "107",
+                    "fileName": "consensus-protocols.md",
+                    "name": "consensus protocols",
+                    "type": "file",
+                    "content": "\nConsensus for blockchain is a procedure in which the peers of a Blockchain network reach agreement about the present state of the data in the network. Through this, consensus algorithms establish reliability and trust in the Blockchain network.\n\nVisit the following resources to learn more:\n\n- [Consensus Mechanisms in Blockchain: A Beginner’s Guide](https://crypto.com/university/consensus-mechanisms-explained)\n- [Consensus Mechanisms](https://ethereum.org/en/developers/docs/consensus-mechanisms/)\n- [What Is a Consensus Mechanism?](https://www.coindesk.com/learn/what-is-a-consensus-mechanism/)\n"
+                },
+                {
+                    "id": "108",
+                    "fileName": "blockchain-interoperability.md",
+                    "name": "blockchain interoperability",
+                    "type": "file",
+                    "content": "\nThe concept of “blockchain interoperability” refers to the ability of different blockchain networks to exchange and leverage data between one another and to move unique types of digital assets between the networks’ respective blockchains.\n\nVisit the following resources to learn more:\n\n- [Cross-Chain Interoperability: What it Means for Blockchain](https://www.gemini.com/cryptopedia/why-is-interoperability-important-for-blockchain)\n- [Blockchain Interoperability : Why Is Cross Chain Technology Important?](https://101blockchains.com/blockchain-interoperability/)\n- [Blockchain Interoperability – Understanding Cross-Chain Technology](https://www.blockchain-council.org/blockchain/blockchain-interoperability/)\n"
+                },
+                {
+                    "id": "109",
+                    "fileName": "blockchains",
+                    "name": "blockchains",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "solana.md",
+                            "name": "solana",
+                            "type": "file",
+                            "content": "\nSolana is a public blockchain platform with smart contract functionality. Its native cryptocurrency is SOL.\n\nVisit the following resources to learn more:\n\n- [What is Solana, and how does it work?](https://cointelegraph.com/news/what-is-solana-and-how-does-it-work)\n- [Beginners Guide To Solana](https://solana.com/news/getting-started-with-solana-development)\n- [Solana Introduction](https://docs.solana.com/introduction)\n- [Solana Whitepaper](https://solana.com/solana-whitepaper.pdf)\n- [Solana Architecture](https://docs.solana.com/cluster/overview)\n- [Start Building Solana!](https://beta.solpg.io/?utm_source=solana.com)\n"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "ton.md",
+                            "name": "ton",
+                            "type": "file",
+                            "content": "\nTON is a fully decentralized layer-1 blockchain designed by Telegram to onboard billions of users. It boasts ultra-fast transactions, tiny fees, easy-to-use apps, and is environmentally friendly.\n\nVisit the following resources to learn more:\n\n- [TON Telegram integration highlights synergy of blockchain community](https://cointelegraph.com/news/ton-telegram-integration-highlights-synergy-of-blockchain-community)\n- [Start building on The Open Network](https://ton.org/dev)\n- [TON Introduction](https://ton.org/docs/learn/introduction)\n- [Blockchain analysis](https://ton.org/analysis)\n"
+                        },
+                        {
+                            "id": "102",
+                            "fileName": "evm-based",
+                            "name": "evm based",
+                            "type": "directory",
+                            "children": [
+                                {
+                                    "id": "100",
+                                    "fileName": "ethereum.md",
+                                    "name": "ethereum",
+                                    "type": "file",
+                                    "content": "\nEthereum is a programmable blockchain platform with the capacity to support smart contracts, dapps (decentralized apps), and other DeFi projects. The Ethereum native token is the Ether (ETH), and it’s used to fuel operations on the blockchain.\n\nThe Ethereum platform launched in 2015, and it’s now the second largest form of crypto next to Bitcoin (BTC).\n\nVisit the following resources to learn more:\n\n- [Ethereum whitepaper](https://ethereum.org/en/whitepaper/)\n- [Intro to Ethereum](https://ethereum.org/en/developers/docs/intro-to-ethereum/)\n- [A gentle introduction to Ethereum](https://bitsonblocks.net/2016/10/02/gentle-introduction-ethereum/)\n"
+                                },
+                                {
+                                    "id": "101",
+                                    "fileName": "polygon.md",
+                                    "name": "polygon",
+                                    "type": "file",
+                                    "content": "\nPolygon, formerly known as the Matic Network, is a protocol that allows anyone to create and exchange value, powered by zero-knowledge technology. Polygon provides multiple solutions including \n\n- [Polygon zkEVM](https://polygon.technology/polygon-zkevm), a zk powered EVM equivalent L2\n- [Polygon PoS](https://polygon.technology/polygon-pos), a proof of stake, EVM compatible side chain\n- [Polygon CDK](https://polygon.technology/polygon-cdk), a Chain Development Kit for building customizable zk powered L2s\n- [Polygon ID](https://polygon.technology/polygon-id), identity infrastructure and SDKs to facilitate trusted and secure relationships between apps and users\n\nVisit the following resources to learn more:\n\n- [Introduction to Polygon](https://wiki.polygon.technology/)\n- [Polygon POL whitepaper](https://polygon.technology/papers/pol-whitepaper)\n"
+                                },
+                                {
+                                    "id": "102",
+                                    "fileName": "binance-smart-chain.md",
+                                    "name": "binance smart chain",
+                                    "type": "file",
+                                    "content": "\nBinance Smart Chain (also known as BNB Chain) is a blockchain project initiated by Binance as a central piece of their cryptocurrency exchange, which is the largest exchange in the world in terms of daily trading volume of cryptocurrencies.\n\nVisit the following resources to learn more:\n\n- [Binance whitepaper](https://www.exodus.com/assets/docs/binance-coin-whitepaper.pdf)\n- [BNB Chain overview](https://www.binance.com/en/blog/all/bnb-chain-blockchain-for-exchanging-the-world-304219301536473088)\n"
+                                },
+                                {
+                                    "id": "103",
+                                    "fileName": "gnosis-chain.md",
+                                    "name": "gnosis chain",
+                                    "type": "file",
+                                    "content": "\nGnosis is a blockchain based on Ethereum, which changed the consensus model to PoS to solve major issues on the Ethereum mainnet. While the platform solves problems surrounding transaction fees and speed, it also means that the Gnosis chain is less decentralized, as it is somewhat reliant on the Ethereum chain.\n\nVisit the following resources to learn more:\n\n- [Gnosis whitepaper](https://blockchainlab.com/pdf/gnosis_whitepaper.pdf)\n- [Gnosis overview](https://developers.gnosischain.com/#gnosis-chain)\n"
+                                },
+                                {
+                                    "id": "104",
+                                    "fileName": "huobi-eco-chain.md",
+                                    "name": "huobi eco chain",
+                                    "type": "file",
+                                    "content": "\nHuobi's ECO Chain (also known as HECO) is a public blockchain that provides developers with a low-cost onchain environment for running decentralized apps (dApps) of smart contracts and storing digital assets.\n\nVisit the following resources to learn more:\n\n- [Huobi Eco Chain whitepaper](https://www.hecochain.com/developer.133bd45.pdf)\n- [Introduction to HECO Chain](https://docs.hecochain.com/#/)\n"
+                                },
+                                {
+                                    "id": "105",
+                                    "fileName": "avalanche.md",
+                                    "name": "avalanche",
+                                    "type": "file",
+                                    "content": "\nAvalanche describes itself as an “open, programmable smart contracts platform for decentralized applications.” What does that mean? Like many other decentralized protocols, Avalanche has its own token called AVAX, which is used to pay transaction fees and can be staked to secure the network.\n\nVisit the following resources to learn more:\n\n- [Avalanche whitepaper](https://assets.website-files.com/5d80307810123f5ffbb34d6e/6008d7bbf8b10d1eb01e7e16_Avalanche%20Platform%20Whitepaper.pdf)\n- [Avalanche official website](https://www.avax.network/)\n"
+                                },
+                                {
+                                    "id": "106",
+                                    "fileName": "fantom.md",
+                                    "name": "fantom",
+                                    "type": "file",
+                                    "content": "\nFantom is a decentralized, open-source smart contract platform that supports decentralized applications (dApps) and digital assets. It's one of many blockchain networks built as a faster, more efficient alternative to Ethereum, it uses the proof-of-stake consensus mechanism.\n\nVisit the following resources to learn more:\n\n- [Fantom whitepaper](https://arxiv.org/pdf/1810.10360.pdf)\n- [Fantom overview](https://docs.fantom.foundation/)\n"
+                                },
+                                {
+                                    "id": "107",
+                                    "fileName": "moonbeam-moonriver.md",
+                                    "name": "moonbeam moonriver",
+                                    "type": "file",
+                                    "content": "\nMoonbeam is a Polkadot network parachain that promises cross-chain interoperability between the Ethereum and Polkadot . More specifically, Moonbeam is a smart contract platform that enables developers to move dApps between the two networks without having to rewrite code or redeploy infrastructure.\n\nMoonriver is an incentivized testnet. It enables developers to create, test, and adjust their protocols prior to launching on Moonbeam. Moonbeam is the mainnet of the ecosystem.\n\nVisit the following resources to learn more:\n\n- [About Moonbream](https://docs.moonbeam.network/learn/platform/networks/moonbeam/)\n- [Moonbeam Vision](https://docs.moonbeam.network/learn/platform/vision/)\n"
+                                },
+                                {
+                                    "fileName": "index.md",
+                                    "name": "index",
+                                    "type": "file",
+                                    "content": "\nThe Ethereum Virtual Machine (EVM) is a dedicated software virtual stack that executes smart contract bytecode and is integrated into each Ethereum node. Simply said, EVM is a software framework that allows developers to construct Ethereum-based decentralized applications (DApps). All Ethereum accounts and smart contracts are stored on this virtual computer.\n\nMany blockchains have forked the Ethereum blockchain and added functionality on top, these blockchains are referred to as EVM-based blockchains.\n\nVisit the following resources to learn more:\n\n- [What is Ethereum Virtual Machine?](https://moralis.io/evm-explained-what-is-ethereum-virtual-machine/)\n- [Understanding the Ethereum Virtual Machine (EVM): Concepts and Architecture](https://www.youtube.com/watch?v=kCswGz9naZg)\n"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "103",
+                            "fileName": "l2-blockchains",
+                            "name": "l2 blockchains",
+                            "type": "directory",
+                            "children": [
+                                {
+                                    "id": "100",
+                                    "fileName": "arbitrum.md",
+                                    "name": "arbitrum",
+                                    "type": "file",
+                                    "content": "\nArbitrum aims to reduce transaction fees and congestion by moving as much computation and data storage off of Ethereum's main blockchain (layer 1) as it can. Storing data off of Ethereum's blockchain is known as Layer 2 scaling solutions.\n\nVisit the following resources to learn more:\n\n- [Arbitrum whitepaper](https://www.usenix.org/system/files/conference/usenixsecurity18/sec18-kalodner.pdf)\n- [Inside Arbitrum](https://developer.offchainlabs.com/docs/Inside_Arbitrum)\n"
+                                },
+                                {
+                                    "id": "101",
+                                    "fileName": "moonbeam-moonriver.md",
+                                    "name": "moonbeam moonriver",
+                                    "type": "file",
+                                    "content": "\nMoonbeam is a Polkadot network parachain that promises cross-chain interoperability between the Ethereum and Polkadot . More specifically, Moonbeam is a smart contract platform that enables developers to move dApps between the two networks without having to rewrite code or redeploy infrastructure.\n\nMoonriver is an incentivized testnet. It enables developers to create, test, and adjust their protocols prior to launching on Moonbeam. Moonbeam is the mainnet of the ecosystem.\n\nVisit the following resources to learn more:\n\n- [About Moonbeam](https://docs.moonbeam.network/learn/platform/networks/moonbeam/)\n- [Moonbeam Vision](https://docs.moonbeam.network/learn/platform/vision/)\n"
+                                },
+                                {
+                                    "fileName": "index.md",
+                                    "name": "index",
+                                    "type": "file",
+                                    "content": "\nLayer-2 refers to a network or technology that operates on top of an underlying blockchain protocol to improve its scalability and efficiency.\n\nThis category of scaling solutions entails shifting a portion of Ethereum's transactional burden to an adjacent system architecture, which then handles the brunt of the network’s processing and only subsequently reports back to Ethereum to finalize its results.\n\nVisit the following resources to learn more:\n\n- [Layer-1 and Layer-2 Blockchain Scaling Solutions](https://www.gemini.com/cryptopedia/blockchain-layer-2-network-layer-1-network)\n- [Layer 2 - Binance Academy](https://academy.binance.com/en/glossary/layer-2)\n- [Develop a ZK-powered Layer 2 with the Polgyon CDK open-source framework](https://wiki.polygon.technology/docs/cdk/)"
+                                }
+                            ]
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": "\nBlockchain systems vary considerably in their design, particularly with regard to the consensus mechanisms used to perform the essential task of verifying network data.\n\nVisit the following resources to learn more:\n\n- [Types of Blockchains: PoW, PoS, and Private](https://www.gemini.com/cryptopedia/blockchain-types-pow-pos-private)\n- [Types of Blockchain](https://www.geeksforgeeks.org/types-of-blockchain/)\n"
+                        }
+                    ]
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nVisit the following resources to learn more:\n\n- [The Complete Course On Understanding Blockchain Technology](https://www.udemy.com/course/understanding-blockchain-technology/)\n- [Blockchain Technology Explained](https://youtu.be/qOVAbKKSH10)\n"
+                }
+            ]
+        },
+        {
+            "id": "102",
+            "fileName": "blockchain-oracles",
+            "name": "blockchain oracles",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "hybrid-smart-contracts.md",
+                    "name": "hybrid smart contracts",
+                    "type": "file",
+                    "content": "\nHybrid smart contracts combine code running on the blockchain (on-chain) with data and computation from outside the blockchain (off-chain) provided by Decentralized Oracle Networks.\n\nVisit the following resources to learn more:\n\n- [Hybrid Smart Contracts Explained](https://blog.chain.link/hybrid-smart-contracts-explained/)\n- [A complete guide to understand hybrid smart contracts](https://www.leewayhertz.com/hybrid-smart-contracts/)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "chainlink.md",
+                    "name": "chainlink",
+                    "type": "file",
+                    "content": "\nChainlink is a decentralized network of oracles that enables smart contracts to securely interact with real-world data and services that exist outside of blockchain networks.\n\nVisit the following resources to learn more:\n\n- [What Is Chainlink? A Beginner’s Guide](https://blog.chain.link/what-is-chainlink/)\n- [What Is Chainlink in 5 Minutes](https://www.gemini.com/cryptopedia/what-is-chainlink-and-how-does-it-work)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "oracle-networks.md",
+                    "name": "oracle networks",
+                    "type": "file",
+                    "content": "\nBy leveraging many different data sources, and implementing an oracle system that isn’t controlled by a single entity, decentralized oracle networks provide an increased level of security and fairness to smart contracts.\n\nVisit the following resources to learn more:\n\n- [Decentralized Oracle Networks](https://medium.com/coinmonks/decentralized-oracle-networks-9fead28f5fe5)\n- [A Beginner’s Guide To The Evolution Of Decentralized Oracle Networks](https://chainlinktoday.com/a-beginners-guide-to-the-evolution-of-decentralized-oracle-networks/)\n- [Understanding Oracle Networks](https://coinmetro.com/blog/understanding-oracle-networks/)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nA blockchain oracle is a third-party service that connects smart contracts with the outside world, primarily to feed information in from the world, but also the reverse. Information from the world encapsulates multiple sources so that decentralised knowledge is obtained.\n\nVisit the following resources to learn more:\n\n- [Blockchain Oracle](https://en.wikipedia.org/wiki/Blockchain_oracle)\n- [What Is a Blockchain Oracle?](https://chain.link/education/blockchain-oracles)\n"
+                }
+            ]
+        },
+        {
+            "id": "103",
+            "fileName": "smart-contracts",
+            "name": "smart contracts",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "programming-languages",
+                    "name": "programming languages",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "solidity.md",
+                            "name": "solidity",
+                            "type": "file",
+                            "content": "\nSolidity is an object-oriented programming language created specifically by Ethereum Network team for constructing smart contracts on various blockchain platforms, most notably, Ethereum.\n\n- It's used to create smart contracts that implements business logic and generate a chain of transaction records in the blockchain system.\n- It acts as a tool for creating machine-level code and compiling it on the Ethereum Vitural Machine (EVM).\n\nLike any other programming languages, Solidity also has variables, functions, classes, arithmetic operations, string manipulation, and many more.\n\nVisit the following resources to learn more:\n\n- [Solidity Programming Language](https://soliditylang.org/)\n- [Solidity Tutorial](https://www.tutorialspoint.com/solidity/index.htm)\n- [Solidity Course by FreeCodeCamp](https://www.youtube.com/watch?v=ipwxYa-F1uY)\n- [Solidity Course by Dapp University](https://www.youtube.com/watch?v=EhPeHeoKF88)\n- [Learn Blockchain, Solidity, and Full Stack Web3 Development](https://youtu.be/gyMwXuJrbJQ)\n"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "vyper.md",
+                            "name": "vyper",
+                            "type": "file",
+                            "content": "\nVyper is a contract-oriented, pythonic programming language that targets the Ethereum Virtual Machine (EVM).\n\nVisit the following resources to learn more:\n\n- [Vyper Programming Language](https://vyper.readthedocs.io/en/stable/)\n- [Learn Vyper in Y Minutes](https://learnxinyminutes.com/docs/vyper/)\n"
+                        },
+                        {
+                            "id": "102",
+                            "fileName": "rust.md",
+                            "name": "rust",
+                            "type": "file",
+                            "content": "\nRust is a multi-paradigm, general-purpose programming language. Rust emphasizes performance, type safety, and concurrency. It is popular on smart contract chains Solana and Polkadot.\n\nVisit the following resources to learn more:\n\n- [Rust Programming Language](https://www.rust-lang.org/)\n- [How to write and deploy a smart contract in Rust](https://learn.figment.io/tutorials/write-and-deploy-a-smart-contract-on-near)\n"
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": "\nSmart contracts can be programmed using relatively developer-friendly languages. If you're experienced with Python or any curly-bracket language, you can find a language with familiar syntax.\n\nVisit the following resources to learn more:\n\n- [Smart Contract Languages](https://ethereum.org/en/developers/docs/smart-contracts/languages/)\n"
+                        }
+                    ]
+                },
+                {
+                    "id": "101",
+                    "fileName": "testing",
+                    "name": "testing",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "unit-tests.md",
+                            "name": "unit tests",
+                            "type": "file",
+                            "content": "\nUnit testing involves testing individual components in a smart contract for correctness. A unit test is simple, quick to run, and provides a clear idea of what went wrong if the test fails.\n\nVisit the following resources to learn more:\n\n- [Smart Contracts Unit Testing](https://ethereum.org/en/developers/docs/smart-contracts/testing/#unit-testing)\n- [Tips for Unit Testing Ethereum Smart Contracts in Solidity](https://betterprogramming.pub/a-few-tips-for-unit-testing-ethereum-smart-contract-in-solidity-d804062068fb)\n"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "integration-tests.md",
+                            "name": "integration tests",
+                            "type": "file",
+                            "content": "\nIntegration tests validate interactions between multiple components. For smart contract testing this can mean interactions between different components of a single contract, or across multiple contracts.\n\nVisit the following resources to learn more:\n\n- [Unit tests vs integration tests | Smart contract testing course](https://youtu.be/GxnX9k8i0zM)\n"
+                        },
+                        {
+                            "id": "102",
+                            "fileName": "code-coverage.md",
+                            "name": "code coverage",
+                            "type": "file",
+                            "content": "\nCode coverage is a metric that can help you understand how much of your source is tested. It's a very useful metric that can help you assess the quality of your test suite.\n\nVisit the following resources to learn more:\n\n- [Testing Smart Contracts](https://ethereum.org/en/developers/docs/smart-contracts/testing/)\n- [Smart Contract Code Coverage In Hardhat](https://medium.com/coinmonks/smart-contract-code-coverage-in-hardhat-d4a5ff6c9ba6)\n"
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": "\nTesting smart contracts is one of the most important measures for improving smart contract security. Unlike traditional software, smart contracts cannot typically be updated after launching, making it imperative to test rigorously before deploying contracts onto mainnet.\n\nVisit the following resources to learn more:\n\n- [Testing Smart Contracts](https://ethereum.org/en/developers/docs/smart-contracts/testing/)\n- [How to Test Ethereum Smart Contracts](https://betterprogramming.pub/how-to-test-ethereum-smart-contracts-35abc8fa199d)\n- [Writing automated smart contract tests](https://docs.openzeppelin.com/learn/writing-automated-tests)\n"
+                        }
+                    ]
+                },
+                {
+                    "id": "102",
+                    "fileName": "deployment.md",
+                    "name": "deployment",
+                    "type": "file",
+                    "content": "\nUnlike other software, smart contracts don’t run on a local computer or a remote server: they live on the blockchain. Thus, interacting with them is different from more traditional applications.\n\nVisit the following resources to learn more:\n\n- [Deploying Smart Contracts](https://ethereum.org/en/developers/docs/smart-contracts/deploying/)\n- [Deploying and interacting with smart contracts](https://docs.openzeppelin.com/learn/deploying-and-interacting)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "monitoring.md",
+                    "name": "monitoring",
+                    "type": "file",
+                    "content": "\nMonitoring smart contracts allow their authors to view its activity and interactions based on generated transactions and events, allowing verification of the contract's intended purpose and functionality.\n\nVisit the following resources to learn more:\n\n- [Monitoring Smart Contracts](https://consensys.github.io/smart-contract-best-practices/development-recommendations/solidity-specific/event-monitoring/)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "upgrades.md",
+                    "name": "upgrades",
+                    "type": "file",
+                    "content": "\nSmart contracts are immutable by default. Once they are created there is no way to alter them, effectively acting as an unbreakable contract among participants. However, for some scenarios, it is desirable to be able to modify them.\n\nVisit the following resources to learn more:\n\n- [Upgrading Ethereum contracts](https://ethereum.org/en/developers/docs/smart-contracts/upgrading/)\n- [Upgrading smart contracts](https://docs.openzeppelin.com/learn/upgrading-smart-contracts)\n- [What are Upgradable Smart Contracts? Full Guide](https://moralis.io/what-are-upgradable-smart-contracts-full-guide/)\n- [Upgrading your Smart Contracts | A Tutorial & Introduction](https://youtu.be/bdXJmWajZRY)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "erc-tokens.md",
+                    "name": "erc tokens",
+                    "type": "file",
+                    "content": "\nAn ‘Ethereum Request for Comments’ (ERC) is a document that programmers use to write smart contracts on Ethereum Blockchain. They describe rules in these documents that Ethereum-based tokens must comply with.\n\nWhile there are several Ethereum standards. These ERC Ethereum standards are the most well-known and popular: ERC-20, ERC-721, ERC-1155, and ERC-777.\n\nVisit the following resources to learn more:\n\n- [What are Ethereum request for comments (ERC) Standards](https://dev.to/envoy_/ks-what-are-ethereum-request-for-comments-erc-standards-5f80)\n- [ERC-20 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/)\n- [ERC-721 Token Standard (NFTs)](https://decrypt.co/resources/erc-721-ethereum-nft-token-standard)\n- [ERC-1155 Token Standard (Multi-Token)](https://decrypt.co/resources/what-is-erc-1155-ethereums-flexible-token-standard)\n"
+                },
+                {
+                    "id": "106",
+                    "fileName": "crypto-wallets.md",
+                    "name": "crypto wallets",
+                    "type": "file",
+                    "content": "\nA cryptocurrency wallet is a device, physical medium, program, or service which stores the public and/or private keys for cryptocurrency transactions. In addition to this basic function of storing the keys, a cryptocurrency wallet more often also offers the functionality of encrypting and/or signing information.\n\nVisit the following resources to learn more:\n\n- [What is a crypto wallet?](https://www.coinbase.com/learn/crypto-basics/what-is-a-crypto-wallet)\n- [What is a Crypto Wallet? A Beginner’s Guide](https://crypto.com/university/crypto-wallets)\n"
+                },
+                {
+                    "id": "107",
+                    "fileName": "ides.md",
+                    "name": "ides",
+                    "type": "file",
+                    "content": "\nAn integrated development environment is a software application that provides comprehensive facilities to computer programmers for software development. An IDE normally consists of at least a source code editor, build automation tools and a debugger.\n\nVisit the following resources to learn more:\n\n- [Integrated Development Environments](https://ethereum.org/en/developers/docs/ides/)\n- [Remix - Ethereum IDE & community](https://remix-project.org/)\n"
+                },
+                {
+                    "id": "108",
+                    "fileName": "crypto-faucets.md",
+                    "name": "crypto faucets",
+                    "type": "file",
+                    "content": "\nA crypto faucet lets users earn small crypto rewards by completing simple tasks. The metaphor is based on how even one drop of water from a leaky faucet could eventually fill up a cup. There are various kinds of crypto faucets, including bitcoin (BTC), Ethereum (ETH), and BNB faucets.\n\nFaucets are common in development environments where developers obtain testnet crypto in order develop and test their application prior to mainnet deployment.\n\nVisit the following resources to learn more:\n\n- [What Is A Crypto Faucet?](https://academy.binance.com/en/articles/what-is-a-crypto-faucet)\n- [What are crypto faucets and how do they work?](https://cointelegraph.com/news/what-are-crypto-faucets-and-how-do-they-work)\n"
+                },
+                {
+                    "id": "109",
+                    "fileName": "decentralized-storage.md",
+                    "name": "decentralized storage",
+                    "type": "file",
+                    "content": "\nDecentralized storage is where data is stored on a decentralized network across multiple locations by users or groups who are incentivized to join, store, and keep data accessible. The servers used are hosted by people, rather than a single company. Anyone is free to join, they are kept honest due to smart contracts, and they are incentivized to participate via tokens.\n\nVisit the following resources to learn more:\n\n- [What Is Decentralized Storage?](https://medium.com/@ppio/what-is-decentralized-storage-9c4b761942e2)\n- [Decentralized Storage](https://ethereum.org/en/developers/docs/storage/)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nA smart contract is a computer program or a transaction protocol that is intended to automatically execute, control or document legally relevant events and actions according to the terms of a contract or an agreement.\n\nVisit the following resources to learn more:\n\n- [Smart Contracts Introduction](https://www.blockchain.education/blockchain101/smart-contracts)\n- [What Is a Smart Contract?](https://chain.link/education/smart-contracts)\n- [Smart contracts - Simply Explained](https://youtu.be/ZE2HxTmxfrI)\n"
+                }
+            ]
+        },
+        {
+            "id": "104",
+            "fileName": "smart-contract-frameworks",
+            "name": "smart contract frameworks",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "hardhat.md",
+                    "name": "hardhat",
+                    "type": "file",
+                    "content": "\nHardhat is an Ethereum development environment. It allows users to compile contracts and run them on a development network. Get Solidity stack traces, console.log and more.\n\nVisit the following resources to learn more:\n\n- [Hardhat Overview](https://hardhat.org/hardhat-runner/docs/getting-started#overview)\n- [Build and Deploy Smart Contracts using Hardhat](https://youtu.be/GBc3lBrXEBo)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "brownie.md",
+                    "name": "brownie",
+                    "type": "file",
+                    "content": "\nBrownie is a Python-based development and testing framework for smart contracts targeting the Ethereum Virtual Machine.\n\nVisit the following resources to learn more:\n\n- [Brownie Overview](https://eth-brownie.readthedocs.io/)\n- [Python and Blockchain: Deploy Smart Contracts using Brownie](https://youtu.be/QfFO22lwSw4)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "truffle.md",
+                    "name": "truffle",
+                    "type": "file",
+                    "content": "\nA development environment, testing framework, and asset pipeline for blockchains using the Ethereum Virtual Machine (EVM), aiming to make life as a developer easier.\n\nVisit the following resources to learn more:\n\n- [Truffle Overview](https://trufflesuite.com/docs/truffle/)\n- [Truffle Tutorial for Beginners | Compile, Test & Deploy Smart contracts to any EVM Blockchain](https://youtu.be/62f757RVEvU)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "foundry.md",
+                    "name": "foundry",
+                    "type": "file",
+                    "content": "\nFoundry is a smart contract development toolchain. Foundry manages your dependencies, compiles your project, runs tests, deploys, and lets you interact with the chain from the command-line and via Solidity scripts.\n\nVisit the following resources to learn more:\n\n- [Foundry Overview](https://book.getfoundry.sh/)\n- [Intro to Foundry](https://youtu.be/fNMfMxGxeag)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nBuilding a full-fledged dapp requires different pieces of technology. Software frameworks include many of the needed features or provide easy plugin systems to pick the tools you desire.\n\nVisit the following resources to learn more:\n\n- [dApp Development Frameworks](https://ethereum.org/en/developers/docs/frameworks/)\n- [A Definitive List of Ethereum Developer Tools - Frameworks](https://media.consensys.net/an-definitive-list-of-ethereum-developer-tools-2159ce865974#frameworks)\n- [Top 10 Smart Contract Developer Tools You Need for 2022](https://medium.com/better-programming/top-10-smart-contract-developer-tools-you-need-for-2022-b763f5df689a)\n"
+                }
+            ]
+        },
+        {
+            "id": "105",
+            "fileName": "blockchain-security",
+            "name": "blockchain security",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "practices",
+                    "name": "practices",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "fuzz-testing-and-static-analysis.md",
+                            "name": "fuzz testing and static analysis",
+                            "type": "file",
+                            "content": "\nFuzzing or fuzz testing is an automated software testing technique that involves providing invalid, unexpected, or random data as inputs to a smart contract.\n\nStatic analysis is the analysis of smart contracts performed without executing them.\n\nVisit the following resources to learn more:\n\n- [Getting Started with Smart Contract Fuzzing](https://www.immunebytes.com/blog/getting-started-with-smart-contract-fuzzing/)\n- [Solidity smart contract Static Code Analysis](https://lightrains.com/blogs/solidity-static-analysis-tools/#static-code-analysis)\n- [Smart contract Fuzzing](https://youtu.be/LRyyNzrqgOc)\n"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "common-threat-vectors.md",
+                            "name": "common threat vectors",
+                            "type": "file",
+                            "content": "\nSmart contract audits enable developers to provide a thorough analysis of smart contract sets. The main goal of a smart contract audit is to detect and eliminate vulnerabilities, starting with the most common threat vectors.\n\nVisit the following resources to learn more:\n\n- [Smart Contract Attack Vectors](https://github.com/kadenzipfel/smart-contract-attack-vectors)\n- [Solidity Security: Comprehensive list of known attack vectors and common anti-patterns](https://blog.sigmaprime.io/solidity-security.html)\n- [Blockchain Attack Vectors: Vulnerabilities of the Most Secure Technology](https://www.apriorit.com/dev-blog/578-blockchain-attack-vectors)\n"
+                        },
+                        {
+                            "id": "102",
+                            "fileName": "source-of-randomness-attacks.md",
+                            "name": "source of randomness attacks",
+                            "type": "file",
+                            "content": "\nThe security of cryptographic systems depends on some secret data that is known to authorized persons but unknown and unpredictable to others. To achieve this unpredictability, some randomization is typically employed. Modern cryptographic protocols often require frequent generation of random quantities. Cryptographic attacks that subvert or exploit weaknesses in this process are known as randomness attacks.\n\nVisit the following resources to learn more:\n\n- [Smart Contract Randomness or ReplicatedLogic Attack](https://blog.finxter.com/randomness-or-replicatedlogic-attack-on-smart-contracts/)\n"
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": "\nSmart contract programming requires a different engineering mindset. The cost of failure can be high, and change can be difficult.\n\nVisit the following resources to learn more:\n\n- [Ethereum Smart Contract Security Best Practices](https://consensys.github.io/smart-contract-best-practices/)\n- [Smart Contract Security and Auditing 101](https://youtu.be/0aJfCug1zTM)\n"
+                        }
+                    ]
+                },
+                {
+                    "id": "101",
+                    "fileName": "tools",
+                    "name": "tools",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "slither.md",
+                            "name": "slither",
+                            "type": "file",
+                            "content": "\nSlither is a Solidity static analysis framework written in Python 3. It runs a suite of vulnerability detectors, prints visual information about contract details, and provides an API to easily write custom analyses. Slither enables developers to find vulnerabilities, enhance their code comprehension, and quickly prototype custom analyses.\n\nVisit the following resources to learn more:\n\n- [Slither, the Solidity source analyzer](https://github.com/crytic/slither/blob/master/README.md)\n"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "manticore.md",
+                            "name": "manticore",
+                            "type": "file",
+                            "content": "\nManticore is a symbolic execution tool for analysis of smart contracts and binaries.\n\nVisit the following resources to learn more:\n\n- [Manticore Docs](https://manticore.readthedocs.io/)\n"
+                        },
+                        {
+                            "id": "102",
+                            "fileName": "mythx.md",
+                            "name": "mythx",
+                            "type": "file",
+                            "content": "\nMythX is a comprehensive smart contract security analysis tools developed by Consensys. It allows users to detect security vulnerabilities in Ethereum smart contracts throughout the development life cycle as well as analyze Solidity dapps for security holes and known smart contract vulnerabilities.\n\nVisit the following resources to learn more:\n\n- [MythX Official Site](https://mythx.io/)\n- [MythX Documentation](https://docs.mythx.io/)\n"
+                        },
+                        {
+                            "id": "103",
+                            "fileName": "echidna.md",
+                            "name": "echidna",
+                            "type": "file",
+                            "content": "\nEchidna is a Haskell program designed for fuzzing/property-based testing of Ethereum smarts contracts. It uses sophisticated grammar-based fuzzing campaigns based on a contract ABI to falsify user-defined predicates or Solidity assertions.\n\nVisit the following resources to learn more:\n\n- [Echidna: A Fast Smart Contract Fuzzer](https://github.com/crytic/echidna/blob/master/README.md)\n"
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": "\nBlockchain and smart contract technology is fairly new, therefore, you should expect constant changes in the security landscape, as new bugs and security risks are discovered, and new best practices are developed. Keeping track of this constantly moving landscape proves difficult, so using tools to aid this mission is important. The cost of failing to properly secure smart contracts can be high, and because change can be difficult, we must make use of these tools.\n"
+                        }
+                    ]
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nSmart contracts are extremely flexible, capable of both holding large quantities of tokens (often in excess of $1B) and running immutable logic based on previously deployed smart contract code. While this has created a vibrant and creative ecosystem of trustless, interconnected smart contracts, it is also the perfect ecosystem to attract attackers looking to profit by exploiting vulnerabilities\n\nVisit the following resources to learn more:\n\n- [Smart Contract Security](https://ethereum.org/en/developers/docs/smart-contracts/security/)\n- [Ethereum Smart Contract Security Recommendations](https://consensys.net/blog/developers/ethereum-smart-contract-security-recommendations/)\n"
+                }
+            ]
+        },
+        {
+            "id": "106",
+            "fileName": "management-platforms",
+            "name": "management platforms",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "open-zeppelin.md",
+                    "name": "open zeppelin",
+                    "type": "file",
+                    "content": "\nOpenZeppelin Contracts helps you minimize risk by using battle-tested libraries of smart contracts for Ethereum and other blockchains. It includes the most used implementations of ERC standards.\n\nVisit the following resources to learn more:\n\n- [OpenZeppelin Contracts](https://docs.openzeppelin.com/contracts/)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nManaging smart contracts in a production environment (mainnet) can prove difficult as users must keep track of different versions, blockchains, deployments, etc. Using a tool for this process eliminates a lot of the risk that comes with manual tracking.\n"
+                }
+            ]
+        },
+        {
+            "id": "107",
+            "fileName": "version-control-systems",
+            "name": "version control systems",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "git.md",
+                    "name": "git",
+                    "type": "file",
+                    "content": "\n[Git](https://git-scm.com/) is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.\n\nVisit the following resources to learn more:\n\n- [Git & GitHub Crash Course For Beginners](https://www.youtube.com/watch?v=SWYqp7iY_Tc)\n- [Learn Git with Tutorials, News and Tips - Atlassian](https://www.atlassian.com/git)\n- [Git Cheat Sheet](https://cs.fyi/guide/git-cheatsheet)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nVersion control/source control systems allow developers to track and control changes to code over time. These services often include the ability to make atomic revisions to code, branch/fork off of specific points, and to compare versions of code. They are useful in determining the who, what, when, and why code changes were made.\n\nVisit the following resources to learn more:\n\n- [Git](https://git-scm.com/)\n- [Mercurial](https://www.mercurial-scm.org/)\n- [What is Version Control?](https://www.atlassian.com/git/tutorials/what-is-version-control)\n"
+                }
+            ]
+        },
+        {
+            "id": "108",
+            "fileName": "repo-hosting-services",
+            "name": "repo hosting services",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "github.md",
+                    "name": "github",
+                    "type": "file",
+                    "content": "\nGitHub is a provider of Internet hosting for software development and version control using Git. It offers the distributed version control and source code management functionality of Git, plus its own features.\n\nVisit the following resources to learn more:\n\n- [GitHub Website](https://github.com)\n- [GitHub Documentation](https://docs.github.com/en/get-started/quickstart)\n- [What is GitHub?](https://www.youtube.com/watch?v=w3jLJU7DT5E)\n- [Git vs. GitHub: Whats the difference?](https://www.youtube.com/watch?v=wpISo9TNjfU)\n- [Git and GitHub for Beginners](https://www.youtube.com/watch?v=RGOj5yH7evk)\n- [Git and GitHub - CS50 Beyond 2019](https://www.youtube.com/watch?v=eulnSXkhE7I)\n- [How to Use Git in a Professional Dev Team](https://ooloo.io/project/github-flow)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "gitlab.md",
+                    "name": "gitlab",
+                    "type": "file",
+                    "content": "\nGitLab is a provider of internet hosting for software development and version control using Git. It offers the distributed version control and source code management functionality of Git, plus its own features.\n\nVisit the following resources to learn more:\n\n- [GitLab Website](https://gitlab.com/)\n- [GitLab Documentation](https://docs.gitlab.com/)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "bitbucket.md",
+                    "name": "bitbucket",
+                    "type": "file",
+                    "content": "\nBitbucket is a Git based hosting and source code repository service that is Atlassian's alternative to other products like GitHub, GitLab etc\n\nBitbucket offers hosting options via Bitbucket Cloud (Atlassian's servers), Bitbucket Server (customer's on-premise) or Bitbucket Data Centre (number of servers in customers on-premise or cloud environment)\n\nVisit the following resources to learn more:\n\n- [Bitbucket Website](https://bitbucket.org/product)\n- [A brief overview of Bitbucket](https://bitbucket.org/product/guides/getting-started/overview#a-brief-overview-of-bitbucket)\n- [Getting started with Bitbucket](https://bitbucket.org/product/guides/basics/bitbucket-interface)\n- [Using Git with Bitbucket Cloud](https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud)\n- [Bitbucket tutorial | How to use Bitbucket Cloud](https://www.youtube.com/watch?v=M44nEyd_5To)\n- [Bitbucket Tutorial | Bitbucket for Beginners](https://www.youtube.com/watch?v=i5T-DB8tb4A)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nWhen working on a team, you often need a remote place to put your code so others can access it, create their own branches, and create or review pull requests. These services often include issue tracking, code review, and continuous integration features. A few popular choices are GitHub, GitLab, BitBucket, and AWS CodeCommit.\n\nVisit the following resources to learn more:\n\n- [GitHub](https://github.com/features/)\n- [GitLab](https://about.gitlab.com/)\n- [BitBucket](https://bitbucket.org/product/guides/getting-started/overview)\n- [How to choose the best source code repository](https://bitbucket.org/product/code-repository)\n"
+                }
+            ]
+        },
+        {
+            "id": "109",
+            "fileName": "dapps",
+            "name": "dapps",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "frontend-frameworks",
+                    "name": "frontend frameworks",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "react.md",
+                            "name": "react",
+                            "type": "file",
+                            "content": "\nReact is the most popular front-end JavaScript library for building user interfaces. React can also render on the server using Node and power mobile apps using React Native.\n\nVisit the following resources to learn more:\n\n- [Visit Dedicated React Roadmap](/react)\n- [React Website](https://reactjs.org/)\n- [Official Getting Started](https://reactjs.org/tutorial/tutorial.html)\n- [The Beginners Guide to React](https://egghead.io/courses/the-beginner-s-guide-to-react)\n- [React JS Course for Beginners](https://www.youtube.com/watch?v=nTeuhbP7wdE)\n- [React Course - Beginners Tutorial for React JavaScript Library [2022]](https://www.youtube.com/watch?v=bMknfKXIFA8)\n- [Understanding Reacts UI Rendering Process](https://www.youtube.com/watch?v=i793Qm6kv3U)\n"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "angular.md",
+                            "name": "angular",
+                            "type": "file",
+                            "content": "\nAngular is a component based front-end development framework built on TypeScript which includes a collection of well-integrated libraries that include features like routing, forms management, client-server communication, and more.\n\nVisit the following resources to learn more:\n\n- [Visit Dedicated Angular Roadmap](/angular)\n- [Official - Getting started with Angular](https://angular.io/start)\n"
+                        },
+                        {
+                            "id": "102",
+                            "fileName": "vue.md",
+                            "name": "vue",
+                            "type": "file",
+                            "content": "\nVue.js is an open-source JavaScript framework for building user interfaces and single-page applications. It is mainly focused on front end development.\n\nVisit the following resources to learn more:\n\n- [Visit Dedicated Vue Roadmap](/vue)\n- [Vue.js Website](https://vuejs.org/)\n- [Official Getting Started](https://vuejs.org/v2/guide/)\n- [Vue.js Course for Beginners](https://www.youtube.com/watch?v=FXpIoQ_rT_c)\n- [Vue.js Crash Course](https://www.youtube.com/watch?v=qZXt1Aom3Cs)\n"
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": "\nWeb frameworks are designed to write web applications. Frameworks are collections of libraries that aid in the development of a software product or website. Frameworks for web application development are collections of various tools. Frameworks vary in their capabilities and functions, depending on the tasks set. They define the structure, establish the rules, and provide the development tools required.\n\nVisit the following resources to learn more:\n\n- [Web3 Frontend – Everything You Need to Learn About Building Dapp Frontends](https://moralis.io/web3-frontend-everything-you-need-to-learn-about-building-dapp-frontends/)\n- [What is the difference between a framework and a library?](https://www.youtube.com/watch?v=D_MO9vIRBcA)\n- [ Which JS Framework is best?](https://www.youtube.com/watch?v=cuHDQhDhvPE)\n"
+                        }
+                    ]
+                },
+                {
+                    "id": "101",
+                    "fileName": "testing.md",
+                    "name": "testing",
+                    "type": "file",
+                    "content": "\nA key to building software that meets requirements without defects is testing. Software testing helps developers know they are building the right software. When tests are run as part of the development process (often with continuous integration tools), they build confidence and prevent regressions in the code.\n\nLike traditional software, testing dApps involves testing the entire stack that makes up the dApp (backend, frontend, db, etc.).\n\nVisit the following resources to learn more:\n\n- [What is Software Testing?](https://www.guru99.com/software-testing-introduction-importance.html)\n- [Testing Pyramid](https://www.browserstack.com/guide/testing-pyramid-for-test-automation)\n- [How to test dApps (decentralized applications)](https://rhian-is.medium.com/how-to-test-dapps-decentralized-applications-4662cf61db90)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "deployment.md",
+                    "name": "deployment",
+                    "type": "file",
+                    "content": "\nDeploying a dApp involves deployment of all of its layers, generally through a management framework.\n\nVisit the following resources to learn more:\n\n- [Tutorial for building an Ethereum DApp with Integrated Web3 Monitoring](https://www.moesif.com/blog/blockchain/ethereum/Tutorial-for-building-Ethereum-Dapp-with-Integrated-Error-Monitoring/)\n- [Build and Deploy a Modern Web 3.0 Blockchain App](https://youtu.be/Wn_Kb3MR_cU)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "maintenance.md",
+                    "name": "maintenance",
+                    "type": "file",
+                    "content": "\ndApps can be harder to maintain because the code and data published to the blockchain is harder to modify. It’s hard for developers to make updates to their dapps (or the underlying data stored by a dapp) once they are deployed, even if bugs or security risks are identified in an old version.\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "architecture.md",
+                    "name": "architecture",
+                    "type": "file",
+                    "content": "\nUnlike Web2 applications, in Web3 there’s no centralized database that stores the application state or user identity, and there’s no centralized web server where the backend logic resides.\n\nVisit the following resources to learn more:\n\n- [The Architecture of a Web 3.0 application](https://www.preethikasireddy.com/post/the-architecture-of-a-web-3-0-application)\n- [Decentralized Applications Architecture: Back End, Security and Design Patterns](https://www.freecodecamp.org/news/how-to-design-a-secure-backend-for-your-decentralized-application-9541b5d8bddb/)\n- [Blockchain Development: Dapp Architecture](https://youtu.be/KBSq8-LnUDI?t=286)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "security.md",
+                    "name": "security",
+                    "type": "file",
+                    "content": "\ndApps face unique security challenges as they run on immutable blockchains. dApps are harder to maintain, and developers cannot modify or update their codes once deployed. Therefore, special consideration must be taken before putting it on the blockchain.\n\nVisit the following resources to learn more:\n\n- [DAPP Security Standards](https://github.com/Dexaran/DAPP-security-standards/blob/master/README.md)\n- [dApp Security Considerations](https://livebook.manning.com/book/building-ethereum-dapps/chapter-14/)\n- [dApp Security:All You Need to Know](https://www.immunebytes.com/blog/dapp-security/#Benefits_of_DApps_Security)\n"
+                },
+                {
+                    "id": "106",
+                    "fileName": "applicability",
+                    "name": "applicability",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "defi.md",
+                            "name": "defi",
+                            "type": "file",
+                            "content": "\nDecentralized finance offers financial instruments without relying on intermediaries such as brokerages, exchanges, or banks by using smart contracts on a blockchain.\n\nVisit the following resources to learn more:\n\n- [Decentralized Finance (DeFi) Definition](https://www.investopedia.com/decentralized-finance-defi-5113835)\n- [What is DeFi?](https://www.coinbase.com/learn/crypto-basics/what-is-defi)\n- [What is DeFi? (Decentralized Finance Animated)](https://www.youtube.com/watch?v=17QRFlml4pA)\n"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "daos.md",
+                            "name": "daos",
+                            "type": "file",
+                            "content": "\nA decentralized autonomous organization (DAO) is an emerging form of legal structure. With no central governing body, every member within a DAO typically shares a common goal and attempt to act in the best interest of the entity. Popularized through cryptocurrency enthusiasts and blockchain technology, DAOs are used to make decisions in a bottoms-up management approach.\n\nVisit the following resources to learn more:\n\n- [What Is A DAO And How Do They Work?](https://consensys.net/blog/blockchain-explained/what-is-a-dao-and-how-do-they-work/)\n- [Decentralized Autonomous Organization (DAO)](https://www.investopedia.com/tech/what-dao/)\n"
+                        },
+                        {
+                            "id": "102",
+                            "fileName": "nfts.md",
+                            "name": "nfts",
+                            "type": "file",
+                            "content": "\nA non-fungible token (NFT) is a financial security consisting of digital data stored in a blockchain, a form of distributed ledger. The ownership of an NFT is recorded in the blockchain, and can be transferred by the owner, allowing NFTs to be sold and traded.\n\nVisit the following resources to learn more:\n\n- [Non-Fungible Token (NFT)](https://www.investopedia.com/non-fungible-tokens-nft-5115211)\n- [NFTs, explained](https://www.theverge.com/22310188/nft-explainer-what-is-blockchain-crypto-art-faq)\n- [NFT Explained In 5 Minutes | What Is NFT? - Non Fungible Token](https://youtu.be/NNQLJcJEzv0)\n"
+                        },
+                        {
+                            "id": "103",
+                            "fileName": "payments.md",
+                            "name": "payments",
+                            "type": "file",
+                            "content": "\nBlockchain technology has the ability to eliminate all the tolls exacted by centralized organization when transferring payments.\n\nVisit the following resources to learn more:\n\n- [How does blockchain impact global payments and remittances?](https://consensys.net/blockchain-use-cases/finance/#payments)\n- [Smart Contract Use Cases - Payments](https://blog.chain.link/smart-contract-use-cases/#external-payments)\n"
+                        },
+                        {
+                            "id": "104",
+                            "fileName": "insurance.md",
+                            "name": "insurance",
+                            "type": "file",
+                            "content": "\nBlockchain technology has the ability to automate claims functions by verifying real-world data through the use of an oracle. It also automates payments between parties for claims and thus lower administrative costs for insurance companies.\n\nVisit the following resources to learn more:\n\n- [Smart Contract Use Cases - Insurance](https://blog.chain.link/smart-contract-use-cases/#insurance)\n- [Top 7 Use Cases of Blockchain in the Insurance Industry](https://imaginovation.net/blog/blockchain-insurance-industry-examples/)\n"
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": "\ndApps can be used for just about anything that requires two or more parties to agree on something. When the appropriate conditions are met, the smart contract will execute automatically. An important differentiation is that these transactions are no longer based on trust but they are rather based on cryptographically-backed smart contracts.\n\nVisit the following resources to learn more:\n\n- [What Is a dApp? A Guide to Decentralized Applications](https://www.sofi.com/learn/content/what-is-a-dapp/)\n- [Blockchain Use Cases and Applications by Industry](https://consensys.net/blockchain-use-cases/)\n- [The real-world use cases for blockchain technology](https://roboticsandautomationnews.com/2022/05/20/the-real-world-use-cases-for-blockchain-technology/)\n"
+                        }
+                    ]
+                },
+                {
+                    "id": "107",
+                    "fileName": "node-as-a-service",
+                    "name": "node as a service",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "alchemy.md",
+                            "name": "alchemy",
+                            "type": "file",
+                            "content": "\nAlchemy is a developer platform that empowers companies to build scalable and reliable decentralized applications without the hassle of managing blockchain infrastructure in-house.\n\nVisit the following resources to learn more:\n\n- [Alchemy official site](https://www.alchemy.com/)\n"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "infura.md",
+                            "name": "infura",
+                            "type": "file",
+                            "content": "\nInfura provides the tools and infrastructure that allow developers to easily take their blockchain application from testing to scaled deployment - with simple, reliable access to Ethereum and IPFS.\n\nVisit the following resources to learn more:\n\n- [Infura official site](https://infura.io/)\n"
+                        },
+                        {
+                            "id": "102",
+                            "fileName": "moralis.md",
+                            "name": "moralis",
+                            "type": "file",
+                            "content": "\nMoralis provides a single workflow for building high performance dapps. Fully compatible with your favorite web3 tools and services.\n\nVisit the following resources to learn more:\n\n- [Moralis official site](https://moralis.io/)\n"
+                        },
+                        {
+                            "id": "103",
+                            "fileName": "quicknode.md",
+                            "name": "quicknode",
+                            "type": "file",
+                            "content": "\nQuickNode is a Web3 developer platform used to build and scale blockchain applications.\n\nVisit the following resources to learn more:\n\n- [Quicknode official site](https://www.quicknode.com/)\n"
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": "\nRunning your own blockchain node can be challenging, especially when getting started or while scaling fast. There are a number of services that run optimized node infrastructures for you, so you can focus on developing your application or product instead.\n\nVisit the following resources to learn more:\n\n- [Blockchain Node Providers and How They Work](https://www.infoq.com/articles/blockchain-as-a-service-get-block/)\n- [Node as a Service - Ethereum](https://ethereum.org/en/developers/docs/nodes-and-clients/nodes-as-a-service/)\n"
+                        }
+                    ]
+                },
+                {
+                    "id": "108",
+                    "fileName": "supporting-languages",
+                    "name": "supporting languages",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "javascript.md",
+                            "name": "javascript",
+                            "type": "file",
+                            "content": "\nJavaScript, often abbreviated JS, is a programming language that is one of the core technologies of the World Wide Web, alongside HTML and CSS. It lets us add interactivity to pages e.g. you might have seen sliders, alerts, click interactions, and popups etc on different websites -- all of that is built using JavaScript. Apart from being used in the browser, it is also used in other non-browser environments as well such as Node.js for writing server-side code in JavaScript, Electron for writing desktop applications, React Native for mobile applications and so on.\n\nVisit the following resources to learn more:\n\n- [W3Schools – JavaScript Tutorial](https://www.w3schools.com/js/)\n- [The Modern JavaScript Tutorial](https://javascript.info/)\n- [Eloquent Javascript - Book](https://eloquentjavascript.net/)\n- [You Dont Know JS Yet (book series) ](https://github.com/getify/You-Dont-Know-JS)\n- [JavaScript Crash Course for Beginners](https://youtu.be/hdI2bqOjy3c)\n- [Node.js Crash Course](https://www.youtube.com/watch?v=fBNz5xF-Kx4)\n- [Node.js Tutorial for Beginners](https://www.youtube.com/watch?v=TlB_eWDSMt4)\n- [Codecademy - Learn JavaScript](https://www.codecademy.com/learn/introduction-to-javascript)\n"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "python.md",
+                            "name": "python",
+                            "type": "file",
+                            "content": "\nPython is a well known programming language which is both a strongly typed and a dynamically typed language. Being an interpreted language, code is executed as soon as it is written and the Python syntax allows for writing code in functional, procedural or object-oriented programmatic ways.\n\nVisit the following resources to learn more:\n\n- [Visit Dedicated Python Roadmap](/python)\n- [Python Website](https://www.python.org/)\n- [Python Getting Started](https://www.python.org/about/gettingstarted/)\n- [W3Schools - Python Tutorial ](https://www.w3schools.com/python/)\n- [Python Crash Course](https://ehmatthes.github.io/pcc/)\n- [Automate the Boring Stuff](https://automatetheboringstuff.com/)\n- [Codecademy - Learn Python 2](https://www.codecademy.com/learn/learn-python)\n"
+                        },
+                        {
+                            "id": "102",
+                            "fileName": "go.md",
+                            "name": "go",
+                            "type": "file",
+                            "content": "\nGo is an open source programming language supported by Google. Go can be used to write cloud services, CLI tools, used for API development, and much more.\n\nVisit the following resources to learn more:\n\n- [Visit Dedicated Go Roadmap](/golang)\n- [A Tour of Go – Go Basics](https://go.dev/tour/welcome/1)\n- [Go Reference Documentation](https://go.dev/doc/)\n- [Learn Go | Boot.dev](https://boot.dev/learn/learn-golang)\n- [Go by Example - annotated example programs](https://gobyexample.com/)\n- [Learn Go | Codecademy](https://www.codecademy.com/learn/learn-go)\n- [W3Schools Go Tutorial ](https://www.w3schools.com/go/)\n"
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": "\nWhile the bulk of the logic in blockchain applications is handled by smart contracts, all the surrounding services that support those smart contracts (frontend, monitoring, etc.) are often written in other languages.\n"
+                        }
+                    ]
+                },
+                {
+                    "id": "109",
+                    "fileName": "client-libraries",
+                    "name": "client libraries",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "ethers-js.md",
+                            "name": "ethers js",
+                            "type": "file",
+                            "content": "\nThe ethers.js library aims to be a complete and compact library for interacting with the Ethereum Blockchain and its ecosystem. It was originally designed for use with ethers.io and has since expanded into a more general-purpose library.\n\nVisit the following resources to learn more:\n\n- [Ethers.js Documentation](https://docs.ethers.io/)\n"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "web3-js.md",
+                            "name": "web3 js",
+                            "type": "file",
+                            "content": "\nweb3.js is a collection of libraries that allow you to interact with a local or remote ethereum node using HTTP, IPC or WebSocket.\n\nVisit the following resources to learn more:\n\n- [web3.js Documentation](https://web3js.readthedocs.io/)\n"
+                        },
+                        {
+                            "id": "102",
+                            "fileName": "moralis.md",
+                            "name": "moralis",
+                            "type": "file",
+                            "content": "\nA library that gives you access to the powerful Moralis Server backend from your JavaScript app.\n\nVisit the following resources to learn more:\n\n- [Moralis SDK](https://github.com/MoralisWeb3/Moralis-JS-SDK/blob/main/README.md)\n"
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": "\nYou don't need to write every smart contract in your project from scratch. There are many open source smart contract libraries available that provide reusable building blocks for your project that can save you from having to reinvent the wheel.\n"
+                        }
+                    ]
+                },
+                {
+                    "id": "110",
+                    "fileName": "client-nodes",
+                    "name": "client nodes",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "geth.md",
+                            "name": "geth",
+                            "type": "file",
+                            "content": "\nGo Ethereum (Geth) is one of the three original implementations (along with C++ and Python) of the Ethereum protocol. It is written in Go, fully open source and licensed under the GNU LGPL v3.\n\nVisit the following resources to learn more:\n\n- [Geth Documentation](https://geth.ethereum.org/docs/)\n"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "besu.md",
+                            "name": "besu",
+                            "type": "file",
+                            "content": "\nBesu is an Apache 2.0 licensed, MainNet compatible, Ethereum client written in Java.\n\nVisit the following resources to learn more:\n\n- [Besu Ethereum Client](https://github.com/hyperledger/besu)\n"
+                        },
+                        {
+                            "id": "102",
+                            "fileName": "nethermind.md",
+                            "name": "nethermind",
+                            "type": "file",
+                            "content": "\nNethermind is a high-performance, highly configurable full Ethereum protocol client built on .NET that runs on Linux, Windows, and macOS, and supports Clique, Aura, Ethash, and Proof-of-Stake consensus algorithms.\n\nVisit the following resources to learn more:\n\n- [Nethermind Documentation](https://docs.nethermind.io/nethermind/)\n"
+                        },
+                        {
+                            "id": "103",
+                            "fileName": "substrate.md",
+                            "name": "substrate",
+                            "type": "file",
+                            "content": "\nSubstrate is a Software Development Kit (SDK) specifically designed to provide you with all of the fundamental components s blockchain requires so you can focus on crafting the logic that makes your chain unique and innovative.\n\nVisit the following resources to learn more:\n\n- [Substrate Documentation](https://docs.substrate.io/quick-start/)\n"
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": "\nA blockchain is a distributed network of computers (known as nodes) running software that can verify blocks and transaction data. The software application, known as a client, must be run on your computer to turn it into a blockchain node.\n"
+                        }
+                    ]
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nA decentralised application (dApp) is an application that can operate autonomously, through the use of smart contracts that run on a blockchain. Like traditional applications, dApps provide some function or utility to its users.\n\nVisit the following resources to learn more:\n\n- [Introduction to dApps](https://ethereum.org/en/developers/docs/dapps/)\n- [What Is a Dapp? Decentralized Apps Explained](https://www.coindesk.com/learn/what-is-a-dapp-decentralized-apps-explained/)\n"
+                }
+            ]
+        },
+        {
+            "id": "110",
+            "fileName": "building-for-scale",
+            "name": "building for scale",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "state-and-payment-channels.md",
+                    "name": "state and payment channels",
+                    "type": "file",
+                    "content": "\nState channels refer to the process in which users transact with one another directly outside of the blockchain, or ‘off-chain,’ and greatly minimize their use of ‘on-chain’ operations.\n\nVisit the following resources to learn more:\n\n- [The Basics of State Channels](https://education.district0x.io/general-topics/understanding-ethereum/basics-state-channels/)\n- [State Channels: An Introduction to Off-chain Transactions](https://www.talentica.com/blogs/state-channels-an-introduction-to-off-chain-transactions/)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "optimistic-rollups-and-fraud-proofs.md",
+                    "name": "optimistic rollups and fraud proofs",
+                    "type": "file",
+                    "content": "\n‍Optimistic rollups are a layer 2 (L2) construction that improves throughput and latency on Ethereum’s base layer by moving computation and data storage off-chain. An optimistic rollup processes transactions outside of Ethereum Mainnet, reducing congestion on the base layer and improving scalability.\n\nOptimistic rollups allow anyone to publish blocks without providing proofs of validity. However, to ensure the chain remains safe, optimistic rollups specify a time window during which anyone can dispute a state transition.\n\nVisit the following resources to learn more:\n\n- [How Do Optimistic Rollups Work (The Complete Guide)](https://www.alchemy.com/overviews/optimistic-rollups)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "zero-knowledge-rollups-and-zero-knowledge-proof.md",
+                    "name": "zero knowledge rollups and zero knowledge proof",
+                    "type": "file",
+                    "content": "\nZero-knowledge rollups (ZK-rollups) are layer 2 scaling solutions that increase the throughput of a blockchain by moving computation and state-storage off-chain.\n\nVisit the following resources to learn more:\n\n- [Zero-Knowledge Rollups - Ethereum](https://ethereum.org/en/developers/docs/scaling/zk-rollups)\n- [Why and How zk-SNARK Works](https://medium.com/@imolfar/why-and-how-zk-snark-works-1-introduction-the-medium-of-a-proof-d946e931160)\n- [Introduction to zk-SNARKs](https://vitalik.ca/general/2021/01/26/snarks.html)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "validium.md",
+                    "name": "validium",
+                    "type": "file",
+                    "content": "\nValidium is a scaling solution that enforces integrity of transactions using validity proofs like ZK-rollups, but doesn’t store transaction data on the Ethereum Mainnet. While off-chain data availability introduces trade-offs, it can lead to massive improvements in scalability\n\nVisit the following resources to learn more:\n\n- [Validium - Ethereum](https://ethereum.org/en/developers/docs/scaling/validium/)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "plasma.md",
+                    "name": "plasma",
+                    "type": "file",
+                    "content": "\nPlasma is a framework that allows the creation of child blockchains that use the main Ethereum chain as a layer of trust and arbitration. In Plasma, child chains can be designed to meet the requirements of specific use cases, specifically those that are not currently feasible on Ethereum.\n\nVisit the following resources to learn more:\n\n- [Plasma Chains - Ethereum](https://ethereum.org/en/developers/docs/scaling/plasma/)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "sidechains.md",
+                    "name": "sidechains",
+                    "type": "file",
+                    "content": "\nA sidechain is a separate blockchain network that connects to another blockchain – called a parent blockchain or mainnet – via a two-way peg.\n\nVisit the following resources to learn more:\n\n- [Sidechains - Ethereum](https://ethereum.org/en/developers/docs/scaling/sidechains/)\n- [An Introduction to Sidechains](https://www.coindesk.com/learn/an-introduction-to-sidechains)\n"
+                },
+                {
+                    "id": "106",
+                    "fileName": "ethereum-2.md",
+                    "name": "ethereum 2",
+                    "type": "file",
+                    "content": "\nEthereum 2.0 marks a long-anticipated upgrade to the Ethereum public mainnet. Designed to accelerate Ethereum’s usage and adoption by improving its performance, Ethereum 2.0 implements Proof of Stake.\n\nVisit the following resources to learn more:\n\n- [What Is Ethereum 2.0?](https://consensys.net/blog/blockchain-explained/what-is-ethereum-2/)\n- [What Is Ethereum 2.0? Understanding The Merge](https://www.forbes.com/advisor/investing/cryptocurrency/ethereum-2/)\n"
+                },
+                {
+                    "id": "107",
+                    "fileName": "on-chain-scaling.md",
+                    "name": "on chain scaling",
+                    "type": "file",
+                    "content": "\nOn-chain scaling refers to any direct modification made to a blockchain, like data sharding and execution sharding in the incoming version of Ethereum 2.0. Another type of on-chain scaling would be a sidechain with two-way bridge to Ethereum, like Polygon.\n\nVisit the following resources to learn more:\n\n- [Scaling - Ethereum](https://ethereum.org/en/developers/docs/scaling/)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nDue to the limited number of transactions-per-second (TPS) built-in to blockchains, a number of alternative mechanism and technologies have emerged to aid the scaling of blockchain dApps.\n"
+                }
+            ]
+        }
+    ]
+}

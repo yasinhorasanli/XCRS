@@ -3,16 +3,10 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Dict
 
-import textwrap
 import numpy as np
 import pandas as pd
 
-# import tensorflow as tf
-import os
-from pathlib import Path
-import json
 from sklearn.metrics.pairwise import cosine_similarity
-import matplotlib.pyplot as plt
 
 import google.generativeai as palm
 
@@ -25,10 +19,10 @@ from recommendation import Recommendation
 def init_palm_data():
     global udemy_courses_df, roadmap_concepts_df, roadmap_concepts_df, roadmaps_df
 
-    save_dir = "../data/"
+    save_dir = "../../embedding-generation/data/"
     emb_model_name = "embedding-gecko-001"
-    udemy_courses_df = pd.read_csv(save_dir + "udemy_courses_{}.csv".format(emb_model_name))
-    roadmap_nodes_df = pd.read_csv(save_dir + "roadmap_nodes_{}.csv".format(emb_model_name))
+    udemy_courses_df = pd.read_csv(save_dir + "udemy_courses_final.csv")
+    roadmap_nodes_df = pd.read_csv(save_dir + "roadmap_nodes_final.csv")
     roadmap_concepts_df = roadmap_nodes_df[roadmap_nodes_df["type"] == "concept"].copy()
     roadmap_concepts_df.reset_index(inplace=True)
 
@@ -192,7 +186,7 @@ def main() -> None:
     voyage_sim_mat_course_X_concept = cosine_similarity(voyage_course_emb_list, voyage_concepts_emb_list)
     voyage_sim_mat_concept_X_course = voyage_sim_mat_course_X_concept.transpose()
     # user1_took = "Physics , Intr. to Information Systems, Intr.to Comp.Eng.and Ethics, Mathematics I, Linear Algebra, Engineering Mathematics, Digital Circuits, Data Structures, Introduction to Electronics, Basics of Electrical Circuits, Object Oriented Programming, Computer Organization, Logic Circuits Laboratory, Numerical Methods, Formal Languages and Automata, Analysis of Algorithms I, Probability and Statistics, Microcomputer Lab., Database Systems, Microprocessor Systems, Computer Architecture, Computer Operating Systems, Analysis of Algorithms II, Signal&Systems for Comp.Eng."
-    
+
     # user1_took_and_liked = "Digital Circuits , Data Structures , Introduction to Electronics, Microprocessor Systems , Computer Architecture"
     # user1_took_and_neutral = "Mathematics I, Linear Algebra, Engineering Mathematics, Basics of Electrical Circuits, Object Oriented Programming, Computer Organization, Logic Circuits Laboratory, Analysis of Algorithms I, Probability and Statistics, Microcomputer Lab., Database Systems, Computer Operating Systems, Analysis of Algorithms II, Signal&Systems for Comp.Eng."
     # user1_took_and_disliked = "Physics, Intr. to Information Systems, Intr.to Comp.Eng.and Ethics, Numerical Methods, Formal Languages and Automata"
@@ -236,6 +230,7 @@ app = FastAPI()
 class CourseRecommendation(BaseModel):
     course: str
     url: str
+    explanation: str
 
 
 # Model for role recommendation
@@ -264,27 +259,27 @@ recommendation_data = [
         "role": "Role A",
         "explanation": "Explanation for Role A",
         "courses": [
-            {"course": "Course 1"},
-            {"course": "Course 2"},
-            {"course": "Course 3"},
+            {"course": "Course 1", "url": "Url 1", "explanation": "Explanation for Course 1"},
+            {"course": "Course 2", "url": "Url 2", "explanation": "Explanation for Course 2"},
+            {"course": "Course 3", "url": "Url 3", "explanation": "Explanation for Course 3"},
         ],
     },
     {
         "role": "Role B",
         "explanation": "Explanation for Role B",
         "courses": [
-            {"course": "Course 4"},
-            {"course": "Course 5"},
-            {"course": "Course 6"},
+            {"course": "Course 4", "url": "Url 4", "explanation": "Explanation for Course 4"},
+            {"course": "Course 5", "url": "Url 5", "explanation": "Explanation for Course 5"},
+            {"course": "Course 6", "url": "Url 6", "explanation": "Explanation for Course 6"},
         ],
     },
     {
         "role": "Role C",
         "explanation": "Explanation for Role C",
         "courses": [
-            {"course": "Course 7"},
-            {"course": "Course 8"},
-            {"course": "Course 9"},
+            {"course": "Course 7", "url": "Url 7", "explanation": "Explanation for Course 7"},
+            {"course": "Course 8", "url": "Url 8", "explanation": "Explanation for Course 8"},
+            {"course": "Course 9", "url": "Url 9", "explanation": "Explanation for Course 9"},
         ],
     },
 ]
@@ -309,44 +304,28 @@ async def get_recommendations(request: RecommendationRequest):
 
     recom_course_id_list = recommendation.recommend_courses(concept_id_list, user_concept_id_set)
 
-
-
     recom_courses_df = udemy_courses_df[udemy_courses_df["id"].isin(recom_course_id_list)]
     recom_courses_title_list = recom_courses_df["title"].tolist()
     udemy_prefix = "www.udemy.com"
     recom_courses_url_list = [udemy_prefix + url for url in recom_courses_df["url"].tolist()]
-    recom_courses_title_url_zipped = zip(recom_courses_df["title"].tolist(), [udemy_prefix + url for url in recom_courses_df["url"].tolist()])               
+    recom_courses_title_url_zipped = zip(
+        recom_courses_df["title"].tolist(), [udemy_prefix + url for url in recom_courses_df["url"].tolist()]
+    )
 
     print(recom_courses_title_list)
     print(recom_courses_url_list)
 
+    courses = [
+        CourseRecommendation(course=title, url=url, explanation="same for all now")
+        for title, url in recom_courses_title_url_zipped
+    ]
 
-    #courses = [CourseRecommendation(title) for title, url in recom_courses_title_url_zipped]
-
-    #recommendations = [CourseRecommendation(**course_info) for course_info in zip(titles, urls)]
-
-
-    #courses = [CourseRecommendation(**course) for course in recom_courses_title_list]
-
-
-
-    #course = CourseRecommendation(recom_courses_title_list[0])
-
-    courses = [CourseRecommendation(course=title, url=url) for title, url in recom_courses_title_url_zipped]
-
-
-    role_recommendations = [RoleRecommendation(
-            role=roadmaps_df.loc[recom_role_id]['name'],
-            explanation="Explanation...",
-            courses=courses
-        )]
+    role_recommendations = [
+        RoleRecommendation(role=roadmaps_df.loc[recom_role_id]["name"], explanation="Explanation...", courses=courses)
+    ]
 
     print(role_recommendations)
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
     # role_recommendations = [
     #     RoleRecommendation(
     #         role=rec["role"],

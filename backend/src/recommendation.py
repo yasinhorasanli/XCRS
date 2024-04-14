@@ -1,12 +1,8 @@
 import pandas as pd
 import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
-
 
 # internal classes
-from eda import ExplatoryDataAnalysis
 import util
-
 
 class Recommendation:
     def __init__(

@@ -38,8 +38,13 @@ export default defineEventHandler(async (event) => {
     })
 
     console.log(response)
-    console.log(response)
 
+    console.log(response.recommendations[0].role)
+    console.log(response.recommendations[0].explanation)
+    console.log(response.recommendations[0].courses)
+
+
+    //response.recommendations
 
     return {
         // ... prediction'dan dönen sonuçları bu return de döndüreceksin

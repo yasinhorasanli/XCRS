@@ -1,7 +1,5 @@
 .vscode/
 backend/src/test.py
-<<<<<<< Updated upstream
-=======
 embedding-generation/api_keys/
 embedding-generation/src/test.ipynb
 embedding-generation/data/voyage_emb/
@@ -9,8 +7,6 @@ embedding-generation/data/palm_emb/
 embedding-generation/data/udemy_courses_final.csv
 embedding-generation/data/roadmap_nodes_final.csv
 embedding-generation/data/udemy_courses_final.csv
-
->>>>>>> Stashed changes
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

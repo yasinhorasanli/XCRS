@@ -1,0 +1,1225 @@
+{
+    "fileName": "backend",
+    "name": "backend",
+    "type": "directory",
+    "children": [
+        {
+            "id": "100",
+            "fileName": "internet",
+            "name": "internet",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "how-does-the-internet-work.md",
+                    "name": "how does the internet work",
+                    "type": "file",
+                    "content": "\nThe Internet is a global network of computers connected to each other which communicate through a standardized set of protocols.\n\nVisit the following resources to learn more:\n\n- [How does the Internet Work?](https://cs.fyi/guide/how-does-internet-work)\n- [The Internet Explained](https://www.vox.com/2014/6/16/18076282/the-internet)\n- [How Does the Internet Work?](http://web.stanford.edu/class/msande91si/www-spr04/readings/week1/InternetWhitepaper.htm)\n- [Introduction to Internet](/guides/what-is-internet)\n- [How does the Internet work?](https://www.youtube.com/watch?v=x3c1ih2NJEg)\n- [How the Internet Works in 5 Minutes](https://www.youtube.com/watch?v=7_LPdttKXPc)\n- [How does the internet work? (Full Course)](https://www.youtube.com/watch?v=zN8YNNHcaZc)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "what-is-http.md",
+                    "name": "what is http",
+                    "type": "file",
+                    "content": "\nHTTP is the `TCP/IP` based application layer communication protocol which standardizes how the client and server communicate with each other. It defines how the content is requested and transmitted across the internet.\n\nVisit the following resources to learn more:\n\n- [Everything you need to know about HTTP](https://cs.fyi/guide/http-in-depth)\n- [What is HTTP?](https://www.cloudflare.com/en-gb/learning/ddos/glossary/hypertext-transfer-protocol-http/)\n- [Full HTTP Networking Course](https://www.youtube.com/watch?v=2JYT5f2isg4)\n- [An overview of HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview)\n- [HTTP/3 From A To Z: Core Concepts](https://www.smashingmagazine.com/2021/08/http3-core-concepts-part1/)\n- [HTTP/1 to HTTP/2 to HTTP/3](https://www.youtube.com/watch?v=a-sBfyiXysI)\n- [HTTP Crash Course & Exploration](https://www.youtube.com/watch?v=iYM2zFP3Zn0)\n- [SSL, TLS, HTTPS Explained](https://www.youtube.com/watch?v=j9QmMEWmcfo)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "browsers-and-how-they-work.md",
+                    "name": "browsers and how they work",
+                    "type": "file",
+                    "content": "\nA web browser is a software application that enables a user to access and display web pages or other online content through its graphical user interface.\n\nVisit the following resources to learn more:\n\n- [How Browsers Work](https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/)\n- [Role of Rendering Engine in Browsers](https://www.browserstack.com/guide/browser-rendering-engine)\n- [Populating the Page: How Browsers Work](https://developer.mozilla.org/en-US/docs/Web/Performance/How_browsers_work)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "dns-and-how-it-works.md",
+                    "name": "dns and how it works",
+                    "type": "file",
+                    "content": "\nThe Domain Name System (DNS) is the phonebook of the Internet. Humans access information online through domain names, like nytimes.com or espn.com. Web browsers interact through Internet Protocol (IP) addresses. DNS translates domain names to IP addresses so browsers can load Internet resources.\n\nVisit the following resources to learn more:\n\n- [What is DNS?](https://www.cloudflare.com/en-gb/learning/dns/what-is-dns/)\n- [How DNS works (comic)](https://howdns.works/)\n- [Understanding Domain names](https://developer.mozilla.org/en-US/docs/Glossary/DNS/)\n- [DNS and How does it Work?](https://www.youtube.com/watch?v=Wj0od2ag5sk)\n- [DNS Records](https://www.youtube.com/watch?v=7lxgpKh_fRY)\n- [Complete DNS mini-series](https://www.youtube.com/watch?v=zEmUuNFBgN8&list=PLTk5ZYSbd9MhMmOiPhfRJNW7bhxHo4q-K)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "what-is-domain-name.md",
+                    "name": "what is domain name",
+                    "type": "file",
+                    "content": "\nA domain name is a unique, easy-to-remember address used to access websites, such as ‘google.com’, and ‘facebook.com’. Users can connect to websites using domain names thanks to the DNS system.\n\nVisit the following resources to learn more:\n\n- [What is a Domain Name?](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_domain_name)\n- [What is a Domain Name? | Domain name vs. URL](https://www.cloudflare.com/en-gb/learning/dns/glossary/what-is-a-domain-name/)\n- [A Beginners Guide to How Domain Names Work](https://www.youtube.com/watch?v=Y4cRx19nhJk)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "what-is-hosting.md",
+                    "name": "what is hosting",
+                    "type": "file",
+                    "content": "\nWeb hosting is an online service that allows you to publish your website files onto the internet. So, anyone who has access to the internet has access to your website.\n\nVisit the following resources to learn more:\n\n- [What Is Web Hosting? Explained](https://www.youtube.com/watch?v=htbY9-yggB0)\n- [Different Types of Web Hosting Explained](https://www.youtube.com/watch?v=AXVZYzw8geg)\n- [Where to Host a Fullstack Project on a Budget](https://www.youtube.com/watch?v=Kx_1NYYJS7Q)\n- [What is the difference between webpage, website, web server, and search engine?](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/Pages_sites_servers_and_search_engines)\n- [What is a web server?](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/What_is_a_web_server)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nThe Internet is a global network of computers connected to each other which communicate through a standardized set of protocols.\n\nVisit the following resources to learn more:\n\n- [How does the Internet Work?](https://cs.fyi/guide/how-does-internet-work)\n- [The Internet Explained](https://www.vox.com/2014/6/16/18076282/the-internet)\n- [How Does the Internet Work?](http://web.stanford.edu/class/msande91si/www-spr04/readings/week1/InternetWhitepaper.htm)\n- [Introduction to Internet](/guides/what-is-internet)\n- [How does the Internet work?](https://www.youtube.com/watch?v=x3c1ih2NJEg)\n- [How the Internet Works in 5 Minutes](https://www.youtube.com/watch?v=7_LPdttKXPc)\n- [Computer Network | Google IT Support Certificate](https://www.youtube.com/watch?v=Z_hU2zm4_S8)\n"
+                }
+            ]
+        },
+        {
+            "id": "101",
+            "fileName": "basic-frontend",
+            "name": "basic frontend",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "html.md",
+                    "name": "html",
+                    "type": "file",
+                    "content": "\nHTML stands for HyperText Markup Language. It is used on the frontend and gives the structure to the webpage which you can style using CSS and make interactive using JavaScript.\n\nVisit the following resources to learn more:\n\n- [W3Schools: Learn HTML](https://www.w3schools.com/html/html_intro.asp)\n- [Codecademy - Learn HTML](https://www.codecademy.com/learn/learn-html)\n- [Interactive HTML Course](https://github.com/denysdovhan/learnyouhtml)\n- [HTML Full Course - Build a Website Tutorial](https://www.youtube.com/watch?v=pQN-pnXPaVg)\n- [HTML Tutorial for Beginners: HTML Crash Course](https://www.youtube.com/watch?v=qz0aGYrrlhU)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "css.md",
+                    "name": "css",
+                    "type": "file",
+                    "content": "\nCSS or Cascading Style Sheets is the language used to style the frontend of any website. CSS is a cornerstone technology of the World Wide Web, alongside HTML and JavaScript.\n\nVisit the following resources to learn more:\n\n- [W3Schools — Learn CSS](https://www.w3schools.com/css/)\n- [freeCodeCamp — Responsive Web Design](https://www.freecodecamp.org/learn/2022/responsive-web-design)\n- [Learn to Code HTML & CSS](https://learn.shayhowe.com/html-css/building-your-first-web-page/)\n- [What The Flexbox!](https://flexbox.io/)\n- [Learn CSS | Codecademy](https://www.codecademy.com/learn/learn-css)\n- [Learn Intermediate CSS | Codecademy](https://www.codecademy.com/learn/learn-intermediate-css)\n- [CSS Crash Course For Absolute Beginners](https://www.youtube.com/watch?v=yfoY53QXEnI)\n- [HTML and CSS Tutorial](https://www.youtube.com/watch?v=D-h8L5hgW-w)\n- [CSS Masterclass - Tutorial & Course for Beginners](https://www.youtube.com/watch?v=FqmB-Zj2-PA)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "javascript.md",
+                    "name": "javascript",
+                    "type": "file",
+                    "content": "\nJavaScript allows you to add interactivity to your pages. Common examples that you may have seen on the websites are sliders, click interactions, popups and so on.\n\nVisit the following resources to learn more:\n\n- [Visit Dedicated JavaScript Roadmap](/javascript)\n- [W3Schools – JavaScript Tutorial](https://www.w3schools.com/js/)\n- [The Modern JavaScript Tutorial](https://javascript.info/)\n- [Exploring JS: JavaScript books for programmers](https://exploringjs.com/)\n- [JavaScript Crash Course for Beginners](https://youtu.be/hdI2bqOjy3c?t=2)\n- [Build a Netflix Landing Page Clone with HTML, CSS & JS](https://youtu.be/P7t13SGytRk?t=22)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nAs a backend developer, you may not need to have proficient knowledge of the frontend stack but you should at least have some basic understanding of HTML, CSS and JavaScript.\n\nVisit the following resources to learn more:\n\n- [W3Schools: Learn HTML](https://www.w3schools.com/html/html_intro.asp)\n- [W3Schools: Learn CSS](https://www.w3schools.com/css/)\n- [W3Schools: JavaScript Tutorial](https://www.w3schools.com/js/)\n- [Articles about Frontend Development](https://thenewstack.io/category/frontend-dev/)\n"
+                }
+            ]
+        },
+        {
+            "id": "102",
+            "fileName": "os-general-knowledge",
+            "name": "os general knowledge",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "terminal-usage.md",
+                    "name": "terminal usage",
+                    "type": "file",
+                    "content": "\nTerminals, also known as command lines or consoles, allow us to accomplish and automate tasks on a computer without the use of a graphical user interface.\n\nVisit the following resources to learn more:\n\n- [Command line crash course](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Understanding_client-side_tools/Command_line)\n- [Basic Terminal Usage - Cheat Sheet to make the command line EASY](https://www.youtube.com/watch?v=jDINUSK7rXE)\n- [50+ Linux Commands You Must Know](https://www.digitalocean.com/community/tutorials/linux-commands)"
+                },
+                {
+                    "id": "101",
+                    "fileName": "how-oss-work-in-general.md",
+                    "name": "how oss work in general",
+                    "type": "file",
+                    "content": "\nAn operating system is a main program on computer, that governs all other applications. It allows you to use browsers, play games, print documents, launch your favorite program.\n\nVisit the following resources to learn more:\n\n- [Operating System - Overview](https://www.tutorialspoint.com/operating_system/os_overview.htm)\n- [Operating System Concepts](https://codex.cs.yale.edu/avi/os-book/OS10/index.html)\n- [Operating System Basics ](https://www.youtube.com/watch?v=9GDX-IyZ_C8)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "process-management.md",
+                    "name": "process management",
+                    "type": "file",
+                    "content": "\nProcess management involves various tasks like creation, scheduling, termination of processes, and a deadlock. Process is a program that is under execution, which is an important part of modern-day operating systems. The OS must allocate resources that enable processes to share and exchange information. It also protects the resources of each process from other methods and allows synchronization among processes.\n\nVisit the following resources to learn more:\n\n- [Operating System: Process and Process Management](https://medium.com/@akhandmishra/operating-system-process-and-process-management-108d83e8ce60)\n- [Process Management in OS: PCB in Operating System](https://www.guru99.com/process-management-pcb.html)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "threads-and-concurrency.md",
+                    "name": "threads and concurrency",
+                    "type": "file",
+                    "content": "\nA thread is the smallest unit of processing that can be performed in an OS. In most modern operating systems, a thread exists within a process - that is, a single process may contain multiple threads.\n\nConcurrency refers to the execution of multiple threads at the same time. It occurs in an operating system when multiple process threads are executing concurrently. These threads can interact with one another via shared memory or message passing. Concurrency results in resource sharing, which causes issues like deadlocks and resource scarcity. It aids with techniques such as process coordination, memory allocation, and execution schedule to maximize throughput.\n\nVisit the following resources to learn more:\n\n- [What’s the Diff: Programs, Processes and Threads](https://www.backblaze.com/blog/whats-the-diff-programs-processes-and-threads/)\n- [Concurrency in Operating System](https://www.javatpoint.com/concurrency-in-operating-system)\n- [Intro to Processes & Threads](https://www.youtube.com/watch?v=exbKr6fnoUw)\n- [Introduction to Concurrency](https://www.youtube.com/watch?v=iKtvNJQoCNw)\n- [Concurrency, Threading and Parallelism Explained](https://www.youtube.com/watch?v=olYdb0DdGtM)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "basic-terminal-commands.md",
+                    "name": "basic terminal commands",
+                    "type": "file",
+                    "content": "\nWorking within the terminal is common practice for any Backend Developer and there are many commands and utilities that can help you achieve your tasks more efficiently.\n\nThe best way to learn these commands is to practice them in your own machine/environment. Specifically, these are related to Linux commands/utilities which are the most prevalent in the market.\n\nTo understand these commands, read through the manual pages by using `man` command e.g. `man grep`, `man awk` etc.\n\nAfter enough exposure and practice to these commands, it will become easier to use these in practice\n\nVisit the following resources to learn more:\n\n- [40 Basic Linux Commands](https://www.hostinger.com/tutorials/linux-commands)\n- [A collection of modern/faster/saner alternatives to common unix commands](https://github.com/ibraheemdev/modern-unix)\n- [Command Line Tutorial](https://www.learnenough.com/command-line-tutorial)\n- [Commandline Challenge](https://cmdchallenge.com/)\n- [The 50 Most Popular Linux & Terminal Commands (with timestamps)](https://www.youtube.com/watch?v=ZtqBQ68cfJc)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "memory-management.md",
+                    "name": "memory management",
+                    "type": "file",
+                    "content": "\nThe term Memory can be defined as a collection of data in a specific format. It is used to store instructions and process data. The memory comprises a large array or group of words or bytes, each with its own location. The primary motive of a computer system is to execute programs. These programs, along with the information they access, should be in the main memory during execution. The CPU fetches instructions from memory according to the value of the program counter.\n\nTo achieve a degree of multiprogramming and proper utilization of memory, memory management is important. There are several memory management methods, reflecting various approaches, and the effectiveness of each algorithm depends on the situation.\n\nVisit the following resources to learn more:\n\n- [Demystifying memory management in modern programming languages](https://dev.to/deepu105/demystifying-memory-management-in-modern-programming-languages-ddd)\n- [Memory Management in Operating System](https://www.geeksforgeeks.org/memory-management-in-operating-system/)\n"
+                },
+                {
+                    "id": "106",
+                    "fileName": "interprocess-communication.md",
+                    "name": "interprocess communication",
+                    "type": "file",
+                    "content": "\nInterprocess communication (IPC) refers specifically to the mechanisms an operating system provides to allow the processes to manage shared data\n\nVisit the following resources to learn more:\n\n- [Interprocess Communication](https://www.geeksforgeeks.org/inter-process-communication-ipc/)\n- [Interprocess Communication - Neso Academy](https://www.youtube.com/watch?v=dJuYKfR8vec)\n"
+                },
+                {
+                    "id": "107",
+                    "fileName": "io-management.md",
+                    "name": "io management",
+                    "type": "file",
+                    "content": "\nOne of the important jobs of an Operating System is to manage various I/O devices including mouse, keyboards, touchpad, disk drives, display adapters, USB devices, Bit-mapped screens, LED, Analog-to-digital converter, On/off switch, network connections, audio I/O, printers, etc.\n\nVisit the following resources to learn more:\n\n- [Operating System - I/O Hardware](https://www.tutorialspoint.com/operating_system/os_io_hardware.htm)\n- [IO Management](https://www.omscs-notes.com/operating-systems/io-management/)\n- [Basics of OS (I/O Structure)](https://www.youtube.com/watch?v=F18RiREDkwE)\n"
+                },
+                {
+                    "id": "108",
+                    "fileName": "posix-basics.md",
+                    "name": "posix basics",
+                    "type": "file",
+                    "content": "\nPOSIX (Portable Operating System Interface) is a family of standards for maintaining compatibility between operating systems. It describes utilities, APIs, and services that a compliant OS should provide to software, thus making it easier to port programs from one system to another.\n\nA practical example: in a Unix-like operating system, there are three _standard streams_, `stdin`, `stdout` and `stderr` - they are I/O connections that you will probably come across when using a terminal, as they manage the flow from the **standard input** (stdin), **standard output** (stdout) and **standard error** (stderr).\n\nSo, in this case, when we want to interact with any of these streams (through a process, for example), the POSIX operating system API makes it easier - for example, in the `<unistd.h>` C header where the stdin, stderr, and stdout are defined as `STDIN_FILENO`, `STDERR_FILENO` and `STDOUT_FILENO`.\n\nPOSIX also adds a standard for exit codes, filesystem semantics, and several other command line utility API conventions.\n\nVisit the following resources to learn more:\n\n- [POSIX standard by IEEE](https://pubs.opengroup.org/onlinepubs/9699919799/)\n- [Summary of some POSIX implementations](https://unix.stackexchange.com/a/220877)\n- [A guide to POSIX](https://www.baeldung.com/linux/posix)\n"
+                },
+                {
+                    "id": "109",
+                    "fileName": "basic-networking-concepts.md",
+                    "name": "basic networking concepts",
+                    "type": "file",
+                    "content": "\nComputer networking refers to interconnected computing devices that can exchange data and share resources with each other. These networked devices use a system of rules, called communications protocols, to transmit information over physical or wireless technologies.\n\nVisit the following resources to learn more:\n\n- [What is Computer Networking?](https://aws.amazon.com/what-is/computer-networking/)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nOperating System is a program that manages a computer’s resources, especially the allocation of those resources among other programs. Typical resources include the central processing unit (CPU), computer memory, file storage, input/output (I/O) devices, and network connections.\n\nVisit the following resources to learn more:\n\n- [What is an operating system?](https://edu.gcfglobal.org/en/computerbasics/understanding-operating-systems/1/)\n- [Operating System summary](https://www.guru99.com/os-tutorial.html)\n- [Operating Systems: Crash Course Computer Science #18](https://www.youtube.com/watch?v=26QPDBe-NB8&ab_channel=CrashCourse)\n- [Introduction to Operating System](https://www.youtube.com/watch?v=vBURTt97EkA&list=PL9hkZBQk8d1zEGbY7ShWCZ2n1gtxqkRrS&index=1)\n"
+                }
+            ]
+        },
+        {
+            "id": "103",
+            "fileName": "learn-a-language",
+            "name": "learn a language",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "go.md",
+                    "name": "go",
+                    "type": "file",
+                    "content": "\nGo is an open source programming language supported by Google. Go can be used to write cloud services, CLI tools, used for API development, and much more.\n\nVisit the following resources to learn more:\n\n- [Visit Dedicated Go Roadmap](/golang)\n- [A Tour of Go – Go Basics](https://go.dev/tour/welcome/1)\n- [Go Reference Documentation](https://go.dev/doc/)\n- [Learn Go | Boot.dev](https://boot.dev/learn/learn-golang)\n- [Go by Example - annotated example programs](https://gobyexample.com/)\n- [Learn Go | Codecademy](https://www.codecademy.com/learn/learn-go)\n- [W3Schools Go Tutorial ](https://www.w3schools.com/go/)\n- [Making a RESTful JSON API in Go](https://thenewstack.io/make-a-restful-json-api-go/)\n- [Go, the Programming Language of the Cloud](https://thenewstack.io/go-the-programming-language-of-the-cloud/)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "rust.md",
+                    "name": "rust",
+                    "type": "file",
+                    "content": "\nRust is a modern systems programming language focusing on safety, speed, and concurrency. It accomplishes these goals by being memory safe without using garbage collection.\n\nVisit the following resources to learn more:\n\n- [The Rust Programming Language - online book](https://doc.rust-lang.org/book/)\n- [Rust by Example - collection of runnable examples](https://doc.rust-lang.org/stable/rust-by-example/index.html)\n- [Rust vs. Go: Why They’re Better Together](https://thenewstack.io/rust-vs-go-why-theyre-better-together/)\n- [Rust by the Numbers: The Rust Programming Language in 2021](https://thenewstack.io/rust-by-the-numbers-the-rust-programming-language-in-2021/)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "java.md",
+                    "name": "java",
+                    "type": "file",
+                    "content": "\nJava is general-purpose language, primarily used for Internet-based applications.\nIt was created in 1995 by James Gosling at Sun Microsystems and is one of the most popular options for backend developers.\n\nVisit the following resources to learn more:\n\n- [Visit Dedicated Java Roadmap](/java)\n- [Java Website](https://www.java.com/)\n- [Codeacademy - Free Course](https://www.codecademy.com/learn/learn-java)\n- [W3 Schools Tutorials](https://www.w3schools.com/java/)\n- [Java Crash Course](https://www.youtube.com/watch?v=eIrMbAQSU34)\n- [Complete Java course](https://www.youtube.com/watch?v=xk4_1vdrzzo)"
+                },
+                {
+                    "id": "103",
+                    "fileName": "csharp.md",
+                    "name": "csharp",
+                    "type": "file",
+                    "content": "\nC# (pronounced \"C sharp\") is a general purpose programming language made by Microsoft. It is used to perform different tasks and can be used to create web apps, games, mobile apps, etc.\n\nVisit the following resources to learn more:\n\n- [C# Learning Path](https://docs.microsoft.com/en-us/learn/paths/csharp-first-steps/?WT.mc_id=dotnet-35129-website)\n- [C# on W3 schools](https://www.w3schools.com/cs/index.php)\n- [Introduction to C#](https://docs.microsoft.com/en-us/shows/CSharp-101/?WT.mc_id=Educationalcsharp-c9-scottha)\n- [C# tutorials](https://www.youtube.com/watch?v=gfkTfcpWqAY&list=PLTjRvDozrdlz3_FPXwb6lX_HoGXa09Yef)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "php.md",
+                    "name": "php",
+                    "type": "file",
+                    "content": "\nPHP is a general purpose scripting language often used for making dynamic and interactive Web pages. It was originally created by Danish-Canadian programmer Rasmus Lerdorf in 1994. The PHP reference implementation is now produced by The PHP Group and supported by PHP Foundation. PHP supports procedural and object-oriented styles of programming with some elements of functional programming as well.\n\nVisit the following resources to learn more:\n\n- [PHP Website](https://php.net/)\n- [Learn PHP - W3Schools](https://www.w3schools.com/php/)\n- [PHP - The Right Way](https://phptherightway.com/)\n- [PHP for Beginners](https://www.youtube.com/watch?v=U2lQWR6uIuo&list=PL3VM-unCzF8ipG50KDjnzhugceoSG3RTC)\n- [PHP For Absolute Beginners](https://www.youtube.com/watch?v=2eebptXfEvw)\n- [Full PHP 8 Tutorial - Learn PHP The Right Way In 2022](https://www.youtube.com/watch?v=sVbEyFZKgqk&list=PLr3d3QYzkw2xabQRUpcZ_IBk9W50M9pe-)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "javascript.md",
+                    "name": "javascript",
+                    "type": "file",
+                    "content": "\nApart from being used in the browser, JavaScript is also used in backend e.g. using [Node.js](https://nodejs.org/) or [Deno](https://deno.land/) for writing server-side code in JavaScript.\n\nIf you pick up JavaScript for the Backend, my personal recommendation would be to learn [JavaScript](/javascript) and then go with [Node.js](/nodejs) as it is the most popular and widely used option. Also, I would recommend learning TypeScript later on as you continue with your backend development Journey; it's a superset of JavaScript and is used in many projects.\n\nVisit the following resources to learn more:\n\n- [Visit Dedicated JavaScript Roadmap](/javascript)\n- [W3Schools – JavaScript Tutorial](https://www.w3schools.com/js/)\n- [The Modern JavaScript Tutorial](https://javascript.info/)\n- [Eloquent Javascript - Book](https://eloquentjavascript.net/)\n- [You Dont Know JS Yet (book series) ](https://github.com/getify/You-Dont-Know-JS)\n- [Codecademy - Learn JavaScript](https://www.codecademy.com/learn/introduction-to-javascript)\n- [JavaScript Crash Course for Beginners](https://youtu.be/hdI2bqOjy3c)\n- [Node.js Crash Course](https://www.youtube.com/watch?v=fBNz5xF-Kx4)\n- [Node.js Tutorial for Beginners](https://www.youtube.com/watch?v=TlB_eWDSMt4)\n"
+                },
+                {
+                    "id": "106",
+                    "fileName": "python.md",
+                    "name": "python",
+                    "type": "file",
+                    "content": "\nPython is a well known programming language which is both a strongly typed and a dynamically typed language. Being an interpreted language, code is executed as soon as it is written and the Python syntax allows for writing code in functional, procedural or object-oriented programmatic ways.\n\nVisit the following resources to learn more:\n\n- [Visit Dedicated Python Roadmap](/python)\n- [Python Website](https://www.python.org/)\n- [Python Getting Started](https://www.python.org/about/gettingstarted/)\n- [Automate the Boring Stuff](https://automatetheboringstuff.com/)\n- [FreeCodeCamp.org - How to Learn Python ? ](https://www.freecodecamp.org/news/how-to-learn-python/)\n- [Python principles - Python basics](https://pythonprinciples.com/)\n- [W3Schools - Python Tutorial ](https://www.w3schools.com/python/)\n- [Python Crash Course](https://ehmatthes.github.io/pcc/)\n- [Codecademy - Learn Python 2](https://www.codecademy.com/learn/learn-python)\n- [An Introduction to Python for Non-Programmers](https://thenewstack.io/an-introduction-to-python-for-non-programmers/)\n- [Getting Started with Python and InfluxDB](https://thenewstack.io/getting-started-with-python-and-influxdb/)\n- [Python for Beginners - Learn Python in 1 Hour](https://www.youtube.com/watch?v=kqtD5dpn9C8&ab_channel=ProgrammingwithMosh)\n"
+                },
+                {
+                    "id": "107",
+                    "fileName": "ruby.md",
+                    "name": "ruby",
+                    "type": "file",
+                    "content": "\nRuby is a high-level, interpreted programming language that blends Perl, Smalltalk, Eiffel, Ada, and Lisp. Ruby focuses on simplicity and productivity along with a syntax that reads and writes naturally. Ruby supports procedural, object-oriented and functional programming and is dynamically typed.\n\nVisit the following resources to learn more:\n\n- [Ruby Website](https://www.ruby-lang.org/en/)\n- [Learn Ruby in 20 minutes](https://www.ruby-lang.org/en/documentation/quickstart/)\n- [Learn Ruby | Codecademy](https://www.codecademy.com/learn/learn-ruby)\n- [Ruby, An Introduction to a Programmer’s Best Friend](https://thenewstack.io/ruby-a-programmers-best-friend/)\n"
+                },
+                {
+                    "id": "108",
+                    "fileName": "cpp.md",
+                    "name": "cpp",
+                    "type": "file",
+                    "content": "\nC++ is a powerful general-purpose programming language. It can be used to develop operating systems, browsers, games, and so on. C++ supports different ways of programming like procedural, object-oriented, functional, and so on. This makes C++ powerful as well as flexible.\n\nVisit the following resources to learn more:\n\n- [Learn Cpp](https://learncpp.com/)\n- [C++ Reference](https://en.cppreference.com/)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nEven if you’re a beginner the least you would have known is that Web Development is majorly classified into two facets: Frontend Development and Backend Development. And obviously, they both have their respective set of tools and technologies. For instance, when we talk about Frontend Development, there always comes 3 names first and foremost – HTML, CSS, and JavaScript.\n\nIn the same way, when it comes to Backend Web Development – we primarily require a backend (or you can say server-side) programming language to make the website function along with various other tools & technologies such as databases, frameworks, web servers, etc.\n\nPick a language from the given list and make sure to learn its quirks, core details about its runtime e.g. concurrency, memory model etc.\n"
+                }
+            ]
+        },
+        {
+            "id": "104",
+            "fileName": "version-control-systems",
+            "name": "version control systems",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "basic-usage-of-git.md",
+                    "name": "basic usage of git",
+                    "type": "file",
+                    "content": "\n[Git](https://git-scm.com/) is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.\n\nVisit the following resources to learn more:\n\n- [Git & GitHub Crash Course For Beginners](https://www.youtube.com/watch?v=SWYqp7iY_Tc)\n- [Learn Git with Tutorials, News and Tips - Atlassian](https://www.atlassian.com/git)\n- [Git Cheat Sheet](https://cs.fyi/guide/git-cheatsheet)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "git.md",
+                    "name": "git",
+                    "type": "file",
+                    "content": "\n[Git](https://git-scm.com/) is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.\n\nVisit the following resources to learn more:\n\n- [Git & GitHub Crash Course For Beginners](https://www.youtube.com/watch?v=SWYqp7iY_Tc)\n- [Learn Git with Tutorials, News and Tips - Atlassian](https://www.atlassian.com/git)\n- [Git Cheat Sheet](https://cs.fyi/guide/git-cheatsheet)\n- [Learn Git Branching](https://learngitbranching.js.org/)\n- [Git Tutorial](https://www.w3schools.com/git/)"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nVersion control/source control systems allow developers to track and control changes to code over time. These services often include the ability to make atomic revisions to code, branch/fork off of specific points, and to compare versions of code. They are useful in determining the who, what, when, and why code changes were made.\n\nVisit the following resources to learn more:\n\n- [Git](https://git-scm.com/)\n- [What is Version Control?](https://www.atlassian.com/git/tutorials/what-is-version-control)\n"
+                }
+            ]
+        },
+        {
+            "id": "105",
+            "fileName": "repo-hosting-services",
+            "name": "repo hosting services",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "github.md",
+                    "name": "github",
+                    "type": "file",
+                    "content": "\nGitHub is a provider of Internet hosting for software development and version control using Git. It offers the distributed version control and source code management functionality of Git, plus its own features.\n\nVisit the following resources to learn more:\n\n- [GitHub Website](https://github.com)\n- [GitHub Documentation](https://docs.github.com/en/get-started/quickstart)\n- [How to Use Git in a Professional Dev Team](https://ooloo.io/project/github-flow)\n- [What is GitHub?](https://www.youtube.com/watch?v=w3jLJU7DT5E)\n- [Git vs. GitHub: Whats the difference?](https://www.youtube.com/watch?v=wpISo9TNjfU)\n- [Git and GitHub for Beginners](https://www.youtube.com/watch?v=RGOj5yH7evk)\n- [Git and GitHub - CS50 Beyond 2019](https://www.youtube.com/watch?v=eulnSXkhE7I)\n- [Learn Git Branching](https://learngitbranching.js.org/?locale=en_us)"
+                },
+                {
+                    "id": "101",
+                    "fileName": "gitlab.md",
+                    "name": "gitlab",
+                    "type": "file",
+                    "content": "\nGitLab is a provider of internet hosting for software development and version control using Git. It offers the distributed version control and source code management functionality of Git, plus its own features.\n\nVisit the following resources to learn more:\n\n- [GitLab Website](https://gitlab.com/)\n- [GitLab Documentation](https://docs.gitlab.com/)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "bitbucket.md",
+                    "name": "bitbucket",
+                    "type": "file",
+                    "content": "\nBitbucket is a Git based hosting and source code repository service that is Atlassian's alternative to other products like GitHub, GitLab etc\n\nBitbucket offers hosting options via Bitbucket Cloud (Atlassian's servers), Bitbucket Server (customer's on-premise) or Bitbucket Data Centre (number of servers in customers on-premise or cloud environment)\n\nVisit the following resources to learn more:\n\n- [Bitbucket Website](https://bitbucket.org/product)\n- [Getting started with Bitbucket](https://bitbucket.org/product/guides/basics/bitbucket-interface)\n- [Using Git with Bitbucket Cloud](https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud)\n- [A brief overview of Bitbucket](https://bitbucket.org/product/guides/getting-started/overview#a-brief-overview-of-bitbucket)\n- [Bitbucket tutorial | How to use Bitbucket Cloud](https://www.youtube.com/watch?v=M44nEyd_5To)\n- [Bitbucket Tutorial | Bitbucket for Beginners](https://www.youtube.com/watch?v=i5T-DB8tb4A)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nWhen working on a team, you often need a remote place to put your code so others can access it, create their own branches, and create or review pull requests. These services often include issue tracking, code review, and continuous integration features. A few popular choices are GitHub, GitLab, BitBucket, and AWS CodeCommit.\n\nVisit the following resources to learn more:\n\n- [GitHub](https://github.com/features/)\n- [GitLab](https://about.gitlab.com/)\n- [BitBucket](https://bitbucket.org/product/guides/getting-started/overview)\n- [How to choose the best source code repository](https://bitbucket.org/product/code-repository)\n"
+                }
+            ]
+        },
+        {
+            "id": "106",
+            "fileName": "relational-databases",
+            "name": "relational databases",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "postgresql.md",
+                    "name": "postgresql",
+                    "type": "file",
+                    "content": "\nPostgreSQL, also known as Postgres, is a free and open-source relational database management system emphasizing extensibility and SQL compliance.\n\nVisit the following resources to learn more:\n\n- [Visit Dedicated PostgreSQL DBA Roadmap](/postgresql-dba)\n- [Official Website](https://www.postgresql.org/)\n- [What is PostgreSQL](https://www.geeksforgeeks.org/what-is-postgresql-introduction/)\n- [Learn PostgreSQL - Full Tutorial for Beginners](https://www.postgresqltutorial.com/)\n- [Learn PostgreSQL Tutorial - Full Course for Beginners](https://www.youtube.com/watch?v=qw--VYLpxG4)\n- [Postgres tutorial for Beginners](https://www.youtube.com/watch?v=eMIxuk0nOkU)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "mysql.md",
+                    "name": "mysql",
+                    "type": "file",
+                    "content": "\nMySQL is an incredibly popular open source relational database management system (RDBMS). MySQL can be used as a stand-alone client or in conjunction with other services to provide database connectivity. The **M** in LAMP stack stands for MySQL; that alone should provide an idea of its prevalence.\n\nVisit the following resources to learn more:\n\n- [MySQL website](https://www.mysql.com/)\n- [W3Schools - MySQL tutorial ](https://www.w3schools.com/mySQl/default.asp)\n- [MySQL tutorial for beginners](https://www.youtube.com/watch?v=7S_tz1z_5bA)\n- [MySQL for Developers](https://planetscale.com/courses/mysql-for-developers/introduction/course-introduction)\n- [MySQL Tutorial](https://www.mysqltutorial.org/)"
+                },
+                {
+                    "id": "102",
+                    "fileName": "mariadb.md",
+                    "name": "mariadb",
+                    "type": "file",
+                    "content": "\nMariaDB server is a community developed fork of MySQL server. Started by core members of the original MySQL team, MariaDB actively works with outside developers to deliver the most featureful, stable, and sanely licensed open SQL server in the industry. MariaDB was created with the intention of being a more versatile, drop-in replacement version of MySQL\n\nVisit the following resources to learn more:\n\n- [MariaDB website](https://mariadb.org/)\n- [MariaDB vs MySQL](https://www.guru99.com/mariadb-vs-mysql.html)\n- [W3Schools - MariaDB tutorial ](https://www.w3schools.blog/mariadb-tutorial)\n- [MariaDB Tutorial For Beginners in One Hour](https://www.youtube.com/watch?v=_AMj02sANpI)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "mssql.md",
+                    "name": "mssql",
+                    "type": "file",
+                    "content": "\nMS SQL (or Microsoft SQL Server) is the Microsoft developed relational database management system (RDBMS). MS SQL uses the T-SQL (Transact-SQL) query language to interact with the relational databases. There are many different versions and editions available of MS SQL\n\nVisit the following resources to learn more:\n\n- [MS SQL website](https://www.microsoft.com/en-ca/sql-server/)\n- [Tutorials for SQL Server](https://docs.microsoft.com/en-us/sql/sql-server/tutorials-for-sql-server-2016?view=sql-server-ver15)\n- [SQL Server tutorial for beginners](https://www.youtube.com/watch?v=-EPMOaV7h_Q)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "oracle.md",
+                    "name": "oracle",
+                    "type": "file",
+                    "content": "\nOracle Database Server or sometimes called Oracle RDBMS or even simply Oracle is a world leading relational database management system produced by Oracle Corporation.\n\nVisit the following resources to learn more:\n\n- [Official Website](https://www.oracle.com/database/)\n- [Official Docs](https://docs.oracle.com/en/database/index.html)\n- [Oracle SQL Tutorial for Beginners](https://www.youtube.com/watch?v=ObbNGhcxXJA)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nA relational database is **a type of database that stores and provides access to data points that are related to one another**. Relational databases store data in a series of tables. Interconnections between the tables are specified as foreign keys. A foreign key is a unique reference from one row in a relational table to another row in a table, which can be the same table but is most commonly a different table.\n\nVisit the following resources to learn more:\n\n- [Relational Databases](https://www.ibm.com/cloud/learn/relational-databases)\n- [51 Years of Relational Databases](https://learnsql.com/blog/codd-article-databases/)\n- [Databases and SQL](https://www.edx.org/course/databases-5-sql)\n- [Intro To Relational Databases](https://www.udacity.com/course/intro-to-relational-databases--ud197)\n- [What is Relational Database](https://youtu.be/OqjJjpjDRLc)\n"
+                }
+            ]
+        },
+        {
+            "id": "107",
+            "fileName": "nosql-databases",
+            "name": "nosql databases",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "document-databases.md",
+                    "name": "document databases",
+                    "type": "file",
+                    "content": "\n## MongoDB\n\nMongoDB is a source-available cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with optional schemas. MongoDB is developed by MongoDB Inc. and licensed under the Server Side Public License (SSPL).\n\nVisit the following resources to learn more:\n\n- [Visit Dedicated MongoDB Roadmap](/mongodb)\n- [MongoDB Website](https://www.mongodb.com/)\n- [MongoDB Documentation](https://docs.mongodb.com/)\n- [MongoDB Online Sandbox](https://mongoplayground.net/)\n- [Learning Path for MongoDB Developers](https://learn.mongodb.com/catalog)\n- [Dynamo DB Docs](https://docs.aws.amazon.com/dynamodb/index.html)\n- [Official Developers Guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "column-databases.md",
+                    "name": "column databases",
+                    "type": "file",
+                    "content": "\nA **<u>wide-column database</u>** (sometimes referred to as a column database) is similar to a relational database. It store data in tables, rows and columns. However in opposite to relational databases here each row can have its own format of the columns. Column databases can be seen as a two-dimensional key-value database. One of such database system is **Apache Cassandra**.\n\n**Warning:** <a href=\"https://en.wikipedia.org/wiki/Wide-column_store#Wide-column_stores_versus_columnar_databases\">note that a \"columnar database\" and a \"column database\" are two different terms!</a>\n\nVisit the following resources to learn more:\n\n- [Apache Cassandra](https://cassandra.apache.org/_/index.html)\n- [Apache Cassandra Database - Full Course for Beginners](https://www.youtube.com/watch?v=J-cSy5MeMOA)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "timeseries-databases.md",
+                    "name": "timeseries databases",
+                    "type": "file",
+                    "content": "\n## InfluxDB\n\nInfluxDB was built from the ground up to be a purpose-built time series database; i.e., it was not repurposed to be time series. Time was built-in from the beginning. InfluxDB is part of a comprehensive platform that supports the collection, storage, monitoring, visualization and alerting of time series data. It’s much more than just a time series database.\n\nVisit the following resources to learn more:\n\n- [InfluxDB Website](https://www.influxdata.com/)\n- [Time series database](https://www.influxdata.com/time-series-database/)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "realtime-databases.md",
+                    "name": "realtime databases",
+                    "type": "file",
+                    "content": "\nA real-time database is broadly defined as a data store designed to collect, process, and/or enrich an incoming series of data points (i.e., a data stream) in real time, typically immediately after the data is created.\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "key-value-databases.md",
+                    "name": "key value databases",
+                    "type": "file",
+                    "content": "\nA key-value database (KV database) is a type of database that stores data as a collection of key-value pairs. In a KV database, each piece of data is identified by a unique key, and the value is the data associated with that key.\n\nKV databases are designed for fast and efficient storage and retrieval of data, and they are often used in applications that require high performance and low latency. They are particularly well-suited for storing large amounts of unstructured data, such as log data and user profiles.\n\nSome popular KV databases include Redis, Memcached, and LevelDB. These databases are often used in combination with other types of databases, such as relational databases or document databases, to provide a complete and scalable data storage solution.\n\nVisit the following resources to learn more:\n\n- [Key-Value Databases - Wikipedia](https://en.wikipedia.org/wiki/Key-value_database)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nNoSQL databases offer data storage and retrieval that is modelled differently to \"traditional\" relational databases. NoSQL databases typically focus more on horizontal scaling, eventual consistency, speed and flexibility and is used commonly for big data and real-time streaming applications.\nNoSQL is often described as a BASE system (**B**asically **A**vailable, **S**oft state, **E**ventual consistency) as opposed to SQL/relational which typically focus on ACID (Atomicity, Consistency, Isolation, Durability). Common NoSQL data structures include key-value pair, wide column, graph and document.\n\nVisit the following resources to learn more:\n\n- [NoSQL Explained](https://www.mongodb.com/nosql-explained)\n- [How do NoSQL Databases work](https://www.youtube.com/watch?v=0buKQHokLK8)\n- [SQL vs NoSQL Explained](https://www.youtube.com/watch?v=ruz-vK8IesE)\n"
+                }
+            ]
+        },
+        {
+            "id": "108",
+            "fileName": "more-about-databases",
+            "name": "more about databases",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "orms.md",
+                    "name": "orms",
+                    "type": "file",
+                    "content": "\nObject-Relational Mapping (ORM) is a technique that lets you query and manipulate data from a database using an object-oriented paradigm. When talking about ORM, most people are referring to a library that implements the Object-Relational Mapping technique, hence the phrase \"an ORM\".\n\nVisit the following resources to learn more:\n\n- [Object Relational Mapping - Wikipedia](https://en.wikipedia.org/wiki/Object–relational_mapping)\n- [What is an ORM and how should I use it?](https://stackoverflow.com/questions/1279613/what-is-an-orm-how-does-it-work-and-how-should-i-use-one)\n- [What is an ORM, how does it work, and how should I use one?](https://stackoverflow.com/a/1279678)"
+                },
+                {
+                    "id": "101",
+                    "fileName": "acid.md",
+                    "name": "acid",
+                    "type": "file",
+                    "content": "\nACID are the four properties of relational database systems that help in making sure that we are able to perform the transactions in a reliable manner. It's an acronym which refers to the presence of four properties: atomicity, consistency, isolation and durability\n\nVisit the following resources to learn more:\n\n- [What is ACID Compliant Database?](https://retool.com/blog/whats-an-acid-compliant-database/)\n- [What is ACID Compliance?: Atomicity, Consistency, Isolation](https://fauna.com/blog/what-is-acid-compliance-atomicity-consistency-isolation)\n- [ACID Explained: Atomic, Consistent, Isolated & Durable](https://www.youtube.com/watch?v=yaQ5YMWkxq4)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "transactions.md",
+                    "name": "transactions",
+                    "type": "file",
+                    "content": "\nIn short, a database transaction is a sequence of multiple operations performed on a database, and all served as a single logical unit of work — taking place wholly or not at all. In other words, there's never a case where only half of the operations are performed and the results saved.\n\nVisit the following resources to learn more:\n\n- [What are Transactions?](https://fauna.com/blog/database-transaction)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "n-plus-one-problem.md",
+                    "name": "n plus one problem",
+                    "type": "file",
+                    "content": "\nThe N+1 query problem happens when your code executes N additional query statements to fetch the same data that could have been retrieved when executing the primary query.\n\nVisit the following resources to learn more:\n\n- [In Detail Explanation of N+1 Problem](https://medium.com/doctolib/understanding-and-fixing-n-1-query-30623109fe89)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "database-normalization.md",
+                    "name": "database normalization",
+                    "type": "file",
+                    "content": "\nDatabase normalization is the process of structuring a relational database in accordance with a series of so-called normal forms in order to reduce data redundancy and improve data integrity. It was first proposed by Edgar F. Codd as part of his relational model.\n\nNormalization entails organizing the columns (attributes) and tables (relations) of a database to ensure that their dependencies are properly enforced by database integrity constraints. It is accomplished by applying some formal rules either by a process of synthesis (creating a new database design) or decomposition (improving an existing database design).\n\nVisit the following resources to learn more:\n\n- [What is Normalization in DBMS (SQL)? 1NF, 2NF, 3NF, BCNF Database with Example](https://www.guru99.com/database-normalization.html)\n- [Database normalization](https://en.wikipedia.org/wiki/Database_normalization)\n- [Basic Concept of Database Normalization](https://www.youtube.com/watch?v=xoTyrdT9SZI)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "failure-modes.md",
+                    "name": "failure modes",
+                    "type": "file",
+                    "content": "\nThere are several different failure modes that can occur in a database, including:\n\n- Read contention: This occurs when multiple clients or processes are trying to read data from the same location in the database at the same time, which can lead to delays or errors.\n- Write contention: This occurs when multiple clients or processes are trying to write data to the same location in the database at the same time, which can lead to delays or errors.\n- Thundering herd: This occurs when a large number of clients or processes try to access the same resource simultaneously, which can lead to resource exhaustion and reduced performance.\n- Cascade: This occurs when a failure in one part of the database system causes a chain reaction that leads to failures in other parts of the system.\n- Deadlock: This occurs when two or more transactions are waiting for each other to release a lock on a resource, leading to a standstill.\n- Corruption: This occurs when data in the database becomes corrupted, which can lead to errors or unexpected results when reading or writing to the database.\n- Hardware failure: This occurs when hardware components, such as disk drives or memory, fail, which can lead to data loss or corruption.\n- Software failure: This occurs when software components, such as the database management system or application, fail, which can lead to errors or unexpected results.\n- Network failure: This occurs when the network connection between the database and the client is lost, which can lead to errors or timeouts when trying to access the database.\n- Denial of service (DoS) attack: This occurs when a malicious actor attempts to overwhelm the database with requests, leading to resource exhaustion and reduced performance.\n"
+                },
+                {
+                    "id": "106",
+                    "fileName": "profiling-performance.md",
+                    "name": "profiling performance",
+                    "type": "file",
+                    "content": "\nThere are several ways to profile the performance of a database:\n\n- Monitor system performance: You can use tools like the Windows Task Manager or the Unix/Linux top command to monitor the performance of your database server. These tools allow you to see the overall CPU, memory, and disk usage of the system, which can help identify any resource bottlenecks.\n- Use database-specific tools: Most database management systems (DBMSs) have their own tools for monitoring performance. For example, Microsoft SQL Server has the SQL Server Management Studio (SSMS) and the sys.dm_os_wait_stats dynamic management view, while Oracle has the Oracle Enterprise Manager and the v$waitstat view. These tools allow you to see specific performance metrics, such as the amount of time spent waiting on locks or the number of physical reads and writes.\n- Use third-party tools: There are also several third-party tools that can help you profile the performance of a database. Some examples include SolarWinds Database Performance Analyzer, Quest Software Foglight, and Redgate SQL Monitor. These tools often provide more in-depth performance analysis and can help you identify specific issues or bottlenecks.\n- Analyze slow queries: If you have specific queries that are running slowly, you can use tools like EXPLAIN PLAN or SHOW PLAN in MySQL or SQL Server to see the execution plan for the query and identify any potential issues. You can also use tools like the MySQL slow query log or the SQL Server Profiler to capture slow queries and analyze them further.\n- Monitor application performance: If you are experiencing performance issues with a specific application that is using the database, you can use tools like Application Insights or New Relic to monitor the performance of the application and identify any issues that may be related to the database.\n\nHave a look at the documentation for the database that you are using.\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nA database is a collection of useful data of one or more related organizations structured in a way to make data an asset to the organization. A database management system is a software designed to assist in maintaining and extracting large collections of data in a timely fashion.\n\nVisit the following resources to learn more:\n\n- [Oracle: What is a Database?](https://www.oracle.com/database/what-is-database/)\n- [Prisma.io: What are Databases?](https://www.prisma.io/dataguide/intro/what-are-databases)\n"
+                }
+            ]
+        },
+        {
+            "id": "109",
+            "fileName": "apis",
+            "name": "apis",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "rest.md",
+                    "name": "rest",
+                    "type": "file",
+                    "content": "\nREST, or REpresentational State Transfer, is an architectural style for providing standards between computer systems on the web, making it easier for systems to communicate with each other.\n\nVisit the following resources to learn more:\n\n- [What is REST?](https://www.codecademy.com/article/what-is-rest)\n- [REST Fundamental](https://dev.to/cassiocappellari/fundamentals-of-rest-api-2nag)\n- [What is a REST API?](https://www.redhat.com/en/topics/api/what-is-a-rest-api)\n- [Roy Fieldings dissertation chapter, Representational State Transfer (REST)](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)\n- [Learn REST: A RESTful Tutorial](https://restapitutorial.com/)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "json-apis.md",
+                    "name": "json apis",
+                    "type": "file",
+                    "content": "\nJSON or JavaScript Object Notation is an encoding scheme that is designed to eliminate the need for an ad-hoc code for each application to communicate with servers that communicate in a defined way. JSON API module exposes an implementation for data stores and data structures, such as entity types, bundles, and fields.\n\nVisit the following resources to learn more:\n\n- [Official Website](https://jsonapi.org/)\n- [Official Docs](https://jsonapi.org/implementations/)\n- [JSON API: Explained in 4 minutes ](https://www.youtube.com/watch?v=N-4prIh7t38)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "soap.md",
+                    "name": "soap",
+                    "type": "file",
+                    "content": "\nSimple Object Access Protocol (SOAP) is a message protocol for exchanging information between systems and applications. When it comes to application programming interfaces (APIs), a SOAP API is developed in a more structured and formalized way. SOAP messages can be carried over a variety of lower-level protocols, including the web-related Hypertext Transfer Protocol (HTTP).\n\nVisit the following resources to learn more:\n\n- [w3school SOAP explanation](https://www.w3schools.com/xml/xml_soap.asp)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "grpc.md",
+                    "name": "grpc",
+                    "type": "file",
+                    "content": "\ngRPC is a high-performance, open source universal RPC framework\n\nRPC stands for Remote Procedure Call, there's an ongoing debate on what the g stands for. RPC is a protocol that allows a program to execute a procedure of another program located on another computer. The great advantage is that the developer doesn’t need to code the details of the remote interaction. The remote procedure is called like any other function. But the client and the server can be coded in different languages.\n\nVisit the following resources to learn more:\n\n- [gRPC Website](https://grpc.io/)\n- [gRPC Docs](https://grpc.io/docs/)\n- [What Is GRPC?](https://www.wallarm.com/what/the-concept-of-grpc)\n- [What Is GRPC?](https://www.youtube.com/watch?v=hVrwuMnCtok)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "hateoas.md",
+                    "name": "hateoas",
+                    "type": "file",
+                    "content": "\nHATEOAS is an acronym for <b>H</b>ypermedia <b>A</b>s <b>T</b>he <b>E</b>ngine <b>O</b>f <b>A</b>pplication <b>S</b>tate, it's the concept that when sending information over a RESTful API the document received should contain everything the client needs in order to parse and use the data i.e they don't have to contact any other endpoint not explicitly mentioned within the Document\n\nVisit the following resources to learn more:\n\n- [Oktane17: Designing Beautiful REST + JSON APIs (3:56 - 5:57)](https://youtu.be/MiOSzpfP1Ww?t=236)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "open-api-spec.md",
+                    "name": "open api spec",
+                    "type": "file",
+                    "content": "\nThe OpenAPI Specification (OAS) defines a standard, language-agnostic interface to RESTful APIs which allows both humans and computers to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined, a consumer can understand and interact with the remote service with a minimal amount of implementation logic.\n\nAn OpenAPI definition can then be used by documentation generation tools to display the API, code generation tools to generate servers and clients in various programming languages, testing tools, and many other use cases.\n\nVisit the following resources to learn more:\n\n- [OpenAPI Specification Website](https://swagger.io/specification/)\n- [Open API Live Editor](https://swagger.io/tools/swagger-editor/)\n- [Official training guide](https://swagger.io/docs/specification/about/)\n- [OpenAPI 3.0: How to Design and Document APIs with the Latest OpenAPI Specification 3.0](https://www.youtube.com/watch?v=6kwmW_p_Tig)\n"
+                },
+                {
+                    "id": "106",
+                    "fileName": "graphql.md",
+                    "name": "graphql",
+                    "type": "file",
+                    "content": "\nGraphQL is a query language and runtime system for APIs (application programming interfaces). It is designed to provide a flexible and efficient way for clients to request data from servers, and it is often used as an alternative to REST (representational state transfer) APIs.\n\nOne of the main features of GraphQL is its ability to specify exactly the data that is needed, rather than receiving a fixed set of data from an endpoint. This allows clients to request only the data that they need, and it reduces the amount of data that needs to be transferred over the network.\n\nGraphQL also provides a way to define the structure of the data that is returned from the server, allowing clients to request data in a predictable and flexible way. This makes it easier to build and maintain client applications that depend on data from the server.\n\nGraphQL is widely used in modern web and mobile applications, and it is supported by a large and active developer community.\n\nVisit the following resources to learn more:\n\n- [GraphQL Official Website](https://graphql.org/)\n"
+                },
+                {
+                    "id": "107",
+                    "fileName": "authentication",
+                    "name": "authentication",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "cookie-based.md",
+                            "name": "cookie based",
+                            "type": "file",
+                            "content": "\nCookies are pieces of data used to identify the user and their preferences. The browser returns the cookie to the server every time the page is requested. Specific cookies like HTTP cookies are used to perform cookie-based authentication to maintain the session for each user.\n\nVisit the following resources to learn more:\n\n- [How does cookie based authentication work?](https://stackoverflow.com/questions/17769011/how-does-cookie-based-authentication-work)\n"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "oauth.md",
+                            "name": "oauth",
+                            "type": "file",
+                            "content": "\nOAuth stands for **O**pen **Auth**orization and is an open standard for authorization. It works to authorize devices, APIs, servers and applications using access tokens rather than user credentials, known as \"secure delegated access\".\n\nIn its most simplest form, OAuth delegates authentication to services like Facebook, Amazon, Twitter and authorizes third-party applications to access the user account **without** having to enter their login and password.\n\nIt is mostly utilized for REST/APIs and only provides a limited scope of a user's data.\n\nVisit the following resources to learn more:\n\n- [Okta - What the Heck is OAuth](https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth)\n- [DigitalOcean - An Introduction to OAuth 2](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2)\n- [What is OAuth really all about](https://www.youtube.com/watch?v=t4-416mg6iU)\n- [OAuth 2.0: An Overview](https://www.youtube.com/watch?v=CPbvxxslDTU)\n"
+                        },
+                        {
+                            "id": "102",
+                            "fileName": "basic-authentication.md",
+                            "name": "basic authentication",
+                            "type": "file",
+                            "content": "\nGiven the name \"Basic Authentication\", you should not confuse Basic Authentication with the standard username and password authentication. Basic authentication is a part of the HTTP specification, and the details can be [found in the RFC7617](https://www.rfc-editor.org/rfc/rfc7617.html).\n\nBecause it is a part of the HTTP specifications, all the browsers have native support for \"HTTP Basic Authentication\".\n\nVisit the following resources to learn more:\n\n- [HTTP Basic Authentication](https://roadmap.sh/guides/http-basic-authentication)\n- [Illustrated HTTP Basic Authentication](https://www.youtube.com/watch?v=mwccHwUn7Gc)\n"
+                        },
+                        {
+                            "id": "103",
+                            "fileName": "token-authentication.md",
+                            "name": "token authentication",
+                            "type": "file",
+                            "content": "\nToken-based authentication is a protocol which allows users to verify their identity, and in return receive a unique access token. During the life of the token, users then access the website or app that the token has been issued for, rather than having to re-enter credentials each time they go back to the same webpage, app, or any resource protected with that same token.\n\nAuth tokens work like a stamped ticket. The user retains access as long as the token remains valid. Once the user logs out or quits an app, the token is invalidated.\n\nToken-based authentication is different from traditional password-based or server-based authentication techniques. Tokens offer a second layer of security, and administrators have detailed control over each action and transaction.\n\nBut using tokens requires a bit of coding know-how. Most developers pick up the techniques quickly, but there is a learning curve.\n\nVisit the following resources to learn more:\n\n- [What Is Token-Based Authentication?](https://www.okta.com/identity-101/what-is-token-based-authentication/)\n"
+                        },
+                        {
+                            "id": "104",
+                            "fileName": "jwt.md",
+                            "name": "jwt",
+                            "type": "file",
+                            "content": "\nJWT stands for JSON Web Token is a token-based encryption open standard/methodology that is used to transfer information securely as a JSON object. Clients and Servers use JWT to securely share information, with the JWT containing encoded JSON objects and claims. JWT tokens are designed to be compact, safe to use within URLs, and ideal for SSO contexts.\n\nVisit the following resources to learn more:\n\n- [jwt.io Website](https://jwt.io/)\n- [Introduction to JSON Web Tokens](https://jwt.io/introduction)\n- [What is JWT?](https://www.akana.com/blog/what-is-jwt)\n- [What Is JWT and Why Should You Use JWT](https://www.youtube.com/watch?v=7Q17ubqLfaM)\n- [What is JWT? JSON Web Token Explained](https://www.youtube.com/watch?v=926mknSW9Lo)\n"
+                        },
+                        {
+                            "id": "105",
+                            "fileName": "openid.md",
+                            "name": "openid",
+                            "type": "file",
+                            "content": "\nOpenID is a protocol that utilizes the authorization and authentication mechanisms of OAuth 2.0 and is now widely adopted by many identity providers on the Internet.\nIt solves the problem of needing to share user's personal info between many different web services(e.g. online shops, discussion forums etc.)\n\nVisit the following resources to learn more:\n\n- [Official Website](https://openid.net/)\n- [What is OpenID](https://openid.net/connect/)\n- [OAuth vs OpenID](https://securew2.com/blog/oauth-vs-openid-which-is-better)\n- [An Illustrated Guide to OAuth and OpenID Connect](https://www.youtube.com/watch?v=t18YB3xDfXI)\n- [OAuth 2.0 and OpenID Connect (in plain English)](https://www.youtube.com/watch?v=996OiexHze0)"
+                        },
+                        {
+                            "id": "106",
+                            "fileName": "saml.md",
+                            "name": "saml",
+                            "type": "file",
+                            "content": "\n**SAML** stands for Security Assertion Markup Language. It is an XML-based standard for exchanging authentication and authorization data between parties, particularly between an identity provider (IdP) and a service provider (SP). In a SAML-based system, a user requests access to a protected resource. The service provider asks the identity provider to authenticate the user and assert whether they are granted access to the resource.\n\n### Benefits of SAML\n\nSome advantages of using SAML include:\n\n- Single Sign-On (SSO): Users can log in once at the IdP and access multiple service providers without needing to authenticate again.\n- Improved security: Passwords and user credentials are not required to be stored and managed by the service provider, reducing the potential vectors for attack.\n- Increased efficiency: As users no longer need to maintain multiple sets of credentials, managing access becomes easier for both the user and the system administrators.\n- Interoperability: SAML enables a wide range of applications to work together, regardless of the underlying technology or platform.\n\n### SAML Components\n\nThree main components are involved in the SAML architecture:\n\n1. **Identity Provider (IdP)**: The entity that manages users' identities and authenticates them by providing security tokens, also called assertions.\n2. **Service Provider (SP)**: The entity that provides a service (such as a web application or API) and relies on the identity provider to authenticate users and grant/deny access to the resources.\n3. **User/Principal**: The end user seeking access to the service provided by the service provider.\n\n### SAML Workflow\n\nThe SAML authentication process consists of the following steps:\n\n1. The user requests access to a protected resource from the service provider.\n2. If the user is not already authenticated, the service provider generates and sends a SAML authentication request to the identity provider.\n3. The identity provider authenticates the user (using, e.g., a username and password, multi-factor authentication, or another method).\n4. The identity provider constructs a SAML response, which includes details about the user and asserts whether the user is authorized to access the requested resource.\n5. The SAML response is sent back to the service provider, typically via the user's web browser or API client.\n6. The service provider processes the SAML response, extracts the necessary information, and grants or denies access to the user based on the identity provider's assertion.\n\nWith SAML, you can streamline user authentication and authorization across various applications and systems, providing a better user experience and improving your overall backend security.\n"
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": "\nThe API authentication process validates the identity of the client attempting to make a connection by using an authentication protocol. The protocol sends the credentials from the remote client requesting the connection to the remote access server in either plain text or encrypted form. The server then knows whether it can grant access to that remote client or not.\n\nHere is the list of common ways of authentication:\n\n- JWT Authentication\n- Token based Authentication\n- Session based Authentication\n- Basic Authentication\n- OAuth - Open Authorization\n- SSO - Single Sign On\n\nVisit the following resources to learn more:\n\n- [User Authentication: Understanding the Basics & Top Tips](https://swoopnow.com/user-authentication/)\n- [An overview about authentication methods](https://betterprogramming.pub/how-do-you-authenticate-mate-f2b70904cc3a)\n- [SSO - Single Sign On](https://roadmap.sh/guides/sso)\n- [OAuth - Open Authorization](https://roadmap.sh/guides/oauth)\n- [JWT Authentication](https://roadmap.sh/guides/jwt-authentication)\n- [Token Based Authentication](https://roadmap.sh/guides/token-authentication)\n- [Session Based Authentication](https://roadmap.sh/guides/session-authentication)\n- [Basic Authentication](https://roadmap.sh/guides/basic-authentication)\n"
+                        }
+                    ]
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nAPI is the acronym for Application Programming Interface, which is a software intermediary that allows two applications to talk to each other.\n\nVisit the following resources to learn more:\n\n- [What is an API?](https://aws.amazon.com/what-is/api/)\n- [What is an API?](https://www.youtube.com/watch?v=s7wmiS2mSXY)\n"
+                }
+            ]
+        },
+        {
+            "id": "110",
+            "fileName": "scaling-databases",
+            "name": "scaling databases",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "database-indexes.md",
+                    "name": "database indexes",
+                    "type": "file",
+                    "content": "\nAn index is a data structure that you build and assign on top of an existing table that basically looks through your table and tries to analyze and summarize so that it can create shortcuts.\n\nVisit the following resources to learn more:\n\n- [An in-depth look at Database Indexing](https://www.freecodecamp.org/news/database-indexing-at-a-glance-bb50809d48bd/)\n- [Database Indexing Explained](https://www.youtube.com/watch?v=-qNSXK7s7_w)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "data-replication.md",
+                    "name": "data replication",
+                    "type": "file",
+                    "content": "\nData replication is the process by which data residing on a physical/virtual server(s) or cloud instance (primary instance) is continuously replicated or copied to a secondary server(s) or cloud instance (standby instance). Organizations replicate data to support high availability, backup, and/or disaster recovery.\n\nVisit the following resources to learn more:\n\n- [What is Data Replication?](https://youtu.be/fUrKt-AQYtE)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "sharding-strategies.md",
+                    "name": "sharding strategies",
+                    "type": "file",
+                    "content": "\nSharding strategy is a technique to split a large dataset into smaller chunks (logical shard) in which we distribute these chunks in different machines/database nodes in order to distribute the traffic load. It’s a good mechanism to improve the scalability of an application. Many databases support sharding, but not all.\n\nVisit the following resources to learn more:\n\n- [Database Sharding – System Design Interview Concept](https://www.geeksforgeeks.org/database-sharding-a-system-design-concept/)\n- [Wikipedia - Sharding in Database Architectures](<https://en.wikipedia.org/wiki/Shard_(database_architecture)>)\n- [How sharding a database can make it faster](https://stackoverflow.blog/2022/03/14/how-sharding-a-database-can-make-it-faster/)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "cap-theorem.md",
+                    "name": "cap theorem",
+                    "type": "file",
+                    "content": "\nCAP is an acronym that stands for Consistency, Availability and Partition Tolerance. According to CAP theorem, any distributed system can only guarantee two of the three properties at any point of time. You can't guarantee all three properties at once.\n\nVisit the following resources to learn more:\n\n- [What is CAP Theorem?](https://www.bmc.com/blogs/cap-theorem/)\n- [CAP Theorem - Wikipedia](https://en.wikipedia.org/wiki/CAP_theorem)\n- [An Illustrated Proof of the CAP Theorem](https://mwhittaker.github.io/blog/an_illustrated_proof_of_the_cap_theorem/)\n- [CAP Theorem and its applications in NoSQL Databases](https://www.ibm.com/uk-en/cloud/learn/cap-theorem)\n- [What is CAP Theorem?](https://www.youtube.com/watch?v=_RbsFXWRZ10)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nA database is a collection of useful data of one or more related organizations structured in a way to make data an asset to the organization. A database management system is a software designed to assist in maintaining and extracting large collections of data in a timely fashion.\n\nVisit the following resources to learn more:\n\n- [Oracle: What is a Database?](https://www.oracle.com/database/what-is-database/)\n- [Prisma.io: What are Databases?](https://www.prisma.io/dataguide/intro/what-are-databases)\n"
+                }
+            ]
+        },
+        {
+            "id": "111",
+            "fileName": "caching",
+            "name": "caching",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "cdn.md",
+                    "name": "cdn",
+                    "type": "file",
+                    "content": "\nA Content Delivery Network (CDN) service aims to provide high availability and performance improvements of websites. This is achieved with fast delivery of website assets and content typically via geographically closer endpoints to the client requests.\nTraditional commercial CDNs (Amazon CloudFront, Akamai, CloudFlare and Fastly) provide servers across the globe which can be used for this purpose.\nServing assets and contents via a CDN reduces bandwidth on website hosting, provides an extra layer of caching to reduce potential outages and can improve website security as well\n\nVisit the following resources to learn more:\n\n- [CloudFlare - What is a CDN? | How do CDNs work?](https://www.cloudflare.com/en-ca/learning/cdn/what-is-a-cdn/)\n- [Wikipedia - Content Delivery Network](https://en.wikipedia.org/wiki/Content_delivery_network)\n- [What is Cloud CDN?](https://www.youtube.com/watch?v=841kyd_mfH0)\n- [What is a Content Delivery Network (CDN)?](https://www.youtube.com/watch?v=Bsq5cKkS33I)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "server-side",
+                    "name": "server side",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "redis.md",
+                            "name": "redis",
+                            "type": "file",
+                            "content": "\nRedis is an open source (BSD licensed), in-memory **data structure store** used as a database, cache, message broker, and streaming engine. Redis provides data structures such as [strings](https://redis.io/topics/data-types-intro#strings), [hashes](https://redis.io/topics/data-types-intro#hashes), [lists](https://redis.io/topics/data-types-intro#lists), [sets](https://redis.io/topics/data-types-intro#sets), [sorted sets](https://redis.io/topics/data-types-intro#sorted-sets) with range queries, [bitmaps](https://redis.io/topics/data-types-intro#bitmaps), [hyperloglogs](https://redis.io/topics/data-types-intro#hyperloglogs), [geospatial indexes](https://redis.io/commands/geoadd), and [streams](https://redis.io/topics/streams-intro). Redis has built-in [replication](https://redis.io/topics/replication), [Lua scripting](https://redis.io/commands/eval), [LRU eviction](https://redis.io/topics/lru-cache), [transactions](https://redis.io/topics/transactions), and different levels of [on-disk persistence](https://redis.io/topics/persistence), and provides high availability via [Redis Sentinel](https://redis.io/topics/sentinel) and automatic partitioning with [Redis Cluster](https://redis.io/topics/cluster-tutorial).\n\nVisit the following resources to learn more:\n\n- [Redis Website](https://redis.io/)\n- [Redis in 100 Seconds](https://www.youtube.com/watch?v=G1rOthIU-uo)\n"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "memcached.md",
+                            "name": "memcached",
+                            "type": "file",
+                            "content": "\nMemcached (pronounced variously mem-cash-dee or mem-cashed) is a general-purpose distributed memory-caching system. It is often used to speed up dynamic database-driven websites by caching data and objects in RAM to reduce the number of times an external data source (such as a database or API) must be read. Memcached is free and open-source software, licensed under the Revised BSD license. Memcached runs on Unix-like operating systems (Linux and macOS) and on Microsoft Windows. It depends on the `libevent` library.\n\nMemcached's APIs provide a very large hash table distributed across multiple machines. When the table is full, subsequent inserts cause older data to be purged in the least recently used (LRU) order. Applications using Memcached typically layer requests and additions into RAM before falling back on a slower backing store, such as a database.\n\nMemcached has no internal mechanism to track misses which may happen. However, some third-party utilities provide this functionality.\n\nVisit the following resources to learn more:\n\n- [Memcached, From Wikipedia](https://en.wikipedia.org/wiki/Memcached)\n- [Memcached, From Official Github](https://github.com/memcached/memcached#readme)\n- [Memcached Tutorial](https://www.tutorialspoint.com/memcached/index.htm)\n"
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": "\nServer-side caching temporarily stores web files and data on the origin server to reuse later.\n\nWhen the user first requests for the webpage, the website goes under the normal process of retrieving data from the server and generates or constructs the webpage of the website. After the request has happened and the response has been sent back, the server copies the webpage and stores it as a cache.\n\nNext time the user revisits the website, it loads the already saved or cached copy of the webpage, thus making it faster.\n\nVisit the following resources to learn more:\n\n- [Server-side caching ](https://www.starwindsoftware.com/resource-library/server-side-caching/)\n- [Server-side caching and Client-side caching](https://www.codingninjas.com/codestudio/library/server-side-caching-and-client-side-caching)\n"
+                        }
+                    ]
+                },
+                {
+                    "id": "102",
+                    "fileName": "client-side.md",
+                    "name": "client side",
+                    "type": "file",
+                    "content": "\nClient-side caching is the storage of network data to a local cache for future re-use. After an application fetches network data, it stores that resource in a local cache. Once a resource has been cached, the browser uses the cache on future requests for that resource to boost performance.\n\nVisit the following resources to learn more:\n\n- [Everything you need to know about HTTP Caching](https://www.youtube.com/watch?v=HiBDZgTNpXY)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nCaching is a technique of storing frequently used data or information in a local memory, for a certain time period. So, next time, when the client requests the same information, instead of retrieving the information from the database, it will give the information from the local memory. The main advantage of caching is that it improves the performance by reducing the processing burden.\n"
+                }
+            ]
+        },
+        {
+            "id": "112",
+            "fileName": "web-security-knowledge",
+            "name": "web security knowledge",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "md5.md",
+                    "name": "md5",
+                    "type": "file",
+                    "content": "\nMD5 (Message-Digest Algorithm 5) is a hash function that is currently advised not to be used due to its extensive vulnerabilities. It is still used as a checksum to verify data integrity.\n\nVisit the following resources to learn more:\n\n- [Wikipedia - MD5](https://en.wikipedia.org/wiki/MD5)\n- [What is MD5?](https://www.techtarget.com/searchsecurity/definition/MD5)\n- [Why is MD5 not safe?](https://infosecscout.com/why-md5-is-not-safe/)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "sha-family.md",
+                    "name": "sha family",
+                    "type": "file",
+                    "content": "\nSHA (Secure Hash Algorithms) is a family of cryptographic hash functions created by the NIST (National Institute of Standards and Technology). The family includes:\n\n- SHA-0: Published in 1993, this is the first algorithm in the family. Shortly after its release, it was discontinued for an undisclosed significant flaw.\n- SHA-1: Created to replace SHA-0 and which resembles MD5, this algorithm has been considered insecure since 2010.\n- SHA-2: This isn't an algorithm, but a set of them, with SHA-256 and SHA-512 being the most popular. SHA-2 is still secure and widely used.\n- SHA-3: Born in a competition, this is the newest member of the family. SHA-3 is very secure and doesn't carry the same design flaws as its brethren.\n\nVisit the following resources to learn more:\n\n- [Wikipedia - SHA-1](https://en.wikipedia.org/wiki/SHA-1)\n- [Wikipedia - SHA-2](https://en.wikipedia.org/wiki/SHA-2)\n- [Wikipedia - SHA-3](https://en.wikipedia.org/wiki/SHA-3)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "bcrypt.md",
+                    "name": "bcrypt",
+                    "type": "file",
+                    "content": "\nbcrypt is a password hashing function, that has been proven reliable and secure since it's release in 1999. It has been implemented into most commonly-used programming languages.\n\nVisit the following resources to learn more:\n\n- [bcrypts npm package](https://www.npmjs.com/package/bcrypt)\n- [Understanding bcrypt](https://auth0.com/blog/hashing-in-action-understanding-bcrypt/)\n- [bcrypt explained](https://www.youtube.com/watch?v=O6cmuiTBZVs)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "scrypt.md",
+                    "name": "scrypt",
+                    "type": "file",
+                    "content": "\nScrypt (pronounced \"ess crypt\") is a password hashing function (like bcrypt). It is designed to use a lot of hardware, which makes brute-force attacks more difficult. Scrypt is mainly used as a proof-of-work algorithm for cryptocurrencies.\n\nVisit the following resources to learn more:\n\n- [Wikipedia - Scrypt](https://en.wikipedia.org/wiki/Scrypt)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "content-security-policy.md",
+                    "name": "content security policy",
+                    "type": "file",
+                    "content": "\nContent Security Policy is a computer security standard introduced to prevent cross-site scripting, clickjacking and other code injection attacks resulting from execution of malicious content in the trusted web page context.\n\nVisit the following resources to learn more:\n\n- [MDN — Content Security Policy (CSP)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)\n- [Google Devs — Content Security Policy (CSP)](https://developers.google.com/web/fundamentals/security/csp)\n"
+                },
+                {
+                    "id": "106",
+                    "fileName": "https.md",
+                    "name": "https",
+                    "type": "file",
+                    "content": "\nHTTPS is a secure way to send data between a web server and a browser.\n\nA communication through HTTPS starts with the handshake phase during which the server and the client agree on how to encrypt the communication, in particular they choose an encryption algorithm and a secret key. After the handshake all the communication between the server and the client will be encrypted using the agreed upon algorithm and key.\n\nThe handshake phase uses a particular kind of cryptography, called asymmetric cryptography, to communicate securely even though client and server have not yet agreed on a secret key. After the handshake phase the HTTPS communication is encrypted with symmetric cryptography, which is much more efficient but requires client and server to both have knowledge of the secret key.\n\nVisit the following resources to learn more:\n\n- [What is HTTPS?](https://www.cloudflare.com/en-gb/learning/ssl/what-is-https/)\n- [Why HTTPS Matters](https://developers.google.com/web/fundamentals/security/encrypt-in-transit/why-https)\n- [Enabling HTTPS on Your Servers](https://developers.google.com/web/fundamentals/security/encrypt-in-transit/enable-https)\n- [How HTTPS works (comic)](https://howhttps.works/)\n- [SSL, TLS, HTTP, HTTPS Explained](https://www.youtube.com/watch?v=hExRDVZHhig)\n- [HTTPS — Stories from the field](https://www.youtube.com/watch?v=GoXgl9r0Kjk)\n- [HTTPS explained with carrier pigeons](https://baida.dev/articles/https-explained-with-carrier-pigeons)\n"
+                },
+                {
+                    "id": "107",
+                    "fileName": "cors.md",
+                    "name": "cors",
+                    "type": "file",
+                    "content": "\nCross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any origins (domain, scheme, or port) other than its own from which a browser should permit loading resources.\n\nVisit the following resources to learn more:\n\n- [Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)\n- [CORS in 100 Seconds](https://www.youtube.com/watch?v=4KHiSt0oLJ0)\n- [CORS in 6 minutes](https://www.youtube.com/watch?v=PNtFSVU-YTI)\n- [Understanding CORS](https://rbika.com/blog/understanding-cors)\n"
+                },
+                {
+                    "id": "108",
+                    "fileName": "owasp.md",
+                    "name": "owasp",
+                    "type": "file",
+                    "content": "\nOWASP or Open Web Application Security Project is an online community that produces freely-available articles, methodologies, documentation, tools, and technologies in the field of web application security.\n\nVisit the following resources to learn more:\n\n- [Wikipedia - OWASP](https://en.wikipedia.org/wiki/OWASP)\n- [OWASP Application Security Verification Standard](https://github.com/OWASP/ASVS)\n- [OWASP Top 10 Security Risks](https://cheatsheetseries.owasp.org/IndexTopTen.html)\n- [OWASP Cheatsheets](https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html)\n"
+                },
+                {
+                    "id": "109",
+                    "fileName": "server-security.md",
+                    "name": "server security",
+                    "type": "file",
+                    "content": "\nLearn about the security of your server and how to secure it. Here are some of the topics off the top of my head:\n\n- Use a firewall: One of the most effective ways to secure a server is to use a firewall to block all unnecessary incoming traffic. You can use iptables on Linux systems or a hardware firewall to do this.\n- Close unnecessary ports: Make sure to close any ports that are not needed for your server to function properly. This will reduce the attack surface of your server and make it more difficult for attackers to gain access.\n- Use strong passwords: Use long, complex passwords for all of your accounts, and consider using a password manager to store them securely.\n- Keep your system up to date: Make sure to keep your operating system and software up to date with the latest security patches. This will help to prevent vulnerabilities from being exploited by attackers.\n- Use SSL/TLS for communication: Use Secure Sockets Layer (SSL) or Transport Layer Security (TLS) to encrypt communication between your server and client devices. This will help to protect against man-in-the-middle attacks and other types of cyber threats.\n- Use a intrusion detection system (IDS): An IDS monitors network traffic and alerts you to any suspicious activity, which can help you to identify and respond to potential threats in a timely manner.\n- Enable two-factor authentication: Two-factor authentication adds an extra layer of security to your accounts by requiring a second form of authentication, such as a code sent to your phone, in addition to your password.\n\nAlso learn about OpenSSL and creating your own PKI as well as managing certs, renewals, and mutual client auth with x509 certs\n"
+                },
+                {
+                    "id": "110",
+                    "fileName": "ssl-tls.md",
+                    "name": "ssl tls",
+                    "type": "file",
+                    "content": "\nSecure Sockets Layer (SSL) and Transport Layer Security (TLS) are cryptographic protocols used to provide security in internet communications. These protocols encrypt the data that is transmitted over the web, so anyone who tries to intercept packets will not be able to interpret the data. One difference that is important to know is that SSL is now deprecated due to security flaws, and most modern web browsers no longer support it. But TLS is still secure and widely supported, so preferably use TLS.\n\nVisit the following resources to learn more:\n\n- [Wikipedia - SSL/TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security)\n- [Cloudflare - What is SSL?](https://www.cloudflare.com/learning/ssl/what-is-ssl/)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nWeb security refers to the protective measures taken by the developers to protect the web applications from threats that could affect the business.\n\nVisit the following resources to learn more:\n\n- [Why HTTPS Matters](https://developers.google.com/web/fundamentals/security/encrypt-in-transit/why-https)\n- [Wikipedia - OWASP](https://en.wikipedia.org/wiki/OWASP)\n- [OWASP Web Application Security Testing Checklist](https://github.com/0xRadi/OWASP-Web-Checklist)\n- [OWASP Top 10 Security Risks](https://sucuri.net/guides/owasp-top-10-security-vulnerabilities-2021/)\n- [OWASP Cheatsheets](https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html)\n- [Content Security Policy (CSP)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)\n"
+                }
+            ]
+        },
+        {
+            "id": "113",
+            "fileName": "testing",
+            "name": "testing",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "integration-testing.md",
+                    "name": "integration testing",
+                    "type": "file",
+                    "content": "\nIntegration testing is a broad category of tests where multiple software modules are **integrated** and tested as a group. It is meant to test the **interaction** between multiple services, resources, or modules. For example, an API's interaction with a backend service, or a service with a database.\n\nVisit the following resources to learn more:\n\n- [Integration Testing](https://www.guru99.com/integration-testing.html)\n- [How to Integrate and Test Your Tech Stack](https://thenewstack.io/how-to-integrate-and-test-your-tech-stack/)\n- [What is Integration Testing?](https://youtu.be/QYCaaNz8emY)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "unit-testing.md",
+                    "name": "unit testing",
+                    "type": "file",
+                    "content": "\nUnit testing is where individual **units** (modules, functions/methods, routines, etc.) of software are tested to ensure their correctness. This low-level testing ensures smaller components are functionally sound while taking the burden off of higher-level tests. Generally, a developer writes these tests during the development process and they are run as automated tests.\n\nVisit the following resources to learn more:\n\n- [Unit Testing Tutorial](https://www.guru99.com/unit-testing-guide.html)\n- [What is Unit Testing?](https://youtu.be/3kzHmaeozDI)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "functional-testing.md",
+                    "name": "functional testing",
+                    "type": "file",
+                    "content": "\nFunctional testing is where software is tested to ensure functional requirements are met. Usually, it is a form of black box testing in which the tester has no understanding of the source code; testing is performed by providing input and comparing expected/actual output.\nIt contrasts with non-functional testing, which includes performance, load, scalability, and penetration testing.\n\nVisit the following resources to learn more:\n\n- [What is Functional Testing?](https://www.guru99.com/functional-testing.html)\n- [Functional Testing vs Non-Functional Testing](https://youtu.be/j_79AXkG4PY)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nA key to building software that meets requirements without defects is testing. Software testing helps developers know they are building the right software. When tests are run as part of the development process (often with continuous integration tools), they build confidence and prevent regressions in the code.\n\nVisit the following resources to learn more:\n\n- [What is Software Testing?](https://www.guru99.com/software-testing-introduction-importance.html)\n- [Testing Pyramid](https://www.browserstack.com/guide/testing-pyramid-for-test-automation)\n"
+                }
+            ]
+        },
+        {
+            "id": "114",
+            "fileName": "design-and-development-principles",
+            "name": "design and development principles",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "gof-design-patterns.md",
+                    "name": "gof design patterns",
+                    "type": "file",
+                    "content": "\nDesign patterns are typical solutions to commonly occurring problems in software design. They can be broken into three categories:\n\n- Creational Patterns for the creation of objects\n- Structural Patterns to provide relationship between objects\n- Behavioral Patterns to help define how objects interact\n\nVisit the following resources to learn more:\n\n- [Design Patterns for Humans](https://github.com/kamranahmedse/design-patterns-for-humans)\n- [GOF design patterns](https://springframework.guru/gang-of-four-design-patterns/)\n- [Design Patterns](https://refactoring.guru/design-patterns)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "domain-driven-design.md",
+                    "name": "domain driven design",
+                    "type": "file",
+                    "content": "\nDomain-driven design (DDD) is a software design approach focusing on modeling software to match a domain according to input from that domain's experts.\n\nIn terms of object-oriented programming, it means that the structure and language of software code (class names, class methods, class variables) should match the business domain. For example, if a software processes loan applications, it might have classes like LoanApplication and Customer, and methods such as AcceptOffer and Withdraw.\n\nDDD connects the implementation to an evolving model and it is predicated on the following goals:\n\n- Placing the project's primary focus on the core domain and domain logic;\n- Basing complex designs on a model of the domain;\n- Initiating a creative collaboration between technical and domain experts to iteratively refine a conceptual model that addresses particular domain problems.\n\nVisit the following resources to learn more:\n\n- [Domain Driven Design Quickly](https://matfrs2.github.io/RS2/predavanja/literatura/Avram%20A,%20Marinescu%20F.%20-%20Domain%20Driven%20Design%20Quickly.pdf)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "test-driven-development.md",
+                    "name": "test driven development",
+                    "type": "file",
+                    "content": "\nTest driven development (TDD) is the process of writing tests for software's requirements which will fail until the software is developed to meet those requirements. Once those tests pass, then the cycle repeats to refactor code or develop another feature/requirement. In theory, this ensures that software is written to meet requirements in the simplest form, and avoids code defects.\n\nVisit the following resources to learn more:\n\n- [What is Test Driven Development (TDD)?](https://www.guru99.com/test-driven-development.html)\n- [Test-driven development](https://www.ibm.com/garage/method/practices/code/practice_test_driven_development/)\n- [Agile in Practice: Test Driven Development](https://youtu.be/uGaNkTahrIw)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "cqrs.md",
+                    "name": "cqrs",
+                    "type": "file",
+                    "content": "\nCQRS, or command query responsibility segregation, defines an architectural pattern where the main focus is to separate the approach of reading and writing operations for a data store. CQRS can also be used along with Event Sourcing pattern in order to persist application state as an ordered of sequence events, making it possible to restore data to any point in time.\n\nVisit the following resources to learn more:\n\n- [CQRS Pattern](https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "event-sourcing.md",
+                    "name": "event sourcing",
+                    "type": "file",
+                    "content": "\nEvent sourcing is a design pattern in which the state of a system is represented as a sequence of events that have occurred over time. In an event-sourced system, changes to the state of the system are recorded as events and stored in an event store. The current state of the system is derived by replaying the events from the event store.\n\nOne of the main benefits of event sourcing is that it provides a clear and auditable history of all the changes that have occurred in the system. This can be useful for debugging and for tracking the evolution of the system over time.\n\nEvent sourcing is often used in conjunction with other patterns, such as Command Query Responsibility Segregation (CQRS) and domain-driven design, to build scalable and responsive systems with complex business logic. It is also useful for building systems that need to support undo/redo functionality or that need to integrate with external systems.\n\nVisit the following resources to learn more:\n\n- [Event Sourcing - Martin Fowler](https://martinfowler.com/eaaDev/EventSourcing.html)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nIn this section, we'll discuss some essential design and development principles to follow while building the backend of any application. These principles will ensure that the backend is efficient, scalable, and maintainable.\n\n## 1. Separation of Concerns (SoC)\n\nSeparation of Concerns is a fundamental principle that states that different functionalities of a system should be as independent as possible. This approach improves maintainability and scalability by allowing developers to work on separate components without affecting each other. Divide your backend into clear modules and layers, such as data storage, business logic, and network communication.\n\n## 2. Reusability\n\nReusability is the ability to use components, functions, or modules in multiple places without duplicating code. While designing the backend, look for opportunities where you can reuse existing code. Use techniques like creating utility functions, abstract classes, and interfaces to promote reusability and reduce redundancy.\n\n## 3. Keep It Simple and Stupid (KISS)\n\nKISS principle states that the simpler the system, the easier it is to understand, maintain, and extend. When designing the backend, try to keep the architecture and code as simple as possible. Use clear naming conventions and modular structures, and avoid over-engineering and unnecessary complexity.\n\n## 4. Don't Repeat Yourself (DRY)\n\nDo not duplicate code or functionality across your backend. Duplication can lead to inconsistency and maintainability issues. Instead, focus on creating reusable components, functions or modules, which can be shared across different parts of the backend.\n\n## 5. Scalability\n\nA scalable system is one that can efficiently handle an increasing number of users, requests, or data. Design the backend with scalability in mind, considering factors such as data storage, caching, load balancing, and horizontal scaling (adding more instances of the backend server).\n\n## 6. Security\n\nSecurity is a major concern when developing any application. Always follow best practices to prevent security flaws, such as protecting sensitive data, using secure communication protocols (e.g., HTTPS), implementing authentication and authorization mechanisms, and sanitizing user inputs.\n\n## 7. Testing\n\nTesting is crucial for ensuring the reliability and stability of the backend. Implement a comprehensive testing strategy, including unit, integration, and performance tests. Use automated testing tools and set up continuous integration (CI) and continuous deployment (CD) pipelines to streamline the testing and deployment process.\n\n## 8. Documentation\n\nProper documentation helps developers understand and maintain the backend codebase. Write clear and concise documentation for your code, explaining the purpose, functionality, and how to use it. Additionally, use comments and appropriate naming conventions to make the code itself more readable and self-explanatory.\n\nBy following these design and development principles, you'll be well on your way to creating an efficient, secure, and maintainable backend for your applications.\n"
+                }
+            ]
+        },
+        {
+            "id": "115",
+            "fileName": "ci-cd.md",
+            "name": "ci cd",
+            "type": "file",
+            "content": "\nCI/CD (Continuous Integration/Continuous Deployment) is the practice of automating building, testing, and deployment of applications with the main goal of detecting issues early, and provide quicker releases to the production environment.\n\nVisit the following resources to learn more:\n\n- [DevOps CI/CD Explained in 100 Seconds by Fireship](https://www.youtube.com/watch?v=scEDHsr3APg)\n- [Automate your Workflows with GitHub Actions](https://www.youtube.com/watch?v=nyKZTKQS_EQ)\n- [What is CI/CD?](https://about.gitlab.com/topics/ci-cd/)\n- [A Primer: Continuous Integration and Continuous Delivery (CI/CD)](https://thenewstack.io/a-primer-continuous-integration-and-continuous-delivery-ci-cd/)\n- [3 Ways to Use Automation in CI/CD Pipelines](https://thenewstack.io/3-ways-to-use-automation-in-ci-cd-pipelines/)\n- [Articles about CI/CD](https://thenewstack.io/category/ci-cd/)\n"
+        },
+        {
+            "id": "116",
+            "fileName": "architectural-patterns",
+            "name": "architectural patterns",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "monolithic-apps.md",
+                    "name": "monolithic apps",
+                    "type": "file",
+                    "content": "\nMonolithic architecture is a pattern in which an application handles requests, executes business logic, interacts with the database, and creates the HTML for the front end. In simpler terms, this one application does many things. It's inner components are highly coupled and deployed as one unit.\n\nVisit the following resources to learn more:\n\n- [Pattern: Monolithic Architecture](https://microservices.io/patterns/monolithic.html)\n- [Monolithic Architecture - Advantages & Disadvantages](https://datamify.medium.com/monolithic-architecture-advantages-and-disadvantages-e71a603eec89)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "microservices.md",
+                    "name": "microservices",
+                    "type": "file",
+                    "content": "\nMicroservice architecture is a pattern in which highly cohesive, loosely coupled services are separately developed, maintained, and deployed. Each component handles an individual function, and when combined, the application handles an overall business function.\n\nVisit the following resources to learn more:\n\n- [Pattern: Microservice Architecture](https://microservices.io/patterns/microservices.html)\n- [What is Microservices?](https://smartbear.com/solutions/microservices/)\n- [Microservices 101](https://thenewstack.io/microservices-101/)\n- [Primer: Microservices Explained](https://thenewstack.io/primer-microservices-explained/)\n- [Articles about Microservices](https://thenewstack.io/category/microservices/)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "soa.md",
+                    "name": "soa",
+                    "type": "file",
+                    "content": "\nSOA, or service-oriented architecture, defines a way to make software components reusable via service interfaces. These interfaces utilize common communication standards in such a way that they can be rapidly incorporated into new applications without having to perform deep integration each time.\n\nVisit the following resources to learn more:\n\n- [Reference Architecture Foundation for Service Oriented Architecture](http://docs.oasis-open.org/soa-rm/soa-ra/v1.0/soa-ra.html)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "serverless.md",
+                    "name": "serverless",
+                    "type": "file",
+                    "content": "\nServerless is an architecture in which a developer builds and runs applications without provisioning or managing servers. With cloud computing/serverless, servers exist but are managed by the cloud provider. Resources are used as they are needed, on demand and often using auto scaling.\n\nVisit the following resources to learn more:\n\n- [Serverless](https://www.ibm.com/cloud/learn/serverless)\n- [AWS Services](https://aws.amazon.com/serverless/)\n- [Serverless Computing in 100 Seconds](https://www.youtube.com/watch?v=W_VV2Fx32_Y&ab_channel=Fireship)\n"
+                },
+                {
+                    "id": "105",
+                    "fileName": "service-mesh.md",
+                    "name": "service mesh",
+                    "type": "file",
+                    "content": "\nA service mesh is a network of microservices that are connected using a mesh of interconnected, intelligent proxies. It is used to manage and secure communication between microservices, and it provides features such as load balancing, service discovery, and observability.\n\nIn a service mesh, each microservice is typically represented by an instance of a lightweight, transparent proxy called an \"envoy.\" The envoys handle the communication between microservices and provide features such as load balancing, routing, and security.\n\nService meshes are typically implemented using a sidecar pattern, in which the envoys are deployed alongside the microservices they are responsible for. This allows the service mesh to be decoupled from the microservices and makes it easier to manage and update.\n\nService meshes are commonly used in cloud-native architectures and are often managed using a control plane, which is responsible for configuring and managing the envoys. Some popular service mesh implementations include Istio and Linkerd.\n\nVisit the following resources to learn more:\n\n- [What is a Service Mesh?](https://www.nginx.com/blog/what-is-a-service-mesh/)\n"
+                },
+                {
+                    "id": "106",
+                    "fileName": "twelve-factor-apps.md",
+                    "name": "twelve factor apps",
+                    "type": "file",
+                    "content": "\nThe Twelve-Factor App is a methodology for building scalable and maintainable software-as-a-service (SaaS) applications. It is based on a set of best practices that were identified by the authors of the methodology as being essential for building modern, cloud-native applications.\n\nThe Twelve-Factor App methodology consists of the following principles:\n\n- Codebase: There should be a single codebase for the application, with multiple deployments.\n- Dependencies: The application should explicitly declare and isolate its dependencies.\n- Config: The application should store configuration in the environment.\n- Backing services: The application should treat backing services as attached resources.\n- Build, release, run: The application should be built, released, and run as an isolated unit.\n- Processes: The application should be executed as one or more stateless processes.\n- Port binding: The application should expose its services through port binding.\n- Concurrency: The application should scale out by adding more processes, not by adding threads.\n- Disposability: The application should be designed to start and stop quickly.\n- Dev/prod parity: The development, staging, and production environments should be as similar as possible.\n- Logs: The application should treat logs as event streams.\n- Admin processes: The application should run admin/maintenance tasks as one-off processes.\n\nThe Twelve-Factor App methodology is widely adopted by developers of SaaS applications, and it is seen as a best practice for building cloud-native applications that are scalable, maintainable, and easy to deploy.\n\nVisit the following resources to learn more:\n\n- [The Twelve-Factor App](https://12factor.net/)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nAn architectural pattern is a general, reusable solution to a commonly occurring problem in software architecture within a given context.The architectural patterns address various issues in software engineering, such as computer hardware performance limitations, high availability and minimization of a business risk.\n\nVisit the following resources to learn more:\n\n- [Architectural Patterns in a nutshell](https://towardsdatascience.com/10-common-software-architectural-patterns-in-a-nutshell-a0b47a1e9013)\n"
+                }
+            ]
+        },
+        {
+            "id": "117",
+            "fileName": "search-engines",
+            "name": "search engines",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "elasticsearch.md",
+                    "name": "elasticsearch",
+                    "type": "file",
+                    "content": "\nElastic search at its core is a document-oriented search engine. It is a document based database that lets you INSERT, DELETE , RETRIEVE and even perform analytics on the saved records. But, Elastic Search is unlike any other general purpose database you have worked with, in the past. It's essentially a search engine and offers an arsenal of features you can use to retrieve the data stored in it, as per your search criteria. And that too, at lightning speeds.\n\nVisit the following resources to learn more:\n\n- [Elasticsearch Website](https://www.elastic.co/elasticsearch/)\n- [Elasticsearch Documentation](https://www.elastic.co/guide/index.html)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "solr.md",
+                    "name": "solr",
+                    "type": "file",
+                    "content": "\nSolr is highly reliable, scalable and fault tolerant, providing distributed indexing, replication and load-balanced querying, automated failover and recovery, centralized configuration and more. Solr powers the search and navigation features of many of the world's largest internet sites.\n\nVisit the following resources to learn more:\n\n- [Official Website](https://solr.apache.org/)\n- [Official Documentation](https://solr.apache.org/resources.html#documentation)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nSearch engines are an essential part of any web application, responsible for providing efficient and relevant search results for users. They store and retrieve data based on unique indexes, which allow for fast and accurate searches. As a backend developer, understanding search engines functionalities, and how to integrate them into your web application, is crucial.\n\n## Types of Search Engines\n\nThere are two primary types of search engines: \n\n1. **Full-text search engines**: These are specifically designed for searching and analyzing text documents. They can efficiently index large volumes of text and provide relevant results based on keywords or phrases. Popular full-text search engines examples include **Elasticsearch**, **Solr**, and **Amazon CloudSearch**.\n\n2. **Database search engines**: Database engines are built-in features of most databases. They provide search capabilities within the data stored in the database. Examples include **MySQL FULLTEXT search** and **PostgreSQL Full-Text Search**.\n\n## Key Concepts\n\nWhen dealing with search engines, it's important to understand these key concepts:\n\n- **Indexing**: The process of analyzing and storing data in an optimized format for fast search and retrieval.\n- **Tokenization**: Breaking text into individual words or terms (also known as tokens), for efficient indexing and searching.\n- **Querying**: The act of searching the indexed data by asking a specific question or requesting information based on keywords or phrases.\n- **Relevance scoring**: A score assigned to each search result that indicates how closely it matches the query, based on algorithms and relevance models.\n\n## Integration\n\nTo integrate a search engine into your web application, you would typically follow these steps:\n\n1. **Choose the search engine**: Identify the search engine that best suits your application's needs, considering factors such as scalability, performance, and ease of integration.\n2. **Index your data**: Analyze and store your data using the chosen search engine. This process may involve creating an index, specifying fields, and defining how the data should be tokenized and analyzed.\n3. **Implement search functionality**: Develop the backend code for handling search requests, such as sending queries to the search engine and parsing the responses. Additionally, make sure to handle user inputs, like keywords, phrases, and filters.\n4. **Display search results**: Design the frontend of your application to show search results in a user-friendly manner, including pagination, sorting, and filters.\n"
+                }
+            ]
+        },
+        {
+            "id": "118",
+            "fileName": "message-brokers",
+            "name": "message brokers",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "rabbitmq.md",
+                    "name": "rabbitmq",
+                    "type": "file",
+                    "content": "\nWith tens of thousands of users, RabbitMQ is one of the most popular open-source message brokers. RabbitMQ is lightweight and easy to deploy on-premises and in the cloud. It supports multiple messaging protocols. RabbitMQ can be deployed in distributed and federated configurations to meet high-scale, high-availability requirements.\n\nVisit the following resources to learn more:\n\n- [RabbitMQ Tutorials](https://www.rabbitmq.com/getstarted.html)\n- [RabbitMQ Tutorial - Message Queues and Distributed Systems](https://www.youtube.com/watch?v=nFxjaVmFj5E)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "kafka.md",
+                    "name": "kafka",
+                    "type": "file",
+                    "content": "\nApache Kafka is an open-source distributed event streaming platform used by thousands of companies for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.\n\nVisit the following resources to learn more:\n\n- [Apache Kafka quickstart](https://kafka.apache.org/quickstart)\n- [Apache Kafka Fundamentals](https://www.youtube.com/watch?v=B5j3uNBH8X4)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nMessage brokers are an inter-application communication technology to help build a common integration mechanism to support cloud-native, microservices-based, serverless, and hybrid cloud architectures. Two of the most famous message brokers are `RabbitMQ` and `Apache Kafka`\n\nVisit the following resources to learn more:\n\n- [Introduction to Message Brokers](https://www.youtube.com/watch?v=57Qr9tk6Uxc)\n"
+                }
+            ]
+        },
+        {
+            "id": "119",
+            "fileName": "containerization",
+            "name": "containerization",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "docker.md",
+                    "name": "docker",
+                    "type": "file",
+                    "content": "\nDocker is a platform for working with containerized applications. Among its features are a daemon and client for managing and interacting with containers, registries for storing images, and a desktop application to package all these features together.\n\nVisit the following resources to learn more:\n\n- [Docker Documentation](https://docs.docker.com/)\n- [What is Docker | AWS ](https://aws.amazon.com/docker/)\n- [Complete Docker Course - From BEGINNER to PRO!](https://www.youtube.com/watch?v=RqTEHSBrYFw)\n- [Docker Tutorial](https://youtu.be/3c-iBn73dDE)\n- [Docker simplified in 55 seconds](https://youtu.be/vP_4DlOH1G4)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "lxc.md",
+                    "name": "lxc",
+                    "type": "file",
+                    "content": "\nLXC is an abbreviation used for Linux Containers which is an operating system that is used for running multiple Linux systems virtually on a controlled host via a single Linux kernel. LXC is a userspace interface for the Linux kernel containment features. Through a powerful API and simple tools, it lets Linux users easily create and manage system or application containers.\n\nVisit the following resources to learn more:\n\n- [LXC Documentation](https://linuxcontainers.org/lxc/documentation/)\n- [What is LXC?](https://linuxcontainers.org/lxc/introduction/)\n- [Linux Container (LXC) Introduction](https://youtu.be/_KnmRdK69qM)\n- [Getting started with LXC containers](https://youtu.be/CWmkSj_B-wo)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "kubernetes.md",
+                    "name": "kubernetes",
+                    "type": "file",
+                    "content": "\nKubernetes is an [open source](https://github.com/kubernetes/kubernetes) container management platform, and the dominant product in this space. Using Kubernetes, teams can deploy images across multiple underlying hosts, defining their desired availability, deployment logic, and scaling logic in YAML. Kubernetes evolved from Borg, an internal Google platform used to provision and allocate compute resources. (similar to the Autopilot and Aquaman systems of Microsoft Azure)\n\nThe popularity of Kubernetes has made it an increasingly important skill for the DevOps Engineer and has triggered the creation of Platform teams across the industry. These Platform engineering teams often exist with the sole purpose of making Kubernetes approachable and usable for their product development colleagues.\n\nVisit the following resources to learn more:\n\n- [Kubernetes Website](https://kubernetes.io/)\n- [Kubernetes Documentation](https://kubernetes.io/docs/home/)\n- [Kubernetes Crash Course for Absolute Beginners](https://www.youtube.com/watch?v=s_o8dwzRlu4)\n- [Primer: How Kubernetes Came to Be, What It Is, and Why You Should Care](https://thenewstack.io/primer-how-kubernetes-came-to-be-what-it-is-and-why-you-should-care/)\n- [Kubernetes: An Overview](https://thenewstack.io/kubernetes-an-overview/)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nContainers and virtual machines are the two most popular approaches to setting up a software infrastructure for your organization.\n\nVisit the following resources to learn more:\n\n- [Containerization vs. Virtualization: Everything you need to know](https://middleware.io/blog/containerization-vs-virtualization/)\n- [Containerization or Virtualization - The Differences ](https://www.youtube.com/watch?v=1WnDHitznGY)\n"
+                }
+            ]
+        },
+        {
+            "id": "120",
+            "fileName": "graphql",
+            "name": "graphql",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "apollo.md",
+                    "name": "apollo",
+                    "type": "file",
+                    "content": "\nApollo is a platform for building a unified graph, a communication layer that helps you manage the flow of data between your application clients (such as web and native apps) and your back-end services.\n\nVisit the following resources to learn more:\n\n- [Apollo Website](https://www.apollographql.com)\n- [Official Docs](https://www.apollographql.com/docs/)\n- [Official YouTube Channel](https://www.youtube.com/c/ApolloGraphQL/)\n- [GraphQL With React Tutorial - Apollo Client](https://www.youtube.com/watch?v=YyUWW04HwKY)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "relay-modern.md",
+                    "name": "relay modern",
+                    "type": "file",
+                    "content": "\nRelay is a JavaScript client used in the browser to fetch GraphQL data. It's a JavaScript framework developed by Facebook for managing and fetching data in React applications. It is built with scalability in mind in order to power complex applications like Facebook. The ultimate goal of GraphQL and Relay is to deliver instant UI-response interactions.\n\nVisit the following resources to learn more:\n\n- [Official Website](https://relay.dev/)\n- [Introduction to Relay modern](https://relay.dev/docs/)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nGraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data. GraphQL provides a complete and understandable description of the data in your API, gives clients the power to ask for exactly what they need and nothing more, makes it easier to evolve APIs over time, and enables powerful developer tools.\n\nVisit the following resources to learn more:\n\n- [Introduction to GraphQL](https://graphql.org/learn/)\n- [The Fullstack Tutorial for GraphQL](https://www.howtographql.com/)\n- [GraphQL Tutorials](https://odyssey.apollographql.com/)\n- [GraphQL Course for Beginners](https://www.youtube.com/watch?v=ed8SzALpx1Q)\n"
+                }
+            ]
+        },
+        {
+            "id": "121",
+            "fileName": "graph-databases",
+            "name": "graph databases",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "neo4j.md",
+                    "name": "neo4j",
+                    "type": "file",
+                    "content": "\nNeo4j AuraDB is a fast, reliable, scalable, and completely automated Neo4j graph database, provided as a cloud service.\n\nVisit the following resources to learn more:\n\n- [Official Website](https://neo4j.com/)\n- [Official Docs](https://neo4j.com/docs/)\n- [Neo4j (Graph Database) Crash Course](https://www.youtube.com/watch?v=8jNPelugC2s)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nA graph database stores nodes and relationships instead of tables, or documents. Data is stored just like you might sketch ideas on a whiteboard. Your data is stored without restricting it to a pre-defined model, allowing a very flexible way of thinking about and using it.\n\nVisit the following resources to learn more:\n\n- [What is a Graph Database?](https://neo4j.com/developer/graph-database/)\n- [Graph Databases VS Relational Databases](https://www.freecodecamp.org/news/graph-database-vs-relational-database/)\n"
+                }
+            ]
+        },
+        {
+            "id": "122",
+            "fileName": "web-servers",
+            "name": "web servers",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "nginx.md",
+                    "name": "nginx",
+                    "type": "file",
+                    "content": "\nNGINX is a powerful web server and uses a non-threaded, event-driven architecture that enables it to outperform Apache if configured correctly. It can also do other important things, such as load balancing, HTTP caching, or be used as a reverse proxy.\n\nVisit the following resources to learn more:\n\n- [Official Website](https://nginx.org/)\n- [NGINX Explained in 100 Seconds](https://www.youtube.com/watch?v=JKxlsvZXG7c)\n"
+                },
+                {
+                    "id": "101",
+                    "fileName": "apache.md",
+                    "name": "apache",
+                    "type": "file",
+                    "content": "\nApache is a free, open-source HTTP server, available on many operating systems, but mainly used on Linux distributions. It is one of the most popular options for web developers, as it accounts for over 30% of all the websites, as estimated by W3Techs.\n\nVisit the following resources to learn more:\n\n- [Apache Server Website](https://httpd.apache.org/)\n- [What is Apache Web Server?](https://www.youtube.com/watch?v=kaaenHXO4t4)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "caddy.md",
+                    "name": "caddy",
+                    "type": "file",
+                    "content": "\nThe Caddy web server is an extensible, cross-platform, open-source web server written in Go. It has some really nice features like automatic SSL/HTTPs and a really easy configuration file.\n\nVisit the following resources to learn more:\n\n- [Official Website](https://caddyserver.com/)\n- [Getting started with Caddy the HTTPS Web Server from scratch](https://www.youtube.com/watch?v=t4naLFSlBpQ)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "ms-iis.md",
+                    "name": "ms iis",
+                    "type": "file",
+                    "content": "\nInternet Information Services (IIS) for Windows® Server is a flexible, secure and manageable Web server for hosting anything on the Web.\n\nVisit the following resources to learn more:\n\n- [Official Website](https://www.iis.net/)\n- [Learn Windows Web Server IIS](https://www.youtube.com/watch?v=1VdxPWwtISA)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nWeb servers can be either hardware or software, or perhaps a combination of the two.\n\n### Hardware Side:\n\nA hardware web server is a computer that houses web server software and the files that make up a website (for example, HTML documents, images, CSS stylesheets, and JavaScript files). A web server establishes a connection to the Internet and facilitates the physical data exchange with other web-connected devices.\n\n### Software side:\n\nA software web server has a number of software components that regulate how hosted files are accessed by online users. This is at the very least an HTTP server. Software that knows and understands HTTP and URLs (web addresses) is known as an HTTP server (the protocol your browser uses to view webpages). The content of these hosted websites is sent to the end user's device through an HTTP server, which may be accessed via the domain names of the websites it holds.\n\nBasically, an HTTP request is made by a browser anytime it wants a file that is stored on a web server. The relevant (hardware) web server receives the request, which is then accepted by the appropriate (software) HTTP server, which then locates the requested content and returns it to the browser over HTTP. (If the server cannot locate the requested page, it responds with a 404 error.)\n\nVisit the following resources to learn more:\n\n- [What is a Web Server ](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_web_server)\n- [Web Server Concepts and Examples](https://youtu.be/9J1nJOivdyw)\n"
+                }
+            ]
+        },
+        {
+            "id": "123",
+            "fileName": "web-sockets.md",
+            "name": "web sockets",
+            "type": "file",
+            "content": "\nWeb sockets are defined as a two-way communication between the servers and the clients, which mean both the parties, communicate and exchange data at the same time. This protocol defines a full duplex communication from the ground up. Web sockets take a step forward in bringing desktop rich functionalities to the web browsers.\n\nVisit the following resources to learn more:\n\n- [Introduction to WebSockets](https://www.tutorialspoint.com/websockets/index.htm)\n- [A Beginners Guide to WebSockets](https://www.youtube.com/watch?v=8ARodQ4Wlf4)\n- [Socket.io Library Bidirectional and low-latency communication for every platform](https://socket.io/)\n"
+        },
+        {
+            "id": "124",
+            "fileName": "server-sent-events.md",
+            "name": "server sent events",
+            "type": "file",
+            "content": "\nServer-Sent Events (SSE) is a technology that allows a web server to push data to a client in real-time. It uses an HTTP connection to send a stream of data from the server to the client, and the client can listen for these events and take action when they are received.\n\nSSE is useful for applications that require real-time updates, such as chat systems, stock tickers, and social media feeds. It is a simple and efficient way to establish a long-lived connection between a client and a server, and it is supported by most modern web browsers.\n\nTo use SSE, the client must create an EventSource object and specify the URL of the server-side script that will send the events. The server can then send events by writing them to the response stream with the proper formatting.\n\nVisit the following resources to learn more:\n\n- [Server-Sent Events - MDN](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events)\n"
+        },
+        {
+            "id": "125",
+            "fileName": "scalability",
+            "name": "scalability",
+            "type": "directory",
+            "children": [
+                {
+                    "id": "100",
+                    "fileName": "mitigation-strategies",
+                    "name": "mitigation strategies",
+                    "type": "directory",
+                    "children": [
+                        {
+                            "id": "100",
+                            "fileName": "graceful-degradation.md",
+                            "name": "graceful degradation",
+                            "type": "file",
+                            "content": "\nGraceful degradation is a design principle that states that a system should be designed to continue functioning, even if some of its components or features are not available. In the context of web development, graceful degradation refers to the ability of a web page or application to continue functioning, even if the user's browser or device does not support certain features or technologies.\n\nGraceful degradation is often used as an alternative to progressive enhancement, a design principle that states that a system should be designed to take advantage of advanced features and technologies if they are available.\n\nVisit the following resources to learn more:\n\n- [What is Graceful Degradation & Why Does it Matter?](https://blog.hubspot.com/website/graceful-degradation)\n- [Four Considerations When Designing Systems For Graceful Degradation](https://newrelic.com/blog/best-practices/design-software-for-graceful-degradation)\n- [The Art of Graceful Degradation](https://farfetchtechblog.com/en/blog/post/the-art-of-failure-ii-graceful-degradation/)\n"
+                        },
+                        {
+                            "id": "101",
+                            "fileName": "throttling.md",
+                            "name": "throttling",
+                            "type": "file",
+                            "content": "\nThrottling is a design pattern that is used to limit the rate at which a system or component can be used. It is commonly used in cloud computing environments to prevent overuse of resources, such as compute power, network bandwidth, or storage capacity.\n\nThere are several ways to implement throttling in a cloud environment:\n\n- Rate limiting: This involves setting a maximum number of requests that can be made to a system or component within a specified time period.\n- Resource allocation: This involves allocating a fixed amount of resources to a system or component, and then limiting the use of those resources if they are exceeded.\n- Token bucket: This involves using a \"bucket\" of tokens to represent the available resources, and then allowing a certain number of tokens to be \"consumed\" by each request. When the bucket is empty, additional requests are denied until more tokens become available.\n\nThrottling is an important aspect of cloud design, as it helps to ensure that resources are used efficiently and that the system remains stable and available. It is often used in conjunction with other design patterns, such as auto-scaling and load balancing, to provide a scalable and resilient cloud environment.\n\nVisit the following resources to learn more:\n\n- [Throttling - AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/2022-03-31/framework/rel_mitigate_interaction_failure_throttle_requests.html)\n"
+                        },
+                        {
+                            "id": "102",
+                            "fileName": "backpressure.md",
+                            "name": "backpressure",
+                            "type": "file",
+                            "content": "\nBackpressure is a design pattern that is used to manage the flow of data through a system, particularly in situations where the rate of data production exceeds the rate of data consumption. It is commonly used in cloud computing environments to prevent overloading of resources and to ensure that data is processed in a timely and efficient manner.\n\nThere are several ways to implement backpressure in a cloud environment:\n\n- Buffering: This involves storing incoming data in a buffer until it can be processed, allowing the system to continue receiving data even if it is temporarily unable to process it.\n- Batching: This involves grouping incoming data into batches and processing the batches in sequence, rather than processing each piece of data individually.\n- Flow control: This involves using mechanisms such as flow control signals or windowing to regulate the rate at which data is transmitted between systems.\n\nBackpressure is an important aspect of cloud design, as it helps to ensure that data is processed efficiently and that the system remains stable and available. It is often used in conjunction with other design patterns, such as auto-scaling and load balancing, to provide a scalable and resilient cloud environment.\n\nVisit the following resources to learn more:\n\n- [Backpressure - AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/serverless/patterns/backpressure/)\n"
+                        },
+                        {
+                            "id": "103",
+                            "fileName": "loadshifting.md",
+                            "name": "loadshifting",
+                            "type": "file",
+                            "content": "\nLoad shifting is a design pattern that is used to manage the workload of a system by shifting the load to different components or resources at different times. It is commonly used in cloud computing environments to balance the workload of a system and to optimize the use of resources.\n\nThere are several ways to implement load shifting in a cloud environment:\n\n- Scheduling: This involves scheduling the execution of tasks or workloads to occur at specific times or intervals.\n- Load balancing: This involves distributing the workload of a system across multiple resources, such as servers or containers, to ensure that the workload is balanced and that resources are used efficiently.\n- Auto-scaling: This involves automatically adjusting the number of resources that are available to a system based on the workload, allowing the system to scale up or down as needed.\n\nLoad shifting is an important aspect of cloud design, as it helps to ensure that resources are used efficiently and that the system remains stable and available. It is often used in conjunction with other design patterns, such as throttling and backpressure, to provide a scalable and resilient cloud environment.\n\nVisit the following resources to learn more:\n\n- [Load Shifting - AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/serverless/patterns/load-shifting/)\n"
+                        },
+                        {
+                            "id": "104",
+                            "fileName": "circuit-breaker.md",
+                            "name": "circuit breaker",
+                            "type": "file",
+                            "content": "\nThe circuit breaker design pattern is a way to protect a system from failures or excessive load by temporarily stopping certain operations if the system is deemed to be in a failed or overloaded state. It is commonly used in cloud computing environments to prevent cascading failures and to improve the resilience and availability of a system.\n\nA circuit breaker consists of three states: closed, open, and half-open. In the closed state, the circuit breaker allows operations to proceed as normal. If the system encounters a failure or becomes overloaded, the circuit breaker moves to the open state, and all subsequent operations are immediately stopped. After a specified period of time, the circuit breaker moves to the half-open state, and a small number of operations are allowed to proceed. If these operations are successful, the circuit breaker moves back to the closed state; if they fail, the circuit breaker moves back to the open state.\n\nThe circuit breaker design pattern is useful for protecting a system from failures or excessive load by providing a way to temporarily stop certain operations and allow the system to recover. It is often used in conjunction with other design patterns, such as retries and fallbacks, to provide a more robust and resilient cloud environment.\n\nVisit the following resources to learn more:\n\n- [Circuit Breaker - AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/rel_mitigate_interaction_failure_graceful_degradation.html)\n"
+                        },
+                        {
+                            "fileName": "index.md",
+                            "name": "index",
+                            "type": "file",
+                            "content": "\nThis section is mainly relevant to the cloud design patterns that help you build scalable solutions. Have a look at the [Cloud Design Patterns](https://learn.microsoft.com/en-us/azure/architecture/patterns/) docs by Microsoft and this video covering [the throttling, retry and circuit breaker patterns](https://www.youtube.com/watch?v=0HoTGgb5oFg)\n"
+                        }
+                    ]
+                },
+                {
+                    "id": "101",
+                    "fileName": "instrumentation-monitoring-telemetry.md",
+                    "name": "instrumentation monitoring telemetry",
+                    "type": "file",
+                    "content": "\nInstrumentation refers to the measure of a product's performance, in order to diagnose errors and to write trace information. Instrumentation can be of two types: source instrumentation and binary instrumentation.\n\nBackend monitoring allows the user to view the performance of infrastructure i.e. the components that run a web application. These include the HTTP server, middleware, database, third-party API services, and more.\n\nTelemetry is the process of continuously collecting data from different components of the application. This data helps engineering teams to troubleshoot issues across services and identify the root causes. In other words, telemetry data powers observability for your distributed applications.\n\nVisit the following resources to learn more:\n\n- [What is Instrumentation?](<https://en.wikipedia.org/wiki/Instrumentation_(computer_programming)>)\n- [What is Monitoring?](https://www.yottaa.com/performance-monitoring-backend-vs-front-end-solutions/)\n- [What is Telemetry?](https://www.sumologic.com/insight/what-is-telemetry/)\n"
+                },
+                {
+                    "id": "102",
+                    "fileName": "migration-strategies.md",
+                    "name": "migration strategies",
+                    "type": "file",
+                    "content": "\nLearn how to run database migrations effectively. Especially zero downtime multi-phase schema migrations. Rather than make all changes at once, do smaller incremental changes to allow old code, and new code to work with the database at the same time, before removing old code, and finally removing the parts of the database schema which is no longer used.\n\nVisit the following resources to learn more:\n\n- [Databases as a Challenge for Continuous Delivery](https://phauer.com/2015/databases-challenge-continuous-delivery/)\n"
+                },
+                {
+                    "id": "103",
+                    "fileName": "horizontal-vertical-scaling.md",
+                    "name": "horizontal vertical scaling",
+                    "type": "file",
+                    "content": "\nHorizontal scaling is a change in the **number** of a resource. For example, increasing the number of virtual machines processing messages in a queue. Vertical scaling is a change in the **size/power** of a resource. For example, increasing the memory or disk space available to a machine. Scaling can be applied to databases, cloud resources, and other areas of computing.\n\nVisit the following resources to learn more:\n\n- [Horizontal vs Vertical Scaling](https://touchstonesecurity.com/horizontal-vs-vertical-scaling-what-you-need-to-know/)\n- [Scaling In Databases](https://www.geeksforgeeks.org/horizontal-and-vertical-scaling-in-databases/)\n- [System Design Basics: Horizontal vs. Vertical Scaling](https://youtu.be/xpDnVSmNFX0)\n- [System Design 101](https://www.youtube.com/watch?v=Y-Gl4HEyeUQ)\n"
+                },
+                {
+                    "id": "104",
+                    "fileName": "observability.md",
+                    "name": "observability",
+                    "type": "file",
+                    "content": "\nIn software development, observability is the measure of how well we can understand a system from the work it does, and how to make it better.\n\nSo what makes a system to be \"observable\"? It is its ability of producing and collecting metrics, logs and traces in order for us to understand what happens under the hood and identify issues and bottlenecks faster.\n\nYou can of course implement all those features by yourself, but there are a lot of softwares out there that can help you with it like Datadog, Sentry and CloudWatch.\n\nVisit the following resources to learn more:\n\n- [DataDog Docs](https://docs.datadoghq.com/)\n- [AWS CloudWatch Docs](https://aws.amazon.com/cloudwatch/getting-started/)\n- [Sentry Docs](https://docs.sentry.io/)\n- [AWS re:Invent 2017: Improving Microservice and Serverless Observability with Monitor](https://www.youtube.com/watch?v=Wx0SHRb2xcI)\n- [Observability and Instrumentation: What They Are and Why They Matter](https://newrelic.com/blog/best-practices/observability-instrumentation)\n"
+                },
+                {
+                    "fileName": "index.md",
+                    "name": "index",
+                    "type": "file",
+                    "content": "\nSpeaking in general terms, scalability is the ability of a system to handle a growing amount of work by adding resources to it.\n\nA software that was conceived with a scalable architecture in mind, is a system that will support higher workloads without any fundamental changes to it, but don't be fooled, this isn't magic. You'll only get so far with smart thinking without adding more sources to it.\n\nFor a system to be scalable, there are certain things you must pay attention to, like:\n\n- Coupling\n- Observability\n- Evolvability\n- Infrastructure\n\nWhen you think about the infrastructure of a scalable system, you have two main ways of building it: using on-premises resources or leveraging all the tools a cloud provider can give you.\n\nThe main difference between on-premises and cloud resources will be FLEXIBILITY, on cloud providers you don't really need to plan ahead, you can upgrade your infrastructure with a couple of clicks, while with on-premises resources you will need a certain level of planning.\n\nVisit the following resources to learn more:\n\n- [Scalable Architecture: A Definition and How-To Guide](https://www.sentinelone.com/blog/scalable-architecture/)\n- [Scaling Distributed Systems - Software Architecture Introduction](https://www.youtube.com/watch?v=gxfERVP18-g)\n"
+                }
+            ]
+        }
+    ]
+}
