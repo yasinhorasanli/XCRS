@@ -2,19 +2,20 @@ import pandas as pd
 import numpy as np
 
 # internal classes
-import util
+import src.util as util
 
 class Recommendation:
     def __init__(
         self,
         udemy_courses_df: pd.DataFrame,
         roadmap_concepts_df: pd.DataFrame,
-        sim_mat_concept_X_course: np.ndarray,
+        concept_X_course: np.ndarray,
         encoder_for_concepts: dict,
+        emb_type: str
     ):
         self.udemy_courses_df = udemy_courses_df
         self.roadmap_concepts_df = roadmap_concepts_df
-        self.sim_mat_concept_X_course = sim_mat_concept_X_course
+        self.concept_X_course = concept_X_course
         self.encoder_for_concepts = encoder_for_concepts
         self.recom_role_id = None
         
@@ -105,7 +106,7 @@ class Recommendation:
 
         for concept_index in selected_recom_concepts:
             top_scores, top_courses = util.top_n_similarity_scores_for_concept(
-                self.udemy_courses_df, self.sim_mat_concept_X_course, concept_index, n
+                self.udemy_courses_df, self.concept_X_course, concept_index, n
             )
 
             # Display the result
