@@ -3,16 +3,10 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Dict
 
-import textwrap
 import numpy as np
 import pandas as pd
 
-# import tensorflow as tf
-import os
-from pathlib import Path
-import json
 from sklearn.metrics.pairwise import cosine_similarity
-import matplotlib.pyplot as plt
 
 import google.generativeai as palm
 
@@ -25,10 +19,10 @@ from recommendation import Recommendation
 def init_palm_data():
     global udemy_courses_df, roadmap_concepts_df, roadmap_concepts_df, roadmaps_df
 
-    save_dir = "../data/"
+    save_dir = "../../embedding-generation/data/"
     emb_model_name = "embedding-gecko-001"
-    udemy_courses_df = pd.read_csv(save_dir + "udemy_courses_{}.csv".format(emb_model_name))
-    roadmap_nodes_df = pd.read_csv(save_dir + "roadmap_nodes_{}.csv".format(emb_model_name))
+    udemy_courses_df = pd.read_csv(save_dir + "udemy_courses_final.csv")
+    roadmap_nodes_df = pd.read_csv(save_dir + "roadmap_nodes_final.csv")
     roadmap_concepts_df = roadmap_nodes_df[roadmap_nodes_df["type"] == "concept"].copy()
     roadmap_concepts_df.reset_index(inplace=True)
 
@@ -320,7 +314,10 @@ async def get_recommendations(request: RecommendationRequest):
     print(recom_courses_title_list)
     print(recom_courses_url_list)
 
-    courses = [CourseRecommendation(course=title, url=url, explanation='same for all now') for title, url in recom_courses_title_url_zipped]
+    courses = [
+        CourseRecommendation(course=title, url=url, explanation="same for all now")
+        for title, url in recom_courses_title_url_zipped
+    ]
 
     role_recommendations = [
         RoleRecommendation(role=roadmaps_df.loc[recom_role_id]["name"], explanation="Explanation...", courses=courses)
