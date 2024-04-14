@@ -124,21 +124,21 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
 
     sim_mat_user_course_X_concept = cosine_similarity(user_emb_list, palm_concepts_emb_list)
 
-    eda_for_palm = ExplatoryDataAnalysis(
-        udemy_courses_df,
-        roadmap_concepts_df,
-        user_courses_df,
-        decoder_for_courses,
-        decoder_for_concepts,
-        decoder_for_user_courses,
-        sim_mat_course_X_concept,
-        sim_mat_user_course_X_concept,
-    )
+    # eda_for_palm = ExplatoryDataAnalysis(
+    #     udemy_courses_df,
+    #     roadmap_concepts_df,
+    #     user_courses_df,
+    #     decoder_for_courses,
+    #     decoder_for_concepts,
+    #     decoder_for_user_courses,
+    #     sim_mat_course_X_concept,
+    #     sim_mat_user_course_X_concept,
+    # )
 
-    eda_for_palm.find_course_X_concept_and_sim_scores(threshold=0.8)
-    eda_for_palm.find_concept_X_course_and_sim_scores(threshold=0.8)
+    # eda_for_palm.find_course_X_concept_and_sim_scores(threshold=0.8)
+    # eda_for_palm.find_concept_X_course_and_sim_scores(threshold=0.8)
 
-    eda_for_palm.find_user_course_X_concept_and_sim_scores(threshold=0.7)
+    # eda_for_palm.find_user_course_X_concept_and_sim_scores(threshold=0.7)
 
     # User Courses X Concepts Matches
     max_sim_for_row_user_courses_X_concepts = util.max_element_indices(sim_mat_user_course_X_concept)
@@ -153,7 +153,7 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
             total_match = total_match + 1
             user_concept_id_list.append(concept_id)
 
-    print(total_match)
+    # print(total_match)
 
     user_concept_id_set = set(user_concept_id_list)
 
@@ -188,8 +188,9 @@ def main() -> None:
     # concept_id = decoder_for_concepts[max_sim_for_row_df.iloc[19]['y']]
 
     # TODO: anotherModel
-    # anotherModel_course_emb_list,  anotherModel_concepts_emb_list = get_emb_lists(udemy_courses_df, roadmap_concepts_df, model='anotherModel')
-
+    voyage_course_emb_list,  voyage_concepts_emb_list = get_emb_lists(udemy_courses_df, roadmap_concepts_df, model='voyage')
+    voyage_sim_mat_course_X_concept = cosine_similarity(voyage_course_emb_list, voyage_concepts_emb_list)
+    voyage_sim_mat_concept_X_course = voyage_sim_mat_course_X_concept.transpose()
     # user1_took = "Physics , Intr. to Information Systems, Intr.to Comp.Eng.and Ethics, Mathematics I, Linear Algebra, Engineering Mathematics, Digital Circuits, Data Structures, Introduction to Electronics, Basics of Electrical Circuits, Object Oriented Programming, Computer Organization, Logic Circuits Laboratory, Numerical Methods, Formal Languages and Automata, Analysis of Algorithms I, Probability and Statistics, Microcomputer Lab., Database Systems, Microprocessor Systems, Computer Architecture, Computer Operating Systems, Analysis of Algorithms II, Signal&Systems for Comp.Eng."
     
     # user1_took_and_liked = "Digital Circuits , Data Structures , Introduction to Electronics, Microprocessor Systems , Computer Architecture"
@@ -342,7 +343,10 @@ async def get_recommendations(request: RecommendationRequest):
 
     print(role_recommendations)
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     # role_recommendations = [
     #     RoleRecommendation(
     #         role=rec["role"],
