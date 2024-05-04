@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # internal classes
-import src.util as util
+import util
 
 class Recommendation:
     def __init__(
