@@ -55,19 +55,24 @@ def palm_embed_fn(text):
     return palm.generate_embeddings(model="models/embedding-gecko-001", text=text)["embedding"]
 
 
-def voyage_embed_fn(self, text):
-    return voyage.embed([text], model=self.model_name).embeddings[0]
+def voyage_embed_fn(text):
+    return voyage.embed([text], model="voyage-large-2").embeddings[0]
 
 
-def get_emb_lists(courses_df: pd.DataFrame, concepts_df: pd.DataFrame, model: str):
-    column_name = model + "_emb"
+def get_emb_lists(folder:str, model: str):
 
-    courses_df[column_name] = courses_df.apply(util.convert_to_float, axis=1)
-    course_emb_list = courses_df[column_name].values
+    df_path = "../../embedding-generation/data/" + folder + "/"
+    udemy_courses_emb_df = pd.read_csv(df_path + "udemy_courses_{}.csv".format(model))
+    roadmap_nodes_emb_df = pd.read_csv(df_path + "roadmap_nodes_{}.csv".format(model))
+    roadmap_concepts_emb_df = roadmap_nodes_emb_df[roadmap_nodes_emb_df["id"].isin(concept_id_list)]
+    #roadmap_concepts_emb_df = roadmap_nodes_emb_df[roadmap_nodes_emb_df["id"].isin(roadmap_concepts_df["id"])]
+
+    udemy_courses_emb_df["emb"] = udemy_courses_emb_df.apply(util.convert_to_float, axis=1)
+    course_emb_list = udemy_courses_emb_df["emb"].values
     course_emb_list = np.vstack(course_emb_list)
 
-    concepts_df[column_name] = concepts_df.apply(util.convert_to_float, axis=1)
-    concept_emb_list = concepts_df[column_name].values
+    roadmap_concepts_emb_df["emb"] = roadmap_concepts_emb_df.apply(util.convert_to_float, axis=1)
+    concept_emb_list = roadmap_concepts_emb_df["emb"].values
     concept_emb_list = np.vstack(concept_emb_list)
 
     return course_emb_list, concept_emb_list
@@ -187,7 +192,7 @@ def main() -> None:
     decoder_for_concepts = dict([(v, k) for k, v in encoder_for_concepts.items()])
 
     # Udemy Courses and Concepts Embeddings List - PALM
-    course_emb_list_palm, concept_emb_list_palm = get_emb_lists(udemy_courses_df, roadmap_concepts_df, model="palm")
+    course_emb_list_palm, concept_emb_list_palm = get_emb_lists(folder="palm_emb", model="embedding-gecko-001")
 
     # Similarity Matrix between Courses and Concepts
     course_X_concept_palm = cosine_similarity(course_emb_list_palm, concept_emb_list_palm)
@@ -198,7 +203,9 @@ def main() -> None:
     # concept_id = decoder_for_concepts[max_sim_for_row_df.iloc[19]['y']]
 
     # TODO: anotherModel
-    course_emb_list_voyage, concept_emb_list_voyage = get_emb_lists(udemy_courses_df, roadmap_concepts_df, model="voyage")
+
+    course_emb_list_voyage, concept_emb_list_voyage = get_emb_lists(folder="voyage_emb", model="voyage-large-2")
+    #get_emb_lists(udemy_courses_df, roadmap_concepts_df, model="voyage")
     course_X_concept_voyage = cosine_similarity(course_emb_list_voyage, concept_emb_list_voyage)
     concept_X_course_voyage = course_X_concept_voyage.transpose()
 
@@ -346,7 +353,7 @@ async def get_recommendations(request: RecommendationRequest):
     )
     recom_role_id_voyage = recommendation.recommend_role(concept_id_list, user_concept_id_set_voyage)
     recom_course_id_list_voyage = recommendation.recommend_courses(concept_id_list, user_concept_id_set_voyage)
-    #####################
+    ####################
 
     recom_courses_df = udemy_courses_df[udemy_courses_df["id"].isin(recom_course_id_list_palm)]
     recom_courses_title_list = recom_courses_df["title"].tolist()

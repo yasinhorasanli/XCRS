@@ -7,7 +7,7 @@ def get_role_id(concept_id):
 
 
 def convert_to_float(row):
-  element = row['palm_emb']
+  element = row['emb']
   element = np.fromstring(element[1:-1], dtype=float, sep=',')
   return element
 

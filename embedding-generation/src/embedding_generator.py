@@ -39,11 +39,12 @@ class EmbeddingGenerator:
         # Column null check
         # TODO: logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
         # logging.debug('...')
-        print(self.udemy_courses_df[self.udemy_courses_df[self.emb_type].isnull()])
+        print("Number of null embedding value for Courses Dataframe: " + str(self.udemy_courses_df[self.emb_type].isnull().sum()))
 
-        self.udemy_courses_df.to_csv(self.df_path + "udemy_courses_{}.csv".format(self.model_name))
+        udemy_courses_emb_df = self.udemy_courses_df[[self.emb_type]].rename(columns={self.emb_type: 'emb'})
+        udemy_courses_emb_df.to_csv(self.df_path + "udemy_courses_{}.csv".format(self.model_name))
 
-        return self.udemy_courses_df
+        return udemy_courses_emb_df
 
     def mean_of_embeddings(self, indices, dataframe):
         embeddings = dataframe.loc[indices]
@@ -76,8 +77,9 @@ class EmbeddingGenerator:
         self.roadmap_nodes_df[self.emb_type] = self.roadmap_nodes_df.apply(self.embed_topics, axis=1)
 
         # Column null check
-        print(self.roadmap_nodes_df[self.roadmap_nodes_df[self.emb_type].isnull()])
+        print("Number of null embedding value for Roadmap Nodes Dataframe: " + str(self.roadmap_nodes_df[self.emb_type].isnull().sum()))
 
-        self.roadmap_nodes_df.to_csv(self.df_path + "roadmap_nodes_{}.csv".format(self.model_name))
-
-        return self.roadmap_nodes_df
+        roadmap_nodes_emb_df = self.roadmap_nodes_df[[self.emb_type]].rename(columns={self.emb_type: 'emb'})
+        roadmap_nodes_emb_df.to_csv(self.df_path + "roadmap_nodes_{}.csv".format(self.model_name))
+        
+        return roadmap_nodes_emb_df

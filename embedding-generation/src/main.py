@@ -4,7 +4,7 @@ import os
 import json
 
 # internal classes
-import src.util as util
+import util
 from embedding_generator import EmbeddingGenerator
 
 df_path = "../data/"
@@ -97,20 +97,19 @@ def main():
     roadmaps_df.set_index("id", inplace=True)
     # print(roadmaps_df)
 
-    # EMB. GEN. for Model: "embedding-gecko-001"
-    palm_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, "embedding-gecko-001")
-    udemy_courses_df = palm_embedding_generator.generate_embeddings_for_courses()
-    roadmap_nodes_df = palm_embedding_generator.generate_embeddings_for_roadmaps()
-
-    # EMB. GEN. for Model: "voyage-large-2"
-    voyage_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, "voyage-large-2")
-    udemy_courses_df = voyage_embedding_generator.generate_embeddings_for_courses()
-    roadmap_nodes_df = voyage_embedding_generator.generate_embeddings_for_roadmaps()
-
     # Save Final DataFrames
     udemy_courses_df.to_csv(df_path + "udemy_courses_final.csv")
     roadmap_nodes_df.to_csv(df_path + "roadmap_nodes_final.csv")
 
+    # EMB. GEN. for Model: "embedding-gecko-001"
+    palm_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, "embedding-gecko-001")
+    palm_embedding_generator.generate_embeddings_for_courses()
+    palm_embedding_generator.generate_embeddings_for_roadmaps()
+
+    # EMB. GEN. for Model: "voyage-large-2"
+    voyage_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, "voyage-large-2")
+    voyage_embedding_generator.generate_embeddings_for_courses()
+    voyage_embedding_generator.generate_embeddings_for_roadmaps()
 
     return
 
