@@ -27,6 +27,6 @@ python main.py
 
 Data will be generated under
 ```bash
-cd embedding-generation/data
+embedding-generation/data
 
 ```

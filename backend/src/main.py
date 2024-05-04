@@ -1,7 +1,5 @@
 # API
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from typing import List, Dict
 
 import numpy as np
 import pandas as pd
@@ -15,7 +13,8 @@ import voyageai
 # internal classes
 import util
 from eda import ExplatoryDataAnalysis
-from recommendation import Recommendation
+from recom import RecommendationEngine
+from models import CourseRecommendation, RoleRecommendation, Recommendation, RecommendationResponse, RecommendationRequest
 
 palm_api_key = open("../../embedding-generation/api_keys/palm_api_key.txt").read().strip()
 voyage_api_key = open("../../embedding-generation/api_keys/voyage_api_key.txt").read().strip()
@@ -158,7 +157,7 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
     total_match = 0
     user_concept_id_list = []
     for i in range(max_sim_for_row_user_courses_X_concepts_df.shape[0]):
-        course_name = decoder_for_user_courses[max_sim_for_row_user_courses_X_concepts_df.iloc[i]["x"]]
+        # course_name = decoder_for_user_courses[max_sim_for_row_user_courses_X_concepts_df.iloc[i]["x"]]
         concept_id = decoder_for_concepts[max_sim_for_row_user_courses_X_concepts_df.iloc[i]["y"]]
         max_sim = max_sim_for_row_user_courses_X_concepts_df.iloc[i]["max"]
         if max_sim > 0.7:
@@ -223,102 +222,80 @@ main()
 app = FastAPI()
 
 
-# Model for course recommendation
-class CourseRecommendation(BaseModel):
-    course: str
-    url: str
-    explanation: str
-
-
-# Model for role recommendation
-class RoleRecommendation(BaseModel):
-    role: str
-    explanation: str
-    courses: List[CourseRecommendation]
-
-
-# Model for recommendation response
-class RecommendationResponse(BaseModel):
-    recommendations: List[RoleRecommendation]
-
-
-# Model for recommendation request
-class RecommendationRequest(BaseModel):
-    took_and_liked: str
-    took_and_neutral: str
-    took_and_disliked: str
-    curious: str
-
-
 # Sample recommendation data
 recommendation_data = [
     {
-        "role": "Role A",
-        "explanation": "Explanation for Role A",
-        "courses": [
+        "model": "Mock Model",
+        "roles": [
             {
-                "course": "Course 1",
-                "url": "Url 1",
-                "explanation": "Explanation for Course 1",
+                "role": "Role A",
+                "explanation": "Explanation for Role A",
+                "courses": [
+                    {
+                        "course": "Course 1",
+                        "url": "Url 1",
+                        "explanation": "Explanation for Course 1"
+                    },
+                    {
+                        "course": "Course 2",
+                        "url": "Url 2",
+                        "explanation": "Explanation for Course 2"
+                    },
+                    {
+                        "course": "Course 3",
+                        "url": "Url 3",
+                        "explanation": "Explanation for Course 3"
+                    }
+                ]
             },
             {
-                "course": "Course 2",
-                "url": "Url 2",
-                "explanation": "Explanation for Course 2",
+                "role": "Role B",
+                "explanation": "Explanation for Role B",
+                "courses": [
+                    {
+                        "course": "Course 4",
+                        "url": "Url 4",
+                        "explanation": "Explanation for Course 4"
+                    },
+                    {
+                        "course": "Course 5",
+                        "url": "Url 5",
+                        "explanation": "Explanation for Course 5"
+                    },
+                    {
+                        "course": "Course 6",
+                        "url": "Url 6",
+                        "explanation": "Explanation for Course 6"
+                    }
+                ]
             },
             {
-                "course": "Course 3",
-                "url": "Url 3",
-                "explanation": "Explanation for Course 3",
-            },
-        ],
-    },
-    {
-        "role": "Role B",
-        "explanation": "Explanation for Role B",
-        "courses": [
-            {
-                "course": "Course 4",
-                "url": "Url 4",
-                "explanation": "Explanation for Course 4",
-            },
-            {
-                "course": "Course 5",
-                "url": "Url 5",
-                "explanation": "Explanation for Course 5",
-            },
-            {
-                "course": "Course 6",
-                "url": "Url 6",
-                "explanation": "Explanation for Course 6",
-            },
-        ],
-    },
-    {
-        "role": "Role C",
-        "explanation": "Explanation for Role C",
-        "courses": [
-            {
-                "course": "Course 7",
-                "url": "Url 7",
-                "explanation": "Explanation for Course 7",
-            },
-            {
-                "course": "Course 8",
-                "url": "Url 8",
-                "explanation": "Explanation for Course 8",
-            },
-            {
-                "course": "Course 9",
-                "url": "Url 9",
-                "explanation": "Explanation for Course 9",
-            },
-        ],
-    },
+                "role": "Role C",
+                "explanation": "Explanation for Role C",
+                "courses": [
+                    {
+                        "course": "Course 7",
+                        "url": "Url 7",
+                        "explanation": "Explanation for Course 7"
+                    },
+                    {
+                        "course": "Course 8",
+                        "url": "Url 8",
+                        "explanation": "Explanation for Course 8"
+                    },
+                    {
+                        "course": "Course 9",
+                        "url": "Url 9",
+                        "explanation": "Explanation for Course 9"
+                    }
+                ]
+            }
+        ]
+    }
 ]
 
 
-@app.post("/recommendations/")
+@app.post("/recommendations/palm")
 async def get_recommendations(request: RecommendationRequest):
 
     user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list_palm, user_emb_list_voyage = create_user_embeddings(
@@ -331,7 +308,7 @@ async def get_recommendations(request: RecommendationRequest):
 
     # PALM RECOMMENDATION
     user_concept_id_set_palm = before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list_palm, concept_emb_list_palm)
-    recommendation = Recommendation(
+    recommendation = RecommendationEngine(
         udemy_courses_df,
         roadmap_concepts_df,
         concept_X_course_palm,
@@ -342,17 +319,17 @@ async def get_recommendations(request: RecommendationRequest):
     recom_course_id_list_palm = recommendation.recommend_courses(concept_id_list, user_concept_id_set_palm)
     #####################
 
-    # VOYAGE RECOMMENDATION
-    user_concept_id_set_voyage = before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list_voyage, concept_emb_list_voyage)
-    recommendation = Recommendation(
-        udemy_courses_df,
-        roadmap_concepts_df,
-        concept_X_course_voyage,
-        encoder_for_concepts,
-        "voyage_emb",
-    )
-    recom_role_id_voyage = recommendation.recommend_role(concept_id_list, user_concept_id_set_voyage)
-    recom_course_id_list_voyage = recommendation.recommend_courses(concept_id_list, user_concept_id_set_voyage)
+    # # VOYAGE RECOMMENDATION
+    # user_concept_id_set_voyage = before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list_voyage, concept_emb_list_voyage)
+    # recommendation = RecommendationEngine(
+    #     udemy_courses_df,
+    #     roadmap_concepts_df,
+    #     concept_X_course_voyage,
+    #     encoder_for_concepts,
+    #     "voyage_emb",
+    # )
+    # recom_role_id_voyage = recommendation.recommend_role(concept_id_list, user_concept_id_set_voyage)
+    # recom_course_id_list_voyage = recommendation.recommend_courses(concept_id_list, user_concept_id_set_voyage)
     ####################
 
     recom_courses_df = udemy_courses_df[udemy_courses_df["id"].isin(recom_course_id_list_palm)]
@@ -377,16 +354,99 @@ async def get_recommendations(request: RecommendationRequest):
         )
     ]
 
-    print(role_recommendations)
+    recommendations = [
+        Recommendation(
+            model="embedding-gecko-001",
+            roles=role_recommendations
+        )
+    ]
 
-    # role_recommendations = [
-    #     RoleRecommendation(
-    #         role=rec["role"],
-    #         explanation=rec["explanation"],
-    #         courses=[CourseRecommendation(**course) for course in rec["courses"]],
+    print(recommendations)
+
+    return RecommendationResponse(recommendations=recommendations)
+
+
+@app.post("/recommendations/voyage")
+async def get_recommendations(request: RecommendationRequest):
+
+    user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list_palm, user_emb_list_voyage = create_user_embeddings(
+        request.took_and_liked,
+        request.took_and_neutral,
+        request.took_and_disliked,
+        request.curious,
+    )
+
+    # VOYAGE RECOMMENDATION
+    user_concept_id_set_voyage = before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list_voyage, concept_emb_list_voyage)
+    recommendation = RecommendationEngine(
+        udemy_courses_df,
+        roadmap_concepts_df,
+        concept_X_course_voyage,
+        encoder_for_concepts,
+        "voyage_emb",
+    )
+    recom_role_id_voyage = recommendation.recommend_role(concept_id_list, user_concept_id_set_voyage)
+    recom_course_id_list_voyage = recommendation.recommend_courses(concept_id_list, user_concept_id_set_voyage)
+    ####################
+
+    recom_courses_df = udemy_courses_df[udemy_courses_df["id"].isin(recom_course_id_list_voyage)]
+    recom_courses_title_list = recom_courses_df["title"].tolist()
+    udemy_prefix = "www.udemy.com"
+    recom_courses_url_list = [udemy_prefix + url for url in recom_courses_df["url"].tolist()]
+    recom_courses_title_url_zipped = zip(
+        recom_courses_df["title"].tolist(),
+        [udemy_prefix + url for url in recom_courses_df["url"].tolist()],
+    )
+
+    print(recom_courses_title_list)
+    print(recom_courses_url_list)
+
+    courses = [CourseRecommendation(course=title, url=url, explanation="same for all now") for title, url in recom_courses_title_url_zipped]
+
+    role_recommendations = [
+        RoleRecommendation(
+            role=roadmaps_df.loc[recom_role_id_voyage]["name"],
+            explanation="Explanation...",
+            courses=courses,
+        )
+    ]
+
+    recommendations = [
+        Recommendation(
+            model="voyage-large-2",
+            roles=role_recommendations
+        )
+    ]
+
+    print(recommendations)
+
+    return RecommendationResponse(recommendations=recommendations)
+
+
+@app.post("/recommendations/mock")
+async def get_recommendations(request: RecommendationRequest):
+
+    recommendations = [
+        Recommendation(
+            model=recommendation_data[0]["model"],
+            roles=[RoleRecommendation(
+                        role=role["role"],
+                        explanation=role["explanation"],
+                        courses=[CourseRecommendation(**course) for course in role["courses"]]
+            )
+            for role in rec["roles"]
+            ]
+        )
+        for rec in recommendation_data
+    ]
+
+    # recommendations = [
+    #     Recommendation(
+    #         model="mock",
+    #         roles=role_recommendations
     #     )
-    #     for rec in recommendation_data
     # ]
 
-    # Return recommendation response
-    return RecommendationResponse(recommendations=role_recommendations)
+    print(recommendations)
+    
+    return RecommendationResponse(recommendations=recommendations)

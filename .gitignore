@@ -1,5 +1,6 @@
 .vscode/
 backend/src/test.py
+backend/src/test.ipynb
 embedding-generation/api_keys/
 embedding-generation/src/test.ipynb
 embedding-generation/data/voyage_emb/

@@ -26,8 +26,7 @@ export default defineEventHandler(async (event) => {
     console.log('userData =', body)
 
     //const {data: responseData} = await useFetch('http://localhost:8000/', {
-    const response = await $fetch<RecommendationResult>('http://localhost:8000/recommendations/', {
-    
+    const palm_response = await $fetch<RecommendationResult>('http://localhost:8000/recommendations/palm', {
         method: 'post',
         body: { 
             took_and_liked: body.took_and_liked,
@@ -37,17 +36,45 @@ export default defineEventHandler(async (event) => {
         }
     })
 
-    console.log(response)
+    const voyage_response = await $fetch<RecommendationResult>('http://localhost:8000/recommendations/voyage', {
+        method: 'post',
+        body: { 
+            took_and_liked: body.took_and_liked,
+            took_and_neutral: body.took_and_neutral,
+            took_and_disliked: body.took_and_disliked,
+            curious: body.curious
+        }
+    })
 
-    console.log(response.recommendations[0].role)
-    console.log(response.recommendations[0].explanation)
-    console.log(response.recommendations[0].courses)
+    const mock_response = await $fetch<RecommendationResult>('http://localhost:8000/recommendations/mock', {
+        method: 'post',
+        body: { 
+            took_and_liked: body.took_and_liked,
+            took_and_neutral: body.took_and_neutral,
+            took_and_disliked: body.took_and_disliked,
+            curious: body.curious
+        }
+    })
+
+    console.log(palm_response)
+
+    // console.log(palm_response.recommendations[0].role)
+    // console.log(palm_response.recommendations[0].explanation)
+    // console.log(palm_response.recommendations[0].courses)
+
+    //console.log(voyage_response.recommendations[0].roles[0].role)
+
+    console.log(mock_response)
 
 
+    const readonlyArray = [palm_response.recommendations[0], voyage_response.recommendations[0], mock_response.recommendations[0]]
+    type Element = typeof readonlyArray[number]
     //response.recommendations
 
     return {
         // ... prediction'dan dönen sonuçları bu return de döndüreceksin
-        recommendations: response.recommendations
+        // recommendations: palm_response.recommendations
+        recommendations: readonlyArray
+
     } as RecommendationResult;
 })

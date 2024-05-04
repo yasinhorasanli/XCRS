@@ -4,7 +4,7 @@ import numpy as np
 # internal classes
 import util
 
-class Recommendation:
+class RecommendationEngine:
     def __init__(
         self,
         udemy_courses_df: pd.DataFrame,

@@ -1,5 +1,5 @@
 export interface RecommendationResult {
-    recommendations: RoleRecommendation[];
+    recommendations: Recommendation[];
 }
 
 // export interface RecommendationResult {
