@@ -3,8 +3,10 @@
 Make sure to install the dependencies:
 
 ```bash
-# pnpm
+# pip
 pip install google-generativeai 
+pip install -U voyageai
+pip install fastapi
 ...
 
 ```
