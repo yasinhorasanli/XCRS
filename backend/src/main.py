@@ -78,10 +78,10 @@ def get_emb_lists(folder: str, model: str):
     return course_emb_list, concept_emb_list
 
 
-def create_user_embeddings(took_and_liked: str, took_and_neutral: str, took_and_disliked: str, curious: str):
+def create_user_embeddings(took_and_liked: str, took_and_neutral: str, took_and_disliked: str, curious: str, model: str):
 
-    categories = ["TookAndLiked", "TookAndNeutral", "TookAndDisliked", "Curious"]
-    user_df = pd.DataFrame(columns=categories)
+    category = ["TookAndLiked", "TookAndNeutral", "TookAndDisliked", "Curious"]
+    user_df = pd.DataFrame(columns=category)
 
     user_df = pd.DataFrame.from_dict(
         [
@@ -95,37 +95,50 @@ def create_user_embeddings(took_and_liked: str, took_and_neutral: str, took_and_
     )
 
     result_dicts = []
-    columns_to_process = categories
+    columns_to_process = category
 
     for column in columns_to_process:
         result_dicts.extend(user_df.apply(lambda row: util.split_and_create_dict(row, column), axis=1).to_list())
 
     flat_data = [item for sublist in result_dicts for item in sublist.items()]
-    user_courses_df = pd.DataFrame(flat_data, columns=["courses", "categories"])
+    user_courses_df = pd.DataFrame(flat_data, columns=["course", "category"])
 
     print(user_courses_df)
 
-    encoder_for_user_courses = dict([(v, k) for v, k in zip(user_courses_df["courses"], range(len(user_courses_df)))])
+    encoder_for_user_courses = dict([(v, k) for v, k in zip(user_courses_df["course"], range(len(user_courses_df)))])
     decoder_for_user_courses = dict([(v, k) for k, v in encoder_for_user_courses.items()])
 
     # Embedding Generation for User Data
 
     # user_courses_df['palm_emb'] = user_courses_df.apply(convert_to_float, axis=1)
 
-    user_courses_df["palm_emb"] = user_courses_df["courses"].apply(palm_embed_fn)
-    user_emb_list_palm = user_courses_df["palm_emb"].values
-    user_emb_list_palm = np.vstack(user_emb_list_palm)
-    print(user_emb_list_palm.shape)
+    # TODO: If it is possible, search courses in wikipedia here.
 
-    user_courses_df["voyage_emb"] = user_courses_df["courses"].apply(voyage_embed_fn)
-    user_emb_list_voyage = user_courses_df["voyage_emb"].values
-    user_emb_list_voyage = np.vstack(user_emb_list_voyage)
-    print(user_emb_list_voyage.shape)
+    if model == "embedding-gecko-001":
+        user_courses_df["emb"] = user_courses_df["course"].apply(palm_embed_fn)
+    elif model == "voyage-large-2":
+        user_courses_df["emb"] = user_courses_df["course"].apply(voyage_embed_fn)
 
-    return (user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list_palm, user_emb_list_voyage)
+    user_emb_list = user_courses_df["emb"].values
+    user_emb_list = np.vstack(user_emb_list)
+    print(user_emb_list.shape)
+
+    return (user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list)
 
 
 def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list, palm_concepts_emb_list):
+
+    # # Coefficients for each category
+    # coefficients = {
+    #     'TookAndLiked': 1,
+    #     'TookAndNeutral': 0.5,
+    #     'TookAndDisliked': -1,
+    #     'Curious': 1  
+    # }
+
+    # # Multiply embeddings with coefficients based on categories
+    # user_courses_df['emb'] = user_courses_df.apply(lambda row: row['emb'] * coefficients.get(row['category'], 1), axis=1)
+
 
     sim_mat_user_course_X_concept = cosine_similarity(user_emb_list, palm_concepts_emb_list)
 
@@ -136,7 +149,7 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
     #     decoder_for_courses,
     #     decoder_for_concepts,
     #     decoder_for_user_courses,
-    #     sim_mat_course_X_concept,
+    #     sim_mat_course_X_concept, 
     #     sim_mat_user_course_X_concept,
     # )
 
@@ -219,11 +232,13 @@ app = FastAPI()
 @app.post("/recommendations/palm")
 async def get_recommendations(request: RecommendationRequest):
 
-    user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list_palm, user_emb_list_voyage = create_user_embeddings(
+    emb_model = "embedding-gecko-001"
+    user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list_palm = create_user_embeddings(
         request.took_and_liked,
         request.took_and_neutral,
         request.took_and_disliked,
         request.curious,
+        emb_model
     )
 
     user_concept_id_set_palm = before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list_palm, concept_emb_list_palm)
@@ -256,7 +271,7 @@ async def get_recommendations(request: RecommendationRequest):
             courses=courses,
         )
     ]
-    recommendations = [Recommendation(model="embedding-gecko-001", roles=role_recommendations)]
+    recommendations = [Recommendation(model=emb_model, roles=role_recommendations)]
 
     return RecommendationResponse(recommendations=recommendations)
 
@@ -264,11 +279,14 @@ async def get_recommendations(request: RecommendationRequest):
 @app.post("/recommendations/voyage")
 async def get_recommendations(request: RecommendationRequest):
 
-    user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list_palm, user_emb_list_voyage = create_user_embeddings(
+    emb_model = "voyage-large-2"
+
+    user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list_voyage = create_user_embeddings(
         request.took_and_liked,
         request.took_and_neutral,
         request.took_and_disliked,
         request.curious,
+        emb_model,
     )
 
     user_concept_id_set_voyage = before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list_voyage, concept_emb_list_voyage)
@@ -303,7 +321,7 @@ async def get_recommendations(request: RecommendationRequest):
         )
     ]
 
-    recommendations = [Recommendation(model="voyage-large-2", roles=role_recommendations)]
+    recommendations = [Recommendation(model=emb_model, roles=role_recommendations)]
 
     return RecommendationResponse(recommendations=recommendations)
 
