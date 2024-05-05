@@ -4,6 +4,7 @@ import numpy as np
 # internal classes
 import util
 
+
 class RecommendationEngine:
     def __init__(
         self,
@@ -11,14 +12,13 @@ class RecommendationEngine:
         roadmap_concepts_df: pd.DataFrame,
         concept_X_course: np.ndarray,
         encoder_for_concepts: dict,
-        emb_type: str
+        emb_type: str,
     ):
         self.udemy_courses_df = udemy_courses_df
         self.roadmap_concepts_df = roadmap_concepts_df
         self.concept_X_course = concept_X_course
         self.encoder_for_concepts = encoder_for_concepts
         self.recom_role_id = None
-        
 
     def recommend_role(self, concept_id_list, user_concept_id_set):
 
@@ -34,10 +34,7 @@ class RecommendationEngine:
             role_id = util.get_role_id(concept_id)
             user_role_id_concept_counts[role_id] += 1
 
-        ratio_dict = {
-            digit: user_role_id_concept_counts[digit] / role_id_concept_counts[digit]
-            for digit in role_id_concept_counts.keys()
-        }
+        ratio_dict = {digit: user_role_id_concept_counts[digit] / role_id_concept_counts[digit] for digit in role_id_concept_counts.keys()}
         recom_role_id = max(ratio_dict, key=ratio_dict.get)
 
         print(role_id_concept_counts)
@@ -68,14 +65,8 @@ class RecommendationEngine:
             if util.get_role_id(concept) == self.recom_role_id:
                 recom_role_concepts.add(concept)
 
-        
         print("Number of role-" + str(self.recom_role_id) + " concepts : " + str(len(recom_role_concepts)))
-        print(
-            "Number of matching user concepts for role-"
-            + str(self.recom_role_id)
-            + ": "
-            + str(len(user_concepts_for_recom_role))
-        )
+        print("Number of matching user concepts for role-" + str(self.recom_role_id) + ": " + str(len(user_concepts_for_recom_role)))
 
         recom_concepts = recom_role_concepts.difference(user_concepts_for_recom_role)
 
@@ -87,9 +78,7 @@ class RecommendationEngine:
         # Explanation for Course recommendation --- Concept recommendation and familarity
 
         familiar_concepts = self.roadmap_concepts_df[self.roadmap_concepts_df["id"].isin(user_concepts_for_recom_role)]
-        recom_concepts_df = self.roadmap_concepts_df[
-            self.roadmap_concepts_df["id"].isin(list(sorted_equalized_dict.keys())[:3])
-        ]
+        recom_concepts_df = self.roadmap_concepts_df[self.roadmap_concepts_df["id"].isin(list(sorted_equalized_dict.keys())[:3])]
         print("Concepts you are already familiar: ")
         print(familiar_concepts[["id", "name"]])
         print()
@@ -105,9 +94,7 @@ class RecommendationEngine:
         n = 3
 
         for concept_index in selected_recom_concepts:
-            top_scores, top_courses = util.top_n_similarity_scores_for_concept(
-                self.udemy_courses_df, self.concept_X_course, concept_index, n
-            )
+            top_scores, top_courses = util.top_n_similarity_scores_for_concept(self.udemy_courses_df, self.concept_X_course, concept_index, n)
 
             # Display the result
             print(f"Top {n} Similarity Scores:", top_scores)

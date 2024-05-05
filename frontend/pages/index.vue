@@ -3,14 +3,12 @@ import type { RecommendationResult } from '~/models/result';
 
 const myResult = ref<RecommendationResult>();
 
-const models = ['Palm', 'Voyage', 'Mock']
+const models = ['Model-1', 'Model-2', 'Model-3']
 const selected = ref(models[0])
 
 console.log('myResult =', myResult.value)
 
 </script>
-
-
 
 
 <template>
@@ -39,7 +37,7 @@ console.log('myResult =', myResult.value)
 
             <USelectMenu v-model="selected" :options="models" />
 
-            <div class="w-80" v-if="selected === 'Palm'">
+            <div class="w-80" v-if="selected === 'Model-1'">
                 <h2 class="text-2xl my-4  font-semibold">Palm</h2>
                 <table class="table">
                     <tbody>
@@ -65,7 +63,7 @@ console.log('myResult =', myResult.value)
                     </tbody>
                 </table>
             </div>
-            <div class="w-80" v-else-if="selected === 'Voyage'">
+            <div class="w-80" v-else-if="selected === 'Model-2'">
                 <h2 class="text-2xl my-4  font-semibold">Voyage</h2>
                 <table class="table">
                     <tbody>
@@ -91,7 +89,7 @@ console.log('myResult =', myResult.value)
                     </tbody>
                 </table>
             </div>
-            <div class="w-80" v-else-if="selected === 'Mock'">
+            <div class="w-80" v-else-if="selected === 'Model-3'">
                 <h2 class="text-2xl my-4  font-semibold">Mock</h2>
                 <table class="table">
                     <tbody>

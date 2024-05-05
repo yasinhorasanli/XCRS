@@ -9,17 +9,18 @@ from sklearn.metrics.pairwise import cosine_similarity
 import google.generativeai as palm
 import voyageai
 
-
 # internal classes
 import util
 from eda import ExplatoryDataAnalysis
 from recom import RecommendationEngine
-from models import CourseRecommendation, RoleRecommendation, Recommendation, RecommendationResponse, RecommendationRequest
+from models import CourseRecommendation, RoleRecommendation, Recommendation, RecommendationResponse, RecommendationRequest, sample_rec_data
 
 palm_api_key = open("../../embedding-generation/api_keys/palm_api_key.txt").read().strip()
 voyage_api_key = open("../../embedding-generation/api_keys/voyage_api_key.txt").read().strip()
 voyage = voyageai.Client(api_key=voyage_api_key)
 palm.configure(api_key=palm_api_key)
+udemy_website = "www.udemy.com"
+
 
 def init_data():
     global udemy_courses_df, roadmap_concepts_df, roadmap_concepts_df, roadmaps_df
@@ -58,13 +59,13 @@ def voyage_embed_fn(text):
     return voyage.embed([text], model="voyage-large-2").embeddings[0]
 
 
-def get_emb_lists(folder:str, model: str):
+def get_emb_lists(folder: str, model: str):
 
     df_path = "../../embedding-generation/data/" + folder + "/"
     udemy_courses_emb_df = pd.read_csv(df_path + "udemy_courses_{}.csv".format(model))
     roadmap_nodes_emb_df = pd.read_csv(df_path + "roadmap_nodes_{}.csv".format(model))
     roadmap_concepts_emb_df = roadmap_nodes_emb_df[roadmap_nodes_emb_df["id"].isin(concept_id_list)]
-    #roadmap_concepts_emb_df = roadmap_nodes_emb_df[roadmap_nodes_emb_df["id"].isin(roadmap_concepts_df["id"])]
+    # roadmap_concepts_emb_df = roadmap_nodes_emb_df[roadmap_nodes_emb_df["id"].isin(roadmap_concepts_df["id"])]
 
     udemy_courses_emb_df["emb"] = udemy_courses_emb_df.apply(util.convert_to_float, axis=1)
     course_emb_list = udemy_courses_emb_df["emb"].values
@@ -78,7 +79,7 @@ def get_emb_lists(folder:str, model: str):
 
 
 def create_user_embeddings(took_and_liked: str, took_and_neutral: str, took_and_disliked: str, curious: str):
-    # USER EMBEDDINGS PART
+
     categories = ["TookAndLiked", "TookAndNeutral", "TookAndDisliked", "Curious"]
     user_df = pd.DataFrame(columns=categories)
 
@@ -116,19 +117,12 @@ def create_user_embeddings(took_and_liked: str, took_and_neutral: str, took_and_
     user_emb_list_palm = np.vstack(user_emb_list_palm)
     print(user_emb_list_palm.shape)
 
-
     user_courses_df["voyage_emb"] = user_courses_df["courses"].apply(voyage_embed_fn)
     user_emb_list_voyage = user_courses_df["voyage_emb"].values
     user_emb_list_voyage = np.vstack(user_emb_list_voyage)
     print(user_emb_list_voyage.shape)
 
-    return (
-        user_courses_df,
-        encoder_for_user_courses,
-        decoder_for_user_courses,
-        user_emb_list_palm,
-        user_emb_list_voyage
-    )
+    return (user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list_palm, user_emb_list_voyage)
 
 
 def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list, palm_concepts_emb_list):
@@ -204,7 +198,7 @@ def main() -> None:
     # TODO: anotherModel
 
     course_emb_list_voyage, concept_emb_list_voyage = get_emb_lists(folder="voyage_emb", model="voyage-large-2")
-    #get_emb_lists(udemy_courses_df, roadmap_concepts_df, model="voyage")
+    # get_emb_lists(udemy_courses_df, roadmap_concepts_df, model="voyage")
     course_X_concept_voyage = cosine_similarity(course_emb_list_voyage, concept_emb_list_voyage)
     concept_X_course_voyage = course_X_concept_voyage.transpose()
 
@@ -222,79 +216,6 @@ main()
 app = FastAPI()
 
 
-# Sample recommendation data
-recommendation_data = [
-    {
-        "model": "Mock Model",
-        "roles": [
-            {
-                "role": "Role A",
-                "explanation": "Explanation for Role A",
-                "courses": [
-                    {
-                        "course": "Course 1",
-                        "url": "Url 1",
-                        "explanation": "Explanation for Course 1"
-                    },
-                    {
-                        "course": "Course 2",
-                        "url": "Url 2",
-                        "explanation": "Explanation for Course 2"
-                    },
-                    {
-                        "course": "Course 3",
-                        "url": "Url 3",
-                        "explanation": "Explanation for Course 3"
-                    }
-                ]
-            },
-            {
-                "role": "Role B",
-                "explanation": "Explanation for Role B",
-                "courses": [
-                    {
-                        "course": "Course 4",
-                        "url": "Url 4",
-                        "explanation": "Explanation for Course 4"
-                    },
-                    {
-                        "course": "Course 5",
-                        "url": "Url 5",
-                        "explanation": "Explanation for Course 5"
-                    },
-                    {
-                        "course": "Course 6",
-                        "url": "Url 6",
-                        "explanation": "Explanation for Course 6"
-                    }
-                ]
-            },
-            {
-                "role": "Role C",
-                "explanation": "Explanation for Role C",
-                "courses": [
-                    {
-                        "course": "Course 7",
-                        "url": "Url 7",
-                        "explanation": "Explanation for Course 7"
-                    },
-                    {
-                        "course": "Course 8",
-                        "url": "Url 8",
-                        "explanation": "Explanation for Course 8"
-                    },
-                    {
-                        "course": "Course 9",
-                        "url": "Url 9",
-                        "explanation": "Explanation for Course 9"
-                    }
-                ]
-            }
-        ]
-    }
-]
-
-
 @app.post("/recommendations/palm")
 async def get_recommendations(request: RecommendationRequest):
 
@@ -305,8 +226,6 @@ async def get_recommendations(request: RecommendationRequest):
         request.curious,
     )
 
-
-    # PALM RECOMMENDATION
     user_concept_id_set_palm = before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list_palm, concept_emb_list_palm)
     recommendation = RecommendationEngine(
         udemy_courses_df,
@@ -317,35 +236,19 @@ async def get_recommendations(request: RecommendationRequest):
     )
     recom_role_id_palm = recommendation.recommend_role(concept_id_list, user_concept_id_set_palm)
     recom_course_id_list_palm = recommendation.recommend_courses(concept_id_list, user_concept_id_set_palm)
-    #####################
-
-    # # VOYAGE RECOMMENDATION
-    # user_concept_id_set_voyage = before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list_voyage, concept_emb_list_voyage)
-    # recommendation = RecommendationEngine(
-    #     udemy_courses_df,
-    #     roadmap_concepts_df,
-    #     concept_X_course_voyage,
-    #     encoder_for_concepts,
-    #     "voyage_emb",
-    # )
-    # recom_role_id_voyage = recommendation.recommend_role(concept_id_list, user_concept_id_set_voyage)
-    # recom_course_id_list_voyage = recommendation.recommend_courses(concept_id_list, user_concept_id_set_voyage)
-    ####################
 
     recom_courses_df = udemy_courses_df[udemy_courses_df["id"].isin(recom_course_id_list_palm)]
     recom_courses_title_list = recom_courses_df["title"].tolist()
-    udemy_prefix = "www.udemy.com"
-    recom_courses_url_list = [udemy_prefix + url for url in recom_courses_df["url"].tolist()]
+    recom_courses_url_list = [udemy_website + url for url in recom_courses_df["url"].tolist()]
     recom_courses_title_url_zipped = zip(
         recom_courses_df["title"].tolist(),
-        [udemy_prefix + url for url in recom_courses_df["url"].tolist()],
+        [udemy_website + url for url in recom_courses_df["url"].tolist()],
     )
 
     print(recom_courses_title_list)
     print(recom_courses_url_list)
 
     courses = [CourseRecommendation(course=title, url=url, explanation="same for all now") for title, url in recom_courses_title_url_zipped]
-
     role_recommendations = [
         RoleRecommendation(
             role=roadmaps_df.loc[recom_role_id_palm]["name"],
@@ -353,15 +256,7 @@ async def get_recommendations(request: RecommendationRequest):
             courses=courses,
         )
     ]
-
-    recommendations = [
-        Recommendation(
-            model="embedding-gecko-001",
-            roles=role_recommendations
-        )
-    ]
-
-    print(recommendations)
+    recommendations = [Recommendation(model="embedding-gecko-001", roles=role_recommendations)]
 
     return RecommendationResponse(recommendations=recommendations)
 
@@ -376,7 +271,6 @@ async def get_recommendations(request: RecommendationRequest):
         request.curious,
     )
 
-    # VOYAGE RECOMMENDATION
     user_concept_id_set_voyage = before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list_voyage, concept_emb_list_voyage)
     recommendation = RecommendationEngine(
         udemy_courses_df,
@@ -387,15 +281,13 @@ async def get_recommendations(request: RecommendationRequest):
     )
     recom_role_id_voyage = recommendation.recommend_role(concept_id_list, user_concept_id_set_voyage)
     recom_course_id_list_voyage = recommendation.recommend_courses(concept_id_list, user_concept_id_set_voyage)
-    ####################
 
     recom_courses_df = udemy_courses_df[udemy_courses_df["id"].isin(recom_course_id_list_voyage)]
     recom_courses_title_list = recom_courses_df["title"].tolist()
-    udemy_prefix = "www.udemy.com"
-    recom_courses_url_list = [udemy_prefix + url for url in recom_courses_df["url"].tolist()]
+    recom_courses_url_list = [udemy_website + url for url in recom_courses_df["url"].tolist()]
     recom_courses_title_url_zipped = zip(
         recom_courses_df["title"].tolist(),
-        [udemy_prefix + url for url in recom_courses_df["url"].tolist()],
+        [udemy_website + url for url in recom_courses_df["url"].tolist()],
     )
 
     print(recom_courses_title_list)
@@ -411,14 +303,7 @@ async def get_recommendations(request: RecommendationRequest):
         )
     ]
 
-    recommendations = [
-        Recommendation(
-            model="voyage-large-2",
-            roles=role_recommendations
-        )
-    ]
-
-    print(recommendations)
+    recommendations = [Recommendation(model="voyage-large-2", roles=role_recommendations)]
 
     return RecommendationResponse(recommendations=recommendations)
 
@@ -428,25 +313,15 @@ async def get_recommendations(request: RecommendationRequest):
 
     recommendations = [
         Recommendation(
-            model=recommendation_data[0]["model"],
-            roles=[RoleRecommendation(
-                        role=role["role"],
-                        explanation=role["explanation"],
-                        courses=[CourseRecommendation(**course) for course in role["courses"]]
-            )
-            for role in rec["roles"]
-            ]
+            model=sample_rec_data[0]["model"],
+            roles=[
+                RoleRecommendation(
+                    role=role["role"], explanation=role["explanation"], courses=[CourseRecommendation(**course) for course in role["courses"]]
+                )
+                for role in rec["roles"]
+            ],
         )
-        for rec in recommendation_data
+        for rec in sample_rec_data
     ]
 
-    # recommendations = [
-    #     Recommendation(
-    #         model="mock",
-    #         roles=role_recommendations
-    #     )
-    # ]
-
-    print(recommendations)
-    
     return RecommendationResponse(recommendations=recommendations)

@@ -1,15 +1,17 @@
 import numpy as np
 
+
 def get_role_id(concept_id):
-  while(concept_id % 100 != concept_id):
-    concept_id = concept_id  / 100
-  return int(concept_id)
+    while concept_id % 100 != concept_id:
+        concept_id = concept_id / 100
+    return int(concept_id)
 
 
 def convert_to_float(row):
-  element = row['emb']
-  element = np.fromstring(element[1:-1], dtype=float, sep=',')
-  return element
+    element = row["emb"]
+    element = np.fromstring(element[1:-1], dtype=float, sep=",")
+    return element
+
 
 def max_element_indices(arr):
     no_of_rows = len(arr)
@@ -18,17 +20,18 @@ def max_element_indices(arr):
     for i in range(no_of_rows):
         max = 0
         for j in range(no_of_column):
-            if arr[i][j] > max :
+            if arr[i][j] > max:
                 max = arr[i][j]
                 x = i
                 y = j
-        max_sim_for_row.append({'x': x, 'y': y, 'max': max})
+        max_sim_for_row.append({"x": x, "y": y, "max": max})
     return max_sim_for_row
 
 
 def split_and_create_dict(row, column_name):
-    values = [value.strip() for value in row[column_name].split(',')]
+    values = [value.strip() for value in row[column_name].split(",")]
     return {value: column_name for value in values}
+
 
 # def create_lists_from_dataframe(df, columns):
 #     result_lists = []
@@ -44,7 +47,7 @@ def equalize_digits(original_list):
     # Find the maximum number of digits
     max_digits = max(map(lambda x: len(str(x)), original_list))
     # Calculate the necessary power of 10 for each integer
-    powers_of_10 = [10**(max_digits - len(str(x))) for x in original_list]
+    powers_of_10 = [10 ** (max_digits - len(str(x))) for x in original_list]
     # Equalize the number of digits by multiplying with the calculated powers of 10
     equalized_list = [x * power for x, power in zip(original_list, powers_of_10)]
     # Create dictionaries for original and equalized/sorted lists

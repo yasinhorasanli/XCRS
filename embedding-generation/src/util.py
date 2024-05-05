@@ -9,17 +9,7 @@ def category_matcher(x):
 
 
 def combine_columns(row):
-    return (
-        row["title"]
-        + ". \n "
-        + row["headline"]
-        + ". \n "
-        + row["category"]
-        + ". \n "
-        + row["what_u_learn"]
-        + ". \n "
-        + row["description"]
-    )
+    return row["title"] + ". \n " + row["headline"] + ". \n " + row["category"] + ". \n " + row["what_u_learn"] + ". \n " + row["description"]
 
 
 def list_files(startpath):

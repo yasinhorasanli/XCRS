@@ -4,6 +4,7 @@ import numpy as np
 import google.generativeai as palm
 import voyageai
 
+
 class EmbeddingGenerator:
 
     def __init__(self, udemy_courses_df: pd.DataFrame, roadmap_nodes_df: pd.DataFrame, df_path: str, model_name: str):
@@ -41,7 +42,7 @@ class EmbeddingGenerator:
         # logging.debug('...')
         print("Number of null embedding value for Courses Dataframe: " + str(self.udemy_courses_df[self.emb_type].isnull().sum()))
 
-        udemy_courses_emb_df = self.udemy_courses_df[[self.emb_type]].rename(columns={self.emb_type: 'emb'})
+        udemy_courses_emb_df = self.udemy_courses_df[[self.emb_type]].rename(columns={self.emb_type: "emb"})
         udemy_courses_emb_df.to_csv(self.df_path + "udemy_courses_{}.csv".format(self.model_name))
 
         return udemy_courses_emb_df
@@ -79,7 +80,7 @@ class EmbeddingGenerator:
         # Column null check
         print("Number of null embedding value for Roadmap Nodes Dataframe: " + str(self.roadmap_nodes_df[self.emb_type].isnull().sum()))
 
-        roadmap_nodes_emb_df = self.roadmap_nodes_df[[self.emb_type]].rename(columns={self.emb_type: 'emb'})
+        roadmap_nodes_emb_df = self.roadmap_nodes_df[[self.emb_type]].rename(columns={self.emb_type: "emb"})
         roadmap_nodes_emb_df.to_csv(self.df_path + "roadmap_nodes_{}.csv".format(self.model_name))
-        
+
         return roadmap_nodes_emb_df
