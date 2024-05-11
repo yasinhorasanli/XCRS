@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
     }>(event);
 
 
-    console.log('userData =', body)
+    //console.log('userData =', body)
 
     //const {data: responseData} = await useFetch('http://localhost:8000/', {
     const palm_response = await $fetch<RecommendationResult>('http://localhost:8000/recommendations/palm', {
@@ -56,7 +56,15 @@ export default defineEventHandler(async (event) => {
         }
     })
 
-    console.log(palm_response)
+    const save_response = await $fetch<RecommendationResult>('http://localhost:8000/save_inputs', {
+        method: 'post',
+        body: { 
+            took_and_liked: body.took_and_liked,
+            took_and_neutral: body.took_and_neutral,
+            took_and_disliked: body.took_and_disliked,
+            curious: body.curious
+        }
+    })
 
     // console.log(palm_response.recommendations[0].role)
     // console.log(palm_response.recommendations[0].explanation)
@@ -64,17 +72,13 @@ export default defineEventHandler(async (event) => {
 
     //console.log(voyage_response.recommendations[0].roles[0].role)
 
-    console.log(mock_response)
-
-
+    const savedFileName = save_response.fileName
     const readonlyArray = [palm_response.recommendations[0], voyage_response.recommendations[0], mock_response.recommendations[0]]
     type Element = typeof readonlyArray[number]
     //response.recommendations
 
     return {
-        // ... prediction'dan dönen sonuçları bu return de döndüreceksin
-        // recommendations: palm_response.recommendations
+        fileName: savedFileName,
         recommendations: readonlyArray
-
     } as RecommendationResult;
 })

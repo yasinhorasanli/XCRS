@@ -33,7 +33,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   // Do something with event.data
 
   try {
-    const response = await $fetch<RecommendationResult>('/api/recommendation', {
+    const response = await $fetch<RecommendationResult>('/api/recommend', {
       method: 'POST',
       body: event.data
     });

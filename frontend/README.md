@@ -16,6 +16,12 @@ pnpm install
 Start the frontend development server on `http://localhost:3000`:
 
 ```bash
+# go to frontend directory
+cd frontend
+
+```
+
+```bash
 # pnpm
 pnpm run dev
 ```

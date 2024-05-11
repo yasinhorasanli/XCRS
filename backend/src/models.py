@@ -24,6 +24,7 @@ class Recommendation(BaseModel):
 
 # Model for recommendation response
 class RecommendationResponse(BaseModel):
+    fileName: str
     recommendations: List[Recommendation]
 
 

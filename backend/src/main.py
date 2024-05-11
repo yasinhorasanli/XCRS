@@ -3,6 +3,7 @@ from fastapi import FastAPI, HTTPException
 
 import numpy as np
 import pandas as pd
+from datetime import datetime
 
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -273,7 +274,7 @@ async def get_recommendations(request: RecommendationRequest):
     ]
     recommendations = [Recommendation(model=emb_model, roles=role_recommendations)]
 
-    return RecommendationResponse(recommendations=recommendations)
+    return RecommendationResponse(fileName="", recommendations=recommendations)
 
 
 @app.post("/recommendations/voyage")
@@ -323,7 +324,7 @@ async def get_recommendations(request: RecommendationRequest):
 
     recommendations = [Recommendation(model=emb_model, roles=role_recommendations)]
 
-    return RecommendationResponse(recommendations=recommendations)
+    return RecommendationResponse(fileName="", recommendations=recommendations)
 
 
 @app.post("/recommendations/mock")
@@ -342,4 +343,29 @@ async def get_recommendations(request: RecommendationRequest):
         for rec in sample_rec_data
     ]
 
-    return RecommendationResponse(recommendations=recommendations)
+    return RecommendationResponse(fileName="", recommendations=recommendations)
+
+
+@app.post("/save_inputs")
+async def get_recommendations(request: RecommendationRequest):
+
+    fileName = datetime.now().strftime('%Y%m%d_%H%M%S.%f')[:-3]
+
+    print(fileName)
+    print(request)
+
+    with open('../user_inputs/{}.json'.format(fileName), 'w') as f:
+        f.write(request.json())
+
+    recommendations = [
+        Recommendation(
+            model="",
+            roles=[RoleRecommendation(role="", 
+                explanation="", 
+                courses=[CourseRecommendation(course="",url="",explanation="")]
+            )
+            ]
+        )
+    ]
+
+    return RecommendationResponse(fileName=fileName, recommendations=recommendations)

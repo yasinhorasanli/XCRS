@@ -1,4 +1,5 @@
 export interface RecommendationResult {
+    fileName: string,
     recommendations: Recommendation[];
 }
 
