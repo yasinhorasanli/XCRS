@@ -6,6 +6,12 @@ def get_role_id(concept_id):
         concept_id = concept_id / 100
     return int(concept_id)
 
+def custom_activation(x):
+    k = 0.2  # scaling factor
+    b = 25   # shift
+    # Apply shifted and scaled sigmoid function and round to 2 decimal places
+    return np.round(100 / (1 + np.exp(-k * (x - b))), 2)
+
 
 def convert_to_float(row):
     element = row["emb"]
@@ -67,5 +73,7 @@ def top_n_similarity_scores_for_concept(udemy_courses_df, similarity_matrix, con
     # Get the top N scores and their corresponding courses
     top_scores = row[top_indices]
     top_courses = udemy_courses_df.iloc[top_indices]
+    top_courses["sim_score"] = top_scores
 
-    return top_scores, top_courses
+
+    return top_courses
