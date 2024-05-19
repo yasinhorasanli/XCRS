@@ -14,6 +14,7 @@ class RecommendationEngine:
         roadmap_concepts_df: pd.DataFrame,
         concept_X_course: np.ndarray,
         encoder_for_concepts: dict,
+        encoder_for_courses: dict,
         roadmaps_df: pd.DataFrame,
         emb_type: str,
     ):
@@ -21,6 +22,7 @@ class RecommendationEngine:
         self.roadmap_concepts_df = roadmap_concepts_df
         self.concept_X_course = concept_X_course
         self.encoder_for_concepts = encoder_for_concepts
+        self.encoder_for_courses = encoder_for_courses
         self.roadmaps_df = roadmaps_df
         self.recom_role_id_list = []
 
@@ -124,7 +126,7 @@ class RecommendationEngine:
 
         # Number of concepts to recommend for each role
         n = 3
-        udemy_website = "www.udemy.com"
+        udemy_website = "https://www.udemy.com"
 
         if len(self.recom_role_id_list) == 0:
             raise Exception("Sorry, you should get a recommendation for role first!")
@@ -188,6 +190,8 @@ class RecommendationEngine:
                         }
                     )
                     rol_rec.courses.append(CourseRecommendation(course=course_row["title"], url=udemy_website+course_row["url"], explanation=""))
+                    # Selected courses added to this list due to prevent reselection.
+                    disliked_similar_course_id_list.append(self.encoder_for_courses[course_row["id"]])
 
                 # Display the result
                 print(f"Top {m} Similarity Scores: ", top_courses["sim_score"])

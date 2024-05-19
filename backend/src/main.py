@@ -170,9 +170,11 @@ def find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list, 
     similarity_matrix = cosine_similarity(disliked_emb_list, course_emb_list)
 
     similar_ones_index = np.argwhere(similarity_matrix > sim_thre)
-    disliked_similar_course_id_list = similar_ones_index[:, 1].tolist()
 
-    return disliked_similar_course_id_list
+    disliked_similar_course_list = similar_ones_index[:, 1].tolist()
+    # disliked_similar_course_id_list = [decoder_for_courses[idx] for idx in disliked_similar_course_list]
+
+    return disliked_similar_course_list
 
 
 def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list, palm_concepts_emb_list):
@@ -228,59 +230,11 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
     return user_concept_id_set
 
 
-def test_before_rec(took_and_liked, took_and_neutral, took_and_disliked, curious):
-
-    emb_model = "embedding-gecko-001"
-    user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list_palm = create_user_embeddings(
-        took_and_liked, took_and_neutral, took_and_disliked, curious, emb_model
-    )
-
-    user_concepts_df = find_similar_concepts_for_courses(user_courses_df, user_emb_list_palm, concept_emb_list_palm, roadmap_concepts_df)
-
-    # If empty dataframe happens
-    if user_concepts_df.shape[0] == 0:
-        return RecommendationResponse(fileName="Insufficient input.", recommendations=[])
-
-    disliked_similar_course_id_list = find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list_palm)
-
-    print(user_concepts_df)
-
-    recommendation = RecommendationEngine(
-        udemy_courses_df,
-        roadmap_concepts_df,
-        concept_X_course_palm,
-        encoder_for_concepts,
-        roadmaps_df,
-        "palm_emb",
-    )
-
-    rol_rec_list = recommendation.recommend_role(user_concepts_df)
-    rol_rec_list = recommendation.recommend_courses_edit(user_concepts_df, rol_rec_list, disliked_similar_course_id_list)
-
-    print(rol_rec_list)
-
-    recommendations = Recommendation(model=emb_model, roles=rol_rec_list)
-
-    # recommendations = [
-    #     Recommendation(
-    #         model="",
-    #         roles=[RoleRecommendation(role="",
-    #             explanation="",
-    #             courses=[CourseRecommendation(course="",url="",explanation="")]
-    #         )
-    #         ]
-    #     )
-    # ]
-
-    return RecommendationResponse(fileName="", recommendations=recommendations)
-
-
 def main() -> None:
     # LOAD DATA FOR PALM
     init_data()
 
-    global decoder_for_courses, encoder_for_concepts, decoder_for_concepts
-    # TODO: Why did you use encoder_for_concepts here?
+    global encoder_for_courses, decoder_for_courses, encoder_for_concepts, decoder_for_concepts
     global course_id_list, concept_id_list
     global course_emb_list_palm, concept_emb_list_palm, course_X_concept_palm, concept_X_course_palm
     global course_emb_list_voyage, concept_emb_list_voyage, course_X_concept_voyage, concept_X_course_voyage
@@ -394,6 +348,7 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
         roadmap_concepts_df,
         concept_X_course_palm,
         encoder_for_concepts,
+        encoder_for_courses,
         roadmaps_df,
         "palm_emb",
     )
