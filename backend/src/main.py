@@ -328,8 +328,6 @@ def main() -> None:
 app = FastAPI()
 
 
-
-
 @app.post("/save_inputs")
 async def save_inputs(request: RecommendationRequest):
 
@@ -349,7 +347,7 @@ async def save_inputs(request: RecommendationRequest):
 
 
 @app.post("/recommendations/{model_name}")
-async def test(request: RecommendationRequest, model_name: str):
+async def get_recommendations(request: RecommendationRequest, model_name: str):
 
     if model_name == "palm":
         emb_model = "embedding-gecko-001"
@@ -360,7 +358,7 @@ async def test(request: RecommendationRequest, model_name: str):
         emb_model = "voyage-large-2"
         concept_emb_list = concept_emb_list_voyage
         course_emb_list = course_emb_list_voyage
-        sim_thre = 0.75
+        sim_thre = 0.8
     elif model_name == "mock":
         recommendations = Recommendation(
             model=sample_rec_data["model"],

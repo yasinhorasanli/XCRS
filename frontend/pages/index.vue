@@ -50,15 +50,15 @@ watch(modelNum, (newNum) => {
                         <!-- <tr>
                             <td colspan="4" class="px-4 py-2 text-center font-semibold ">{{ myResult.recommendations[modelNum].model }}</td>
                         </tr> -->
-                        <tr v-for="row in myResult.recommendations[modelNum].roles" :key="row.role" class="border-2 border-slate-400">
+                        <tr v-for="row in myResult.recommendations[modelNum].roles" :key="row.role + modelNum" class="border-2 border-slate-400">
                             <td colspan="4" class="px-4 py-2 bg-slate-100">
                                 <div class="text-xl font-semibold">{{ row.role }}</div>
                                 <div class="mt-2">{{ row.explanation }}</div>
                                 <div class="mt-2">
-                                    <div v-for="(course, index) in row.courses" :key="course.course" class="mt-2 bg-blue-100">
+                                    <div v-for="(course, index) in row.courses" :key="course.course + + modelNum" class="mt-2 bg-blue-100">
                                         <div class="text-lg font-bold mt-4 text-blue-800">Course {{ index + 1 }}</div>
                                         <div><strong>Title:</strong> {{ course.course }}</div>
-                                        <div><strong>Url:</strong> <a :href="course.url" target="_blank" class="text-blue-500 underline">{{ course.url }}</a></div>
+                                        <div><strong>Url:</strong> <a :href="course.url" target="_blank" rel="noopener noreferrer" class="text-blue-500 underline">{{ course.url }}</a></div>
                                         <div><strong>Explanation:</strong> {{ course.explanation }}</div>
                                     </div>
                                 </div>

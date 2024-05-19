@@ -172,7 +172,8 @@ class RecommendationEngine:
                 top_courses = util.top_n_similarity_scores_for_concept(
                     self.udemy_courses_df, self.concept_X_course, concept_index, disliked_similar_course_id_list, m
                 )
-                rec_concept_row = self.roadmap_concepts_df[self.roadmap_concepts_df["id"] == concept_index]
+                # TODO: Check if the concept is true
+                rec_concept_row = self.roadmap_concepts_df.loc[self.roadmap_concepts_df['id'] == concept_index]
                 for id, course_row in top_courses.iterrows():
 
                     result_for_recom_role.append(
