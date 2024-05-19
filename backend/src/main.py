@@ -127,9 +127,9 @@ def create_user_embeddings(took_and_liked: str, took_and_neutral: str, took_and_
     return (user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list)
 
 
-def find_similar_concepts_for_courses(user_courses_df, user_emb_list, palm_concepts_emb_list, roadmap_concepts_df):
+def find_similar_concepts_for_courses(user_courses_df, user_emb_list, concepts_emb_list, roadmap_concepts_df):
 
-    similarity_matrix = cosine_similarity(user_emb_list, palm_concepts_emb_list)
+    similarity_matrix = cosine_similarity(user_emb_list, concepts_emb_list)
 
     # Find courses with similarity score > 0.7 for each concept
     result = []
@@ -153,10 +153,22 @@ def find_similar_concepts_for_courses(user_courses_df, user_emb_list, palm_conce
                     'similarity_score': sim_score
                 })
 
+
     # Create DataFrame from the result
     result_df = pd.DataFrame(result)
 
     return result_df
+
+def find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list):
+
+    disliked_courses = user_courses_df[user_courses_df['category'] == 'TookAndDisliked']
+    disliked_emb_list = np.vstack(disliked_courses["emb"].values)
+    similarity_matrix = cosine_similarity(disliked_emb_list, course_emb_list)
+    
+    similar_ones_index = np.argwhere(similarity_matrix > 0.70)
+    disliked_similar_course_id_list = similar_ones_index[:, 1].tolist()
+
+    return disliked_similar_course_id_list
 
 
 def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list, palm_concepts_emb_list):
@@ -223,10 +235,18 @@ def test_before_rec(took_and_liked, took_and_neutral, took_and_disliked, curious
         curious,
         emb_model
     )
+    
     user_concepts_df = find_similar_concepts_for_courses(user_courses_df, user_emb_list_palm, concept_emb_list_palm, roadmap_concepts_df)
 
-    print(user_concepts_df)
 
+    # If empty dataframe happens
+    if (user_concepts_df.shape[0] == 0):
+        return RecommendationResponse(fileName="Insufficient input.", recommendations=[])
+
+    disliked_similar_course_id_list = find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list_palm)
+
+    print(user_concepts_df)
+    
     recommendation = RecommendationEngine(
         udemy_courses_df,
         roadmap_concepts_df,
@@ -237,40 +257,22 @@ def test_before_rec(took_and_liked, took_and_neutral, took_and_disliked, curious
     )
 
     rol_rec_list = recommendation.recommend_role(user_concepts_df)
+    rol_rec_list = recommendation.recommend_courses_edit(user_concepts_df, rol_rec_list, disliked_similar_course_id_list)
 
     print(rol_rec_list)
 
-    # RR = recommendation.generate_explanation_role(user_concepts_df)
+    recommendations = Recommendation(model=emb_model, roles=rol_rec_list)
 
-    rol_rec_list = recommendation.recommend_courses_edit(user_concepts_df, rol_rec_list)
-
-
-    #print(recom_role_id_list_palm)
-    print(rol_rec_list)
-
-    recom_courses_df = udemy_courses_df[udemy_courses_df["id"].isin(recom_course_id_list_palm)]
-    recom_courses_title_list = recom_courses_df["title"].tolist()
-    recom_courses_url_list = [udemy_website + url for url in recom_courses_df["url"].tolist()]
-    recom_courses_title_url_zipped = zip(
-        recom_courses_df["title"].tolist(),
-        [udemy_website + url for url in recom_courses_df["url"].tolist()],
-    )
-
-    print(recom_courses_title_list)
-    print(recom_courses_url_list)
-
-
-
-    recommendations = [
-        Recommendation(
-            model="",
-            roles=[RoleRecommendation(role="", 
-                explanation="", 
-                courses=[CourseRecommendation(course="",url="",explanation="")]
-            )
-            ]
-        )
-    ]
+    # recommendations = [
+    #     Recommendation(
+    #         model="",
+    #         roles=[RoleRecommendation(role="", 
+    #             explanation="", 
+    #             courses=[CourseRecommendation(course="",url="",explanation="")]
+    #         )
+    #         ]
+    #     )
+    # ]
 
     return RecommendationResponse(fileName="", recommendations=recommendations)
 
@@ -311,13 +313,13 @@ def main() -> None:
     course_X_concept_voyage = cosine_similarity(course_emb_list_voyage, concept_emb_list_voyage)
     concept_X_course_voyage = course_X_concept_voyage.transpose()
 
-    user1_took = "Physics , Intr. to Information Systems, Intr.to Comp.Eng.and Ethics, Mathematics I, Linear Algebra, Engineering Mathematics, Digital Circuits, Data Structures, Introduction to Electronics, Basics of Electrical Circuits, Object Oriented Programming, Computer Organization, Logic Circuits Laboratory, Numerical Methods, Formal Languages and Automata, Analysis of Algorithms I, Probability and Statistics, Microcomputer Lab., Database Systems, Microprocessor Systems, Computer Architecture, Computer Operating Systems, Analysis of Algorithms II, Signal&Systems for Comp.Eng."
-    user1_took_and_liked = "Digital Circuits , Data Structures , Introduction to Electronics, Microprocessor Systems , Computer Architecture"
-    user1_took_and_neutral = "Mathematics I, Linear Algebra, Engineering Mathematics, Basics of Electrical Circuits, Object Oriented Programming, Computer Organization, Logic Circuits Laboratory, Analysis of Algorithms I, Probability and Statistics, Microcomputer Lab., Database Systems, Computer Operating Systems, Analysis of Algorithms II, Signal&Systems for Comp.Eng."
-    user1_took_and_disliked = "Physics, Intr. to Information Systems, Intr.to Comp.Eng.and Ethics, Numerical Methods, Formal Languages and Automata"
-    user1_curious = "Embedded Softwares, Web Development"
+    # user1_took = "Physics , Intr. to Information Systems, Intr.to Comp.Eng.and Ethics, Mathematics I, Linear Algebra, Engineering Mathematics, Digital Circuits, Data Structures, Introduction to Electronics, Basics of Electrical Circuits, Object Oriented Programming, Computer Organization, Logic Circuits Laboratory, Numerical Methods, Formal Languages and Automata, Analysis of Algorithms I, Probability and Statistics, Microcomputer Lab., Database Systems, Microprocessor Systems, Computer Architecture, Computer Operating Systems, Analysis of Algorithms II, Signal&Systems for Comp.Eng."
+    # user1_took_and_liked = "Digital Circuits , Data Structures , Introduction to Electronics, Microprocessor Systems , Computer Architecture"
+    # user1_took_and_neutral = "Mathematics I, Linear Algebra, Engineering Mathematics, Basics of Electrical Circuits, Object Oriented Programming, Computer Organization, Logic Circuits Laboratory, Analysis of Algorithms I, Probability and Statistics, Microcomputer Lab., Database Systems, Computer Operating Systems, Analysis of Algorithms II, Signal&Systems for Comp.Eng."
+    # user1_took_and_disliked = "Physics, Intr. to Information Systems, Intr.to Comp.Eng.and Ethics, Numerical Methods, Formal Languages and Automata, kotlin, Unity"
+    # user1_curious = "Embedded Softwares, Web Development"
 
-    test_before_rec(user1_took_and_liked, user1_took_and_neutral, user1_took_and_disliked, user1_curious)
+    # test_before_rec(user1_took_and_liked, user1_took_and_neutral, user1_took_and_disliked, user1_curious)
 
 
 
@@ -331,123 +333,6 @@ main()
 app = FastAPI()
 
 
-@app.post("/recommendations/palm")
-async def get_recommendations(request: RecommendationRequest):
-
-    emb_model = "embedding-gecko-001"
-    user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list_palm = create_user_embeddings(
-        request.took_and_liked,
-        request.took_and_neutral,
-        request.took_and_disliked,
-        request.curious,
-        emb_model
-    )
-
-    user_concept_id_set_palm = before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list_palm, concept_emb_list_palm)
-    recommendation = RecommendationEngine(
-        udemy_courses_df,
-        roadmap_concepts_df,
-        concept_X_course_palm,
-        encoder_for_concepts,
-        roadmaps_df,
-        "palm_emb",
-    )
-    recom_role_id_palm = recommendation.recommend_role(concept_id_list, user_concept_id_set_palm)
-    recom_course_id_list_palm = recommendation.recommend_courses(concept_id_list, user_concept_id_set_palm)
-
-    recom_courses_df = udemy_courses_df[udemy_courses_df["id"].isin(recom_course_id_list_palm)]
-    recom_courses_title_list = recom_courses_df["title"].tolist()
-    recom_courses_url_list = [udemy_website + url for url in recom_courses_df["url"].tolist()]
-    recom_courses_title_url_zipped = zip(
-        recom_courses_df["title"].tolist(),
-        [udemy_website + url for url in recom_courses_df["url"].tolist()],
-    )
-
-    print(recom_courses_title_list)
-    print(recom_courses_url_list)
-
-    courses = [CourseRecommendation(course=title, url=url, explanation="same for all now") for title, url in recom_courses_title_url_zipped]
-    role_recommendations = [
-        RoleRecommendation(
-            role=roadmaps_df.loc[recom_role_id_palm]["name"],
-            explanation="Explanation...",
-            courses=courses,
-        )
-    ]
-    recommendations = [Recommendation(model=emb_model, roles=role_recommendations)]
-
-    return RecommendationResponse(fileName="", recommendations=recommendations)
-
-
-@app.post("/recommendations/voyage")
-async def get_recommendations(request: RecommendationRequest):
-
-    emb_model = "voyage-large-2"
-
-    user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list_voyage = create_user_embeddings(
-        request.took_and_liked,
-        request.took_and_neutral,
-        request.took_and_disliked,
-        request.curious,
-        emb_model,
-    )
-
-    user_concept_id_set_voyage = before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list_voyage, concept_emb_list_voyage)
-    recommendation = RecommendationEngine(
-        udemy_courses_df,
-        roadmap_concepts_df,
-        concept_X_course_voyage,
-        encoder_for_concepts,
-        roadmaps_df,
-        "voyage_emb",
-    )
-    recom_role_id_voyage = recommendation.recommend_role(concept_id_list, user_concept_id_set_voyage)
-    recom_course_id_list_voyage = recommendation.recommend_courses(concept_id_list, user_concept_id_set_voyage)
-
-    recom_courses_df = udemy_courses_df[udemy_courses_df["id"].isin(recom_course_id_list_voyage)]
-    recom_courses_title_list = recom_courses_df["title"].tolist()
-    recom_courses_url_list = [udemy_website + url for url in recom_courses_df["url"].tolist()]
-    recom_courses_title_url_zipped = zip(
-        recom_courses_df["title"].tolist(),
-        [udemy_website + url for url in recom_courses_df["url"].tolist()],
-    )
-
-    print(recom_courses_title_list)
-    print(recom_courses_url_list)
-
-    courses = [CourseRecommendation(course=title, url=url, explanation="same for all now") for title, url in recom_courses_title_url_zipped]
-
-    role_recommendations = [
-        RoleRecommendation(
-            role=roadmaps_df.loc[recom_role_id_voyage]["name"],
-            explanation="Explanation...",
-            courses=courses,
-        )
-    ]
-
-    recommendations = [Recommendation(model=emb_model, roles=role_recommendations)]
-
-    return RecommendationResponse(fileName="", recommendations=recommendations)
-
-
-@app.post("/recommendations/mock")
-async def get_mock_recommendations(request: RecommendationRequest):
-
-    recommendations = [
-        Recommendation(
-            model=sample_rec_data[0]["model"],
-            roles=[
-                RoleRecommendation(
-                    role=role["role"], explanation=role["explanation"], courses=[CourseRecommendation(**course) for course in role["courses"]]
-                )
-                for role in rec["roles"]
-            ],
-        )
-        for rec in sample_rec_data
-    ]
-
-    return RecommendationResponse(fileName="", recommendations=recommendations)
-
 
 @app.post("/save_inputs")
 async def save_inputs(request: RecommendationRequest):
@@ -460,49 +345,80 @@ async def save_inputs(request: RecommendationRequest):
     with open('../user_inputs/{}.json'.format(fileName), 'w') as f:
         f.write(request.json())
 
-    recommendations = [
-        Recommendation(
-            model="",
-            roles=[RoleRecommendation(role="", 
-                explanation="", 
-                courses=[CourseRecommendation(course="",url="",explanation="")]
-            )
-            ]
-        )
-    ]
+    recommendations = Recommendation(
+                        model="",
+                        roles=[RoleRecommendation(role="", 
+                            explanation="", 
+                            courses=[CourseRecommendation(course="",url="",explanation="")]
+                        )
+                        ]
+                    )
+    
 
-    return RecommendationResponse(fileName=fileName, recommendations=recommendations)
-
+    return RecommendationResponse(fileName=fileName, recommendations=[recommendations])
 
 
 
-@app.post("/test")
-async def test(request: RecommendationRequest):
+@app.post("/recommendations/{model_name}")
+async def test(request: RecommendationRequest, model_name:str):
 
-    emb_model = "embedding-gecko-001"
-    user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list_palm = create_user_embeddings(
+    if (model_name=="palm"):
+        emb_model = "embedding-gecko-001"
+        concept_emb_list = concept_emb_list_palm
+        course_emb_list = course_emb_list_palm
+    elif (model_name == "voyage"):
+        emb_model = "voyage-large-2"
+        concept_emb_list = concept_emb_list_voyage
+        course_emb_list = course_emb_list_voyage
+    elif (model_name == "mock"):
+        recommendations = Recommendation(
+                    model=sample_rec_data["model"],
+                    roles=[
+                        RoleRecommendation(
+                            role=role["role"], explanation=role["explanation"], courses=[CourseRecommendation(**course) for course in role["courses"]]
+                        )
+                        for role in sample_rec_data["roles"]
+                    ],
+                )
+        return RecommendationResponse(fileName="", recommendations=[recommendations])
+    else:
+        raise HTTPException(status_code=404, detail="Embedding model not found")
+
+    user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list = create_user_embeddings(
         request.took_and_liked,
         request.took_and_neutral,
         request.took_and_disliked,
         request.curious,
         emb_model
     )
-    result_df = find_similar_concepts_for_courses(user_courses_df, user_emb_list_palm, concept_emb_list_palm, roadmap_concepts_df)
 
-    print(result_df)
-
-    recommendations = [
-        Recommendation(
-            model="",
-            roles=[RoleRecommendation(role="", 
-                explanation="", 
-                courses=[CourseRecommendation(course="",url="",explanation="")]
-            )
-            ]
-        )
-    ]
-
-    return RecommendationResponse(fileName="", recommendations=recommendations)
+    user_concepts_df = find_similar_concepts_for_courses(user_courses_df, user_emb_list, concept_emb_list, roadmap_concepts_df)
 
 
+    # If empty dataframe happens
+    if (user_concepts_df.shape[0] == 0):
+        raise HTTPException(status_code=404, detail="Insufficient input.")
+        # return RecommendationResponse(fileName="Insufficient input.", recommendations=[])
 
+    disliked_similar_course_id_list = find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list)
+
+    print(user_concepts_df)
+    
+
+    recommendation = RecommendationEngine(
+        udemy_courses_df,
+        roadmap_concepts_df,
+        concept_X_course_palm,
+        encoder_for_concepts,
+        roadmaps_df,
+        "palm_emb",
+    )
+
+    rol_rec_list = recommendation.recommend_role(user_concepts_df)
+    rol_rec_list = recommendation.recommend_courses(user_concepts_df, rol_rec_list, disliked_similar_course_id_list)
+
+    print(rol_rec_list)
+
+    recommendations = Recommendation(model=emb_model, roles=rol_rec_list)
+
+    return RecommendationResponse(fileName="", recommendations=[recommendations])
