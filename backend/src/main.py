@@ -1,5 +1,6 @@
 # API
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import JSONResponse
 
 import numpy as np
 import pandas as pd
@@ -8,6 +9,7 @@ from datetime import datetime
 from sklearn.metrics.pairwise import cosine_similarity
 
 import google.generativeai as palm
+import uvicorn
 import voyageai
 
 # internal classes
@@ -49,7 +51,7 @@ def init_data():
     roadmaps_df = pd.DataFrame.from_dict(roadmaps_dict)
     roadmaps_df.set_index("id", inplace=True)
 
-    #return (udemy_courses_df, roadmap_nodes_df, roadmap_concepts_df, roadmaps_df)
+    # return (udemy_courses_df, roadmap_nodes_df, roadmap_concepts_df, roadmaps_df)
 
 
 def palm_embed_fn(text):
@@ -127,7 +129,7 @@ def create_user_embeddings(took_and_liked: str, took_and_neutral: str, took_and_
     return (user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list)
 
 
-def find_similar_concepts_for_courses(user_courses_df, user_emb_list, concepts_emb_list, roadmap_concepts_df):
+def find_similar_concepts_for_courses(user_courses_df, user_emb_list, concepts_emb_list, roadmap_concepts_df, sim_thre):
 
     similarity_matrix = cosine_similarity(user_emb_list, concepts_emb_list)
 
@@ -135,37 +137,39 @@ def find_similar_concepts_for_courses(user_courses_df, user_emb_list, concepts_e
     result = []
     for i, row in user_courses_df.iterrows():
         course_id = i
-        course_name = row['course']
-        category = row['category']
+        course_name = row["course"]
+        category = row["category"]
         similarities = similarity_matrix[i]
         for j, sim_score in enumerate(similarities):
-            if sim_score > 0.7:
-                concept_id = roadmap_concepts_df.loc[j, 'id']
+            if sim_score > sim_thre:
+                concept_id = roadmap_concepts_df.loc[j, "id"]
                 role_id = util.get_role_id(concept_id)
-                concept_name = roadmap_concepts_df.loc[j, 'name']
-                result.append({
-                    'course_id': course_id,
-                    'course_name': course_name,
-                    'category': category,
-                    'concept_id': concept_id,
-                    'concept_name': concept_name,
-                    'role_id': role_id,
-                    'similarity_score': sim_score
-                })
-
+                concept_name = roadmap_concepts_df.loc[j, "name"]
+                result.append(
+                    {
+                        "course_id": course_id,
+                        "course_name": course_name,
+                        "category": category,
+                        "concept_id": concept_id,
+                        "concept_name": concept_name,
+                        "role_id": role_id,
+                        "similarity_score": sim_score,
+                    }
+                )
 
     # Create DataFrame from the result
     result_df = pd.DataFrame(result)
 
     return result_df
 
-def find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list):
 
-    disliked_courses = user_courses_df[user_courses_df['category'] == 'TookAndDisliked']
+def find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list, sim_thre):
+
+    disliked_courses = user_courses_df[user_courses_df["category"] == "TookAndDisliked"]
     disliked_emb_list = np.vstack(disliked_courses["emb"].values)
     similarity_matrix = cosine_similarity(disliked_emb_list, course_emb_list)
-    
-    similar_ones_index = np.argwhere(similarity_matrix > 0.70)
+
+    similar_ones_index = np.argwhere(similarity_matrix > sim_thre)
     disliked_similar_course_id_list = similar_ones_index[:, 1].tolist()
 
     return disliked_similar_course_id_list
@@ -178,12 +182,11 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
     #     'TookAndLiked': 1,
     #     'TookAndNeutral': 0.5,
     #     'TookAndDisliked': -1,
-    #     'Curious': 1  
+    #     'Curious': 1
     # }
 
     # # Multiply embeddings with coefficients based on categories
     # user_courses_df['emb'] = user_courses_df.apply(lambda row: row['emb'] * coefficients.get(row['category'], 1), axis=1)
-
 
     sim_mat_user_course_X_concept = cosine_similarity(user_emb_list, palm_concepts_emb_list)
 
@@ -194,7 +197,7 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
     #     decoder_for_courses,
     #     decoder_for_concepts,
     #     decoder_for_user_courses,
-    #     sim_mat_course_X_concept, 
+    #     sim_mat_course_X_concept,
     #     sim_mat_user_course_X_concept,
     # )
 
@@ -207,12 +210,11 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
     max_sim_for_row_user_courses_X_concepts = util.max_element_indices(sim_mat_user_course_X_concept)
     max_sim_for_row_user_courses_X_concepts_df = pd.DataFrame(max_sim_for_row_user_courses_X_concepts)
 
-
     total_match = 0
     user_concept_id_list = []
 
     for i in range(max_sim_for_row_user_courses_X_concepts_df.shape[0]):
-        #course_name = decoder_for_user_courses[max_sim_for_row_user_courses_X_concepts_df.iloc[i]["x"]]
+        # course_name = decoder_for_user_courses[max_sim_for_row_user_courses_X_concepts_df.iloc[i]["x"]]
         concept_id = decoder_for_concepts[max_sim_for_row_user_courses_X_concepts_df.iloc[i]["y"]]
         max_sim = max_sim_for_row_user_courses_X_concepts_df.iloc[i]["max"]
         if max_sim > 0.7:
@@ -225,28 +227,24 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
 
     return user_concept_id_set
 
+
 def test_before_rec(took_and_liked, took_and_neutral, took_and_disliked, curious):
 
     emb_model = "embedding-gecko-001"
     user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list_palm = create_user_embeddings(
-        took_and_liked,
-        took_and_neutral,
-        took_and_disliked,
-        curious,
-        emb_model
+        took_and_liked, took_and_neutral, took_and_disliked, curious, emb_model
     )
-    
+
     user_concepts_df = find_similar_concepts_for_courses(user_courses_df, user_emb_list_palm, concept_emb_list_palm, roadmap_concepts_df)
 
-
     # If empty dataframe happens
-    if (user_concepts_df.shape[0] == 0):
+    if user_concepts_df.shape[0] == 0:
         return RecommendationResponse(fileName="Insufficient input.", recommendations=[])
 
     disliked_similar_course_id_list = find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list_palm)
 
     print(user_concepts_df)
-    
+
     recommendation = RecommendationEngine(
         udemy_courses_df,
         roadmap_concepts_df,
@@ -266,8 +264,8 @@ def test_before_rec(took_and_liked, took_and_neutral, took_and_disliked, curious
     # recommendations = [
     #     Recommendation(
     #         model="",
-    #         roles=[RoleRecommendation(role="", 
-    #             explanation="", 
+    #         roles=[RoleRecommendation(role="",
+    #             explanation="",
     #             courses=[CourseRecommendation(course="",url="",explanation="")]
     #         )
     #         ]
@@ -275,6 +273,7 @@ def test_before_rec(took_and_liked, took_and_neutral, took_and_disliked, curious
     # ]
 
     return RecommendationResponse(fileName="", recommendations=recommendations)
+
 
 def main() -> None:
     # LOAD DATA FOR PALM
@@ -322,88 +321,75 @@ def main() -> None:
     # test_before_rec(user1_took_and_liked, user1_took_and_neutral, user1_took_and_disliked, user1_curious)
 
 
-
-
-
-
 # if __name__ == '__main__':
 
-main()
+# main()
 
 app = FastAPI()
+
 
 
 
 @app.post("/save_inputs")
 async def save_inputs(request: RecommendationRequest):
 
-    fileName = datetime.now().strftime('%Y%m%d_%H%M%S.%f')[:-3]
+    fileName = datetime.now().strftime("%Y%m%d_%H%M%S.%f")[:-3]
 
     print(fileName)
     print(request)
 
-    with open('../user_inputs/{}.json'.format(fileName), 'w') as f:
+    with open("../user_inputs/{}.json".format(fileName), "w") as f:
         f.write(request.json())
 
     recommendations = Recommendation(
-                        model="",
-                        roles=[RoleRecommendation(role="", 
-                            explanation="", 
-                            courses=[CourseRecommendation(course="",url="",explanation="")]
-                        )
-                        ]
-                    )
-    
+        model="", roles=[RoleRecommendation(role="", explanation="", courses=[CourseRecommendation(course="", url="", explanation="")])]
+    )
 
     return RecommendationResponse(fileName=fileName, recommendations=[recommendations])
 
 
-
 @app.post("/recommendations/{model_name}")
-async def test(request: RecommendationRequest, model_name:str):
+async def test(request: RecommendationRequest, model_name: str):
 
-    if (model_name=="palm"):
+    if model_name == "palm":
         emb_model = "embedding-gecko-001"
         concept_emb_list = concept_emb_list_palm
         course_emb_list = course_emb_list_palm
-    elif (model_name == "voyage"):
+        sim_thre = 0.7
+    elif model_name == "voyage":
         emb_model = "voyage-large-2"
         concept_emb_list = concept_emb_list_voyage
         course_emb_list = course_emb_list_voyage
-    elif (model_name == "mock"):
+        sim_thre = 0.75
+    elif model_name == "mock":
         recommendations = Recommendation(
-                    model=sample_rec_data["model"],
-                    roles=[
-                        RoleRecommendation(
-                            role=role["role"], explanation=role["explanation"], courses=[CourseRecommendation(**course) for course in role["courses"]]
-                        )
-                        for role in sample_rec_data["roles"]
-                    ],
+            model=sample_rec_data["model"],
+            roles=[
+                RoleRecommendation(
+                    role=role["role"], explanation=role["explanation"], courses=[CourseRecommendation(**course) for course in role["courses"]]
                 )
+                for role in sample_rec_data["roles"]
+            ],
+        )
         return RecommendationResponse(fileName="", recommendations=[recommendations])
     else:
+        # raise UnicornException(name=model_name)
         raise HTTPException(status_code=404, detail="Embedding model not found")
 
     user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list = create_user_embeddings(
-        request.took_and_liked,
-        request.took_and_neutral,
-        request.took_and_disliked,
-        request.curious,
-        emb_model
+        request.took_and_liked, request.took_and_neutral, request.took_and_disliked, request.curious, emb_model
     )
 
-    user_concepts_df = find_similar_concepts_for_courses(user_courses_df, user_emb_list, concept_emb_list, roadmap_concepts_df)
-
+    user_concepts_df = find_similar_concepts_for_courses(user_courses_df, user_emb_list, concept_emb_list, roadmap_concepts_df, sim_thre)
 
     # If empty dataframe happens
-    if (user_concepts_df.shape[0] == 0):
+    if user_concepts_df.shape[0] == 0:
         raise HTTPException(status_code=404, detail="Insufficient input.")
         # return RecommendationResponse(fileName="Insufficient input.", recommendations=[])
 
-    disliked_similar_course_id_list = find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list)
+    disliked_similar_course_id_list = find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list, sim_thre)
 
     print(user_concepts_df)
-    
 
     recommendation = RecommendationEngine(
         udemy_courses_df,
@@ -422,3 +408,21 @@ async def test(request: RecommendationRequest, model_name:str):
     recommendations = Recommendation(model=emb_model, roles=rol_rec_list)
 
     return RecommendationResponse(fileName="", recommendations=[recommendations])
+
+
+# class UnicornException(Exception):
+#     def __init__(self, name: str):
+#         self.name = name
+
+# @app.exception_handler(UnicornException)
+# async def unicorn_exception_handler(request: Request, exc: UnicornException):
+#     return JSONResponse(
+#         status_code=418,
+#         content={"message": f"Oops! {exc.name} did something. There goes a rainbow..."},
+#     )
+
+
+if __name__ == "__main__":
+    main()
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+    

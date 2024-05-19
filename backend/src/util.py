@@ -6,9 +6,10 @@ def get_role_id(concept_id):
         concept_id = concept_id / 100
     return int(concept_id)
 
+
 def custom_activation(x):
     k = 0.2  # scaling factor
-    b = 25   # shift
+    b = 25  # shift
     # Apply shifted and scaled sigmoid function and round to 2 decimal places
     return np.round(100 / (1 + np.exp(-k * (x - b))), 2)
 
@@ -50,6 +51,8 @@ def split_and_create_dict(row, column_name):
 
 
 def equalize_digits(original_list):
+    
+    # TODO: ValueError: max() arg is an empty sequence
     # Find the maximum number of digits
     max_digits = max(map(lambda x: len(str(x)), original_list))
     # Calculate the necessary power of 10 for each integer
@@ -69,7 +72,7 @@ def top_n_similarity_scores_for_concept(udemy_courses_df, similarity_matrix, con
 
     # Reduce the score of disliked courses
     row_reduced = row.copy()
-    row_reduced[disliked_course_id_list]= row_reduced[disliked_course_id_list] / 2
+    row_reduced[disliked_course_id_list] = row_reduced[disliked_course_id_list] / 2
 
     # Get the indices of the top N similarity scores for the specified concept
     top_indices = np.argsort(row_reduced)[-n:][::-1]
@@ -78,6 +81,5 @@ def top_n_similarity_scores_for_concept(udemy_courses_df, similarity_matrix, con
     top_scores = row[top_indices]
     top_courses = udemy_courses_df.iloc[top_indices]
     top_courses["sim_score"] = top_scores
-
 
     return top_courses

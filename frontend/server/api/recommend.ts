@@ -1,3 +1,4 @@
+import { handleError } from "vue";
 import { RecommendationResult } from "~/models/result";
 
 
@@ -56,6 +57,7 @@ export default defineEventHandler(async (event) => {
         }
     })
 
+
     const save_response = await $fetch<RecommendationResult>('http://localhost:8000/save_inputs', {
         method: 'post',
         body: { 
@@ -66,6 +68,7 @@ export default defineEventHandler(async (event) => {
         }
     })
 
+    // console.log(palm_response.status);
     // console.log(palm_response.recommendations[0].role)
     // console.log(palm_response.recommendations[0].explanation)
     // console.log(palm_response.recommendations[0].courses)
@@ -74,7 +77,7 @@ export default defineEventHandler(async (event) => {
 
     const savedFileName = save_response.fileName
     const readonlyArray = [palm_response.recommendations[0], voyage_response.recommendations[0], mock_response.recommendations[0]]
-    type Element = typeof readonlyArray[number]
+    //type Element = typeof readonlyArray[number]
     //response.recommendations
 
     return {
