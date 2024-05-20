@@ -1,6 +1,6 @@
 {
     "functions": {
-      "pages/api/**/*": {
+      "server/api/recommend.ts": {
         "maxDuration": 60
       }
     }
