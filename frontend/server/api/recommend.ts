@@ -6,7 +6,7 @@ import { RecommendationResult } from "~/models/result";
 // const config = useRuntimeConfig()
 
 let environment = process.env.NODE_ENV;
-let $endpoint = environment == 'development' ? 'http://localhost:8000/' : 'http://localhost:3333/';
+let $endpoint = environment == 'development' ? 'http://localhost:8000/' : 'http://159.146.105.19:8000/';
 
 console.log('ENVIRONMENT =', process.env.NODE_ENV)
 console.log('$ENDPOINTS =', $endpoint)
