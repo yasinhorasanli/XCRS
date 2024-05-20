@@ -1,6 +1,7 @@
-import { handleError } from "vue";
+//import { handleError } from "vue";
 import { RecommendationResult } from "~/models/result";
 
+export const maxDuration = 60;
 
 
 // const config = useRuntimeConfig()
