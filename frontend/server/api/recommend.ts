@@ -6,7 +6,7 @@ import { RecommendationResult } from "~/models/result";
 // const config = useRuntimeConfig()
 
 let environment = process.env.NODE_ENV;
-let $endpoint = environment == 'development' ? 'http://localhost:8000/' : 'http://159.146.105.19:8000/';
+let $endpoint = environment == 'development' ? 'http://localhost:8000' : 'http://159.146.105.19:8000';
 
 console.log('ENVIRONMENT =', process.env.NODE_ENV)
 console.log('$ENDPOINTS =', $endpoint)
@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
     //console.log('userData =', body)
 
     //const {data: responseData} = await useFetch('http://localhost:8000/', {
-    const palm_response = await $fetch<RecommendationResult>('http://localhost:8000/recommendations/palm', {
+    const palm_response = await $fetch<RecommendationResult>($endpoint + '/recommendations/palm', {
         method: 'post',
         body: { 
             took_and_liked: body.took_and_liked,
@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
         }
     })
 
-    const voyage_response = await $fetch<RecommendationResult>('http://localhost:8000/recommendations/voyage', {
+    const voyage_response = await $fetch<RecommendationResult>($endpoint + '/recommendations/voyage', {
         method: 'post',
         body: { 
             took_and_liked: body.took_and_liked,
@@ -47,7 +47,7 @@ export default defineEventHandler(async (event) => {
         }
     })
 
-    const mock_response = await $fetch<RecommendationResult>('http://localhost:8000/recommendations/mock', {
+    const mock_response = await $fetch<RecommendationResult>($endpoint + '/recommendations/mock', {
         method: 'post',
         body: { 
             took_and_liked: body.took_and_liked,
@@ -58,7 +58,7 @@ export default defineEventHandler(async (event) => {
     })
 
 
-    const save_response = await $fetch<RecommendationResult>('http://localhost:8000/save_inputs', {
+    const save_response = await $fetch<RecommendationResult>($endpoint + '/save_inputs', {
         method: 'post',
         body: { 
             took_and_liked: body.took_and_liked,
