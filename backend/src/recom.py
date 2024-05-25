@@ -171,11 +171,11 @@ class RecommendationEngine:
             result_for_recom_role = []
             for concept_index in selected_recom_concepts:
 
-                top_courses = util.top_n_similarity_scores_for_concept(
+                top_courses = util.top_n_courses_for_concept(
                     self.udemy_courses_df, self.concept_X_course, concept_index, disliked_similar_course_id_list, m
                 )
                 # TODO: Check if the concept is true
-                rec_concept_row = self.roadmap_concepts_df.loc[self.roadmap_concepts_df['id'] == concept_index]
+                rec_concept_row = self.roadmap_concepts_df.loc[self.roadmap_concepts_df["id"] == concept_index]
                 for id, course_row in top_courses.iterrows():
 
                     result_for_recom_role.append(
@@ -189,7 +189,10 @@ class RecommendationEngine:
                             "similarity_score": course_row["sim_score"],
                         }
                     )
-                    rol_rec.courses.append(CourseRecommendation(course=course_row["title"], url=udemy_website+course_row["url"], explanation=""))
+
+                    explanation = self.generate_explanation_for_course(recom_role_id, self.encoder_for_courses[course_row["id"]])
+
+                    rol_rec.courses.append(CourseRecommendation(course=course_row["title"], url=udemy_website + course_row["url"], explanation=explanation))
                     # Selected courses added to this list due to prevent reselection.
                     disliked_similar_course_id_list.append(self.encoder_for_courses[course_row["id"]])
 
@@ -201,3 +204,30 @@ class RecommendationEngine:
                 result_df = pd.DataFrame(result_for_recom_role)
 
         return rol_rec_list
+
+
+    def generate_explanation_for_course(self, recom_role_id, recom_course_id) -> str:
+
+        top_concepts = util.top_n_concepts_for_courses(self.roadmap_concepts_df, self.concept_X_course, recom_role_id, recom_course_id, 3)
+        course_title = self.udemy_courses_df.loc[recom_course_id, "title"]
+        role_name = self.roadmaps_df.loc[recom_role_id]["name"]
+        explanation = ""
+        
+        # start_exp = "This course (" + course_title + ") includes the concepts of " 
+        start_exp = "This course includes the concepts of " 
+
+        concepts_included = ""
+        seen_concepts = set()
+
+        for id, concept_row in top_concepts.iterrows():
+            concept_name = concept_row["name"]            
+            if concept_name not in seen_concepts:
+                seen_concepts.add(concept_name)
+                concepts_included += concept_name + ", "
+        
+        if concepts_included != "":
+            explanation += start_exp + concepts_included[:-2] + " which are necessary for you to progress in the " + role_name + " role."
+            
+        print(explanation)
+
+        return explanation

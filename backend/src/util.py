@@ -66,7 +66,7 @@ def equalize_digits(original_list):
     return original_dict, sorted_equalized_dict
 
 
-def top_n_similarity_scores_for_concept(udemy_courses_df, similarity_matrix, concept_index, disliked_course_id_list, n):
+def top_n_courses_for_concept(udemy_courses_df, similarity_matrix, concept_index, disliked_course_id_list, n):
     # Get the row corresponding to the specified concept index
     row = similarity_matrix[concept_index, :]
 
@@ -80,6 +80,17 @@ def top_n_similarity_scores_for_concept(udemy_courses_df, similarity_matrix, con
     # Get the top N scores and their corresponding courses
     top_scores = row[top_indices]
     top_courses = udemy_courses_df.iloc[top_indices]
+    top_courses["sim_score"] = top_scores
+
+    return top_courses
+
+
+def top_n_concepts_for_courses(roadmap_concepts_df, similarity_matrix, recom_role_id, course_id, n):
+    
+    column = similarity_matrix[:, course_id]
+    top_indices = np.argsort(column)[-n:][::-1]
+    top_scores = column[top_indices]
+    top_courses = roadmap_concepts_df.iloc[top_indices]
     top_courses["sim_score"] = top_scores
 
     return top_courses

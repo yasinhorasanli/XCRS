@@ -255,19 +255,10 @@ def main() -> None:
 
     # Udemy Courses and Concepts Embeddings List - PALM
     course_emb_list_palm, concept_emb_list_palm = get_emb_lists(folder="palm_emb", model="embedding-gecko-001")
-
-    # Similarity Matrix between Courses and Concepts
     course_X_concept_palm = cosine_similarity(course_emb_list_palm, concept_emb_list_palm)
     concept_X_course_palm = course_X_concept_palm.transpose()
 
-    # EXAMPLE
-    # course_id = decoder_for_courses[max_sim_for_row_df.iloc[19]['x']]
-    # concept_id = decoder_for_concepts[max_sim_for_row_df.iloc[19]['y']]
-
-    # TODO: anotherModel
-
     course_emb_list_voyage, concept_emb_list_voyage = get_emb_lists(folder="voyage_emb", model="voyage-large-2")
-    # get_emb_lists(udemy_courses_df, roadmap_concepts_df, model="voyage")
     course_X_concept_voyage = cosine_similarity(course_emb_list_voyage, concept_emb_list_voyage)
     concept_X_course_voyage = course_X_concept_voyage.transpose()
 

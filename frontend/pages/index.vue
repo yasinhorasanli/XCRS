@@ -58,8 +58,8 @@ watch(modelNum, (newNum) => {
                                     <div v-for="(course, index) in row.courses" :key="course.course + + modelNum" class="mt-2 bg-blue-100">
                                         <div class="text-lg font-bold mt-4 text-blue-800">Course {{ index + 1 }}</div>
                                         <div><strong>Title:</strong> {{ course.course }}</div>
-                                        <div><strong>Url:</strong> <a :href="course.url" target="_blank" rel="noopener noreferrer" class="text-blue-500 underline">{{ course.url }}</a></div>
                                         <div><strong>Explanation:</strong> {{ course.explanation }}</div>
+                                        <div><strong>Url:</strong> <a :href="course.url" target="_blank" rel="noopener noreferrer" class="text-blue-500 underline">{{ course.url }}</a></div>
                                     </div>
                                 </div>
                             </td>
