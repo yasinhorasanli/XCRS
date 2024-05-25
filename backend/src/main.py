@@ -2,6 +2,7 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 
+import os
 import numpy as np
 import pandas as pd
 from datetime import datetime
@@ -11,17 +12,24 @@ from sklearn.metrics.pairwise import cosine_similarity
 import google.generativeai as palm
 import uvicorn
 import voyageai
+from openai import OpenAI
 
 # internal classes
 import util
 from eda import ExplatoryDataAnalysis
 from recom import RecommendationEngine
 from models import CourseRecommendation, RoleRecommendation, Recommendation, RecommendationResponse, RecommendationRequest, sample_rec_data
+from models import PALM_MODEL, VOYAGE_MODEL, OPENAI_MODEL
 
 palm_api_key = open("../../embedding-generation/api_keys/palm_api_key.txt").read().strip()
 voyage_api_key = open("../../embedding-generation/api_keys/voyage_api_key.txt").read().strip()
+openai_api_key = open("../../embedding-generation/api_keys/openai_api_key.txt").read().strip()
+os.environ["OPENAI_API_KEY"] = openai_api_key
+
 voyage = voyageai.Client(api_key=voyage_api_key)
 palm.configure(api_key=palm_api_key)
+openai = OpenAI()
+
 udemy_website = "www.udemy.com"
 
 
@@ -55,11 +63,16 @@ def init_data():
 
 
 def palm_embed_fn(text):
-    return palm.generate_embeddings(model="models/embedding-gecko-001", text=text)["embedding"]
+    return palm.generate_embeddings(model="models/"+PALM_MODEL, text=text)["embedding"]
 
 
 def voyage_embed_fn(text):
-    return voyage.embed([text], model="voyage-large-2").embeddings[0]
+    return voyage.embed([text], model=VOYAGE_MODEL).embeddings[0]
+
+
+def openai_embed_fn(text):
+    text = text.replace("\n", " ")
+    return openai.embeddings.create(input = [text], model=OPENAI_MODEL).data[0].embedding
 
 
 def get_emb_lists(folder: str, model: str):
@@ -122,10 +135,12 @@ def create_user_embeddings(took_and_liked: str, took_and_neutral: str, took_and_
 
     # TODO: If it is possible, search courses in wikipedia here.
 
-    if model == "embedding-gecko-001":
+    if model == PALM_MODEL:
         user_courses_df["emb"] = user_courses_df["course"].apply(palm_embed_fn)
-    elif model == "voyage-large-2":
+    elif model == VOYAGE_MODEL:
         user_courses_df["emb"] = user_courses_df["course"].apply(voyage_embed_fn)
+    elif model == OPENAI_MODEL:
+        user_courses_df["emb"] = user_courses_df["course"].apply(openai_embed_fn)
 
     user_emb_list = user_courses_df["emb"].values
     user_emb_list = np.vstack(user_emb_list)
@@ -243,6 +258,8 @@ def main() -> None:
     global course_id_list, concept_id_list
     global course_emb_list_palm, concept_emb_list_palm, course_X_concept_palm, concept_X_course_palm
     global course_emb_list_voyage, concept_emb_list_voyage, course_X_concept_voyage, concept_X_course_voyage
+    global course_emb_list_openai, concept_emb_list_openai, course_X_concept_openai, concept_X_course_openai
+
 
     # Encoders/Decoders for Courses and Concepts
     course_id_list = udemy_courses_df["id"]
@@ -254,13 +271,17 @@ def main() -> None:
     decoder_for_concepts = dict([(v, k) for k, v in encoder_for_concepts.items()])
 
     # Udemy Courses and Concepts Embeddings List - PALM
-    course_emb_list_palm, concept_emb_list_palm = get_emb_lists(folder="palm_emb", model="embedding-gecko-001")
+    course_emb_list_palm, concept_emb_list_palm = get_emb_lists(folder="palm_emb", model=PALM_MODEL)
     course_X_concept_palm = cosine_similarity(course_emb_list_palm, concept_emb_list_palm)
     concept_X_course_palm = course_X_concept_palm.transpose()
 
-    course_emb_list_voyage, concept_emb_list_voyage = get_emb_lists(folder="voyage_emb", model="voyage-large-2")
+    course_emb_list_voyage, concept_emb_list_voyage = get_emb_lists(folder="voyage_emb", model=VOYAGE_MODEL)
     course_X_concept_voyage = cosine_similarity(course_emb_list_voyage, concept_emb_list_voyage)
     concept_X_course_voyage = course_X_concept_voyage.transpose()
+
+    course_emb_list_openai, concept_emb_list_openai = get_emb_lists(folder="openai_emb", model=OPENAI_MODEL)
+    course_X_concept_openai = cosine_similarity(course_emb_list_openai, concept_emb_list_openai)
+    concept_X_course_openai = course_X_concept_openai.transpose()
 
     # user1_took = "Physics , Intr. to Information Systems, Intr.to Comp.Eng.and Ethics, Mathematics I, Linear Algebra, Engineering Mathematics, Digital Circuits, Data Structures, Introduction to Electronics, Basics of Electrical Circuits, Object Oriented Programming, Computer Organization, Logic Circuits Laboratory, Numerical Methods, Formal Languages and Automata, Analysis of Algorithms I, Probability and Statistics, Microcomputer Lab., Database Systems, Microprocessor Systems, Computer Architecture, Computer Operating Systems, Analysis of Algorithms II, Signal&Systems for Comp.Eng."
     # user1_took_and_liked = "Digital Circuits , Data Structures , Introduction to Electronics, Microprocessor Systems , Computer Architecture"
@@ -300,15 +321,20 @@ async def save_inputs(request: RecommendationRequest):
 async def get_recommendations(request: RecommendationRequest, model_name: str):
 
     if model_name == "palm":
-        emb_model = "embedding-gecko-001"
+        emb_model = PALM_MODEL
         concept_emb_list = concept_emb_list_palm
         course_emb_list = course_emb_list_palm
         sim_thre = 0.7
     elif model_name == "voyage":
-        emb_model = "voyage-large-2"
+        emb_model = VOYAGE_MODEL
         concept_emb_list = concept_emb_list_voyage
         course_emb_list = course_emb_list_voyage
         sim_thre = 0.8
+    elif model_name == "openai":
+        emb_model = OPENAI_MODEL
+        concept_emb_list = concept_emb_list_openai
+        course_emb_list = course_emb_list_openai
+        sim_thre = 0.55
     elif model_name == "mock":
         recommendations = Recommendation(
             model=sample_rec_data["model"],

@@ -103,13 +103,21 @@ def main():
 
     # EMB. GEN. for Model: "embedding-gecko-001"
     palm_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, "embedding-gecko-001")
-    palm_embedding_generator.generate_embeddings_for_courses()
-    palm_embedding_generator.generate_embeddings_for_roadmaps()
+    palm_embedding_generator.return_num_of_tokens()
+    # palm_embedding_generator.generate_embeddings_for_courses()
+    # palm_embedding_generator.generate_embeddings_for_roadmaps()
 
     # EMB. GEN. for Model: "voyage-large-2"
     voyage_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, "voyage-large-2")
-    voyage_embedding_generator.generate_embeddings_for_courses()
-    voyage_embedding_generator.generate_embeddings_for_roadmaps()
+    voyage_embedding_generator.return_num_of_tokens()
+    # voyage_embedding_generator.generate_embeddings_for_courses()
+    # voyage_embedding_generator.generate_embeddings_for_roadmaps()
+
+    # EMB. GEN. for Model: "text-embedding-3-small"
+    openai_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, "text-embedding-3-small")
+    openai_embedding_generator.generate_embeddings_for_courses()
+    openai_embedding_generator.generate_embeddings_for_roadmaps()
+
 
     return
 

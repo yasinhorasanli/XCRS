@@ -3,7 +3,7 @@ import type { RecommendationResult } from '~/models/result';
 
 const myResult = ref<RecommendationResult>();
 
-const models = ['Model-1', 'Model-2', 'Model-3']
+const models = ['Model-1', 'Model-2', 'Model-3', 'Model-4']
 const selected = ref(models[0])
 
 console.log('myResult.fileName =', myResult.value?.fileName)
@@ -37,7 +37,7 @@ watch(modelNum, (newNum) => {
             <h2 class="text-2xl my-4 font-semibold text-center">Recommendation Results</h2>
             <USelectMenu v-model="selected" :options="models" />
 
-            <div v-if="selected === 'Model-1' || selected === 'Model-2' || selected === 'Model-3'">
+            <div v-if="selected === 'Model-1' || selected === 'Model-2' || selected === 'Model-3' || selected === 'Model-4'">
                 <table class="table-auto w-full border-collapse">
                     <!-- <thead>
                         <tr>

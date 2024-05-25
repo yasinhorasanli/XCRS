@@ -1,9 +1,17 @@
 import pandas as pd
 import numpy as np
+import os
 
 import google.generativeai as palm
 import voyageai
+from openai import OpenAI
 
+import tiktoken
+
+
+PALM_MODEL = "embedding-gecko-001"
+VOYAGE_MODEL = "voyage-large-2"
+OPENAI_MODEL = "text-embedding-3-small"
 
 class EmbeddingGenerator:
 
@@ -12,14 +20,19 @@ class EmbeddingGenerator:
         self.roadmap_nodes_df = roadmap_nodes_df
         self.model_name = model_name
 
-        if model_name == "embedding-gecko-001":
+        if model_name == PALM_MODEL:
             palm_api_key = open("../api_keys/palm_api_key.txt").read().strip()
             palm.configure(api_key=palm_api_key)
             self.emb_type = "palm_emb"
-        elif model_name == "voyage-large-2":
+        elif model_name == VOYAGE_MODEL:
             api_key = open("../api_keys/voyage_api_key.txt").read().strip()
             self.model = voyageai.Client(api_key=api_key)
             self.emb_type = "voyage_emb"
+        elif model_name == OPENAI_MODEL:
+            api_key = open("../api_keys/openai_api_key.txt").read().strip()
+            os.environ["OPENAI_API_KEY"] = api_key
+            self.model = OpenAI()
+            self.emb_type = "openai_emb"
         else:
             raise Exception("System does not support this model: " + model_name)
 
@@ -30,12 +43,18 @@ class EmbeddingGenerator:
 
     def voyage_embed_fn(self, text):
         return self.model.embed([text], model=self.model_name).embeddings[0]
+    
+    def openai_embed_fn(self, text):
+        text = text.replace("\n", " ")
+        return self.model.embeddings.create(input = [text], model=self.model_name).data[0].embedding
 
     def generate_embeddings_for_courses(self):
         if self.emb_type == "palm_emb":
             self.udemy_courses_df[self.emb_type] = self.udemy_courses_df["concat_text"].apply(self.palm_embed_fn)
         elif self.emb_type == "voyage_emb":
             self.udemy_courses_df[self.emb_type] = self.udemy_courses_df["concat_text"].apply(self.voyage_embed_fn)
+        elif self.emb_type == "openai_emb":
+            self.udemy_courses_df[self.emb_type] = self.udemy_courses_df["concat_text"].apply(self.openai_embed_fn)
 
         # Column null check
         # TODO: logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
@@ -60,6 +79,8 @@ class EmbeddingGenerator:
                 return self.palm_embed_fn(row["content"])
             elif self.emb_type == "voyage_emb":
                 return self.voyage_embed_fn(row["content"])
+            elif self.emb_type == "openai_emb":
+                return self.openai_embed_fn(row["content"])
         else:
             return None
 
@@ -84,3 +105,29 @@ class EmbeddingGenerator:
         roadmap_nodes_emb_df.to_csv(self.df_path + "roadmap_nodes_{}.csv".format(self.model_name))
 
         return roadmap_nodes_emb_df
+
+
+    
+
+    def num_tokens_from_string(self, text: str) -> int:
+        """Returns the number of tokens in a text string."""
+        encoding_name = "cl100k_base"
+        encoding = tiktoken.get_encoding(encoding_name)
+        num_tokens = len(encoding.encode(text))
+        return num_tokens
+
+    def return_num_of_tokens(self):
+
+        if self.emb_type == "palm_emb":
+            self.udemy_courses_df["token_count"] = self.udemy_courses_df["concat_text"].apply(self.num_tokens_from_string)
+        elif self.emb_type == "voyage_emb":
+            self.udemy_courses_df["token_count"] = self.udemy_courses_df["concat_text"].apply(self.num_tokens_from_string)
+        elif self.emb_type == "openai_emb":
+            self.udemy_courses_df["token_count"] = self.udemy_courses_df["concat_text"].apply(self.num_tokens_from_string)
+        
+        total_token_count = self.udemy_courses_df["token_count"].sum()
+
+        print(total_token_count)
+        # udemy_courses_emb_df.to_csv(self.df_path + "udemy_courses_{}.csv".format(self.model_name))
+
+        return total_token_count
