@@ -4,9 +4,10 @@ Make sure to install the dependencies:
 
 ```bash
 # pip
-pip install google-generativeai 
+pip install -U google-generativeai 
 pip install -U voyageai
 pip install fastapi
+pip install pandas
 ...
 
 ```

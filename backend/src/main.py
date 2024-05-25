@@ -106,6 +106,11 @@ def create_user_embeddings(took_and_liked: str, took_and_neutral: str, took_and_
     flat_data = [item for sublist in result_dicts for item in sublist.items()]
     user_courses_df = pd.DataFrame(flat_data, columns=["course", "category"])
 
+    # Drop rows where 'course' is null, empty, or only blank spaces
+    user_courses_df = user_courses_df.dropna(subset=['course'])
+    user_courses_df = user_courses_df[user_courses_df['course'].str.strip() != '']
+    user_courses_df = user_courses_df.reset_index(drop=True)
+
     print(user_courses_df)
 
     encoder_for_user_courses = dict([(v, k) for v, k in zip(user_courses_df["course"], range(len(user_courses_df)))])

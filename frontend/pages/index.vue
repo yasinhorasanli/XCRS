@@ -26,9 +26,9 @@ watch(modelNum, (newNum) => {
                 <br>
                 Group the courses you liked, courses you are neutral about, and courses you disliked. Write them by separating them with commas.
                 <br>
-                If you don't remember the full name of the course, you can write the main concepts you learned in that course.
+                You do not need to write only the name of the course, you can write subjects, concepts you learned in courses or you already knew. (e.g. Java, Python, HTML, CSS, Spring Boot, Linux etc.)
                 <br>
-                Additionally, write topics, concepts, or courses you are curious about.
+                Additionally, write subjects, concepts, or courses you are curious about.
             </p>
             <InputForm @submited="myResult = $event" />
         </div>
