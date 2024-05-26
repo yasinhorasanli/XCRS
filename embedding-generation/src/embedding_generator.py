@@ -5,6 +5,7 @@ import os
 import google.generativeai as palm
 import voyageai
 from openai import OpenAI
+from mistralai.client import MistralClient
 
 import tiktoken
 
@@ -12,6 +13,7 @@ import tiktoken
 PALM_MODEL = "embedding-gecko-001"
 VOYAGE_MODEL = "voyage-large-2"
 OPENAI_MODEL = "text-embedding-3-small"
+MISTRAL_MODEL = "mistral-embed"
 
 class EmbeddingGenerator:
 
@@ -33,6 +35,10 @@ class EmbeddingGenerator:
             os.environ["OPENAI_API_KEY"] = api_key
             self.model = OpenAI()
             self.emb_type = "openai_emb"
+        elif model_name == MISTRAL_MODEL:
+            api_key = open("../api_keys/mistral_api_key.txt").read().strip()
+            self.model = MistralClient(api_key=api_key)
+            self.emb_type = "mistral_emb"
         else:
             raise Exception("System does not support this model: " + model_name)
 
@@ -47,6 +53,10 @@ class EmbeddingGenerator:
     def openai_embed_fn(self, text):
         text = text.replace("\n", " ")
         return self.model.embeddings.create(input = [text], model=self.model_name).data[0].embedding
+    
+    def mistral_embed_fn(self, text):
+        return self.model.embeddings(model=self.model_name, input=text).data[0].embedding
+        
 
     def generate_embeddings_for_courses(self):
         if self.emb_type == "palm_emb":
@@ -55,6 +65,8 @@ class EmbeddingGenerator:
             self.udemy_courses_df[self.emb_type] = self.udemy_courses_df["concat_text"].apply(self.voyage_embed_fn)
         elif self.emb_type == "openai_emb":
             self.udemy_courses_df[self.emb_type] = self.udemy_courses_df["concat_text"].apply(self.openai_embed_fn)
+        elif self.emb_type == "mistral_emb":
+            self.udemy_courses_df[self.emb_type] = self.udemy_courses_df["concat_text"].apply(self.mistral_embed_fn)
 
         # Column null check
         # TODO: logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
@@ -81,6 +93,8 @@ class EmbeddingGenerator:
                 return self.voyage_embed_fn(row["content"])
             elif self.emb_type == "openai_emb":
                 return self.openai_embed_fn(row["content"])
+            elif self.emb_type == "mistral_emb":
+                return self.mistral_embed_fn(row["content"])
         else:
             return None
 
@@ -124,6 +138,8 @@ class EmbeddingGenerator:
             self.udemy_courses_df["token_count"] = self.udemy_courses_df["concat_text"].apply(self.num_tokens_from_string)
         elif self.emb_type == "openai_emb":
             self.udemy_courses_df["token_count"] = self.udemy_courses_df["concat_text"].apply(self.num_tokens_from_string)
+        elif self.emb_type == "mistral_emb":
+            self.udemy_courses_df["token_count"] = self.udemy_courses_df["concat_text"].apply(self.num_tokens_from_string)  
         
         total_token_count = self.udemy_courses_df["token_count"].sum()
 

@@ -4,6 +4,8 @@ from typing import List, Dict
 PALM_MODEL = "embedding-gecko-001"
 VOYAGE_MODEL = "voyage-large-2"
 OPENAI_MODEL = "text-embedding-3-small"
+MISTRAL_MODEL = "mistral-embed"
+
 
 # Model for course recommendation
 class CourseRecommendation(BaseModel):

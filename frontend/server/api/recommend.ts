@@ -1,7 +1,7 @@
 //import { handleError } from "vue";
 import { RecommendationResult } from "~/models/result";
 
-export const maxDuration = 60;
+// export const maxDuration = 60;
 
 
 // const config = useRuntimeConfig()
@@ -58,7 +58,7 @@ export default defineEventHandler(async (event) => {
         }
     })
 
-    const mock_response = await $fetch<RecommendationResult>($endpoint + '/recommendations/mock', {
+    const mistral_response = await $fetch<RecommendationResult>($endpoint + '/recommendations/mistral', {
         method: 'post',
         body: { 
             took_and_liked: body.took_and_liked,
@@ -67,6 +67,16 @@ export default defineEventHandler(async (event) => {
             curious: body.curious
         }
     })
+
+    // const mock_response = await $fetch<RecommendationResult>($endpoint + '/recommendations/mock', {
+    //     method: 'post',
+    //     body: { 
+    //         took_and_liked: body.took_and_liked,
+    //         took_and_neutral: body.took_and_neutral,
+    //         took_and_disliked: body.took_and_disliked,
+    //         curious: body.curious
+    //     }
+    // })
 
 
     const save_response = await $fetch<RecommendationResult>($endpoint + '/save_inputs', {
@@ -87,7 +97,7 @@ export default defineEventHandler(async (event) => {
     //console.log(voyage_response.recommendations[0].roles[0].role)
 
     const savedFileName = save_response.fileName
-    const readonlyArray = [palm_response.recommendations[0], voyage_response.recommendations[0], openai_response.recommendations[0], mock_response.recommendations[0]]
+    const readonlyArray = [palm_response.recommendations[0], voyage_response.recommendations[0], openai_response.recommendations[0], mistral_response.recommendations[0]]
     //type Element = typeof readonlyArray[number]
     //response.recommendations
 

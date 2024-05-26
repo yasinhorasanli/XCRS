@@ -4,9 +4,10 @@ backend/src/test.ipynb
 backend/user_inputs/*
 embedding-generation/api_keys/*
 embedding-generation/src/test.ipynb
-embedding-generation/data/voyage_emb/*
 embedding-generation/data/palm_emb/*
+embedding-generation/data/voyage_emb/*
 embedding-generation/data/openai_emb/*
+embedding-generation/data/mistral_emb/*
 embedding-generation/data/test_data/
 embedding-generation/data/udemy_courses_final.csv
 embedding-generation/data/roadmap_nodes_final.csv

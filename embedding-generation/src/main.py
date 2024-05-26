@@ -6,6 +6,7 @@ import json
 # internal classes
 import util
 from embedding_generator import EmbeddingGenerator
+from embedding_generator import PALM_MODEL, VOYAGE_MODEL, OPENAI_MODEL, MISTRAL_MODEL
 
 df_path = "../data/"
 roadmap_data_path = "../data/roadmaps_in_json"
@@ -102,19 +103,24 @@ def main():
     roadmap_nodes_df.to_csv(df_path + "roadmap_nodes_final.csv")
 
     # EMB. GEN. for Model: "embedding-gecko-001"
-    palm_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, "embedding-gecko-001")
+    palm_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, PALM_MODEL)
     palm_embedding_generator.return_num_of_tokens()
     # palm_embedding_generator.generate_embeddings_for_courses()
     # palm_embedding_generator.generate_embeddings_for_roadmaps()
 
     # EMB. GEN. for Model: "voyage-large-2"
-    voyage_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, "voyage-large-2")
-    voyage_embedding_generator.return_num_of_tokens()
+    voyage_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, VOYAGE_MODEL)
+    # voyage_embedding_generator.return_num_of_tokens()
     # voyage_embedding_generator.generate_embeddings_for_courses()
     # voyage_embedding_generator.generate_embeddings_for_roadmaps()
 
     # EMB. GEN. for Model: "text-embedding-3-small"
-    openai_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, "text-embedding-3-small")
+    openai_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, OPENAI_MODEL)
+    # openai_embedding_generator.generate_embeddings_for_courses()
+    #openai_embedding_generator.generate_embeddings_for_roadmaps()
+
+    # EMB. GEN. for Model: "mistral-embed"
+    openai_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, MISTRAL_MODEL)
     openai_embedding_generator.generate_embeddings_for_courses()
     openai_embedding_generator.generate_embeddings_for_roadmaps()
 

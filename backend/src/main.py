@@ -13,22 +13,26 @@ import google.generativeai as palm
 import uvicorn
 import voyageai
 from openai import OpenAI
+from mistralai.client import MistralClient
+
 
 # internal classes
 import util
 from eda import ExplatoryDataAnalysis
 from recom import RecommendationEngine
 from models import CourseRecommendation, RoleRecommendation, Recommendation, RecommendationResponse, RecommendationRequest, sample_rec_data
-from models import PALM_MODEL, VOYAGE_MODEL, OPENAI_MODEL
+from models import PALM_MODEL, VOYAGE_MODEL, OPENAI_MODEL, MISTRAL_MODEL
 
 palm_api_key = open("../../embedding-generation/api_keys/palm_api_key.txt").read().strip()
 voyage_api_key = open("../../embedding-generation/api_keys/voyage_api_key.txt").read().strip()
 openai_api_key = open("../../embedding-generation/api_keys/openai_api_key.txt").read().strip()
-os.environ["OPENAI_API_KEY"] = openai_api_key
+mistral_api_key = open("../../embedding-generation/api_keys/mistral_api_key.txt").read().strip()
 
 voyage = voyageai.Client(api_key=voyage_api_key)
 palm.configure(api_key=palm_api_key)
+os.environ["OPENAI_API_KEY"] = openai_api_key
 openai = OpenAI()
+mistral = MistralClient(api_key=mistral_api_key)
 
 udemy_website = "www.udemy.com"
 
@@ -73,6 +77,10 @@ def voyage_embed_fn(text):
 def openai_embed_fn(text):
     text = text.replace("\n", " ")
     return openai.embeddings.create(input = [text], model=OPENAI_MODEL).data[0].embedding
+
+
+def mistral_embed_fn(text):
+    return mistral.embeddings(model=MISTRAL_MODEL, input=text).data[0].embedding
 
 
 def get_emb_lists(folder: str, model: str):
@@ -141,6 +149,8 @@ def create_user_embeddings(took_and_liked: str, took_and_neutral: str, took_and_
         user_courses_df["emb"] = user_courses_df["course"].apply(voyage_embed_fn)
     elif model == OPENAI_MODEL:
         user_courses_df["emb"] = user_courses_df["course"].apply(openai_embed_fn)
+    elif model == MISTRAL_MODEL:
+        user_courses_df["emb"] = user_courses_df["course"].apply(mistral_embed_fn)
 
     user_emb_list = user_courses_df["emb"].values
     user_emb_list = np.vstack(user_emb_list)
@@ -259,6 +269,7 @@ def main() -> None:
     global course_emb_list_palm, concept_emb_list_palm, course_X_concept_palm, concept_X_course_palm
     global course_emb_list_voyage, concept_emb_list_voyage, course_X_concept_voyage, concept_X_course_voyage
     global course_emb_list_openai, concept_emb_list_openai, course_X_concept_openai, concept_X_course_openai
+    global course_emb_list_mistral, concept_emb_list_mistral, course_X_concept_mistral, concept_X_course_mistral
 
 
     # Encoders/Decoders for Courses and Concepts
@@ -282,6 +293,10 @@ def main() -> None:
     course_emb_list_openai, concept_emb_list_openai = get_emb_lists(folder="openai_emb", model=OPENAI_MODEL)
     course_X_concept_openai = cosine_similarity(course_emb_list_openai, concept_emb_list_openai)
     concept_X_course_openai = course_X_concept_openai.transpose()
+
+    course_emb_list_mistral, concept_emb_list_mistral = get_emb_lists(folder="mistral_emb", model=MISTRAL_MODEL)
+    course_X_concept_mistral = cosine_similarity(course_emb_list_mistral, concept_emb_list_mistral)
+    concept_X_course_mistral = course_X_concept_mistral.transpose()
 
     # user1_took = "Physics , Intr. to Information Systems, Intr.to Comp.Eng.and Ethics, Mathematics I, Linear Algebra, Engineering Mathematics, Digital Circuits, Data Structures, Introduction to Electronics, Basics of Electrical Circuits, Object Oriented Programming, Computer Organization, Logic Circuits Laboratory, Numerical Methods, Formal Languages and Automata, Analysis of Algorithms I, Probability and Statistics, Microcomputer Lab., Database Systems, Microprocessor Systems, Computer Architecture, Computer Operating Systems, Analysis of Algorithms II, Signal&Systems for Comp.Eng."
     # user1_took_and_liked = "Digital Circuits , Data Structures , Introduction to Electronics, Microprocessor Systems , Computer Architecture"
@@ -335,6 +350,11 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
         concept_emb_list = concept_emb_list_openai
         course_emb_list = course_emb_list_openai
         sim_thre = 0.55
+    elif model_name == "mistral":
+        emb_model = MISTRAL_MODEL
+        concept_emb_list = concept_emb_list_mistral
+        course_emb_list = course_emb_list_mistral
+        sim_thre = 0.8
     elif model_name == "mock":
         recommendations = Recommendation(
             model=sample_rec_data["model"],
