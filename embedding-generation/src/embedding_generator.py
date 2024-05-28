@@ -6,6 +6,7 @@ import google.generativeai as palm
 import voyageai
 from openai import OpenAI
 from mistralai.client import MistralClient
+import cohere
 
 import tiktoken
 
@@ -14,6 +15,7 @@ PALM_MODEL = "embedding-gecko-001"
 VOYAGE_MODEL = "voyage-large-2"
 OPENAI_MODEL = "text-embedding-3-small"
 MISTRAL_MODEL = "mistral-embed"
+COHERE_MODEL = "embed-english-v3.0"
 
 class EmbeddingGenerator:
 
@@ -39,6 +41,10 @@ class EmbeddingGenerator:
             api_key = open("../api_keys/mistral_api_key.txt").read().strip()
             self.model = MistralClient(api_key=api_key)
             self.emb_type = "mistral_emb"
+        elif model_name == COHERE_MODEL:
+            api_key = open("../api_keys/cohere_api_key.txt").read().strip()
+            self.model = cohere.Client(api_key)
+            self.emb_type = "cohere_emb"
         else:
             raise Exception("System does not support this model: " + model_name)
 
@@ -57,6 +63,8 @@ class EmbeddingGenerator:
     def mistral_embed_fn(self, text):
         return self.model.embeddings(model=self.model_name, input=text).data[0].embedding
         
+    def cohere_embed_fn(self, text):
+        return self.model.embed(model=self.model_name, texts=[text], input_type="search_document").embeddings[0]
 
     def generate_embeddings_for_courses(self):
         if self.emb_type == "palm_emb":
@@ -67,6 +75,8 @@ class EmbeddingGenerator:
             self.udemy_courses_df[self.emb_type] = self.udemy_courses_df["concat_text"].apply(self.openai_embed_fn)
         elif self.emb_type == "mistral_emb":
             self.udemy_courses_df[self.emb_type] = self.udemy_courses_df["concat_text"].apply(self.mistral_embed_fn)
+        elif self.emb_type == "cohere_emb":
+            self.udemy_courses_df[self.emb_type] = self.udemy_courses_df["concat_text"].apply(self.cohere_embed_fn)
 
         # Column null check
         # TODO: logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
@@ -95,6 +105,8 @@ class EmbeddingGenerator:
                 return self.openai_embed_fn(row["content"])
             elif self.emb_type == "mistral_emb":
                 return self.mistral_embed_fn(row["content"])
+            elif self.emb_type == "cohere_emb":
+                return self.cohere_embed_fn(row["content"])
         else:
             return None
 
@@ -139,6 +151,8 @@ class EmbeddingGenerator:
         elif self.emb_type == "openai_emb":
             self.udemy_courses_df["token_count"] = self.udemy_courses_df["concat_text"].apply(self.num_tokens_from_string)
         elif self.emb_type == "mistral_emb":
+            self.udemy_courses_df["token_count"] = self.udemy_courses_df["concat_text"].apply(self.num_tokens_from_string)  
+        elif self.emb_type == "cohere_emb":
             self.udemy_courses_df["token_count"] = self.udemy_courses_df["concat_text"].apply(self.num_tokens_from_string)  
         
         total_token_count = self.udemy_courses_df["token_count"].sum()

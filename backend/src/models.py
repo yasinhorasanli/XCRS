@@ -5,6 +5,7 @@ PALM_MODEL = "embedding-gecko-001"
 VOYAGE_MODEL = "voyage-large-2"
 OPENAI_MODEL = "text-embedding-3-small"
 MISTRAL_MODEL = "mistral-embed"
+COHERE_MODEL = "embed-english-v3.0"
 
 
 # Model for course recommendation
