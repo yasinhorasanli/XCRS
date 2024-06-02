@@ -55,22 +55,22 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 <template>
   <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
 
-    <UFormGroup label="Took and Liked" name="took_and_liked">
-      <UTextarea autoresize :maxrows="5" placeholder="Courses or topics you took and liked"
+    <UFormGroup label="Courses and Concepts I Enjoyed " name="took_and_liked">
+      <UTextarea autoresize :maxrows="5" placeholder="Courses and related concepts or subjects that you found enjoyable or liked."
         v-model="state.took_and_liked" />
     </UFormGroup>
 
-    <UFormGroup label="Took and Neutral" name="took_and_neutral">
-      <UTextarea autoresize :maxrows="5" placeholder="Courses or topics you took and neither you liked nor disliked..."
+    <UFormGroup label="Courses and Concepts I Found Neutral" name="took_and_neutral">
+      <UTextarea autoresize :maxrows="5" placeholder="Courses and related concepts or subjects that you neither liked nor disliked, but found neutral."
         v-model="state.took_and_neutral" />
     </UFormGroup>
 
-    <UFormGroup label="Took and Disliked" name="took_and_disliked">
-      <UTextarea autoresize :maxrows="5" placeholder="Courses or topics you took and disliked"
+    <UFormGroup label="Courses and Concepts I Didn't Enjoy" name="took_and_disliked">
+      <UTextarea autoresize :maxrows="5" placeholder="Courses and related concepts or subjects that you didn't find enjoyable or liked."
         v-model="state.took_and_disliked" />
     </UFormGroup>
-    <UFormGroup label="Curious" name="curious">
-      <UTextarea autoresize :maxrows="5" placeholder="Courses or topics you are curious about"
+    <UFormGroup label="Courses and Concepts I'm Curious About" name="curious">
+      <UTextarea autoresize :maxrows="5" placeholder="Courses and related concepts or subjects that you are curious to learn more about."
         v-model="state.curious" />
     </UFormGroup>
 

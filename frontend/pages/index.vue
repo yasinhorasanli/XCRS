@@ -57,23 +57,23 @@ const courses = [
         <div class="w-full md:w-3/4 lg:w-1/2 xl:w-1/3 p-4" v-if="!myResult">
             <h2 class="text-2xl my-4 font-semibold text-center">Explainable Course Recommendation System</h2>
             <p class="mb-4 text-left">
-                To get a recommendation for a career role and courses to reach that career role, think of the courses you have already taken.
+                To receive recommendations for career paths and courses to achieve your goals, consider the courses you've already completed. 
                 <br>
-                Group the courses you liked, courses you are neutral about, and courses you disliked. Write them by separating them with commas.
+                Categorize them into courses you enjoyed, courses you are neutral about, and courses you disliked, separating them with commas.
                 <br>
-                You do not need to write only the name of the course, you can write subjects, concepts you learned in courses or you already knew. (e.g. Java, Python, HTML, CSS, Spring Boot, Linux etc.)
+                Feel free to include not just course names, but also subjects and concepts you've learned, such as Java, Python, HTML, CSS, Spring Boot, or Linux.
                 <br>
-                Additionally, write subjects, concepts, or courses you are curious about.
+                Additionally, please list any subjects, concepts, or courses you're curious about.
                 <br>
                 <span class="font-semibold">Note:</span>
-                <span class="italic"> There is a cheat sheet at the bottom of the page containing sample lessons and topics.</span>
+                <span class="italic"> There is a cheatsheet at the bottom of the page containing sample courses, subjects, concepts.</span>
             </p>
 
 
             <InputForm @submited="myResult = $event" />
 
             <div class="my-4">
-                <h3 class="text-sm font-semibold">Courses Cheat Sheet:</h3>
+                <!-- <h3 class="text-sm font-semibold">Course Cheatsheet:</h3> -->
                 <div class="flex flex-wrap gap-1 text-xs">
                     <div v-for="course in courses" :key="course" class="p-1 bg-gray-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
                         {{ course }}
