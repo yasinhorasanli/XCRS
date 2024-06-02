@@ -15,6 +15,41 @@ watch(modelNum, (newNum) => {
   console.log('Selected model index:', newNum);
 });
 
+const courses = [
+    // Programming Languages
+    "Python", "Java", "C++", "C", "C#", "JavaScript", "Ruby", "PHP", "Swift", "Kotlin", "TypeScript", "Go", "Rust", "SQL", "R", "MATLAB", "Shell Scripting",
+    // Web Development
+    "HTML", "CSS", "JavaScript", "React", "Angular", "Vue.js", "Node.js", "Express.js", "Next.js", "Bootstrap", "jQuery", "Django", "Flask", "Ruby on Rails", "ASP.NET", "Web Security", "RESTful APIs", "GraphQL",
+    // Mobile Development
+    "iOS Development", "Android Development", "React Native", "Flutter", "Swift", "Kotlin", "Xamarin", "Mobile App Security",
+    // Software Development
+    "Software Engineering", "Agile Methodologies", "DevOps", "Version Control (Git)", "Continuous Integration/Continuous Deployment (CI/CD)", "Test-Driven Development (TDD)", "Design Patterns", "Software Testing", "Microservices",
+    // Data Structures & Algorithms
+    "Data Structures", "Algorithms", "Complexity Analysis", "Sorting and Searching", "Graph Theory", "Dynamic Programming", "Recursion", "Trees", "Hash Tables", "Heaps", "Linked Lists", "Stacks and Queues",
+    // Databases
+    "SQL", "NoSQL", "MySQL", "PostgreSQL", "MongoDB", "Cassandra", "Oracle Database", "Redis", "Elasticsearch", "Database Design", "Data Warehousing", "Big Data",
+    // Operating Systems
+    "Linux", "Windows", "macOS", "Unix", "Operating System Concepts", "Process Management", "Memory Management", "File Systems", "Shell Scripting",
+    // Networks
+    "Computer Networks", "Network Protocols", "TCP/IP", "Network Security", "Wireless Networks", "Network Architecture", "Cloud Computing", "Network Administration",
+    // Cybersecurity
+    "Cybersecurity Fundamentals", "Ethical Hacking", "Network Security", "Cryptography", "Information Security", "Penetration Testing", "Security Policies", "Risk Management", "Incident Response",
+    // Cloud Computing
+    "AWS", "Azure", "Google Cloud Platform", "Cloud Architecture", "Cloud Security", "Kubernetes", "Docker", "Serverless Computing", "Cloud Storage", "Cloud Databases", "Cloud Services",
+    // Artificial Intelligence & Machine Learning
+    "Artificial Intelligence", "Machine Learning", "Deep Learning", "Neural Networks", "Natural Language Processing", "Computer Vision", "Reinforcement Learning", "TensorFlow", "PyTorch", "Scikit-learn",
+    // Data Science
+    "Data Analysis", "Data Visualization", "Data Mining", "Big Data", "Statistics", "Probability", "R", "Python for Data Science", "Pandas", "NumPy", "Matplotlib", "Seaborn", "Tableau", "Power BI",
+    // Computer Graphics
+    "Computer Graphics", "Game Development", "Unity", "Unreal Engine", "OpenGL", "DirectX", "3D Modeling", "Animation", "VR/AR Development",
+    // Embedded Systems
+    "Embedded Systems", "IoT", "Microcontrollers", "Arduino", "Raspberry Pi", "Real-Time Operating Systems", "Embedded C", "Firmware Development", "Robotics",
+    // Theoretical Computer Science
+    "Computational Theory", "Automata Theory", "Formal Languages", "Compiler Design", "Complexity Theory", "Cryptography", "Information Theory", "Discrete Mathematics",
+    // Miscellaneous
+    "Functional Programming", "Parallel Programming", "Distributed Systems", "Blockchain", "Quantum Computing", "Bioinformatics", "Human-Computer Interaction", "Software Project Management", "IT Governance", "IT Service Management"
+];
+
 </script>
 
 <template>
@@ -29,9 +64,26 @@ watch(modelNum, (newNum) => {
                 You do not need to write only the name of the course, you can write subjects, concepts you learned in courses or you already knew. (e.g. Java, Python, HTML, CSS, Spring Boot, Linux etc.)
                 <br>
                 Additionally, write subjects, concepts, or courses you are curious about.
+                <br>
+                <span class="font-semibold">Note:</span>
+                <span class="italic"> There is a cheat sheet at the bottom of the page containing sample lessons and topics.</span>
             </p>
+
+
             <InputForm @submited="myResult = $event" />
+
+            <div class="my-4">
+                <h3 class="text-sm font-semibold">Courses Cheat Sheet:</h3>
+                <div class="flex flex-wrap gap-1 text-xs">
+                    <div v-for="course in courses" :key="course" class="p-1 bg-gray-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                        {{ course }}
+                    </div>
+                </div>
+            </div>
+
         </div>
+
+
 
         <div class="w-full md:w-3/4 lg:w-1/2 xl:w-1/3 space-y-4 p-4" v-else>
             <h2 class="text-2xl my-4 font-semibold text-center">Recommendation Results</h2>

@@ -6,8 +6,10 @@ Make sure to install the dependencies:
 # pip
 pip install -U google-generativeai 
 pip install -U voyageai
-pip install mistral
+pip install openai
+pip install mistralai
 pip install cohere
+
 pip install fastapi
 pip install pandas
 
