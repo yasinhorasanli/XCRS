@@ -6,7 +6,7 @@ import json
 # internal classes
 import util
 from embedding_generator import EmbeddingGenerator
-from embedding_generator import PALM_MODEL, VOYAGE_MODEL, OPENAI_MODEL, MISTRAL_MODEL, COHERE_MODEL
+from embedding_generator import GOOGLE_MODEL, VOYAGE_MODEL, OPENAI_MODEL, MISTRAL_MODEL, COHERE_MODEL
 
 df_path = "../data/"
 roadmap_data_path = "../data/roadmaps_in_json"
@@ -102,22 +102,22 @@ def main():
     udemy_courses_df.to_csv(df_path + "udemy_courses_final.csv")
     roadmap_nodes_df.to_csv(df_path + "roadmap_nodes_final.csv")
 
-    # EMB. GEN. for Model: "embedding-gecko-001"
-    palm_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, PALM_MODEL)
-    palm_embedding_generator.return_num_of_tokens()
-    # palm_embedding_generator.generate_embeddings_for_courses()
-    # palm_embedding_generator.generate_embeddings_for_roadmaps()
+    # EMB. GEN. for Model: "text-embedding-004"
+    google_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, GOOGLE_MODEL)
+    # google_embedding_generator.return_num_of_tokens()
+    # google_embedding_generator.generate_embeddings_for_courses()
+    # google_embedding_generator.generate_embeddings_for_roadmaps()
 
-    # EMB. GEN. for Model: "voyage-large-2"
+    # EMB. GEN. for Model: "voyage-large-2-instruct"
     voyage_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, VOYAGE_MODEL)
     # voyage_embedding_generator.return_num_of_tokens()
-    # voyage_embedding_generator.generate_embeddings_for_courses()
-    # voyage_embedding_generator.generate_embeddings_for_roadmaps()
+    voyage_embedding_generator.generate_embeddings_for_courses()
+    voyage_embedding_generator.generate_embeddings_for_roadmaps()
 
-    # EMB. GEN. for Model: "text-embedding-3-small"
+    # EMB. GEN. for Model: "text-embedding-3-large"
     openai_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, OPENAI_MODEL)
-    # openai_embedding_generator.generate_embeddings_for_courses()
-    # openai_embedding_generator.generate_embeddings_for_roadmaps()
+    openai_embedding_generator.generate_embeddings_for_courses()
+    openai_embedding_generator.generate_embeddings_for_roadmaps()
 
     # EMB. GEN. for Model: "mistral-embed"
     mistral_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, MISTRAL_MODEL)
@@ -126,8 +126,8 @@ def main():
 
     # EMB. GEN. for Model: "embed-english-v3.0""
     cohere_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, COHERE_MODEL)
-    cohere_embedding_generator.generate_embeddings_for_courses()
-    cohere_embedding_generator.generate_embeddings_for_roadmaps()
+    # cohere_embedding_generator.generate_embeddings_for_courses()
+    # cohere_embedding_generator.generate_embeddings_for_roadmaps()
 
 
     return

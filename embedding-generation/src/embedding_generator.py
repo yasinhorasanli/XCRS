@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import os
 
-import google.generativeai as palm
+import google.generativeai as genai
 import voyageai
 from openai import OpenAI
 from mistralai.client import MistralClient
@@ -11,9 +11,9 @@ import cohere
 import tiktoken
 
 
-PALM_MODEL = "embedding-gecko-001"
-VOYAGE_MODEL = "voyage-large-2"
-OPENAI_MODEL = "text-embedding-3-small"
+GOOGLE_MODEL = "text-embedding-004"
+VOYAGE_MODEL = "voyage-large-2-instruct"
+OPENAI_MODEL = "text-embedding-3-large"
 MISTRAL_MODEL = "mistral-embed"
 COHERE_MODEL = "embed-english-v3.0"
 
@@ -24,10 +24,10 @@ class EmbeddingGenerator:
         self.roadmap_nodes_df = roadmap_nodes_df
         self.model_name = model_name
 
-        if model_name == PALM_MODEL:
-            palm_api_key = open("../api_keys/palm_api_key.txt").read().strip()
-            palm.configure(api_key=palm_api_key)
-            self.emb_type = "palm_emb"
+        if model_name == GOOGLE_MODEL:
+            google_api_key = open("../api_keys/google_api_key.txt").read().strip()
+            genai.configure(api_key=google_api_key)
+            self.emb_type = "google_emb"
         elif model_name == VOYAGE_MODEL:
             api_key = open("../api_keys/voyage_api_key.txt").read().strip()
             self.model = voyageai.Client(api_key=api_key)
@@ -50,8 +50,8 @@ class EmbeddingGenerator:
 
         self.df_path = df_path + self.emb_type + "/"
 
-    def palm_embed_fn(self, text):
-        return palm.generate_embeddings(model="models/" + self.model_name, text=text)["embedding"]
+    def google_embed_fn(self, text):
+        return genai.embed_content(model="models/"+self.model_name,content=text,task_type="similarity")['embedding']
 
     def voyage_embed_fn(self, text):
         return self.model.embed([text], model=self.model_name).embeddings[0]
@@ -67,8 +67,8 @@ class EmbeddingGenerator:
         return self.model.embed(model=self.model_name, texts=[text], input_type="search_document").embeddings[0]
 
     def generate_embeddings_for_courses(self):
-        if self.emb_type == "palm_emb":
-            self.udemy_courses_df[self.emb_type] = self.udemy_courses_df["concat_text"].apply(self.palm_embed_fn)
+        if self.emb_type == "google_emb":
+            self.udemy_courses_df[self.emb_type] = self.udemy_courses_df["concat_text"].apply(self.google_embed_fn)
         elif self.emb_type == "voyage_emb":
             self.udemy_courses_df[self.emb_type] = self.udemy_courses_df["concat_text"].apply(self.voyage_embed_fn)
         elif self.emb_type == "openai_emb":
@@ -97,8 +97,8 @@ class EmbeddingGenerator:
 
     def embed_concepts(self, row):
         if row["type"] == "concept":
-            if self.emb_type == "palm_emb":
-                return self.palm_embed_fn(row["content"])
+            if self.emb_type == "google_emb":
+                return self.google_embed_fn(row["content"])
             elif self.emb_type == "voyage_emb":
                 return self.voyage_embed_fn(row["content"])
             elif self.emb_type == "openai_emb":
@@ -144,7 +144,7 @@ class EmbeddingGenerator:
 
     def return_num_of_tokens(self):
 
-        if self.emb_type == "palm_emb":
+        if self.emb_type == "google_emb":
             self.udemy_courses_df["token_count"] = self.udemy_courses_df["concat_text"].apply(self.num_tokens_from_string)
         elif self.emb_type == "voyage_emb":
             self.udemy_courses_df["token_count"] = self.udemy_courses_df["concat_text"].apply(self.num_tokens_from_string)

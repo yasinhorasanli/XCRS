@@ -5,6 +5,7 @@ backend/user_inputs/*
 embedding-generation/api_keys/*
 embedding-generation/src/test.ipynb
 embedding-generation/data/palm_emb/*
+embedding-generation/data/google_emb/*
 embedding-generation/data/voyage_emb/*
 embedding-generation/data/openai_emb/*
 embedding-generation/data/mistral_emb/*

@@ -9,7 +9,7 @@ from datetime import datetime
 
 from sklearn.metrics.pairwise import cosine_similarity
 
-import google.generativeai as palm
+import google.generativeai as genai
 import uvicorn
 import voyageai
 from openai import OpenAI
@@ -22,9 +22,9 @@ import util
 from eda import ExplatoryDataAnalysis
 from recom import RecommendationEngine
 from models import CourseRecommendation, RoleRecommendation, Recommendation, RecommendationResponse, RecommendationRequest, sample_rec_data
-from models import PALM_MODEL, VOYAGE_MODEL, OPENAI_MODEL, MISTRAL_MODEL, COHERE_MODEL
+from models import GOOGLE_MODEL, VOYAGE_MODEL, OPENAI_MODEL, MISTRAL_MODEL, COHERE_MODEL
 
-palm_api_key = open("../../embedding-generation/api_keys/palm_api_key.txt").read().strip()
+google_api_key = open("../../embedding-generation/api_keys/google_api_key.txt").read().strip()
 voyage_api_key = open("../../embedding-generation/api_keys/voyage_api_key.txt").read().strip()
 openai_api_key = open("../../embedding-generation/api_keys/openai_api_key.txt").read().strip()
 mistral_api_key = open("../../embedding-generation/api_keys/mistral_api_key.txt").read().strip()
@@ -32,7 +32,7 @@ cohere_api_key = open("../../embedding-generation/api_keys/cohere_api_key.txt").
 
 
 voyage = voyageai.Client(api_key=voyage_api_key)
-palm.configure(api_key=palm_api_key)
+genai.configure(api_key=google_api_key)
 os.environ["OPENAI_API_KEY"] = openai_api_key
 openai = OpenAI()
 mistral = MistralClient(api_key=mistral_api_key)
@@ -70,8 +70,8 @@ def init_data():
     # return (udemy_courses_df, roadmap_nodes_df, roadmap_concepts_df, roadmaps_df)
 
 
-def palm_embed_fn(text):
-    return palm.generate_embeddings(model="models/"+PALM_MODEL, text=text)["embedding"]
+def google_embed_fn(text):
+    return genai.embed_content(model="models/"+GOOGLE_MODEL, content=text, task_type="similarity")['embedding']
 
 
 def voyage_embed_fn(text):
@@ -147,12 +147,12 @@ def create_user_embeddings(took_and_liked: str, took_and_neutral: str, took_and_
 
     # Embedding Generation for User Data
 
-    # user_courses_df['palm_emb'] = user_courses_df.apply(convert_to_float, axis=1)
+    # user_courses_df['google_emb'] = user_courses_df.apply(convert_to_float, axis=1)
 
     # TODO: If it is possible, search courses in wikipedia here.
 
-    if model == PALM_MODEL:
-        user_courses_df["emb"] = user_courses_df["course"].apply(palm_embed_fn)
+    if model == GOOGLE_MODEL:
+        user_courses_df["emb"] = user_courses_df["course"].apply(google_embed_fn)
     elif model == VOYAGE_MODEL:
         user_courses_df["emb"] = user_courses_df["course"].apply(voyage_embed_fn)
     elif model == OPENAI_MODEL:
@@ -217,7 +217,7 @@ def find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list, 
     return disliked_similar_course_list
 
 
-def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list, palm_concepts_emb_list):
+def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list, concepts_emb_list):
 
     # # Coefficients for each category
     # coefficients = {
@@ -230,9 +230,9 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
     # # Multiply embeddings with coefficients based on categories
     # user_courses_df['emb'] = user_courses_df.apply(lambda row: row['emb'] * coefficients.get(row['category'], 1), axis=1)
 
-    sim_mat_user_course_X_concept = cosine_similarity(user_emb_list, palm_concepts_emb_list)
+    sim_mat_user_course_X_concept = cosine_similarity(user_emb_list, concepts_emb_list)
 
-    # eda_for_palm = ExplatoryDataAnalysis(
+    # eda_for_google = ExplatoryDataAnalysis(
     #     udemy_courses_df,
     #     roadmap_concepts_df,
     #     user_courses_df,
@@ -243,10 +243,10 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
     #     sim_mat_user_course_X_concept,
     # )
 
-    # eda_for_palm.find_course_X_concept_and_sim_scores(threshold=0.8)
-    # eda_for_palm.find_concept_X_course_and_sim_scores(threshold=0.8)
+    # eda_for_google.find_course_X_concept_and_sim_scores(threshold=0.8)
+    # eda_for_google.find_concept_X_course_and_sim_scores(threshold=0.8)
 
-    # eda_for_palm.find_user_course_X_concept_and_sim_scores(threshold=0.7)
+    # eda_for_google.find_user_course_X_concept_and_sim_scores(threshold=0.7)
 
     # User Courses X Concepts Matches
     max_sim_for_row_user_courses_X_concepts = util.max_element_indices(sim_mat_user_course_X_concept)
@@ -271,12 +271,12 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
 
 
 def main() -> None:
-    # LOAD DATA FOR PALM
+    # LOAD DATA FOR GOOGLE
     init_data()
 
     global encoder_for_courses, decoder_for_courses, encoder_for_concepts, decoder_for_concepts
     global course_id_list, concept_id_list
-    global course_emb_list_palm, concept_emb_list_palm, course_X_concept_palm, concept_X_course_palm
+    global course_emb_list_google, concept_emb_list_google, course_X_concept_google, concept_X_course_google
     global course_emb_list_voyage, concept_emb_list_voyage, course_X_concept_voyage, concept_X_course_voyage
     global course_emb_list_openai, concept_emb_list_openai, course_X_concept_openai, concept_X_course_openai
     global course_emb_list_mistral, concept_emb_list_mistral, course_X_concept_mistral, concept_X_course_mistral
@@ -293,10 +293,10 @@ def main() -> None:
     encoder_for_concepts = dict([(v, k) for v, k in zip(concept_id_list, range(len(concept_id_list)))])
     decoder_for_concepts = dict([(v, k) for k, v in encoder_for_concepts.items()])
 
-    # Udemy Courses and Concepts Embeddings List - PALM
-    course_emb_list_palm, concept_emb_list_palm = get_emb_lists(folder="palm_emb", model=PALM_MODEL)
-    course_X_concept_palm = cosine_similarity(course_emb_list_palm, concept_emb_list_palm)
-    concept_X_course_palm = course_X_concept_palm.transpose()
+    # Udemy Courses and Concepts Embeddings List - GOOGLE
+    course_emb_list_google, concept_emb_list_google = get_emb_lists(folder="google_emb", model=GOOGLE_MODEL)
+    course_X_concept_google = cosine_similarity(course_emb_list_google, concept_emb_list_google)
+    concept_X_course_google = course_X_concept_google.transpose()
 
     course_emb_list_voyage, concept_emb_list_voyage = get_emb_lists(folder="voyage_emb", model=VOYAGE_MODEL)
     course_X_concept_voyage = cosine_similarity(course_emb_list_voyage, concept_emb_list_voyage)
@@ -351,16 +351,16 @@ async def save_inputs(request: RecommendationRequest):
 @app.post("/recommendations/{model_name}")
 async def get_recommendations(request: RecommendationRequest, model_name: str):
 
-    if model_name == "palm":
-        emb_model = PALM_MODEL
-        concept_emb_list = concept_emb_list_palm
-        course_emb_list = course_emb_list_palm
+    if model_name == "google":
+        emb_model = GOOGLE_MODEL
+        concept_emb_list = concept_emb_list_google
+        course_emb_list = course_emb_list_google
         sim_thre = 0.7
     elif model_name == "voyage":
         emb_model = VOYAGE_MODEL
         concept_emb_list = concept_emb_list_voyage
         course_emb_list = course_emb_list_voyage
-        sim_thre = 0.8
+        sim_thre = 0.60
     elif model_name == "openai":
         emb_model = OPENAI_MODEL
         concept_emb_list = concept_emb_list_openai
@@ -409,11 +409,11 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
     recommendation = RecommendationEngine(
         udemy_courses_df,
         roadmap_concepts_df,
-        concept_X_course_palm,
+        concept_X_course_google,
         encoder_for_concepts,
         encoder_for_courses,
         roadmaps_df,
-        "palm_emb",
+        "google_emb",
     )
 
     rol_rec_list = recommendation.recommend_role(user_concepts_df)
