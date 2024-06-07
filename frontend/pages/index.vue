@@ -16,38 +16,38 @@ watch(modelNum, (newNum) => {
 });
 
 const courses = [
-    // Programming Languages
-    "Python", "Java", "C++", "C", "C#", "JavaScript", "Ruby", "PHP", "Swift", "Kotlin", "TypeScript", "Go", "Rust", "SQL", "R", "MATLAB", "Shell Scripting",
-    // Web Development
-    "HTML", "CSS", "JavaScript", "React", "Angular", "Vue.js", "Node.js", "Express.js", "Next.js", "Bootstrap", "jQuery", "Django", "Flask", "Ruby on Rails", "ASP.NET", "Web Security", "RESTful APIs", "GraphQL",
-    // Mobile Development
-    "iOS Development", "Android Development", "React Native", "Flutter", "Swift", "Kotlin", "Xamarin", "Mobile App Security",
-    // Software Development
-    "Software Engineering", "Agile Methodologies", "DevOps", "Version Control (Git)", "Continuous Integration/Continuous Deployment (CI/CD)", "Test-Driven Development (TDD)", "Design Patterns", "Software Testing", "Microservices",
-    // Data Structures & Algorithms
-    "Data Structures", "Algorithms", "Complexity Analysis", "Sorting and Searching", "Graph Theory", "Dynamic Programming", "Recursion", "Trees", "Hash Tables", "Heaps", "Linked Lists", "Stacks and Queues",
-    // Databases
-    "SQL", "NoSQL", "MySQL", "PostgreSQL", "MongoDB", "Cassandra", "Oracle Database", "Redis", "Elasticsearch", "Database Design", "Data Warehousing", "Big Data",
-    // Operating Systems
-    "Linux", "Windows", "macOS", "Unix", "Operating System Concepts", "Process Management", "Memory Management", "File Systems", "Shell Scripting",
-    // Networks
-    "Computer Networks", "Network Protocols", "TCP/IP", "Network Security", "Wireless Networks", "Network Architecture", "Cloud Computing", "Network Administration",
-    // Cybersecurity
-    "Cybersecurity Fundamentals", "Ethical Hacking", "Network Security", "Cryptography", "Information Security", "Penetration Testing", "Security Policies", "Risk Management", "Incident Response",
-    // Cloud Computing
-    "AWS", "Azure", "Google Cloud Platform", "Cloud Architecture", "Cloud Security", "Kubernetes", "Docker", "Serverless Computing", "Cloud Storage", "Cloud Databases", "Cloud Services",
-    // Artificial Intelligence & Machine Learning
-    "Artificial Intelligence", "Machine Learning", "Deep Learning", "Neural Networks", "Natural Language Processing", "Computer Vision", "Reinforcement Learning", "TensorFlow", "PyTorch", "Scikit-learn",
-    // Data Science
-    "Data Analysis", "Data Visualization", "Data Mining", "Big Data", "Statistics", "Probability", "R", "Python for Data Science", "Pandas", "NumPy", "Matplotlib", "Seaborn", "Tableau", "Power BI",
-    // Computer Graphics
-    "Computer Graphics", "Game Development", "Unity", "Unreal Engine", "OpenGL", "DirectX", "3D Modeling", "Animation", "VR/AR Development",
-    // Embedded Systems
-    "Embedded Systems", "IoT", "Microcontrollers", "Arduino", "Raspberry Pi", "Real-Time Operating Systems", "Embedded C", "Firmware Development", "Robotics",
-    // Theoretical Computer Science
-    "Computational Theory", "Automata Theory", "Formal Languages", "Compiler Design", "Complexity Theory", "Cryptography", "Information Theory", "Discrete Mathematics",
-    // Miscellaneous
-    "Functional Programming", "Parallel Programming", "Distributed Systems", "Blockchain", "Quantum Computing", "Bioinformatics", "Human-Computer Interaction", "Software Project Management", "IT Governance", "IT Service Management"
+    // 0. Programming Languages
+    ["Python", "Java", "C++", "C", "C#", "JavaScript", "Ruby", "PHP", "Swift", "Kotlin", "TypeScript", "Go", "Rust", "SQL", "R", "MATLAB", "Shell Scripting"],
+    // 1. Web Development
+    ["HTML", "CSS", "JavaScript", "React", "Angular", "Vue.js", "Node.js", "Express.js", "Next.js", "Bootstrap", "jQuery", "Django", "Flask", "Ruby on Rails", "ASP.NET", "Web Security", "RESTful APIs", "GraphQL"],
+    // 2. Mobile Development
+    ["iOS Development", "Android Development", "React Native", "Flutter", "Swift", "Kotlin", "Xamarin", "Mobile App Security"],
+    // 3. Software Development
+    ["Software Engineering", "Agile Methodologies", "DevOps", "Version Control (Git)", "Continuous Integration/Continuous Deployment (CI/CD)", "Test-Driven Development (TDD)", "Design Patterns", "Software Testing", "Microservices"],
+    // 4. Data Structures & Algorithms
+    ["Data Structures", "Algorithms", "Complexity Analysis", "Sorting and Searching", "Graph Theory", "Dynamic Programming", "Recursion", "Trees", "Hash Tables", "Heaps", "Linked Lists", "Stacks and Queues"],
+    // 5. Databases
+    ["SQL", "NoSQL", "MySQL", "PostgreSQL", "MongoDB", "Cassandra", "Oracle Database", "Redis", "Elasticsearch", "Database Design", "Data Warehousing", "Big Data"],
+    // 6. Operating Systems
+    ["Linux", "Windows", "macOS", "Unix", "Operating System Concepts", "Process Management", "Memory Management", "File Systems", "Shell Scripting"],
+    // 7. Networks
+    ["Computer Networks", "Network Protocols", "TCP/IP", "Network Security", "Wireless Networks", "Network Architecture", "Cloud Computing", "Network Administration"],
+    // 8. Cybersecurity
+    ["Cybersecurity Fundamentals", "Ethical Hacking", "Network Security", "Cryptography", "Information Security", "Penetration Testing", "Security Policies", "Risk Management", "Incident Response"],
+    // 9. Cloud Computing
+    ["AWS", "Azure", "Google Cloud Platform", "Cloud Architecture", "Cloud Security", "Kubernetes", "Docker", "Serverless Computing", "Cloud Storage", "Cloud Databases", "Cloud Services"],
+    // 10. Artificial Intelligence & Machine Learning
+    ["Artificial Intelligence", "Machine Learning", "Deep Learning", "Neural Networks", "Natural Language Processing", "Computer Vision", "Reinforcement Learning", "TensorFlow", "PyTorch", "Scikit-learn"],
+    // 11. Data Science
+    ["Data Analysis", "Data Visualization", "Data Mining", "Big Data", "Statistics", "Probability", "R", "Python for Data Science", "Pandas", "NumPy", "Matplotlib", "Seaborn", "Tableau", "Power BI"],
+    // 12. Computer Graphics
+    ["Computer Graphics", "Game Development", "Unity", "Unreal Engine", "OpenGL", "DirectX", "3D Modeling", "Animation", "VR/AR Development"],
+    // 13. Embedded Systems
+    ["Embedded Systems", "IoT", "Microcontrollers", "Arduino", "Raspberry Pi", "Real-Time Operating Systems", "Embedded C", "Firmware Development", "Robotics"],
+    // 14. Theoretical Computer Science
+    ["Computational Theory", "Automata Theory", "Formal Languages", "Compiler Design", "Complexity Theory", "Cryptography", "Information Theory", "Discrete Mathematics"],
+    // 15. Miscellaneous
+    ["Functional Programming", "Parallel Programming", "Distributed Systems", "Blockchain", "Quantum Computing", "Bioinformatics", "Human-Computer Interaction", "Software Project Management", "IT Governance", "IT Service Management"]
 ];
 
 </script>
@@ -75,7 +75,52 @@ const courses = [
             <div class="my-4">
                 <!-- <h3 class="text-sm font-semibold">Course Cheatsheet:</h3> -->
                 <div class="flex flex-wrap gap-1 text-xs">
-                    <div v-for="course in courses" :key="course" class="p-1 bg-gray-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                    <div v-for="course in courses[0]" :key="course" class="p-1 bg-red-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                        {{ course }}
+                    </div>
+                    <div v-for="course in courses[1]" :key="course" class="p-1 bg-orange-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                        {{ course }}
+                    </div>
+                    <div v-for="course in courses[2]" :key="course" class="p-1 bg-emerald-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                        {{ course }}
+                    </div>
+                    <div v-for="course in courses[3]" :key="course" class="p-1 bg-gray-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                        {{ course }}
+                    </div>
+                    <div v-for="course in courses[4]" :key="course" class="p-1 bg-lime-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                        {{ course }}
+                    </div>
+                    <div v-for="course in courses[5]" :key="course" class="p-1 bg-green-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                        {{ course }}
+                    </div>
+                    <div v-for="course in courses[6]" :key="course" class="p-1 bg-amber-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                        {{ course }}
+                    </div>
+                    <div v-for="course in courses[7]" :key="course" class="p-1 bg-teal-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                        {{ course }}
+                    </div>
+                    <div v-for="course in courses[8]" :key="course" class="p-1 bg-yellow-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                        {{ course }}
+                    </div>
+                    <div v-for="course in courses[9]" :key="course" class="p-1 bg-sky-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                        {{ course }}
+                    </div>
+                    <div v-for="course in courses[10]" :key="course" class="p-1 bg-cyan-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                        {{ course }}
+                    </div>
+                    <div v-for="course in courses[11]" :key="course" class="p-1 bg-indigo-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                        {{ course }}
+                    </div>
+                    <div v-for="course in courses[12]" :key="course" class="p-1 bg-rose-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                        {{ course }}
+                    </div>
+                    <div v-for="course in courses[13]" :key="course" class="p-1 bg-purple-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                        {{ course }}
+                    </div>
+                    <div v-for="course in courses[14]" :key="course" class="p-1 bg-blue-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                        {{ course }}
+                    </div>
+                    <div v-for="course in courses[15]" :key="course" class="p-1 bg-pink-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
                         {{ course }}
                     </div>
                 </div>
@@ -102,9 +147,9 @@ const courses = [
                         <!-- <tr>
                             <td colspan="4" class="px-4 py-2 text-center font-semibold ">{{ myResult.recommendations[modelNum].model }}</td>
                         </tr> -->
-                        <tr v-for="row in myResult.recommendations[modelNum].roles" :key="row.role + modelNum" class="border-2 border-slate-400">
+                        <tr v-for="(row, index_role) in myResult.recommendations[modelNum].roles" :key="row.role + modelNum" class="border-2 border-slate-400">
                             <td colspan="4" class="px-4 py-2 bg-slate-100">
-                                <div class="text-xl font-semibold">{{ row.role }}</div>
+                                <div class="text-xl font-semibold">Career Role {{index_role + 1}} - {{ row.role }}</div>
                                 <div class="mt-2">{{ row.explanation }}</div>
                                 <div class="mt-2">
                                     <div v-for="(course, index) in row.courses" :key="course.course + + modelNum" class="mt-2 bg-blue-100">

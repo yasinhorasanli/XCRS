@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
     //console.log('userData =', body)
 
     //const {data: responseData} = await useFetch('http://localhost:8000/', {
-    const palm_response = await $fetch<RecommendationResult>($endpoint + '/recommendations/palm', {
+    const google_response = await $fetch<RecommendationResult>($endpoint + '/recommendations/google', {
         method: 'post',
         body: { 
             took_and_liked: body.took_and_liked,
@@ -107,7 +107,7 @@ export default defineEventHandler(async (event) => {
     //console.log(voyage_response.recommendations[0].roles[0].role)
 
     const savedFileName = save_response.fileName
-    const readonlyArray = [palm_response.recommendations[0], voyage_response.recommendations[0], 
+    const readonlyArray = [google_response.recommendations[0], voyage_response.recommendations[0], 
                             openai_response.recommendations[0], mistral_response.recommendations[0], 
                             cohere_response.recommendations[0]]
     //type Element = typeof readonlyArray[number]
