@@ -26,7 +26,7 @@ class RecommendationEngine:
         self.roadmaps_df = roadmaps_df
         self.recom_role_id_list = []
 
-    def recommend_role(self, user_concepts_df):
+    def recommend_role(self, user_concepts_df: pd.DataFrame):
 
         concept_id_list = self.roadmap_concepts_df["id"]
         # user_concept_id_set = set(user_concepts_df["concept_id"])
@@ -36,7 +36,7 @@ class RecommendationEngine:
         coefficients = {"TookAndLiked": 0.75, "TookAndNeutral": 0.5, "TookAndDisliked": -0.5, "Curious": 1}
 
         role_id_concept_counts = Counter(util.get_role_id(concept_id) for concept_id in concept_id_list)
-        user_role_id_points = Counter()
+        role_id_user_scores = Counter()
         encountered_concepts = set()
 
         for concept_id, role_id, category in zip(user_concepts_df["concept_id"], user_concepts_df["role_id"], user_concepts_df["category"]):
@@ -44,15 +44,17 @@ class RecommendationEngine:
             concept_info = (concept_id, category, role_id)
             if concept_info not in encountered_concepts:
                 # Increase counters based on category and coefficients
-                coefficient = coefficients.get(category, 0)
-                user_role_id_points[role_id] += coefficient
+                score = coefficients.get(category, 0)
+                role_id_user_scores[role_id] += score
                 encountered_concepts.add(concept_info)
 
-        points_dict = {role_id: user_role_id_points[role_id] * 100 / role_id_concept_counts[role_id] for role_id in role_id_concept_counts.keys()}
+        points_dict = {role_id: role_id_user_scores[role_id] * 100 / role_id_concept_counts[role_id] for role_id in role_id_concept_counts.keys()}
         # recom_role_id = max(points_dict, key=points_dict.get)
 
         # print(points_dict)
 
+        # Example Activation:   [-50,   -25,    -10,    0,      5,      10.67,  23.645, 32.5        44.6332,    50(All-N),  60.4342,    74,     75(All-L),  86,     94,     100(ALL-C)]
+        #              ----->   [0.0,   0.0,    0.09,   0.67,   1.8,    5.39,   43.27,  81.76,      98.07,      99.33,      99.92,      99.99,  100.0,      100.0,  100.0,  100.0]
         for key, value in points_dict.items():
             points_dict[key] = util.custom_activation(value)
 
@@ -68,7 +70,7 @@ class RecommendationEngine:
 
         # print(recom_role_id_list)
         # print(sorted(role_id_concept_counts.items()))
-        # print(sorted(user_role_id_points.items()))
+        # print(sorted(role_id_user_scores.items()))
         # print(sorted(points_dict.items()))
 
         # NO NEED
@@ -93,7 +95,7 @@ class RecommendationEngine:
 
         return rr_list
 
-    def generate_explanation_for_role(self, recom_role_id, user_concepts_df) -> str:
+    def generate_explanation_for_role(self, recom_role_id: int, user_concepts_df: pd.DataFrame) -> str:
 
         role = self.roadmaps_df.loc[recom_role_id]["name"]
         effective_courses = user_concepts_df[user_concepts_df["role_id"] == recom_role_id]
@@ -206,7 +208,7 @@ class RecommendationEngine:
         return rol_rec_list
 
 
-    def generate_explanation_for_course(self, recom_role_id, recom_course_id) -> str:
+    def generate_explanation_for_course(self, recom_role_id: int, recom_course_id: int) -> str:
 
         top_concepts = util.top_n_concepts_for_courses(self.roadmap_concepts_df, self.concept_X_course, recom_role_id, recom_course_id, 3)
         course_title = self.udemy_courses_df.loc[recom_course_id, "title"]

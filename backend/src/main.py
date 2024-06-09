@@ -219,14 +219,6 @@ def find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list, 
 
 def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_list, concepts_emb_list):
 
-    # # Coefficients for each category
-    # coefficients = {
-    #     'TookAndLiked': 1,
-    #     'TookAndNeutral': 0.5,
-    #     'TookAndDisliked': -1,
-    #     'Curious': 1
-    # }
-
     # # Multiply embeddings with coefficients based on categories
     # user_courses_df['emb'] = user_courses_df.apply(lambda row: row['emb'] * coefficients.get(row['category'], 1), axis=1)
 
@@ -268,6 +260,8 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
     user_concept_id_set = set(user_concept_id_list)
 
     return user_concept_id_set
+
+
 
 
 def main() -> None:
@@ -391,10 +385,12 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
         # raise UnicornException(name=model_name)
         raise HTTPException(status_code=404, detail="Embedding model not found")
 
+    ################################# 1. CREATING EMBEDDINGS FOR USER'S COURSES #######################################
     user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list = create_user_embeddings(
         request.took_and_liked, request.took_and_neutral, request.took_and_disliked, request.curious, emb_model
     )
 
+    ################################# 2. FINDING SIMILAR CONCEPTS FOR USER'S COURSES ##################################
     user_concepts_df = find_similar_concepts_for_courses(user_courses_df, user_emb_list, concept_emb_list, roadmap_concepts_df, sim_thre)
 
     # If empty dataframe happens
@@ -402,6 +398,7 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
         raise HTTPException(status_code=404, detail="Insufficient input.")
         # return RecommendationResponse(fileName="Insufficient input.", recommendations=[])
 
+    ################################# 3. FINDING SIMILAR COURSES FOR USER'S DISLIKED COURSES ##########################
     disliked_similar_course_id_list = find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list, sim_thre)
 
     print(user_concepts_df)
@@ -416,7 +413,10 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
         "google_emb",
     )
 
+    ################################# 4. ROLE RECOMMENDATION ##########################################################
     rol_rec_list = recommendation.recommend_role(user_concepts_df)
+
+    ################################# 5. COURSE RECOMMENDATION ##########################################################
     rol_rec_list = recommendation.recommend_courses(user_concepts_df, rol_rec_list, disliked_similar_course_id_list)
 
     print(rol_rec_list)
