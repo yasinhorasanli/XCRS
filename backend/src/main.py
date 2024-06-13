@@ -173,7 +173,7 @@ def find_similar_concepts_for_courses(user_courses_df, user_emb_list, concepts_e
 
     similarity_matrix = cosine_similarity(user_emb_list, concepts_emb_list)
 
-    # Find courses with similarity score > 0.7 for each concept
+    # Find courses with similarity score > sim_thre for each concept
     result = []
     for i, row in user_courses_df.iterrows():
         course_id = i
@@ -275,6 +275,7 @@ def main() -> None:
     global course_emb_list_openai, concept_emb_list_openai, course_X_concept_openai, concept_X_course_openai
     global course_emb_list_mistral, concept_emb_list_mistral, course_X_concept_mistral, concept_X_course_mistral
     global course_emb_list_cohere, concept_emb_list_cohere, course_X_concept_cohere, concept_X_course_cohere
+    global emb_thresholds
 
 
 
@@ -308,6 +309,16 @@ def main() -> None:
     course_X_concept_cohere = cosine_similarity(course_emb_list_cohere, concept_emb_list_cohere)
     concept_X_course_cohere = course_X_concept_cohere.transpose()
 
+    similarity_matrices = [course_X_concept_google, 
+                           course_X_concept_voyage, 
+                           course_X_concept_openai, 
+                           course_X_concept_mistral, 
+                           course_X_concept_cohere] 
+
+    emb_thresholds = [util.mean_plus_std_dev(matrix) for matrix in similarity_matrices]
+
+
+
     # user1_took = "Physics , Intr. to Information Systems, Intr.to Comp.Eng.and Ethics, Mathematics I, Linear Algebra, Engineering Mathematics, Digital Circuits, Data Structures, Introduction to Electronics, Basics of Electrical Circuits, Object Oriented Programming, Computer Organization, Logic Circuits Laboratory, Numerical Methods, Formal Languages and Automata, Analysis of Algorithms I, Probability and Statistics, Microcomputer Lab., Database Systems, Microprocessor Systems, Computer Architecture, Computer Operating Systems, Analysis of Algorithms II, Signal&Systems for Comp.Eng."
     # user1_took_and_liked = "Digital Circuits , Data Structures , Introduction to Electronics, Microprocessor Systems , Computer Architecture"
     # user1_took_and_neutral = "Mathematics I, Linear Algebra, Engineering Mathematics, Basics of Electrical Circuits, Object Oriented Programming, Computer Organization, Logic Circuits Laboratory, Analysis of Algorithms I, Probability and Statistics, Microcomputer Lab., Database Systems, Computer Operating Systems, Analysis of Algorithms II, Signal&Systems for Comp.Eng."
@@ -336,7 +347,7 @@ async def save_inputs(request: RecommendationRequest):
         f.write(request.json())
 
     recommendations = Recommendation(
-        model="", roles=[RoleRecommendation(role="", explanation="", courses=[CourseRecommendation(course="", url="", explanation="")])]
+        model="", roles=[RoleRecommendation(role="", score=0.0, explanation="", courses=[CourseRecommendation(course="", url="", explanation="")])]
     )
 
     return RecommendationResponse(fileName=fileName, recommendations=[recommendations])
@@ -349,33 +360,33 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
         emb_model = GOOGLE_MODEL
         concept_emb_list = concept_emb_list_google
         course_emb_list = course_emb_list_google
-        sim_thre = 0.7
+        sim_thre = emb_thresholds[0]
     elif model_name == "voyage":
         emb_model = VOYAGE_MODEL
         concept_emb_list = concept_emb_list_voyage
         course_emb_list = course_emb_list_voyage
-        sim_thre = 0.60
+        sim_thre = emb_thresholds[1]
     elif model_name == "openai":
         emb_model = OPENAI_MODEL
         concept_emb_list = concept_emb_list_openai
         course_emb_list = course_emb_list_openai
-        sim_thre = 0.55
+        sim_thre = emb_thresholds[2]
     elif model_name == "mistral":
         emb_model = MISTRAL_MODEL
         concept_emb_list = concept_emb_list_mistral
         course_emb_list = course_emb_list_mistral
-        sim_thre = 0.8
+        sim_thre = emb_thresholds[3]
     elif model_name == "cohere":
         emb_model = COHERE_MODEL
         concept_emb_list = concept_emb_list_cohere
         course_emb_list = course_emb_list_cohere
-        sim_thre = 0.45
+        sim_thre = emb_thresholds[4]
     elif model_name == "mock":
         recommendations = Recommendation(
             model=sample_rec_data["model"],
             roles=[
                 RoleRecommendation(
-                    role=role["role"], explanation=role["explanation"], courses=[CourseRecommendation(**course) for course in role["courses"]]
+                    role=role["role"], score=role["score"], explanation=role["explanation"], courses=[CourseRecommendation(**course) for course in role["courses"]]
                 )
                 for role in sample_rec_data["roles"]
             ],

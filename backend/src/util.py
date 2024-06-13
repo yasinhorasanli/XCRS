@@ -94,3 +94,11 @@ def top_n_concepts_for_courses(roadmap_concepts_df, similarity_matrix, recom_rol
     top_courses["sim_score"] = top_scores
 
     return top_courses
+
+
+def mean_plus_std_dev(similarity_matrix):
+    flattened_scores = similarity_matrix.flatten()
+    mean = np.mean(flattened_scores)
+    std_dev = np.std(flattened_scores)
+    
+    return mean + std_dev

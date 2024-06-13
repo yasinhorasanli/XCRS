@@ -84,9 +84,10 @@ class RecommendationEngine:
         rr_list = []
         for recom_role_id in recom_role_id_list:
             role = self.roadmaps_df.loc[recom_role_id]["name"]
+            score = points_dict[recom_role_id]
             explanation = self.generate_explanation_for_role(recom_role_id, user_concepts_df)
-            rr = RoleRecommendation(role=role, explanation=explanation, courses=[])
-            rr_list.append(RoleRecommendation(role=role, explanation=explanation, courses=[]))
+            # rr = RoleRecommendation(role=role, score=score, explanation=explanation, courses=[])
+            rr_list.append(RoleRecommendation(role=role, score=score, explanation=explanation, courses=[]))
 
         # print("Recommended Role-{} with points: {}".format(recom_role_id, points_dict[recom_role_id]))
         # print("Recommended Role: " + self.roadmaps_df.loc[recom_role_id]["name"])
