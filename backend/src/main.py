@@ -2,6 +2,8 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 
+import logging
+from pprint import pformat
 import os
 import numpy as np
 import pandas as pd
@@ -40,13 +42,18 @@ cohere = cohereai.Client(cohere_api_key)
 
 udemy_website = "www.udemy.com"
 
+logging.basicConfig(filename='../log/backend.log', filemode='a', format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
+logger = logging.getLogger()
+
 
 def init_data():
     global udemy_courses_df, roadmap_concepts_df, roadmaps_df
 
     df_path = "../../embedding-generation/data/"
-    udemy_courses_df = pd.read_csv(df_path + "udemy_courses_final.csv")
-    roadmap_nodes_df = pd.read_csv(df_path + "roadmap_nodes_final.csv")
+    udemy_courses_file = "udemy_courses_final.csv"
+    roadmap_nodes_file = "roadmap_nodes_final.csv"
+    udemy_courses_df = pd.read_csv(df_path + udemy_courses_file)
+    roadmap_nodes_df = pd.read_csv(df_path + roadmap_nodes_file)
     roadmap_concepts_df = roadmap_nodes_df[roadmap_nodes_df["type"] == "concept"].copy()
     roadmap_concepts_df.reset_index(inplace=True)
 
@@ -66,6 +73,9 @@ def init_data():
     roadmaps_dict = {"id": np.arange(1, len(roles) + 1), "name": roles}
     roadmaps_df = pd.DataFrame.from_dict(roadmaps_dict)
     roadmaps_df.set_index("id", inplace=True)
+
+    logger.info('Data is initialized using ' + udemy_courses_file + ' and ' + roadmap_nodes_file)    
+    logger.info(pformat(list(zip(np.arange(1, len(roles) + 1), roles))))
 
     # return (udemy_courses_df, roadmap_nodes_df, roadmap_concepts_df, roadmaps_df)
 
@@ -265,8 +275,12 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
 
 
 def main() -> None:
-    # LOAD DATA FOR GOOGLE
+
+    logger.info('----- XCRS IS STARTING -----')
+
+    # LOAD DATA FOR MODELS
     init_data()
+
 
     global encoder_for_courses, decoder_for_courses, encoder_for_concepts, decoder_for_concepts
     global course_id_list, concept_id_list
@@ -309,6 +323,11 @@ def main() -> None:
     course_X_concept_cohere = cosine_similarity(course_emb_list_cohere, concept_emb_list_cohere)
     concept_X_course_cohere = course_X_concept_cohere.transpose()
 
+    models_dict = {'Google': GOOGLE_MODEL, 'Voyage': VOYAGE_MODEL, 'OpenAI': OPENAI_MODEL, 'Mistral': MISTRAL_MODEL, 'Cohere': COHERE_MODEL}
+    logger.info('Similarity Matrices between Udemy Courses and Roadmap Concepts are calculated using LLMs: \n' 
+                + pformat(models_dict)
+                )
+
     similarity_matrices = [course_X_concept_google, 
                            course_X_concept_voyage, 
                            course_X_concept_openai, 
@@ -318,19 +337,11 @@ def main() -> None:
     emb_thresholds = [util.mean_plus_std_dev(matrix) for matrix in similarity_matrices]
 
 
-
-    # user1_took = "Physics , Intr. to Information Systems, Intr.to Comp.Eng.and Ethics, Mathematics I, Linear Algebra, Engineering Mathematics, Digital Circuits, Data Structures, Introduction to Electronics, Basics of Electrical Circuits, Object Oriented Programming, Computer Organization, Logic Circuits Laboratory, Numerical Methods, Formal Languages and Automata, Analysis of Algorithms I, Probability and Statistics, Microcomputer Lab., Database Systems, Microprocessor Systems, Computer Architecture, Computer Operating Systems, Analysis of Algorithms II, Signal&Systems for Comp.Eng."
-    # user1_took_and_liked = "Digital Circuits , Data Structures , Introduction to Electronics, Microprocessor Systems , Computer Architecture"
-    # user1_took_and_neutral = "Mathematics I, Linear Algebra, Engineering Mathematics, Basics of Electrical Circuits, Object Oriented Programming, Computer Organization, Logic Circuits Laboratory, Analysis of Algorithms I, Probability and Statistics, Microcomputer Lab., Database Systems, Computer Operating Systems, Analysis of Algorithms II, Signal&Systems for Comp.Eng."
-    # user1_took_and_disliked = "Physics, Intr. to Information Systems, Intr.to Comp.Eng.and Ethics, Numerical Methods, Formal Languages and Automata, kotlin, Unity"
-    # user1_curious = "Embedded Softwares, Web Development"
-
-    # test_before_rec(user1_took_and_liked, user1_took_and_neutral, user1_took_and_disliked, user1_curious)
+    logger.info('Their corresponding thresholds: \n' 
+                + pformat(list(zip(models_dict.keys(), emb_thresholds))))
 
 
-# if __name__ == '__main__':
 
-# main()
 
 app = FastAPI()
 
@@ -344,7 +355,7 @@ async def save_inputs(request: RecommendationRequest):
     print(request)
 
     with open("../user_inputs/{}.json".format(fileName), "w") as f:
-        f.write(request.json())
+        f.write(request.model_dump_json())
 
     recommendations = Recommendation(
         model="", roles=[RoleRecommendation(role="", score=0.0, explanation="", courses=[CourseRecommendation(course="", url="", explanation="")])]
@@ -360,26 +371,31 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
         emb_model = GOOGLE_MODEL
         concept_emb_list = concept_emb_list_google
         course_emb_list = course_emb_list_google
+        concept_X_course = concept_X_course_google
         sim_thre = emb_thresholds[0]
     elif model_name == "voyage":
         emb_model = VOYAGE_MODEL
         concept_emb_list = concept_emb_list_voyage
         course_emb_list = course_emb_list_voyage
+        concept_X_course = concept_X_course_voyage
         sim_thre = emb_thresholds[1]
     elif model_name == "openai":
         emb_model = OPENAI_MODEL
         concept_emb_list = concept_emb_list_openai
         course_emb_list = course_emb_list_openai
+        concept_X_course = concept_X_course_openai
         sim_thre = emb_thresholds[2]
     elif model_name == "mistral":
         emb_model = MISTRAL_MODEL
         concept_emb_list = concept_emb_list_mistral
         course_emb_list = course_emb_list_mistral
+        concept_X_course = concept_X_course_mistral        
         sim_thre = emb_thresholds[3]
     elif model_name == "cohere":
         emb_model = COHERE_MODEL
         concept_emb_list = concept_emb_list_cohere
         course_emb_list = course_emb_list_cohere
+        concept_X_course = concept_X_course_cohere
         sim_thre = emb_thresholds[4]
     elif model_name == "mock":
         recommendations = Recommendation(
@@ -394,7 +410,11 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
         return RecommendationResponse(fileName="", recommendations=[recommendations])
     else:
         # raise UnicornException(name=model_name)
+        logger.error('Wrong Endpoint: ' + model_name)
         raise HTTPException(status_code=404, detail="Embedding model not found")
+    
+    logger.info('POST - recommendation request for ' + model_name)
+    logger.info(request)
 
     ################################# 1. CREATING EMBEDDINGS FOR USER'S COURSES #######################################
     user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list = create_user_embeddings(
@@ -417,11 +437,10 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
     recommendation = RecommendationEngine(
         udemy_courses_df,
         roadmap_concepts_df,
-        concept_X_course_google,
+        concept_X_course,
         encoder_for_concepts,
         encoder_for_courses,
         roadmaps_df,
-        "google_emb",
     )
 
     ################################# 4. ROLE RECOMMENDATION ##########################################################

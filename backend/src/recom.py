@@ -1,3 +1,5 @@
+import logging
+from pprint import pformat
 import pandas as pd
 import numpy as np
 from collections import Counter
@@ -6,6 +8,8 @@ from collections import Counter
 import util
 from models import RoleRecommendation, CourseRecommendation
 
+logging.basicConfig(filename='../log/backend.log', filemode='a', format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
+logger = logging.getLogger()
 
 class RecommendationEngine:
     def __init__(
@@ -16,7 +20,6 @@ class RecommendationEngine:
         encoder_for_concepts: dict,
         encoder_for_courses: dict,
         roadmaps_df: pd.DataFrame,
-        emb_type: str,
     ):
         self.udemy_courses_df = udemy_courses_df
         self.roadmap_concepts_df = roadmap_concepts_df
@@ -27,6 +30,8 @@ class RecommendationEngine:
         self.recom_role_id_list = []
 
     def recommend_role(self, user_concepts_df: pd.DataFrame):
+
+        logger.info('Role recommendation started.')
 
         concept_id_list = self.roadmap_concepts_df["id"]
         # user_concept_id_set = set(user_concepts_df["concept_id"])
@@ -58,6 +63,9 @@ class RecommendationEngine:
         for key, value in points_dict.items():
             points_dict[key] = util.custom_activation(value)
 
+        list(zip(self.roadmaps_df.loc[points_dict.keys()]["name"], points_dict.values()))
+        logger.info(pformat(list(zip(self.roadmaps_df.loc[points_dict.keys()]["name"], points_dict.values()))))
+
         # Filter keys based on a threshold (0.67 is equal to having no concept for that role)
         filtered_keys = [key for key, value in points_dict.items() if value > 0.68]
 
@@ -73,26 +81,22 @@ class RecommendationEngine:
         # print(sorted(role_id_user_scores.items()))
         # print(sorted(points_dict.items()))
 
-        # NO NEED
-        # rr_list = list(RoleRecommendation)
-        # for recom_role_id in recom_role_id_list:
-        #     role = self.roadmaps_df.loc[recom_role_id]["name"]
-        #     #explanation =
-        #     rr = RoleRecommendation(role=role, explanation=explanation, courses=[])
-        #     rr_list.append(rr)
 
         rr_list = []
-        for recom_role_id in recom_role_id_list:
+        for i, recom_role_id in enumerate(recom_role_id_list):
             role = self.roadmaps_df.loc[recom_role_id]["name"]
             score = points_dict[recom_role_id]
             explanation = self.generate_explanation_for_role(recom_role_id, user_concepts_df)
             # rr = RoleRecommendation(role=role, score=score, explanation=explanation, courses=[])
             rr_list.append(RoleRecommendation(role=role, score=score, explanation=explanation, courses=[]))
+            logger.info('Role-{}: {}, \nScore: {}, \nExplanation: {}'.format(i+1, role, score, explanation))
 
         # print("Recommended Role-{} with points: {}".format(recom_role_id, points_dict[recom_role_id]))
         # print("Recommended Role: " + self.roadmaps_df.loc[recom_role_id]["name"])
 
         self.recom_role_id_list = recom_role_id_list
+
+        logger.info(rr_list)
 
         return rr_list
 
