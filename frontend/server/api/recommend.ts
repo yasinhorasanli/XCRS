@@ -78,17 +78,6 @@ export default defineEventHandler(async (event) => {
         }
     })
 
-    // const mock_response = await $fetch<RecommendationResult>($endpoint + '/recommendations/mock', {
-    //     method: 'post',
-    //     body: { 
-    //         took_and_liked: body.took_and_liked,
-    //         took_and_neutral: body.took_and_neutral,
-    //         took_and_disliked: body.took_and_disliked,
-    //         curious: body.curious
-    //     }
-    // })
-
-
     const save_response = await $fetch<RecommendationResult>($endpoint + '/save_inputs', {
         method: 'post',
         body: { 

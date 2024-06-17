@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import List, Dict
 
 GOOGLE_MODEL = "text-embedding-004"
-VOYAGE_MODEL = "voyage-large-2-instruct"
+VOYAGE_MODEL = "voyage-large-2"
 OPENAI_MODEL = "text-embedding-3-large"
 MISTRAL_MODEL = "mistral-embed"
 COHERE_MODEL = "embed-english-v3.0"
@@ -42,6 +42,11 @@ class RecommendationRequest(BaseModel):
     took_and_disliked: str
     curious: str
 
+
+INSUFFICIENT_INPUT = RecommendationResponse(
+    fileName="",
+    recommendations=[],
+)
 
 # Sample recommendation data
 sample_rec_data = {

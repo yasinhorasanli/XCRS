@@ -15,6 +15,25 @@ watch(modelNum, (newNum) => {
   console.log('Selected model index:', newNum);
 });
 
+const filteredRoles = computed(() => {
+      const recommendationResult = myResult.value;
+      if (!recommendationResult) {
+        return [];
+      }
+      const recommendation = recommendationResult.recommendations[modelNum.value];
+
+      if (!recommendation) {
+        return [];
+      }
+      const roles = recommendation.roles;
+
+      if (!roles) {
+        return [];
+      }
+
+      return roles;
+});
+
 const courses = [
     // 0. Programming Languages
     ["Python", "Java", "C++", "C", "C#", "JavaScript", "Ruby", "PHP", "Swift", "Kotlin", "TypeScript", "Go", "Rust", "SQL", "R", "MATLAB", "Shell Scripting"],
@@ -147,7 +166,7 @@ const courses = [
                         <!-- <tr>
                             <td colspan="4" class="px-4 py-2 text-center font-semibold ">{{ myResult.recommendations[modelNum].model }}</td>
                         </tr> -->
-                        <tr v-for="(row, index_role) in myResult.recommendations[modelNum].roles" :key="row.role + modelNum" class="border-2 border-slate-400">
+                        <tr v-for="(row, index_role) in filteredRoles" :key="row.role + modelNum" class="border-2 border-slate-400">
                             <td colspan="4" class="px-4 py-2 bg-slate-100">
                                 <div class="text-xl font-semibold">Career Role {{index_role + 1}} - {{ row.role }}</div>
                                 <div class="mt-2"><strong>Score:</strong> {{ row.score }}</div>

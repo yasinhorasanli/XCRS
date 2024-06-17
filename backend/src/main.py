@@ -23,7 +23,7 @@ import cohere as cohereai
 import util
 from eda import ExplatoryDataAnalysis
 from recom import RecommendationEngine
-from models import CourseRecommendation, RoleRecommendation, Recommendation, RecommendationResponse, RecommendationRequest, sample_rec_data
+from models import CourseRecommendation, RoleRecommendation, Recommendation, RecommendationResponse, RecommendationRequest, sample_rec_data, INSUFFICIENT_INPUT
 from models import GOOGLE_MODEL, VOYAGE_MODEL, OPENAI_MODEL, MISTRAL_MODEL, COHERE_MODEL
 
 google_api_key = open("../../embedding-generation/api_keys/google_api_key.txt").read().strip()
@@ -42,7 +42,7 @@ cohere = cohereai.Client(cohere_api_key)
 
 udemy_website = "www.udemy.com"
 
-logging.basicConfig(filename='../log/backend.log', filemode='a', format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
+logging.basicConfig(filename="../log/backend.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
 logger = logging.getLogger()
 
 
@@ -74,31 +74,33 @@ def init_data():
     roadmaps_df = pd.DataFrame.from_dict(roadmaps_dict)
     roadmaps_df.set_index("id", inplace=True)
 
-    logger.info('Data is initialized using ' + udemy_courses_file + ' and ' + roadmap_nodes_file)    
+    logger.info("Data is initialized using " + udemy_courses_file + " and " + roadmap_nodes_file)
     logger.info(pformat(list(zip(np.arange(1, len(roles) + 1), roles))))
 
     # return (udemy_courses_df, roadmap_nodes_df, roadmap_concepts_df, roadmaps_df)
 
 
-def google_embed_fn(text):
-    return genai.embed_content(model="models/"+GOOGLE_MODEL, content=text, task_type="similarity")['embedding']
+def google_embed_fn(text_list):
+    return genai.embed_content(model="models/" + GOOGLE_MODEL, content=text_list, task_type="similarity")["embedding"]
 
 
-def voyage_embed_fn(text):
-    return voyage.embed([text], model=VOYAGE_MODEL).embeddings[0]
+def voyage_embed_fn(texts_list):
+    return voyage.embed(texts_list, model=VOYAGE_MODEL).embeddings
 
 
-def openai_embed_fn(text):
-    text = text.replace("\n", " ")
-    return openai.embeddings.create(input = [text], model=OPENAI_MODEL).data[0].embedding
+def openai_embed_fn(text_list):
+    text_list = [text.replace("\n", " ") for text in text_list]
+    embeddings = openai.embeddings.create(input=text_list, model=OPENAI_MODEL).data
+    return [embedding.embedding for embedding in embeddings]
 
 
-def mistral_embed_fn(text):
-    return mistral.embeddings(model=MISTRAL_MODEL, input=text).data[0].embedding
+def mistral_embed_fn(text_list):
+    embeddings = mistral.embeddings(model=MISTRAL_MODEL, input=text_list).data
+    return [embedding.embedding for embedding in embeddings]
 
 
-def cohere_embed_fn(text):
-    return cohere.embed(model=COHERE_MODEL, texts=[text], input_type="search_document").embeddings[0]
+def cohere_embed_fn(text_list):
+    return cohere.embed(model=COHERE_MODEL, texts=text_list, input_type="search_document").embeddings
 
 
 def get_emb_lists(folder: str, model: str):
@@ -146,37 +148,35 @@ def create_user_embeddings(took_and_liked: str, took_and_neutral: str, took_and_
     user_courses_df = pd.DataFrame(flat_data, columns=["course", "category"])
 
     # Drop rows where 'course' is null, empty, or only blank spaces
-    user_courses_df = user_courses_df.dropna(subset=['course'])
-    user_courses_df = user_courses_df[user_courses_df['course'].str.strip() != '']
+    user_courses_df = user_courses_df.dropna(subset=["course"])
+    user_courses_df = user_courses_df[user_courses_df["course"].str.strip() != ""]
     user_courses_df = user_courses_df.reset_index(drop=True)
 
-    print(user_courses_df)
-
-    encoder_for_user_courses = dict([(v, k) for v, k in zip(user_courses_df["course"], range(len(user_courses_df)))])
-    decoder_for_user_courses = dict([(v, k) for k, v in encoder_for_user_courses.items()])
+    # print(user_courses_df)
+    # logger.info(user_courses_df)
 
     # Embedding Generation for User Data
-
-    # user_courses_df['google_emb'] = user_courses_df.apply(convert_to_float, axis=1)
-
     # TODO: If it is possible, search courses in wikipedia here.
 
-    if model == GOOGLE_MODEL:
-        user_courses_df["emb"] = user_courses_df["course"].apply(google_embed_fn)
-    elif model == VOYAGE_MODEL:
-        user_courses_df["emb"] = user_courses_df["course"].apply(voyage_embed_fn)
-    elif model == OPENAI_MODEL:
-        user_courses_df["emb"] = user_courses_df["course"].apply(openai_embed_fn)
-    elif model == MISTRAL_MODEL:
-        user_courses_df["emb"] = user_courses_df["course"].apply(mistral_embed_fn)
-    elif model == COHERE_MODEL:
-        user_courses_df["emb"] = user_courses_df["course"].apply(cohere_embed_fn)
+    courses = user_courses_df["course"].tolist()
 
+    if model == GOOGLE_MODEL:
+        embeddings = google_embed_fn(courses)
+    elif model == VOYAGE_MODEL:
+        embeddings = voyage_embed_fn(courses)
+    elif model == OPENAI_MODEL:
+        embeddings = openai_embed_fn(courses)
+    elif model == MISTRAL_MODEL:
+        embeddings = mistral_embed_fn(courses)
+    elif model == COHERE_MODEL:
+        embeddings = cohere_embed_fn(courses)
+
+    user_courses_df["emb"] = embeddings
     user_emb_list = user_courses_df["emb"].values
     user_emb_list = np.vstack(user_emb_list)
-    print(user_emb_list.shape)
+    logger.info("Embeddings matrix shape: " + str(user_emb_list.shape))
 
-    return (user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list)
+    return (user_courses_df, user_emb_list)
 
 
 def find_similar_concepts_for_courses(user_courses_df, user_emb_list, concepts_emb_list, roadmap_concepts_df, sim_thre):
@@ -240,7 +240,6 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
     #     user_courses_df,
     #     decoder_for_courses,
     #     decoder_for_concepts,
-    #     decoder_for_user_courses,
     #     sim_mat_course_X_concept,
     #     sim_mat_user_course_X_concept,
     # )
@@ -258,7 +257,6 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
     user_concept_id_list = []
 
     for i in range(max_sim_for_row_user_courses_X_concepts_df.shape[0]):
-        # course_name = decoder_for_user_courses[max_sim_for_row_user_courses_X_concepts_df.iloc[i]["x"]]
         concept_id = decoder_for_concepts[max_sim_for_row_user_courses_X_concepts_df.iloc[i]["y"]]
         max_sim = max_sim_for_row_user_courses_X_concepts_df.iloc[i]["max"]
         if max_sim > 0.7:
@@ -272,15 +270,12 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
     return user_concept_id_set
 
 
-
-
 def main() -> None:
 
-    logger.info('----- XCRS IS STARTING -----')
+    logger.info("----- XCRS IS STARTING -----")
 
     # LOAD DATA FOR MODELS
     init_data()
-
 
     global encoder_for_courses, decoder_for_courses, encoder_for_concepts, decoder_for_concepts
     global course_id_list, concept_id_list
@@ -290,8 +285,6 @@ def main() -> None:
     global course_emb_list_mistral, concept_emb_list_mistral, course_X_concept_mistral, concept_X_course_mistral
     global course_emb_list_cohere, concept_emb_list_cohere, course_X_concept_cohere, concept_X_course_cohere
     global emb_thresholds
-
-
 
     # Encoders/Decoders for Courses and Concepts
     course_id_list = udemy_courses_df["id"]
@@ -323,24 +316,20 @@ def main() -> None:
     course_X_concept_cohere = cosine_similarity(course_emb_list_cohere, concept_emb_list_cohere)
     concept_X_course_cohere = course_X_concept_cohere.transpose()
 
-    models_dict = {'Google': GOOGLE_MODEL, 'Voyage': VOYAGE_MODEL, 'OpenAI': OPENAI_MODEL, 'Mistral': MISTRAL_MODEL, 'Cohere': COHERE_MODEL}
-    logger.info('Similarity Matrices between Udemy Courses and Roadmap Concepts are calculated using LLMs: \n' 
-                + pformat(models_dict)
-                )
+    models_dict = {"Google": GOOGLE_MODEL, "Voyage": VOYAGE_MODEL, "OpenAI": OPENAI_MODEL, "Mistral": MISTRAL_MODEL, "Cohere": COHERE_MODEL}
+    logger.info("Similarity Matrices between Udemy Courses and Roadmap Concepts are calculated using LLMs: \n" + pformat(models_dict))
 
-    similarity_matrices = [course_X_concept_google, 
-                           course_X_concept_voyage, 
-                           course_X_concept_openai, 
-                           course_X_concept_mistral, 
-                           course_X_concept_cohere] 
+    similarity_matrices = [
+        course_X_concept_google,
+        course_X_concept_voyage,
+        course_X_concept_openai,
+        course_X_concept_mistral,
+        course_X_concept_cohere,
+    ]
 
-    emb_thresholds = [util.mean_plus_std_dev(matrix) for matrix in similarity_matrices]
+    emb_thresholds = [util.mean_plus_2_std_dev(matrix) for matrix in similarity_matrices]
 
-
-    logger.info('Their corresponding thresholds: \n' 
-                + pformat(list(zip(models_dict.keys(), emb_thresholds))))
-
-
+    logger.info("Their corresponding thresholds: \n" + pformat(list(zip(models_dict.keys(), emb_thresholds))))
 
 
 app = FastAPI()
@@ -366,7 +355,6 @@ async def save_inputs(request: RecommendationRequest):
 
 @app.post("/recommendations/{model_name}")
 async def get_recommendations(request: RecommendationRequest, model_name: str):
-
     if model_name == "google":
         emb_model = GOOGLE_MODEL
         concept_emb_list = concept_emb_list_google
@@ -389,7 +377,7 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
         emb_model = MISTRAL_MODEL
         concept_emb_list = concept_emb_list_mistral
         course_emb_list = course_emb_list_mistral
-        concept_X_course = concept_X_course_mistral        
+        concept_X_course = concept_X_course_mistral
         sim_thre = emb_thresholds[3]
     elif model_name == "cohere":
         emb_model = COHERE_MODEL
@@ -402,7 +390,10 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
             model=sample_rec_data["model"],
             roles=[
                 RoleRecommendation(
-                    role=role["role"], score=role["score"], explanation=role["explanation"], courses=[CourseRecommendation(**course) for course in role["courses"]]
+                    role=role["role"],
+                    score=role["score"],
+                    explanation=role["explanation"],
+                    courses=[CourseRecommendation(**course) for course in role["courses"]],
                 )
                 for role in sample_rec_data["roles"]
             ],
@@ -410,14 +401,14 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
         return RecommendationResponse(fileName="", recommendations=[recommendations])
     else:
         # raise UnicornException(name=model_name)
-        logger.error('Wrong Endpoint: ' + model_name)
+        logger.error("Wrong Endpoint: " + model_name)
         raise HTTPException(status_code=404, detail="Embedding model not found")
-    
-    logger.info('POST - recommendation request for ' + model_name)
-    logger.info(request)
+
+    logger.info("POST - recommendation request for " + model_name)
+    logger.info(pformat(request.model_computed_fields))
 
     ################################# 1. CREATING EMBEDDINGS FOR USER'S COURSES #######################################
-    user_courses_df, encoder_for_user_courses, decoder_for_user_courses, user_emb_list = create_user_embeddings(
+    user_courses_df, user_emb_list = create_user_embeddings(
         request.took_and_liked, request.took_and_neutral, request.took_and_disliked, request.curious, emb_model
     )
 
@@ -426,13 +417,13 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
 
     # If empty dataframe happens
     if user_concepts_df.shape[0] == 0:
-        raise HTTPException(status_code=404, detail="Insufficient input.")
-        # return RecommendationResponse(fileName="Insufficient input.", recommendations=[])
+        logger.error('Insufficient Input')
+        return INSUFFICIENT_INPUT
+
+    logger.info('Total number of concepts X user courses matches:' + str(user_concepts_df.shape[0]))
 
     ################################# 3. FINDING SIMILAR COURSES FOR USER'S DISLIKED COURSES ##########################
     disliked_similar_course_id_list = find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list, sim_thre)
-
-    print(user_concepts_df)
 
     recommendation = RecommendationEngine(
         udemy_courses_df,
@@ -446,10 +437,14 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
     ################################# 4. ROLE RECOMMENDATION ##########################################################
     rol_rec_list = recommendation.recommend_role(user_concepts_df)
 
+    if len(rol_rec_list) == 0:
+        logger.error('Role recommendation list is empty!')
+        return INSUFFICIENT_INPUT
+
     ################################# 5. COURSE RECOMMENDATION ##########################################################
     rol_rec_list = recommendation.recommend_courses(user_concepts_df, rol_rec_list, disliked_similar_course_id_list)
 
-    print(rol_rec_list)
+    # print(rol_rec_list)
 
     recommendations = Recommendation(model=emb_model, roles=rol_rec_list)
 
@@ -471,4 +466,3 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
 if __name__ == "__main__":
     main()
     uvicorn.run(app, host="0.0.0.0", port=8000)
-    

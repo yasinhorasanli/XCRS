@@ -51,7 +51,7 @@ def split_and_create_dict(row, column_name):
 
 
 def equalize_digits(original_list):
-    
+
     # TODO: ValueError: max() arg is an empty sequence
     # Find the maximum number of digits
     max_digits = max(map(lambda x: len(str(x)), original_list))
@@ -86,7 +86,7 @@ def top_n_courses_for_concept(udemy_courses_df, similarity_matrix, concept_index
 
 
 def top_n_concepts_for_courses(roadmap_concepts_df, similarity_matrix, recom_role_id, course_id, n):
-    
+
     column = similarity_matrix[:, course_id]
     top_indices = np.argsort(column)[-n:][::-1]
     top_scores = column[top_indices]
@@ -96,9 +96,9 @@ def top_n_concepts_for_courses(roadmap_concepts_df, similarity_matrix, recom_rol
     return top_courses
 
 
-def mean_plus_std_dev(similarity_matrix):
+def mean_plus_2_std_dev(similarity_matrix):
     flattened_scores = similarity_matrix.flatten()
     mean = np.mean(flattened_scores)
     std_dev = np.std(flattened_scores)
-    
-    return mean + std_dev
+
+    return mean + 2 * std_dev

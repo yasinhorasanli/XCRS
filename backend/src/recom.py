@@ -8,8 +8,9 @@ from collections import Counter
 import util
 from models import RoleRecommendation, CourseRecommendation
 
-logging.basicConfig(filename='../log/backend.log', filemode='a', format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
+logging.basicConfig(filename="../log/backend.log", filemode="a", format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
 logger = logging.getLogger()
+
 
 class RecommendationEngine:
     def __init__(
@@ -31,7 +32,7 @@ class RecommendationEngine:
 
     def recommend_role(self, user_concepts_df: pd.DataFrame):
 
-        logger.info('Role recommendation started.')
+        logger.info("Role recommendation started.")
 
         concept_id_list = self.roadmap_concepts_df["id"]
         # user_concept_id_set = set(user_concepts_df["concept_id"])
@@ -54,9 +55,6 @@ class RecommendationEngine:
                 encountered_concepts.add(concept_info)
 
         points_dict = {role_id: role_id_user_scores[role_id] * 100 / role_id_concept_counts[role_id] for role_id in role_id_concept_counts.keys()}
-        # recom_role_id = max(points_dict, key=points_dict.get)
-
-        # print(points_dict)
 
         # Example Activation:   [-50,   -25,    -10,    0,      5,      10.67,  23.645, 32.5        44.6332,    50(All-N),  60.4342,    74,     75(All-L),  86,     94,     100(ALL-C)]
         #              ----->   [0.0,   0.0,    0.09,   0.67,   1.8,    5.39,   43.27,  81.76,      98.07,      99.33,      99.92,      99.99,  100.0,      100.0,  100.0,  100.0]
@@ -81,7 +79,6 @@ class RecommendationEngine:
         # print(sorted(role_id_user_scores.items()))
         # print(sorted(points_dict.items()))
 
-
         rr_list = []
         for i, recom_role_id in enumerate(recom_role_id_list):
             role = self.roadmaps_df.loc[recom_role_id]["name"]
@@ -89,14 +86,9 @@ class RecommendationEngine:
             explanation = self.generate_explanation_for_role(recom_role_id, user_concepts_df)
             # rr = RoleRecommendation(role=role, score=score, explanation=explanation, courses=[])
             rr_list.append(RoleRecommendation(role=role, score=score, explanation=explanation, courses=[]))
-            logger.info('Role-{}: {}, \nScore: {}, \nExplanation: {}'.format(i+1, role, score, explanation))
-
-        # print("Recommended Role-{} with points: {}".format(recom_role_id, points_dict[recom_role_id]))
-        # print("Recommended Role: " + self.roadmaps_df.loc[recom_role_id]["name"])
+            logger.info("Role-{}: {}, \tScore: {}, \tExplanation: {}".format(i + 1, role, score, explanation))
 
         self.recom_role_id_list = recom_role_id_list
-
-        logger.info(rr_list)
 
         return rr_list
 
@@ -124,8 +116,6 @@ class RecommendationEngine:
             if courses_took != "":
                 explanation += "Also, "
             explanation += curious_exp + courses_curious[:-2] + ". "
-
-        print(explanation)
 
         return explanation
 
@@ -199,7 +189,9 @@ class RecommendationEngine:
 
                     explanation = self.generate_explanation_for_course(recom_role_id, self.encoder_for_courses[course_row["id"]])
 
-                    rol_rec.courses.append(CourseRecommendation(course=course_row["title"], url=udemy_website + course_row["url"], explanation=explanation))
+                    rol_rec.courses.append(
+                        CourseRecommendation(course=course_row["title"], url=udemy_website + course_row["url"], explanation=explanation)
+                    )
                     # Selected courses added to this list due to prevent reselection.
                     disliked_similar_course_id_list.append(self.encoder_for_courses[course_row["id"]])
 
@@ -207,11 +199,10 @@ class RecommendationEngine:
                 print(f"Top {m} Similarity Scores: ", top_courses["sim_score"])
                 print(f"Corresponding Courses: ", top_courses[["id", "title"]])
 
-                print("Results: ", result_for_recom_role)
+                # print("Results: ", result_for_recom_role)
                 result_df = pd.DataFrame(result_for_recom_role)
 
         return rol_rec_list
-
 
     def generate_explanation_for_course(self, recom_role_id: int, recom_course_id: int) -> str:
 
@@ -219,22 +210,22 @@ class RecommendationEngine:
         course_title = self.udemy_courses_df.loc[recom_course_id, "title"]
         role_name = self.roadmaps_df.loc[recom_role_id]["name"]
         explanation = ""
-        
-        # start_exp = "This course (" + course_title + ") includes the concepts of " 
-        start_exp = "This course includes the concepts of " 
+
+        # start_exp = "This course (" + course_title + ") includes the concepts of "
+        start_exp = "This course includes the concepts of "
 
         concepts_included = ""
         seen_concepts = set()
 
         for id, concept_row in top_concepts.iterrows():
-            concept_name = concept_row["name"]            
+            concept_name = concept_row["name"]
             if concept_name not in seen_concepts:
                 seen_concepts.add(concept_name)
                 concepts_included += concept_name + ", "
-        
+
         if concepts_included != "":
             explanation += start_exp + concepts_included[:-2] + " which are necessary for you to progress in the " + role_name + " role."
-            
+
         print(explanation)
 
         return explanation
