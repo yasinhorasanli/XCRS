@@ -105,10 +105,10 @@ def main():
     # EMB. GEN. for Model: "text-embedding-004"
     google_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, GOOGLE_MODEL)
     # google_embedding_generator.return_num_of_tokens()
-    # google_embedding_generator.generate_embeddings_for_courses()
-    # google_embedding_generator.generate_embeddings_for_roadmaps()
+    google_embedding_generator.generate_embeddings_for_courses()
+    google_embedding_generator.generate_embeddings_for_roadmaps()
 
-    # EMB. GEN. for Model: "voyage-large-2-instruct"
+    # EMB. GEN. for Model: "voyage-large-2"
     voyage_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, VOYAGE_MODEL)
     # voyage_embedding_generator.return_num_of_tokens()
     voyage_embedding_generator.generate_embeddings_for_courses()
@@ -121,13 +121,13 @@ def main():
 
     # EMB. GEN. for Model: "mistral-embed"
     mistral_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, MISTRAL_MODEL)
-    # mistral_embedding_generator.generate_embeddings_for_courses()
-    # mistral_embedding_generator.generate_embeddings_for_roadmaps()
+    mistral_embedding_generator.generate_embeddings_for_courses()
+    mistral_embedding_generator.generate_embeddings_for_roadmaps()
 
     # EMB. GEN. for Model: "embed-english-v3.0""
     cohere_embedding_generator = EmbeddingGenerator(udemy_courses_df, roadmap_nodes_df, df_path, COHERE_MODEL)
-    # cohere_embedding_generator.generate_embeddings_for_courses()
-    # cohere_embedding_generator.generate_embeddings_for_roadmaps()
+    cohere_embedding_generator.generate_embeddings_for_courses()
+    cohere_embedding_generator.generate_embeddings_for_roadmaps()
 
 
     return

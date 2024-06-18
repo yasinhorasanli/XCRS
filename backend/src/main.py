@@ -46,6 +46,38 @@ logging.basicConfig(filename="../log/backend.log", filemode="a", format="%(ascti
 logger = logging.getLogger()
 
 
+def google_embed_fn(text_list):
+    return genai.embed_content(model="models/" + GOOGLE_MODEL, content=text_list, task_type="similarity")["embedding"]
+
+
+def voyage_embed_fn(texts_list):
+    return voyage.embed(texts_list, model=VOYAGE_MODEL).embeddings
+
+
+def openai_embed_fn(text_list):
+    text_list = [text.replace("\n", " ") for text in text_list]
+    embeddings = openai.embeddings.create(input=text_list, model=OPENAI_MODEL).data
+    return [embedding.embedding for embedding in embeddings]
+
+
+def mistral_embed_fn(text_list):
+    embeddings = mistral.embeddings(model=MISTRAL_MODEL, input=text_list).data
+    return [embedding.embedding for embedding in embeddings]
+
+
+def cohere_embed_fn(text_list):
+    return cohere.embed(model=COHERE_MODEL, texts=text_list, input_type="search_document").embeddings
+
+
+embed_functions = {
+        GOOGLE_MODEL: google_embed_fn,
+        VOYAGE_MODEL: voyage_embed_fn,
+        OPENAI_MODEL: openai_embed_fn,
+        MISTRAL_MODEL: mistral_embed_fn,
+        COHERE_MODEL: cohere_embed_fn,
+    }
+
+
 def init_data():
     global udemy_courses_df, roadmap_concepts_df, roadmaps_df
 
@@ -78,29 +110,6 @@ def init_data():
     logger.info(pformat(list(zip(np.arange(1, len(roles) + 1), roles))))
 
     # return (udemy_courses_df, roadmap_nodes_df, roadmap_concepts_df, roadmaps_df)
-
-
-def google_embed_fn(text_list):
-    return genai.embed_content(model="models/" + GOOGLE_MODEL, content=text_list, task_type="similarity")["embedding"]
-
-
-def voyage_embed_fn(texts_list):
-    return voyage.embed(texts_list, model=VOYAGE_MODEL).embeddings
-
-
-def openai_embed_fn(text_list):
-    text_list = [text.replace("\n", " ") for text in text_list]
-    embeddings = openai.embeddings.create(input=text_list, model=OPENAI_MODEL).data
-    return [embedding.embedding for embedding in embeddings]
-
-
-def mistral_embed_fn(text_list):
-    embeddings = mistral.embeddings(model=MISTRAL_MODEL, input=text_list).data
-    return [embedding.embedding for embedding in embeddings]
-
-
-def cohere_embed_fn(text_list):
-    return cohere.embed(model=COHERE_MODEL, texts=text_list, input_type="search_document").embeddings
 
 
 def get_emb_lists(folder: str, model: str):
@@ -158,20 +167,28 @@ def create_user_embeddings(took_and_liked: str, took_and_neutral: str, took_and_
     # Embedding Generation for User Data
     # TODO: If it is possible, search courses in wikipedia here.
 
-    courses = user_courses_df["course"].tolist()
+    batch_size = 100
+    user_courses = user_courses_df["course"].tolist()
+    embed_fn = embed_functions.get(model, None)
 
-    if model == GOOGLE_MODEL:
-        embeddings = google_embed_fn(courses)
-    elif model == VOYAGE_MODEL:
-        embeddings = voyage_embed_fn(courses)
-    elif model == OPENAI_MODEL:
-        embeddings = openai_embed_fn(courses)
-    elif model == MISTRAL_MODEL:
-        embeddings = mistral_embed_fn(courses)
-    elif model == COHERE_MODEL:
-        embeddings = cohere_embed_fn(courses)
+    if embed_fn:
+        # Process contents in batches
+        embeddings = []
+        for i in range(0, len(user_courses), batch_size):
+            batch_user_courses = user_courses[i : i + batch_size]
+            batch_embeddings = embed_fn(batch_user_courses)
+            embeddings.extend(batch_embeddings)
 
-    user_courses_df["emb"] = embeddings
+        # Ensure the lengths match
+        if len(embeddings) != len(user_courses):
+            raise ValueError("Mismatch between number of embeddings and user courses")
+
+        # Update the DataFrame with embeddings
+        user_courses_df["emb"] = embeddings
+    else:
+        # Handle the case where emb_type is not valid
+        raise ValueError(f"Embedding type {model} is not valid")
+
     user_emb_list = user_courses_df["emb"].values
     user_emb_list = np.vstack(user_emb_list)
     logger.info("Embeddings matrix shape: " + str(user_emb_list.shape))
@@ -268,6 +285,7 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
     user_concept_id_set = set(user_concept_id_list)
 
     return user_concept_id_set
+
 
 
 def main() -> None:

@@ -61,8 +61,9 @@ class RecommendationEngine:
         for key, value in points_dict.items():
             points_dict[key] = util.custom_activation(value)
 
-        list(zip(self.roadmaps_df.loc[points_dict.keys()]["name"], points_dict.values()))
-        logger.info(pformat(list(zip(self.roadmaps_df.loc[points_dict.keys()]["name"], points_dict.values()))))
+        role_name_coverage_score_dict = zip(self.roadmaps_df.loc[points_dict.keys()]["name"], points_dict.values())
+        role_name_coverage_score_dict = sorted(list(role_name_coverage_score_dict), key=lambda item: item[1], reverse=True)
+        logger.info(pformat(role_name_coverage_score_dict))
 
         # Filter keys based on a threshold (0.67 is equal to having no concept for that role)
         filtered_keys = [key for key, value in points_dict.items() if value > 0.68]
