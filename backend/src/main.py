@@ -225,9 +225,16 @@ def find_similar_concepts_for_courses(user_courses_df, user_emb_list, concepts_e
                 )
 
     # Create DataFrame from the result
-    result_df = pd.DataFrame(result)
+    user_concepts_df = pd.DataFrame(result)
 
-    return result_df
+    ####### IMPROVEMENT
+    #### The decision regarding a role concept should be determined only by the most similar user course.
+    # Sort the DataFrame by similarity_score in descending order
+    user_concepts_df = user_concepts_df.sort_values(by="similarity_score", ascending=False)
+    # Keep only the top record for each concept_id
+    user_concepts_df = user_concepts_df.groupby("concept_id").head(1).reset_index(drop=True)
+
+    return user_concepts_df
 
 
 def find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list, sim_thre):
@@ -365,7 +372,7 @@ async def save_inputs(request: RecommendationRequest):
         f.write(request.model_dump_json())
 
     recommendations = Recommendation(
-        model="", roles=[RoleRecommendation(role="", score=0.0, explanation="", courses=[CourseRecommendation(course="", url="", explanation="")])]
+        model="", roles=[RoleRecommendation(role="", explanation="", courses=[CourseRecommendation(course="", url="", explanation="")])]
     )
 
     return RecommendationResponse(fileName=fileName, recommendations=[recommendations])

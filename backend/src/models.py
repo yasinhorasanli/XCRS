@@ -18,7 +18,7 @@ class CourseRecommendation(BaseModel):
 # Model for role recommendation
 class RoleRecommendation(BaseModel):
     role: str
-    score: float
+    # score: float
     explanation: str
     courses: List[CourseRecommendation]
 
@@ -54,7 +54,6 @@ sample_rec_data = {
     "roles": [
         {
             "role": "Role A",
-            "score": 98.3,
             "explanation": "Explanation for Role A",
             "courses": [
                 {"course": "Course 1", "url": "Url 1", "explanation": "Explanation for Course 1"},
@@ -64,7 +63,6 @@ sample_rec_data = {
         },
         {
             "role": "Role B",
-            "score": 80.45,
             "explanation": "Explanation for Role B",
             "courses": [
                 {"course": "Course 4", "url": "Url 4", "explanation": "Explanation for Course 4"},
@@ -74,7 +72,6 @@ sample_rec_data = {
         },
         {
             "role": "Role C",
-            "score": 53.21,
             "explanation": "Explanation for Role C",
             "courses": [
                 {"course": "Course 7", "url": "Url 7", "explanation": "Explanation for Course 7"},

@@ -39,7 +39,7 @@ class RecommendationEngine:
 
         print(user_concepts_df)
         # Coefficients for each category
-        coefficients = {"TookAndLiked": 0.75, "TookAndNeutral": 0.5, "TookAndDisliked": -0.5, "Curious": 1}
+        coefficients = {"TookAndLiked": 0.75, "TookAndNeutral": 0.5, "TookAndDisliked": -0.25, "Curious": 1}
 
         role_id_concept_counts = Counter(util.get_role_id(concept_id) for concept_id in concept_id_list)
         role_id_user_scores = Counter()
@@ -56,8 +56,8 @@ class RecommendationEngine:
 
         points_dict = {role_id: role_id_user_scores[role_id] * 100 / role_id_concept_counts[role_id] for role_id in role_id_concept_counts.keys()}
 
-        # Example Activation:   [-50,   -25,    -10,    0,      5,      10.67,  23.645, 32.5        44.6332,    50(All-N),  60.4342,    74,     75(All-L),  86,     94,     100(ALL-C)]
-        #              ----->   [0.0,   0.0,    0.09,   0.67,   1.8,    5.39,   43.27,  81.76,      98.07,      99.33,      99.92,      99.99,  100.0,      100.0,  100.0,  100.0]
+        # Example Activation:   [-25,    -10,    0,      5,      10.67,  23.645, 32.5        44.6332,    50(All-N),  60.4342,    74,     75(All-L),  86,     94,     100(ALL-C)]
+        #              ----->   [0.0,    0.09,   0.67,   1.8,    5.39,   43.27,  81.76,      98.07,      99.33,      99.92,      99.99,  100.0,      100.0,  100.0,  100.0]
         for key, value in points_dict.items():
             points_dict[key] = util.custom_activation(value)
 
@@ -85,8 +85,7 @@ class RecommendationEngine:
             role = self.roadmaps_df.loc[recom_role_id]["name"]
             score = points_dict[recom_role_id]
             explanation = self.generate_explanation_for_role(recom_role_id, user_concepts_df)
-            # rr = RoleRecommendation(role=role, score=score, explanation=explanation, courses=[])
-            rr_list.append(RoleRecommendation(role=role, score=score, explanation=explanation, courses=[]))
+            rr_list.append(RoleRecommendation(role=role, explanation=explanation, courses=[]))
             logger.info("Role-{}: {}, \tScore: {}, \tExplanation: {}".format(i + 1, role, score, explanation))
 
         self.recom_role_id_list = recom_role_id_list

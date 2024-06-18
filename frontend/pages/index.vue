@@ -169,7 +169,7 @@ const courses = [
                         <tr v-for="(row, index_role) in filteredRoles" :key="row.role + modelNum" class="border-2 border-slate-400">
                             <td colspan="4" class="px-4 py-2 bg-slate-100">
                                 <div class="text-xl font-semibold">Career Role {{index_role + 1}} - {{ row.role }}</div>
-                                <div class="mt-2"><strong>Score:</strong> {{ row.score }}</div>
+                                <!-- <div class="mt-2"><strong>Score:</strong> {{ row.score }}</div> -->
                                 <div class="mt-2">{{ row.explanation }}</div>
                                 <div class="mt-2">
                                     <div v-for="(course, index) in row.courses" :key="course.course + + modelNum" class="mt-2 bg-blue-100">
