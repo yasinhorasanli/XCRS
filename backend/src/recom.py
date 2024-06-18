@@ -32,7 +32,7 @@ class RecommendationEngine:
 
     def recommend_role(self, user_concepts_df: pd.DataFrame):
 
-        logger.info("Role recommendation started.")
+        logger.info(util.pad_string_with_dashes("ROLE RECOMMENDATION ", length=80))
 
         concept_id_list = self.roadmap_concepts_df["id"]
         # user_concept_id_set = set(user_concepts_df["concept_id"])
@@ -63,7 +63,7 @@ class RecommendationEngine:
 
         role_name_coverage_score_dict = zip(self.roadmaps_df.loc[points_dict.keys()]["name"], points_dict.values())
         role_name_coverage_score_dict = sorted(list(role_name_coverage_score_dict), key=lambda item: item[1], reverse=True)
-        logger.info(pformat(role_name_coverage_score_dict))
+        logger.info(role_name_coverage_score_dict)
 
         # Filter keys based on a threshold (0.67 is equal to having no concept for that role)
         filtered_keys = [key for key, value in points_dict.items() if value > 0.68]
@@ -121,6 +121,8 @@ class RecommendationEngine:
 
     def recommend_courses(self, user_concepts_df: pd.DataFrame, rol_rec_list: list[RoleRecommendation], disliked_similar_course_id_list: list[int]):
 
+        logger.info(util.pad_string_with_dashes("COURSE RECOMMENDATION ", length=80))
+
         # Number of concepts to recommend for each role
         n = 3
         udemy_website = "https://www.udemy.com"
@@ -132,54 +134,46 @@ class RecommendationEngine:
         user_concept_id_set = set(user_concepts_df["concept_id"])
 
         for recom_role_id, rol_rec in zip(self.recom_role_id_list, rol_rec_list):
-            recom_role_user_concepts = user_concepts_df[user_concepts_df["role_id"] == recom_role_id]
-            recom_role_concepts = {concept for concept in self.roadmap_concepts_df["id"] if util.get_role_id(concept) == recom_role_id}
+            user_concepts_for_recom_role = user_concepts_df[user_concepts_df["role_id"] == recom_role_id]
+            concepts_in_recom_role = {concept for concept in self.roadmap_concepts_df["id"] if util.get_role_id(concept) == recom_role_id}
+            role_name = self.roadmaps_df.loc[recom_role_id]["name"]
 
-            print("Number of role-" + str(recom_role_id) + " concepts : " + str(len(recom_role_concepts)))
-            print("Number of matching user concepts for role-" + str(recom_role_id) + ": " + str(recom_role_user_concepts.shape[0]))
+            logger.info(role_name + " role total number of concepts :\t" + str(len(concepts_in_recom_role)))
+            logger.info(role_name + " role matching user concepts:\t" + str(user_concepts_for_recom_role.shape[0]))
 
-            recom_concepts = recom_role_concepts.difference(recom_role_user_concepts["concept_id"])
+            missing_concepts = concepts_in_recom_role.difference(user_concepts_for_recom_role["concept_id"])
 
-            original_dict, sorted_equalized_dict = util.equalize_digits(recom_concepts)
-
-            # print("Original Dict:", original_dict)
-            # print("Sorted equalized Dict:", sorted_equalized_dict)
-
-            # Explanation for Course recommendation --- Concept recommendation and familarity
-
-            # familiar_concepts = self.roadmap_concepts_df[self.roadmap_concepts_df["id"].isin(user_concepts_for_recom_role)]
-            # print("Concepts you are already familiar: ")
-            # print(familiar_concepts[["id", "name"]])
-
+            sorted_equalized_dict = util.equalize_digits(missing_concepts)
             recom_concepts_df = self.roadmap_concepts_df[self.roadmap_concepts_df["id"].isin(list(sorted_equalized_dict.keys())[:n])]
-            print()
-            print("Recommended concepts: ")
-            print(recom_concepts_df[["id", "name"]])
+            
+            logger.info('Recommended concepts: \t' + str(recom_concepts_df["name"].tolist()))
 
-            selected_recom_concepts = list(sorted_equalized_dict.keys())[:n]
-            selected_recom_concepts = [self.encoder_for_concepts.get(idx) for idx in selected_recom_concepts]
-            print(selected_recom_concepts)
+            #selected_recom_concepts = list(sorted_equalized_dict.keys())[:n]
+            recom_concept_id_list = recom_concepts_df["id"].tolist()
 
+            
+            recom_concept_id_list_encoded = [self.encoder_for_concepts.get(idx) for idx in recom_concept_id_list]
+            
             # Course Recommendation Part
 
             # Number of courses to recommend for each concept
             m = 1
 
             result_for_recom_role = []
-            for concept_index in selected_recom_concepts:
+            for concept_index in recom_concept_id_list_encoded:
 
                 top_courses = util.top_n_courses_for_concept(
                     self.udemy_courses_df, self.concept_X_course, concept_index, disliked_similar_course_id_list, m
                 )
-                # TODO: Check if the concept is true
-                rec_concept_row = self.roadmap_concepts_df.loc[self.roadmap_concepts_df["id"] == concept_index]
+                
+                concept_row = recom_concepts_df.loc[concept_index]                
                 for id, course_row in top_courses.iterrows():
 
                     result_for_recom_role.append(
                         {
                             "role_id": recom_role_id,
                             "concept_id": concept_index,
-                            "concept_name": rec_concept_row["name"],
+                            "concept_name": concept_row["name"],
                             "course_id": course_row["id"],
                             "course_title": course_row["title"],
                             "course_url": udemy_website + course_row["url"],
@@ -192,15 +186,18 @@ class RecommendationEngine:
                     rol_rec.courses.append(
                         CourseRecommendation(course=course_row["title"], url=udemy_website + course_row["url"], explanation=explanation)
                     )
+                    logger.info('Concept-{}: {}'.format(id, concept_row["name"]))
+                    logger.info('Similarity Score: {}'.format(course_row["sim_score"]))
+                    logger.info("Course: {}, \tUrl: {}, \tExplanation: {}".format(course_row["title"], udemy_website + course_row["url"], explanation))                    
+
                     # Selected courses added to this list due to prevent reselection.
                     disliked_similar_course_id_list.append(self.encoder_for_courses[course_row["id"]])
 
-                # Display the result
-                print(f"Top {m} Similarity Scores: ", top_courses["sim_score"])
-                print(f"Corresponding Courses: ", top_courses[["id", "title"]])
 
                 # print("Results: ", result_for_recom_role)
                 result_df = pd.DataFrame(result_for_recom_role)
+        
+            logger.info(role_name + " - Course Recommendation End")
 
         return rol_rec_list
 
@@ -225,7 +222,5 @@ class RecommendationEngine:
 
         if concepts_included != "":
             explanation += start_exp + concepts_included[:-2] + " which are necessary for you to progress in the " + role_name + " role."
-
-        print(explanation)
 
         return explanation

@@ -60,10 +60,10 @@ def equalize_digits(original_list):
     # Equalize the number of digits by multiplying with the calculated powers of 10
     equalized_list = [x * power for x, power in zip(original_list, powers_of_10)]
     # Create dictionaries for original and equalized/sorted lists
-    original_dict = dict(zip(original_list, equalized_list))
+    # original_dict = dict(zip(original_list, equalized_list))
     sorted_equalized_dict = dict(sorted(zip(original_list, equalized_list), key=lambda x: x[1]))
 
-    return original_dict, sorted_equalized_dict
+    return sorted_equalized_dict
 
 
 def top_n_courses_for_concept(udemy_courses_df, similarity_matrix, concept_index, disliked_course_id_list, n):
@@ -96,9 +96,20 @@ def top_n_concepts_for_courses(roadmap_concepts_df, similarity_matrix, recom_rol
     return top_courses
 
 
-def mean_plus_2_std_dev(similarity_matrix):
-    flattened_scores = similarity_matrix.flatten()
+def calculate_threshold(sim_mat, sigma_num):
+    flattened_scores = sim_mat.flatten()
     mean = np.mean(flattened_scores)
     std_dev = np.std(flattened_scores)
 
-    return mean + 2 * std_dev
+    return mean + sigma_num * std_dev
+
+
+def pad_string_with_dashes(input_string, length=120):
+    max_length = length
+    if len(input_string) > max_length:
+        raise ValueError("Input string is longer than 120 characters")
+    
+    num_dashes = max_length - len(input_string)
+    padded_string = input_string + '-' * num_dashes
+    
+    return padded_string

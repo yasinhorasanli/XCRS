@@ -107,7 +107,7 @@ def init_data():
     roadmaps_df.set_index("id", inplace=True)
 
     logger.info("Data is initialized using " + udemy_courses_file + " and " + roadmap_nodes_file)
-    logger.info(pformat(list(zip(np.arange(1, len(roles) + 1), roles))))
+    logger.info('Career Roles: \n' + pformat(list(zip(np.arange(1, len(roles) + 1), roles))))
 
     # return (udemy_courses_df, roadmap_nodes_df, roadmap_concepts_df, roadmaps_df)
 
@@ -191,7 +191,7 @@ def create_user_embeddings(took_and_liked: str, took_and_neutral: str, took_and_
 
     user_emb_list = user_courses_df["emb"].values
     user_emb_list = np.vstack(user_emb_list)
-    logger.info("Embeddings matrix shape: " + str(user_emb_list.shape))
+    logger.info("User courses embeddings created. Shape: " + str(user_emb_list.shape))
 
     return (user_courses_df, user_emb_list)
 
@@ -227,6 +227,8 @@ def find_similar_concepts_for_courses(user_courses_df, user_emb_list, concepts_e
     # Create DataFrame from the result
     user_concepts_df = pd.DataFrame(result)
 
+    logger.info('Number of similar concepts for user courses: ' + str(len(user_concepts_df)))
+
     ####### IMPROVEMENT
     #### The decision regarding a role concept should be determined only by the most similar user course.
     # Sort the DataFrame by similarity_score in descending order
@@ -234,19 +236,30 @@ def find_similar_concepts_for_courses(user_courses_df, user_emb_list, concepts_e
     # Keep only the top record for each concept_id
     user_concepts_df = user_concepts_df.groupby("concept_id").head(1).reset_index(drop=True)
 
+    logger.info('Number of similar concepts for user courses after discard: ' + str(len(user_concepts_df)))
+
     return user_concepts_df
 
 
 def find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list, sim_thre):
 
     disliked_courses = user_courses_df[user_courses_df["category"] == "TookAndDisliked"]
+    disliked_course_names = disliked_courses["course"].values
+
     disliked_emb_list = np.vstack(disliked_courses["emb"].values)
     similarity_matrix = cosine_similarity(disliked_emb_list, course_emb_list)
 
     similar_ones_index = np.argwhere(similarity_matrix > sim_thre)
 
     disliked_similar_course_list = similar_ones_index[:, 1].tolist()
+    matching_course_titles = udemy_courses_df.iloc[disliked_similar_course_list]["title"].tolist()
+
     # disliked_similar_course_id_list = [decoder_for_courses[idx] for idx in disliked_similar_course_list]
+    course_mapping = {
+        disliked: similar for disliked, similar in zip(disliked_course_names, matching_course_titles)
+    }
+    logger.info("Mapping of disliked courses to similar courses:\n%s", course_mapping)
+
 
     return disliked_similar_course_list
 
@@ -297,7 +310,7 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
 
 def main() -> None:
 
-    logger.info("----- XCRS IS STARTING -----")
+    logger.info("##################################### XCRS IS STARTING #####################################")
 
     # LOAD DATA FOR MODELS
     init_data()
@@ -309,7 +322,7 @@ def main() -> None:
     global course_emb_list_openai, concept_emb_list_openai, course_X_concept_openai, concept_X_course_openai
     global course_emb_list_mistral, concept_emb_list_mistral, course_X_concept_mistral, concept_X_course_mistral
     global course_emb_list_cohere, concept_emb_list_cohere, course_X_concept_cohere, concept_X_course_cohere
-    global emb_thresholds
+    global emb_thre_2sigma_dict, emb_thre_3sigma_dict
 
     # Encoders/Decoders for Courses and Concepts
     course_id_list = udemy_courses_df["id"]
@@ -352,9 +365,16 @@ def main() -> None:
         course_X_concept_cohere,
     ]
 
-    emb_thresholds = [util.mean_plus_2_std_dev(matrix) for matrix in similarity_matrices]
+    models_dict = {"Google": GOOGLE_MODEL, "Voyage": VOYAGE_MODEL, "OpenAI": OPENAI_MODEL, "Mistral": MISTRAL_MODEL, "Cohere": COHERE_MODEL}
 
-    logger.info("Their corresponding thresholds: \n" + pformat(list(zip(models_dict.keys(), emb_thresholds))))
+    emb_thre_2sigma = [util.calculate_threshold(sim_mat=matrix, sigma_num=2) for matrix in similarity_matrices]
+    emb_thre_2sigma_dict = dict(zip(models_dict.values(), emb_thre_2sigma))
+
+    emb_thre_3sigma = [util.calculate_threshold(sim_mat=matrix, sigma_num=3)  for matrix in similarity_matrices]
+    emb_thre_3sigma_dict = dict(zip(models_dict.values(), emb_thre_3sigma))
+    
+    logger.info('Embedding thresholds as Mean + Two Sigma \n' + pformat(emb_thre_2sigma_dict))
+    logger.info("Their corresponding thresholds: \n" + pformat(list(zip(models_dict.keys(), emb_thre_2sigma))))
 
 
 app = FastAPI()
@@ -365,11 +385,10 @@ async def save_inputs(request: RecommendationRequest):
 
     fileName = datetime.now().strftime("%Y%m%d_%H%M%S.%f")[:-3]
 
-    print(fileName)
-    print(request)
-
     with open("../user_inputs/{}.json".format(fileName), "w") as f:
         f.write(request.model_dump_json())
+
+    logger.info('Request saved to file {}'.format(fileName))
 
     recommendations = Recommendation(
         model="", roles=[RoleRecommendation(role="", explanation="", courses=[CourseRecommendation(course="", url="", explanation="")])]
@@ -385,31 +404,26 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
         concept_emb_list = concept_emb_list_google
         course_emb_list = course_emb_list_google
         concept_X_course = concept_X_course_google
-        sim_thre = emb_thresholds[0]
     elif model_name == "voyage":
         emb_model = VOYAGE_MODEL
         concept_emb_list = concept_emb_list_voyage
         course_emb_list = course_emb_list_voyage
         concept_X_course = concept_X_course_voyage
-        sim_thre = emb_thresholds[1]
     elif model_name == "openai":
         emb_model = OPENAI_MODEL
         concept_emb_list = concept_emb_list_openai
         course_emb_list = course_emb_list_openai
         concept_X_course = concept_X_course_openai
-        sim_thre = emb_thresholds[2]
     elif model_name == "mistral":
         emb_model = MISTRAL_MODEL
         concept_emb_list = concept_emb_list_mistral
         course_emb_list = course_emb_list_mistral
         concept_X_course = concept_X_course_mistral
-        sim_thre = emb_thresholds[3]
     elif model_name == "cohere":
         emb_model = COHERE_MODEL
         concept_emb_list = concept_emb_list_cohere
         course_emb_list = course_emb_list_cohere
         concept_X_course = concept_X_course_cohere
-        sim_thre = emb_thresholds[4]
     elif model_name == "mock":
         recommendations = Recommendation(
             model=sample_rec_data["model"],
@@ -429,8 +443,18 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
         logger.error("Wrong Endpoint: " + model_name)
         raise HTTPException(status_code=404, detail="Embedding model not found")
 
-    logger.info("POST - recommendation request for " + model_name)
-    logger.info(pformat(request.model_computed_fields))
+
+    sim_thre_2sigma = emb_thre_2sigma_dict[emb_model]
+    sim_thre_3sigma = emb_thre_3sigma_dict[emb_model]
+    
+
+    logger.info(util.pad_string_with_dashes("POST - recommendation request for " + model_name.upper(), length=120))
+    logger.info('TookAndLiked: ' + request.took_and_liked)
+    logger.info('TookAndNeutral: ' + request.took_and_neutral)
+    logger.info('TookAndDisliked: ' + request.took_and_disliked)
+    logger.info('Curious: ' + request.curious)
+
+
 
     ################################# 1. CREATING EMBEDDINGS FOR USER'S COURSES #######################################
     user_courses_df, user_emb_list = create_user_embeddings(
@@ -438,7 +462,7 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
     )
 
     ################################# 2. FINDING SIMILAR CONCEPTS FOR USER'S COURSES ##################################
-    user_concepts_df = find_similar_concepts_for_courses(user_courses_df, user_emb_list, concept_emb_list, roadmap_concepts_df, sim_thre)
+    user_concepts_df = find_similar_concepts_for_courses(user_courses_df, user_emb_list, concept_emb_list, roadmap_concepts_df, sim_thre_2sigma)
 
     # If empty dataframe happens
     if user_concepts_df.shape[0] == 0:
@@ -448,7 +472,7 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
     logger.info('Total number of concepts X user courses matches:' + str(user_concepts_df.shape[0]))
 
     ################################# 3. FINDING SIMILAR COURSES FOR USER'S DISLIKED COURSES ##########################
-    disliked_similar_course_id_list = find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list, sim_thre)
+    disliked_similar_course_id_list = find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list, sim_thre_3sigma)
 
     recommendation = RecommendationEngine(
         udemy_courses_df,
