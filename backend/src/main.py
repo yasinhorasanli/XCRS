@@ -232,9 +232,9 @@ def find_similar_concepts_for_courses(user_courses_df, user_emb_list, concepts_e
     ####### IMPROVEMENT
     #### The decision regarding a role concept should be determined only by the most similar user course.
     # Sort the DataFrame by similarity_score in descending order
-    user_concepts_df = user_concepts_df.sort_values(by="similarity_score", ascending=False)
-    # Keep only the top record for each concept_id
-    user_concepts_df = user_concepts_df.groupby("concept_id").head(1).reset_index(drop=True)
+    # user_concepts_df = user_concepts_df.sort_values(by="similarity_score", ascending=False)
+    # # Keep only the top record for each concept_id
+    # user_concepts_df = user_concepts_df.groupby("concept_id").head(1).reset_index(drop=True)
 
     logger.info('Number of similar concepts for user courses after discard: ' + str(len(user_concepts_df)))
 
@@ -373,8 +373,8 @@ def main() -> None:
     emb_thre_3sigma = [util.calculate_threshold(sim_mat=matrix, sigma_num=3)  for matrix in similarity_matrices]
     emb_thre_3sigma_dict = dict(zip(models_dict.values(), emb_thre_3sigma))
     
-    logger.info('Embedding thresholds as Mean + Two Sigma \n' + pformat(emb_thre_2sigma_dict))
-    logger.info("Their corresponding thresholds: \n" + pformat(list(zip(models_dict.keys(), emb_thre_2sigma))))
+    logger.info('Embedding thresholds as Mean + Three Sigma: \n{}'.format(emb_thre_3sigma_dict))
+    logger.info("Their corresponding thresholds: \n" + pformat(list(zip(models_dict.keys(), emb_thre_3sigma))))
 
 
 app = FastAPI()
@@ -388,7 +388,7 @@ async def save_inputs(request: RecommendationRequest):
     with open("../user_inputs/{}.json".format(fileName), "w") as f:
         f.write(request.model_dump_json())
 
-    logger.info('Request saved to file {}'.format(fileName))
+    logger.info('Request saved to the file {}.json in user_inputs/'.format(fileName))
 
     recommendations = Recommendation(
         model="", roles=[RoleRecommendation(role="", explanation="", courses=[CourseRecommendation(course="", url="", explanation="")])]
@@ -462,7 +462,7 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
     )
 
     ################################# 2. FINDING SIMILAR CONCEPTS FOR USER'S COURSES ##################################
-    user_concepts_df = find_similar_concepts_for_courses(user_courses_df, user_emb_list, concept_emb_list, roadmap_concepts_df, sim_thre_2sigma)
+    user_concepts_df = find_similar_concepts_for_courses(user_courses_df, user_emb_list, concept_emb_list, roadmap_concepts_df, sim_thre_3sigma)
 
     # If empty dataframe happens
     if user_concepts_df.shape[0] == 0:
