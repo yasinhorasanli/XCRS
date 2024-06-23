@@ -107,6 +107,8 @@ def init_data():
     roadmaps_df.set_index("id", inplace=True)
 
     logger.info("Data is initialized using " + udemy_courses_file + " and " + roadmap_nodes_file)
+    logger.info('Total number of roadmap concepts: ' + str(roadmap_concepts_df.shape[0]))
+    logger.info('Total number of courses: ' + str(udemy_courses_df.shape[0]))
     logger.info('Career Roles: \n' + pformat(list(zip(np.arange(1, len(roles) + 1), roles))))
 
     # return (udemy_courses_df, roadmap_nodes_df, roadmap_concepts_df, roadmaps_df)
@@ -120,11 +122,11 @@ def get_emb_lists(folder: str, model: str):
     roadmap_concepts_emb_df = roadmap_nodes_emb_df[roadmap_nodes_emb_df["id"].isin(concept_id_list)]
     # roadmap_concepts_emb_df = roadmap_nodes_emb_df[roadmap_nodes_emb_df["id"].isin(roadmap_concepts_df["id"])]
 
-    udemy_courses_emb_df["emb"] = udemy_courses_emb_df.apply(util.convert_to_float, axis=1)
+    udemy_courses_emb_df.loc[:, "emb"] = udemy_courses_emb_df.apply(util.convert_to_float, axis=1)
     course_emb_list = udemy_courses_emb_df["emb"].values
     course_emb_list = np.vstack(course_emb_list)
 
-    roadmap_concepts_emb_df["emb"] = roadmap_concepts_emb_df.apply(util.convert_to_float, axis=1)
+    roadmap_concepts_emb_df.loc[:, "emb"] = roadmap_concepts_emb_df.apply(util.convert_to_float, axis=1)
     concept_emb_list = roadmap_concepts_emb_df["emb"].values
     concept_emb_list = np.vstack(concept_emb_list)
 
@@ -310,7 +312,7 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
 
 def main() -> None:
 
-    logger.info("##################################### XCRS IS STARTING #####################################")
+    logger.info("################################################### XCRS IS STARTING ###################################################")
 
     # LOAD DATA FOR MODELS
     init_data()
@@ -322,7 +324,7 @@ def main() -> None:
     global course_emb_list_openai, concept_emb_list_openai, course_X_concept_openai, concept_X_course_openai
     global course_emb_list_mistral, concept_emb_list_mistral, course_X_concept_mistral, concept_X_course_mistral
     global course_emb_list_cohere, concept_emb_list_cohere, course_X_concept_cohere, concept_X_course_cohere
-    global emb_thre_2sigma_dict, emb_thre_3sigma_dict
+    global emb_thre_2sigma_dict, emb_thre_3sigma_dict, emb_thre_2_5_sigma_dict
 
     # Encoders/Decoders for Courses and Concepts
     course_id_list = udemy_courses_df["id"]
@@ -370,11 +372,13 @@ def main() -> None:
     emb_thre_2sigma = [util.calculate_threshold(sim_mat=matrix, sigma_num=2) for matrix in similarity_matrices]
     emb_thre_2sigma_dict = dict(zip(models_dict.values(), emb_thre_2sigma))
 
+    emb_thre_2_5_sigma = [util.calculate_threshold(sim_mat=matrix, sigma_num=2.5) for matrix in similarity_matrices]
+    emb_thre_2_5_sigma_dict = dict(zip(models_dict.values(), emb_thre_2_5_sigma))
+
     emb_thre_3sigma = [util.calculate_threshold(sim_mat=matrix, sigma_num=3)  for matrix in similarity_matrices]
     emb_thre_3sigma_dict = dict(zip(models_dict.values(), emb_thre_3sigma))
     
-    logger.info('Embedding thresholds as Mean + Three Sigma: \n{}'.format(emb_thre_3sigma_dict))
-    logger.info("Their corresponding thresholds: \n" + pformat(list(zip(models_dict.keys(), emb_thre_3sigma))))
+    logger.info("Their corresponding thresholds: \n" + pformat(list(zip(models_dict.keys(), emb_thre_2_5_sigma))))
 
 
 app = FastAPI()
@@ -445,16 +449,22 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
 
 
     sim_thre_2sigma = emb_thre_2sigma_dict[emb_model]
+    sim_thre_2_5_sigma = emb_thre_2_5_sigma_dict[emb_model]
     sim_thre_3sigma = emb_thre_3sigma_dict[emb_model]
+    
     
 
     logger.info(util.pad_string_with_dashes("POST - recommendation request for " + model_name.upper(), length=120))
+    logger.info(util.pad_string_with_dashes("", length=120))
     logger.info('TookAndLiked: ' + request.took_and_liked)
     logger.info('TookAndNeutral: ' + request.took_and_neutral)
     logger.info('TookAndDisliked: ' + request.took_and_disliked)
     logger.info('Curious: ' + request.curious)
 
 
+    threshold = sim_thre_2_5_sigma
+    count = (concept_X_course > sim_thre_2_5_sigma).sum().sum()
+    logger.info('Total number of matches between courses and concepts: ' + str(count) + ' by threshold: ' + str(threshold))
 
     ################################# 1. CREATING EMBEDDINGS FOR USER'S COURSES #######################################
     user_courses_df, user_emb_list = create_user_embeddings(
@@ -462,7 +472,7 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
     )
 
     ################################# 2. FINDING SIMILAR CONCEPTS FOR USER'S COURSES ##################################
-    user_concepts_df = find_similar_concepts_for_courses(user_courses_df, user_emb_list, concept_emb_list, roadmap_concepts_df, sim_thre_3sigma)
+    user_concepts_df = find_similar_concepts_for_courses(user_courses_df, user_emb_list, concept_emb_list, roadmap_concepts_df, sim_thre_2_5_sigma)
 
     # If empty dataframe happens
     if user_concepts_df.shape[0] == 0:
@@ -472,7 +482,7 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
     logger.info('Total number of concepts X user courses matches:' + str(user_concepts_df.shape[0]))
 
     ################################# 3. FINDING SIMILAR COURSES FOR USER'S DISLIKED COURSES ##########################
-    disliked_similar_course_id_list = find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list, sim_thre_3sigma)
+    disliked_similar_course_id_list = find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list, sim_thre_2_5_sigma)
 
     recommendation = RecommendationEngine(
         udemy_courses_df,
@@ -493,7 +503,9 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
     ################################# 5. COURSE RECOMMENDATION ##########################################################
     rol_rec_list = recommendation.recommend_courses(user_concepts_df, rol_rec_list, disliked_similar_course_id_list)
 
-    # print(rol_rec_list)
+    logger.info(util.pad_string_with_dashes(model_name.upper() + " END ", length=120))
+    logger.info(util.pad_string_with_dashes("", length=120))
+
 
     recommendations = Recommendation(model=emb_model, roles=rol_rec_list)
 

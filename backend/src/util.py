@@ -79,8 +79,8 @@ def top_n_courses_for_concept(udemy_courses_df, similarity_matrix, concept_index
 
     # Get the top N scores and their corresponding courses
     top_scores = row[top_indices]
-    top_courses = udemy_courses_df.iloc[top_indices]
-    top_courses["sim_score"] = top_scores
+    top_courses = udemy_courses_df.iloc[top_indices].copy()
+    top_courses.loc[:, "sim_score"] = top_scores
 
     return top_courses
 
@@ -90,10 +90,10 @@ def top_n_concepts_for_courses(roadmap_concepts_df, similarity_matrix, recom_rol
     column = similarity_matrix[:, course_id]
     top_indices = np.argsort(column)[-n:][::-1]
     top_scores = column[top_indices]
-    top_courses = roadmap_concepts_df.iloc[top_indices]
-    top_courses["sim_score"] = top_scores
+    top_concepts = roadmap_concepts_df.iloc[top_indices].copy()
+    top_concepts.loc[:, "sim_score"] = top_scores
 
-    return top_courses
+    return top_concepts
 
 
 def calculate_threshold(sim_mat, sigma_num):
