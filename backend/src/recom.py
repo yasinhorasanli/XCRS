@@ -151,9 +151,9 @@ class RecommendationEngine:
             logger.info("Total number of matching user curious concepts:\t" + str(len(user_curious_concept_id_set)))
 
 
-            missing_concepts = concepts_in_recom_role.difference(user_took_concept_id_set)
+            remaining_concepts = concepts_in_recom_role.difference(user_took_concept_id_set)
 
-            sorted_equalized_dict = util.equalize_digits(missing_concepts)
+            sorted_equalized_dict = util.equalize_digits(remaining_concepts)
             recom_concepts_df = self.roadmap_concepts_df[self.roadmap_concepts_df["id"].isin(list(sorted_equalized_dict.keys())[:n])]
             
             logger.info('Recommended concepts: \t' + str(recom_concepts_df["name"].tolist()))
@@ -163,6 +163,9 @@ class RecommendationEngine:
 
             
             recom_concept_id_list_encoded = [self.encoder_for_concepts.get(idx) for idx in recom_concept_id_list]
+
+            concepts_in_recom_role_encoded = [self.encoder_for_concepts.get(idx) for idx in concepts_in_recom_role]
+
             
             # Course Recommendation Part
 
@@ -191,7 +194,7 @@ class RecommendationEngine:
                         }
                     )
 
-                    explanation = self.generate_explanation_for_course(recom_role_id, self.encoder_for_courses[course_row["id"]])
+                    explanation = self.generate_explanation_for_course(recom_role_id, self.encoder_for_courses[course_row["id"]], concepts_in_recom_role_encoded)
 
                     rol_rec.courses.append(
                         CourseRecommendation(course=course_row["title"], url=udemy_website + course_row["url"], explanation=explanation)
@@ -212,9 +215,9 @@ class RecommendationEngine:
 
         return rol_rec_list
 
-    def generate_explanation_for_course(self, recom_role_id: int, recom_course_id: int) -> str:
+    def generate_explanation_for_course(self, recom_role_id: int, recom_course_id: int, concepts_in_recom_role_encoded: set) -> str:
 
-        top_concepts = util.top_n_concepts_for_courses(self.roadmap_concepts_df, self.concept_X_course, recom_role_id, recom_course_id, 3)
+        top_concepts = util.top_n_concepts_for_courses(self.roadmap_concepts_df, self.concept_X_course, concepts_in_recom_role_encoded, recom_course_id, 3)
         course_title = self.udemy_courses_df.loc[recom_course_id, "title"]
         role_name = self.roadmaps_df.loc[recom_role_id]["name"]
         explanation = ""
