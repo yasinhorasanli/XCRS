@@ -85,12 +85,12 @@ def top_n_courses_for_concept(udemy_courses_df, similarity_matrix, concept_index
     return top_courses
 
 
-def top_n_concepts_for_courses(roadmap_concepts_df, similarity_matrix, concepts_in_recom_role_encoded, course_id, n):
+def top_n_concepts_for_courses(roadmap_concepts_df, similarity_matrix, remaining_concepts_encoded, course_id, n):
 
     column = similarity_matrix[:, course_id]
-    filtered_column = column[concepts_in_recom_role_encoded]
+    filtered_column = column[remaining_concepts_encoded]
     top_filtered_indices = np.argsort(filtered_column)[-n:][::-1]
-    top_indices = [concepts_in_recom_role_encoded[idx] for idx in top_filtered_indices]
+    top_indices = [remaining_concepts_encoded[idx] for idx in top_filtered_indices]
     top_scores = column[top_indices]
     top_concepts = roadmap_concepts_df.iloc[top_indices].copy()
     top_concepts.loc[:, "sim_score"] = top_scores

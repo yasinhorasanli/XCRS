@@ -3,6 +3,10 @@ from pprint import pformat
 import pandas as pd
 import numpy as np
 from collections import Counter
+import os
+
+from openai import OpenAI
+
 
 # internal classes
 import util
@@ -29,6 +33,9 @@ class RecommendationEngine:
         self.encoder_for_courses = encoder_for_courses
         self.roadmaps_df = roadmaps_df
         self.recom_role_id_list = []
+        openai_api_key = open("../../embedding-generation/api_keys/openai_api_key.txt").read().strip()
+        os.environ["OPENAI_API_KEY"] = openai_api_key
+        self.exp_model = OpenAI()
 
     def recommend_role(self, user_concepts_df: pd.DataFrame):
 
@@ -94,30 +101,45 @@ class RecommendationEngine:
 
     def generate_explanation_for_role(self, recom_role_id: int, user_concepts_df: pd.DataFrame) -> str:
 
-        role = self.roadmaps_df.loc[recom_role_id]["name"]
+        role_name = self.roadmaps_df.loc[recom_role_id]["name"]
         effective_courses = user_concepts_df[user_concepts_df["role_id"] == recom_role_id]
         explanation = ""
         took_exp = "I assume that you are familiar with "
         curious_exp = "I can see that you are willing to learn "
 
-        courses_took = ""
-        courses_curious = ""
+        courses_took_set= set(effective_courses[effective_courses["category"].str.startswith("TookAnd")]["concept_name"])
+        courses_curious_set = set(effective_courses[effective_courses["category"] == "Curious"]["concept_name"])
 
-        for i, course in effective_courses.iterrows():
-            if course["category"].startswith("TookAnd"):
-                courses_took += course["concept_name"] + ", "
-            if course["category"] == "Curious":
-                courses_curious += course["concept_name"] + ", "
+        courses_took = ", ".join(courses_took_set)
+        courses_curious = ", ".join(courses_curious_set)
 
         if courses_took != "":
-            explanation += took_exp + courses_took[:-2] + ". "
+            explanation += took_exp + courses_took + ". "
 
         if courses_curious != "":
             if courses_took != "":
                 explanation += "Also, "
-            explanation += curious_exp + courses_curious[:-2] + ". "
+            explanation += curious_exp + courses_curious + ". "
+ 
+        response = self.exp_model.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {
+            "role": "system",
+            "content": "You will be provided with sentences, and your task is to convert them to standard English and correct meaningless parts. Convert mostly computer science related abbreviations to their longer form. Also you can paraphrase the sentences in better way without shortening. The main objective of these sentences are to explain someone that he is okay for {} Role.".format(role_name)
+            },
+            {
+            "role": "user",
+            "content": explanation
+            }
+        ],
+        temperature=0.7,
+        max_tokens=256,
+        top_p=1
+        )
+        enhanced_explanation = response.choices[0].message.content
 
-        return explanation
+        return enhanced_explanation
 
     def recommend_courses(self, user_concepts_df: pd.DataFrame, rol_rec_list: list[RoleRecommendation], disliked_similar_course_id_list: list[int]):
 
@@ -166,6 +188,9 @@ class RecommendationEngine:
 
             concepts_in_recom_role_encoded = [self.encoder_for_concepts.get(idx) for idx in concepts_in_recom_role]
 
+            remaining_concepts_encoded = [self.encoder_for_concepts.get(idx) for idx in remaining_concepts]
+
+
             
             # Course Recommendation Part
 
@@ -194,7 +219,7 @@ class RecommendationEngine:
                         }
                     )
 
-                    explanation = self.generate_explanation_for_course(recom_role_id, self.encoder_for_courses[course_row["id"]], concepts_in_recom_role_encoded)
+                    explanation = self.generate_explanation_for_course(recom_role_id, self.encoder_for_courses[course_row["id"]], remaining_concepts_encoded)
 
                     rol_rec.courses.append(
                         CourseRecommendation(course=course_row["title"], url=udemy_website + course_row["url"], explanation=explanation)
@@ -215,9 +240,9 @@ class RecommendationEngine:
 
         return rol_rec_list
 
-    def generate_explanation_for_course(self, recom_role_id: int, recom_course_id: int, concepts_in_recom_role_encoded: set) -> str:
+    def generate_explanation_for_course(self, recom_role_id: int, recom_course_id: int, remaining_concepts_encoded: set) -> str:
 
-        top_concepts = util.top_n_concepts_for_courses(self.roadmap_concepts_df, self.concept_X_course, concepts_in_recom_role_encoded, recom_course_id, 3)
+        top_concepts = util.top_n_concepts_for_courses(self.roadmap_concepts_df, self.concept_X_course, remaining_concepts_encoded, recom_course_id, 3)
         course_title = self.udemy_courses_df.loc[recom_course_id, "title"]
         role_name = self.roadmaps_df.loc[recom_role_id]["name"]
         explanation = ""
@@ -225,16 +250,10 @@ class RecommendationEngine:
         # start_exp = "This course (" + course_title + ") includes the concepts of "
         start_exp = "This course includes the concepts of "
 
-        concepts_included = ""
-        seen_concepts = set()
-
-        for id, concept_row in top_concepts.iterrows():
-            concept_name = concept_row["name"]
-            if concept_name not in seen_concepts:
-                seen_concepts.add(concept_name)
-                concepts_included += concept_name + ", "
+        top_concepts_set = set(top_concepts["name"])
+        concepts_included = ", ".join(top_concepts_set)
 
         if concepts_included != "":
-            explanation += start_exp + concepts_included[:-2] + " which are necessary for you to progress in the " + role_name + " role."
+            explanation += start_exp + concepts_included+ " which are necessary for you to progress in the " + role_name + " role."
 
         return explanation
