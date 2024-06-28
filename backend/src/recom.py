@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from collections import Counter
 import os
+import json
 
 from openai import OpenAI
 
@@ -52,14 +53,40 @@ class RecommendationEngine:
         role_id_user_scores = Counter()
         encountered_concepts = set()
 
+        category_priority = {
+            'Curious': 4,
+            'TookAndLiked': 3,
+            'TookAndDisliked': 2,
+            'TookAndNeutral': 1
+        }
+        highest_priority_concepts = {}
+
+        role_id_user_scores = {role_id: 0 for role_id in (np.arange(1, len(self.roadmaps_df) + 1))}
+
         for concept_id, role_id, category in zip(user_concepts_df["concept_id"], user_concepts_df["role_id"], user_concepts_df["category"]):
-            # Check if concept_id, category, role_id has been encountered before
-            concept_info = (concept_id, category, role_id)
-            if concept_info not in encountered_concepts:
-                # Increase counters based on category and coefficients
-                score = coefficients.get(category, 0)
-                role_id_user_scores[role_id] += score
-                encountered_concepts.add(concept_info)
+            key = (concept_id, role_id)
+            if key in highest_priority_concepts:
+                if category_priority[category] > category_priority[highest_priority_concepts[key]]:
+                    highest_priority_concepts[key] = category
+            else:
+                highest_priority_concepts[key] = category
+
+        for (concept_id, role_id), category in highest_priority_concepts.items():
+            score = coefficients.get(category, 0)
+            role_id_user_scores[role_id] += score
+
+        # Print the results
+        logger.info(pformat(role_id_user_scores))
+
+
+        # for concept_id, role_id, category in zip(user_concepts_df["concept_id"], user_concepts_df["role_id"], user_concepts_df["category"]):
+        #     # Check if concept_id, category, role_id has been encountered before
+        #     concept_info = (concept_id, category, role_id)
+        #     if concept_info not in encountered_concepts:
+        #         # Increase counters based on category and coefficients
+        #         score = coefficients.get(category, 0)
+        #         role_id_user_scores[role_id] += score
+        #         encountered_concepts.add(concept_info)
 
         points_dict = {role_id: role_id_user_scores[role_id] * 100 / role_id_concept_counts[role_id] for role_id in role_id_concept_counts.keys()}
 
@@ -88,58 +115,138 @@ class RecommendationEngine:
         # print(sorted(points_dict.items()))
 
         rr_list = []
-        for i, recom_role_id in enumerate(recom_role_id_list):
+        # for i, recom_role_id in enumerate(recom_role_id_list):
+        #     role = self.roadmaps_df.loc[recom_role_id]["name"]
+        #     score = points_dict[recom_role_id]
+        #     explanation = self.generate_explanation_for_role(recom_role_id, user_concepts_df)
+        #     rr_list.append(RoleRecommendation(role=role, explanation=explanation, courses=[]))
+        #     logger.info("Role-{}: {}, \tScore: {}, \tExplanation: {}".format(i + 1, role, score, explanation))
+
+
+        role_id_explanations_dict = self.generate_explanation_for_roles(recom_role_id_list, user_concepts_df)
+
+        for i, (recom_role_id, explanation) in enumerate(role_id_explanations_dict.items()):
             role = self.roadmaps_df.loc[recom_role_id]["name"]
             score = points_dict[recom_role_id]
-            explanation = self.generate_explanation_for_role(recom_role_id, user_concepts_df)
             rr_list.append(RoleRecommendation(role=role, explanation=explanation, courses=[]))
             logger.info("Role-{}: {}, \tScore: {}, \tExplanation: {}".format(i + 1, role, score, explanation))
+
 
         self.recom_role_id_list = recom_role_id_list
 
         return rr_list
 
-    def generate_explanation_for_role(self, recom_role_id: int, user_concepts_df: pd.DataFrame) -> str:
+    def generate_explanation_for_roles(self, recom_role_id_list: list[int], user_concepts_df: pd.DataFrame):
 
-        role_name = self.roadmaps_df.loc[recom_role_id]["name"]
-        effective_courses = user_concepts_df[user_concepts_df["role_id"] == recom_role_id]
-        explanation = ""
-        took_exp = "I assume that you are familiar with "
-        curious_exp = "I can see that you are willing to learn "
+        promptsArray = []
+        for i, recom_role_id in enumerate(recom_role_id_list):
+            role_name = self.roadmaps_df.loc[recom_role_id]["name"]
+            effective_courses = user_concepts_df[user_concepts_df["role_id"] == recom_role_id]
+            explanation = ""
+            took_exp = "I assume that you are familiar with "
+            curious_exp = "I can see that you are willing to learn "
 
-        courses_took_set= set(effective_courses[effective_courses["category"].str.startswith("TookAnd")]["concept_name"])
-        courses_curious_set = set(effective_courses[effective_courses["category"] == "Curious"]["concept_name"])
+            courses_took_set= set(effective_courses[effective_courses["category"].str.startswith("TookAnd")]["concept_name"])
+            courses_curious_set = set(effective_courses[effective_courses["category"] == "Curious"]["concept_name"])
 
-        courses_took = ", ".join(courses_took_set)
-        courses_curious = ", ".join(courses_curious_set)
+            courses_took = ", ".join(courses_took_set)
+            courses_curious = ", ".join(courses_curious_set)
 
-        if courses_took != "":
-            explanation += took_exp + courses_took + ". "
-
-        if courses_curious != "":
             if courses_took != "":
-                explanation += "Also, "
-            explanation += curious_exp + courses_curious + ". "
- 
-        response = self.exp_model.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {
-            "role": "system",
-            "content": "You will be provided with sentences, and your task is to convert them to standard English and correct meaningless parts. Convert mostly computer science related abbreviations to their longer form. Also you can paraphrase the sentences in better way without shortening. The main objective of these sentences are to explain someone that he is okay for {} Role.".format(role_name)
-            },
-            {
-            "role": "user",
-            "content": explanation
-            }
-        ],
-        temperature=0.7,
-        max_tokens=256,
-        top_p=1
-        )
-        enhanced_explanation = response.choices[0].message.content
+                explanation += took_exp + courses_took + ". "
 
-        return enhanced_explanation
+            if courses_curious != "":
+                if courses_took != "":
+                    explanation += "Also, "
+                explanation += curious_exp + courses_curious + ". "
+
+            promptsArray.append("Role: {} \n Sentences to convert: {}".format(role_name, explanation))
+
+
+        stringifiedPromptsArray = json.dumps(promptsArray)
+
+        logger.info(pformat(promptsArray))
+
+        prompts = [
+            {
+                "role": "user",
+                "content": stringifiedPromptsArray
+            }
+        ]
+        batchInstruction = {
+            "role":"system",
+            "content":
+            """
+            You will be provided with sentences, and your task is to convert them to standard English and correct meaningless parts. 
+            Convert mostly computer science related abbreviations to their longer form. 
+            Also you can paraphrase the sentences in better way without shortening. 
+            The main objective of these sentences are to explain someone that he is okay for specified role.
+            Do not include role in the response, just return converted sentences.
+            Do these for every element of the array. Reply with an array of all responses.
+            """
+        }
+        prompts.append(batchInstruction)
+        stringifiedBatchCompletion = self.exp_model.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=prompts,
+            temperature=0.7,
+            max_tokens=1000,
+            top_p=1
+        )
+        
+        results = stringifiedBatchCompletion.choices[0].message.content
+        logger.info(pformat(results))
+        batchExplanations = json.loads(stringifiedBatchCompletion.choices[0].message.content)
+
+
+        logger.info(pformat(batchExplanations))
+
+        role_id_explanations_dict = {key: value for key, value in zip(recom_role_id_list, batchExplanations)}
+
+        return role_id_explanations_dict
+
+
+    # def generate_explanation_for_role(self, recom_role_id: int, user_concepts_df: pd.DataFrame) -> str:
+
+    #     role_name = self.roadmaps_df.loc[recom_role_id]["name"]
+    #     effective_courses = user_concepts_df[user_concepts_df["role_id"] == recom_role_id]
+    #     explanation = ""
+    #     took_exp = "I assume that you are familiar with "
+    #     curious_exp = "I can see that you are willing to learn "
+
+    #     courses_took_set= set(effective_courses[effective_courses["category"].str.startswith("TookAnd")]["concept_name"])
+    #     courses_curious_set = set(effective_courses[effective_courses["category"] == "Curious"]["concept_name"])
+
+    #     courses_took = ", ".join(courses_took_set)
+    #     courses_curious = ", ".join(courses_curious_set)
+
+    #     if courses_took != "":
+    #         explanation += took_exp + courses_took + ". "
+
+    #     if courses_curious != "":
+    #         if courses_took != "":
+    #             explanation += "Also, "
+    #         explanation += curious_exp + courses_curious + ". "
+ 
+    #     response = self.exp_model.chat.completions.create(
+    #         model="gpt-3.5-turbo",
+    #         messages=[
+    #             {
+    #             "role": "system",
+    #             "content": "You will be provided with sentences, and your task is to convert them to standard English and correct meaningless parts. Convert mostly computer science related abbreviations to their longer form. Also you can paraphrase the sentences in better way without shortening. The main objective of these sentences are to explain someone that he is okay for {} Role.".format(role_name)
+    #             },
+    #             {
+    #             "role": "user",
+    #             "content": explanation
+    #             }
+    #         ],
+    #         temperature=0.7,
+    #         max_tokens=256,
+    #         top_p=1
+    #     )
+    #     enhanced_explanation = response.choices[0].message.content
+
+    #     return enhanced_explanation
 
     def recommend_courses(self, user_concepts_df: pd.DataFrame, rol_rec_list: list[RoleRecommendation], disliked_similar_course_id_list: list[int]):
 
@@ -161,6 +268,8 @@ class RecommendationEngine:
             user_curious_concepts_df = user_concepts_for_recom_role_df[user_concepts_for_recom_role_df['category']== 'Curious']
 
             concepts_in_recom_role = {concept for concept in self.roadmap_concepts_df["id"] if util.get_role_id(concept) == recom_role_id}
+            # topics_in_recom_role = {topic for topic in self.roadmap_topics_df["id"] if util.get_role_id(topic) == recom_role_id}
+
             role_name = self.roadmaps_df.loc[recom_role_id]["name"]
             
 
@@ -186,11 +295,18 @@ class RecommendationEngine:
             
             recom_concept_id_list_encoded = [self.encoder_for_concepts.get(idx) for idx in recom_concept_id_list]
 
-            concepts_in_recom_role_encoded = [self.encoder_for_concepts.get(idx) for idx in concepts_in_recom_role]
+            # concepts_in_recom_role_encoded = [self.encoder_for_concepts.get(idx) for idx in concepts_in_recom_role]
+            # topics_in_recom_role_encoded = [self.encoder_for_topics.get(idx) for idx in concepts_in_recom_role]
+            # remaining_concepts_encoded = [self.encoder_for_concepts.get(idx) for idx in remaining_concepts]
 
-            remaining_concepts_encoded = [self.encoder_for_concepts.get(idx) for idx in remaining_concepts]
-
-
+            # recom_concepts_embeddings = [concept_emb_list[id] for id in recom_concept_id_list_encoded]
+            # remaining_concepts_embeddings = concept_emb_list[remaining_concepts_encoded]
+            # mean_embedding = np.mean(remaining_concepts_embeddings, axis=0)
+            # recom_topics = topic_emb_list[topics_in_recom_role_encoded]
+            # similarities = cosine_similarity([mean_embedding], recom_topics)[0]
+            # top_indices = np.argsort(similarities)[-3:][::-1]
+            # most_similar_topics = self.roadmap_topics_df.iloc[top_indices][['name', 'id']]
+            # logger.info(pformat(most_similar_topics))
             
             # Course Recommendation Part
 
@@ -219,7 +335,10 @@ class RecommendationEngine:
                         }
                     )
 
-                    explanation = self.generate_explanation_for_course(recom_role_id, self.encoder_for_courses[course_row["id"]], remaining_concepts_encoded)
+                    explanation = self.generate_explanation_for_course(recom_role_id, self.encoder_for_courses[course_row["id"]], remaining_concepts)
+                    logger.info(explanation)
+
+                    # explanation = self.generate_explanation_for_course(recom_role_id, self.encoder_for_courses[course_row["id"]], remaining_concepts_encoded)
 
                     rol_rec.courses.append(
                         CourseRecommendation(course=course_row["title"], url=udemy_website + course_row["url"], explanation=explanation)
@@ -240,20 +359,60 @@ class RecommendationEngine:
 
         return rol_rec_list
 
-    def generate_explanation_for_course(self, recom_role_id: int, recom_course_id: int, remaining_concepts_encoded: set) -> str:
+    # def generate_explanation_for_course_old(self, recom_role_id: int, recom_course_id: int, remaining_concepts_encoded: set) -> str:
 
-        top_concepts = util.top_n_concepts_for_courses(self.roadmap_concepts_df, self.concept_X_course, remaining_concepts_encoded, recom_course_id, 3)
-        course_title = self.udemy_courses_df.loc[recom_course_id, "title"]
+    #     top_concepts = util.top_n_concepts_for_courses(self.roadmap_concepts_df, self.concept_X_course, remaining_concepts_encoded, recom_course_id, 3)
+    #     course_title = self.udemy_courses_df.loc[recom_course_id, "title"]
+    #     role_name = self.roadmaps_df.loc[recom_role_id]["name"]
+    #     explanation = ""
+
+    #     # start_exp = "This course (" + course_title + ") includes the concepts of "
+    #     start_exp = "This course includes the concepts of "
+
+    #     top_concepts_set = set(top_concepts["name"])
+    #     concepts_included = ", ".join(top_concepts_set)
+
+    #     if concepts_included != "":
+    #         explanation += start_exp + concepts_included+ " which are necessary for you to progress in the " + role_name + " role."
+
+    #     return explanation
+
+
+    def generate_explanation_for_course(self, recom_role_id: int, recom_course_id: int, remaining_concepts: list) -> str:
+
+        course = self.udemy_courses_df.loc[recom_course_id]
         role_name = self.roadmaps_df.loc[recom_role_id]["name"]
-        explanation = ""
+        remaining_concepts_names = self.roadmap_concepts_df[self.roadmap_concepts_df['id'].isin(remaining_concepts)]["name"]
 
-        # start_exp = "This course (" + course_title + ") includes the concepts of "
-        start_exp = "This course includes the concepts of "
+        remaining_concepts_name_list = ", ".join(remaining_concepts_names)
 
-        top_concepts_set = set(top_concepts["name"])
-        concepts_included = ", ".join(top_concepts_set)
 
-        if concepts_included != "":
-            explanation += start_exp + concepts_included+ " which are necessary for you to progress in the " + role_name + " role."
+        response = self.exp_model.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {
+                "role": "system",
+                "content": """
+                You will be provided with some information about a course. You need to infer the key concepts in that course 
+                and explain why user should take this course to advance in the {} role by using these concepts.
+                Do not include or mention key concepts before explanation. 
+                Response should be one paragraph and should not exceed 350 characters.
+                Also if you can, make connection between concepts that are missing from the user: {}.
+                """.format(role_name, remaining_concepts_name_list)
+                },
+                {
+                "role": "user",
+                "content":  "Title: "                   + str(course["title"])       +
+                            "\nHeadline: "              + str(course["headline"])    + 
+                            "\nCategory: "              + str(course["category"])    + 
+                            "\nWhat you will learn: "   + str(course["what_u_learn"])+ 
+                            "\nDescription: "           + str(course["description"]) 
+                }
+            ],
+            temperature=0.7,
+            max_tokens=256,
+            top_p=1
+            )
+        enhanced_explanation = response.choices[0].message.content
 
-        return explanation
+        return enhanced_explanation

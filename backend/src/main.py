@@ -88,6 +88,8 @@ def init_data():
     roadmap_nodes_df = pd.read_csv(df_path + roadmap_nodes_file)
     roadmap_concepts_df = roadmap_nodes_df[roadmap_nodes_df["type"] == "concept"].copy()
     roadmap_concepts_df.reset_index(inplace=True)
+    # roadmap_topics_df = roadmap_nodes_df[roadmap_nodes_df["type"] == "concept"].copy()
+    # roadmap_topics_df.reset_index(inplace=True)
 
     roles = [
         "AI Data Scientist",
@@ -120,6 +122,8 @@ def get_emb_lists(folder: str, model: str):
     udemy_courses_emb_df = pd.read_csv(df_path + "udemy_courses_{}.csv".format(model))
     roadmap_nodes_emb_df = pd.read_csv(df_path + "roadmap_nodes_{}.csv".format(model))
     roadmap_concepts_emb_df = roadmap_nodes_emb_df[roadmap_nodes_emb_df["id"].isin(concept_id_list)]
+    # roadmap_topics_emb_df = roadmap_nodes_emb_df[roadmap_nodes_emb_df["id"].isin(topic_id_list)]
+
     # roadmap_concepts_emb_df = roadmap_nodes_emb_df[roadmap_nodes_emb_df["id"].isin(roadmap_concepts_df["id"])]
 
     udemy_courses_emb_df.loc[:, "emb"] = udemy_courses_emb_df.apply(util.convert_to_float, axis=1)
@@ -129,6 +133,12 @@ def get_emb_lists(folder: str, model: str):
     roadmap_concepts_emb_df.loc[:, "emb"] = roadmap_concepts_emb_df.apply(util.convert_to_float, axis=1)
     concept_emb_list = roadmap_concepts_emb_df["emb"].values
     concept_emb_list = np.vstack(concept_emb_list)
+
+    
+    # roadmap_topics_emb_df.loc[:, "emb"] = roadmap_topics_emb_df.apply(util.convert_to_float, axis=1)
+    # topic_emb_list = roadmap_topics_emb_df["emb"].values
+    # topic_emb_list = np.vstack(topic_emb_list)
+    
 
     return course_emb_list, concept_emb_list
 
@@ -334,6 +344,10 @@ def main() -> None:
     concept_id_list = roadmap_concepts_df["id"]
     encoder_for_concepts = dict([(v, k) for v, k in zip(concept_id_list, range(len(concept_id_list)))])
     decoder_for_concepts = dict([(v, k) for k, v in encoder_for_concepts.items()])
+
+    # topic_id_list = roadmap_topics_df["id"]
+    # encoder_for_topics = dict([(v, k) for v, k in zip(topic_id_list, range(len(topic_id_list)))])
+    # decoder_for_topics = dict([(v, k) for k, v in encoder_for_topics.items()])
 
     # Udemy Courses and Concepts Embeddings List - GOOGLE
     course_emb_list_google, concept_emb_list_google = get_emb_lists(folder="google_emb", model=GOOGLE_MODEL)
