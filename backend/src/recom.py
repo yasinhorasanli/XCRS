@@ -292,9 +292,6 @@ class RecommendationEngine:
 
         stringifiedPromptsArray = json.dumps(promptsArray)
 
-        logger.info(pformat(promptsArray))
-        logger.info(pformat(stringifiedPromptsArray))
-
         prompts = [{"role": "user", "content": stringifiedPromptsArray}]
         batchInstruction = {
             "role": "system",
@@ -319,9 +316,9 @@ class RecommendationEngine:
         batchExplanations = []
         try:
             results = stringifiedBatchCompletion.choices[0].message.content
-            logger.info(pformat(results))
+            # logger.info(pformat(results))
             batchExplanations = json.loads(results)
-            logger.info(pformat(batchExplanations))
+            # logger.info(pformat(batchExplanations))
         except:
             logger.error("COURSE EXPLANATION RESULT - JSON VALIDATION ERROR")
 
