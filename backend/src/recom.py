@@ -5,6 +5,7 @@ import numpy as np
 from collections import Counter
 import os
 import json
+import re
 
 from openai import OpenAI
 
@@ -177,12 +178,13 @@ class RecommendationEngine:
             "role":"system",
             "content":
             """
-            You will be provided with sentences, and your task is to convert them to standard English and correct meaningless parts. 
+            You will be provided with array of sentences, and your task is to convert them to standard English and correct meaningless parts. 
             Convert mostly computer science related abbreviations to their longer form. 
-            Also you can paraphrase the sentences in better way without shortening. 
+            Also you can paraphrase the sentences in better way. You can summarize and merge some key concepts.
             The main objective of these sentences are to explain someone that he is okay for specified role.
             Do not include role in the response, just return converted sentences.
-            Do these for every element of the array. Reply with an array of all responses.
+            Do these for every element of the array. Reply with an array of all responses. 
+            Each corresponding response should not exceed 350 character.
             """
         }
         prompts.append(batchInstruction)
@@ -335,27 +337,38 @@ class RecommendationEngine:
                         }
                     )
 
-                    explanation = self.generate_explanation_for_course(recom_role_id, self.encoder_for_courses[course_row["id"]], remaining_concepts)
-                    logger.info(explanation)
+                    # explanation = self.generate_explanation_for_course(recom_role_id, self.encoder_for_courses[course_row["id"]], remaining_concepts)
+                    # logger.info(explanation)
 
-                    # explanation = self.generate_explanation_for_course(recom_role_id, self.encoder_for_courses[course_row["id"]], remaining_concepts_encoded)
+                    # # explanation = self.generate_explanation_for_course(recom_role_id, self.encoder_for_courses[course_row["id"]], remaining_concepts_encoded)
 
-                    rol_rec.courses.append(
-                        CourseRecommendation(course=course_row["title"], url=udemy_website + course_row["url"], explanation=explanation)
-                    )
-                    logger.info('Concept: {} \t'.format(concept_row["name"]) + 'Similarity Score: {}'.format(course_row["sim_score"]))
-                    logger.info("Course: {}, \tUrl: {}, \tExplanation: {}".format(course_row["title"], udemy_website + course_row["url"], explanation))                    
+                    # rol_rec.courses.append(
+                    #     CourseRecommendation(course=course_row["title"], url=udemy_website + course_row["url"], explanation=explanation)
+                    # )
+                    # logger.info('Concept: {} \t'.format(concept_row["name"]) + 'Similarity Score: {}'.format(course_row["sim_score"]))
+                    # logger.info("Course: {}, \tUrl: {}, \tExplanation: {}".format(course_row["title"], udemy_website + course_row["url"], explanation))                    
 
                     # Selected courses added to this list due to prevent reselection.
                     disliked_similar_course_id_list.append(self.encoder_for_courses[course_row["id"]])
 
 
-                # print("Results: ", result_for_recom_role)
-                result_df = pd.DataFrame(result_for_recom_role)
-        
-            logger.info(util.pad_string_with_dashes(role_name + " END ", length=80))
+            course_matches_df = pd.DataFrame(result_for_recom_role)
 
-            
+            course_id_explanations_dict = self.generate_explanation_for_courses(result_for_recom_role, remaining_concepts)
+
+            for id, (recom_course_id, explanation) in enumerate(course_id_explanations_dict.items()):
+                concept_course_match = course_matches_df.loc[course_matches_df['course_id'] == recom_course_id]
+
+                if not concept_course_match.empty:
+                    concept_course_match = concept_course_match.iloc[0]
+                    rol_rec.courses.append(CourseRecommendation(course=concept_course_match["course_title"], url=udemy_website + concept_course_match["course_url"], explanation=str(explanation)))
+                    logger.info('Concept: {} \t'.format(concept_course_match["concept_name"]) + 'Similarity Score: {}'.format(concept_course_match["similarity_score"]))
+                    logger.info("Course: {}, \tUrl: {}, \tExplanation: {}".format(concept_course_match["course_title"], udemy_website + concept_course_match["course_url"], explanation))     
+        
+                else:
+                    logger.warning(f"No matching course found for course_id {recom_course_id}")
+
+            logger.info(util.pad_string_with_dashes(role_name + " END ", length=80))  
 
         return rol_rec_list
 
@@ -376,6 +389,82 @@ class RecommendationEngine:
     #         explanation += start_exp + concepts_included+ " which are necessary for you to progress in the " + role_name + " role."
 
     #     return explanation
+
+    def generate_explanation_for_courses(self, result_for_recom_role: list[dict], remaining_concepts: list):
+                    
+        remaining_concepts_names = self.roadmap_concepts_df[self.roadmap_concepts_df['id'].isin(remaining_concepts)]["name"]
+        remaining_concepts_name_list = ", ".join(remaining_concepts_names)
+
+        recom_course_id_list = [item['course_id'] for item in result_for_recom_role]
+
+
+        promptsArray = []
+        for id, match in enumerate(result_for_recom_role):
+            role_id = match["role_id"] 
+            course_id = match["course_id"]  
+            role_name = self.roadmaps_df.loc[role_id]["name"]
+
+            course = self.udemy_courses_df[self.udemy_courses_df['id'] == course_id]
+            
+            if not course.empty:
+                course_info = """Title: {} Headline: {} Description: {} What you will learn: {}""".format(
+                    course.iloc[0]["title"], 
+                    course.iloc[0]["headline"], 
+                    course.iloc[0]["description"], 
+                    course.iloc[0]["what_u_learn"])
+                
+                course_info = re.sub(r'[\n\r\t]', ' ', course_info)
+                course_info = re.sub(r'\s+', ' ', course_info).strip()
+                            
+                promptsArray.append(course_info)
+            else:
+                logger.error(f"Course with ID {course_id} not found in udemy_courses_df.")
+
+        stringifiedPromptsArray = json.dumps(promptsArray)
+
+        logger.info(pformat(promptsArray))
+        logger.info(pformat(stringifiedPromptsArray))
+
+
+        prompts = [
+            {
+                "role": "user",
+                "content": stringifiedPromptsArray
+            }
+        ]
+        batchInstruction = {
+            "role": "system",
+            "content": """
+            You will be provided with array of information about courses. You need to infer the key concepts by looking informations on courses 
+            and explain why user should take those courses to advance in the {} role by using these concepts.
+            Do not include or mention key concepts before explanation. 
+            Also if you can, make connection between concepts that are missing from the user: {}.
+            Do these all for every element of the array. Reply with an array, each response separated by commas.
+            Responses for each course should be one paragraph and should not exceed 350 characters.
+            Make sure response is an array.
+            """.format(role_name, remaining_concepts_name_list)
+        }
+        prompts.append(batchInstruction)
+        stringifiedBatchCompletion = self.exp_model.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=prompts,
+            temperature=0.7,
+            max_tokens=1500,
+            top_p=1
+        )
+
+        batchExplanations = []
+        try:
+            results = stringifiedBatchCompletion.choices[0].message.content
+            logger.info(pformat(results))
+            batchExplanations = json.loads(results)
+            logger.info(pformat(batchExplanations))
+        except:
+            logger.error("HATAAAA")
+
+        course_id_explanations_dict = {key: value for key, value in zip(recom_course_id_list, batchExplanations)}
+
+        return course_id_explanations_dict
 
 
     def generate_explanation_for_course(self, recom_role_id: int, recom_course_id: int, remaining_concepts: list) -> str:
