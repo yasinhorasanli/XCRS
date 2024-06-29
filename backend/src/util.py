@@ -105,29 +105,27 @@ def calculate_threshold(sim_mat, sigma_num):
 
     return mean + sigma_num * std_dev
 
+
 def calculate_mean(sim_mat):
     flattened_scores = sim_mat.flatten()
     mean = np.mean(flattened_scores)
-    std_dev = np.std(flattened_scores)
 
     return mean
 
 
 def calculate_sigma(sim_mat):
     flattened_scores = sim_mat.flatten()
-    mean = np.mean(flattened_scores)
     std_dev = np.std(flattened_scores)
 
     return std_dev
-
 
 
 def pad_string_with_dashes(input_string, length=120):
     max_length = length
     if len(input_string) > max_length:
         raise ValueError("Input string is longer than 120 characters")
-    
+
     num_dashes = max_length - len(input_string)
-    padded_string = input_string + '-' * num_dashes
-    
+    padded_string = input_string + "-" * num_dashes
+
     return padded_string

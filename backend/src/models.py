@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Dict
+from typing import List
 
 GOOGLE_MODEL = "text-embedding-004"
 VOYAGE_MODEL = "voyage-large-2"

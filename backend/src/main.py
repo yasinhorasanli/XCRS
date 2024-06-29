@@ -23,7 +23,15 @@ import cohere as cohereai
 import util
 from eda import ExplatoryDataAnalysis
 from recom import RecommendationEngine
-from models import CourseRecommendation, RoleRecommendation, Recommendation, RecommendationResponse, RecommendationRequest, sample_rec_data, INSUFFICIENT_INPUT
+from models import (
+    CourseRecommendation,
+    RoleRecommendation,
+    Recommendation,
+    RecommendationResponse,
+    RecommendationRequest,
+    sample_rec_data,
+    INSUFFICIENT_INPUT,
+)
 from models import GOOGLE_MODEL, VOYAGE_MODEL, OPENAI_MODEL, MISTRAL_MODEL, COHERE_MODEL
 
 google_api_key = open("../../embedding-generation/api_keys/google_api_key.txt").read().strip()
@@ -70,12 +78,12 @@ def cohere_embed_fn(text_list):
 
 
 embed_functions = {
-        GOOGLE_MODEL: google_embed_fn,
-        VOYAGE_MODEL: voyage_embed_fn,
-        OPENAI_MODEL: openai_embed_fn,
-        MISTRAL_MODEL: mistral_embed_fn,
-        COHERE_MODEL: cohere_embed_fn,
-    }
+    GOOGLE_MODEL: google_embed_fn,
+    VOYAGE_MODEL: voyage_embed_fn,
+    OPENAI_MODEL: openai_embed_fn,
+    MISTRAL_MODEL: mistral_embed_fn,
+    COHERE_MODEL: cohere_embed_fn,
+}
 
 
 def init_data():
@@ -109,9 +117,9 @@ def init_data():
     roadmaps_df.set_index("id", inplace=True)
 
     logger.info("Data is initialized using " + udemy_courses_file + " and " + roadmap_nodes_file)
-    logger.info('Total number of roadmap concepts: ' + str(roadmap_concepts_df.shape[0]))
-    logger.info('Total number of courses: ' + str(udemy_courses_df.shape[0]))
-    logger.info('Career Roles: \n' + pformat(list(zip(np.arange(1, len(roles) + 1), roles))))
+    logger.info("Total number of roadmap concepts: " + str(roadmap_concepts_df.shape[0]))
+    logger.info("Total number of courses: " + str(udemy_courses_df.shape[0]))
+    logger.info("Career Roles: \n" + pformat(list(zip(np.arange(1, len(roles) + 1), roles))))
 
     # return (udemy_courses_df, roadmap_nodes_df, roadmap_concepts_df, roadmaps_df)
 
@@ -124,8 +132,6 @@ def get_emb_lists(folder: str, model: str):
     roadmap_concepts_emb_df = roadmap_nodes_emb_df[roadmap_nodes_emb_df["id"].isin(concept_id_list)]
     # roadmap_topics_emb_df = roadmap_nodes_emb_df[roadmap_nodes_emb_df["id"].isin(topic_id_list)]
 
-    # roadmap_concepts_emb_df = roadmap_nodes_emb_df[roadmap_nodes_emb_df["id"].isin(roadmap_concepts_df["id"])]
-
     udemy_courses_emb_df.loc[:, "emb"] = udemy_courses_emb_df.apply(util.convert_to_float, axis=1)
     course_emb_list = udemy_courses_emb_df["emb"].values
     course_emb_list = np.vstack(course_emb_list)
@@ -134,11 +140,9 @@ def get_emb_lists(folder: str, model: str):
     concept_emb_list = roadmap_concepts_emb_df["emb"].values
     concept_emb_list = np.vstack(concept_emb_list)
 
-    
     # roadmap_topics_emb_df.loc[:, "emb"] = roadmap_topics_emb_df.apply(util.convert_to_float, axis=1)
     # topic_emb_list = roadmap_topics_emb_df["emb"].values
     # topic_emb_list = np.vstack(topic_emb_list)
-    
 
     return course_emb_list, concept_emb_list
 
@@ -173,7 +177,6 @@ def create_user_embeddings(took_and_liked: str, took_and_neutral: str, took_and_
     user_courses_df = user_courses_df[user_courses_df["course"].str.strip() != ""]
     user_courses_df = user_courses_df.reset_index(drop=True)
 
-    # print(user_courses_df)
     # logger.info(user_courses_df)
 
     # Embedding Generation for User Data
@@ -239,7 +242,7 @@ def find_similar_concepts_for_courses(user_courses_df, user_emb_list, concepts_e
     # Create DataFrame from the result
     user_concepts_df = pd.DataFrame(result)
 
-    logger.info('Number of similar concepts for user courses: ' + str(len(user_concepts_df)))
+    logger.info("Number of similar concepts for user courses: " + str(len(user_concepts_df)))
 
     ####### IMPROVEMENT
     #### The decision regarding a role concept should be determined only by the most similar user course.
@@ -248,7 +251,7 @@ def find_similar_concepts_for_courses(user_courses_df, user_emb_list, concepts_e
     # # Keep only the top record for each concept_id
     # user_concepts_df = user_concepts_df.groupby("concept_id").head(1).reset_index(drop=True)
 
-    logger.info('Number of similar concepts for user courses after discard: ' + str(len(user_concepts_df)))
+    logger.info("Number of similar concepts for user courses after discard: " + str(len(user_concepts_df)))
 
     return user_concepts_df
 
@@ -267,11 +270,8 @@ def find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list, 
     matching_course_titles = udemy_courses_df.iloc[disliked_similar_course_list]["title"].tolist()
 
     # disliked_similar_course_id_list = [decoder_for_courses[idx] for idx in disliked_similar_course_list]
-    course_mapping = {
-        disliked: similar for disliked, similar in zip(disliked_course_names, matching_course_titles)
-    }
+    course_mapping = {disliked: similar for disliked, similar in zip(disliked_course_names, matching_course_titles)}
     logger.info("Mapping of disliked courses to similar courses:\n%s", course_mapping)
-
 
     return disliked_similar_course_list
 
@@ -317,7 +317,6 @@ def before_recommendation(user_courses_df, decoder_for_user_courses, user_emb_li
     user_concept_id_set = set(user_concept_id_list)
 
     return user_concept_id_set
-
 
 
 def main() -> None:
@@ -389,9 +388,9 @@ def main() -> None:
     emb_thre_2_5_sigma = [util.calculate_threshold(sim_mat=matrix, sigma_num=2.5) for matrix in similarity_matrices]
     emb_thre_2_5_sigma_dict = dict(zip(models_dict.values(), emb_thre_2_5_sigma))
 
-    emb_thre_3sigma = [util.calculate_threshold(sim_mat=matrix, sigma_num=3)  for matrix in similarity_matrices]
+    emb_thre_3sigma = [util.calculate_threshold(sim_mat=matrix, sigma_num=3) for matrix in similarity_matrices]
     emb_thre_3sigma_dict = dict(zip(models_dict.values(), emb_thre_3sigma))
-    
+
     logger.info("Their corresponding thresholds: \n" + pformat(list(zip(models_dict.keys(), emb_thre_2_5_sigma))))
 
 
@@ -406,7 +405,7 @@ async def save_inputs(request: RecommendationRequest):
     with open("../user_inputs/{}.json".format(fileName), "w") as f:
         f.write(request.model_dump_json())
 
-    logger.info('Request saved to the file {}.json in user_inputs/'.format(fileName))
+    logger.info("Request saved to the file {}.json in user_inputs/".format(fileName))
 
     recommendations = Recommendation(
         model="", roles=[RoleRecommendation(role="", explanation="", courses=[CourseRecommendation(course="", url="", explanation="")])]
@@ -461,24 +460,20 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
         logger.error("Wrong Endpoint: " + model_name)
         raise HTTPException(status_code=404, detail="Embedding model not found")
 
-
     sim_thre_2sigma = emb_thre_2sigma_dict[emb_model]
     sim_thre_2_5_sigma = emb_thre_2_5_sigma_dict[emb_model]
     sim_thre_3sigma = emb_thre_3sigma_dict[emb_model]
-    
-    
 
     logger.info(util.pad_string_with_dashes("POST - recommendation request for " + model_name.upper(), length=120))
     logger.info(util.pad_string_with_dashes("", length=120))
-    logger.info('TookAndLiked: ' + request.took_and_liked)
-    logger.info('TookAndNeutral: ' + request.took_and_neutral)
-    logger.info('TookAndDisliked: ' + request.took_and_disliked)
-    logger.info('Curious: ' + request.curious)
-
+    logger.info("TookAndLiked: " + request.took_and_liked)
+    logger.info("TookAndNeutral: " + request.took_and_neutral)
+    logger.info("TookAndDisliked: " + request.took_and_disliked)
+    logger.info("Curious: " + request.curious)
 
     threshold = sim_thre_2_5_sigma
     count = (concept_X_course > sim_thre_2_5_sigma).sum().sum()
-    logger.info('Total number of matches between courses and concepts: ' + str(count) + ' by threshold: ' + str(threshold))
+    logger.info("Total number of matches between courses and concepts: " + str(count) + " by threshold: " + str(threshold))
 
     ################################# 1. CREATING EMBEDDINGS FOR USER'S COURSES #######################################
     user_courses_df, user_emb_list = create_user_embeddings(
@@ -490,10 +485,10 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
 
     # If empty dataframe happens
     if user_concepts_df.shape[0] == 0:
-        logger.error('Insufficient Input')
+        logger.error("Insufficient Input")
         return INSUFFICIENT_INPUT
 
-    logger.info('Total number of concepts X user courses matches:' + str(user_concepts_df.shape[0]))
+    logger.info("Total number of concepts X user courses matches:" + str(user_concepts_df.shape[0]))
 
     ################################# 3. FINDING SIMILAR COURSES FOR USER'S DISLIKED COURSES ##########################
     disliked_similar_course_id_list = find_similar_courses_for_disliked_courses(user_courses_df, course_emb_list, sim_thre_2_5_sigma)
@@ -511,7 +506,7 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
     rol_rec_list = recommendation.recommend_role(user_concepts_df)
 
     if len(rol_rec_list) == 0:
-        logger.error('Role recommendation list is empty!')
+        logger.error("Role recommendation list is empty!")
         return INSUFFICIENT_INPUT
 
     ################################# 5. COURSE RECOMMENDATION ##########################################################
@@ -520,22 +515,9 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
     logger.info(util.pad_string_with_dashes(model_name.upper() + " END ", length=120))
     logger.info(util.pad_string_with_dashes("", length=120))
 
-
     recommendations = Recommendation(model=emb_model, roles=rol_rec_list)
 
     return RecommendationResponse(fileName="", recommendations=[recommendations])
-
-
-# class UnicornException(Exception):
-#     def __init__(self, name: str):
-#         self.name = name
-
-# @app.exception_handler(UnicornException)
-# async def unicorn_exception_handler(request: Request, exc: UnicornException):
-#     return JSONResponse(
-#         status_code=418,
-#         content={"message": f"Oops! {exc.name} did something. There goes a rainbow..."},
-#     )
 
 
 if __name__ == "__main__":
