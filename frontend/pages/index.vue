@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import type { RecommendationResult } from '~/models/result';
 
+definePageMeta({
+    colorMode: 'light',
+})
+
 const myResult = ref<RecommendationResult>();
 
 const models = ['Model-1', 'Model-2', 'Model-3', 'Model-4', 'Model-5']

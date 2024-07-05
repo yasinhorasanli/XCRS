@@ -199,7 +199,6 @@ class RecommendationEngine:
             logger.info("Recommended concepts: \t" + str(recom_concepts_df["name"].tolist()))
 
             recom_concept_id_list = recom_concepts_df["id"].tolist()
-
             recom_concept_id_list_encoded = [self.encoder_for_concepts.get(idx) for idx in recom_concept_id_list]
 
             # Course Recommendation Part
@@ -243,7 +242,7 @@ class RecommendationEngine:
                     rol_rec.courses.append(
                         CourseRecommendation(
                             course=concept_course_match["course_title"],
-                            url=udemy_website + concept_course_match["course_url"],
+                            url=concept_course_match["course_url"],
                             explanation=str(explanation),
                         )
                     )
