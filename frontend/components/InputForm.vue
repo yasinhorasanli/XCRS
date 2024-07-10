@@ -28,10 +28,13 @@ const emits = defineEmits<{
   (e: 'submited', result: RecommendationResult): void
 }>();
 
+const isLoading = defineModel("isLoading");
+
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   // Do something with event.data
 
+  isLoading.value = true;
   try {
     const response = await $fetch<RecommendationResult>('/api/recommend', {
       method: 'POST',
@@ -42,10 +45,11 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
     console.log('userData =', response)
 
-
     emits('submited', response);
   } catch {
     // hata göster
+  } finally {
+    isLoading.value = false;
   }
 
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto my-10">
+  <div class="">
     <NuxtPage></NuxtPage>
   </div>
 </template>

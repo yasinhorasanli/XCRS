@@ -7,6 +7,8 @@ definePageMeta({
 
 const myResult = ref<RecommendationResult>();
 
+const isLoading = ref(false);
+
 const models = ['Model-1', 'Model-2', 'Model-3', 'Model-4', 'Model-5']
 const selected = ref(models[0])
 
@@ -76,84 +78,83 @@ const courses = [
 </script>
 
 <template>
-    <div class="w-full flex flex-col items-center justify-center">
-        <div class="w-full md:w-3/4 lg:w-1/2 xl:w-1/3 p-4" v-if="!myResult">
-            <h2 class="text-2xl my-4 font-semibold text-center">Explainable Course Recommendation System</h2>
-            <p class="mb-4 text-left">
-                To receive recommendations for career paths and courses to achieve your goals, consider the courses you've already completed. 
-                <br>
-                Categorize them into courses you enjoyed, courses you are neutral about, and courses you disliked, separating them with commas.
-                <br>
-                Feel free to include not just course names, but also subjects and concepts you've learned, such as Java, Python, HTML, CSS, Spring Boot, or Linux.
-                <br>
-                Additionally, please list any subjects, concepts, or courses you're curious about.
-                <br>
-                <span class="font-semibold">Note:</span>
-                <span class="italic"> There is a cheatsheet at the bottom of the page containing sample courses, subjects, concepts.</span>
-            </p>
+    <div class="w-full container mx-auto my-10">
+        <div v-if="isLoading" class="w-screen h-screen z-10 fixed flex items-center justify-center top-0 left-0 bg-gray-400 opacity-50">Loading...</div>
+
+        <div class="flex items-center justify-center"> 
+            <div class="w-full md:w-3/4 lg:w-1/2 xl:w-1/3 p-4" v-if="!myResult">
+                <h2 class="text-2xl my-4 font-semibold text-center">Explainable Course Recommendation System</h2>
+                <p class="mb-4 text-left">
+                    To receive recommendations for career paths and courses to achieve your goals, consider the courses you've already completed. 
+                    <br>
+                    Categorize them into courses you enjoyed, courses you are neutral about, and courses you disliked, separating them with commas.
+                    <br>
+                    Feel free to include not just course names, but also subjects and concepts you've learned, such as Java, Python, HTML, CSS, Spring Boot, or Linux.
+                    <br>
+                    Additionally, please list any subjects, concepts, or courses you're curious about.
+                    <br>
+                    <span class="font-semibold">Note:</span>
+                    <span class="italic"> There is a cheatsheet at the bottom of the page containing sample courses, subjects, concepts.</span>
+                </p>
 
 
-            <InputForm @submited="myResult = $event" />
+                <InputForm @submited="myResult = $event" v-model:is-loading="isLoading"/>
 
-            <div class="my-4">
-                <!-- <h3 class="text-sm font-semibold">Course Cheatsheet:</h3> -->
-                <div class="flex flex-wrap gap-1 text-xs">
-                    <div v-for="course in courses[0]" :key="course" class="p-1 bg-red-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
-                        {{ course }}
-                    </div>
-                    <div v-for="course in courses[1]" :key="course" class="p-1 bg-orange-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
-                        {{ course }}
-                    </div>
-                    <div v-for="course in courses[2]" :key="course" class="p-1 bg-emerald-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
-                        {{ course }}
-                    </div>
-                    <div v-for="course in courses[3]" :key="course" class="p-1 bg-gray-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
-                        {{ course }}
-                    </div>
-                    <div v-for="course in courses[4]" :key="course" class="p-1 bg-lime-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
-                        {{ course }}
-                    </div>
-                    <div v-for="course in courses[5]" :key="course" class="p-1 bg-green-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
-                        {{ course }}
-                    </div>
-                    <div v-for="course in courses[6]" :key="course" class="p-1 bg-amber-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
-                        {{ course }}
-                    </div>
-                    <div v-for="course in courses[7]" :key="course" class="p-1 bg-teal-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
-                        {{ course }}
-                    </div>
-                    <div v-for="course in courses[8]" :key="course" class="p-1 bg-yellow-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
-                        {{ course }}
-                    </div>
-                    <div v-for="course in courses[9]" :key="course" class="p-1 bg-sky-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
-                        {{ course }}
-                    </div>
-                    <div v-for="course in courses[10]" :key="course" class="p-1 bg-cyan-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
-                        {{ course }}
-                    </div>
-                    <div v-for="course in courses[11]" :key="course" class="p-1 bg-indigo-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
-                        {{ course }}
-                    </div>
-                    <div v-for="course in courses[12]" :key="course" class="p-1 bg-rose-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
-                        {{ course }}
-                    </div>
-                    <div v-for="course in courses[13]" :key="course" class="p-1 bg-purple-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
-                        {{ course }}
-                    </div>
-                    <div v-for="course in courses[14]" :key="course" class="p-1 bg-blue-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
-                        {{ course }}
-                    </div>
-                    <div v-for="course in courses[15]" :key="course" class="p-1 bg-pink-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
-                        {{ course }}
+                <div class="my-4">
+                    <!-- <h3 class="text-sm font-semibold">Course Cheatsheet:</h3> -->
+                    <div class="flex flex-wrap gap-1 text-xs">
+                        <div v-for="course in courses[0]" :key="course" class="p-1 bg-red-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                            {{ course }}
+                        </div>
+                        <div v-for="course in courses[1]" :key="course" class="p-1 bg-orange-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                            {{ course }}
+                        </div>
+                        <div v-for="course in courses[2]" :key="course" class="p-1 bg-emerald-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                            {{ course }}
+                        </div>
+                        <div v-for="course in courses[3]" :key="course" class="p-1 bg-gray-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                            {{ course }}
+                        </div>
+                        <div v-for="course in courses[4]" :key="course" class="p-1 bg-lime-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                            {{ course }}
+                        </div>
+                        <div v-for="course in courses[5]" :key="course" class="p-1 bg-green-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                            {{ course }}
+                        </div>
+                        <div v-for="course in courses[6]" :key="course" class="p-1 bg-amber-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                            {{ course }}
+                        </div>
+                        <div v-for="course in courses[7]" :key="course" class="p-1 bg-teal-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                            {{ course }}
+                        </div>
+                        <div v-for="course in courses[8]" :key="course" class="p-1 bg-yellow-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                            {{ course }}
+                        </div>
+                        <div v-for="course in courses[9]" :key="course" class="p-1 bg-sky-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                            {{ course }}
+                        </div>
+                        <div v-for="course in courses[10]" :key="course" class="p-1 bg-cyan-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                            {{ course }}
+                        </div>
+                        <div v-for="course in courses[11]" :key="course" class="p-1 bg-indigo-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                            {{ course }}
+                        </div>
+                        <div v-for="course in courses[12]" :key="course" class="p-1 bg-rose-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                            {{ course }}
+                        </div>
+                        <div v-for="course in courses[13]" :key="course" class="p-1 bg-purple-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                            {{ course }}
+                        </div>
+                        <div v-for="course in courses[14]" :key="course" class="p-1 bg-blue-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                            {{ course }}
+                        </div>
+                        <div v-for="course in courses[15]" :key="course" class="p-1 bg-pink-100 rounded inline-block" :style="{ minWidth: 'fit-content' }">
+                            {{ course }}
+                        </div>
                     </div>
                 </div>
-            </div>
-
-        </div>
-
-
-
-        <div class="w-full md:w-3/4 lg:w-1/2 xl:w-1/3 space-y-4 p-4" v-else>
+            </div>        
+            <div class="w-full md:w-3/4 lg:w-1/2 xl:w-1/3 space-y-4 p-4" v-else>
             <h2 class="text-2xl my-4 font-semibold text-center">Recommendation Results</h2>
             <USelectMenu v-model="selected" :options="models" />
 
@@ -201,5 +202,8 @@ const courses = [
                 Try again
             </UButton>
         </div>
+        </div>
+
+
     </div>
 </template>
