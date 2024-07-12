@@ -1,5 +1,6 @@
 import numpy as np
-
+import re
+import pandas as pd
 
 def get_role_id(concept_id):
     while concept_id % 100 != concept_id:
@@ -79,11 +80,9 @@ def top_n_courses_for_concept(udemy_courses_df, similarity_matrix, concept_index
 
     # Get the top N scores and their corresponding courses
     top_scores = row[top_indices]
-    top_courses = udemy_courses_df.iloc[top_indices].copy()
-    top_courses.loc[:, "sim_score"] = top_scores
+    top_courses_with_scores = [(index, score) for index, score in zip(top_indices, top_scores)]
 
-    return top_courses
-
+    return top_courses_with_scores
 
 def top_n_concepts_for_courses(roadmap_concepts_df, similarity_matrix, remaining_concepts_encoded, course_id, n):
 
@@ -96,6 +95,7 @@ def top_n_concepts_for_courses(roadmap_concepts_df, similarity_matrix, remaining
     top_concepts.loc[:, "sim_score"] = top_scores
 
     return top_concepts
+
 
 
 def calculate_threshold(sim_mat, sigma_num):
@@ -129,3 +129,22 @@ def pad_string_with_dashes(input_string, length=120):
     padded_string = input_string + "-" * num_dashes
 
     return padded_string
+
+
+def remove_emojis(text):
+    # Remove emojis using the emoji library
+    emoji_pattern = re.compile(
+        pattern="["
+                u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+                u"\U0001F600-\U0001F64F"  # emoticons
+                u"\U0001F680-\U0001F6FF"  # transport & map symbols
+                u"\U0001F700-\U0001F77F"  # alchemical symbols
+                u"\U0001F780-\U0001F7FF"  # Geometric Shapes Extended
+                u"\U0001F800-\U0001F8FF"  # Supplemental Arrows-C
+                u"\U0001F900-\U0001F9FF"  # Supplemental Symbols and Pictographs
+                u"\U0001FA00-\U0001FA6F"  # Chess Symbols
+                u"\U0001FA70-\U0001FAFF"  # Symbols and Pictographs Extended-A
+                u"\U00002702-\U000027B0"  # Dingbats
+                u"\U000024C2-\U0001F251" 
+                "]+", flags=re.UNICODE)
+    return emoji_pattern.sub(r'', text)
