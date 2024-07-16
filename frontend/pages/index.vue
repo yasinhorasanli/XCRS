@@ -79,7 +79,7 @@ const courses = [
 
 <template>
     <div class="w-full container mx-auto my-10">
-        <div v-if="isLoading" class="w-screen h-screen z-10 fixed flex items-center justify-center top-0 left-0 bg-gray-400 opacity-50">Your inputs submitted, it may take 1-2 minutes to get respone...</div>
+        <div v-if="isLoading" class="w-screen h-screen z-10 fixed flex items-center justify-center top-0 left-0 bg-gray-400 opacity-50">Your inputs submitted, it may take 1-2 minutes to get a response...</div>
 
         <div class="flex items-center justify-center"> 
             <div class="w-full md:w-3/4 lg:w-1/2 xl:w-1/3 p-4" v-if="!myResult">

@@ -142,22 +142,25 @@ class RecommendationEngine:
             The main objective of these sentences are to explain someone that he is okay for specified role.
             Do not include role in the response, just return converted sentences.
             Do these for every element of the array. Reply with an array of all responses. 
-            Each corresponding response should not exceed 350 character.
+            Each corresponding response should not exceed 400 characters.
+            Make sure response is an array.
             """,
         }
         prompts.append(batchInstruction)
         stringifiedBatchCompletion = self.exp_model.chat.completions.create(
-            model="gpt-3.5-turbo", messages=prompts, temperature=0.7, max_tokens=1000, top_p=1
+            model="gpt-3.5-turbo", messages=prompts, temperature=0.7, max_tokens=1500, top_p=1
         )
 
         batchExplanations = []
         try:
             results = stringifiedBatchCompletion.choices[0].message.content
+            results.replace("\n", " ").strip()
             # logger.info(pformat(results))
             batchExplanations = json.loads(results)
             # logger.info(pformat(batchExplanations))
         except:
             logger.error("ROLE EXPLANATION RESULT - JSON VALIDATION ERROR")
+            logger.info(pformat(results))
 
         role_id_explanations_dict = {key: value for key, value in zip(recom_role_id_list, batchExplanations)}
 
