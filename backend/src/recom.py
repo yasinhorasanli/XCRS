@@ -148,7 +148,7 @@ class RecommendationEngine:
         }
         prompts.append(batchInstruction)
         stringifiedBatchCompletion = self.exp_model.chat.completions.create(
-            model="gpt-3.5-turbo", messages=prompts, temperature=0.7, max_tokens=1500, top_p=1
+            model="gpt-4o", messages=prompts, temperature=0.7, max_tokens=1500, top_p=1
         )
 
         batchExplanations = []
@@ -330,7 +330,7 @@ class RecommendationEngine:
 
         prompts.append(batchInstruction)
         stringifiedBatchCompletion = self.exp_model.chat.completions.create(
-            model="gpt-3.5-turbo", messages=prompts, temperature=0.7, max_tokens=1500, top_p=1
+            model="gpt-4o", messages=prompts, temperature=0.7, max_tokens=1500, top_p=1
         )
 
         batchExplanations = []
