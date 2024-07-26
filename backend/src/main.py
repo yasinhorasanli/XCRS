@@ -87,7 +87,7 @@ embed_functions = {
 
 
 def init_data():
-    global udemy_courses_df, roadmap_concepts_df, roadmaps_df
+    global udemy_courses_df, roadmap_concepts_df, roadmap_topics_df, roadmaps_df
 
     df_path = "../../embedding-generation/data/"
     udemy_courses_file = "udemy_courses_final.csv"
@@ -96,8 +96,8 @@ def init_data():
     roadmap_nodes_df = pd.read_csv(df_path + roadmap_nodes_file)
     roadmap_concepts_df = roadmap_nodes_df[roadmap_nodes_df["type"] == "concept"].copy()
     roadmap_concepts_df.reset_index(inplace=True)
-    # roadmap_topics_df = roadmap_nodes_df[roadmap_nodes_df["type"] == "concept"].copy()
-    # roadmap_topics_df.reset_index(inplace=True)
+    roadmap_topics_df = roadmap_nodes_df[roadmap_nodes_df["type"] == "topic"].copy()
+    roadmap_topics_df.reset_index(inplace=True)
 
     roles = [
         "AI Data Scientist",
@@ -118,10 +118,11 @@ def init_data():
 
     logger.info("Data is initialized using " + udemy_courses_file + " and " + roadmap_nodes_file)
     logger.info("Total number of roadmap concepts: " + str(roadmap_concepts_df.shape[0]))
+    logger.info("Total number of roadmap topics: " + str(roadmap_topics_df.shape[0]))
     logger.info("Total number of courses: " + str(udemy_courses_df.shape[0]))
     logger.info("Career Roles: \n" + pformat(list(zip(np.arange(1, len(roles) + 1), roles))))
 
-    # return (udemy_courses_df, roadmap_nodes_df, roadmap_concepts_df, roadmaps_df)
+    # return (udemy_courses_df, roadmap_nodes_df, roadmap_concepts_df, roadmap_topics_df, roadmaps_df)
 
 
 def get_emb_lists(folder: str, model: str):
@@ -496,6 +497,7 @@ async def get_recommendations(request: RecommendationRequest, model_name: str):
     recommendation = RecommendationEngine(
         udemy_courses_df,
         roadmap_concepts_df,
+        roadmap_topics_df,
         concept_X_course,
         encoder_for_concepts,
         encoder_for_courses,

@@ -7,6 +7,39 @@ def get_role_id(concept_id):
         concept_id = concept_id / 100
     return int(concept_id)
 
+def get_parent_topics(concept_id):
+    parent_topic_list = []
+    while concept_id % 100 != concept_id:
+        concept_id = int(concept_id / 100)
+        if concept_id < 100:
+            break
+        parent_topic_list.append(concept_id)             
+    return parent_topic_list
+
+def calculate_topic_coverage(concept_id_list, roadmap_topics_id_list, roadmap_concepts_id_list):
+    topic_concept_count = {topic_id: 0 for topic_id in roadmap_topics_id_list}
+    topic_coverage_count = topic_concept_count.copy()
+
+    for concept_id in roadmap_concepts_id_list:
+        parent_topics = get_parent_topics(concept_id)
+        for topic_id in parent_topics:
+            if topic_id in topic_concept_count:
+                topic_concept_count[topic_id] += 1
+
+    for concept_id in concept_id_list:
+        parent_topics = get_parent_topics(concept_id)
+        for topic_id in parent_topics:
+            if topic_id in topic_coverage_count:
+                topic_coverage_count[topic_id] += 1
+
+    # Calculate the coverage percentage
+    coverage_percentage = {topic_id: (count / topic_concept_count[topic_id]) * 100 for topic_id, count in topic_coverage_count.items() if topic_concept_count[topic_id] > 0}
+    
+    # Filter topics with at least 40% coverage and sort them
+    covered_topics = {topic_id: coverage for topic_id, coverage in coverage_percentage.items() if coverage >= 40}
+    sorted_covered_topics = sorted(covered_topics.items(), key=lambda x: x[1], reverse=True)
+    
+    return [topic_id for topic_id, coverage in sorted_covered_topics]
 
 def custom_activation(x):
     k = 0.2  # scaling factor

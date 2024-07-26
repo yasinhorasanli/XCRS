@@ -23,6 +23,7 @@ class RecommendationEngine:
         self,
         udemy_courses_df: pd.DataFrame,
         roadmap_concepts_df: pd.DataFrame,
+        roadmap_topics_df: pd.DataFrame,
         concept_X_course: np.ndarray,
         encoder_for_concepts: dict,
         encoder_for_courses: dict,
@@ -30,6 +31,7 @@ class RecommendationEngine:
     ):
         self.udemy_courses_df = udemy_courses_df
         self.roadmap_concepts_df = roadmap_concepts_df
+        self.roadmap_topics_df = roadmap_topics_df
         self.concept_X_course = concept_X_course
         self.encoder_for_concepts = encoder_for_concepts
         self.encoder_for_courses = encoder_for_courses
@@ -90,7 +92,9 @@ class RecommendationEngine:
             recom_role_id_list = sorted(filtered_keys, reverse=True)
 
         rr_list = []
-        role_id_explanations_dict = self.generate_explanation_for_roles(recom_role_id_list, user_concepts_df)
+        roadmap_concepts_id_list = self.roadmap_concepts_df["id"].values
+        roadmap_topics_id_list = self.roadmap_topics_df["id"].values
+        role_id_explanations_dict = self.generate_explanation_for_roles(recom_role_id_list, user_concepts_df, roadmap_concepts_id_list, roadmap_topics_id_list)
 
         for i, (recom_role_id, explanation) in enumerate(role_id_explanations_dict.items()):
             role = self.roadmaps_df.loc[recom_role_id]["name"]
@@ -102,21 +106,30 @@ class RecommendationEngine:
 
         return rr_list
 
-    def generate_explanation_for_roles(self, recom_role_id_list: list[int], user_concepts_df: pd.DataFrame):
+    def generate_explanation_for_roles(self, recom_role_id_list: list[int], user_concepts_df: pd.DataFrame, roadmap_concepts_id_list: list[int], roadmap_topics_id_list: list[int]):
 
         promptsArray = []
         for recom_role_id in recom_role_id_list:
             role_name = self.roadmaps_df.loc[recom_role_id]["name"]
             effective_courses = user_concepts_df[user_concepts_df["role_id"] == recom_role_id]
+            
             explanation = ""
             took_exp = "I assume that you are familiar with "
             curious_exp = "I can see that you are willing to learn "
 
-            courses_took_set = set(effective_courses[effective_courses["category"].str.startswith("TookAnd")]["concept_name"])
-            courses_curious_set = set(effective_courses[effective_courses["category"] == "Curious"]["concept_name"])
+            took_concepts_set = set(effective_courses[effective_courses["category"].str.startswith("TookAnd")]["concept_id"])
+            topics_took_list = util.calculate_topic_coverage(took_concepts_set, roadmap_topics_id_list, roadmap_concepts_id_list)
+            topics_took_name_list = self.roadmap_topics_df[self.roadmap_topics_df['id'].isin(topics_took_list)]["name"].tolist()
 
-            courses_took = ", ".join(courses_took_set)
-            courses_curious = ", ".join(courses_curious_set)
+            curious_concepts_set = set(effective_courses[effective_courses["category"] == "Curious"]["concept_id"])
+            topics_curious_list = util.calculate_topic_coverage(curious_concepts_set, roadmap_topics_id_list, roadmap_concepts_id_list)
+            topics_curious_name_list = self.roadmap_topics_df[self.roadmap_topics_df['id'].isin(topics_curious_list)]["name"].tolist()
+            
+            concepts_took_list = list(set(effective_courses[effective_courses["category"].str.startswith("TookAnd")]["concept_name"]))
+            concepts_curious_list = list(set(effective_courses[effective_courses["category"] == "Curious"]["concept_name"]))
+
+            courses_took = ", ".join(topics_took_name_list if len(topics_took_name_list) > 0 else concepts_took_list)
+            courses_curious = ", ".join(topics_curious_name_list if len(topics_curious_name_list) > 0 else concepts_curious_list)
 
             if courses_took != "":
                 explanation += took_exp + courses_took + ". "
