@@ -143,20 +143,30 @@ class RecommendationEngine:
 
         stringifiedPromptsArray = json.dumps(promptsArray)
 
-        # logger.info(pformat(promptsArray))
+        logger.info(pformat(stringifiedPromptsArray))
 
         prompts = [{"role": "user", "content": stringifiedPromptsArray}]
         batchInstruction = {
             "role": "system",
             "content": """
-            You will be provided with array of sentences, and your task is to convert them to standard English and correct meaningless parts. 
-            Convert mostly computer science related abbreviations to their longer form. 
-            Also you can paraphrase the sentences in better way. You can summarize and merge some key concepts.
-            The main objective of these sentences are to explain someone that he is okay for specified role.
-            Do not include role in the response, just return converted sentences.
-            Do these for every element of the array. Reply with an array of all responses. 
-            Each corresponding response should not exceed 400 characters.
-            Make sure response is an array.
+            You will be provided with an array of sentences. Your task is to:
+            1. Convert them to standard English, correcting any meaningless parts.
+            2. Expand computer science-related abbreviations to their full form.
+            3. Paraphrase the sentences in a clearer way, summarizing and merging key concepts where appropriate.
+            4. Ensure the sentences effectively explain why the person is suited for the specified role.
+
+            **Important Instructions:**
+            - Return the output as a valid array.
+            - Do not wrap the result with '```json\n' or ('[\n' or something else.
+            - Each corresponding response should not exceed 400 characters.
+            - Do not include the role name in the response.
+            - Ensure the final response is strictly an array of strings, with each string being the converted sentence.
+
+            **Example Input:**
+            ["Sentence 1.", "Sentence 2.", "Sentence 3."]
+
+            **Example Output:**
+            ["Converted Sentence 1.", "Converted Sentence 2.", "Converted Sentence 3."]
             """,
         }
         prompts.append(batchInstruction)
@@ -164,16 +174,19 @@ class RecommendationEngine:
             model="gpt-4o", messages=prompts, temperature=0.7, max_tokens=1500, top_p=1
         )
 
-        batchExplanations = []
         try:
             results = stringifiedBatchCompletion.choices[0].message.content
-            results.replace("\n", " ").strip()
-            # logger.info(pformat(results))
-            batchExplanations = json.loads(results)
-            # logger.info(pformat(batchExplanations))
-        except:
-            logger.error("ROLE EXPLANATION RESULT - JSON VALIDATION ERROR")
+            # Ensure the response is in a valid JSON array format
+            if not results.startswith("[") or not results.endswith("]"):
+                raise ValueError("Response is not a valid JSON array.")
+            
+            # Load the JSON response
+            batchExplanations = json.loads(results.replace("\n", " ").strip())
+            logger.info(pformat(batchExplanations))
+        except (json.JSONDecodeError, ValueError) as e:
+            logger.error(f"ROLE EXPLANATION RESULT - JSON VALIDATION ERROR: {e}")
             logger.info(pformat(results))
+            batchExplanations = []
 
         role_id_explanations_dict = {key: value for key, value in zip(recom_role_id_list, batchExplanations)}
 
@@ -324,21 +337,30 @@ class RecommendationEngine:
                 logger.error(f"Course with ID {course_id} not found in udemy_courses_df.")
 
         stringifiedPromptsArray = json.dumps(promptsArray)
+        logger.info(pformat(stringifiedPromptsArray))
 
         prompts = [{"role": "user", "content": stringifiedPromptsArray}]
         batchInstruction = {
             "role": "system",
-            "content": """
-            You will be provided with array of information about courses. You need to infer the key concepts by looking informations on courses 
-            and explain why user should take those courses to advance in the {} role by using these concepts.
-            Do not include or mention key concepts before explanation. 
-            Also if you can, make connection between concepts that are missing from the user: {}.
-            Do these all for every element of the array. Reply with an array, each response separated by commas.
-            Responses for each course should be one paragraph and should not exceed 350 characters.
-            Make sure response is an array.
-            """.format(
-                role_name, remaining_concepts_name_list
-            ),
+            "content": f"""
+            You will be provided with an array of information about courses. Your task is to:
+            1. Infer the key concepts from the provided course information.
+            2. Explain why the user should take those courses to advance in the {role_name} role, utilizing these inferred concepts.
+            3. Do not include or explicitly mention the key concepts in your explanation.
+            4. Where possible, connect these explanations to the concepts the user is missing: {remaining_concepts_name_list}.
+
+            **Important Instructions:**
+            - Return the output as a valid array.
+            - Do not wrap the result with '```json\n' or ('[\n' or something else.
+            - Each response should be one paragraph and should not exceed 400 characters.
+            - Ensure the final response is strictly an array of strings, with each string being the explanation for a course.
+
+            **Example Input:**
+            ["Sentence 1.", "Sentence 2.", "Sentence 3."]
+
+            **Example Output:**
+            ["Converted Sentence 1.", "Converted Sentence 2.", "Converted Sentence 3."]
+            """
         }
 
         prompts.append(batchInstruction)
@@ -349,11 +371,17 @@ class RecommendationEngine:
         batchExplanations = []
         try:
             results = stringifiedBatchCompletion.choices[0].message.content
-            # logger.info(pformat(results))
-            batchExplanations = json.loads(results)
-            # logger.info(pformat(batchExplanations))
-        except:
-            logger.error("COURSE EXPLANATION RESULT - JSON VALIDATION ERROR")
+            # Ensure the response is in a valid JSON array format
+            if not results.startswith("[") or not results.endswith("]"):
+                raise ValueError("Response is not a valid JSON array.")
+            
+            # Load the JSON response
+            batchExplanations = json.loads(results.replace("\n", " ").strip())
+            logger.info(pformat(batchExplanations))
+        except (json.JSONDecodeError, ValueError) as e:
+            logger.error(f"COURSE EXPLANATION RESULT - JSON VALIDATION ERROR: {e}")
+            logger.info(pformat(results))
+            batchExplanations = []
 
         course_id_explanations_dict = {key: value for key, value in zip(recom_course_id_list, batchExplanations)}
 
