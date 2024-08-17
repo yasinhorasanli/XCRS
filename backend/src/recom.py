@@ -356,10 +356,10 @@ class RecommendationEngine:
             - Ensure the final response is strictly an array of strings, with each string being the explanation for a course.
 
             **Example Input:**
-            ["Sentence 1.", "Sentence 2.", "Sentence 3."]
+            ["Course 1.", "Course 2.", "Course 3."]
 
             **Example Output:**
-            ["Converted Sentence 1.", "Converted Sentence 2.", "Converted Sentence 3."]
+            ["Converted Text 1.", "Converted Text 2.", "Converted Text 3."]
             """
         }
 
