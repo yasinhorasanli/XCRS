@@ -28,7 +28,8 @@ python main.py
 
 ## Data
 
-Data will be generated under
+```udemy_courses_final.csv``` and ```roadmap_nodes_final.csv``` files will be generated under the path:
+
 ```bash
 embedding-generation/data
 
