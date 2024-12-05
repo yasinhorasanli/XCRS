@@ -2,6 +2,7 @@
 backend/src/test.py
 backend/src/test.ipynb
 backend/user_inputs/*
+
 embedding-generation/api_keys/*
 embedding-generation/src/test.ipynb
 embedding-generation/data/palm_emb/*
@@ -18,6 +19,7 @@ embedding-generation/data/udemy_courses_final.csv
 backend/charts/
 backend/statistical_tests/
 backend/src/thesis_graphs.ipynb
+backend/src/topic.ipynb
 backend/src/histogram.ipynb
 
 
