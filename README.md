@@ -1,15 +1,11 @@
 # Explainable Course Recommendation System (XCRS)
 
-This repository hosts code and data associated with the paper: 
+This repository hosts code and data associated with the XCRS project.
 
-```bash
-@inproceedings{,
-  author    = {},
-  year      = ,
-  title     = {},
-  booktitle = {}
-}
-```
+[comment]: # (This repository hosts code and data associated with the paper:)
+
+[comment]: # (```bash @inproceedings{,  author    = {},  year      = ,  title     = {},  booktitle = {}}```)
+
 
 ## Reproduce the results
 
