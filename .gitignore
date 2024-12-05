@@ -14,7 +14,12 @@ embedding-generation/data/test_data/
 embedding-generation/data/udemy_courses_final.csv
 embedding-generation/data/roadmap_nodes_final.csv
 embedding-generation/data/udemy_courses_final.csv
-backend/charts/box_whisker.ipynb
+
+backend/charts/
+backend/statistical_tests/
+backend/src/thesis_graphs.ipynb
+backend/src/histogram.ipynb
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
