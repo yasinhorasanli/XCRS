@@ -1,15 +1,17 @@
 # Explainable Course Recommendation System (XCRS)
 
-This repository hosts code and data associated with the XCRS project.
+This repository hosts the replication package (code, data, and evaluation materials) associated with the XCRS project.
 
-[comment]: # (This repository hosts code and data associated with the paper:)
+<br />
 
-[comment]: # (```bash @inproceedings{,  author    = {},  year      = ,  title     = {},  booktitle = {}}```)
+Cite the code: [![DOI](https://zenodo.org/badge/783277216.svg)](https://doi.org/10.5281/zenodo.14291086)
+
+<br />
 
 ## Repository Structure
 
 Our package is divided in folders and it is organized as follows:
-- [**backend**](backend): This folder contains the implementation of backend application, backbone of our system. 
+- [**backend**](backend): This folder contains the implementation of the backend component, the backbone of our system. 
 - [**embedding-generation**](backend): This folder contains the embedding generation component of the XCRS. 
 - [**frontend**](frontend): This folder contains the frontend component of the XCRS.
 - [**evaluation-materials**](evaluation-materials): This folder contains the user study materials (protocol, questions, and responses).
