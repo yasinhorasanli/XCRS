@@ -1,0 +1,21 @@
+from functools import lru_cache
+from pathlib import Path
+
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_prefix="XCRS_", env_file=REPO_ROOT / ".env", extra="ignore")
+
+    database_url: str = "postgresql+psycopg://xcrs:xcrs@localhost:5432/xcrs"
+    embedding_base_url: str = "http://localhost:11434/v1"
+    embedding_model: str = "qwen3-embedding:0.6b"
+    embedding_batch_size: int = 32
+    embedding_timeout_s: float = 120.0
+
+
+@lru_cache
+def get_settings() -> Settings:
+    return Settings()

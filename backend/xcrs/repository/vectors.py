@@ -1,0 +1,71 @@
+"""Vector queries. The only place that writes pgvector SQL (ADR-0009, ADR-0012)."""
+
+from dataclasses import dataclass
+
+from sqlalchemy import text
+from sqlalchemy.orm import Session
+
+from xcrs.db.models import EmbeddingModel
+
+
+def _vector_literal(vector) -> str:
+    return "[" + ",".join(f"{float(x):.8g}" for x in vector) + "]"
+
+
+@dataclass(frozen=True)
+class ConceptMatch:
+    phrase_index: int  # 0-based position in the input list
+    concept_id: int
+    similarity: float
+
+
+def concepts_above_threshold(
+    session: Session, model: EmbeddingModel, phrase_vectors: list, threshold: float
+) -> list[ConceptMatch]:
+    """All (phrase, concept) pairs above `threshold`, via an exact scan (ADR-0010).
+
+    Every phrase of a request is handled in one query.
+    """
+    rows = session.execute(
+        text("""
+            WITH phrases AS MATERIALIZED (   -- parse each phrase vector once, not once per concept
+                SELECT idx - 1 AS phrase_index, vec::vector AS vec
+                FROM   unnest(CAST(:vectors AS text[])) WITH ORDINALITY AS p(vec, idx)
+            ),
+            scored AS (
+                SELECT p.phrase_index, e.node_id AS concept_id, 1 - (e.embedding <=> p.vec) AS similarity
+                FROM   phrases p
+                JOIN   node_embeddings e ON e.model_id = :model_id
+            )
+            SELECT s.phrase_index, s.concept_id, s.similarity
+            FROM   scored s
+            JOIN   roadmap_nodes n ON n.id = s.concept_id AND n.type = 'concept'
+            WHERE  s.similarity > :threshold
+            ORDER  BY s.phrase_index, s.similarity DESC
+        """),
+        {"vectors": [_vector_literal(v) for v in phrase_vectors], "model_id": model.id, "threshold": threshold},
+    ).all()
+    return [ConceptMatch(r.phrase_index, r.concept_id, r.similarity) for r in rows]
+
+
+def nearest_courses_sql(model: EmbeddingModel) -> str:
+    """k-NN over course vectors, shaped to match the per-model partial HNSW index.
+
+    The cast and the model filter must be exactly `embedding::vector(<dims>)` and
+    `model_id = <id>`, otherwise Postgres silently falls back to a full scan (ADR-0009).
+    Both values come from the registry as integers, never from user input.
+    """
+    dims, model_id = int(model.dimensions), int(model.id)
+    vector_type = "vector" if dims <= 2000 else "halfvec"
+    return f"""
+        SELECT course_id, 1 - (embedding::{vector_type}({dims}) <=> CAST(:query AS {vector_type}({dims}))) AS similarity
+        FROM   course_embeddings
+        WHERE  model_id = {model_id}
+        ORDER  BY embedding::{vector_type}({dims}) <=> CAST(:query AS {vector_type}({dims}))
+        LIMIT  :k
+    """
+
+
+def nearest_courses(session: Session, model: EmbeddingModel, vector, k: int = 20) -> list[tuple[int, float]]:
+    rows = session.execute(text(nearest_courses_sql(model)), {"query": _vector_literal(vector), "k": k}).all()
+    return [(r.course_id, r.similarity) for r in rows]

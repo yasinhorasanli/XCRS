@@ -1,0 +1,22 @@
+# Local development stack (ADR-0014).
+# Ollama runs natively on the Mac for Metal GPU acceleration; containers reach it
+# through host.docker.internal. On the VMs, Ollama will run on the 16 GB VM instead.
+services:
+  postgres:
+    image: pgvector/pgvector:pg18
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-xcrs}
+      POSTGRES_USER: ${POSTGRES_USER:-xcrs}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-xcrs}
+    ports:
+      - "127.0.0.1:5432:5432"   # localhost only
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:
