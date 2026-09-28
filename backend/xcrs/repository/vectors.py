@@ -69,3 +69,48 @@ def nearest_courses_sql(model: EmbeddingModel) -> str:
 def nearest_courses(session: Session, model: EmbeddingModel, vector, k: int = 20) -> list[tuple[int, float]]:
     rows = session.execute(text(nearest_courses_sql(model)), {"query": _vector_literal(vector), "k": k}).all()
     return [(r.course_id, r.similarity) for r in rows]
+
+
+def candidate_courses(session: Session, model: EmbeddingModel, concept_ids: list[int]) -> list[tuple[int, int, float]]:
+    """(concept_id, course_id, similarity) from the precomputed top-k matches (ADR-0009)."""
+    if not concept_ids:
+        return []
+    rows = session.execute(
+        text("""
+            SELECT concept_id, course_id, similarity
+            FROM   concept_course_matches
+            WHERE  model_id = :model_id AND concept_id = ANY(:concept_ids)
+            ORDER  BY concept_id, rank
+        """),
+        {"model_id": model.id, "concept_ids": concept_ids},
+    ).all()
+    return [(r.concept_id, r.course_id, r.similarity) for r in rows]
+
+
+def courses_similar_to(
+    session: Session, model: EmbeddingModel, phrase_vectors: list, course_ids: list[int], threshold: float
+) -> set[int]:
+    """Which of the given (candidate) courses are above `threshold` for any phrase.
+
+    Exact, and limited to candidates, so no request scans the whole catalog (ADR-0010).
+    """
+    if not phrase_vectors or not course_ids:
+        return set()
+    rows = session.execute(
+        text("""
+            WITH phrases AS MATERIALIZED (
+                SELECT vec::vector AS vec FROM unnest(CAST(:vectors AS text[])) AS p(vec)
+            )
+            SELECT DISTINCT e.course_id
+            FROM   phrases p
+            JOIN   course_embeddings e ON e.model_id = :model_id AND e.course_id = ANY(:course_ids)
+            WHERE  1 - (e.embedding <=> p.vec) > :threshold
+        """),
+        {
+            "vectors": [_vector_literal(v) for v in phrase_vectors],
+            "model_id": model.id,
+            "course_ids": course_ids,
+            "threshold": threshold,
+        },
+    ).all()
+    return {r.course_id for r in rows}

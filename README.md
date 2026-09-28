@@ -98,6 +98,13 @@ uv run xcrs register-model qwen3-embedding:0.6b --id 1 --status active
 uv run xcrs embed-catalog qwen3-embedding:0.6b
 uv run xcrs search "Docker"               # smoke test
 uv run pytest
+
+# explanations: a local LLM through Ollama (optional; recommendations work without it)
+ollama pull qwen3.5:9b
+
+# run the API and the (temporary) Nuxt UI
+uv run uvicorn xcrs.api.app:app --port 8000   # API docs: http://localhost:8000/docs
+cd ../frontend && pnpm install && pnpm run dev # UI:       http://localhost:3000
 ```
 
 ## Running the research prototype

@@ -15,6 +15,13 @@ class Settings(BaseSettings):
     embedding_batch_size: int = 32
     embedding_timeout_s: float = 120.0
 
+    # Explanation LLM: any OpenAI-compatible chat endpoint (Ollama locally).
+    llm_enabled: bool = True
+    llm_base_url: str = "http://localhost:11434/v1"
+    llm_model: str = "qwen3.5:9b"
+    llm_timeout_s: float = 180.0
+    llm_disable_thinking: bool = True
+
 
 @lru_cache
 def get_settings() -> Settings:
