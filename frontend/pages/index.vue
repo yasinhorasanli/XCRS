@@ -9,13 +9,14 @@ const myResult = ref<RecommendationResult>();
 
 const isLoading = ref(false);
 
-const models = ['Model-1', 'Model-2', 'Model-3', 'Model-4', 'Model-5']
-const selected = ref(models[0])
+// The new backend returns one model's result; the selector only appears if there are several.
+const models = computed(() => (myResult.value?.recommendations ?? []).map((_, i) => `Model-${i + 1}`))
+const selected = ref('Model-1')
 
 console.log('myResult.fileName =', myResult.value?.fileName)
 
 const modelNum = computed(() => {
-  return models.indexOf(selected.value);
+  return models.value.indexOf(selected.value);
 });
 watch(modelNum, (newNum) => {
   console.log('Selected model index:', newNum);
@@ -156,7 +157,10 @@ const courses = [
             </div>        
             <div class="w-full md:w-3/4 lg:w-1/2 xl:w-1/3 space-y-4 p-4" v-else>
             <h2 class="text-2xl my-4 font-semibold text-center">Recommendation Results</h2>
-            <USelectMenu v-model="selected" :options="models" />
+            <USelectMenu v-if="models.length > 1" v-model="selected" :options="models" />
+            <p v-if="filteredRoles.length === 0" class="text-center italic">
+                No matching career roles were found for your input. Try adding more courses, subjects or concepts.
+            </p>
 
             <div v-if="selected === 'Model-1' || selected === 'Model-2' || selected === 'Model-3' || selected === 'Model-4' || selected === 'Model-5'">
                 <table class="table-auto w-full border-collapse">

@@ -1,109 +1,44 @@
-//import { handleError } from "vue";
 import { RecommendationResult } from "~/models/result";
 
-// export const maxDuration = 60;
+// Temporary adapter (ADR-0016): the current UI sends four comma-separated strings;
+// the new backend takes structured lists at /api/v1/recommendations.
+const apiUrl = process.env.XCRS_API_URL ?? "http://localhost:8000";
 
+type Category = "took_and_liked" | "took_and_neutral" | "took_and_disliked" | "curious";
 
-// const config = useRuntimeConfig()
+interface CourseV1 { title: string; url: string; explanation: string | null; concepts: string[] }
+interface RoleV1 { role: string; score: number; explanation: string | null; courses: CourseV1[] }
+interface ResponseV1 { request_id: string; status: string; model: string; roles: RoleV1[] }
 
-let environment = process.env.NODE_ENV;
-let $endpoint = environment == 'development' ? 'http://localhost:8000' : 'http://159.146.105.19:8000';
-
-console.log('ENVIRONMENT =', process.env.NODE_ENV)
-console.log('$ENDPOINTS =', $endpoint)
+const split = (text: string | undefined) =>
+    (text ?? "").split(",").map((s) => s.trim()).filter((s) => s.length > 0);
 
 export default defineEventHandler(async (event) => {
-    if (event.method != 'POST') return sendError(event, Error('Unknown parameters'));
+    const body = await readBody<Record<Category, string>>(event);
 
-    //console.log('event =', event)
-
-    const body = await readBody<{
-        took_and_liked: string,
-        took_and_neutral: string,
-        took_and_disliked: string,
-        curious: string
-    }>(event);
-
-
-    //console.log('userData =', body)
-
-    //const {data: responseData} = await useFetch('http://localhost:8000/', {
-    const google_response = await $fetch<RecommendationResult>($endpoint + '/recommendations/google', {
-        method: 'post',
-        body: { 
-            took_and_liked: body.took_and_liked,
-            took_and_neutral: body.took_and_neutral,
-            took_and_disliked: body.took_and_disliked,
-            curious: body.curious
-        }
-    })
-
-    const voyage_response = await $fetch<RecommendationResult>($endpoint + '/recommendations/voyage', {
-        method: 'post',
-        body: { 
-            took_and_liked: body.took_and_liked,
-            took_and_neutral: body.took_and_neutral,
-            took_and_disliked: body.took_and_disliked,
-            curious: body.curious
-        }
-    })
-
-    const openai_response = await $fetch<RecommendationResult>($endpoint + '/recommendations/openai', {
-        method: 'post',
-        body: { 
-            took_and_liked: body.took_and_liked,
-            took_and_neutral: body.took_and_neutral,
-            took_and_disliked: body.took_and_disliked,
-            curious: body.curious
-        }
-    })
-
-    const mistral_response = await $fetch<RecommendationResult>($endpoint + '/recommendations/mistral', {
-        method: 'post',
-        body: { 
-            took_and_liked: body.took_and_liked,
-            took_and_neutral: body.took_and_neutral,
-            took_and_disliked: body.took_and_disliked,
-            curious: body.curious
-        }
-    })
-
-    const cohere_response = await $fetch<RecommendationResult>($endpoint + '/recommendations/cohere', {
-        method: 'post',
-        body: { 
-            took_and_liked: body.took_and_liked,
-            took_and_neutral: body.took_and_neutral,
-            took_and_disliked: body.took_and_disliked,
-            curious: body.curious
-        }
-    })
-
-    const save_response = await $fetch<RecommendationResult>($endpoint + '/save_inputs', {
-        method: 'post',
-        body: { 
-            took_and_liked: body.took_and_liked,
-            took_and_neutral: body.took_and_neutral,
-            took_and_disliked: body.took_and_disliked,
-            curious: body.curious
-        }
-    })
-
-    // console.log(palm_response.status);
-    // console.log(palm_response.recommendations[0].role)
-    // console.log(palm_response.recommendations[0].explanation)
-    // console.log(palm_response.recommendations[0].courses)
-
-    //console.log(voyage_response.recommendations[0].roles[0].role)
-
-    const savedFileName = save_response.fileName
-    const readonlyArray = [google_response.recommendations[0], voyage_response.recommendations[0], 
-                            openai_response.recommendations[0], mistral_response.recommendations[0], 
-                            cohere_response.recommendations[0]]
-    //type Element = typeof readonlyArray[number]
-    //response.recommendations
+    const response = await $fetch<ResponseV1>(`${apiUrl}/api/v1/recommendations`, {
+        method: "POST",
+        body: {
+            liked: split(body.took_and_liked),
+            neutral: split(body.took_and_neutral),
+            disliked: split(body.took_and_disliked),
+            curious: split(body.curious),
+        },
+    });
 
     return {
-        fileName: savedFileName,
-        recommendations: readonlyArray
+        fileName: response.request_id,
+        recommendations: [{
+            model: response.model,
+            roles: response.roles.map((r) => ({
+                role: r.role,
+                explanation: r.explanation ?? "",
+                courses: r.courses.map((c) => ({
+                    course: c.title,
+                    url: c.url,
+                    explanation: c.explanation ?? `Covers: ${c.concepts.slice(0, 4).join(", ")}`,
+                })),
+            })),
+        }],
     } as RecommendationResult;
-})
+});
