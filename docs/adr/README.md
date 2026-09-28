@@ -18,11 +18,13 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0012](0012-sqlalchemy-orm-with-raw-sql-repository.md) | SQLAlchemy 2.0 (ORM + raw SQL) behind a repository, on psycopg 3 | Accepted | 2026-09-28 |
 | [0013](0013-user-activity-hybrid-then-normalized.md) | User activity storage: hybrid now, fully normalized once the input format settles | Accepted | 2026-09-28 |
 | [0014](0014-local-first-then-split-by-role.md) | Run locally first; target deployment splits the two VMs by role | Accepted | 2026-09-28 |
+| [0015](0015-sync-endpoints-async-ready.md) | Synchronous endpoints now, structured to switch to async later | Accepted | 2026-09-29 |
+| [0016](0016-versioned-structured-recommendation-api.md) | Versioned recommendation API with structured input | Accepted | 2026-09-29 |
+| [0017](0017-layered-backend-with-pure-domain.md) | Layered backend with a pure domain core | Accepted | 2026-09-29 |
 
 ## Upcoming decisions
 
-- Explanation LLM: hosted vs local (GPU later)
-- Backend structure (repository / retriever / scorer / explainer)
+- Explanation LLM: prompt with structured input, output schema, where the LLM runs (hosted vs local)
 - Frontend framework
 - (Later) Data quality: enriching user input, richer generated roadmaps, prerequisite graph and roadmap visualization
 - User input collection redesign (clickable suggested phrases instead of comma-separated text); afterwards, normalize the request input (ADR-0013)
