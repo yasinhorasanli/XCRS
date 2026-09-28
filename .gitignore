@@ -177,3 +177,9 @@ cython_debug/
 # Claude files
 CLAUDE.md
 .claude/
+
+# Private, never-committed working notes (modernization plan, interview stories)
+/untracked/
+
+# macOS Finder metadata
+.DS_Store
