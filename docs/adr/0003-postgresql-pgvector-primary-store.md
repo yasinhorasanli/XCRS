@@ -19,7 +19,7 @@ Constraints from [ADR-0002](0002-self-hosted-first-cloud-last.md): zero cost, se
 ## Options considered
 
 ### Option A — PostgreSQL + pgvector
-- ✅ The data is **relational**: roles contain topics, topics contain concepts, and concepts link to courses. Explicit foreign keys replace the digit-encoded IDs, and role scoring becomes SQL aggregation.
+- ✅ The data is **relational**: roles contain topics, topics contain concepts, and concepts link to courses. Explicit foreign keys replace the digit-encoded IDs, and role scoring becomes SQL aggregation. *(Note 2026-09-29: role scoring ended up as pure Python in the domain layer ([ADR-0017](0017-layered-backend-with-pure-domain.md)); the database supplies the matches.)*
 - ✅ Vectors, metadata and relations live in one database, so a single query can combine similarity search with joins and filters.
 - ✅ One container, a mature ecosystem, simple backups (`pg_dump`)
 - ✅ Clear cloud path (AWS RDS/Aurora, GCP Cloud SQL/AlloyDB)

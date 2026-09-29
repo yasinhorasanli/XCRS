@@ -33,16 +33,41 @@ Decided so far:
 - **User activity:** requests store their input as JSONB for now; shown roles and courses, and feedback, are normalized tables. The input will be normalized once its format settles. [ADR-0013](adr/0013-user-activity-hybrid-then-normalized.md)
 - **Deployment:** local-first on the MacBook (Ollama native for GPU, the rest in Docker Compose); target: 16 GB VM runs Ollama (private network only), 8 GB VM runs Postgres, the backend and the frontend. [ADR-0014](adr/0014-local-first-then-split-by-role.md)
 - **Ingestion store (proposed):** MongoDB for raw scraped data and roadmap drafts. [ADR-0004](adr/0004-mongodb-for-ingestion-layer.md)
+- **Concurrency:** synchronous endpoints in FastAPI's thread pool, with all I/O behind adapters so a switch to async doesn't touch the domain. [ADR-0015](adr/0015-sync-endpoints-async-ready.md)
+- **API contract:** one versioned endpoint, `POST /api/v1/recommendations`, with structured lists instead of comma-separated text; the model comes from the registry, not the URL. [ADR-0016](adr/0016-versioned-structured-recommendation-api.md)
+- **Backend structure:** `api/` → `services/` → pure `domain/` plus adapters (`repository/`, `embeddings/`, `explain/`). [ADR-0017](adr/0017-layered-backend-with-pure-domain.md)
+- **Explanations (accepted, not built yet):** the response returns roles and courses immediately; explanations are generated in the background, one LLM call per role, and the UI polls for them. [ADR-0018](adr/0018-decoupled-per-role-explanations.md)
 
 ```
 Browser ──► Frontend (TBD)
                  │
                  ▼
-         Backend API (TBD structure)
+         Backend API (/api/v1, layered)
                  │
                  ▼
          PostgreSQL + pgvector ◄── ingestion pipeline ◄── (MongoDB raw/drafts, proposed)
                                                       ◄── scraper / roadmap generator (future)
 ```
 
-Still open: explanation-LLM hosting, backend structure, frontend framework, LLM orchestration, CI/CD, and the cloud target. See [adr/README.md](adr/README.md#upcoming-decisions).
+## New system (running locally on the MacBook, 2026-09-29)
+
+```
+Browser ──► Nuxt 3 (prototype UI; server route adapts comma-separated input to /api/v1)
+                 │  1 call
+                 ▼
+         FastAPI  POST /api/v1/recommendations              (backend/xcrs/)
+           api/       validation, dependency wiring
+           services/  order of steps, saves the request and its results
+           domain/    role scoring, course selection (pure Python, no I/O)
+           adapters:
+             embeddings/ ──► Ollama  qwen3-embedding:0.6b   (native, Apple GPU)
+             repository/ ──► PostgreSQL 18 + pgvector 0.8   (Docker)
+             explain/    ──► Ollama  qwen3.5:9b             (one call per role, inline for now)
+
+Offline: uv run xcrs import-prototype | register-model | embed-catalog
+         (catalog vectors, threshold statistics, top-20 concept → course matches)
+```
+
+The prototype (`backend/src/`, `embedding-generation/`) stays runnable next to it until the quality comparison passes. First measurements are in [baseline.md](baseline.md#new-system-first-measurements).
+
+Still open: the explanation contract (to be recorded as ADR-0019), the production explanation model (ADR-0020, after a CPU benchmark), threshold calibration for user phrases, frontend framework, LLM orchestration, CI/CD, and the cloud target. See [adr/README.md](adr/README.md#upcoming-decisions).

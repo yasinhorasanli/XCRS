@@ -55,3 +55,35 @@ Measuring these requires the per-provider embedding files and API keys, which ar
 - [ ] Backend startup time
 - [ ] Backend resident memory after startup
 - [ ] API cost per user request
+
+## New system: first measurements
+
+MacBook Pro M4 Pro, Ollama on the Apple GPU, 2026-09-28/29. **These are not production numbers:** the VMs are CPU-only, and the baselines that count are measured there ([ADR-0007](adr/0007-ollama-qwen3-embedding.md), [ADR-0014](adr/0014-local-first-then-split-by-role.md)). VM numbers are pending.
+
+### Offline (catalog)
+
+| Step | Value |
+|---|---|
+| Embed the full catalog (1,322 texts, `qwen3-embedding:0.6b`) | 62.8 s |
+| Re-run with nothing changed (content hashes) | 0.03 s, 0 texts embedded |
+| Threshold statistics + 17,380 top-20 matches | 1.2 s |
+
+### Request path
+
+| Step | Value |
+|---|---|
+| Embed 10 user phrases | 97 ms |
+| Exact threshold scan, phrases × concepts ([ADR-0010](adr/0010-exact-threshold-search-and-candidate-penalty.md)) | ~20 ms (448 ms before parsing each phrase vector once in a materialized CTE) |
+| k-NN course search via HNSW | 4 ms |
+| Explanation per role (`qwen3.5:9b`, thinking off) | ~3–13 s |
+| Explanations per request (3 roles, sequential) | ~21–42 s. Moving them out of the response is [ADR-0018](adr/0018-decoupled-per-role-explanations.md) |
+
+### Before → after
+
+| Item | Prototype | New system |
+|---|---|---|
+| Embedding pipelines per request | 5 (one per provider, sequential) | 1 (the active model) |
+| External API calls per request | up to 25 (5 embedding + up to 20 `gpt-4o`) | 0 (all local) |
+| LLM calls per request | up to 20 | up to 3 (one per recommended role) |
+| Data at startup | CSVs parsed into memory, 5 dense matrices | nothing loaded; PostgreSQL + pgvector |
+| Tests | none | 24 |

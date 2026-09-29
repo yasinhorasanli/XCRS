@@ -21,10 +21,13 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0015](0015-sync-endpoints-async-ready.md) | Synchronous endpoints now, structured to switch to async later | Accepted | 2026-09-29 |
 | [0016](0016-versioned-structured-recommendation-api.md) | Versioned recommendation API with structured input | Accepted | 2026-09-29 |
 | [0017](0017-layered-backend-with-pure-domain.md) | Layered backend with a pure domain core | Accepted | 2026-09-29 |
+| [0018](0018-decoupled-per-role-explanations.md) | Explanations generated after the response, one LLM call per role | Accepted | 2026-09-29 |
 
 ## Upcoming decisions
 
-- Explanation LLM: prompt with structured input, output schema, where the LLM runs (hosted vs local)
+- ADR-0019: Explanation LLM contract: structured grounded input, JSON-schema output, own `Explainer` interface (built in `backend/xcrs/explain/`, to be recorded)
+- ADR-0020: Explanation LLM model for production (CPU VM now, GPU later), after a CPU benchmark
+- Threshold calibration for user phrases (the open issue in ADR-0010), during the prototype-vs-new comparison
 - Frontend framework
 - (Later) Data quality: enriching user input, richer generated roadmaps, prerequisite graph and roadmap visualization
 - User input collection redesign (clickable suggested phrases instead of comma-separated text); afterwards, normalize the request input (ADR-0013)
