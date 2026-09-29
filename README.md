@@ -108,6 +108,15 @@ uv run uvicorn xcrs.api.app:app --port 8000   # API docs: http://localhost:8000/
 cd ../frontend && pnpm install && pnpm run dev # UI:       http://localhost:3000
 ```
 
+Everything in containers (as on the servers), with Ollama still native on the Mac:
+
+```bash
+docker compose --profile app up -d --build      # postgres + api (:8000) + web (:3000)
+docker compose run --rm api alembic upgrade head
+```
+
+CI (GitHub Actions, `.github/workflows/ci.yml`) runs Ruff, the migrations, the tests, the frontend build and both image builds on every push.
+
 ## Running the research prototype
 
 ### Prerequisites

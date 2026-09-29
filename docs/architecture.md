@@ -38,6 +38,7 @@ Decided so far:
 - **Backend structure:** `api/` → `services/` → pure `domain/` plus adapters (`repository/`, `embeddings/`, `explain/`). [ADR-0017](adr/0017-layered-backend-with-pure-domain.md)
 - **Explanations (accepted, not built yet):** the response returns roles and courses immediately; explanations are generated in the background, one LLM call per role, and the UI polls for them. [ADR-0018](adr/0018-decoupled-per-role-explanations.md)
 - **Explanation layer:** LangChain chain (prompt template → `ChatOpenAI` on any OpenAI-compatible server → structured output), grounded in the algorithm's actual reasons; the algorithm decides, the LLM explains. A LangChain retriever wraps our own pgvector SQL. [ADR-0019](adr/0019-explanation-layer-on-langchain.md)
+- **CI and containers:** GitHub Actions runs Ruff, migrations (up, down, up), `alembic check`, the tests against pgvector, the frontend build and both image builds. Backend and frontend have container images; `docker compose --profile app` runs the full stack. [ADR-0021](adr/0021-ci-on-github-actions.md)
 
 ```
 Browser ──► Frontend (TBD)
@@ -72,4 +73,4 @@ Offline: uv run xcrs import-prototype | register-model | embed-catalog
 
 The prototype (`backend/src/`, `embedding-generation/`) stays runnable next to it until the quality comparison passes. First measurements are in [baseline.md](baseline.md#new-system-first-measurements).
 
-Still open: the production explanation model (ADR-0020, after a CPU benchmark), threshold calibration for user phrases, frontend framework, a chat/agent feature and LLM tracing, CI/CD, and the cloud target. See [adr/README.md](adr/README.md#upcoming-decisions).
+Still open: the production explanation model (ADR-0020, after a CPU benchmark), threshold calibration for user phrases, frontend framework, a chat/agent feature and LLM tracing, deployment (CD), and the cloud target. See [adr/README.md](adr/README.md#upcoming-decisions).

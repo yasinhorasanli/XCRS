@@ -49,10 +49,16 @@ def test_course_retriever_finds_the_course_whose_own_vector_is_the_query(session
     """The LangChain retriever wraps our pgvector SQL (ADR-0019). Querying with a course's stored vector
     must return that course first, with its metadata."""
     session, model = session_and_model
-    course = session.scalars(select(Course).where(Course.is_active).order_by(Course.id).limit(1)).one()
-    stored = session.scalars(
-        select(CourseEmbedding.embedding).where(CourseEmbedding.course_id == course.id, CourseEmbedding.model_id == 1)
-    ).one()
+    row = session.execute(
+        select(Course, CourseEmbedding.embedding)
+        .join(CourseEmbedding, CourseEmbedding.course_id == Course.id)
+        .where(Course.is_active, CourseEmbedding.model_id == 1)
+        .order_by(Course.id)
+        .limit(1)
+    ).one_or_none()
+    if row is None:
+        pytest.skip("no embedded courses (run `xcrs embed-catalog`)")
+    course, stored = row
 
     class FixedEmbedder:
         model_id, dimensions = model.name, model.dimensions
