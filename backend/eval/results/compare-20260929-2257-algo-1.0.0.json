@@ -1,0 +1,300 @@
+{
+  "date": "2026-09-29T22:57:32.029444+00:00",
+  "new": {
+    "backend-java": {
+      "roles": [
+        "DevOps Engineer",
+        "AI Data Scientist",
+        "Backend Developer"
+      ],
+      "courses": [
+        "AWS DevOps CI/CD - CodePipeline, Elastic Beanstalk and Mocha",
+        "Advanced Data Center Management and Infrastructure",
+        "ChatGPT for Data Science and Building ML Models",
+        "ChatGPT for DevOps",
+        "Data Science Projects - Data Analysis & Machine Learning",
+        "Getting started with Python using ChatGPT",
+        "HTML CSS Modern Responsive Website from Scratch 2023",
+        "SQL Foundations"
+      ]
+    },
+    "frontend": {
+      "roles": [
+        "Full Stack Developer",
+        "Frontend Developer",
+        "Backend Developer"
+      ],
+      "courses": [
+        "AWS DevOps CI/CD - CodePipeline, Elastic Beanstalk and Mocha",
+        "Advanced Data Center Management and Infrastructure",
+        "Build your first React JS Application",
+        "DevOps on AWS: Release and Deploy (Course 2 of 3)",
+        "FREE: Create a Node JS backend app and host it on AWS",
+        "HTML CSS Modern Responsive Website from Scratch 2023",
+        "Next.js 13 Crash Course For Beginners [2023]",
+        "SQL Foundations"
+      ]
+    },
+    "data-science": {
+      "roles": [
+        "AI Data Scientist",
+        "Game Developer"
+      ],
+      "courses": [
+        "A Crash Course in Binary Space Partitioning",
+        "ChatGPT for Data Science and Building ML Models",
+        "Data Science Projects - Data Analysis & Machine Learning",
+        "Getting started with Python using ChatGPT",
+        "Introduction to OpenGL - Lighting",
+        "Learn C++ Game Development"
+      ]
+    },
+    "devops": {
+      "roles": [
+        "DevOps Engineer",
+        "Full Stack Developer",
+        "QA Engineer"
+      ],
+      "courses": [
+        "AWS DevOps CI/CD - CodePipeline, Elastic Beanstalk and Mocha",
+        "Advanced Data Center Management and Infrastructure",
+        "Automating Web/Mobile/API applications with TestProject",
+        "ChatGPT for DevOps",
+        "DevOps on AWS: Release and Deploy (Course 2 of 3)",
+        "FREE: Create a Node JS backend app and host it on AWS",
+        "Manual Testing Crash Course for Software Testers"
+      ]
+    },
+    "android": {
+      "roles": [
+        "Android Developer",
+        "Backend Developer"
+      ],
+      "courses": [
+        "Advanced Data Center Management and Infrastructure",
+        "Android Fundamentals of Activities for Beginners",
+        "HTML CSS Modern Responsive Website from Scratch 2023",
+        "Learn Android 4.0 Programming in Java",
+        "Learn Android Application Development",
+        "SQL Foundations"
+      ]
+    },
+    "game": {
+      "roles": [
+        "Game Developer",
+        "Backend Developer"
+      ],
+      "courses": [
+        "A Crash Course in Binary Space Partitioning",
+        "Advanced Data Center Management and Infrastructure",
+        "HTML CSS Modern Responsive Website from Scratch 2023",
+        "Introduction to OpenGL - Lighting",
+        "Learn C++ Game Development",
+        "SQL Foundations"
+      ]
+    },
+    "blockchain": {
+      "roles": [
+        "Blockchain Developer",
+        "Full Stack Developer",
+        "Backend Developer"
+      ],
+      "courses": [
+        "AWS DevOps CI/CD - CodePipeline, Elastic Beanstalk and Mocha",
+        "Advanced Data Center Management and Infrastructure",
+        "ChatGPT for DevOps",
+        "Dark Web Foundation: A Guide to the Deep/Dark Web 2019",
+        "DevOps on AWS: Release and Deploy (Course 2 of 3)",
+        "FREE: Create a Node JS backend app and host it on AWS",
+        "HTML CSS Modern Responsive Website from Scratch 2023",
+        "Introduction to Dark Web, Anonymity and Cryptocurrency",
+        "SQL Foundations"
+      ]
+    },
+    "qa": {
+      "roles": [
+        "QA Engineer",
+        "Frontend Developer",
+        "Backend Developer"
+      ],
+      "courses": [
+        "Advanced Data Center Management and Infrastructure",
+        "Automating Web/Mobile/API applications with TestProject",
+        "Build your first React JS Application",
+        "ChatGPT for DevOps",
+        "HTML CSS Modern Responsive Website from Scratch 2023",
+        "Manual Testing Crash Course for Software Testers",
+        "Next.js 13 Crash Course For Beginners [2023]",
+        "SQL Foundations"
+      ]
+    },
+    "ux": {
+      "roles": [
+        "UX Designer",
+        "Frontend Developer",
+        "QA Engineer"
+      ],
+      "courses": [
+        ".NET MAUI UI Challenges: AI Image Generator App",
+        "Android Fundamentals of Activities for Beginners",
+        "Automating Web/Mobile/API applications with TestProject",
+        "Build your first React JS Application",
+        "ChatGPT for DevOps",
+        "HTML CSS Modern Responsive Website from Scratch 2023",
+        "Manual Testing Crash Course for Software Testers",
+        "Next.js 13 Crash Course For Beginners [2023]",
+        "Visual Paradigm Essential"
+      ]
+    },
+    "fullstack": {
+      "roles": [
+        "Full Stack Developer",
+        "Frontend Developer",
+        "Backend Developer"
+      ],
+      "courses": [
+        "AWS DevOps CI/CD - CodePipeline, Elastic Beanstalk and Mocha",
+        "Advanced Data Center Management and Infrastructure",
+        "Advanced Databases and SQL Querying",
+        "Build your first React JS Application",
+        "DevOps on AWS: Release and Deploy (Course 2 of 3)",
+        "FREE: Create a Node JS backend app and host it on AWS",
+        "HTML CSS Modern Responsive Website from Scratch 2023",
+        "Next.js 13 Crash Course For Beginners [2023]"
+      ]
+    },
+    "edge-single-fact": {
+      "roles": [
+        "AI Data Scientist",
+        "Backend Developer"
+      ],
+      "courses": [
+        "Advanced Data Center Management and Infrastructure",
+        "ChatGPT for Data Science and Building ML Models",
+        "Data Science Projects - Data Analysis & Machine Learning",
+        "Getting started with Python using ChatGPT",
+        "HTML CSS Modern Responsive Website from Scratch 2023",
+        "SQL Foundations"
+      ]
+    },
+    "edge-curious-only": {
+      "roles": [
+        "AI Data Scientist",
+        "DevOps Engineer"
+      ],
+      "courses": [
+        "AWS DevOps CI/CD - CodePipeline, Elastic Beanstalk and Mocha",
+        "Advanced Data Center Management and Infrastructure",
+        "ChatGPT for Data Science and Building ML Models",
+        "ChatGPT for DevOps",
+        "Data Science Projects - Data Analysis & Machine Learning",
+        "Getting started with Python using ChatGPT"
+      ]
+    },
+    "edge-misattribution": {
+      "roles": [
+        "DevOps Engineer",
+        "Backend Developer"
+      ],
+      "courses": [
+        "AWS DevOps CI/CD - CodePipeline, Elastic Beanstalk and Mocha",
+        "Advanced Data Center Management and Infrastructure",
+        "ChatGPT for DevOps",
+        "HTML CSS Modern Responsive Website from Scratch 2023",
+        "SQL Foundations"
+      ]
+    },
+    "edge-disliked-heavy": {
+      "roles": [],
+      "courses": []
+    },
+    "edge-abbreviations": {
+      "roles": [
+        "DevOps Engineer",
+        "Full Stack Developer",
+        "QA Engineer"
+      ],
+      "courses": [
+        "AWS DevOps CI/CD - CodePipeline, Elastic Beanstalk and Mocha",
+        "Advanced Data Center Management and Infrastructure",
+        "Automating Web/Mobile/API applications with TestProject",
+        "ChatGPT for DevOps",
+        "DevOps on AWS: Release and Deploy (Course 2 of 3)",
+        "FREE: Create a Node JS backend app and host it on AWS",
+        "Manual Testing Crash Course for Software Testers"
+      ]
+    }
+  },
+  "threshold": {
+    "model": "qwen3-embedding:0.6b",
+    "course_x_concept_mean": 0.234,
+    "course_x_concept_std": 0.105,
+    "phrases": 50,
+    "sigmas": [
+      {
+        "sigma": 1.5,
+        "threshold": 0.392,
+        "median_matches_per_phrase": 10.5,
+        "max_matches": 60,
+        "phrases_with_no_match": [
+          "Natural language processing"
+        ]
+      },
+      {
+        "sigma": 2.0,
+        "threshold": 0.444,
+        "median_matches_per_phrase": 4.0,
+        "max_matches": 35,
+        "phrases_with_no_match": [
+          "Bash scripting",
+          "DSA",
+          "Natural language processing"
+        ]
+      },
+      {
+        "sigma": 2.5,
+        "threshold": 0.497,
+        "median_matches_per_phrase": 2.0,
+        "max_matches": 25,
+        "phrases_with_no_match": [
+          "Bash scripting",
+          "DSA",
+          "Express",
+          "Natural language processing",
+          "Prototyping",
+          "Python",
+          "Spring Boot",
+          "User research"
+        ]
+      },
+      {
+        "sigma": 3.0,
+        "threshold": 0.549,
+        "median_matches_per_phrase": 1.0,
+        "max_matches": 20,
+        "phrases_with_no_match": [
+          "Bash scripting",
+          "Cloud computing",
+          "Cypress",
+          "DSA",
+          "Deep learning",
+          "Express",
+          "Game physics",
+          "Linux",
+          "Machine learning",
+          "Manual testing",
+          "Mobile app architecture",
+          "Natural language processing",
+          "Pandas",
+          "Prototyping",
+          "Python",
+          "Spring Boot",
+          "Statistics",
+          "Test automation",
+          "User research"
+        ]
+      }
+    ]
+  },
+  "comparison": null
+}

@@ -8,11 +8,12 @@ import logging
 import time
 import uuid
 from collections.abc import Callable
+from dataclasses import dataclass
 
 from sqlalchemy.orm import Session
 
 from xcrs.db.models import EmbeddingModel
-from xcrs.domain import scoring, selection
+from xcrs.domain import matching, scoring, selection
 from xcrs.domain.results import CourseResult, ExplanationStatus, RecommendationResult, RoleResult
 from xcrs.domain.types import Category, CourseCandidate, Phrase, PhraseConceptMatch
 from xcrs.embeddings import embedder_for
@@ -24,8 +25,10 @@ from xcrs.services.explanations import ExplanationQueue
 
 log = logging.getLogger(__name__)
 
-ALGORITHM_VERSION = "1.0.0"  # prototype algorithm, ported (see domain/)
+ALGORITHM_VERSION = "1.1.0"  # 1.0.0: prototype algorithm, ported; 1.1.0: fallback for unmatched phrases (ADR-0022)
 THRESHOLD_SIGMA = 2.5
+FALLBACK_SIGMA = 1.5  # floor for a phrase that matches nothing above THRESHOLD_SIGMA (ADR-0022)
+FALLBACK_MARGIN = 0.05  # such a phrase keeps its best concept and all within this similarity of it
 EXPLAIN_MAX_ITEMS = 12
 NEXT_CONCEPTS = 8  # uncovered concepts returned per role, and given to the explanation LLM
 
@@ -44,6 +47,14 @@ def to_phrases(user_input: dict[Category, list[str]]) -> list[Phrase]:
     return phrases
 
 
+@dataclass
+class Computation:
+    model: EmbeddingModel
+    threshold: float
+    roles: list[RoleResult]
+    contexts: dict[int, RoleContext]  # role_id -> the facts its explanation may use
+
+
 class RecommendationService:
     def __init__(
         self,
@@ -55,16 +66,19 @@ class RecommendationService:
         self.explanations = explanations  # None: explanations are disabled
         self.embedder_factory = embedder_factory
 
-    def recommend(self, user_input: dict[Category, list[str]]) -> RecommendationResult:
-        started = time.perf_counter()
+    def compute(self, user_input: dict[Category, list[str]]) -> "Computation":
+        """The recommendation and each role's explanation input, without saving anything.
+        `recommend` builds on it; evaluation tools (backend/eval/) call it directly."""
         model = catalog_repo.active_model(self.session)
         threshold = model.sim_mean + THRESHOLD_SIGMA * model.sim_std
         phrases = to_phrases(user_input)
+        roles, contexts = self._recommend(model, threshold, phrases) if phrases else ([], {})
+        return Computation(model, threshold, roles, contexts)
 
-        roles: list[RoleResult] = []
-        contexts: dict[int, RoleContext] = {}
-        if phrases:
-            roles, contexts = self._recommend(model, threshold, phrases)
+    def recommend(self, user_input: dict[Category, list[str]]) -> RecommendationResult:
+        started = time.perf_counter()
+        computed = self.compute(user_input)
+        model, threshold, roles, contexts = computed.model, computed.threshold, computed.roles, computed.contexts
 
         status = ExplanationStatus.PENDING if self.explanations else ExplanationStatus.DISABLED
         for role in roles:
@@ -100,12 +114,15 @@ class RecommendationService:
     ) -> tuple[list[RoleResult], dict[int, RoleContext]]:
         catalog = catalog_repo.load_roadmap_catalog(self.session)
 
-        # 1. Embed the phrases and match them to roadmap concepts (exact threshold scan).
+        # 1. Embed the phrases and match them to roadmap concepts: an exact scan down to the fallback
+        #    floor, then everything above the threshold, or a phrase's best few if it has none (pure).
         phrase_vectors = self.embedder_factory(model).embed_query([p.text for p in phrases])
-        matches = [
+        floor = model.sim_mean + FALLBACK_SIGMA * model.sim_std
+        candidates = [
             PhraseConceptMatch(phrases[m.phrase_index], m.concept_id, catalog.concept_roles[m.concept_id], m.similarity)
-            for m in vectors.concepts_above_threshold(self.session, model, phrase_vectors, threshold)
+            for m in vectors.concepts_above_threshold(self.session, model, phrase_vectors, floor)
         ]
+        matches = matching.select_matches(candidates, threshold, FALLBACK_MARGIN)
 
         # 2. Score roles (pure).
         role_scores = scoring.score_roles(matches, catalog.concept_roles, catalog.concepts_per_role)

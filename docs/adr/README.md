@@ -24,11 +24,12 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0018](0018-decoupled-per-role-explanations.md) | Explanations generated after the response, one LLM call per role | Accepted | 2026-09-29 |
 | [0019](0019-explanation-layer-on-langchain.md) | Explanation layer on LangChain, with a grounded contract; retriever over our own SQL | Accepted | 2026-09-30 |
 | [0021](0021-ci-on-github-actions.md) | Continuous integration on GitHub Actions; container images for backend and frontend | Accepted (delegated) | 2026-09-30 |
+| [0022](0022-threshold-fallback-for-unmatched-phrases.md) | Keep the 2.5σ threshold, with a fallback for phrases that match nothing | Accepted (delegated) | 2026-09-30 |
 
 ## Upcoming decisions
 
 - ADR-0020: Explanation LLM model for production (CPU VM now, GPU later), after a CPU benchmark
-- Threshold calibration for user phrases (the open issue in ADR-0010), during the prototype-vs-new comparison
+- Threshold constants re-tuned against the prototype once its comparison can run (ADR-0022)
 - Frontend framework
 - (Later) Data quality: enriching user input, richer generated roadmaps, prerequisite graph and roadmap visualization
 - User input collection redesign (clickable suggested phrases instead of comma-separated text); afterwards, normalize the request input (ADR-0013)

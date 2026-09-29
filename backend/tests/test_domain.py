@@ -2,6 +2,7 @@
 
 import pytest
 
+from xcrs.domain import matching
 from xcrs.domain.scoring import activation, concept_categories, score_roles
 from xcrs.domain.selection import concepts_to_learn, covered_topics, pick_courses
 from xcrs.domain.types import Category, CourseCandidate, Phrase, PhraseConceptMatch
@@ -72,3 +73,30 @@ def test_covered_topics_needs_forty_percent():
     ancestors = {1: [10], 2: [10], 3: [10], 4: [20], 5: [20]}
     per_topic = {10: 3, 20: 5}
     assert covered_topics([1, 2, 4], ancestors, per_topic) == [10]  # 67% of topic 10, 20% of topic 20
+
+
+# --- matching (ADR-0022) ---
+
+
+def _m(phrase, concept_id, similarity):
+    return PhraseConceptMatch(phrase, concept_id, 1, similarity)
+
+
+def test_matches_above_the_threshold_all_count_and_weaker_ones_are_ignored():
+    java = Phrase("Java", Category.LIKED)
+    selected = matching.select_matches([_m(java, 1, 0.7), _m(java, 2, 0.6), _m(java, 3, 0.45)], 0.5, 0.05)
+    assert [m.concept_id for m in selected] == [1, 2]
+
+
+def test_a_phrase_with_no_match_above_the_threshold_keeps_its_near_best_candidates():
+    """Regression: at 2.5 sigma "Python" matched nothing and was silently dropped. Its candidates are the
+    "python" concepts of several roadmaps, nearly tied; all of them count, not an arbitrary top-k."""
+    python = Phrase("Python", Category.LIKED)
+    candidates = [_m(python, 1, 0.485), _m(python, 2, 0.483), _m(python, 3, 0.454), _m(python, 4, 0.41)]
+    assert [m.concept_id for m in matching.select_matches(candidates, 0.5, 0.05)] == [1, 2, 3]
+
+
+def test_fallback_is_per_phrase():
+    java, python = Phrase("Java", Category.LIKED), Phrase("Python", Category.CURIOUS)
+    selected = matching.select_matches([_m(java, 1, 0.7), _m(python, 2, 0.45), _m(java, 3, 0.45)], 0.5, 0.05)
+    assert {(m.phrase.text, m.concept_id) for m in selected} == {("Java", 1), ("Python", 2)}

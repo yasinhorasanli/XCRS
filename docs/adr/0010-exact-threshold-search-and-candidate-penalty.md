@@ -67,7 +67,7 @@ The request path has two user-dependent similarity steps (see [ADR-0009](0009-pe
 
 ## Open issue (for quality validation, not decided here)
 
-The prototype derives its threshold from the **course × concept** score distribution but applies it to **short user phrases × concepts**. Short phrases produce a different distribution. The threshold must be recalibrated for the new model during the prototype-vs-new comparison.
+The prototype derives its threshold from the **course × concept** score distribution but applies it to **short user phrases × concepts**. Short phrases produce a different distribution. The threshold must be recalibrated for the new model during the prototype-vs-new comparison. *(Note 2026-09-30: measured and partly addressed in [ADR-0022](0022-threshold-fallback-for-unmatched-phrases.md): at 2.5σ, 8 of 50 test phrases matched nothing; a fallback now keeps them.)*
 
 ## Revisit when
 
