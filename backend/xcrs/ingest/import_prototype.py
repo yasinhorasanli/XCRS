@@ -58,7 +58,9 @@ def legacy_parent_id(node_id: int) -> int | None:
 
 def import_roles(session: Session) -> None:
     stmt = insert(Role).values([{"id": i, "slug": slug, "name": name} for i, slug, name in ROLES])
-    session.execute(stmt.on_conflict_do_update(index_elements=["id"], set_={"slug": stmt.excluded.slug, "name": stmt.excluded.name}))
+    session.execute(
+        stmt.on_conflict_do_update(index_elements=["id"], set_={"slug": stmt.excluded.slug, "name": stmt.excluded.name})
+    )
 
 
 def import_roadmap_nodes(session: Session) -> int:

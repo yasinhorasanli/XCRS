@@ -68,8 +68,12 @@ class RecommendationResponseV1(BaseModel):
                     explanation=role.explanation,
                     courses=[
                         CourseV1(
-                            course_id=c.course_id, title=c.title, url=c.url, explanation=c.explanation,
-                            concepts=c.concepts, similarity=round(c.similarity, 4),
+                            course_id=c.course_id,
+                            title=c.title,
+                            url=c.url,
+                            explanation=c.explanation,
+                            concepts=c.concepts,
+                            similarity=round(c.similarity, 4),
                         )
                         for c in role.courses
                     ],

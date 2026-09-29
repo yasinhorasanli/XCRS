@@ -1,9 +1,7 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
-
 from alembic import context
+from sqlalchemy import engine_from_config, pool
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -29,9 +27,8 @@ UNMODELLED_INDEXES = {"embedding_models_one_active_idx"}
 
 
 def include_object(obj, name, type_, reflected, compare_to):
-    if type_ == "index" and reflected and (name in UNMODELLED_INDEXES or name.endswith("_hnsw")):
-        return False
-    return True
+    return not (type_ == "index" and reflected and (name in UNMODELLED_INDEXES or name.endswith("_hnsw")))
+
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -77,9 +74,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata, include_object=include_object
-        )
+        context.configure(connection=connection, target_metadata=target_metadata, include_object=include_object)
 
         with context.begin_transaction():
             context.run_migrations()

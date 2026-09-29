@@ -1,5 +1,7 @@
 """Prompt construction for explanations: pure functions, no LLM call."""
 
+import json
+
 from xcrs.explain.base import CourseContext, KnownItem, RoleContext
 from xcrs.explain.llm import build_payload, build_system_prompt, parse_response
 
@@ -33,7 +35,12 @@ def test_prompt_asks_about_curiosity_when_stated():
 
 
 def test_parse_response_matches_courses_by_id_and_drops_unknown_ids():
-    content = '{"role_explanation": "Fits.", "courses": [{"course_id": 7, "explanation": "Good."}, {"course_id": 99, "explanation": "?"}]}'
+    content = json.dumps(
+        {
+            "role_explanation": "Fits.",
+            "courses": [{"course_id": 7, "explanation": "Good."}, {"course_id": 99, "explanation": "?"}],
+        }
+    )
     result = parse_response(content, context(curious=[]))
     assert result.role_explanation == "Fits."
     assert result.course_explanations == {7: "Good."}

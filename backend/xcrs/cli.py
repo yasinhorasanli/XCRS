@@ -1,9 +1,9 @@
 """XCRS admin commands.
 
-    uv run xcrs import-prototype
-    uv run xcrs register-model qwen3-embedding:0.6b --id 1 --status active
-    uv run xcrs embed-catalog qwen3-embedding:0.6b
-    uv run xcrs search "Docker"
+uv run xcrs import-prototype
+uv run xcrs register-model qwen3-embedding:0.6b --id 1 --status active
+uv run xcrs embed-catalog qwen3-embedding:0.6b
+uv run xcrs search "Docker"
 """
 
 import argparse
@@ -46,7 +46,9 @@ def cmd_register_model(args) -> None:
     values = {"id": args.id, "name": args.name, "status": args.status, **preset}
     with new_session() as session:
         stmt = insert(EmbeddingModel).values(values)
-        session.execute(stmt.on_conflict_do_update(index_elements=["id"], set_={k: stmt.excluded[k] for k in values if k != "id"}))
+        session.execute(
+            stmt.on_conflict_do_update(index_elements=["id"], set_={k: stmt.excluded[k] for k in values if k != "id"})
+        )
         session.commit()
     print(f"registered {args.name} as model {args.id} ({args.status})")
 
@@ -63,7 +65,10 @@ def cmd_search(args) -> None:
         threshold = model.sim_mean + args.sigma * model.sim_std
         vector = embedder_for(model).embed_query([args.phrase])[0]
         matches = vectors.concepts_above_threshold(session, model, [vector], threshold)
-        print(f"threshold {threshold:.3f} (mean {model.sim_mean:.3f} + {args.sigma}σ {model.sim_std:.3f}); {len(matches)} matches")
+        print(
+            f"threshold {threshold:.3f} (mean {model.sim_mean:.3f} + {args.sigma}σ {model.sim_std:.3f}); "
+            f"{len(matches)} matches"
+        )
         names = dict(
             session.execute(
                 select(RoadmapNode.id, Role.name + " › " + RoadmapNode.name).join(Role, Role.id == RoadmapNode.role_id)

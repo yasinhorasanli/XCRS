@@ -81,7 +81,8 @@ def upgrade() -> None:
             query_prefix       text,
             document_prefix    text,
             status             text NOT NULL
-                               CONSTRAINT embedding_models_status_check CHECK (status IN ('candidate', 'active', 'retired')),
+                               CONSTRAINT embedding_models_status_check
+                               CHECK (status IN ('candidate', 'active', 'retired')),
             sim_mean           real,
             sim_std            real,
             stats_computed_at  timestamptz,
@@ -89,7 +90,9 @@ def upgrade() -> None:
         )
     """)
     # at most one active model
-    op.execute("CREATE UNIQUE INDEX embedding_models_one_active_idx ON embedding_models ((true)) WHERE status = 'active'")
+    op.execute(
+        "CREATE UNIQUE INDEX embedding_models_one_active_idx ON embedding_models ((true)) WHERE status = 'active'"
+    )
 
     for entity, table in (("course", "courses"), ("node", "roadmap_nodes")):
         op.execute(f"""

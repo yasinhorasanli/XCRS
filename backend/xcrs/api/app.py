@@ -1,6 +1,6 @@
 """FastAPI application. HTTP only: validation, dependency wiring, status codes (ADR-0017).
 
-    uv run uvicorn xcrs.api.app:app --reload
+uv run uvicorn xcrs.api.app:app --reload
 """
 
 import logging

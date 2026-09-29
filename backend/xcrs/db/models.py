@@ -3,11 +3,12 @@
 import uuid
 from datetime import datetime
 from decimal import Decimal
+from typing import ClassVar
 
 from pgvector.sqlalchemy import Vector
 from sqlalchemy import (
-    BigInteger,
     REAL,
+    BigInteger,
     CheckConstraint,
     DateTime,
     ForeignKey,
@@ -25,7 +26,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
 class Base(DeclarativeBase):
-    type_annotation_map = {datetime: DateTime(timezone=True), float: REAL}
+    type_annotation_map: ClassVar[dict] = {datetime: DateTime(timezone=True), float: REAL}
 
 
 def created_at() -> Mapped[datetime]:
@@ -132,7 +133,9 @@ class CourseEmbedding(Base):
 class NodeEmbedding(Base):
     __tablename__ = "node_embeddings"
 
-    node_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("roadmap_nodes.id", ondelete="CASCADE"), primary_key=True)
+    node_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey("roadmap_nodes.id", ondelete="CASCADE"), primary_key=True
+    )
     model_id: Mapped[int] = mapped_column(SmallInteger, ForeignKey("embedding_models.id"), primary_key=True)
     embedding = mapped_column(Vector(), nullable=False)
     content_hash: Mapped[str] = mapped_column(Text)
@@ -148,7 +151,9 @@ class ConceptCourseMatch(Base):
     )
 
     model_id: Mapped[int] = mapped_column(SmallInteger, ForeignKey("embedding_models.id"), primary_key=True)
-    concept_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("roadmap_nodes.id", ondelete="CASCADE"), primary_key=True)
+    concept_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey("roadmap_nodes.id", ondelete="CASCADE"), primary_key=True
+    )
     course_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("courses.id", ondelete="CASCADE"), primary_key=True)
     similarity: Mapped[float]
     rank: Mapped[int] = mapped_column(SmallInteger)
@@ -210,9 +215,7 @@ class Feedback(Base):
     __tablename__ = "feedback"
 
     id: Mapped[int] = mapped_column(BigInteger, Identity(always=True), primary_key=True)
-    request_id: Mapped[uuid.UUID] = mapped_column(
-        UUID, ForeignKey("recommendation_requests.id", ondelete="CASCADE")
-    )
+    request_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey("recommendation_requests.id", ondelete="CASCADE"))
     role_id: Mapped[int | None] = mapped_column(SmallInteger, ForeignKey("roles.id"))
     course_id: Mapped[int | None] = mapped_column(BigInteger, ForeignKey("courses.id"))
     rating: Mapped[int | None] = mapped_column(SmallInteger)

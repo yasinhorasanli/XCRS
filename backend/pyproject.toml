@@ -16,7 +16,10 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["pytest>=8.4"]
+dev = [
+    "pytest>=8.4",
+    "ruff>=0.16.9",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -30,3 +33,22 @@ testpaths = ["tests"]
 
 [project.scripts]
 xcrs = "xcrs.cli:main"
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+extend-exclude = ["src"]  # the research prototype (backend/src) stays as it was
+
+[tool.ruff.lint]
+# E/W pycodestyle · F pyflakes (real bugs) · I import order · B bugbear (likely bugs)
+# UP modern syntax · SIM simplifications · RUF Ruff's own checks
+select = ["E", "W", "F", "I", "B", "UP", "SIM", "RUF"]
+# Intentional typography in CLI output and comments.
+allowed-confusables = ["σ", "›", "–"]
+
+[tool.ruff.lint.flake8-bugbear]
+# FastAPI's dependency injection is declared in argument defaults by design.
+extend-immutable-calls = ["fastapi.Depends"]
+
+[tool.ruff.lint.per-file-ignores]
+"migrations/env.py" = ["E402"]  # Alembic template: imports follow config setup

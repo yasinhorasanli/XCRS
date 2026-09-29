@@ -114,7 +114,7 @@ class RecommendationService:
         candidates: dict[int, list[CourseCandidate]] = {}
         for concept_id, course_id, similarity in vectors.candidate_courses(self.session, model, all_targets):
             candidates.setdefault(concept_id, []).append(CourseCandidate(concept_id, course_id, similarity))
-        disliked_vectors = [v for p, v in zip(phrases, phrase_vectors) if p.category is Category.DISLIKED]
+        disliked_vectors = [v for p, v in zip(phrases, phrase_vectors, strict=True) if p.category is Category.DISLIKED]
         candidate_ids = sorted({c.course_id for cs in candidates.values() for c in cs})
         penalized = vectors.courses_similar_to(self.session, model, disliked_vectors, candidate_ids, threshold)
 
@@ -187,7 +187,10 @@ class RecommendationService:
         for rank, role in enumerate(result.roles, start=1):
             self.session.add(
                 RecommendedRole(
-                    request_id=result.request_id, rank=rank, role_id=role.role_id, score=role.score,
+                    request_id=result.request_id,
+                    rank=rank,
+                    role_id=role.role_id,
+                    score=role.score,
                     explanation=role.explanation,
                 )
             )
@@ -196,8 +199,12 @@ class RecommendationService:
             for rank, c in enumerate(role.courses, start=1):
                 self.session.add(
                     RecommendedCourse(
-                        request_id=result.request_id, role_id=role.role_id, rank=rank, course_id=c.course_id,
-                        similarity=c.similarity, explanation=c.explanation,
+                        request_id=result.request_id,
+                        role_id=role.role_id,
+                        rank=rank,
+                        course_id=c.course_id,
+                        similarity=c.similarity,
+                        explanation=c.explanation,
                     )
                 )
         self.session.commit()

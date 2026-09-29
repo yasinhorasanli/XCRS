@@ -18,7 +18,14 @@ from sqlalchemy import and_, delete, or_, select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
 
-from xcrs.db.models import ConceptCourseMatch, Course, CourseEmbedding, EmbeddingModel, NodeEmbedding, RoadmapNode
+from xcrs.db.models import (
+    ConceptCourseMatch,
+    Course,
+    CourseEmbedding,
+    EmbeddingModel,
+    NodeEmbedding,
+    RoadmapNode,
+)
 from xcrs.embeddings import embedder_for
 
 TOP_K = 20
@@ -36,29 +43,62 @@ def embed_pending(session: Session, model: EmbeddingModel) -> dict[str, int]:
 
     concepts = session.execute(
         select(RoadmapNode.id, RoadmapNode.content, RoadmapNode.content_hash)
-        .outerjoin(NodeEmbedding, and_(NodeEmbedding.node_id == RoadmapNode.id, NodeEmbedding.model_id == model.id))
+        .outerjoin(
+            NodeEmbedding,
+            and_(
+                NodeEmbedding.node_id == RoadmapNode.id,
+                NodeEmbedding.model_id == model.id,
+            ),
+        )
         .where(RoadmapNode.type == "concept")
-        .where(or_(NodeEmbedding.node_id.is_(None), NodeEmbedding.content_hash != RoadmapNode.content_hash))
+        .where(
+            or_(
+                NodeEmbedding.node_id.is_(None),
+                NodeEmbedding.content_hash != RoadmapNode.content_hash,
+            )
+        )
     ).all()
     courses = session.execute(
         select(Course.id, Course.embed_text, Course.content_hash)
-        .outerjoin(CourseEmbedding, and_(CourseEmbedding.course_id == Course.id, CourseEmbedding.model_id == model.id))
-        .where(or_(CourseEmbedding.course_id.is_(None), CourseEmbedding.content_hash != Course.content_hash))
+        .outerjoin(
+            CourseEmbedding,
+            and_(
+                CourseEmbedding.course_id == Course.id,
+                CourseEmbedding.model_id == model.id,
+            ),
+        )
+        .where(
+            or_(
+                CourseEmbedding.course_id.is_(None),
+                CourseEmbedding.content_hash != Course.content_hash,
+            )
+        )
     ).all()
 
-    for table, key, rows in ((NodeEmbedding, "node_id", concepts), (CourseEmbedding, "course_id", courses)):
+    for table, key, rows in (
+        (NodeEmbedding, "node_id", concepts),
+        (CourseEmbedding, "course_id", courses),
+    ):
         if not rows:
             continue
         vectors = embedder.embed_documents([text for _, text, _ in rows])
         values = [
-            {key: row_id, "model_id": model.id, "embedding": vec, "content_hash": content_hash}
-            for (row_id, _, content_hash), vec in zip(rows, vectors)
+            {
+                key: row_id,
+                "model_id": model.id,
+                "embedding": vec,
+                "content_hash": content_hash,
+            }
+            for (row_id, _, content_hash), vec in zip(rows, vectors, strict=True)
         ]
         stmt = insert(table).values(values)
         session.execute(
             stmt.on_conflict_do_update(
                 index_elements=[key, "model_id"],
-                set_={"embedding": stmt.excluded.embedding, "content_hash": stmt.excluded.content_hash},
+                set_={
+                    "embedding": stmt.excluded.embedding,
+                    "content_hash": stmt.excluded.content_hash,
+                },
             )
         )
     session.commit()
@@ -117,7 +157,11 @@ def compute_stats_and_matches(session: Session, model: EmbeddingModel, k: int = 
     for start in range(0, len(values), 5000):
         session.execute(insert(ConceptCourseMatch).values(values[start : start + 5000]))
     session.commit()
-    return {"sim_mean": model.sim_mean, "sim_std": model.sim_std, "matches": len(values)}
+    return {
+        "sim_mean": model.sim_mean,
+        "sim_std": model.sim_std,
+        "matches": len(values),
+    }
 
 
 def run(session: Session, model_name: str) -> dict[str, float]:
