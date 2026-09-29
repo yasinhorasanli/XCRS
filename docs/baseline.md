@@ -77,6 +77,8 @@ MacBook Pro M4 Pro, Ollama on the Apple GPU, 2026-09-28/29. **These are not prod
 | k-NN course search via HNSW | 4 ms |
 | Explanation per role (`qwen3.5:9b`, thinking off) | ~3–13 s |
 | Explanations per request (3 roles, sequential) | ~21–42 s. Moving them out of the response is [ADR-0018](adr/0018-decoupled-per-role-explanations.md) |
+| **Response time with explanations in the background** ([ADR-0018](adr/0018-decoupled-per-role-explanations.md), 2026-09-30) | **0.77 s** (server 685 ms), down from 31.5 s with explanations inline; all 3 roles explained ~29 s later (7.9–12.3 s each) |
+| Restart during an explanation job | both roles re-queued on startup and finished; the interrupted one on its 2nd attempt |
 
 ### Before → after
 
@@ -86,4 +88,4 @@ MacBook Pro M4 Pro, Ollama on the Apple GPU, 2026-09-28/29. **These are not prod
 | External API calls per request | up to 25 (5 embedding + up to 20 `gpt-4o`) | 0 (all local) |
 | LLM calls per request | up to 20 | up to 3 (one per recommended role) |
 | Data at startup | CSVs parsed into memory, 5 dense matrices | nothing loaded; PostgreSQL + pgvector |
-| Tests | none | 24 |
+| Tests | none | 37 (+ CI on every push, ADR-0021) |

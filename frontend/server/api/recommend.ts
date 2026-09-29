@@ -7,7 +7,7 @@ const apiUrl = process.env.XCRS_API_URL ?? "http://localhost:8000";
 type Category = "took_and_liked" | "took_and_neutral" | "took_and_disliked" | "curious";
 
 interface CourseV1 { title: string; url: string; explanation: string | null; concepts: string[] }
-interface RoleV1 { role: string; score: number; explanation: string | null; courses: CourseV1[] }
+interface RoleV1 { role: string; score: number; explanation: string | null; explanation_status: string; courses: CourseV1[] }
 interface ResponseV1 { request_id: string; status: string; model: string; roles: RoleV1[] }
 
 const split = (text: string | undefined) =>
@@ -16,7 +16,7 @@ const split = (text: string | undefined) =>
 export default defineEventHandler(async (event) => {
     const body = await readBody<Record<Category, string>>(event);
 
-    const response = await $fetch<ResponseV1>(`${apiUrl}/api/v1/recommendations`, {
+    let response = await $fetch<ResponseV1>(`${apiUrl}/api/v1/recommendations`, {
         method: "POST",
         body: {
             liked: split(body.took_and_liked),
@@ -25,6 +25,13 @@ export default defineEventHandler(async (event) => {
             curious: split(body.curious),
         },
     });
+
+    // Explanations arrive in the background (ADR-0018). This old page can't show them later,
+    // so wait here (up to 5 minutes) until no role is pending.
+    for (let i = 0; i < 150 && response.roles.some((r) => r.explanation_status === "pending"); i++) {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        response = await $fetch<ResponseV1>(`${apiUrl}/api/v1/recommendations/${response.request_id}`);
+    }
 
     return {
         fileName: response.request_id,

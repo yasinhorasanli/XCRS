@@ -59,6 +59,10 @@ def load_roadmap_catalog(session: Session) -> RoadmapCatalog:
     )
 
 
+def ping(session: Session) -> None:
+    session.execute(select(1))
+
+
 def active_model(session: Session) -> EmbeddingModel:
     model = session.scalars(select(EmbeddingModel).where(EmbeddingModel.status == "active")).one_or_none()
     if model is None or model.sim_mean is None:

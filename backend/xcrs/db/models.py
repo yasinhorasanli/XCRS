@@ -20,8 +20,9 @@ from sqlalchemy import (
     Text,
     UniqueConstraint,
     func,
+    text,
 )
-from sqlalchemy.dialects.postgresql import JSONB, UUID
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
@@ -181,8 +182,17 @@ class RecommendationRequest(Base):
 
 
 class RecommendedRole(Base):
+    """A shown role, and its explanation job (ADR-0018): the rows are the queue."""
+
     __tablename__ = "recommended_roles"
-    __table_args__ = (UniqueConstraint("request_id", "role_id"),)
+    __table_args__ = (
+        UniqueConstraint("request_id", "role_id"),
+        CheckConstraint(
+            "explanation_status IN ('pending', 'done', 'failed', 'disabled')",
+            name="recommended_roles_explanation_status_check",
+        ),
+        Index("recommended_roles_pending_idx", "request_id", postgresql_where=text("explanation_status = 'pending'")),
+    )
 
     request_id: Mapped[uuid.UUID] = mapped_column(
         UUID, ForeignKey("recommendation_requests.id", ondelete="CASCADE"), primary_key=True
@@ -192,6 +202,12 @@ class RecommendedRole(Base):
     score: Mapped[float]
     explanation: Mapped[str | None] = mapped_column(Text)
     prompt_version: Mapped[str | None] = mapped_column(Text)  # covers the role's course explanations too
+    explanation_status: Mapped[str] = mapped_column(Text, server_default="pending")
+    explanation_input: Mapped[dict | None] = mapped_column(JSONB)  # exactly what the LLM gets
+    explanation_ms: Mapped[int | None]
+    explanation_attempts: Mapped[int] = mapped_column(SmallInteger, server_default="0")
+    explained_at: Mapped[datetime | None]
+    next_concept_ids: Mapped[list[int]] = mapped_column(ARRAY(BigInteger), server_default="{}")
 
 
 class RecommendedCourse(Base):
@@ -210,6 +226,7 @@ class RecommendedCourse(Base):
     course_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("courses.id"))
     similarity: Mapped[float]
     explanation: Mapped[str | None] = mapped_column(Text)
+    concept_ids: Mapped[list[int]] = mapped_column(ARRAY(BigInteger), server_default="{}")  # picked for these
 
 
 class Feedback(Base):

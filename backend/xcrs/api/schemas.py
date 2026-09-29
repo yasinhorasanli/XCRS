@@ -4,8 +4,8 @@ import uuid
 
 from pydantic import BaseModel, Field
 
+from xcrs.domain.results import ExplanationStatus, RecommendationResult
 from xcrs.domain.types import Category
-from xcrs.services.recommend import RecommendationResult
 
 Phrases = list[str]
 
@@ -41,9 +41,12 @@ class CourseV1(BaseModel):
 
 
 class RoleV1(BaseModel):
+    role_id: int
     role: str
     score: float
     explanation: str | None
+    # pending: poll GET /api/v1/recommendations/{request_id}; done | failed | disabled are final (ADR-0018)
+    explanation_status: ExplanationStatus
     next_to_learn: list[str]  # the role's first uncovered roadmap concepts, in learning order (not LLM-made)
     courses: list[CourseV1]
 
@@ -64,9 +67,11 @@ class RecommendationResponseV1(BaseModel):
             latency_ms=r.latency_ms,
             roles=[
                 RoleV1(
+                    role_id=role.role_id,
                     role=role.role,
                     score=role.score,
                     explanation=role.explanation,
+                    explanation_status=role.explanation_status,
                     next_to_learn=role.next_to_learn,
                     courses=[
                         CourseV1(

@@ -156,11 +156,13 @@ Primary key: `(model_id, concept_id, course_id)`. Unique: `(model_id, concept_id
 Index: `(created_at)`.
 
 ### `recommended_roles`
-`request_id` uuid → `recommendation_requests` ON DELETE CASCADE · `rank` smallint · `role_id` → `roles` · `score` real · `explanation` text · `prompt_version` text NULL (which prompt produced the role's explanations; ADR-0019).
+`request_id` uuid → `recommendation_requests` ON DELETE CASCADE · `rank` smallint · `role_id` → `roles` · `score` real · `explanation` text · `prompt_version` text NULL (which prompt produced the role's explanations; ADR-0019) · `next_concept_ids` bigint[] (the uncovered concepts shown, in learning order).
+
+**Explanation job columns** (ADR-0018; the rows are the queue): `explanation_status` text NOT NULL DEFAULT `pending`, CHECK in (`pending`, `done`, `failed`, `disabled`) · `explanation_input` jsonb NULL (exactly the facts the LLM gets) · `explanation_ms` int NULL · `explanation_attempts` smallint NOT NULL DEFAULT 0 (a job gives up after 3) · `explained_at` timestamptz NULL. Partial index `(request_id) WHERE explanation_status = 'pending'` for the startup re-queue.
 Primary key: `(request_id, rank)`. Unique: `(request_id, role_id)`.
 
 ### `recommended_courses`
-`request_id` · `role_id` · `rank` smallint · `course_id` → `courses` · `similarity` real · `explanation` text.
+`request_id` · `role_id` · `rank` smallint · `course_id` → `courses` · `similarity` real · `explanation` text · `concept_ids` bigint[] (the concepts the course was picked for).
 Primary key: `(request_id, role_id, rank)`. Foreign key: `(request_id, role_id)` → `recommended_roles (request_id, role_id)` ON DELETE CASCADE.
 
 ### `feedback`

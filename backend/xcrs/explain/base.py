@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from typing import Protocol
 
 
@@ -30,6 +30,22 @@ class RoleContext:
     covered_topics: list[str]
     next_to_learn: list[str]
     courses: list[CourseContext]
+
+    def to_dict(self) -> dict:
+        return asdict(self)
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "RoleContext":
+        """Rebuild a stored context (recommended_roles.explanation_input) for a background job."""
+        return cls(
+            role=data["role"],
+            score=data["score"],
+            known=[KnownItem(**k) for k in data["known"]],
+            curious=[KnownItem(**k) for k in data["curious"]],
+            covered_topics=list(data["covered_topics"]),
+            next_to_learn=list(data["next_to_learn"]),
+            courses=[CourseContext(**c) for c in data["courses"]],
+        )
 
 
 @dataclass

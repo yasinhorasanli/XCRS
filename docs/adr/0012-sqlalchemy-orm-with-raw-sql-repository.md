@@ -40,7 +40,7 @@ Migrations use Alembic ([ADR-0011](0011-alembic-schema-migrations.md)), which ca
 
 ## Trade-offs accepted
 
-- **N+1 risk.** Mitigated by explicit eager loading in the repository, plus tests that count the queries a repository function issues. *(Note 2026-09-29: not written yet; planned with the ADR-0018 read endpoint.)*
+- **N+1 risk.** Mitigated by explicit eager loading in the repository, plus tests that count the queries a repository function issues. *(Note 2026-09-29: not written yet; planned with the ADR-0018 read endpoint.)* *(Resolved 2026-09-30: `tests/test_explanation_jobs.py::test_reading_a_result_takes_a_fixed_number_of_queries` asserts that reading a result is 4 queries however many roles and courses it has.)*
 - **Two styles of data access** (ORM and raw SQL). Contained by the repository boundary.
 
 ## Revisit when

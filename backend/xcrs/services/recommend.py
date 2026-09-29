@@ -1,19 +1,26 @@
-"""The recommendation use case: orchestrates I/O adapters and pure domain functions (ADR-0017)."""
+"""The recommendation use case: orchestrates I/O adapters and pure domain functions (ADR-0017).
+
+Explanations don't happen here any more (ADR-0018): the service saves each role's explanation input
+and queues a job; the caller gets the recommendation immediately and reads explanations later.
+"""
 
 import logging
 import time
 import uuid
-from dataclasses import dataclass, field
+from collections.abc import Callable
 
 from sqlalchemy.orm import Session
 
-from xcrs.db.models import RecommendationRequest, RecommendedCourse, RecommendedRole
+from xcrs.db.models import EmbeddingModel
 from xcrs.domain import scoring, selection
+from xcrs.domain.results import CourseResult, ExplanationStatus, RecommendationResult, RoleResult
 from xcrs.domain.types import Category, CourseCandidate, Phrase, PhraseConceptMatch
 from xcrs.embeddings import embedder_for
-from xcrs.explain.base import CourseContext, Explainer, KnownItem, RoleContext
+from xcrs.embeddings.base import Embedder
+from xcrs.explain.base import CourseContext, KnownItem, RoleContext
+from xcrs.repository import activity, vectors
 from xcrs.repository import catalog as catalog_repo
-from xcrs.repository import vectors
+from xcrs.services.explanations import ExplanationQueue
 
 log = logging.getLogger(__name__)
 
@@ -22,35 +29,7 @@ THRESHOLD_SIGMA = 2.5
 EXPLAIN_MAX_ITEMS = 12
 NEXT_CONCEPTS = 8  # uncovered concepts returned per role, and given to the explanation LLM
 
-
-@dataclass
-class CourseResult:
-    course_id: int
-    title: str
-    url: str
-    similarity: float
-    concepts: list[str]
-    explanation: str | None = None
-
-
-@dataclass
-class RoleResult:
-    role_id: int
-    role: str
-    score: float
-    explanation: str | None = None
-    prompt_version: str | None = None
-    next_to_learn: list[str] = field(default_factory=list)  # decided by the algorithm, not the LLM
-    courses: list[CourseResult] = field(default_factory=list)
-
-
-@dataclass
-class RecommendationResult:
-    request_id: uuid.UUID
-    status: str  # ok | insufficient_input
-    model: str
-    roles: list[RoleResult]
-    latency_ms: int
+__all__ = ["CourseResult", "RecommendationResult", "RecommendationService", "RoleResult"]
 
 
 def to_phrases(user_input: dict[Category, list[str]]) -> list[Phrase]:
@@ -66,9 +45,15 @@ def to_phrases(user_input: dict[Category, list[str]]) -> list[Phrase]:
 
 
 class RecommendationService:
-    def __init__(self, session: Session, explainer: Explainer):
+    def __init__(
+        self,
+        session: Session,
+        explanations: ExplanationQueue | None,
+        embedder_factory: Callable[[EmbeddingModel], Embedder] = embedder_for,
+    ):
         self.session = session
-        self.explainer = explainer
+        self.explanations = explanations  # None: explanations are disabled
+        self.embedder_factory = embedder_factory
 
     def recommend(self, user_input: dict[Category, list[str]]) -> RecommendationResult:
         started = time.perf_counter()
@@ -77,8 +62,13 @@ class RecommendationService:
         phrases = to_phrases(user_input)
 
         roles: list[RoleResult] = []
+        contexts: dict[int, RoleContext] = {}
         if phrases:
-            roles = self._recommend(model, threshold, phrases)
+            roles, contexts = self._recommend(model, threshold, phrases)
+
+        status = ExplanationStatus.PENDING if self.explanations else ExplanationStatus.DISABLED
+        for role in roles:
+            role.explanation_status = status
 
         result = RecommendationResult(
             request_id=uuid.uuid4(),
@@ -87,14 +77,31 @@ class RecommendationService:
             roles=roles,
             latency_ms=round((time.perf_counter() - started) * 1000),
         )
-        self._save(model.id, threshold, user_input, result)
+        activity.save_recommendation(
+            self.session,
+            result,
+            model_id=model.id,
+            algorithm_version=ALGORITHM_VERSION,
+            threshold=threshold,
+            user_input={category.value: texts for category, texts in user_input.items()},
+            explanation_inputs={role_id: c.to_dict() for role_id, c in contexts.items()} if self.explanations else {},
+        )
+        # Queue only after the commit, so a worker never looks for rows that aren't there yet.
+        if self.explanations:
+            for role in roles:
+                self.explanations.submit(result.request_id, role.role_id)
         return result
 
-    def _recommend(self, model, threshold: float, phrases: list[Phrase]) -> list[RoleResult]:
+    def get(self, request_id: uuid.UUID) -> RecommendationResult | None:
+        return activity.load_recommendation(self.session, request_id)
+
+    def _recommend(
+        self, model: EmbeddingModel, threshold: float, phrases: list[Phrase]
+    ) -> tuple[list[RoleResult], dict[int, RoleContext]]:
         catalog = catalog_repo.load_roadmap_catalog(self.session)
 
         # 1. Embed the phrases and match them to roadmap concepts (exact threshold scan).
-        phrase_vectors = embedder_for(model).embed_query([p.text for p in phrases])
+        phrase_vectors = self.embedder_factory(model).embed_query([p.text for p in phrases])
         matches = [
             PhraseConceptMatch(phrases[m.phrase_index], m.concept_id, catalog.concept_roles[m.concept_id], m.similarity)
             for m in vectors.concepts_above_threshold(self.session, model, phrase_vectors, threshold)
@@ -103,7 +110,7 @@ class RecommendationService:
         # 2. Score roles (pure).
         role_scores = scoring.score_roles(matches, catalog.concept_roles, catalog.concepts_per_role)
         if not role_scores:
-            return []
+            return [], {}
 
         # 3. Concepts each role's courses should target (pure).
         targets: dict[int, list[int]] = {}
@@ -124,20 +131,34 @@ class RecommendationService:
         picks = {rs.role_id: selection.pick_courses(targets[rs.role_id], candidates, penalized) for rs in role_scores}
         courses = catalog_repo.courses_by_id(self.session, sorted({p.course_id for ps in picks.values() for p in ps}))
 
-        results = []
+        results, contexts = [], {}
         for rs in role_scores:
-            role = RoleResult(rs.role_id, catalog.role_names[rs.role_id], rs.score)
-            role.next_to_learn = [catalog.node_names[c] for c in targets[rs.role_id][:NEXT_CONCEPTS]]
+            next_ids = targets[rs.role_id][:NEXT_CONCEPTS]
+            role = RoleResult(
+                rs.role_id,
+                catalog.role_names[rs.role_id],
+                rs.score,
+                next_to_learn=[catalog.node_names[c] for c in next_ids],
+                next_concept_ids=next_ids,
+            )
             for p in picks[rs.role_id]:
                 c = courses[p.course_id]
                 role.courses.append(
-                    CourseResult(c.id, c.title, c.url, p.similarity, [catalog.node_names[i] for i in p.concept_ids])
+                    CourseResult(
+                        c.id,
+                        c.title,
+                        c.url,
+                        p.similarity,
+                        [catalog.node_names[i] for i in p.concept_ids],
+                        concept_ids=list(p.concept_ids),
+                    )
                 )
-            self._explain(role, matches, courses, catalog)
+            contexts[rs.role_id] = self._context(role, matches, courses, catalog)
             results.append(role)
-        return results
+        return results, contexts
 
-    def _explain(self, role: RoleResult, matches, courses, catalog) -> None:
+    def _context(self, role: RoleResult, matches, courses, catalog) -> RoleContext:
+        """The facts an explanation may draw on for this role, and nothing else (ADR-0019)."""
         role_matches = sorted((m for m in matches if m.role_id == role.role_id), key=lambda m: -m.similarity)
 
         def items(taken: bool) -> list[KnownItem]:
@@ -151,7 +172,7 @@ class RecommendationService:
 
         known_concepts = [m.concept_id for m in role_matches if m.phrase.category.is_taken]
         topics = selection.covered_topics(known_concepts, catalog.concept_ancestors, catalog.concepts_per_topic)
-        context = RoleContext(
+        return RoleContext(
             role=role.role,
             score=role.score,
             known=items(taken=True),
@@ -169,47 +190,3 @@ class RecommendationService:
                 for c in role.courses
             ],
         )
-        explanation = self.explainer.explain(context)
-        role.explanation = explanation.role_explanation
-        role.prompt_version = explanation.prompt_version
-        for c in role.courses:
-            c.explanation = explanation.course_explanations.get(c.course_id)
-
-    def _save(self, model_id: int, threshold: float, user_input, result: RecommendationResult) -> None:
-        self.session.add(
-            RecommendationRequest(
-                id=result.request_id,
-                model_id=model_id,
-                algorithm_version=ALGORITHM_VERSION,
-                threshold_used=threshold,
-                input={category.value: texts for category, texts in user_input.items()},
-                status=result.status,
-                latency_ms=result.latency_ms,
-            )
-        )
-        self.session.flush()  # the request row must exist before its roles (foreign key)
-        for rank, role in enumerate(result.roles, start=1):
-            self.session.add(
-                RecommendedRole(
-                    request_id=result.request_id,
-                    rank=rank,
-                    role_id=role.role_id,
-                    score=role.score,
-                    explanation=role.explanation,
-                    prompt_version=role.prompt_version,
-                )
-            )
-        self.session.flush()
-        for role in result.roles:
-            for rank, c in enumerate(role.courses, start=1):
-                self.session.add(
-                    RecommendedCourse(
-                        request_id=result.request_id,
-                        role_id=role.role_id,
-                        rank=rank,
-                        course_id=c.course_id,
-                        similarity=c.similarity,
-                        explanation=c.explanation,
-                    )
-                )
-        self.session.commit()

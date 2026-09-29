@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     llm_timeout_s: float = 180.0
     llm_disable_thinking: bool = True
     llm_api_key: str | None = None  # only for hosted endpoints; Ollama needs none
+    explain_threads: int = 1  # background explanation workers (ADR-0018); 1 suits a CPU-bound LLM
 
 
 @lru_cache
