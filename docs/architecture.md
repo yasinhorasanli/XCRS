@@ -37,6 +37,7 @@ Decided so far:
 - **API contract:** one versioned endpoint, `POST /api/v1/recommendations`, with structured lists instead of comma-separated text; the model comes from the registry, not the URL. [ADR-0016](adr/0016-versioned-structured-recommendation-api.md)
 - **Backend structure:** `api/` → `services/` → pure `domain/` plus adapters (`repository/`, `embeddings/`, `explain/`). [ADR-0017](adr/0017-layered-backend-with-pure-domain.md)
 - **Explanations (accepted, not built yet):** the response returns roles and courses immediately; explanations are generated in the background, one LLM call per role, and the UI polls for them. [ADR-0018](adr/0018-decoupled-per-role-explanations.md)
+- **Explanation layer:** LangChain chain (prompt template → `ChatOpenAI` on any OpenAI-compatible server → structured output), grounded in the algorithm's actual reasons; the algorithm decides, the LLM explains. A LangChain retriever wraps our own pgvector SQL. [ADR-0019](adr/0019-explanation-layer-on-langchain.md)
 
 ```
 Browser ──► Frontend (TBD)
@@ -62,7 +63,8 @@ Browser ──► Nuxt 3 (prototype UI; server route adapts comma-separated inpu
            adapters:
              embeddings/ ──► Ollama  qwen3-embedding:0.6b   (native, Apple GPU)
              repository/ ──► PostgreSQL 18 + pgvector 0.8   (Docker)
-             explain/    ──► Ollama  qwen3.5:9b             (one call per role, inline for now)
+             explain/    ──► Ollama  qwen3.5:9b             (LangChain chain, one call per role, inline for now)
+           retrieval.py  LangChain retriever over repository/ (xcrs search-courses; future chat tool)
 
 Offline: uv run xcrs import-prototype | register-model | embed-catalog
          (catalog vectors, threshold statistics, top-20 concept → course matches)
@@ -70,4 +72,4 @@ Offline: uv run xcrs import-prototype | register-model | embed-catalog
 
 The prototype (`backend/src/`, `embedding-generation/`) stays runnable next to it until the quality comparison passes. First measurements are in [baseline.md](baseline.md#new-system-first-measurements).
 
-Still open: the explanation contract (to be recorded as ADR-0019), the production explanation model (ADR-0020, after a CPU benchmark), threshold calibration for user phrases, frontend framework, LLM orchestration, CI/CD, and the cloud target. See [adr/README.md](adr/README.md#upcoming-decisions).
+Still open: the production explanation model (ADR-0020, after a CPU benchmark), threshold calibration for user phrases, frontend framework, a chat/agent feature and LLM tracing, CI/CD, and the cloud target. See [adr/README.md](adr/README.md#upcoming-decisions).

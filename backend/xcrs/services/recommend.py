@@ -20,7 +20,7 @@ log = logging.getLogger(__name__)
 ALGORITHM_VERSION = "1.0.0"  # prototype algorithm, ported (see domain/)
 THRESHOLD_SIGMA = 2.5
 EXPLAIN_MAX_ITEMS = 12
-EXPLAIN_NEXT_CONCEPTS = 8
+NEXT_CONCEPTS = 8  # uncovered concepts returned per role, and given to the explanation LLM
 
 
 @dataclass
@@ -39,6 +39,8 @@ class RoleResult:
     role: str
     score: float
     explanation: str | None = None
+    prompt_version: str | None = None
+    next_to_learn: list[str] = field(default_factory=list)  # decided by the algorithm, not the LLM
     courses: list[CourseResult] = field(default_factory=list)
 
 
@@ -125,16 +127,17 @@ class RecommendationService:
         results = []
         for rs in role_scores:
             role = RoleResult(rs.role_id, catalog.role_names[rs.role_id], rs.score)
+            role.next_to_learn = [catalog.node_names[c] for c in targets[rs.role_id][:NEXT_CONCEPTS]]
             for p in picks[rs.role_id]:
                 c = courses[p.course_id]
                 role.courses.append(
                     CourseResult(c.id, c.title, c.url, p.similarity, [catalog.node_names[i] for i in p.concept_ids])
                 )
-            self._explain(role, matches, targets[rs.role_id], courses, catalog)
+            self._explain(role, matches, courses, catalog)
             results.append(role)
         return results
 
-    def _explain(self, role: RoleResult, matches, targets, courses, catalog) -> None:
+    def _explain(self, role: RoleResult, matches, courses, catalog) -> None:
         role_matches = sorted((m for m in matches if m.role_id == role.role_id), key=lambda m: -m.similarity)
 
         def items(taken: bool) -> list[KnownItem]:
@@ -154,7 +157,7 @@ class RecommendationService:
             known=items(taken=True),
             curious=items(taken=False),
             covered_topics=[catalog.node_names[t] for t in topics],
-            next_to_learn=[catalog.node_names[c] for c in targets[:EXPLAIN_NEXT_CONCEPTS]],
+            next_to_learn=role.next_to_learn,
             courses=[
                 CourseContext(
                     c.course_id,
@@ -168,6 +171,7 @@ class RecommendationService:
         )
         explanation = self.explainer.explain(context)
         role.explanation = explanation.role_explanation
+        role.prompt_version = explanation.prompt_version
         for c in role.courses:
             c.explanation = explanation.course_explanations.get(c.course_id)
 
@@ -192,6 +196,7 @@ class RecommendationService:
                     role_id=role.role_id,
                     score=role.score,
                     explanation=role.explanation,
+                    prompt_version=role.prompt_version,
                 )
             )
         self.session.flush()

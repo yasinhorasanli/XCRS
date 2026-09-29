@@ -4,6 +4,7 @@ uv run xcrs import-prototype
 uv run xcrs register-model qwen3-embedding:0.6b --id 1 --status active
 uv run xcrs embed-catalog qwen3-embedding:0.6b
 uv run xcrs search "Docker"
+uv run xcrs search-courses "Docker"
 """
 
 import argparse
@@ -17,6 +18,7 @@ from xcrs.db.session import new_session
 from xcrs.embeddings import embedder_for
 from xcrs.ingest import embed_catalog, import_prototype
 from xcrs.repository import vectors
+from xcrs.retrieval import CourseRetriever
 
 # Known model settings, so registration doesn't depend on remembering prefixes.
 # Qwen3-Embedding expects an instruction on queries and nothing on documents (model card).
@@ -78,6 +80,15 @@ def cmd_search(args) -> None:
             print(f"  {m.similarity:.3f}  {names[m.concept_id]}")
 
 
+def cmd_search_courses(args) -> None:
+    """Smoke test for the LangChain retriever: courses nearest to a phrase (k-NN via the HNSW index)."""
+    with new_session() as session:
+        model = embed_catalog.get_model(session, args.model)
+        retriever = CourseRetriever(session=session, model=model, embedder=embedder_for(model), k=args.limit)
+        for doc in retriever.invoke(args.phrase):
+            print(f"  {doc.metadata['similarity']:.3f}  {doc.metadata['title']}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(prog="xcrs")
     sub = parser.add_subparsers(required=True)
@@ -101,6 +112,12 @@ def main() -> None:
     p.add_argument("--sigma", type=float, default=2.5)
     p.add_argument("--limit", type=int, default=15)
     p.set_defaults(func=cmd_search)
+
+    p = sub.add_parser("search-courses", help="smoke test: courses nearest to a phrase (LangChain retriever)")
+    p.add_argument("phrase")
+    p.add_argument("--model", default="qwen3-embedding:0.6b")
+    p.add_argument("--limit", type=int, default=10)
+    p.set_defaults(func=cmd_search_courses)
 
     args = parser.parse_args()
     args.func(args)

@@ -36,6 +36,7 @@ class RoleContext:
 class RoleExplanation:
     role_explanation: str | None = None
     course_explanations: dict[int, str] = field(default_factory=dict)
+    prompt_version: str | None = None  # set only when an explanation was actually produced
 
 
 class Explainer(Protocol):

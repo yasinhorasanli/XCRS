@@ -35,7 +35,7 @@ Local model servers (Ollama, Hugging Face TEI, vLLM, llama.cpp) all expose an **
 
 **Option C.** The application depends only on an `Embedder` interface (`model_id`, `dimensions`, `embed_documents`, `embed_query`). The first implementation is an OpenAI-compatible HTTP adapter configured with environment variables.
 
-**LangChain is deferred** to the explanation-LLM decision, where it offers more (model swapping, structured output, LangGraph). If it's adopted then, it becomes one more adapter behind this interface, and no rewrite is needed. LangChain's vector-store abstraction won't be used either way; pgvector is queried with SQL.
+**LangChain is deferred** to the explanation-LLM decision, where it offers more (model swapping, structured output, LangGraph). If it's adopted then, it becomes one more adapter behind this interface, and no rewrite is needed. LangChain's vector-store abstraction won't be used either way; pgvector is queried with SQL. *(Note 2026-09-30: the explanation layer adopted LangChain in [ADR-0019](0019-explanation-layer-on-langchain.md); embeddings stay on this interface, and its retriever wraps our own SQL, not LangChain's vector store.)*
 
 ## Trade-offs accepted
 

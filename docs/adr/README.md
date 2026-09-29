@@ -22,14 +22,14 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0016](0016-versioned-structured-recommendation-api.md) | Versioned recommendation API with structured input | Accepted | 2026-09-29 |
 | [0017](0017-layered-backend-with-pure-domain.md) | Layered backend with a pure domain core | Accepted | 2026-09-29 |
 | [0018](0018-decoupled-per-role-explanations.md) | Explanations generated after the response, one LLM call per role | Accepted | 2026-09-29 |
+| [0019](0019-explanation-layer-on-langchain.md) | Explanation layer on LangChain, with a grounded contract; retriever over our own SQL | Accepted | 2026-09-30 |
 
 ## Upcoming decisions
 
-- ADR-0019: Explanation LLM contract: structured grounded input, JSON-schema output, own `Explainer` interface (built in `backend/xcrs/explain/`, to be recorded)
 - ADR-0020: Explanation LLM model for production (CPU VM now, GPU later), after a CPU benchmark
 - Threshold calibration for user phrases (the open issue in ADR-0010), during the prototype-vs-new comparison
 - Frontend framework
 - (Later) Data quality: enriching user input, richer generated roadmaps, prerequisite graph and roadmap visualization
 - User input collection redesign (clickable suggested phrases instead of comma-separated text); afterwards, normalize the request input (ADR-0013)
-- LLM orchestration (plain SDKs vs LangChain/LangGraph)
+- Chat/agent feature (LangGraph) and LLM tracing (LangSmith or self-hosted); see ADR-0019
 - CI/CD and the cloud deployment target

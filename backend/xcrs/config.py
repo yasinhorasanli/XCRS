@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     llm_model: str = "qwen3.5:9b"
     llm_timeout_s: float = 180.0
     llm_disable_thinking: bool = True
+    llm_api_key: str | None = None  # only for hosted endpoints; Ollama needs none
 
 
 @lru_cache

@@ -156,7 +156,7 @@ Primary key: `(model_id, concept_id, course_id)`. Unique: `(model_id, concept_id
 Index: `(created_at)`.
 
 ### `recommended_roles`
-`request_id` uuid → `recommendation_requests` ON DELETE CASCADE · `rank` smallint · `role_id` → `roles` · `score` real · `explanation` text.
+`request_id` uuid → `recommendation_requests` ON DELETE CASCADE · `rank` smallint · `role_id` → `roles` · `score` real · `explanation` text · `prompt_version` text NULL (which prompt produced the role's explanations; ADR-0019).
 Primary key: `(request_id, rank)`. Unique: `(request_id, role_id)`.
 
 ### `recommended_courses`

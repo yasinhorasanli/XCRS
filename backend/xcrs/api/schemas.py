@@ -44,6 +44,7 @@ class RoleV1(BaseModel):
     role: str
     score: float
     explanation: str | None
+    next_to_learn: list[str]  # the role's first uncovered roadmap concepts, in learning order (not LLM-made)
     courses: list[CourseV1]
 
 
@@ -66,6 +67,7 @@ class RecommendationResponseV1(BaseModel):
                     role=role.role,
                     score=role.score,
                     explanation=role.explanation,
+                    next_to_learn=role.next_to_learn,
                     courses=[
                         CourseV1(
                             course_id=c.course_id,

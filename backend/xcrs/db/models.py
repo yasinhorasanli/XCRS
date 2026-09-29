@@ -191,6 +191,7 @@ class RecommendedRole(Base):
     role_id: Mapped[int] = mapped_column(SmallInteger, ForeignKey("roles.id"))
     score: Mapped[float]
     explanation: Mapped[str | None] = mapped_column(Text)
+    prompt_version: Mapped[str | None] = mapped_column(Text)  # covers the role's course explanations too
 
 
 class RecommendedCourse(Base):
