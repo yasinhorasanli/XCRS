@@ -50,6 +50,7 @@ class LangChainExplainer:
         timeout_s: float = 120.0,
         disable_thinking: bool = True,
         api_key: str | None = None,
+        max_tokens: int = 700,
     ):
         llm = ChatOpenAI(
             base_url=base_url,
@@ -57,6 +58,7 @@ class LangChainExplainer:
             api_key=api_key or "not-needed",  # local servers ignore it; the client requires a value
             temperature=0.1,
             timeout=timeout_s,
+            max_tokens=max_tokens,  # stops a runaway generation; a truncated answer fails validation and degrades
             max_retries=0,  # a retry doubles a slow CPU generation; failures degrade instead
             reasoning_effort="none" if disable_thinking else None,  # reasoning models: answer directly
             use_responses_api=False,  # plain chat completions, which every OpenAI-compatible server has
@@ -70,7 +72,9 @@ class LangChainExplainer:
                 {"system": build_system_prompt(payload), "payload": json.dumps(payload, ensure_ascii=False)}
             )
             return to_explanation(out, context)
-        except (openai.APIError, ValueError) as exc:  # ValueError covers invalid JSON and schema mismatches
+        # OpenAIError covers HTTP errors and an answer cut off at max_tokens (LengthFinishReasonError);
+        # ValueError covers invalid JSON and schema mismatches.
+        except (openai.OpenAIError, ValueError) as exc:
             # Explanations enrich a recommendation; a failure must not lose the recommendation.
             log.warning("explanation failed for role %s: %s", context.role, exc)
             return RoleExplanation()

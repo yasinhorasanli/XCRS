@@ -80,6 +80,23 @@ MacBook Pro M4 Pro, Ollama on the Apple GPU, 2026-09-28/29. **These are not prod
 | **Response time with explanations in the background** ([ADR-0018](adr/0018-decoupled-per-role-explanations.md), 2026-09-30) | **0.77 s** (server 685 ms), down from 31.5 s with explanations inline; all 3 roles explained ~29 s later (7.9–12.3 s each) |
 | Restart during an explanation job | both roles re-queued on startup and finished; the interrupted one on its 2nd attempt |
 
+### Explanation model, per device (ADR-0020, 2026-09-30)
+
+Same prompt and schema as the app; inputs from 15 synthetic profiles. CPU = Ollama with `num_gpu=0`, 10 threads on the M4 Pro (a best case for the VM).
+
+| Model / device | Median s per role | Decode tok/s | Clean (heuristic grounding checks) |
+|---|---|---|---|
+| `qwen3.5:9b` / GPU | 8.3 | 38.5 | 80% |
+| `qwen3.5:9b` / CPU | 57.9 | 7.1 | 67% |
+| `qwen3.5:4b` / GPU | 11.0 | 24.5 | 68% |
+| `qwen3.5:4b` / CPU | 33.6 | 10.8 | 73% |
+
+Request-path embedding (10 phrases) while an explanation generates on the **same CPU**: ~100 ms → **~20 s**. That's why embeddings and the explanation LLM run on different VMs.
+
+### Phrase matching (ADR-0022)
+
+50 profile phrases at the 2.5σ threshold: **8 matched nothing** with algorithm 1.0.0 (e.g. "Python", "Spring Boot"); **1** with the fallback (1.1.0).
+
 ### Before → after
 
 | Item | Prototype | New system |

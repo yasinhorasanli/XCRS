@@ -39,7 +39,7 @@
 ## Decision
 
 1. **Now: everything runs locally on the Mac.** Ollama runs **natively** (for Metal GPU acceleration). Postgres + pgvector and the backend run in **Docker Compose** and reach Ollama at `http://host.docker.internal:11434`. *(Corrected 2026-09-29: in development only Postgres runs in Docker Compose. The backend runs natively with `uv run uvicorn` for fast reloads and reaches Ollama at `localhost:11434`. The backend gets a container image for the VMs.)*
-2. **Target: Option A.** VM-B runs Ollama; VM-A runs Postgres, the backend and the frontend.
+2. **Target: Option A.** VM-B runs Ollama; VM-A runs Postgres, the backend and the frontend. *(Note 2026-09-30: refined by [ADR-0020](0020-explanation-model-per-hardware.md): on CPU, an explanation job made request-path embeddings ~200× slower on the same machine, so the embedding model runs on VM-A and VM-B runs only the explanation LLM.)*
    - **Ollama listens only on the private network between the VMs,** firewalled to VM-A, and is never exposed publicly.
    - Compose files are organized so each VM runs only its own services.
    - The model's location is a single environment variable (the embedding base URL). *(Corrected 2026-09-29: two variables, `XCRS_EMBEDDING_BASE_URL` and `XCRS_LLM_BASE_URL`, so the explanation LLM can move to another host, such as the GPU, on its own.)*

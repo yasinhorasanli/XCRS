@@ -2,6 +2,7 @@
 
 import openai
 from langchain_core.runnables import RunnableLambda
+from openai.types.chat import ChatCompletion
 
 from xcrs.explain.base import CourseContext, KnownItem, RoleContext
 from xcrs.explain.llm import CourseExplanationOut, LangChainExplainer, RoleExplanationOut, to_explanation
@@ -92,3 +93,12 @@ def test_invalid_model_output_degrades_to_no_explanation():
         raise ValueError("model returned JSON that doesn't match the schema")
 
     assert explainer_returning(invalid_output).explain(context(curious=[])).role_explanation is None
+
+
+def test_answer_cut_off_at_the_token_cap_degrades_to_no_explanation():
+    """A runaway generation hits max_tokens; the client raises LengthFinishReasonError (not an APIError)."""
+
+    def truncated(_inputs):
+        raise openai.LengthFinishReasonError(completion=ChatCompletion.model_construct(usage=None))
+
+    assert explainer_returning(truncated).explain(context(curious=[])).role_explanation is None

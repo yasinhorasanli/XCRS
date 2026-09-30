@@ -22,6 +22,9 @@ class Settings(BaseSettings):
     llm_timeout_s: float = 180.0
     llm_disable_thinking: bool = True
     llm_api_key: str | None = None  # only for hosted endpoints; Ollama needs none
+    # Cap on generated tokens. Answers need ~200–350 (benchmark median 201–244). Insurance against a known
+    # failure mode of small models in JSON mode (endless whitespace), which would hold the worker until the timeout.
+    llm_max_tokens: int = 700
     explain_threads: int = 1  # background explanation workers (ADR-0018); 1 suits a CPU-bound LLM
 
 

@@ -13,4 +13,5 @@ def get_explainer() -> Explainer:
         timeout_s=settings.llm_timeout_s,
         disable_thinking=settings.llm_disable_thinking,
         api_key=settings.llm_api_key,
+        max_tokens=settings.llm_max_tokens,
     )

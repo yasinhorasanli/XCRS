@@ -44,8 +44,11 @@ def build_cases(max_roles: int) -> list[tuple[str, str, RoleContext, int]]:
     return cases
 
 
+MAX_TOKENS = 700  # same cap as the app (XCRS_LLM_MAX_TOKENS); hitting it means a runaway generation
+
+
 def options(device: str, threads: int) -> dict:
-    opts = {"temperature": 0.1}
+    opts = {"temperature": 0.1, "num_predict": MAX_TOKENS}
     if device == "cpu":
         opts |= {"num_gpu": 0, "num_thread": threads}
     return opts
@@ -152,11 +155,14 @@ def main() -> None:
                         / max(r.get("prompt_eval_duration", 1) / NS, 1e-9),
                         "decode_tok_s": r["eval_count"] / (r["eval_duration"] / NS),
                     }
-                    try:
-                        out = RoleExplanationOut.model_validate_json(r["message"]["content"])
-                        run |= {"flags": grounding_flags(context, out), "output": out.model_dump()}
-                    except ValidationError:
-                        run |= {"flags": ["invalid_json"], "output": r["message"]["content"]}
+                    if r["eval_count"] >= MAX_TOKENS:
+                        run |= {"flags": ["runaway"], "output": r["message"]["content"][:2000]}
+                    else:
+                        try:
+                            out = RoleExplanationOut.model_validate_json(r["message"]["content"])
+                            run |= {"flags": grounding_flags(context, out), "output": out.model_dump()}
+                        except ValidationError:
+                            run |= {"flags": ["invalid_json"], "output": r["message"]["content"]}
                 except httpx.HTTPError as exc:
                     run["error"] = str(exc)
                 runs.append(run)
