@@ -55,7 +55,7 @@ Browser ──► Frontend (TBD)
                                                       ◄── scraper / roadmap generator (future)
 ```
 
-## New system (running locally on the MacBook, 2026-09-29)
+## New system (runs locally on the MacBook, natively or in containers; 2026-09-30)
 
 ```
 Browser ──► Nuxt 3 (skill board + linked results; the Nuxt server proxies /api/v1/** to the API)

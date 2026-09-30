@@ -2,7 +2,7 @@
 
 XCRS recommends **career roles** and **online courses** based on what you have already learned and what you are curious about. It also explains, in plain language, **why** it recommends each role and course.
 
-> **Status:** the `modernization` branch is a work in progress. The goal is to make XCRS production-ready (cloud deployment, a proper data layer, CI/CD, and a new UI). The system described below is the current, research-prototype version.
+> **Status:** the `modernization` branch is a work in progress toward a production-ready, self-hosted XCRS. The sections below describe the original research prototype; the [new system](#new-system-in-progress-modernization-branch) section describes what replaces it.
 
 ---
 
@@ -80,9 +80,13 @@ The research prototype runs the same pipeline with five embedding providers so t
 
 ---
 
-## New backend (in progress, `modernization` branch)
+## New system (in progress, `modernization` branch)
 
-The modernized data layer runs locally with PostgreSQL + pgvector in Docker and a self-hosted embedding model in [Ollama](https://ollama.com). Design decisions are recorded in [`docs/adr/`](docs/adr/README.md); the schema is in [`docs/schema.md`](docs/schema.md).
+The modernized system runs locally with PostgreSQL + pgvector, a self-hosted embedding model and a local LLM in [Ollama](https://ollama.com), a layered FastAPI backend and a new UI. Recommendations return in under a second; explanations arrive in the background. Design decisions are recorded in [`docs/adr/`](docs/adr/README.md); the architecture is in [`docs/architecture.md`](docs/architecture.md), the schema in [`docs/schema.md`](docs/schema.md), and measurements in [`docs/baseline.md`](docs/baseline.md).
+
+| Tell it what you know | See roles, courses and why |
+|---|---|
+| ![Skill board: drag skills into four categories, with suggestions related to what you added](docs/images/home.png) | ![Results: career roles linked to their courses, with explanations](docs/images/results.png) |
 
 ```bash
 brew install ollama uv
@@ -101,7 +105,7 @@ uv run xcrs search-courses "Docker"       # nearest courses via the LangChain re
 uv run pytest
 
 # explanations: a local LLM through Ollama (optional; recommendations work without it)
-ollama pull qwen3.5:9b
+ollama pull qwen3.5:9b                    # on a CPU-only machine: qwen3.5:4b (ADR-0020)
 
 # run the API and the UI (skill board → linked results)
 uv run uvicorn xcrs.api.app:app --port 8000   # API docs: http://localhost:8000/docs
@@ -115,7 +119,9 @@ docker compose --profile app up -d --build      # postgres + api (:8000) + web (
 docker compose run --rm api alembic upgrade head
 ```
 
-CI (GitHub Actions, `.github/workflows/ci.yml`) runs Ruff, the migrations, the tests, the frontend build and both image builds on every push.
+CI (GitHub Actions, `.github/workflows/ci.yml`) runs Ruff, the migrations (up, down, up), the tests, the frontend type check and build, and both image builds on every push.
+
+Evaluation tools (`backend/eval/`): `uv run python eval/bench_explainer.py` (explanation speed and grounding per model and device) and `uv run python eval/compare_prototype.py` (prototype-vs-new comparison and threshold diagnostics).
 
 ## Running the research prototype
 
