@@ -15,7 +15,9 @@ COPY pyproject.toml uv.lock ./
 RUN --mount=type=cache,target=/root/.cache/uv uv sync --locked --no-dev --no-install-project
 
 COPY xcrs ./xcrs
-RUN --mount=type=cache,target=/root/.cache/uv uv sync --locked --no-dev --no-editable
+# --reinstall-package: uv caches our own wheel keyed on pyproject.toml, not on the source files, so without it
+# a rebuilt image can silently ship the previous build's code.
+RUN --mount=type=cache,target=/root/.cache/uv uv sync --locked --no-dev --no-editable --reinstall-package xcrs
 
 
 FROM python:3.13-slim
