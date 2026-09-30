@@ -114,3 +114,28 @@ def courses_similar_to(
         },
     ).all()
     return {r.course_id for r in rows}
+
+
+def nearest_concepts(session: Session, model: EmbeddingModel, phrase_vectors: list, k: int) -> list[ConceptMatch]:
+    """The k nearest concepts to each phrase (exact; concepts are few, ADR-0010). For suggestions."""
+    rows = session.execute(
+        text("""
+            WITH phrases AS MATERIALIZED (
+                SELECT idx - 1 AS phrase_index, vec::vector AS vec
+                FROM   unnest(CAST(:vectors AS text[])) WITH ORDINALITY AS p(vec, idx)
+            )
+            SELECT p.phrase_index, x.concept_id, x.similarity
+            FROM   phrases p
+            CROSS  JOIN LATERAL (
+                SELECT e.node_id AS concept_id, 1 - (e.embedding <=> p.vec) AS similarity
+                FROM   node_embeddings e
+                JOIN   roadmap_nodes n ON n.id = e.node_id AND n.type = 'concept'
+                WHERE  e.model_id = :model_id
+                ORDER  BY e.embedding <=> p.vec
+                LIMIT  :k
+            ) x
+            ORDER  BY p.phrase_index, x.similarity DESC
+        """),
+        {"vectors": [_vector_literal(v) for v in phrase_vectors], "model_id": model.id, "k": k},
+    ).all()
+    return [ConceptMatch(r.phrase_index, r.concept_id, r.similarity) for r in rows]

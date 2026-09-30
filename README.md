@@ -103,7 +103,7 @@ uv run pytest
 # explanations: a local LLM through Ollama (optional; recommendations work without it)
 ollama pull qwen3.5:9b
 
-# run the API and the (temporary) Nuxt UI
+# run the API and the UI (skill board → linked results)
 uv run uvicorn xcrs.api.app:app --port 8000   # API docs: http://localhost:8000/docs
 cd ../frontend && pnpm install && pnpm run dev # UI:       http://localhost:3000
 ```

@@ -43,3 +43,4 @@ class RecommendationResult:
     model: str
     roles: list[RoleResult]
     latency_ms: int  # the response only; explanation time is per role (explanation_ms)
+    input: dict[str, list[str]] = field(default_factory=dict)  # what the learner entered, by category

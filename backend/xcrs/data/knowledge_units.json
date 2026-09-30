@@ -1,0 +1,20 @@
+{
+  "_about": "Curated starter suggestions for the input page, grouped for browsing. Moved from the prototype UI's hardcoded cheatsheet (frontend/pages/index.vue). Search also covers every roadmap concept.",
+  "groups": [
+    {"name": "Programming languages", "units": ["Python", "Java", "JavaScript", "TypeScript", "C", "C++", "C#", "Go", "Rust", "Kotlin", "Swift", "Ruby", "PHP", "SQL", "R", "MATLAB", "Shell scripting"]},
+    {"name": "Web development", "units": ["HTML", "CSS", "React", "Angular", "Vue.js", "Next.js", "Node.js", "Express.js", "Django", "Flask", "Spring Boot", "ASP.NET", "Ruby on Rails", "REST APIs", "GraphQL", "Web security"]},
+    {"name": "Mobile", "units": ["Android development", "iOS development", "Jetpack Compose", "SwiftUI", "React Native", "Flutter", "Mobile app security"]},
+    {"name": "Software engineering", "units": ["Object-oriented programming", "Design patterns", "Agile", "Version control (Git)", "Software testing", "Test-driven development", "Microservices", "System design", "Clean code"]},
+    {"name": "Algorithms and data structures", "units": ["Data structures", "Algorithms", "Complexity analysis", "Sorting and searching", "Graph theory", "Dynamic programming", "Recursion", "Trees", "Hash tables"]},
+    {"name": "Databases", "units": ["Relational databases", "PostgreSQL", "MySQL", "MongoDB", "Redis", "Elasticsearch", "Database design", "NoSQL", "Data warehousing"]},
+    {"name": "Systems and networks", "units": ["Linux", "Operating systems", "Computer networks", "TCP/IP", "DNS", "HTTP", "Process management", "Memory management"]},
+    {"name": "Cloud and DevOps", "units": ["Docker", "Kubernetes", "AWS", "Azure", "Google Cloud", "CI/CD", "Terraform", "Ansible", "Monitoring", "Serverless"]},
+    {"name": "Security", "units": ["Cybersecurity fundamentals", "Cryptography", "Network security", "Penetration testing", "Authentication", "OWASP"]},
+    {"name": "Data and AI", "units": ["Machine learning", "Deep learning", "Neural networks", "Natural language processing", "Computer vision", "Statistics", "Probability", "Data analysis", "Data visualization", "Pandas", "NumPy", "PyTorch", "TensorFlow", "Scikit-learn", "Large language models"]},
+    {"name": "Games and graphics", "units": ["Game development", "Unity", "Unreal Engine", "Computer graphics", "OpenGL", "Shaders", "Game physics", "3D math"]},
+    {"name": "Quality and testing", "units": ["Manual testing", "Test automation", "Selenium", "Cypress", "Unit testing", "Performance testing", "API testing"]},
+    {"name": "Design and product", "units": ["UX design", "UI design", "User research", "Figma", "Prototyping", "Accessibility", "Usability testing"]},
+    {"name": "Blockchain", "units": ["Blockchain", "Smart contracts", "Solidity", "Ethereum", "Web3", "Cryptocurrency"]},
+    {"name": "Theory", "units": ["Discrete mathematics", "Linear algebra", "Automata theory", "Compiler design", "Computation theory", "Distributed systems", "Parallel programming", "Functional programming"]}
+  ]
+}

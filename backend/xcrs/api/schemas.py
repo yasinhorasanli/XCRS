@@ -1,9 +1,11 @@
 """HTTP request/response models for /api/v1 (ADR-0016)."""
 
 import uuid
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
+from xcrs.domain.labels import display_label
 from xcrs.domain.results import ExplanationStatus, RecommendationResult
 from xcrs.domain.types import Category
 
@@ -56,6 +58,7 @@ class RecommendationResponseV1(BaseModel):
     status: str
     model: str
     latency_ms: int
+    input: dict[str, list[str]]  # what the learner entered, by category
     roles: list[RoleV1]
 
     @classmethod
@@ -65,6 +68,7 @@ class RecommendationResponseV1(BaseModel):
             status=r.status,
             model=r.model,
             latency_ms=r.latency_ms,
+            input=r.input,
             roles=[
                 RoleV1(
                     role_id=role.role_id,
@@ -72,14 +76,14 @@ class RecommendationResponseV1(BaseModel):
                     score=role.score,
                     explanation=role.explanation,
                     explanation_status=role.explanation_status,
-                    next_to_learn=role.next_to_learn,
+                    next_to_learn=[display_label(n) for n in role.next_to_learn],
                     courses=[
                         CourseV1(
                             course_id=c.course_id,
                             title=c.title,
                             url=c.url,
                             explanation=c.explanation,
-                            concepts=c.concepts,
+                            concepts=[display_label(n) for n in c.concepts],
                             similarity=round(c.similarity, 4),
                         )
                         for c in role.courses
@@ -88,3 +92,46 @@ class RecommendationResponseV1(BaseModel):
                 for role in r.roles
             ],
         )
+
+
+class FeedbackV1(BaseModel):
+    """Thumbs up (1) or down (-1) on a role, a course, or the whole result."""
+
+    role_id: int | None = None
+    course_id: int | None = None
+    rating: Literal[-1, 1]
+    comment: str | None = Field(default=None, max_length=1000)
+
+
+class KnowledgeUnitGroupV1(BaseModel):
+    name: str
+    units: list[str]
+
+
+class KnowledgeUnitGroupsV1(BaseModel):
+    groups: list[KnowledgeUnitGroupV1]
+
+
+class KnowledgeUnitV1(BaseModel):
+    label: str
+    source: Literal["curated", "roadmap"]
+    roles: list[str]  # roadmaps that contain it
+
+
+class KnowledgeUnitsV1(BaseModel):
+    units: list[KnowledgeUnitV1]
+
+
+class RelatedRequestV1(BaseModel):
+    phrases: list[str] = Field(max_length=120)
+    limit: int = Field(default=12, ge=1, le=30)
+
+
+class RelatedUnitV1(BaseModel):
+    label: str
+    because: str  # the learner's phrase it is close to
+    similarity: float
+
+
+class RelatedUnitsV1(BaseModel):
+    units: list[RelatedUnitV1]

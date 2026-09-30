@@ -40,6 +40,8 @@ Decided so far:
 - **Explanation layer:** LangChain chain (prompt template → `ChatOpenAI` on any OpenAI-compatible server → structured output), grounded in the algorithm's actual reasons; the algorithm decides, the LLM explains. A LangChain retriever wraps our own pgvector SQL. [ADR-0019](adr/0019-explanation-layer-on-langchain.md)
 - **CI and containers:** GitHub Actions runs Ruff, migrations (up, down, up), `alembic check`, the tests against pgvector, the frontend build and both image builds. Backend and frontend have container images; `docker compose --profile app` runs the full stack. [ADR-0021](adr/0021-ci-on-github-actions.md)
 - **Phrase matching:** everything above mean + 2.5σ counts; a phrase with no match falls back to its near-best concepts above 1.5σ, so short generic phrases ("Python") aren't dropped. [ADR-0022](adr/0022-threshold-fallback-for-unmatched-phrases.md)
+- **Frontend:** a skill board (drag-and-drop or click chips into four categories, with curated, searched and "related to what you added" suggestions) and a results page that links each role to its courses with colored connectors; thumbs feedback per role and course. [ADR-0023](adr/0023-skill-board-input-and-linked-results.md)
+- **Explanation model and placement:** `qwen3.5:4b` on the CPU VM, `qwen3.5:9b` on GPUs; the embedding model runs on VM-A and the explanation LLM alone on VM-B, because on a shared CPU an explanation made embeddings ~200× slower. [ADR-0020](adr/0020-explanation-model-per-hardware.md)
 - **Evaluation tools** (`backend/eval/`): synthetic learner profiles, the explainer benchmark (speed and grounding per model and device) and the prototype-vs-new comparison with threshold diagnostics.
 
 ```
@@ -56,8 +58,8 @@ Browser ──► Frontend (TBD)
 ## New system (running locally on the MacBook, 2026-09-29)
 
 ```
-Browser ──► Nuxt 3 (prototype UI; server route adapts comma-separated input to /api/v1)
-                 │  1 call
+Browser ──► Nuxt 3 (skill board + linked results; the Nuxt server proxies /api/v1/** to the API)
+                 │  POST once, then GET while explanations arrive; suggestions via /knowledge-units
                  ▼
          FastAPI  POST /api/v1/recommendations → roles + courses at once   (backend/xcrs/)
                   GET  /api/v1/recommendations/{id} → the same, with explanations as they arrive
@@ -77,4 +79,4 @@ Offline: uv run xcrs import-prototype | register-model | embed-catalog
 
 The prototype (`backend/src/`, `embedding-generation/`) stays runnable next to it until the quality comparison passes. First measurements are in [baseline.md](baseline.md#new-system-first-measurements).
 
-Still open: the production explanation model (ADR-0020, after a CPU benchmark), frontend framework, a chat/agent feature and LLM tracing, deployment (CD), and the cloud target. See [adr/README.md](adr/README.md#upcoming-decisions).
+Still open: frontend framework, a chat/agent feature and LLM tracing, deployment (CD), and the cloud target. See [adr/README.md](adr/README.md#upcoming-decisions).

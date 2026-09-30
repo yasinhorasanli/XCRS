@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 from xcrs.db.models import (
     Course,
     EmbeddingModel,
+    Feedback,
     RecommendationRequest,
     RecommendedCourse,
     RecommendedRole,
@@ -125,6 +126,7 @@ def load_recommendation(session: Session, request_id: uuid.UUID) -> Recommendati
         status=request.status,
         model=model_name,
         latency_ms=request.latency_ms or 0,
+        input=request.input,
         roles=[
             RoleResult(
                 role_id=r.role_id,
@@ -204,3 +206,35 @@ def save_explanation(
         )
     session.commit()
     return status
+
+
+# --- Feedback (ADR-0013, ADR-0023) ------------------------------------------------------------------
+
+
+def feedback_target_exists(session: Session, request_id: uuid.UUID, role_id: int | None, course_id: int | None) -> bool:
+    """The request exists, and the role / course (if given) were part of what it showed."""
+    if course_id is not None:
+        query = select(RecommendedCourse.request_id).where(
+            RecommendedCourse.request_id == request_id, RecommendedCourse.course_id == course_id
+        )
+        if role_id is not None:
+            query = query.where(RecommendedCourse.role_id == role_id)
+    elif role_id is not None:
+        query = select(RecommendedRole.request_id).where(
+            RecommendedRole.request_id == request_id, RecommendedRole.role_id == role_id
+        )
+    else:
+        query = select(RecommendationRequest.id).where(RecommendationRequest.id == request_id)
+    return session.execute(query.limit(1)).first() is not None
+
+
+def save_feedback(
+    session: Session,
+    request_id: uuid.UUID,
+    role_id: int | None,
+    course_id: int | None,
+    rating: int,
+    comment: str | None,
+) -> None:
+    session.add(Feedback(request_id=request_id, role_id=role_id, course_id=course_id, rating=rating, comment=comment))
+    session.commit()

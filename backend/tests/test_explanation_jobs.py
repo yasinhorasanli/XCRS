@@ -11,8 +11,8 @@ from fastapi.testclient import TestClient
 from sqlalchemy import delete, event, select
 from sqlalchemy.exc import OperationalError
 
-from xcrs.api.app import app, get_service
-from xcrs.db.models import NodeEmbedding, RecommendationRequest, RecommendedRole, RoadmapNode
+from xcrs.api.app import app, get_knowledge_units, get_service, get_session
+from xcrs.db.models import Feedback, NodeEmbedding, RecommendationRequest, RecommendedRole, RoadmapNode
 from xcrs.db.session import get_engine, new_session
 from xcrs.domain.results import ExplanationStatus
 from xcrs.domain.types import Category
@@ -20,6 +20,7 @@ from xcrs.explain.base import RoleExplanation
 from xcrs.repository import activity
 from xcrs.repository import catalog as catalog_repo
 from xcrs.services.explanations import ExplanationWorker
+from xcrs.services.knowledge_units import KnowledgeUnitService
 from xcrs.services.recommend import RecommendationService
 
 
@@ -233,5 +234,70 @@ def test_api_returns_the_recommendation_then_serves_it_by_id(db, embedder):
             c["course_id"] for r in posted["roles"] for c in r["courses"]
         ]
         assert client.get(f"/api/v1/recommendations/{uuid.uuid4()}").status_code == 404
+    finally:
+        app.dependency_overrides.clear()
+
+
+# --- Feedback and suggestions endpoints (ADR-0023) ---
+
+
+def client_with(session, embedder, queue=None) -> TestClient:
+    app.dependency_overrides[get_service] = lambda: RecommendationService(
+        session, queue or RecordingQueue(), embedder_factory=lambda _model: embedder
+    )
+    app.dependency_overrides[get_knowledge_units] = lambda: KnowledgeUnitService(
+        session, embedder_factory=lambda _model: embedder
+    )
+    app.dependency_overrides[get_session] = lambda: session
+    return TestClient(app)
+
+
+def test_result_echoes_the_input_and_accepts_feedback(db, embedder):
+    session, created = db
+    try:
+        client = client_with(session, embedder)
+        names = list(embedder.vectors)[:3]
+        posted = client.post("/api/v1/recommendations", json={"liked": names, "curious": []}).json()
+        request_id = posted["request_id"]
+        created.append(uuid.UUID(request_id))
+        assert posted["input"]["liked"] == names
+        assert client.get(f"/api/v1/recommendations/{request_id}").json()["input"]["liked"] == names
+
+        role = posted["roles"][0]
+        course = role["courses"][0]
+        url = f"/api/v1/recommendations/{request_id}/feedback"
+        assert client.post(url, json={"role_id": role["role_id"], "rating": 1}).status_code == 201
+        assert (
+            client.post(
+                url, json={"role_id": role["role_id"], "course_id": course["course_id"], "rating": -1}
+            ).status_code
+            == 201
+        )
+        assert client.post(url, json={"rating": 1, "comment": "useful"}).status_code == 201
+        assert client.post(url, json={"role_id": 999, "rating": 1}).status_code == 404  # not shown in this result
+        assert client.post(url, json={"rating": 5}).status_code == 422
+        assert session.scalars(select(Feedback.rating).where(Feedback.request_id == uuid.UUID(request_id))).all() == [
+            1,
+            -1,
+            1,
+        ]
+    finally:
+        app.dependency_overrides.clear()
+
+
+def test_knowledge_unit_endpoints(db, embedder):
+    session, _ = db
+    try:
+        client = client_with(session, embedder)
+        groups = client.get("/api/v1/knowledge-units/groups").json()["groups"]
+        assert groups and all(g["units"] for g in groups)
+
+        found = client.get("/api/v1/knowledge-units", params={"q": "python"}).json()["units"]
+        assert found[0]["label"] == "Python" and len(found[0]["roles"]) >= 2
+
+        phrase = next(iter(embedder.vectors))
+        related_units = client.post("/api/v1/knowledge-units/related", json={"phrases": [phrase]}).json()["units"]
+        assert related_units and all(u["because"] == phrase for u in related_units)
+        assert all(u["label"].lower() != phrase.lower() for u in related_units)
     finally:
         app.dependency_overrides.clear()

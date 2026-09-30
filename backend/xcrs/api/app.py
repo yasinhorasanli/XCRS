@@ -8,15 +8,27 @@ import uuid
 from collections.abc import AsyncIterator, Iterator
 from contextlib import asynccontextmanager
 
-from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi import Depends, FastAPI, HTTPException, Query, Request
 from sqlalchemy.orm import Session
 
-from xcrs.api.schemas import RecommendationRequestV1, RecommendationResponseV1
+from xcrs.api.schemas import (
+    FeedbackV1,
+    KnowledgeUnitGroupsV1,
+    KnowledgeUnitsV1,
+    KnowledgeUnitV1,
+    RecommendationRequestV1,
+    RecommendationResponseV1,
+    RelatedRequestV1,
+    RelatedUnitsV1,
+    RelatedUnitV1,
+)
 from xcrs.config import get_settings
 from xcrs.db.session import new_session
 from xcrs.explain import get_explainer
+from xcrs.repository import activity
 from xcrs.repository import catalog as catalog_repo
 from xcrs.services.explanations import ExplanationWorker
+from xcrs.services.knowledge_units import KnowledgeUnitService
 from xcrs.services.recommend import RecommendationService
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
@@ -52,6 +64,10 @@ def get_service(request: Request, session: Session = Depends(get_session)) -> Re
     return RecommendationService(session, request.app.state.explanations)
 
 
+def get_knowledge_units(session: Session = Depends(get_session)) -> KnowledgeUnitService:
+    return KnowledgeUnitService(session)
+
+
 @app.get("/api/v1/health")
 def health(session: Session = Depends(get_session)) -> dict:
     catalog_repo.ping(session)
@@ -76,3 +92,37 @@ def get_recommendation(
     if result is None:
         raise HTTPException(status_code=404, detail="recommendation not found")
     return RecommendationResponseV1.from_result(result)
+
+
+@app.post("/api/v1/recommendations/{request_id}/feedback", status_code=201)
+def create_feedback(request_id: uuid.UUID, body: FeedbackV1, session: Session = Depends(get_session)) -> dict:
+    if not activity.feedback_target_exists(session, request_id, body.role_id, body.course_id):
+        raise HTTPException(status_code=404, detail="no such recommendation, role or course")
+    activity.save_feedback(session, request_id, body.role_id, body.course_id, body.rating, body.comment)
+    return {"status": "ok"}
+
+
+# --- Knowledge-unit suggestions for the input page (ADR-0023) ------------------------------------
+
+
+@app.get("/api/v1/knowledge-units/groups", response_model=KnowledgeUnitGroupsV1)
+def knowledge_unit_groups(service: KnowledgeUnitService = Depends(get_knowledge_units)) -> KnowledgeUnitGroupsV1:
+    return KnowledgeUnitGroupsV1(groups=service.groups())
+
+
+@app.get("/api/v1/knowledge-units", response_model=KnowledgeUnitsV1)
+def search_knowledge_units(
+    q: str = Query(min_length=1, max_length=100),
+    limit: int = Query(default=20, ge=1, le=50),
+    service: KnowledgeUnitService = Depends(get_knowledge_units),
+) -> KnowledgeUnitsV1:
+    return KnowledgeUnitsV1(units=[KnowledgeUnitV1(**vars(u)) for u in service.search(q, limit)])
+
+
+@app.post("/api/v1/knowledge-units/related", response_model=RelatedUnitsV1)
+def related_knowledge_units(
+    body: RelatedRequestV1, service: KnowledgeUnitService = Depends(get_knowledge_units)
+) -> RelatedUnitsV1:
+    """Suggestions close to what the learner already entered (one embedding call)."""
+    units = service.related([p[:100] for p in body.phrases], body.limit)
+    return RelatedUnitsV1(units=[RelatedUnitV1(**vars(u)) for u in units])

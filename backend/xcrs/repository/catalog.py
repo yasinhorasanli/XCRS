@@ -72,3 +72,16 @@ def active_model(session: Session) -> EmbeddingModel:
 
 def courses_by_id(session: Session, course_ids: list[int]) -> dict[int, Course]:
     return {c.id: c for c in session.scalars(select(Course).where(Course.id.in_(course_ids)))}
+
+
+def concept_names(session: Session) -> list[tuple[str, str]]:
+    """(concept name, role name) for every roadmap concept: the searchable knowledge units."""
+    return [
+        (r.name, r.role)
+        for r in session.execute(
+            select(RoadmapNode.name, Role.name.label("role"))
+            .join(Role, Role.id == RoadmapNode.role_id)
+            .where(RoadmapNode.type == "concept")
+            .order_by(RoadmapNode.name)
+        )
+    ]

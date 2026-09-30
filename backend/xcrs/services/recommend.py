@@ -90,6 +90,7 @@ class RecommendationService:
             model=model.name,
             roles=roles,
             latency_ms=round((time.perf_counter() - started) * 1000),
+            input={category.value: texts for category, texts in user_input.items()},
         )
         activity.save_recommendation(
             self.session,
@@ -97,7 +98,7 @@ class RecommendationService:
             model_id=model.id,
             algorithm_version=ALGORITHM_VERSION,
             threshold=threshold,
-            user_input={category.value: texts for category, texts in user_input.items()},
+            user_input=result.input,
             explanation_inputs={role_id: c.to_dict() for role_id, c in contexts.items()} if self.explanations else {},
         )
         # Queue only after the commit, so a worker never looks for rows that aren't there yet.
