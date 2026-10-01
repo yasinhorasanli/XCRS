@@ -5,7 +5,7 @@ The reviewed source of truth for what XCRS recommends ([ADR-0025](../docs/adr/00
 | File | Contents |
 |---|---|
 | [`skills.yaml`](skills.yaml) | Every skill and concept, shared by all roles, with prerequisites |
-| [`roles.yaml`](roles.yaml) | The level ladder, role families, roles (with O\*NET codes), transitions between roles, and the mapping from the legacy research roles |
+| [`roles.yaml`](roles.yaml) | The level ladder, role families, roles (with O\*NET codes and other market titles), common paths between roles, and the mapping from the legacy research roles |
 | [`roadmaps/<role>.yaml`](roadmaps) | For each role and level: what the level adds, in stages |
 
 ## Notation
@@ -29,11 +29,13 @@ uv run xcrs catalog bridge backend-engineer@mid data-engineer@mid        # the s
 
 **Moving between roles:** any move is possible. `moves` ranks every other role by coverage (the share of its requirements already met, skills weighted by how distinctive they are) and estimates the starting level (highest level ≥ 60% covered). `common_paths` in `roles.yaml` lists the moves people commonly make, as evidence.
 
+**Role or alias:** other market titles go in a role's `also_called`. A title can list `adds`, the skills it asks for on top of the role; `validate` rejects a title the role covers less than 80% of at mid level, because that is a different job and needs its own role and roadmap.
+
 ## Reviewing a change
 
 CI proves the files are consistent; the review is about whether they are **true**. For each changed file, ask:
 
-1. **Roles:** is this a real, distinct kind of job (not a seniority or a rename)? Is the summary what the job actually is?
+1. **Roles:** is this a real, distinct kind of job (not a seniority or a rename)? Is the summary what the job actually is? Is a missing title better added as an alias (`also_called`)?
 2. **Levels:** would a hiring manager agree with what each level adds? Is anything missing that every job ad asks for, or is anything niche presented as required? Use `path` to read a whole roadmap.
 3. **Proficiency:** is `working` vs `advanced` right for that level?
 4. **Prerequisites:** is it truly required first, or just related? (Only real prerequisites belong in `requires`.)

@@ -787,6 +787,17 @@ skills:
     description: Running Windows servers and services.
     onet: [Microsoft Windows Server]
 
+  feature-flags:
+    name: Feature flags and progressive delivery
+    kind: practice
+    description: Releasing behind flags, gradual rollouts and kill switches (LaunchDarkly, Unleash, OpenFeature).
+    requires: [ci-cd:1]
+  gpu-infrastructure:
+    name: GPU infrastructure
+    kind: platform
+    description: Running GPU workloads on Kubernetes or the cloud; drivers, scheduling, utilization and cost.
+    requires: [kubernetes:2, cloud-fundamentals:2]
+
   # --- Data -------------------------------------------------------------------------------------
   statistics:
     name: Statistics and probability
@@ -867,7 +878,7 @@ skills:
     name: dbt
     kind: tool
     description: SQL-based transformations with tests and documentation in the warehouse.
-    requires: [sql:3, data-modeling:2]
+    requires: [sql:2, data-modeling:1]
   etl-pipelines:
     name: ETL/ELT pipelines
     kind: concept
@@ -906,7 +917,7 @@ skills:
     name: Data quality and testing
     kind: practice
     description: Validating, monitoring and documenting data contracts.
-    requires: [etl-pipelines:2]
+    requires: ["etl-pipelines|dbt:2"]
   data-governance:
     name: Data governance and privacy
     kind: practice
@@ -917,6 +928,17 @@ skills:
     kind: concept
     description: "Designing an organization's data platform: storage, flows, ownership and cost."
     requires: [data-modeling:3, data-warehousing:2, system-design:1]
+
+  semantic-layer:
+    name: Semantic layer and metrics
+    kind: concept
+    description: Defining business metrics once (dbt Semantic Layer, LookML, Cube) so every report agrees.
+    requires: [data-modeling:2, sql:2]
+  product-analytics:
+    name: Product analytics
+    kind: practice
+    description: Event tracking, funnels, retention and cohorts (Amplitude, Mixpanel, PostHog).
+    requires: [sql:1, statistics:1]
 
   # --- Machine learning and AI ---------------------------------------------------------------------
   machine-learning-fundamentals:
@@ -1051,6 +1073,32 @@ skills:
     kind: platform
     description: Sharing consistent features between training and serving.
     requires: [feature-engineering:2, data-warehousing:1]
+
+  mcp:
+    name: Model Context Protocol (MCP)
+    kind: framework
+    description: Exposing tools and data to AI agents through MCP servers.
+    requires: [ai-agents:1, rest-api-design:1]
+  research-methods:
+    name: Research methods
+    kind: practice
+    description: Framing hypotheses, designing experiments and ablations, reading and reproducing papers.
+    requires: [statistics:2]
+  ml-optimization:
+    name: Optimization for machine learning
+    kind: concept
+    description: Gradient-based optimization, convergence, regularization and loss design.
+    requires: [calculus:2, linear-algebra:2]
+  distributed-training:
+    name: Distributed training
+    kind: concept
+    description: Data and model parallelism, mixed precision and training on GPU clusters.
+    requires: [deep-learning:2, "pytorch|tensorflow:2"]
+  reinforcement-learning:
+    name: Reinforcement learning
+    kind: concept
+    description: Agents learning from rewards; policy and value methods, and RL from human feedback.
+    requires: [machine-learning-fundamentals:2, deep-learning:1]
 
   # --- Security ---------------------------------------------------------------------------------
   security-fundamentals:
@@ -1211,6 +1259,51 @@ skills:
     description: "Quality strategy across teams: risk, environments, tooling and metrics."
     requires: [test-planning:3]
 
+  # --- Customer-facing engineering and developer relations ------------------------------------------
+  customer-discovery:
+    name: Technical discovery
+    kind: practice
+    description: Learning a customer's systems, constraints and goals before proposing a solution.
+    requires: [stakeholder-communication:1]
+  presales:
+    name: Pre-sales process
+    kind: practice
+    description: Qualifying opportunities, answering RFPs and security questionnaires, working with account executives.
+    requires: [customer-discovery:1]
+  technical-demos:
+    name: Technical demos and proofs of concept
+    kind: practice
+    description: Building and presenting demos and proofs of concept that show a product fits a customer's problem.
+    requires: [customer-discovery:1]
+  solution-design:
+    name: Solution design
+    kind: practice
+    description: Fitting a product into a customer's architecture; integrations, data flows, security and rollout plan.
+    requires: [customer-discovery:2, rest-api-design:1, authentication-authorization:1]
+  enterprise-integration:
+    name: Enterprise integration
+    kind: concept
+    description: Connecting to customers' systems; SSO, webhooks, data connectors, legacy APIs and on-premise constraints.
+    requires: [rest-api-design:2, authentication-authorization:1]
+  public-speaking:
+    name: Public speaking
+    kind: practice
+    description: Talks, workshops, webinars and livestreams for technical audiences.
+  developer-content:
+    name: Developer content
+    kind: practice
+    description: Tutorials, blog posts, videos and sample apps that teach developers a product.
+    requires: [technical-writing:1]
+  community-building:
+    name: Developer community building
+    kind: practice
+    description: Running forums, Discord servers, meetups and champion programs, and feeding what they learn back to product.
+  developer-experience:
+    name: Developer experience (DX)
+    kind: concept
+    description: How easy a platform is to adopt; API and SDK usability, docs structure, onboarding friction.
+    requires: [rest-api-design:1]
+
   # --- Working practices, architecture and leadership ----------------------------------------------
   agile-scrum:
     name: Agile and Scrum
@@ -1261,3 +1354,7 @@ skills:
     kind: practice
     description: Delivery metrics (e.g. DORA), team processes and continuous improvement.
     requires: [agile-scrum:2]
+  user-research:
+    name: User research
+    kind: practice
+    description: Interviews, usability tests and feedback analysis that turn users' problems into product changes.

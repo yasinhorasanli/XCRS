@@ -60,6 +60,15 @@ class Skill:
 
 
 @dataclass(frozen=True)
+class Alias:
+    """Another market title for a role (ADR-0027). `adds` = the skills the title asks for on top of the role;
+    a title that adds too much (see validate.ALIAS_MIN_COVERAGE) has to become a role of its own."""
+
+    title: str
+    adds: tuple[Requirement, ...] = ()
+
+
+@dataclass(frozen=True)
 class Role:
     id: str
     name: str
@@ -67,6 +76,7 @@ class Role:
     summary: str
     onet: str
     levels: tuple[str, ...]
+    also_called: tuple[Alias, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -170,6 +180,30 @@ def _roadmap(path: Path) -> Roadmap:
     return Roadmap(raw.get("role", ""), tuple(levels))
 
 
+def _alias(raw) -> Alias:
+    if isinstance(raw, str):
+        return Alias(raw)
+    try:
+        return Alias(raw["title"], tuple(Requirement.parse(r) for r in raw.get("adds") or ()))
+    except (KeyError, TypeError) as exc:
+        raise CatalogError(f"roles.yaml: bad also_called entry {raw!r}: a title, or {{title, adds}}") from exc
+
+
+def _role(role_id: str, body: dict) -> Role:
+    try:
+        return Role(
+            role_id,
+            body["name"],
+            body["family"],
+            body["summary"],
+            str(body["onet"]),
+            tuple(body["levels"]),
+            tuple(_alias(a) for a in body.get("also_called") or ()),
+        )
+    except KeyError as exc:
+        raise CatalogError(f"roles.yaml: role {role_id!r} lacks {exc}") from exc
+
+
 def load_catalog(directory: Path = CATALOG_DIR) -> Catalog:
     skills_raw = _read(directory / "skills.yaml").get("skills") or {}
     roles_raw = _read(directory / "roles.yaml")
@@ -177,10 +211,7 @@ def load_catalog(directory: Path = CATALOG_DIR) -> Catalog:
         levels=roles_raw.get("levels") or {},
         families=roles_raw.get("families") or {},
         skills={sid: _skill(sid, body) for sid, body in skills_raw.items()},
-        roles={
-            rid: Role(rid, body["name"], body["family"], body["summary"], str(body["onet"]), tuple(body["levels"]))
-            for rid, body in (roles_raw.get("roles") or {}).items()
-        },
+        roles={rid: _role(rid, body) for rid, body in (roles_raw.get("roles") or {}).items()},
         common_paths=[
             CommonPath(RoleLevel.parse(t["from"]), RoleLevel.parse(t["to"]), t["kind"], t.get("typical_years"))
             for t in roles_raw.get("common_paths") or ()

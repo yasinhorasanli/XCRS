@@ -11,7 +11,7 @@ import re
 from collections import Counter
 from dataclasses import dataclass, field
 
-from xcrs.catalog.model import LADDER, PATH_KINDS, SKILL_KINDS, Catalog, Requirement, RoleLevel
+from xcrs.catalog.model import LADDER, PATH_KINDS, SKILL_KINDS, Alias, Catalog, Requirement, Role, RoleLevel
 
 _SLUG = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 _ONET = re.compile(r"^\d{2}-\d{4}\.\d{2}$")
@@ -109,6 +109,17 @@ def _check_roles(cat: Catalog, report: Report) -> None:
     for legacy, new in cat.legacy_roles.items():
         if new is not None and new not in cat.roles:
             report.errors.append(f"legacy role {legacy}: maps to unknown role {new!r}")
+    titles: dict[str, str] = {}
+    for role in cat.roles.values():
+        for title in [role.name, *(a.title for a in role.also_called)]:
+            if title.lower() in titles:
+                report.errors.append(f"role {role.id}: title {title!r} is already used by {titles[title.lower()]}")
+            titles[title.lower()] = role.id
+        for alias in role.also_called:
+            for req in alias.adds:
+                for option in req.options:
+                    if option not in cat.skills:
+                        report.errors.append(f"role {role.id}, also called {alias.title!r}: unknown skill {option!r}")
     entry_roles = {r.id for r in cat.roles.values()}
     reachable = {t.target.role for t in cat.common_paths} | {r.id for r in cat.roles.values() if r.levels[0] == "entry"}
     for rid in sorted(entry_roles - reachable):
@@ -191,6 +202,49 @@ def _check_common_paths(cat: Catalog, report: Report) -> None:
             )
 
 
+# A title stays an alias while the role covers at least this share of what the title asks for; below it,
+# the title is a different job and needs its own role and roadmap (ADR-0027).
+ALIAS_MIN_COVERAGE = 0.8
+
+
+def alias_level(role: Role) -> str:
+    """Titles are compared where most hiring happens: mid level, or the role's first level."""
+    return "mid" if "mid" in role.levels else role.levels[0]
+
+
+def alias_coverage(cat: Catalog, role: Role, alias: Alias, weights: dict[str, float] | None = None) -> float:
+    """Share of the alias's requirements (the role's, plus `adds`) that the role itself covers."""
+    at = RoleLevel(role.id, alias_level(role))
+    target = requirements(cat, at)
+    for req in alias.adds:
+        target[req.options] = max(target.get(req.options, 0), req.level)
+    return _covered(requirements(cat, at), target, weights or skill_weights(cat))
+
+
+def _check_aliases(cat: Catalog, report: Report) -> None:
+    weights = skill_weights(cat)
+    for role in cat.roles.values():
+        for alias in role.also_called:
+            if not alias.adds:
+                continue
+            have = {
+                o: lv for opts, lv in requirements(cat, RoleLevel(role.id, alias_level(role))).items() for o in opts
+            }
+            for req in alias.adds:
+                have.update({o: max(have.get(o, 0), req.level) for o in req.options})
+            for req in alias.adds:
+                for option in req.options:
+                    for pre in cat.skills[option].requires if option in cat.skills else ():
+                        if not _satisfied(pre, have):
+                            report.errors.append(f"role {role.id}, also called {alias.title!r}: {option} needs {pre}")
+            covered = alias_coverage(cat, role, alias, weights)
+            if covered < ALIAS_MIN_COVERAGE:
+                report.errors.append(
+                    f"role {role.id}, also called {alias.title!r}: the role covers only {covered:.0%} of it "
+                    f"(< {ALIAS_MIN_COVERAGE:.0%}); make it a role of its own"
+                )
+
+
 def requirements(cat: Catalog, at: RoleLevel) -> dict[tuple[str, ...], int]:
     """Required skills up to `at` in a role's roadmap, keyed by options (a choice stays one requirement)."""
     need: dict[tuple[str, ...], int] = {}
@@ -240,13 +294,18 @@ def skill_weights(cat: Catalog) -> dict[str, float]:
 def coverage(cat: Catalog, source: RoleLevel, target: RoleLevel, weights: dict[str, float] | None = None) -> float:
     """Share of the target's requirements (weighted by distinctiveness and proficiency) that someone at
     `source` already meets; partial proficiency counts partly. 1.0 means nothing left to learn."""
-    weights = weights or skill_weights(cat)
+    return _covered(requirements(cat, source), requirements(cat, target), weights or skill_weights(cat))
+
+
+def _covered(
+    source: dict[tuple[str, ...], int], target: dict[tuple[str, ...], int], weights: dict[str, float]
+) -> float:
     have: dict[str, int] = {}
-    for options, level in requirements(cat, source).items():
+    for options, level in source.items():
         for option in options:
             have[option] = max(have.get(option, 0), level)
     total = met = 0.0
-    for options, level in requirements(cat, target).items():
+    for options, level in target.items():
         weight = max(weights[o] for o in options) * level
         total += weight
         met += weight * min(1.0, max(have.get(o, 0) for o in options) / level)
@@ -287,15 +346,18 @@ def validate(cat: Catalog) -> Report:
     usage = _check_roadmaps(cat, report)
     if not report.errors:
         _check_common_paths(cat, report)
-    unused = sorted(set(cat.skills) - set(usage))
+        _check_aliases(cat, report)
+    in_aliases = {o for r in cat.roles.values() for a in r.also_called for req in a.adds for o in req.options}
+    unused = sorted(set(cat.skills) - set(usage) - in_aliases)
     if unused:
-        report.warnings.append(f"{len(unused)} skills are in no roadmap: {', '.join(unused)}")
+        report.warnings.append(f"{len(unused)} skills are in no roadmap or title: {', '.join(unused)}")
     report.stats = {
         "skills": len(cat.skills),
         "skills_by_kind": dict(Counter(s.kind for s in cat.skills.values()).most_common()),
         "prerequisite_edges": sum(len(r.options) for s in cat.skills.values() for r in s.requires),
         "roles": len(cat.roles),
         "common_paths": len(cat.common_paths),
+        "titles": len(cat.roles) + sum(len(r.also_called) for r in cat.roles.values()),
         "roadmap_items": sum(len(st.items) for rm in cat.roadmaps.values() for lv in rm.levels for st in lv.stages),
         "most_shared_skills": [f"{s} ({n} roles)" for s, n in usage.most_common(10)],
     }

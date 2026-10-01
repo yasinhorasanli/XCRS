@@ -1,12 +1,17 @@
-# Career roles, levels and transitions (ADR-0027).
+# Career roles, levels and common paths between them (ADR-0027).
 #
 # A role is a kind of work (Backend Engineer), not a seniority. Seniority is a level on one shared
 # ladder; each role's roadmap (roadmaps/<role>.yaml) says what each level adds. Moving up a level
-# inside a role is implied; moving to another role is a transition (below).
+# inside a role is implied; any role can move to any other (see common_paths below).
 #
 # onet: the O*NET-SOC occupation the role belongs to. O*NET occupations are broader than market
 # titles (DevOps, SRE and mobile all sit under 15-1252/15-1299.08), so several roles share one.
 # esco: filled in by the taxonomy import (ESCO occupation URI), then reviewed.
+#
+# also_called: other market titles for the same job, so search and job-title matching find the role.
+# A title can list `adds`, the skills it asks for on top of the role (Product Engineer = Full-Stack +
+# product analytics, experiments...). The validator measures it: when the role covers less than 80% of
+# the title, the title is a different job and must become a role of its own (ADR-0027).
 
 levels:
   entry:
@@ -33,6 +38,7 @@ families:
   data-ai: Data and AI
   security: Security
   web3: Web3
+  customer-engineering: Customer-facing engineering
   leadership: Architecture and leadership
 
 roles:
@@ -54,6 +60,9 @@ roles:
     summary: Builds features across front end and back end, from the database to the screen.
     onet: 15-1254.00
     levels: [entry, mid, senior, staff]
+    also_called:
+      - title: Product Engineer
+        adds: [product-thinking:2, statistics:2, product-analytics:2, ab-testing:2, feature-flags:2, user-research:1]
   android-engineer:
     name: Android Engineer
     family: product-engineering
@@ -102,6 +111,12 @@ roles:
     summary: "Keeps production systems reliable with software engineering: SLOs, automation, incident response and capacity."
     onet: 15-1299.08
     levels: [mid, senior, staff]
+  ai-reliability-engineer:
+    name: AI Reliability Engineer
+    family: infrastructure
+    summary: "Keeps AI features dependable in production: evaluations, guardrails, quality and drift monitoring, and AI incident response."
+    onet: 15-1299.08
+    levels: [mid, senior, staff]
   platform-engineer:
     name: Platform Engineer
     family: infrastructure
@@ -113,6 +128,12 @@ roles:
     family: data-ai
     summary: Turns data into answers and dashboards that guide business decisions.
     onet: 15-2051.01
+    levels: [entry, mid, senior, staff]
+  analytics-engineer:
+    name: Analytics Engineer
+    family: data-ai
+    summary: Turns raw warehouse data into tested, documented data models and metrics that analysts and the business can trust.
+    onet: 15-1243.01
     levels: [entry, mid, senior, staff]
   data-engineer:
     name: Data Engineer
@@ -132,10 +153,24 @@ roles:
     summary: Builds, trains and ships machine learning models into production systems.
     onet: 15-2051.00
     levels: [entry, mid, senior, staff]
+  applied-scientist:
+    name: Applied Scientist
+    family: data-ai
+    summary: "Researches and builds new models for products: frames the problem, runs experiments, adapts published research and hands working models to engineering."
+    onet: 15-1221.00
+    levels: [entry, mid, senior, staff]
+    also_called: [Research Engineer, Research Scientist, Machine Learning Scientist]
   mlops-engineer:
     name: MLOps Engineer
     family: data-ai
     summary: Runs the infrastructure and pipelines that train, deploy and monitor ML models.
+    onet: 15-1299.08
+    levels: [mid, senior, staff]
+    also_called: [ML Platform Engineer]
+  ai-platform-engineer:
+    name: AI Platform Engineer
+    family: data-ai
+    summary: "Builds the shared platform that serves models to product teams: LLM serving, GPU capacity, vector stores and evaluation services."
     onet: 15-1299.08
     levels: [mid, senior, staff]
   ai-engineer:
@@ -162,6 +197,27 @@ roles:
     summary: Builds smart contracts and decentralized applications.
     onet: 15-1299.07
     levels: [entry, mid, senior, staff]
+  forward-deployed-engineer:
+    name: Forward-Deployed Engineer
+    family: customer-engineering
+    summary: Works inside customers' environments to build and ship production solutions on the company's platform, today often AI agents and integrations.
+    onet: 15-1252.00  # O*NET has no FDE occupation; it is software development done at the customer
+    levels: [entry, mid, senior, staff]
+    also_called: [Forward Deployed Software Engineer]
+  solutions-engineer:
+    name: Solutions Engineer
+    family: customer-engineering
+    summary: "Wins and enables customers around the sale: technical discovery, tailored demos, proofs of concept and solution designs."
+    onet: 41-9031.00
+    levels: [entry, mid, senior, staff]
+    also_called: [Sales Engineer, Pre-Sales Engineer, Customer Engineer]
+  developer-advocate:
+    name: Developer Advocate
+    family: customer-engineering
+    summary: Helps developers succeed with a platform through content, talks, sample code and community, and brings their feedback back to the product.
+    onet: 15-1252.00  # no DevRel occupation in O*NET; the closest is software development
+    levels: [mid, senior, staff]
+    also_called: [Developer Relations Engineer, Developer Evangelist]
   software-architect:
     name: Software Architect
     family: leadership
@@ -215,6 +271,27 @@ common_paths:
   - {from: machine-learning-engineer@mid, to: ai-engineer@mid, kind: broaden}
   - {from: security-engineer@mid, to: penetration-tester@mid, kind: specialize}
   - {from: penetration-tester@mid, to: security-engineer@mid, kind: broaden}
+  - {from: data-analyst@mid, to: analytics-engineer@mid, kind: specialize}
+  - {from: analytics-engineer@mid, to: data-engineer@mid, kind: broaden}
+  - {from: data-engineer@mid, to: analytics-engineer@mid, kind: specialize}
+  - {from: data-scientist@mid, to: applied-scientist@mid, kind: specialize}
+  - {from: machine-learning-engineer@mid, to: applied-scientist@mid, kind: pivot}
+  - {from: applied-scientist@mid, to: machine-learning-engineer@mid, kind: broaden}
+  - {from: backend-engineer@mid, to: forward-deployed-engineer@mid, kind: broaden}
+  - {from: full-stack-engineer@mid, to: forward-deployed-engineer@mid, kind: broaden}
+  - {from: ai-engineer@mid, to: forward-deployed-engineer@mid, kind: broaden}
+  - {from: forward-deployed-engineer@mid, to: ai-engineer@mid, kind: specialize}
+  - {from: backend-engineer@mid, to: solutions-engineer@mid, kind: pivot}
+  - {from: full-stack-engineer@mid, to: solutions-engineer@mid, kind: pivot}
+  - {from: solutions-engineer@mid, to: forward-deployed-engineer@mid, kind: pivot}
+  - {from: forward-deployed-engineer@senior, to: solutions-engineer@senior, kind: broaden}
+  - {from: frontend-engineer@mid, to: developer-advocate@mid, kind: pivot}
+  - {from: full-stack-engineer@mid, to: developer-advocate@mid, kind: pivot}
+  - {from: backend-engineer@mid, to: developer-advocate@mid, kind: pivot}
+  - {from: site-reliability-engineer@mid, to: ai-reliability-engineer@mid, kind: specialize}
+  - {from: ai-engineer@mid, to: ai-reliability-engineer@mid, kind: specialize}
+  - {from: mlops-engineer@mid, to: ai-platform-engineer@mid, kind: specialize}
+  - {from: platform-engineer@mid, to: ai-platform-engineer@mid, kind: specialize}
   - {from: backend-engineer@senior, to: software-architect@senior, kind: lead, typical_years: "8+"}
   - {from: full-stack-engineer@senior, to: software-architect@senior, kind: lead, typical_years: "8+"}
   - {from: platform-engineer@senior, to: software-architect@senior, kind: lead, typical_years: "8+"}

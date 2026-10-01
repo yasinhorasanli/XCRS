@@ -36,7 +36,7 @@
 
 ## Decision
 
-1. **One skills graph.** Skills and concepts are one entity with a `kind`; 238 skills to start (`catalog/skills.yaml`), each with a description and, where they exist, matching O\*NET technology names as demand evidence.
+1. **One skills graph.** Skills and concepts are one entity with a `kind`; about 250 skills to start (`catalog/skills.yaml`), each with a description and, where they exist, matching O\*NET technology names as demand evidence.
 2. **Prerequisites live only between skills**, as **AND of OR groups**, each with a **minimum proficiency** (1 basic · 2 working · 3 advanced · 4 expert): `kubernetes requires docker:2, computer-networking:2`; `docker requires python|go:2`. They must form a DAG.
 3. **Resources** (ADR-0026) declare **teaches** and **requires** links to skills (with proficiency; tagged by the local LLM, reviewable), plus explicit **part-of / next** links only for series. Resource order is derived from the skills graph. **No 2024 Udemy data is imported.**
 4. **Roadmaps:** for each role and level, cumulative **stages** of skill requirements (choices allowed, `optional` stages for "good to know"). Rule enforced by the validator: a roadmap asks for a skill only after its required prerequisites, at enough proficiency; optional stages never count as prerequisites; proficiency never drops at a higher level.

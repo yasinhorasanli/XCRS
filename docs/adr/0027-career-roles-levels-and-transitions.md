@@ -1,7 +1,7 @@
 # ADR-0027: Career roles as specializations on one level ladder, connected by transitions
 
 - **Status:** Accepted. Delegated: the decider asked Claude to decide the career roles and roadmaps (2026-10-01); pending the decider's review of the catalog pull request.
-- **Changed during review (2026-10-01):** "any role to any other?" (PR #9) → any move is possible and measured; the listed transitions became common paths (decisions 4–5).
+- **Changed during review (2026-10-01):** "any role to any other?" (PR #9) → any move is possible and measured; the listed transitions became common paths (decisions 4–5). "Missing roles" (PR #9) → 7 roles added and market titles recorded as aliases, with a measurable rule for which is which (decisions 1 and 7).
 - **Date:** 2026-10-01
 - **Decider:** Muhammed Yasin Horasanli
 
@@ -33,31 +33,33 @@
 
 ## Decision
 
-1. **23 roles in 7 families**, each a market specialization mapped to an O\*NET-SOC parent (ESCO to be linked by the taxonomy import):
+1. **30 roles in 8 families**, each a market specialization mapped to an O\*NET-SOC parent (ESCO to be linked by the taxonomy import):
    - Product engineering: Frontend, Backend, Full-Stack, Android, iOS, Game Developer, Embedded Software Engineer
    - Quality engineering: QA Automation Engineer (SDET)
-   - Infrastructure and reliability: DevOps, Cloud, Site Reliability, Platform Engineer
-   - Data and AI: Data Analyst, Data Engineer, Data Scientist, Machine Learning Engineer, MLOps Engineer, AI Engineer
+   - Infrastructure and reliability: DevOps, Cloud, Site Reliability, AI Reliability, Platform Engineer
+   - Data and AI: Data Analyst, Analytics Engineer, Data Engineer, Data Scientist, Machine Learning Engineer, Applied Scientist, MLOps Engineer, AI Platform Engineer, AI Engineer
    - Security: Security Engineer, Penetration Tester
    - Web3: Blockchain Engineer
+   - Customer-facing engineering: Forward-Deployed Engineer, Solutions Engineer, Developer Advocate
    - Architecture and leadership: Software Architect, Engineering Manager
-2. **One ladder:** entry (0–2 years), mid (2–5), senior (5+), staff/principal (8+), each with a scope statement. Roles start where the market hires: SRE, Platform and MLOps at mid; Software Architect and Engineering Manager at senior (entered from senior engineering roles).
+2. **One ladder:** entry (0–2 years), mid (2–5), senior (5+), staff/principal (8+), each with a scope statement. Roles start where the market hires: SRE, Platform, MLOps, AI Platform, AI Reliability and Developer Advocate at mid; Software Architect and Engineering Manager at senior (entered from senior engineering roles).
 3. **Within a role, moving up a level is implied**; each roadmap level lists what it adds (senior adds system design, incident leadership, mentoring…).
 4. **Any role can move to any other.** For every pair the catalog computes:
    - **coverage:** the share of the target's requirements someone already meets, each skill weighted by how *distinctive* it is (rare across roles weighs more: dbt says "data engineer", Git doesn't) and by proficiency, partial proficiency counting partly;
    - **starting level:** the highest target level at least 60% covered (a senior backend engineer typically starts data engineering at entry, Cloud at senior).
 
    `xcrs catalog moves ROLE@LEVEL` ranks every other role; `xcrs catalog bridge` lists the skills to learn. Results match practice, e.g. from DevOps@senior: Cloud 100%, Platform 91%, SRE 79% (starting at mid); from Data Analyst@mid: Data Scientist 62% (starting at entry).
-5. **44 common paths** (e.g. Backend@senior → Software Architect@senior, "lead", typically 8+ years) record moves people really make, typed broaden / specialize / pivot / lead. They are evidence, not a whitelist. The validator flags a non-leadership common path whose target is in the far half of the source's ranked moves (today: Backend → Blockchain, Backend@senior → Platform), for a reviewer to confirm.
+5. **65 common paths** (e.g. Backend@senior → Software Architect@senior, "lead", typically 8+ years) record moves people really make, typed broaden / specialize / pivot / lead. They are evidence, not a whitelist. The validator flags a non-leadership common path whose target is in the far half of the source's ranked moves (today: Backend → Blockchain, Backend@senior → Platform, Data Engineer → ML Engineer), for a reviewer to confirm.
 6. **The research roles become a separate legacy catalog**, mapped to the closest new role for comparison (UX Designer has no counterpart: design is outside this catalog's software-engineering scope). They are removed once the new catalog proves better.
+7. **Role or alias, by measurement.** Other market titles for a role are kept as `also_called` (41 titles in all), so search and job-title matching find the role. A title may list `adds`, the skills it asks for on top of the role. **It stays an alias while the role covers at least 80% of it at mid level** (where most hiring happens); below that it is a different job and must be a role with its own roadmap. The validator enforces it. In the first review this measured Product Engineer at 81% of Full-Stack (alias) and AI Platform Engineer and AI Reliability Engineer at 71% and 73% of MLOps and SRE (roles). At senior level those two rise to 87% and 81%, because senior MLOps and SRE engineers pick up LLM serving, so they are distinct mainly at the level people are hired into them.
 
 ## Trade-offs accepted
 
 - The role list is ours, not a standard; O\*NET mapping keeps it anchored.
 - Years per level are guidance; real promotion depends on scope and impact.
 - Dropping UX Designer narrows the product to software engineering.
-- 23 roadmaps to keep current; the catalog workflow (ADR-0028) makes changes reviewable.
-- The distance is only as good as the roadmaps, and the weights and the 60% starting threshold are judgement calls; they are constants in `xcrs/catalog/validate.py`, to tune with real feedback.
+- 30 roadmaps to keep current; the catalog workflow (ADR-0028) makes changes reviewable.
+- The distance is only as good as the roadmaps, and the weights, the 60% starting threshold and the 80% alias threshold are judgement calls; they are constants in `xcrs/catalog/validate.py`, to tune with real feedback.
 
 ## Revisit when
 

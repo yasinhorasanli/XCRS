@@ -1,0 +1,29 @@
+# Roadmap for developer-advocate (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: developer-advocate
+levels:
+  mid:
+    summary: "Creates tutorials, sample apps and talks that help developers succeed with a platform, and relays their feedback. Usually entered from an engineering role."
+    stages:
+      - name: Engineering foundations
+        skills: [programming-fundamentals:2, "javascript|typescript|python:2", git:2, computer-networking:1, http:2, rest-api-design:2, testing-fundamentals:1]
+      - name: Developer education
+        skills: [technical-writing:2, developer-content:2, public-speaking:2, developer-experience:1]
+      - name: Community and product
+        skills: [community-building:1, stakeholder-communication:2, product-thinking:1]
+      - name: Good to know
+        optional: true
+        skills: [llm-fundamentals:1, prompt-engineering:1]
+  senior:
+    summary: "Owns developer relations for a product area: content programs, conference talks, community and developer-experience fixes."
+    stages:
+      - name: Developer experience
+        skills: [developer-experience:3, developer-content:3, public-speaking:3, community-building:2]
+      - name: Influence
+        skills: [technical-writing:3, product-thinking:2, stakeholder-communication:3, mentoring:2, project-planning:1]
+  staff:
+    title: Principal Developer Advocate
+    summary: "Sets developer relations strategy and makes developer experience a company-wide priority."
+    stages:
+      - name: Direction
+        skills: [developer-experience:4, community-building:3, product-thinking:3, technical-leadership:2, stakeholder-communication:4]

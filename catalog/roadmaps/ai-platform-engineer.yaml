@@ -1,0 +1,27 @@
+# Roadmap for ai-platform-engineer (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: ai-platform-engineer
+levels:
+  mid:
+    summary: "Runs the infrastructure that serves models to product teams: LLM serving, GPUs and vector stores. Usually entered from MLOps or platform engineering."
+    stages:
+      - name: Engineering foundations
+        skills: [programming-fundamentals:2, data-structures:1, python:2, linux:2, shell-scripting:1, git:2, computer-networking:2, http:2, rest-api-design:1]
+      - name: Infrastructure
+        skills: [docker:2, kubernetes:2, helm:1, ci-cd:2, cloud-fundamentals:2, "aws|azure|gcp:2", infrastructure-as-code:1, terraform:1, observability:2]
+      - name: AI serving
+        skills: [llm-fundamentals:2, llm-serving:2, model-serving:1, gpu-infrastructure:2, embeddings-vector-search:1, vector-databases:2]
+  senior:
+    summary: "Designs the AI platform: multi-tenant serving, GPU capacity and cost, and shared evaluation and guardrail services."
+    stages:
+      - name: AI platform
+        skills: [llm-serving:3, gpu-infrastructure:3, prompt-engineering:2, llm-evaluation:2, ai-guardrails:1, caching:2]
+      - name: Operations
+        skills: [helm:2, gitops:1, prometheus-grafana:2, capacity-planning:2, finops:1, infrastructure-as-code:2, internal-developer-platforms:1]
+      - name: Leadership
+        skills: [mentoring:2, technical-writing:2]
+  staff:
+    summary: "Sets AI platform direction across the organization: what to build, buy or run locally, and at what cost."
+    stages:
+      - name: Direction
+        skills: [gpu-infrastructure:4, llm-serving:4, finops:2, internal-developer-platforms:2, technical-leadership:3, stakeholder-communication:3]

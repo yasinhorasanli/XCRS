@@ -205,3 +205,33 @@ def test_far_common_paths_are_flagged_for_review(tmp_path):
     report = validate.validate(model.load_catalog(path))
     assert report.errors == []
     assert any("common path dev@mid -> ana@mid: ana is only #2 of 2 nearest roles" in w for w in report.warnings)
+
+
+def test_titles_that_add_little_stay_aliases_and_big_ones_must_become_roles(tmp_path):
+    """ops at mid needs basics, go, docker, kubernetes. Adding one skill keeps a title an alias; adding a
+    distinctive stack makes it a different job (ADR-0027: role covers < 80%)."""
+    skills = SKILLS + "  helm: {name: Helm, kind: tool, description: x, requires: [kubernetes:2]}\n"
+    skills += "  argo: {name: Argo, kind: tool, description: x, requires: [kubernetes:2]}\n"
+    skills += "  istio: {name: Istio, kind: tool, description: x, requires: [kubernetes:2]}\n"
+    small = ROLES.replace(
+        "onet: 15-1299.08, levels: [entry, mid]}",
+        "onet: 15-1299.08, levels: [entry, mid], also_called: [SysAdmin, {title: K8s Admin, adds: [helm:1]}]}",
+    )
+    big = small.replace("adds: [helm:1]", "adds: [helm:3, argo:3, istio:3]")
+    ok, too_far = tmp_path / "ok", tmp_path / "far"
+    ok.mkdir(), too_far.mkdir()
+    cat = model.load_catalog(make(ok, roles=small, skills=skills))
+    assert validate.validate(cat).errors == []
+    assert [a.title for a in cat.roles["ops"].also_called] == ["SysAdmin", "K8s Admin"]
+    found = errors(make(too_far, roles=big, skills=skills))
+    assert len(found) == 1 and "also called 'K8s Admin': the role covers only" in found[0]
+
+
+def test_alias_titles_must_be_unique_and_use_known_skills(tmp_path):
+    roles = ROLES.replace(
+        "onet: 15-1299.08, levels: [entry, mid]}",
+        "onet: 15-1299.08, levels: [entry, mid], also_called: [Developer, {title: X, adds: [cobol:1]}]}",
+    )
+    found = errors(make(tmp_path, roles=roles))
+    assert "role ops: title 'Developer' is already used by dev" in found
+    assert "role ops, also called 'X': unknown skill 'cobol'" in found
