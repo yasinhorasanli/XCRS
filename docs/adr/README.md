@@ -32,15 +32,16 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0026](0026-learning-resources-courses-videos-docs.md) | Learning resources: courses, YouTube and documentation in one model; free and paid; English first | Accepted | 2026-10-01 |
 | [0027](0027-career-roles-levels-and-transitions.md) | Career roles as specializations on one level ladder, connected by transitions | Accepted (delegated, reviewed) | 2026-10-01 |
 | [0028](0028-catalog-as-code-skills-graph-and-prerequisites.md) | Catalog as code: one skills graph, prerequisites as AND-of-OR with proficiency, reviewed as pull requests | Accepted (delegated, reviewed) | 2026-10-01 |
+| [0029](0029-engine-v2-skills-input-proficiency-and-coverage-scoring.md) | Engine v2: catalog skills with free-text fallback, optional proficiency, coverage × interest scoring, matching thresholds set by measurement | Accepted | 2026-10-01 |
 
 ## Upcoming decisions
 
 - Re-run the explainer benchmark on the VMs before launch (ADR-0020)
 - Threshold constants re-tuned against the prototype once its comparison can run (ADR-0022)
-- Catalog database schema and import (ADR-0028), then the recommendation engine on the new catalog
+- Skill matching method and thresholds, measured on the evaluation set (ADR-0029 → ADR-0030)
 - Taxonomy import: ESCO links and an O*NET coverage check of the drafted roadmaps (ADR-0025)
 - First resource providers, and where raw ingested data lives (ADR-0004, proposed)
-- (Later) Enriching user input, roadmap visualization
+- (Later) Roadmap visualization
 - Map suggestion chips to concept ids (ADR-0023), then normalize the request input (ADR-0013)
 - Chat/agent feature (LangGraph) and LLM tracing (LangSmith or self-hosted); see ADR-0019
 - CD (deployment to the VMs) and the cloud deployment target

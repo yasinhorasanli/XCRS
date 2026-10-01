@@ -1,0 +1,381 @@
+# Skill-matching evaluation set (ADR-0029): what a learner might type on the skill board, and which
+# catalog skills it should match. Used to compare matching methods and to choose thresholds (ADR-0030).
+#
+#   expect: every one of these must be matched          (recall)
+#   any:    at least one of these must be matched        (for vague phrases)
+#   accept: also fine if matched; anything else is wrong (precision)
+#   expect: [] with no `any` = the phrase should match nothing
+#
+# kind: exact · alias (abbreviation or other name) · typo · paraphrase (described, not named) ·
+#       tool (a tool not in the catalog → the skill it belongs to) · multi (several skills) ·
+#       broad (vague) · course (a course or video title) · unrelated (not a software skill)
+#
+# Drafted by Claude (2026-10-01); reviewed by sampling (ADR-0029). Fix wrong cases in a pull request.
+
+cases:
+  # --- exact names -------------------------------------------------------------------------------
+  - {phrase: Python, expect: [python], kind: exact}
+  - {phrase: JavaScript, expect: [javascript], kind: exact}
+  - {phrase: TypeScript, expect: [typescript], kind: exact}
+  - {phrase: Java, expect: [java], accept: [spring-boot], kind: exact}
+  - {phrase: Kotlin, expect: [kotlin], accept: [android-sdk], kind: exact}
+  - {phrase: Swift, expect: [swift], accept: [ios-sdk], kind: exact}
+  - {phrase: Go, expect: [go], accept: [go-web-services], kind: exact}
+  - {phrase: Rust, expect: [rust], kind: exact}
+  - {phrase: SQL, expect: [sql], accept: [relational-databases], kind: exact}
+  - {phrase: Docker, expect: [docker], kind: exact}
+  - {phrase: Kubernetes, expect: [kubernetes], kind: exact}
+  - {phrase: Terraform, expect: [terraform], accept: [infrastructure-as-code], kind: exact}
+  - {phrase: React, expect: [react], kind: exact}
+  - {phrase: Angular, expect: [angular], kind: exact}
+  - {phrase: Django, expect: [django], accept: [python], kind: exact}
+  - {phrase: FastAPI, expect: [fastapi], accept: [python], kind: exact}
+  - {phrase: Spring Boot, expect: [spring-boot], accept: [java], kind: exact}
+  - {phrase: PostgreSQL, expect: [postgresql], accept: [relational-databases], kind: exact}
+  - {phrase: MongoDB, expect: [mongodb], accept: [nosql-databases], kind: exact}
+  - {phrase: Redis, expect: [redis], accept: [caching], kind: exact}
+  - {phrase: Apache Kafka, expect: [kafka], accept: [message-brokers, stream-processing], kind: exact}
+  - {phrase: GraphQL, expect: [graphql], kind: exact}
+  - {phrase: Git, expect: [git], kind: exact}
+  - {phrase: Linux, expect: [linux], kind: exact}
+  - {phrase: AWS, expect: [aws], accept: [cloud-fundamentals], kind: exact}
+  - {phrase: Microsoft Azure, expect: [azure], accept: [cloud-fundamentals], kind: exact}
+  - {phrase: PyTorch, expect: [pytorch], accept: [deep-learning], kind: exact}
+  - {phrase: TensorFlow, expect: [tensorflow], accept: [deep-learning], kind: exact}
+  - {phrase: pandas, expect: [pandas], accept: [python], kind: exact}
+  - {phrase: Apache Airflow, expect: [airflow], accept: [etl-pipelines], kind: exact}
+  - {phrase: Apache Spark, expect: [spark], kind: exact}
+  - {phrase: dbt, expect: [dbt], accept: [data-modeling], kind: exact}
+  - {phrase: Snowflake, expect: [snowflake], accept: [data-warehousing], kind: exact}
+  - {phrase: Unity, expect: [unity], kind: exact}
+  - {phrase: Unreal Engine, expect: [unreal-engine], kind: exact}
+  - {phrase: Flutter, expect: [flutter], accept: [dart], kind: exact}
+  - {phrase: Selenium, expect: [selenium], accept: [test-automation], kind: exact}
+  - {phrase: Solidity, expect: [solidity], accept: [ethereum], kind: exact}
+  - {phrase: Prompt engineering, expect: [prompt-engineering], kind: exact}
+  - {phrase: Retrieval-augmented generation, expect: [rag], kind: exact}
+  - {phrase: Penetration testing, expect: [penetration-testing], kind: exact}
+  - {phrase: Threat modeling, expect: [threat-modeling], kind: exact}
+  - {phrase: System design, expect: [system-design], kind: exact}
+  - {phrase: Microservices, expect: [microservices], kind: exact}
+  - {phrase: Statistics, expect: [statistics], kind: exact}
+  - {phrase: Linear algebra, expect: [linear-algebra], kind: exact}
+  - {phrase: Public speaking, expect: [public-speaking], kind: exact}
+  - {phrase: Mentoring, expect: [mentoring], kind: exact}
+
+  # --- aliases and abbreviations ------------------------------------------------------------------
+  - {phrase: k8s, expect: [kubernetes], kind: alias}
+  - {phrase: JS, expect: [javascript], kind: alias}
+  - {phrase: TS, expect: [typescript], kind: alias}
+  - {phrase: Golang, expect: [go], kind: alias}
+  - {phrase: C sharp, expect: [csharp], kind: alias}
+  - {phrase: .NET, expect: [csharp], accept: [aspnet-core], kind: alias}
+  - {phrase: C plus plus, expect: [cpp], kind: alias}
+  - {phrase: Postgres, expect: [postgresql], accept: [relational-databases], kind: alias}
+  - {phrase: Mongo, expect: [mongodb], accept: [nosql-databases], kind: alias}
+  - {phrase: GCP, expect: [gcp], accept: [cloud-fundamentals], kind: alias}
+  - {phrase: Amazon Web Services, expect: [aws], accept: [cloud-fundamentals], kind: alias}
+  - {phrase: IaC, expect: [infrastructure-as-code], accept: [terraform], kind: alias}
+  - {phrase: CI/CD pipelines, expect: [ci-cd], accept: [github-actions, jenkins], kind: alias}
+  - {phrase: RAG, expect: [rag], kind: alias}
+  - {phrase: LLMs, expect: [llm-fundamentals], accept: [transformers, prompt-engineering], kind: alias}
+  - {phrase: ML, expect: [machine-learning-fundamentals], kind: alias}
+  - {phrase: DL, expect: [deep-learning], kind: alias}
+  - {phrase: NLP, expect: [nlp], kind: alias}
+  - {phrase: CV (computer vision), expect: [computer-vision], kind: alias}
+  - {phrase: OOP, expect: [oop], kind: alias}
+  - {phrase: DSA, expect: [data-structures, algorithms], kind: alias}
+  - {phrase: TDD, expect: [tdd], accept: [unit-testing], kind: alias}
+  - {phrase: DDD, expect: [domain-driven-design], kind: alias}
+  - {phrase: SRE, expect: [sre-practices], accept: [incident-management, observability], kind: alias}
+  - {phrase: K8s operators, expect: [kubernetes], kind: alias}
+  - {phrase: RN, any: [react-native], kind: alias}
+  - {phrase: Vue, expect: [vue], kind: alias}
+  - {phrase: Next, any: [nextjs], kind: alias}
+  - {phrase: Tailwind, expect: [tailwind-css], accept: [css], kind: alias}
+  - {phrase: Sklearn, expect: [scikit-learn], accept: [machine-learning-fundamentals], kind: alias}
+  - {phrase: HF transformers, expect: [transformers], accept: [nlp, fine-tuning], kind: alias}
+  - {phrase: A/B tests, expect: [ab-testing], accept: [statistics], kind: alias}
+  - {phrase: PowerBI, expect: [bi-tools], accept: [data-visualization], kind: alias}
+  - {phrase: Tableau, expect: [bi-tools], accept: [data-visualization], kind: alias}
+  - {phrase: Excel, expect: [spreadsheets], kind: alias}
+  - {phrase: AD, any: [active-directory], kind: alias}
+  - {phrase: IAM, expect: [identity-access-management], accept: [cloud-security], kind: alias}
+  - {phrase: SIEM, expect: [siem], accept: [security-incident-response], kind: alias}
+  - {phrase: DevRel, expect: [developer-content, community-building], accept: [public-speaking, developer-experience], kind: alias}
+  - {phrase: DX, any: [developer-experience], kind: alias}
+  - {phrase: MCP servers, expect: [mcp], accept: [ai-agents], kind: alias}
+  - {phrase: EVM, expect: [ethereum], accept: [solidity, blockchain-fundamentals], kind: alias}
+  - {phrase: gRPC, expect: [grpc], kind: alias}
+  - {phrase: Regex, expect: [regular-expressions], kind: alias}
+  - {phrase: Bash, expect: [shell-scripting], accept: [linux], kind: alias}
+
+  # --- typos ----------------------------------------------------------------------------------------
+  - {phrase: Pyhton, expect: [python], kind: typo}
+  - {phrase: javscript, expect: [javascript], kind: typo}
+  - {phrase: Kubernets, expect: [kubernetes], kind: typo}
+  - {phrase: Dokcer, expect: [docker], kind: typo}
+  - {phrase: postgress, expect: [postgresql], accept: [relational-databases], kind: typo}
+  - {phrase: Terraform modules (terrafrom), expect: [terraform], accept: [infrastructure-as-code], kind: typo}
+  - {phrase: reactjs, expect: [react], kind: typo}
+  - {phrase: Angluar, expect: [angular], kind: typo}
+  - {phrase: Djano, expect: [django], accept: [python], kind: typo}
+  - {phrase: tensorflwo, expect: [tensorflow], accept: [deep-learning], kind: typo}
+  - {phrase: Pytroch, expect: [pytorch], accept: [deep-learning], kind: typo}
+  - {phrase: kafak, expect: [kafka], accept: [message-brokers], kind: typo}
+  - {phrase: Elasticsearh, expect: [elasticsearch], kind: typo}
+  - {phrase: machine lerning, expect: [machine-learning-fundamentals], kind: typo}
+  - {phrase: statisitcs, expect: [statistics], kind: typo}
+  - {phrase: algoritms, expect: [algorithms], accept: [data-structures], kind: typo}
+  - {phrase: microservises, expect: [microservices], kind: typo}
+  - {phrase: Typscript, expect: [typescript], kind: typo}
+  - {phrase: grafanna dashboards, expect: [prometheus-grafana], accept: [observability], kind: typo}
+  - {phrase: jenkis, expect: [jenkins], accept: [ci-cd], kind: typo}
+  - {phrase: Kotiln, expect: [kotlin], kind: typo}
+  - {phrase: swiftUi, expect: [swiftui], accept: [swift], kind: typo}
+  - {phrase: Ansibel, expect: [ansible], kind: typo}
+  - {phrase: Snowflak warehouse, expect: [snowflake], accept: [data-warehousing], kind: typo}
+  - {phrase: penetraton testing, expect: [penetration-testing], kind: typo}
+
+  # --- described, not named -----------------------------------------------------------------------
+  - {phrase: putting apps in containers, expect: [docker], kind: paraphrase}
+  - {phrase: orchestrating containers across a cluster, expect: [kubernetes], kind: paraphrase}
+  - {phrase: writing tests before the code, expect: [tdd], accept: [unit-testing], kind: paraphrase}
+  - {phrase: building web APIs, expect: [rest-api-design], accept: [http, nodejs, fastapi, django, spring-boot, graphql], kind: paraphrase}
+  - {phrase: designing database tables and indexes, expect: [database-design], accept: [relational-databases, sql], kind: paraphrase}
+  - {phrase: making websites work on phones, expect: [responsive-design], accept: [css], kind: paraphrase}
+  - {phrase: making sites usable with screen readers, expect: [accessibility], kind: paraphrase}
+  - {phrase: speeding up page load times, expect: [web-performance], kind: paraphrase}
+  - {phrase: automatically deploying on every commit, expect: [ci-cd], accept: [github-actions, jenkins, gitops], kind: paraphrase}
+  - {phrase: provisioning cloud resources with code, expect: [infrastructure-as-code], accept: [terraform, ansible], kind: paraphrase}
+  - {phrase: keeping services up and handling outages, expect: [sre-practices], accept: [incident-management, observability], kind: paraphrase}
+  - {phrase: being on call and running postmortems, expect: [incident-management], accept: [sre-practices], kind: paraphrase}
+  - {phrase: logs metrics and traces, expect: [observability], accept: [opentelemetry, prometheus-grafana], kind: paraphrase}
+  - {phrase: reducing the cloud bill, expect: [finops], accept: [cloud-architecture], kind: paraphrase}
+  - {phrase: storing passwords and API keys safely, expect: [secrets-management], accept: [secure-coding], kind: paraphrase}
+  - {phrase: login and permissions, expect: [authentication-authorization], accept: [identity-access-management], kind: paraphrase}
+  - {phrase: protecting web apps from XSS and SQL injection, expect: [web-security], accept: [secure-coding, api-security], kind: paraphrase}
+  - {phrase: hacking into systems legally to find weaknesses, expect: [penetration-testing], accept: [security-testing-tools], kind: paraphrase}
+  - {phrase: watching security alerts in a SOC, expect: [siem], accept: [security-incident-response], kind: paraphrase}
+  - {phrase: encryption and hashing, expect: [cryptography-basics], kind: paraphrase}
+  - {phrase: teaching computers to learn from data, expect: [machine-learning-fundamentals], kind: paraphrase}
+  - {phrase: neural networks, expect: [deep-learning], accept: [pytorch, tensorflow], kind: paraphrase}
+  - {phrase: chatbots that answer from company documents, expect: [rag], accept: [llm-frameworks, embeddings-vector-search, vector-databases, llm-fundamentals], kind: paraphrase}
+  - {phrase: LLMs that call tools and act on their own, expect: [ai-agents], accept: [mcp, llm-frameworks], kind: paraphrase}
+  - {phrase: training a model further on my own data, expect: [fine-tuning], accept: [transformers, pytorch], kind: paraphrase}
+  - {phrase: checking whether LLM answers are good, expect: [llm-evaluation], kind: paraphrase}
+  - {phrase: stopping prompt injection, expect: [ai-guardrails], accept: [llm-evaluation], kind: paraphrase}
+  - {phrase: running language models on our own GPUs, expect: [llm-serving], accept: [gpu-infrastructure, model-serving], kind: paraphrase}
+  - {phrase: turning text into vectors for similarity search, expect: [embeddings-vector-search], accept: [vector-databases], kind: paraphrase}
+  - {phrase: detecting objects in images, expect: [computer-vision], accept: [deep-learning], kind: paraphrase}
+  - {phrase: tracking ML experiments and metrics, expect: [experiment-tracking], kind: paraphrase}
+  - {phrase: putting ML models into production behind an API, expect: [model-serving], accept: [ml-pipelines, llm-serving], kind: paraphrase}
+  - {phrase: noticing when a model's accuracy drifts, expect: [model-monitoring], kind: paraphrase}
+  - {phrase: moving data from source systems into the warehouse, expect: [etl-pipelines], accept: [data-warehousing, airflow], kind: paraphrase}
+  - {phrase: processing events in real time, expect: [stream-processing], accept: [kafka, event-driven-architecture], kind: paraphrase}
+  - {phrase: making dashboards for managers, expect: [data-visualization], accept: [bi-tools], kind: paraphrase}
+  - {phrase: fixing messy data, expect: [data-cleaning], accept: [pandas, data-quality], kind: paraphrase}
+  - {phrase: defining revenue and churn metrics once for every report, expect: [semantic-layer], accept: [data-modeling, product-analytics], kind: paraphrase}
+  - {phrase: funnels retention and cohorts, expect: [product-analytics], accept: [ab-testing], kind: paraphrase}
+  - {phrase: star schemas and fact tables, expect: [data-modeling], accept: [data-warehousing], kind: paraphrase}
+  - {phrase: releasing features gradually behind a toggle, expect: [feature-flags], kind: paraphrase}
+  - {phrase: interviewing users about their problems, expect: [user-research], accept: [product-thinking, customer-discovery], kind: paraphrase}
+  - {phrase: understanding what a customer needs before a sale, expect: [customer-discovery], accept: [presales], kind: paraphrase}
+  - {phrase: building demos for prospects, expect: [technical-demos], accept: [presales], kind: paraphrase}
+  - {phrase: writing tutorials and blog posts for developers, expect: [developer-content], accept: [technical-writing], kind: paraphrase}
+  - {phrase: giving talks at conferences, expect: [public-speaking], kind: paraphrase}
+  - {phrase: running a developer Discord community, expect: [community-building], kind: paraphrase}
+  - {phrase: writing design docs and READMEs, expect: [technical-writing], accept: [architecture-decision-records], kind: paraphrase}
+  - {phrase: recording why we chose an architecture, expect: [architecture-decision-records], accept: [technical-writing], kind: paraphrase}
+  - {phrase: managing a team of engineers, expect: [people-management], accept: [hiring, mentoring], kind: paraphrase}
+  - {phrase: interviewing candidates, expect: [hiring], kind: paraphrase}
+  - {phrase: estimating how long work will take, expect: [project-planning], kind: paraphrase}
+  - {phrase: sprints and standups, expect: [agile-scrum], kind: paraphrase}
+  - {phrase: reviewing teammates' pull requests, expect: [code-review], accept: [git], kind: paraphrase}
+  - {phrase: finding why code is slow, expect: [profiling], accept: [debugging], kind: paraphrase}
+  - {phrase: threads locks and race conditions, expect: [concurrency], kind: paraphrase}
+  - {phrase: TCP/IP and DNS, expect: [computer-networking], accept: [http], kind: paraphrase}
+  - {phrase: programming microcontrollers in C, expect: [microcontrollers], accept: [c], kind: paraphrase}
+  - {phrase: I2C SPI and UART, expect: [communication-protocols], accept: [microcontrollers], kind: paraphrase}
+  - {phrase: writing shaders for lighting effects, expect: [shaders], accept: [computer-graphics], kind: paraphrase}
+  - {phrase: syncing game state between players online, expect: [multiplayer-networking], kind: paraphrase}
+  - {phrase: publishing an app to Google Play and the App Store, expect: [app-store-release], kind: paraphrase}
+  - {phrase: apps that work offline on the phone, expect: [mobile-data-persistence], kind: paraphrase}
+  - {phrase: writing smart contracts, expect: [solidity], accept: [ethereum, smart-contract-testing], kind: paraphrase}
+  - {phrase: auditing smart contracts for exploits, expect: [smart-contract-security], accept: [solidity], kind: paraphrase}
+  - {phrase: load testing an API with thousands of users, expect: [performance-testing], accept: [api-testing], kind: paraphrase}
+  - {phrase: exploratory testing by hand, expect: [manual-testing], kind: paraphrase}
+  - {phrase: planning what and how to test for a release, expect: [test-planning], accept: [test-strategy], kind: paraphrase}
+  - {phrase: designing large scalable systems, expect: [system-design], accept: [distributed-systems, architecture-patterns, cloud-architecture], kind: paraphrase}
+  - {phrase: GPU clusters for AI workloads, expect: [gpu-infrastructure], accept: [distributed-training, llm-serving], kind: paraphrase}
+  - {phrase: training one model on many GPUs, expect: [distributed-training], accept: [gpu-infrastructure], kind: paraphrase}
+  - {phrase: reading and reproducing ML papers, expect: [research-methods], kind: paraphrase}
+
+  # --- tools not in the catalog → their skill ----------------------------------------------------
+  - {phrase: Jest, expect: [unit-testing], accept: [frontend-testing, javascript, testing-fundamentals], kind: tool}
+  - {phrase: pytest, expect: [unit-testing], accept: [python, testing-fundamentals, integration-testing], kind: tool}
+  - {phrase: JUnit, expect: [unit-testing], accept: [java, testing-fundamentals], kind: tool}
+  - {phrase: Cypress, expect: [e2e-testing], accept: [frontend-testing, test-automation], kind: tool}
+  - {phrase: Playwright, expect: [e2e-testing], accept: [frontend-testing, test-automation], kind: tool}
+  - {phrase: Postman, expect: [api-testing], accept: [rest-api-design], kind: tool}
+  - {phrase: JMeter, expect: [performance-testing], kind: tool}
+  - {phrase: k6, any: [performance-testing], kind: tool}
+  - {phrase: Vite, expect: [frontend-build-tools], kind: tool}
+  - {phrase: Webpack, expect: [frontend-build-tools], kind: tool}
+  - {phrase: Redux, expect: [state-management], accept: [react], kind: tool}
+  - {phrase: Pinia, expect: [state-management], accept: [vue], kind: tool}
+  - {phrase: Storybook, expect: [design-systems], accept: [frontend-testing, react], kind: tool}
+  - {phrase: Figma, expect: [ui-ux-basics], accept: [design-systems], kind: tool}
+  - {phrase: Express.js, expect: [nodejs], accept: [rest-api-design, javascript], kind: tool}
+  - {phrase: NestJS, expect: [nodejs], accept: [typescript, rest-api-design], kind: tool}
+  - {phrase: Flask, expect: [python], accept: [rest-api-design, fastapi, django], kind: tool}
+  - {phrase: Laravel, expect: [php], kind: tool}
+  - {phrase: Ruby on Rails, any: [rest-api-design, programming-fundamentals], accept: [orm, relational-databases], kind: tool}
+  - {phrase: Hibernate, expect: [orm], accept: [java, spring-boot], kind: tool}
+  - {phrase: SQLAlchemy, expect: [orm], accept: [python, sql], kind: tool}
+  - {phrase: Prisma, expect: [orm], accept: [typescript, nodejs], kind: tool}
+  - {phrase: RabbitMQ, expect: [message-brokers], kind: tool}
+  - {phrase: Amazon SQS, expect: [message-brokers], accept: [aws], kind: tool}
+  - {phrase: OpenSearch, expect: [elasticsearch], kind: tool}
+  - {phrase: DynamoDB, expect: [nosql-databases], accept: [aws], kind: tool}
+  - {phrase: Cassandra, expect: [nosql-databases], accept: [distributed-systems], kind: tool}
+  - {phrase: MySQL Workbench, expect: [mysql], accept: [sql, relational-databases], kind: tool}
+  - {phrase: GitLab CI, expect: [ci-cd], accept: [github-actions], kind: tool}
+  - {phrase: ArgoCD, expect: [gitops], accept: [kubernetes, ci-cd], kind: tool}
+  - {phrase: Istio, expect: [service-mesh], accept: [kubernetes], kind: tool}
+  - {phrase: HashiCorp Vault, expect: [secrets-management], kind: tool}
+  - {phrase: Pulumi, expect: [infrastructure-as-code], accept: [terraform], kind: tool}
+  - {phrase: CloudFormation, expect: [infrastructure-as-code], accept: [aws], kind: tool}
+  - {phrase: AWS Lambda, expect: [serverless], accept: [aws], kind: tool}
+  - {phrase: Datadog, expect: [observability], accept: [prometheus-grafana], kind: tool}
+  - {phrase: Splunk, expect: [siem], accept: [observability], kind: tool}
+  - {phrase: Kibana, expect: [elasticsearch], accept: [observability, data-visualization], kind: tool}
+  - {phrase: Burp Suite, expect: [security-testing-tools], accept: [web-security, penetration-testing], kind: tool}
+  - {phrase: Metasploit, expect: [security-testing-tools], accept: [penetration-testing, exploit-development], kind: tool}
+  - {phrase: Nmap, expect: [security-testing-tools], accept: [network-security, penetration-testing], kind: tool}
+  - {phrase: Wireshark, any: [computer-networking, network-security, security-testing-tools], kind: tool}
+  - {phrase: LangChain, expect: [llm-frameworks], accept: [rag, ai-agents], kind: tool}
+  - {phrase: LlamaIndex, expect: [llm-frameworks], accept: [rag], kind: tool}
+  - {phrase: pgvector, expect: [vector-databases], accept: [postgresql, embeddings-vector-search], kind: tool}
+  - {phrase: Pinecone, expect: [vector-databases], accept: [embeddings-vector-search], kind: tool}
+  - {phrase: Ollama, expect: [llm-serving], accept: [llm-fundamentals], kind: tool}
+  - {phrase: vLLM, expect: [llm-serving], accept: [gpu-infrastructure], kind: tool}
+  - {phrase: MLflow, expect: [experiment-tracking], accept: [ml-pipelines, model-serving], kind: tool}
+  - {phrase: Kubeflow, expect: [ml-pipelines], accept: [kubernetes], kind: tool}
+  - {phrase: Hugging Face, expect: [transformers], accept: [fine-tuning, nlp], kind: tool}
+  - {phrase: OpenCV, expect: [computer-vision], kind: tool}
+  - {phrase: XGBoost, expect: [machine-learning-fundamentals], accept: [scikit-learn, feature-engineering], kind: tool}
+  - {phrase: Databricks, expect: [spark], accept: [data-lakehouse], kind: tool}
+  - {phrase: BigQuery, expect: [data-warehousing], accept: [gcp, sql], kind: tool}
+  - {phrase: Apache Flink, expect: [stream-processing], kind: tool}
+  - {phrase: Looker, expect: [bi-tools], accept: [semantic-layer, data-visualization], kind: tool}
+  - {phrase: Amplitude, expect: [product-analytics], kind: tool}
+  - {phrase: LaunchDarkly, expect: [feature-flags], kind: tool}
+  - {phrase: Hardhat, expect: [smart-contract-testing], accept: [solidity, ethereum], kind: tool}
+  - {phrase: ethers.js, expect: [web3-libraries], accept: [ethereum, javascript], kind: tool}
+  - {phrase: FreeRTOS, expect: [rtos], accept: [microcontrollers], kind: tool}
+  - {phrase: Arduino, expect: [microcontrollers], accept: [c, cpp, digital-electronics], kind: tool}
+  - {phrase: Jira, expect: [agile-scrum], accept: [project-planning], kind: tool}
+
+  # --- several skills in one phrase ---------------------------------------------------------------
+  - {phrase: REST APIs with Django, expect: [rest-api-design, django], accept: [python], kind: multi}
+  - {phrase: React and TypeScript, expect: [react, typescript], kind: multi}
+  - {phrase: Docker and Kubernetes, expect: [docker, kubernetes], kind: multi}
+  - {phrase: Python for data analysis with pandas, expect: [python, pandas], accept: [exploratory-data-analysis, numpy], kind: multi}
+  - {phrase: AWS and Terraform, expect: [aws, terraform], accept: [infrastructure-as-code, cloud-fundamentals], kind: multi}
+  - {phrase: SQL and Power BI reports, expect: [sql, bi-tools], accept: [data-visualization], kind: multi}
+  - {phrase: Spring Boot microservices on Kubernetes, expect: [spring-boot, microservices, kubernetes], accept: [java, docker], kind: multi}
+  - {phrase: Node.js and MongoDB, expect: [nodejs, mongodb], accept: [javascript, nosql-databases], kind: multi}
+  - {phrase: Kafka and Spark streaming, expect: [kafka, spark], accept: [stream-processing], kind: multi}
+  - {phrase: RAG with LangChain and a vector database, expect: [rag, llm-frameworks, vector-databases], accept: [embeddings-vector-search], kind: multi}
+  - {phrase: Prometheus Grafana and alerting, expect: [prometheus-grafana], accept: [observability, incident-management], kind: multi}
+  - {phrase: Kotlin and Jetpack Compose, expect: [kotlin, jetpack-compose], accept: [android-sdk], kind: multi}
+  - {phrase: Swift and SwiftUI, expect: [swift, swiftui], accept: [ios-sdk], kind: multi}
+  - {phrase: Unity and C#, expect: [unity, csharp], kind: multi}
+  - {phrase: Git and GitHub Actions, expect: [git, github-actions], accept: [ci-cd], kind: multi}
+  - {phrase: HTML CSS and JavaScript, expect: [html, css, javascript], kind: multi}
+  - {phrase: Airflow and dbt pipelines, expect: [airflow, dbt], accept: [etl-pipelines], kind: multi}
+  - {phrase: statistics and A/B testing, expect: [statistics, ab-testing], kind: multi}
+  - {phrase: Linux and Bash scripting, expect: [linux, shell-scripting], kind: multi}
+  - {phrase: PyTorch and transformers, expect: [pytorch, transformers], accept: [deep-learning, nlp], kind: multi}
+  - {phrase: Terraform and Ansible, expect: [terraform, ansible], accept: [infrastructure-as-code], kind: multi}
+  - {phrase: Selenium with Java, expect: [selenium, java], accept: [test-automation], kind: multi}
+  - {phrase: OAuth and JWT, expect: [authentication-authorization], accept: [api-security, web-security], kind: multi}
+  - {phrase: mentoring and hiring engineers, expect: [mentoring, hiring], accept: [people-management], kind: multi}
+  - {phrase: Azure and Active Directory, expect: [azure, active-directory], accept: [identity-access-management], kind: multi}
+
+  # --- vague ----------------------------------------------------------------------------------------
+  - {phrase: backend development, any: [rest-api-design, nodejs, django, fastapi, spring-boot, aspnet-core, go-web-services], accept: [relational-databases, http, microservices, system-design], kind: broad}
+  - {phrase: frontend stuff, any: [html, css, javascript, react, vue, angular], accept: [responsive-design, dom, typescript, frontend-architecture], kind: broad}
+  - {phrase: web development, any: [html, css, javascript, http, rest-api-design], accept: [react, nodejs, responsive-design, dom], kind: broad}
+  - {phrase: mobile apps, any: [android-sdk, ios-sdk, flutter, react-native], accept: [mobile-architecture, kotlin, swift], kind: broad}
+  - {phrase: cloud, any: [cloud-fundamentals, aws, azure, gcp], accept: [cloud-architecture, serverless], kind: broad}
+  - {phrase: DevOps, any: [ci-cd, docker, infrastructure-as-code], accept: [kubernetes, linux, observability, github-actions], kind: broad}
+  - {phrase: data science, any: [machine-learning-fundamentals, statistics, pandas], accept: [exploratory-data-analysis, scikit-learn, data-visualization], kind: broad}
+  - {phrase: big data, any: [spark, data-lakehouse, etl-pipelines], accept: [kafka, stream-processing, data-warehousing], kind: broad}
+  - {phrase: AI, any: [machine-learning-fundamentals, llm-fundamentals, deep-learning], accept: [ai-agents, prompt-engineering, nlp], kind: broad}
+  - {phrase: generative AI, any: [llm-fundamentals, prompt-engineering, transformers], accept: [rag, ai-agents, fine-tuning], kind: broad}
+  - {phrase: cybersecurity, any: [security-fundamentals, network-security, web-security], accept: [penetration-testing, siem, threat-modeling], kind: broad}
+  - {phrase: testing, any: [testing-fundamentals, unit-testing, test-automation], accept: [manual-testing, integration-testing, e2e-testing], kind: broad}
+  - {phrase: databases, any: [relational-databases, sql, database-design], accept: [postgresql, mysql, nosql-databases], kind: broad}
+  - {phrase: networking, expect: [computer-networking], accept: [network-security, cloud-networking, http], kind: broad}
+  - {phrase: software architecture, any: [architecture-patterns, system-design], accept: [microservices, domain-driven-design, design-patterns], kind: broad}
+  - {phrase: game development, any: [unity, unreal-engine, game-design-basics], accept: [game-math, computer-graphics], kind: broad}
+  - {phrase: embedded systems, any: [microcontrollers, embedded-linux, rtos], accept: [c, digital-electronics], kind: broad}
+  - {phrase: crypto and web3, any: [blockchain-fundamentals, ethereum, solidity], accept: [web3-libraries, defi-protocols], kind: broad}
+  - {phrase: leadership, any: [technical-leadership, people-management, mentoring], kind: broad}
+  - {phrase: communication skills, any: [stakeholder-communication, technical-writing, public-speaking], kind: broad}
+  - {phrase: math for ML, any: [linear-algebra, calculus, statistics], accept: [ml-optimization], kind: broad}
+  - {phrase: coding, any: [programming-fundamentals], accept: [clean-code, data-structures, algorithms], kind: broad}
+  - {phrase: automation, any: [test-automation, shell-scripting, ci-cd, ansible], accept: [python, infrastructure-as-code], kind: broad}
+  - {phrase: performance, any: [profiling, web-performance, performance-testing, game-optimization], kind: broad}
+  - {phrase: analytics, any: [data-visualization, sql, product-analytics, bi-tools], accept: [statistics, exploratory-data-analysis], kind: broad}
+
+  # --- course and video titles -----------------------------------------------------------------------
+  - {phrase: The Complete Python Bootcamp From Zero to Hero, expect: [python], accept: [programming-fundamentals], kind: course}
+  - {phrase: Docker & Kubernetes - The Practical Guide, expect: [docker, kubernetes], kind: course}
+  - {phrase: Machine Learning A-Z, expect: [machine-learning-fundamentals], accept: [python, r, scikit-learn], kind: course}
+  - {phrase: CS50 Introduction to Computer Science, expect: [programming-fundamentals], accept: [c, data-structures, algorithms, python], kind: course}
+  - {phrase: AWS Certified Solutions Architect Associate, expect: [aws], accept: [cloud-architecture, cloud-fundamentals, cloud-networking], kind: course}
+  - {phrase: The Ultimate React Course 2025, expect: [react], accept: [javascript, state-management], kind: course}
+  - {phrase: SQL for Data Analysis, expect: [sql], accept: [exploratory-data-analysis, relational-databases], kind: course}
+  - {phrase: Deep Learning Specialization, expect: [deep-learning], accept: [machine-learning-fundamentals, transformers], kind: course}
+  - {phrase: Kubernetes for the Absolute Beginners, expect: [kubernetes], accept: [docker], kind: course}
+  - {phrase: Terraform Up and Running, expect: [terraform], accept: [infrastructure-as-code], kind: course}
+  - {phrase: Designing Data-Intensive Applications, expect: [distributed-systems], accept: [system-design, database-design, stream-processing], kind: course}
+  - {phrase: Clean Code by Uncle Bob, expect: [clean-code], accept: [design-patterns], kind: course}
+  - {phrase: Build a Large Language Model From Scratch, expect: [transformers], accept: [llm-fundamentals, pytorch, deep-learning], kind: course}
+  - {phrase: Ethical Hacking from Scratch, expect: [penetration-testing], accept: [security-testing-tools, network-security, web-security], kind: course}
+  - {phrase: iOS & Swift - The Complete iOS App Development Bootcamp, expect: [swift, ios-sdk], accept: [swiftui], kind: course}
+  - {phrase: The Data Engineering Zoomcamp, any: [etl-pipelines, data-warehousing], accept: [airflow, spark, dbt, kafka, docker, terraform], kind: course}
+  - {phrase: Selenium WebDriver with Java - Basics to Advanced, expect: [selenium], accept: [java, test-automation], kind: course}
+  - {phrase: System Design Interview - An Insider's Guide, expect: [system-design], accept: [distributed-systems, caching], kind: course}
+  - {phrase: Git & GitHub Crash Course, expect: [git], accept: [code-review], kind: course}
+  - {phrase: Unreal Engine 5 C++ Developer, expect: [unreal-engine, cpp], kind: course}
+
+  # --- not software skills: should match nothing ----------------------------------------------------
+  - {phrase: cooking, expect: [], kind: unrelated}
+  - {phrase: playing guitar, expect: [], kind: unrelated}
+  - {phrase: football, expect: [], kind: unrelated}
+  - {phrase: oil painting, expect: [], kind: unrelated}
+  - {phrase: gardening, expect: [], kind: unrelated}
+  - {phrase: yoga, expect: [], kind: unrelated}
+  - {phrase: learning Spanish, expect: [], kind: unrelated}
+  - {phrase: Turkish literature, expect: [], kind: unrelated}
+  - {phrase: accounting, expect: [], accept: [spreadsheets], kind: unrelated}
+  - {phrase: photography, expect: [], kind: unrelated}
+  - {phrase: carpentry, expect: [], kind: unrelated}
+  - {phrase: chess, expect: [], kind: unrelated}
+  - {phrase: driving a truck, expect: [], kind: unrelated}
+  - {phrase: nursing, expect: [], kind: unrelated}
+  - {phrase: marketing on Instagram, expect: [], kind: unrelated}
+  - {phrase: baking bread, expect: [], kind: unrelated}
+  - {phrase: hiking, expect: [], kind: unrelated}
+  - {phrase: knitting, expect: [], kind: unrelated}
+  - {phrase: real estate, expect: [], kind: unrelated}
+  - {phrase: video editing, expect: [], kind: unrelated}
+  - {phrase: asdfgh, expect: [], kind: unrelated}
+  - {phrase: I like cats, expect: [], kind: unrelated}
+  - {phrase: Microsoft Word, expect: [], accept: [spreadsheets, technical-writing], kind: unrelated}
+  - {phrase: plumbing pipes, expect: [], kind: unrelated}
+  - {phrase: wine tasting, expect: [], kind: unrelated}
