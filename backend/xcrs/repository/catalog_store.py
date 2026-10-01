@@ -224,3 +224,10 @@ def role_requirements(session: Session, role: str, level: str) -> dict[tuple[str
         key = tuple(sorted(options))
         need[key] = max(need.get(key, 0), min_level)
     return need
+
+
+def skill_display_names(session: Session, slugs: Iterable[str]) -> dict[str, str]:
+    slugs = list(set(slugs))
+    if not slugs:
+        return {}
+    return dict(session.execute(select(Skill.slug, Skill.name).where(Skill.slug.in_(slugs))).all())

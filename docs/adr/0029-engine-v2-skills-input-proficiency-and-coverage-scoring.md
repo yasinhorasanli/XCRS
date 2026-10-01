@@ -3,6 +3,7 @@
 - **Status:** Accepted
 - **Date:** 2026-10-01
 - **Decider:** Muhammed Yasin Horasanli
+- **Note (2026-10-02):** decision 3 was measured; [ADR-0030](0030-skill-matching-lookup-llm-pick-confirmed-by-similarity.md) chose the LLM picking from the catalog list, confirmed by similarity. The definition step did not beat embedding the phrase and was dropped.
 
 ## Context
 

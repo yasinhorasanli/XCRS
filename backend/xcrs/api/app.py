@@ -22,14 +22,16 @@ from xcrs.api.schemas import (
     RelatedUnitsV1,
     RelatedUnitV1,
 )
+from xcrs.api.schemas_v2 import MatchedSkillV2, PhraseMatchV2, SkillMatchRequestV2, SkillMatchResponseV2
 from xcrs.config import get_settings
 from xcrs.db.session import new_session
 from xcrs.explain import get_explainer
-from xcrs.repository import activity
+from xcrs.repository import activity, catalog_store
 from xcrs.repository import catalog as catalog_repo
 from xcrs.services.explanations import ExplanationWorker
 from xcrs.services.knowledge_units import KnowledgeUnitService
 from xcrs.services.recommend import RecommendationService
+from xcrs.services.skill_matching import SkillMatcher, build_matcher
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 log = logging.getLogger(__name__)
@@ -66,6 +68,10 @@ def get_service(request: Request, session: Session = Depends(get_session)) -> Re
 
 def get_knowledge_units(session: Session = Depends(get_session)) -> KnowledgeUnitService:
     return KnowledgeUnitService(session)
+
+
+def get_skill_matcher(session: Session = Depends(get_session)) -> SkillMatcher:
+    return build_matcher(session)
 
 
 @app.get("/api/v1/health")
@@ -129,3 +135,26 @@ def related_knowledge_units(
         [p[:100] for p in body.phrases], [a[:100] for a in body.avoid], [e[:100] for e in body.exclude], body.limit
     )
     return RelatedUnitsV1(units=[RelatedUnitV1(**vars(u)) for u in units])
+
+
+# --- /api/v2: engine v2 on the new catalog (ADR-0029); /api/v1 serves the legacy engine until the switch-over.
+
+
+@app.post("/api/v2/skills/match", response_model=SkillMatchResponseV2)
+def match_skills(
+    body: SkillMatchRequestV2,
+    matcher: SkillMatcher = Depends(get_skill_matcher),
+    session: Session = Depends(get_session),
+) -> SkillMatchResponseV2:
+    """Catalog skills for typed phrases (ADR-0030). Clients call it as each chip is added, so the LLM step
+    (seconds on a CPU, once per phrase) is usually done before "Recommend"."""
+    results = matcher.match([p.strip()[:100] for p in body.phrases])
+    names = catalog_store.skill_display_names(session, [s for r in results for s in r.skills])
+    return SkillMatchResponseV2(
+        matches=[
+            PhraseMatchV2(
+                phrase=r.phrase, skills=[MatchedSkillV2(id=s, name=names[s]) for s in r.skills], method=r.method
+            )
+            for r in results
+        ]
+    )

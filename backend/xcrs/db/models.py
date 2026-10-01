@@ -415,3 +415,32 @@ class LegacyRoleMap(Base):
 
     legacy_slug: Mapped[str] = mapped_column(Text, primary_key=True)
     role_id: Mapped[int | None] = mapped_column(SmallInteger, ForeignKey("catalog.roles.id", ondelete="SET NULL"))
+
+
+class SkillEmbedding(Base):
+    """A skill's vector for one model (ADR-0008, ADR-0030), embedded from "name: description"."""
+
+    __tablename__ = "skill_embeddings"
+    __table_args__ = ({"schema": CATALOG},)
+
+    skill_id: Mapped[int] = mapped_column(ForeignKey("catalog.skills.id", ondelete="CASCADE"), primary_key=True)
+    model_id: Mapped[int] = mapped_column(SmallInteger, ForeignKey("embedding_models.id"), primary_key=True)
+    embedding = mapped_column(Vector(), nullable=False)  # untyped: size depends on the model
+    content_hash: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+
+class PhraseMatch(Base):
+    """What the LLM step decided for a normalized phrase (ADR-0030); derived data, safe to empty."""
+
+    __tablename__ = "phrase_matches"
+    __table_args__ = ({"schema": CATALOG},)
+
+    phrase_key: Mapped[str] = mapped_column(Text, primary_key=True)
+    catalog_checksum: Mapped[str] = mapped_column(Text, primary_key=True)
+    prompt_version: Mapped[str] = mapped_column(Text, primary_key=True)
+    llm_model: Mapped[str] = mapped_column(Text, primary_key=True)
+    skills: Mapped[list[str]] = mapped_column(ARRAY(Text))  # kept after confirmation
+    picked: Mapped[list[str]] = mapped_column(ARRAY(Text))  # what the LLM answered, for auditing
+    llm_ms: Mapped[int | None]
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
