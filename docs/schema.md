@@ -211,6 +211,13 @@ erDiagram
 - **Entities removed from the YAML are deleted.** If something outside the catalog still refers to one, the delete fails and the whole import rolls back, rather than silently losing data.
 - Each import records what was added, updated and removed (`imports.changes`).
 
+**Skill matching (migration `0006`, ADR-0030):**
+
+| Table | Key | What it holds |
+|---|---|---|
+| `skill_embeddings` | (`skill_id`, `model_id` → `public.embedding_models`) | the skill's vector for one model, from "name: description"; `content_hash` re-embeds changed skills (`xcrs catalog embed`). No vector index at 257 skills |
+| `phrase_matches` | (`phrase_key`, `catalog_checksum`, `prompt_version`, `llm_model`) | cache of the LLM step: `skills` kept after confirmation, `picked` = what the LLM answered, `llm_ms`. Derived data; a new import, prompt or model asks again |
+
 Resource tables (`learning_resources`, resource–skill links, series; ADR-0026) are added with resource ingestion, once the providers and the raw store are decided.
 
 ## Size today

@@ -26,6 +26,8 @@ class Settings(BaseSettings):
     # failure mode of small models in JSON mode (endless whitespace), which would hold the worker until the timeout.
     llm_max_tokens: int = 700
     explain_threads: int = 1  # background explanation workers (ADR-0018); 1 suits a CPU-bound LLM
+    # Skill matching (ADR-0030) uses the same LLM; a new phrase takes ~2 s on a GPU, ~5 s or more on a CPU VM.
+    match_llm_timeout_s: float = 60.0
 
 
 @lru_cache

@@ -20,9 +20,10 @@ from xcrs.catalog import model, validate
 from xcrs.db.models import EmbeddingModel, RoadmapNode, Role
 from xcrs.db.session import new_session
 from xcrs.embeddings import embedder_for
-from xcrs.ingest import embed_catalog, research_data
+from xcrs.ingest import embed_catalog, embed_skills, research_data
 from xcrs.repository import catalog_store, vectors
 from xcrs.retrieval import CourseRetriever
+from xcrs.services import skill_matching
 
 # Known model settings, so registration doesn't depend on remembering prefixes.
 # Qwen3-Embedding expects an instruction on queries and nothing on documents (model card).
@@ -174,6 +175,24 @@ def cmd_catalog_import(args) -> None:
     print("  parts    " + ", ".join(f"{k} {v}" for k, v in changes["parts"].items()))
 
 
+def cmd_catalog_embed(args) -> None:
+    """Embed catalog skills with the active model ("name: description"; only new or changed ones)."""
+    with new_session() as session:
+        model = session.scalars(select(EmbeddingModel).where(EmbeddingModel.status == "active")).one()
+        count = embed_skills.embed_skills(session, model)
+        name = model.name
+        session.commit()
+    print(f"{count} skills embedded with {name}")
+
+
+def cmd_catalog_match(args) -> None:
+    """Match phrases to catalog skills as the API does (ADR-0030); shows the method used."""
+    with new_session() as session:
+        matcher = skill_matching.build_matcher(session, use_llm=not args.no_llm)
+        for r in matcher.match(args.phrases):
+            print(f"  {r.phrase!r:40} {r.method:9} {', '.join(r.skills) or '-'}")
+
+
 def cmd_catalog_moves(args) -> None:
     """Every other role ranked by how much of it someone already covers (ADR-0027); * = common path."""
     cat = model.load_catalog(args.dir)
@@ -229,6 +248,12 @@ def main() -> None:
     p = catalog_sub.add_parser("import", help="load the catalog YAML into the database (validated first)")
     p.add_argument("--force", action="store_true", help="import even if nothing changed since the last import")
     p.set_defaults(func=cmd_catalog_import)
+    p = catalog_sub.add_parser("embed", help="embed catalog skills with the active model (after import)")
+    p.set_defaults(func=cmd_catalog_embed)
+    p = catalog_sub.add_parser("match", help="match typed phrases to skills, e.g. k8s Jira 'neural networks'")
+    p.add_argument("phrases", nargs="+")
+    p.add_argument("--no-llm", action="store_true", help="lookup and embeddings only (the fallback)")
+    p.set_defaults(func=cmd_catalog_match)
     p = catalog_sub.add_parser("moves", help="rank every other role by distance, e.g. backend-engineer@mid")
     p.add_argument("role_level")
     p.add_argument("--top", type=int, default=25)

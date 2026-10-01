@@ -33,12 +33,13 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0027](0027-career-roles-levels-and-transitions.md) | Career roles as specializations on one level ladder, connected by transitions | Accepted (delegated, reviewed) | 2026-10-01 |
 | [0028](0028-catalog-as-code-skills-graph-and-prerequisites.md) | Catalog as code: one skills graph, prerequisites as AND-of-OR with proficiency, reviewed as pull requests | Accepted (delegated, reviewed) | 2026-10-01 |
 | [0029](0029-engine-v2-skills-input-proficiency-and-coverage-scoring.md) | Engine v2: catalog skills with free-text fallback, optional proficiency, coverage × interest scoring, matching thresholds set by measurement | Accepted | 2026-10-01 |
+| [0030](0030-skill-matching-lookup-llm-pick-confirmed-by-similarity.md) | Skill matching: name lookup, then the LLM picks from the catalog, confirmed by embedding similarity | Accepted | 2026-10-02 |
 
 ## Upcoming decisions
 
 - Re-run the explainer benchmark on the VMs before launch (ADR-0020)
 - Threshold constants re-tuned against the prototype once its comparison can run (ADR-0022)
-- Skill matching method and thresholds, measured on the evaluation set (ADR-0029 → ADR-0030)
+- Engine v2 role scoring: coverage × interest formula and level estimate, calibrated on the evaluation profiles (ADR-0029)
 - Taxonomy import: ESCO links and an O*NET coverage check of the drafted roadmaps (ADR-0025)
 - First resource providers, and where raw ingested data lives (ADR-0004, proposed)
 - (Later) Roadmap visualization
