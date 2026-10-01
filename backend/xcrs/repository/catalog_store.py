@@ -15,7 +15,7 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
 
 from xcrs.catalog.model import LADDER, Catalog, Requirement
-from xcrs.catalog.snapshot import cumulative_requirements
+from xcrs.catalog.snapshot import cumulative_requirements, optional_skills
 from xcrs.db.models import (
     CareerRole,
     CareerRoleLevel,
@@ -277,6 +277,7 @@ def load_snapshot(session: Session) -> CatalogSnapshot:
             levels=[lv for lv, _, _ in levels],
             titles={lv: title for lv, title, _ in levels},
             requirements=cumulative_requirements([(lv, stages.get((role_id, lid), [])) for lv, _, lid in levels]),
+            optional=optional_skills([(lv, stages.get((role_id, lid), [])) for lv, _, lid in levels]),
         )
     snapshot = CatalogSnapshot(
         roles=roles,

@@ -24,6 +24,18 @@ def cumulative_requirements(levels) -> dict[str, list[Requirement]]:
     return out
 
 
+def optional_skills(levels) -> dict[str, int]:
+    """Skills from "good to know" stages, at the highest proficiency mentioned."""
+    out: dict[str, int] = {}
+    for _, stages in levels:
+        for _, optional, items in stages:
+            if optional:
+                for options, proficiency in items:
+                    for o in options:
+                        out[o] = max(out.get(o, 0), proficiency)
+    return out
+
+
 def snapshot_from_catalog(cat: Catalog) -> CatalogSnapshot:
     roles = {}
     for rid, role in cat.roles.items():
@@ -39,6 +51,7 @@ def snapshot_from_catalog(cat: Catalog) -> CatalogSnapshot:
             levels=[lv.level for lv in roadmap.levels],
             titles={lv.level: lv.title for lv in roadmap.levels},
             requirements=cumulative_requirements(levels),
+            optional=optional_skills(levels),
         )
     return CatalogSnapshot(
         roles=roles,

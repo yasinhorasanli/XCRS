@@ -6,10 +6,12 @@ For each role:
   learner enjoyed, felt neutral about or didn't enjoy count as known (at their 1-4 rating, unrated = 1);
   curious ones don't, since that's what they want to learn.
 - **interest**: the share of the learner's attention that falls on this role's skills. Every skill they
-  mentioned carries a category weight (curious, liked, neutral, disliked) times its distinctiveness;
-  a role collects the weights of the mentioned skills it requires, over the total of all mentioned.
+  mentioned carries a category weight (curious, liked, neutral, disliked) times its distinctiveness; a
+  role collects those weights for the skills it uses, scaled by how much it relies on each (the proficiency
+  its roadmap asks for, out of 4; "good to know" skills at half), over the total of all mentioned.
 - **score** = a * interest + (1 - a) * coverage, with `a` and the category weights calibrated on labeled
-  learner profiles (eval/bench_role_scoring.py).
+  learner profiles (eval/bench_role_scoring.py); roles that start above entry are scaled down for learners
+  far from their starting level (`entry_barrier`).
 - **level**: the highest level whose own additions, and every lower level's, are at least
   STARTING_COVERAGE met (the bar of `xcrs catalog moves`); None means "start at the role's first level".
 - **gaps**: what the next level asks for that the learner doesn't have yet, in roadmap order.
@@ -39,13 +41,14 @@ KNOWN = {Category.LIKED, Category.NEUTRAL, Category.DISLIKED}
 
 @dataclass(frozen=True)
 class Weights:
-    """The defaults are the values calibrated on eval/learner_profiles.yaml (ADR-0031): held-out top-1 96%,
-    top-3 100%, MRR 0.98; a between 0.3 and 0.5 performs alike, 0.4 is the middle."""
+    """The defaults are the values calibrated on eval/learner_profiles.yaml (ADR-0031, revised 2026-10-02 with
+    reliance-weighted interest): held-out top-1 98%, top-3 100%, MRR 0.98; a from 0.6 to 1.0 performs alike,
+    0.7 keeps coverage in the score; a real penalty for disliked skills costs at most one profile."""
 
-    interest: float = 0.4  # a: the share of the score that is interest (the rest is coverage)
-    curious: float = 1.25
-    liked: float = 0.75
-    neutral: float = 0.0  # neutral skills count for coverage, not for interest
+    interest: float = 0.7  # a: the share of the score that is interest (the rest is coverage)
+    curious: float = 1.0
+    liked: float = 1.0
+    neutral: float = 0.5
     disliked: float = -0.5
     coverage_at: str = "mean"  # which coverage ranks roles: "first" level, "top" level, or "mean" of levels
 
@@ -79,6 +82,17 @@ class RoleSnapshot:
     levels: list[str]  # ladder levels the role has, in order
     titles: dict[str, str | None]  # level -> title (e.g. "Principal Scientist")
     requirements: dict[str, list[Requirement]]  # level -> cumulative required items, roadmap order
+    optional: dict[str, int] = field(default_factory=dict)  # "good to know" skill -> proficiency mentioned
+
+    def reliance(self) -> dict[str, float]:
+        """How much the role relies on each skill: the highest proficiency its roadmap asks for, out of 4;
+        "good to know" skills count half. A role built on SQL (expert) relies on it more than one that asks
+        for basic SQL, so a learner who loves SQL is more interested in the former."""
+        out = {o: 0.5 * lv / 4 for o, lv in self.optional.items()}
+        for r in self.requirements[self.levels[-1]]:
+            for o in r.options:
+                out[o] = max(out.get(o, 0.0), r.level / 4)
+        return out
 
 
 @dataclass
@@ -91,6 +105,10 @@ class CatalogSnapshot:
     def __post_init__(self) -> None:
         if not self.weights:
             self.weights = distinctiveness(self.roles.values(), self.skill_names)
+        self._reliance = {rid: role.reliance() for rid, role in self.roles.items()}
+
+    def reliance(self, role: str) -> dict[str, float]:
+        return self._reliance[role]
 
 
 def distinctiveness(roles: Iterable[RoleSnapshot], skills: Iterable[str]) -> dict[str, float]:
@@ -170,6 +188,15 @@ def _coverage(requirements: list[Requirement], have: dict[str, int], weights: di
     return met / total if total else 0.0
 
 
+def entry_barrier(role: RoleSnapshot, first_level_coverage: float) -> float:
+    """Roles that start above entry (Software Architect at senior, SRE at mid) are entered from other roles
+    (ADR-0027), so they rank high only for learners close to their starting level: x0.5 for someone with
+    nothing of it, rising to x1 at STARTING_COVERAGE of the first level."""
+    if role.levels[0] == "entry":
+        return 1.0
+    return 0.5 + 0.5 * min(1.0, first_level_coverage / STARTING_COVERAGE)
+
+
 def level_additions(role: RoleSnapshot) -> dict[str, list[Requirement]]:
     """What each level adds to the one below: new items, or items asked at a higher proficiency."""
     out, before = {}, {}
@@ -207,8 +234,10 @@ def score_roles(
             coverage = level_coverage[role.levels[-1]]
         else:
             coverage = sum(level_coverage.values()) / len(level_coverage)
-        in_role = {o for r in role.requirements[role.levels[-1]] for o in r.options}
-        contributions = {s: weights.of(c) * snapshot.weights.get(s, 1.0) for s, c in category.items() if s in in_role}
+        reliance = snapshot.reliance(role.id)
+        contributions = {
+            s: weights.of(c) * snapshot.weights.get(s, 1.0) * reliance[s] for s, c in category.items() if s in reliance
+        }
         interest = sum(contributions.values()) / attention
         level = reached_level(role, have, snapshot.weights)
         target = (
@@ -220,6 +249,8 @@ def score_roles(
             if max(have.get(o, 0) for o in r.options) < r.level
         ]
         because = [s for s, v in sorted(contributions.items(), key=lambda kv: -kv[1]) if v > 0]
-        score = weights.interest * interest + (1 - weights.interest) * coverage
+        score = (weights.interest * interest + (1 - weights.interest) * coverage) * entry_barrier(
+            role, level_coverage[role.levels[0]]
+        )
         results.append(RoleScore(role.id, score, interest, coverage, level_coverage, level, target, gaps, because))
     return sorted(results, key=lambda r: -r.score)

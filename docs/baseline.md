@@ -106,3 +106,19 @@ Request-path embedding (10 phrases) while an explanation generates on the **same
 | LLM calls per request | up to 20 | up to 3 (one per recommended role) |
 | Data at startup | CSVs parsed into memory, 5 dense matrices | nothing loaded; PostgreSQL + pgvector |
 | Tests | none | 37 (+ CI on every push, ADR-0021) |
+
+## Engine v2 vs legacy (2026-10-02)
+
+Measured with `backend/eval/compare_engines.py` (results in `backend/eval/results/compare-engines-*.md`) on the 53 labeled learner profiles of `backend/eval/learner_profiles.yaml`. The legacy engine gets the skills' names as phrases, and its 10 roles are mapped to the new catalog.
+
+| | Legacy engine (research catalog) | Engine v2 (new catalog) |
+|---|---|---|
+| Roles | 10 (roadmap.sh) | 30, each with 4 levels |
+| Top-1 right, profiles the legacy engine can name | 86% | **95%** (98% held-out overall) |
+| Top-1 right, all profiles | 51% | **98%** |
+| Top-3 contains the expected role, all profiles | 40% | **100%** |
+| Scoring latency per profile | 131 ms (embedding, thresholds, course matches) | **2 ms** (skills known; typed text adds matching, ADR-0030) |
+| Output | roles + courses + LLM explanations | roles + estimated level + gaps to the next level (resources: next step) |
+
+v2 was calibrated on the same profiles (ADR-0031), so its in-sample numbers flatter it; the cross-validated figure is 98% top-1. Level estimates are weak (about 55% exact from about ten chips) and are shown as estimates.
+
