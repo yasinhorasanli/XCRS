@@ -15,7 +15,7 @@ from xcrs.domain.role_scoring import Category, Mention, RoleScore, score_roles
 from xcrs.repository import catalog_store
 from xcrs.services.skill_matching import SkillMatcher
 
-ALGORITHM_VERSION = "v2.1"  # bump when scoring, weights or matching change (results stay comparable)
+ALGORITHM_VERSION = "v2.2"  # bump when scoring, weights or matching change (results stay comparable)
 ROLES_SHOWN = 3
 GAPS_SHOWN = 8
 

@@ -49,6 +49,9 @@ def load_profiles() -> list[dict]:
     return profiles
 
 
+BARRIER = None  # per role: True if it starts above entry (set in main; entry_barrier in role_scoring)
+
+
 def features(snapshot, profiles):
     """Per profile and role: coverage (first, top, mean level), the distinctiveness of mentioned skills the
     role requires per category, and the learner's total per category."""
@@ -76,10 +79,10 @@ def features(snapshot, profiles):
                 lc[lv] = met / total
             per_role[rid] = lc
             cov[i, j] = [lc[role.levels[0]], lc[role.levels[-1]], sum(lc.values()) / len(lc)]
-            skills = {o for r in role.requirements[role.levels[-1]] for o in r.options}
+            reliance = snapshot.reliance(rid)
             for c_idx, c in enumerate(CATEGORIES):
                 in_role[i, j, c_idx] = sum(
-                    snapshot.weights[s] for s, cat in category.items() if cat == c and s in skills
+                    snapshot.weights[s] * reliance[s] for s, cat in category.items() if cat == c and s in reliance
                 )
         level_cov.append(per_role)
     return roles, cov, in_role, totals, level_cov
@@ -93,7 +96,12 @@ def scores(params, cov, in_role, totals, multiply=False):
     coverage = cov[:, :, ["first", "top", "mean"].index(params["coverage_at"])]
     if multiply:
         return coverage * np.clip(interest, 0, None)
-    return params["interest"] * interest + (1 - params["interest"]) * coverage
+    blend = params["interest"] * interest + (1 - params["interest"]) * coverage
+    if BARRIER is None:
+        return blend
+    first = cov[:, :, 0]
+    factor = np.where(BARRIER, 0.5 + 0.5 * np.minimum(1.0, first / 0.55), 1.0)
+    return blend * factor
 
 
 def evaluate(s, profiles, roles, idx):
@@ -179,6 +187,8 @@ def main() -> None:
     snapshot = snapshot_from_catalog(cat)
     profiles = load_profiles()
     roles, cov, in_role, totals, level_cov = features(snapshot, profiles)
+    global BARRIER
+    BARRIER = np.array([snapshot.roles[r].levels[0] != "entry" for r in roles])
     every = list(range(len(profiles)))
     variants = {
         "blend a*interest + (1-a)*coverage (S2)": {},

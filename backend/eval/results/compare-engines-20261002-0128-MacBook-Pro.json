@@ -1,0 +1,1733 @@
+{
+ "date": "2026-10-02T01:27",
+ "host": "MacBook-Pro.local",
+ "labeled": {
+  "legacy_can_name_the_role": {
+   "profiles": 21,
+   "legacy_hit@1": 0.8571428571428571,
+   "legacy_hit@3": 1.0,
+   "v2_hit@1": 0.9523809523809523,
+   "v2_hit@3": 1.0
+  },
+  "all": {
+   "profiles": 53,
+   "legacy_hit@1": 0.5094339622641509,
+   "legacy_hit@3": 0.39622641509433965,
+   "v2_hit@1": 0.9811320754716981,
+   "v2_hit@3": 1.0
+  },
+  "latency_ms_median": {
+   "legacy (embed + threshold + course matches)": 131.14583300193772,
+   "v2 scoring (skills given)": 1.942625007359311
+  },
+  "rows": [
+   {
+    "profile": "frontend-react-mid",
+    "kind": "role",
+    "expect": [
+     "frontend-engineer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "frontend-engineer",
+     "full-stack-engineer",
+     "qa-automation-engineer"
+    ],
+    "v2_top3": [
+     "frontend-engineer",
+     "full-stack-engineer",
+     "blockchain-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 191.3222909788601,
+    "v2_ms": 1.9998750067315996
+   },
+   {
+    "profile": "backend-java-mid",
+    "kind": "role",
+    "expect": [
+     "backend-engineer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "qa-automation-engineer",
+     "full-stack-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "backend-engineer",
+     "data-engineer",
+     "full-stack-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 195.8216250059195,
+    "v2_ms": 2.0819590135943145
+   },
+   {
+    "profile": "fullstack-js",
+    "kind": "role",
+    "expect": [
+     "full-stack-engineer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "full-stack-engineer",
+     "frontend-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "full-stack-engineer",
+     "frontend-engineer",
+     "backend-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 165.41899999720044,
+    "v2_ms": 1.9878750026691705
+   },
+   {
+    "profile": "android-kotlin",
+    "kind": "role",
+    "expect": [
+     "android-engineer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "android-engineer",
+     "qa-automation-engineer",
+     "full-stack-engineer"
+    ],
+    "v2_top3": [
+     "android-engineer",
+     "ios-engineer",
+     "backend-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 145.97895802580751,
+    "v2_ms": 1.9247499876655638
+   },
+   {
+    "profile": "ios-swift",
+    "kind": "role",
+    "expect": [
+     "ios-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "android-engineer",
+     "frontend-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "ios-engineer",
+     "android-engineer",
+     "embedded-software-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 128.04700000560842,
+    "v2_ms": 1.9417500006966293
+   },
+   {
+    "profile": "game-unity",
+    "kind": "role",
+    "expect": [
+     "game-developer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "game-developer",
+     "backend-engineer",
+     null
+    ],
+    "v2_top3": [
+     "game-developer",
+     "backend-engineer",
+     "software-architect"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 149.5438750134781,
+    "v2_ms": 2.048583992291242
+   },
+   {
+    "profile": "embedded-c",
+    "kind": "role",
+    "expect": [
+     "embedded-software-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "full-stack-engineer",
+     "backend-engineer",
+     "android-engineer"
+    ],
+    "v2_top3": [
+     "embedded-software-engineer",
+     "penetration-tester",
+     "game-developer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 154.00433400645852,
+    "v2_ms": 2.121333993272856
+   },
+   {
+    "profile": "qa-automation",
+    "kind": "role",
+    "expect": [
+     "qa-automation-engineer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "qa-automation-engineer",
+     "devops-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "qa-automation-engineer",
+     "backend-engineer",
+     "full-stack-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 149.42133400472812,
+    "v2_ms": 1.5740840171929449
+   },
+   {
+    "profile": "devops-mid",
+    "kind": "role",
+    "expect": [
+     "devops-engineer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "devops-engineer",
+     "full-stack-engineer",
+     "qa-automation-engineer"
+    ],
+    "v2_top3": [
+     "devops-engineer",
+     "platform-engineer",
+     "cloud-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 149.14116699947044,
+    "v2_ms": 2.0047500147484243
+   },
+   {
+    "profile": "cloud-aws",
+    "kind": "role",
+    "expect": [
+     "cloud-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "devops-engineer",
+     "full-stack-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "cloud-engineer",
+     "devops-engineer",
+     "platform-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 146.23504198971204,
+    "v2_ms": 1.9778750138357282
+   },
+   {
+    "profile": "sre",
+    "kind": "role",
+    "expect": [
+     "site-reliability-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "devops-engineer",
+     "qa-automation-engineer",
+     "full-stack-engineer"
+    ],
+    "v2_top3": [
+     "site-reliability-engineer",
+     "devops-engineer",
+     "ai-reliability-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 145.31716701458208,
+    "v2_ms": 1.9083750084973872
+   },
+   {
+    "profile": "ai-reliability",
+    "kind": "role",
+    "expect": [
+     "ai-reliability-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "data-scientist",
+     "devops-engineer",
+     "qa-automation-engineer"
+    ],
+    "v2_top3": [
+     "ai-reliability-engineer",
+     "ai-engineer",
+     "ai-platform-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 165.14558298513293,
+    "v2_ms": 1.7505419964436442
+   },
+   {
+    "profile": "platform",
+    "kind": "role",
+    "expect": [
+     "platform-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "devops-engineer",
+     "full-stack-engineer",
+     "qa-automation-engineer"
+    ],
+    "v2_top3": [
+     "platform-engineer",
+     "devops-engineer",
+     "ai-platform-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 161.20712499832734,
+    "v2_ms": 1.9449579995125532
+   },
+   {
+    "profile": "data-analyst",
+    "kind": "role",
+    "expect": [
+     "data-analyst"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "data-scientist",
+     "qa-automation-engineer",
+     "devops-engineer"
+    ],
+    "v2_top3": [
+     "data-analyst",
+     "data-scientist",
+     "analytics-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 135.43395799933933,
+    "v2_ms": 2.0249579974915832
+   },
+   {
+    "profile": "analytics-eng",
+    "kind": "role",
+    "expect": [
+     "analytics-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "data-scientist",
+     "qa-automation-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "analytics-engineer",
+     "data-engineer",
+     "data-analyst"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 123.99754099897109,
+    "v2_ms": 1.9301669963169843
+   },
+   {
+    "profile": "data-engineer",
+    "kind": "role",
+    "expect": [
+     "data-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "devops-engineer",
+     "data-scientist",
+     "android-engineer"
+    ],
+    "v2_top3": [
+     "data-engineer",
+     "analytics-engineer",
+     "cloud-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 131.14583300193772,
+    "v2_ms": 1.8684999959077686
+   },
+   {
+    "profile": "data-scientist",
+    "kind": "role",
+    "expect": [
+     "data-scientist"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "data-scientist",
+     "qa-automation-engineer",
+     "devops-engineer"
+    ],
+    "v2_top3": [
+     "data-scientist",
+     "data-analyst",
+     "machine-learning-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 142.9426670074463,
+    "v2_ms": 2.0101669942960143
+   },
+   {
+    "profile": "ml-engineer",
+    "kind": "role",
+    "expect": [
+     "machine-learning-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "data-scientist",
+     "devops-engineer",
+     "qa-automation-engineer"
+    ],
+    "v2_top3": [
+     "machine-learning-engineer",
+     "applied-scientist",
+     "mlops-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 135.02920800237916,
+    "v2_ms": 1.8732919998001307
+   },
+   {
+    "profile": "applied-scientist",
+    "kind": "role",
+    "expect": [
+     "applied-scientist"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "data-scientist",
+     "game-developer",
+     "qa-automation-engineer"
+    ],
+    "v2_top3": [
+     "applied-scientist",
+     "machine-learning-engineer",
+     "data-scientist"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 161.46224999101833,
+    "v2_ms": 2.0763750071637332
+   },
+   {
+    "profile": "mlops",
+    "kind": "role",
+    "expect": [
+     "mlops-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "data-scientist",
+     "devops-engineer",
+     "qa-automation-engineer"
+    ],
+    "v2_top3": [
+     "mlops-engineer",
+     "machine-learning-engineer",
+     "devops-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 150.90333300759085,
+    "v2_ms": 2.144624973880127
+   },
+   {
+    "profile": "ai-platform",
+    "kind": "role",
+    "expect": [
+     "ai-platform-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "devops-engineer",
+     "data-scientist",
+     "full-stack-engineer"
+    ],
+    "v2_top3": [
+     "ai-platform-engineer",
+     "ai-engineer",
+     "cloud-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 136.30670800921507,
+    "v2_ms": 2.0126670133322477
+   },
+   {
+    "profile": "ai-engineer",
+    "kind": "role",
+    "expect": [
+     "ai-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "data-scientist",
+     "backend-engineer",
+     "devops-engineer"
+    ],
+    "v2_top3": [
+     "ai-engineer",
+     "forward-deployed-engineer",
+     "ai-reliability-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 136.03116699960083,
+    "v2_ms": 2.0012079912703484
+   },
+   {
+    "profile": "security-eng",
+    "kind": "role",
+    "expect": [
+     "security-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "devops-engineer",
+     "data-scientist",
+     "qa-automation-engineer"
+    ],
+    "v2_top3": [
+     "security-engineer",
+     "penetration-tester",
+     "cloud-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 133.1662090087775,
+    "v2_ms": 1.9387500069569796
+   },
+   {
+    "profile": "pentester",
+    "kind": "role",
+    "expect": [
+     "penetration-tester"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "data-scientist",
+     "backend-engineer",
+     "qa-automation-engineer"
+    ],
+    "v2_top3": [
+     "penetration-tester",
+     "security-engineer",
+     "backend-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 114.22550000133924,
+    "v2_ms": 1.878583978395909
+   },
+   {
+    "profile": "blockchain",
+    "kind": "role",
+    "expect": [
+     "blockchain-engineer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "blockchain-engineer",
+     "full-stack-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "blockchain-engineer",
+     "qa-automation-engineer",
+     "solutions-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 128.92300001112744,
+    "v2_ms": 1.9248330208938569
+   },
+   {
+    "profile": "fde",
+    "kind": "role",
+    "expect": [
+     "forward-deployed-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "data-scientist",
+     null,
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "forward-deployed-engineer",
+     "solutions-engineer",
+     "ai-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 186.11441599205136,
+    "v2_ms": 2.287957991939038
+   },
+   {
+    "profile": "solutions-eng",
+    "kind": "role",
+    "expect": [
+     "solutions-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     null,
+     "data-scientist",
+     "devops-engineer"
+    ],
+    "v2_top3": [
+     "solutions-engineer",
+     "forward-deployed-engineer",
+     "developer-advocate"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 124.34591699275188,
+    "v2_ms": 2.0249169901944697
+   },
+   {
+    "profile": "devrel",
+    "kind": "role",
+    "expect": [
+     "developer-advocate"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "full-stack-engineer",
+     "blockchain-engineer",
+     "devops-engineer"
+    ],
+    "v2_top3": [
+     "developer-advocate",
+     "solutions-engineer",
+     "qa-automation-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 109.21691701514646,
+    "v2_ms": 1.920584007166326
+   },
+   {
+    "profile": "architect-senior",
+    "kind": "senior",
+    "expect": [
+     "software-architect"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "backend-engineer",
+     "devops-engineer",
+     "qa-automation-engineer"
+    ],
+    "v2_top3": [
+     "software-architect",
+     "backend-engineer",
+     "full-stack-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 130.74233298539184,
+    "v2_ms": 1.880750001873821
+   },
+   {
+    "profile": "eng-manager",
+    "kind": "senior",
+    "expect": [
+     "engineering-manager"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "qa-automation-engineer",
+     "frontend-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "engineering-manager",
+     "backend-engineer",
+     "qa-automation-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 136.1573330068495,
+    "v2_ms": 1.9846250070258975
+   },
+   {
+    "profile": "student-web",
+    "kind": "student",
+    "expect": [
+     "frontend-engineer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "full-stack-engineer",
+     "frontend-engineer",
+     "data-scientist"
+    ],
+    "v2_top3": [
+     "frontend-engineer",
+     "full-stack-engineer",
+     "blockchain-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 59.78608300210908,
+    "v2_ms": 1.761708001140505
+   },
+   {
+    "profile": "student-data",
+    "kind": "student",
+    "expect": [
+     "data-analyst"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "data-scientist",
+     "backend-engineer",
+     "blockchain-engineer"
+    ],
+    "v2_top3": [
+     "data-scientist",
+     "data-analyst",
+     "applied-scientist"
+    ],
+    "legacy_hit": [
+     true,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 70.82600001012906,
+    "v2_ms": 1.7495419888291508
+   },
+   {
+    "profile": "student-security",
+    "kind": "student",
+    "expect": [
+     "penetration-tester"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "backend-engineer",
+     "full-stack-engineer",
+     "qa-automation-engineer"
+    ],
+    "v2_top3": [
+     "penetration-tester",
+     "security-engineer",
+     "backend-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 67.51358398469165,
+    "v2_ms": 1.7660830053500831
+   },
+   {
+    "profile": "student-games",
+    "kind": "student",
+    "expect": [
+     "game-developer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "game-developer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "game-developer",
+     "embedded-software-engineer",
+     "data-scientist"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 76.32187500712462,
+    "v2_ms": 1.8490000220481306
+   },
+   {
+    "profile": "student-mobile",
+    "kind": "student",
+    "expect": [
+     "android-engineer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "android-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "android-engineer",
+     "qa-automation-engineer",
+     "backend-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 66.73391698859632,
+    "v2_ms": 1.810541027225554
+   },
+   {
+    "profile": "backend-to-data",
+    "kind": "career-change",
+    "expect": [
+     "data-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "data-scientist",
+     "devops-engineer",
+     "full-stack-engineer"
+    ],
+    "v2_top3": [
+     "data-engineer",
+     "backend-engineer",
+     "forward-deployed-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 145.10312501806766,
+    "v2_ms": 1.9780000147875398
+   },
+   {
+    "profile": "analyst-to-ds",
+    "kind": "career-change",
+    "expect": [
+     "data-scientist"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "data-scientist",
+     "devops-engineer",
+     "qa-automation-engineer"
+    ],
+    "v2_top3": [
+     "data-scientist",
+     "data-analyst",
+     "machine-learning-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 135.67487499676645,
+    "v2_ms": 1.9558329950086772
+   },
+   {
+    "profile": "frontend-to-mobile",
+    "kind": "career-change",
+    "expect": [
+     "frontend-engineer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "frontend-engineer",
+     "full-stack-engineer",
+     "android-engineer"
+    ],
+    "v2_top3": [
+     "frontend-engineer",
+     "full-stack-engineer",
+     "android-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 104.10179101745598,
+    "v2_ms": 1.8577919981908053
+   },
+   {
+    "profile": "qa-to-devops",
+    "kind": "career-change",
+    "expect": [
+     "devops-engineer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "devops-engineer",
+     "full-stack-engineer",
+     "qa-automation-engineer"
+    ],
+    "v2_top3": [
+     "devops-engineer",
+     "cloud-engineer",
+     "qa-automation-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 125.13412500265986,
+    "v2_ms": 1.942625007359311
+   },
+   {
+    "profile": "likes-backend-hates-frontend",
+    "kind": "mixed",
+    "expect": [
+     "backend-engineer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "data-scientist",
+     "backend-engineer",
+     "devops-engineer"
+    ],
+    "v2_top3": [
+     "ai-engineer",
+     "backend-engineer",
+     "forward-deployed-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     true
+    ],
+    "v2_hit": [
+     false,
+     true
+    ],
+    "legacy_ms": 133.7729159859009,
+    "v2_ms": 1.9561660010367632
+   },
+   {
+    "profile": "llm-curious-backend",
+    "kind": "mixed",
+    "expect": [
+     "ai-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "data-scientist",
+     "full-stack-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "ai-engineer",
+     "forward-deployed-engineer",
+     "backend-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 127.0117909880355,
+    "v2_ms": 2.036707999650389
+   },
+   {
+    "profile": "backend-dev-curious-k8s",
+    "kind": "neighbours",
+    "expect": [
+     "backend-engineer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "devops-engineer",
+     "backend-engineer",
+     "full-stack-engineer"
+    ],
+    "v2_top3": [
+     "backend-engineer",
+     "devops-engineer",
+     "software-architect"
+    ],
+    "legacy_hit": [
+     false,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 124.17091699899174,
+    "v2_ms": 2.0541659905575216
+   },
+   {
+    "profile": "fullstack-leaning-backend",
+    "kind": "neighbours",
+    "expect": [
+     "backend-engineer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "full-stack-engineer",
+     "data-scientist",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "backend-engineer",
+     "full-stack-engineer",
+     "frontend-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 87.21470899763517,
+    "v2_ms": 1.8317089998163283
+   },
+   {
+    "profile": "frontend-dev-who-does-some-api",
+    "kind": "neighbours",
+    "expect": [
+     "frontend-engineer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "full-stack-engineer",
+     "frontend-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "frontend-engineer",
+     "full-stack-engineer",
+     "blockchain-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 103.42791699804366,
+    "v2_ms": 1.6201249964069575
+   },
+   {
+    "profile": "ds-vs-mle-deploying",
+    "kind": "neighbours",
+    "expect": [
+     "machine-learning-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "data-scientist",
+     "devops-engineer",
+     "full-stack-engineer"
+    ],
+    "v2_top3": [
+     "machine-learning-engineer",
+     "mlops-engineer",
+     "data-scientist"
+    ],
+    "legacy_hit": [
+     true,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 125.23433301248588,
+    "v2_ms": 1.8740000086836517
+   },
+   {
+    "profile": "ds-vs-applied-research",
+    "kind": "neighbours",
+    "expect": [
+     "applied-scientist"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "data-scientist",
+     "game-developer",
+     "frontend-engineer"
+    ],
+    "v2_top3": [
+     "applied-scientist",
+     "machine-learning-engineer",
+     "data-scientist"
+    ],
+    "legacy_hit": [
+     true,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 109.37729201395996,
+    "v2_ms": 1.872749999165535
+   },
+   {
+    "profile": "sre-vs-platform",
+    "kind": "neighbours",
+    "expect": [
+     "site-reliability-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "devops-engineer",
+     "qa-automation-engineer",
+     "full-stack-engineer"
+    ],
+    "v2_top3": [
+     "site-reliability-engineer",
+     "devops-engineer",
+     "ai-reliability-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 94.55849998630583,
+    "v2_ms": 1.8523749895393848
+   },
+   {
+    "profile": "devops-vs-cloud",
+    "kind": "neighbours",
+    "expect": [
+     "cloud-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "devops-engineer",
+     "full-stack-engineer",
+     "qa-automation-engineer"
+    ],
+    "v2_top3": [
+     "cloud-engineer",
+     "devops-engineer",
+     "security-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 102.17970798839815,
+    "v2_ms": 1.9239170069340616
+   },
+   {
+    "profile": "analyst-vs-analytics-eng",
+    "kind": "neighbours",
+    "expect": [
+     "data-analyst"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "data-scientist",
+     "qa-automation-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "data-analyst",
+     "analytics-engineer",
+     "data-scientist"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 107.26079199230298,
+    "v2_ms": 1.9443340133875608
+   },
+   {
+    "profile": "security-vs-pentest",
+    "kind": "neighbours",
+    "expect": [
+     "security-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "qa-automation-engineer",
+     "devops-engineer"
+    ],
+    "v2_top3": [
+     "security-engineer",
+     "penetration-tester",
+     "cloud-engineer"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 84.72170800087042,
+    "v2_ms": 1.951291982550174
+   },
+   {
+    "profile": "senior-backend-lukewarm",
+    "kind": "neighbours",
+    "expect": [
+     "backend-engineer"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "backend-engineer",
+     "data-scientist",
+     "qa-automation-engineer"
+    ],
+    "v2_top3": [
+     "backend-engineer",
+     "software-architect",
+     "data-engineer"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 132.58795900037512,
+    "v2_ms": 1.9711250206455588
+   },
+   {
+    "profile": "competent-but-dislikes-it",
+    "kind": "neighbours",
+    "expect": [
+     "data-scientist"
+    ],
+    "representable": true,
+    "legacy_top3": [
+     "data-scientist",
+     "game-developer",
+     "blockchain-engineer"
+    ],
+    "v2_top3": [
+     "data-scientist",
+     "machine-learning-engineer",
+     "applied-scientist"
+    ],
+    "legacy_hit": [
+     true,
+     true
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 104.93591701379046,
+    "v2_ms": 1.962250011274591
+   },
+   {
+    "profile": "ai-eng-vs-fde",
+    "kind": "neighbours",
+    "expect": [
+     "ai-engineer"
+    ],
+    "representable": false,
+    "legacy_top3": [
+     "data-scientist",
+     null,
+     "blockchain-engineer"
+    ],
+    "v2_top3": [
+     "ai-engineer",
+     "forward-deployed-engineer",
+     "applied-scientist"
+    ],
+    "legacy_hit": [
+     false,
+     false
+    ],
+    "v2_hit": [
+     true,
+     true
+    ],
+    "legacy_ms": 92.44679100811481,
+    "v2_ms": 1.8918339919764549
+   }
+  ]
+ },
+ "phrase_profiles": {
+  "same_top1": 0.5333333333333333,
+  "top3_overlap": 0.4444444444444444,
+  "rows": [
+   {
+    "profile": "backend-java",
+    "legacy_top3": [
+     "devops-engineer",
+     "data-scientist",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "backend-engineer",
+     "devops-engineer",
+     "qa-automation-engineer"
+    ],
+    "same_top1": false,
+    "top3_overlap": 0.6666666666666666
+   },
+   {
+    "profile": "frontend",
+    "legacy_top3": [
+     "full-stack-engineer",
+     "frontend-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "frontend-engineer",
+     "full-stack-engineer",
+     "blockchain-engineer"
+    ],
+    "same_top1": false,
+    "top3_overlap": 0.6666666666666666
+   },
+   {
+    "profile": "data-science",
+    "legacy_top3": [
+     "data-scientist",
+     "game-developer",
+     "blockchain-engineer"
+    ],
+    "v2_top3": [
+     "data-scientist",
+     "machine-learning-engineer",
+     "applied-scientist"
+    ],
+    "same_top1": true,
+    "top3_overlap": 0.3333333333333333
+   },
+   {
+    "profile": "devops",
+    "legacy_top3": [
+     "devops-engineer",
+     "full-stack-engineer",
+     "qa-automation-engineer"
+    ],
+    "v2_top3": [
+     "cloud-engineer",
+     "devops-engineer",
+     "penetration-tester"
+    ],
+    "same_top1": false,
+    "top3_overlap": 0.3333333333333333
+   },
+   {
+    "profile": "android",
+    "legacy_top3": [
+     "android-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "android-engineer",
+     "ios-engineer",
+     "qa-automation-engineer"
+    ],
+    "same_top1": true,
+    "top3_overlap": 0.3333333333333333
+   },
+   {
+    "profile": "game",
+    "legacy_top3": [
+     "game-developer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "game-developer",
+     "embedded-software-engineer",
+     "applied-scientist"
+    ],
+    "same_top1": true,
+    "top3_overlap": 0.3333333333333333
+   },
+   {
+    "profile": "blockchain",
+    "legacy_top3": [
+     "blockchain-engineer",
+     "full-stack-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "blockchain-engineer",
+     "qa-automation-engineer",
+     "solutions-engineer"
+    ],
+    "same_top1": true,
+    "top3_overlap": 0.3333333333333333
+   },
+   {
+    "profile": "qa",
+    "legacy_top3": [
+     "qa-automation-engineer",
+     "frontend-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "qa-automation-engineer",
+     "frontend-engineer",
+     "full-stack-engineer"
+    ],
+    "same_top1": true,
+    "top3_overlap": 0.6666666666666666
+   },
+   {
+    "profile": "ux",
+    "legacy_top3": [
+     null,
+     "qa-automation-engineer",
+     "frontend-engineer"
+    ],
+    "v2_top3": [
+     "frontend-engineer",
+     "android-engineer",
+     "ios-engineer"
+    ],
+    "same_top1": false,
+    "top3_overlap": 0.3333333333333333
+   },
+   {
+    "profile": "fullstack",
+    "legacy_top3": [
+     "full-stack-engineer",
+     "frontend-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "full-stack-engineer",
+     "backend-engineer",
+     "frontend-engineer"
+    ],
+    "same_top1": true,
+    "top3_overlap": 1.0
+   },
+   {
+    "profile": "edge-single-fact",
+    "legacy_top3": [
+     "data-scientist",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "data-analyst",
+     "analytics-engineer",
+     "data-engineer"
+    ],
+    "same_top1": false,
+    "top3_overlap": 0.0
+   },
+   {
+    "profile": "edge-curious-only",
+    "legacy_top3": [
+     "data-scientist",
+     "devops-engineer"
+    ],
+    "v2_top3": [
+     "data-scientist",
+     "machine-learning-engineer",
+     "cloud-engineer"
+    ],
+    "same_top1": true,
+    "top3_overlap": 0.3333333333333333
+   },
+   {
+    "profile": "edge-misattribution",
+    "legacy_top3": [
+     "devops-engineer",
+     "backend-engineer"
+    ],
+    "v2_top3": [
+     "devops-engineer",
+     "cloud-engineer",
+     "backend-engineer"
+    ],
+    "same_top1": true,
+    "top3_overlap": 0.6666666666666666
+   },
+   {
+    "profile": "edge-disliked-heavy",
+    "legacy_top3": [
+     "data-scientist",
+     "blockchain-engineer",
+     "devops-engineer"
+    ],
+    "v2_top3": [
+     "cloud-engineer",
+     "devops-engineer",
+     "data-engineer"
+    ],
+    "same_top1": false,
+    "top3_overlap": 0.3333333333333333
+   },
+   {
+    "profile": "edge-abbreviations",
+    "legacy_top3": [
+     "devops-engineer",
+     "full-stack-engineer",
+     "qa-automation-engineer"
+    ],
+    "v2_top3": [
+     "game-developer",
+     "backend-engineer",
+     "full-stack-engineer"
+    ],
+    "same_top1": false,
+    "top3_overlap": 0.3333333333333333
+   }
+  ]
+ }
+}

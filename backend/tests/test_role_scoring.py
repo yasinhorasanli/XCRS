@@ -91,3 +91,23 @@ def test_the_learner_profiles_use_catalog_skills_and_roles():
         assert [s for s in chips if s not in cat.skills] == [], p["id"]
         assert all(r in cat.roles for r in [*p["expect"], *p.get("accept", [])]), p["id"]
         assert p["level"] in cat.roles[p["expect"][0]].levels, p["id"]
+
+
+def test_interest_follows_how_much_a_role_relies_on_a_skill(snapshot):
+    """Loving SQL points to a role built on SQL (Data Analyst), not one that asks for basic SQL."""
+    assert snapshot.reliance("data-analyst")["sql"] > snapshot.reliance("solutions-engineer")["sql"]
+    assert top(snapshot, [Mention("sql", L)]) == ["data-analyst"]
+
+
+def test_good_to_know_skills_count_for_interest_at_half(snapshot):
+    role = snapshot.roles["backend-engineer"]
+    assert "mongodb" in role.optional and 0 < snapshot.reliance("backend-engineer")["mongodb"] <= 0.5
+
+
+def test_roles_entered_from_other_roles_rank_high_only_near_their_start(snapshot):
+    """Software Architect starts at senior: generic fundamentals from a beginner don't make it the top role."""
+    beginner = [Mention(s, L) for s in ("oop", "data-structures", "algorithms", "rest-api-design")]
+    assert top(snapshot, beginner)[0] != "software-architect"
+    senior = [Mention(s, L, 4) for s in ("system-design", "distributed-systems", "architecture-patterns")]
+    senior += [Mention(s, L, 3) for s in ("architecture-decision-records", "domain-driven-design", "microservices")]
+    assert top(snapshot, senior)[0] == "software-architect"
