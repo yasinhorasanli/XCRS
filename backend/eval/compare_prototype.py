@@ -3,9 +3,9 @@
     uv run python eval/compare_prototype.py                                   # new system only
     uv run python eval/compare_prototype.py --prototype-url http://localhost:8001
 
-The prototype side needs the research prototype running (`cd backend/src && python main.py`), which
-needs the five providers' API keys and their embedding CSVs; each call also makes gpt-4o requests
-(a few cents for all profiles).
+The research prototype is no longer on this branch: run it from `main` (or the Zenodo release) with
+`cd backend/src && python main.py`. It needs the five providers' API keys and their embedding CSVs; each
+call also makes gpt-4o requests (a few cents for all profiles).
 
 Pass rule: the five prototype providers don't agree with each other either. The new system passes
 when its mean top-3 role overlap with the prototype providers is at least their mean pairwise overlap

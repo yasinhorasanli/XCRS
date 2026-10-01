@@ -1,186 +1,87 @@
 # XCRS — Explainable Course Recommendation System
 
-XCRS recommends **career roles** and **online courses** based on what you have already learned and what you are curious about. It also explains, in plain language, **why** it recommends each role and course.
+XCRS recommends **career roles** and **online courses** based on what you have already learned and what you are curious about, and explains **why** it recommends each one, in plain language built from your own input.
 
-> **Status:** the `modernization` branch is a work in progress toward a production-ready, self-hosted XCRS. The sections below describe the original research prototype; the [new system](#new-system-in-progress-modernization-branch) section describes what replaces it.
-
----
-
-## How it works
-
-You fill in four free-text fields, each a comma-separated list of courses, subjects or concepts:
-
-| Field             | Meaning                                | Weight  |
-| ----------------- | -------------------------------------- | ------- |
-| Curious about     | Things you want to learn               | `1.0`   |
-| Took and liked    | Things you studied and enjoyed         | `0.75`  |
-| Took, neutral     | Things you studied, no strong feelings | `0.5`   |
-| Took and disliked | Things you studied and didn't enjoy    | `-0.25` |
-
-XCRS then:
-
-1. **Embeds** every item you entered with an LLM embedding model.
-2. **Matches** your items to concepts from [roadmap.sh](https://roadmap.sh) career roadmaps, using cosine similarity with a statistical threshold (mean + 2.5σ of the course × concept similarity distribution).
-3. **Scores the 10 career roles** by weighted concept coverage, squashed through a sigmoid, and picks the top 3.
-4. **Recommends 3 Udemy courses per role.** It targets the roadmap concepts you haven't covered yet and down-weights courses similar to ones you disliked.
-5. **Explains** each role and course recommendation with an LLM (`gpt-4o`).
-
-### Supported career roles
-
-AI Data Scientist · Android Developer · Backend Developer · Blockchain Developer · DevOps Engineer · Frontend Developer · Full Stack Developer · Game Developer · QA Engineer · UX Designer
-
-### Embedding models compared
-
-The research prototype runs the same pipeline with five embedding providers so they can be compared side by side. The UI labels them _Model-1 … Model-5_.
-
-| #   | Provider  | Model                    |
-| --- | --------- | ------------------------ |
-| 1   | Google    | `text-embedding-004`     |
-| 2   | Voyage AI | `voyage-large-2`         |
-| 3   | OpenAI    | `text-embedding-3-large` |
-| 4   | Mistral   | `mistral-embed`          |
-| 5   | Cohere    | `embed-english-v3.0`     |
-
----
-
-## Architecture
-
-```
-                         ┌─────────────────────────────┐
-  Browser ──► Nuxt 3 ──► │ /api/recommend (Nuxt server)│
-                         └──────────────┬──────────────┘
-                                        │ calls each model endpoint in turn
-                                        ▼
-                         ┌─────────────────────────────┐
-                         │ FastAPI backend             │
-                         │  POST /recommendations/{m}  │  m ∈ google|voyage|openai|mistral|cohere|mock
-                         │  POST /save_inputs          │
-                         └──────────────┬──────────────┘
-                                        │ loads at startup
-                                        ▼
-                         ┌─────────────────────────────┐
-                         │ Pre-computed embeddings     │  (CSV files, generated offline)
-                         │ courses × roadmap concepts  │
-                         └─────────────────────────────┘
-```
-
-| Component                                       | Stack                     | Purpose                                                                                    |
-| ----------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------ |
-| [`embedding-generation/`](embedding-generation) | Python, pandas            | Offline: cleans course data, flattens roadmaps, embeds everything with all 5 providers     |
-| [`backend/`](backend)                           | Python, FastAPI           | Online: embeds user input, matches it, scores roles, picks courses, generates explanations |
-| [`frontend/`](frontend)                         | Nuxt 3, Nuxt UI, Tailwind | Input form and results view with a model switcher                                          |
-
-### Data
-
-| Dataset                                                                   | Rows                              | Source                                                           |
-| ------------------------------------------------------------------------- | --------------------------------- | ---------------------------------------------------------------- |
-| Udemy courses (raw)                                                       | 973                               | Udemy                                                            |
-| Udemy courses (filtered: Development, IT & Software, Office Productivity) | 453                               | derived                                                          |
-| Roadmap nodes                                                             | 1,104 (869 concepts + 235 topics) | [roadmap.sh](https://github.com/kamranahmedse/developer-roadmap) |
-
----
-
-## New system (in progress, `modernization` branch)
-
-The modernized system runs locally with PostgreSQL + pgvector, a self-hosted embedding model and a local LLM in [Ollama](https://ollama.com), a layered FastAPI backend and a new UI. Recommendations return in under a second; explanations arrive in the background. Design decisions are recorded in [`docs/adr/`](docs/adr/README.md); the architecture is in [`docs/architecture.md`](docs/architecture.md), the schema in [`docs/schema.md`](docs/schema.md), and measurements in [`docs/baseline.md`](docs/baseline.md).
+> **Status:** the `modernization` branch is a work in progress toward a production-ready, self-hosted XCRS. The original research prototype lives on the `main` branch and in the [Zenodo release](#research-origin--citation).
 
 | Tell it what you know | See roles, courses and why |
 |---|---|
 | ![Skill board: drag skills into four categories, with suggestions related to what you added](docs/images/home.png) | ![Results: career roles linked to their courses, with explanations](docs/images/results.png) |
 
+## How it works
+
+You sort skills, subjects and courses into four boxes (drag, click a suggestion, or type):
+
+| Box | Meaning | Weight |
+|---|---|---|
+| Curious about | Things you want to learn | `1.0` |
+| I enjoyed | Things you studied and liked | `0.75` |
+| Neutral about | Things you studied, no strong feelings | `0.5` |
+| Didn't enjoy | Things you studied and would rather avoid | `-0.25` |
+
+XCRS then:
+
+1. **Embeds** each item with a self-hosted embedding model (`qwen3-embedding:0.6b`).
+2. **Matches** it to concepts from 10 [roadmap.sh](https://roadmap.sh) career roadmaps: every concept above a statistical threshold (mean + 2.5σ), with a fallback so short, generic items such as "Python" aren't dropped.
+3. **Scores the 10 career roles** by weighted concept coverage, squashed through a sigmoid, and keeps the top 3.
+4. **Recommends up to 3 Udemy courses per role**, aimed at the roadmap concepts you haven't covered yet, from precomputed concept → course matches, down-weighting courses similar to what you didn't enjoy.
+5. **Explains** each role and course with a local LLM, given only the facts the algorithm used. The recommendation returns in under a second; explanations arrive in the background.
+
+Roles: AI Data Scientist · Android Developer · Backend Developer · Blockchain Developer · DevOps Engineer · Frontend Developer · Full Stack Developer · Game Developer · QA Engineer · UX Designer
+
+## Architecture
+
+```
+Browser ──► Nuxt (skill board, linked results; proxies /api/v1/**)
+                 │
+                 ▼
+         FastAPI /api/v1  ──  api/ → services/ → pure domain/ + adapters
+           ├─ embeddings ──► Ollama  qwen3-embedding:0.6b
+           ├─ explanations (background worker, LangChain) ──► Ollama  qwen3.5:9b (GPU) / 4b (CPU)
+           └─ repository ──► PostgreSQL + pgvector (catalog, per-model vectors, activity, job queue)
+```
+
+| Folder | Stack | Purpose |
+|---|---|---|
+| [`backend/`](backend) | Python 3.13, FastAPI, SQLAlchemy, Alembic, LangChain, uv | API, recommendation algorithm, explanation worker, admin CLI (`xcrs`), evaluation tools (`eval/`) |
+| [`frontend/`](frontend) | Nuxt, Nuxt UI, Tailwind | Skill board and results pages |
+| [`data/research-2024/`](data/research-2024) | CSV, JSON | Seed catalog: 453 courses, 10 roadmaps (1,104 nodes) |
+| [`docs/`](docs) | Markdown | [Decision records](docs/adr/README.md), [architecture](docs/architecture.md), [schema](docs/schema.md), [measurements](docs/baseline.md) |
+
+## Run it locally
+
 ```bash
 brew install ollama uv
-ollama pull qwen3-embedding:0.6b          # Ollama runs natively (Apple GPU)
+ollama serve &                                # Ollama runs natively (uses the Apple GPU)
+ollama pull qwen3-embedding:0.6b
+ollama pull qwen3.5:9b                        # explanations; on a CPU-only machine: qwen3.5:4b (ADR-0020)
 cp .env.example .env
 docker compose up -d postgres
 
 cd backend
 uv sync
-uv run alembic upgrade head               # create the schema
-uv run xcrs import-prototype              # CSV data → Postgres
+uv run alembic upgrade head                   # create the schema
+uv run xcrs import-research-data              # seed catalog → Postgres
 uv run xcrs register-model qwen3-embedding:0.6b --id 1 --status active
 uv run xcrs embed-catalog qwen3-embedding:0.6b
-uv run xcrs search "Docker"               # smoke test
-uv run xcrs search-courses "Docker"       # nearest courses via the LangChain retriever
 uv run pytest
 
-# explanations: a local LLM through Ollama (optional; recommendations work without it)
-ollama pull qwen3.5:9b                    # on a CPU-only machine: qwen3.5:4b (ADR-0020)
-
-# run the API and the UI (skill board → linked results)
 uv run uvicorn xcrs.api.app:app --port 8000   # API docs: http://localhost:8000/docs
 cd ../frontend && pnpm install && pnpm run dev # UI:       http://localhost:3000
 ```
 
-Everything in containers (as on the servers), with Ollama still native on the Mac:
+Everything in containers (as on the servers), with Ollama still native:
 
 ```bash
-docker compose --profile app up -d --build      # postgres + api (:8000) + web (:3000)
+docker compose --profile app up -d --build    # postgres + api (:8000) + web (:3000)
 docker compose run --rm api alembic upgrade head
 ```
 
-CI (GitHub Actions, `.github/workflows/ci.yml`) runs Ruff, the migrations (up, down, up), the tests, the frontend type check and build, and both image builds on every push.
-
-Evaluation tools (`backend/eval/`): `uv run python eval/bench_explainer.py` (explanation speed and grounding per model and device) and `uv run python eval/compare_prototype.py` (prototype-vs-new comparison and threshold diagnostics).
-
-## Running the research prototype
-
-### Prerequisites
-
-- Python 3.10+
-- Node.js 18+ and `pnpm`
-- API keys for Google, Voyage, OpenAI, Mistral and Cohere
-
-Put each key in its own file (the folder is gitignored):
-
-```
-embedding-generation/api_keys/google_api_key.txt
-embedding-generation/api_keys/voyage_api_key.txt
-embedding-generation/api_keys/openai_api_key.txt
-embedding-generation/api_keys/mistral_api_key.txt
-embedding-generation/api_keys/cohere_api_key.txt
-```
-
-### 1. Generate embeddings (one-time)
-
-```bash
-pip install pandas numpy scikit-learn tiktoken google-generativeai voyageai openai "mistralai<1" cohere
-cd embedding-generation/src
-python main.py
-```
-
-This creates `embedding-generation/data/<provider>_emb/` folders with the course and roadmap-node embeddings.
-
-### 2. Start the backend
-
-```bash
-pip install fastapi uvicorn pandas numpy scikit-learn google-generativeai voyageai openai "mistralai<1" cohere
-mkdir -p backend/log backend/user_inputs
-cd backend/src          # paths are relative, so it must run from here
-python main.py          # http://localhost:8000, docs at /docs
-```
-
-> Use `python main.py`. Running `uvicorn main:app` directly skips `main()`, so the embeddings never load.
-
-### 3. Start the frontend
-
-```bash
-cd frontend
-pnpm install
-pnpm run dev            # http://localhost:3000
-```
-
----
-
-## Roadmap
-
-Modernization work happens on the `modernization` branch. Candidate directions include containerization, CI/CD, cloud infrastructure as code, a database with vector search in place of CSV files, a redesigned UI, an improved LLM layer, and eventually a better course scraper and AI-assisted roadmap generation. The final choices are still open.
-
----
+**CI** (GitHub Actions) runs Ruff, the migrations (up, down, up), the tests, the frontend type check and build, and both image builds on every push. **Evaluation** (`backend/eval/`): `bench_explainer.py` measures explanation speed and grounding per model and device; `compare_prototype.py` gives threshold diagnostics and, with the research prototype running from `main`, a prototype-vs-new comparison.
 
 ## Research origin & citation
 
-XCRS started as an academic research project. The original replication package (code, data, the user-study protocol, questions and responses) is archived on Zenodo:
+XCRS started as an academic research project: five embedding providers compared side by side, `gpt-4o` explanations, and a user study. That prototype is on the `main` branch, and the replication package (code, data, the user-study protocol, questions and responses) is archived on Zenodo:
 
 [![DOI](https://zenodo.org/badge/783277216.svg)](https://doi.org/10.5281/zenodo.14291086)
 

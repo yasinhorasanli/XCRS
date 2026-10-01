@@ -184,7 +184,7 @@ Vector storage is ~5 MB at 1,024 dimensions. The whole database is tiny; the des
 
 ## Notes from consolidating (resolved 2026-09-28)
 
-1. **Hardcoded course exclusion.** `recommend_courses` always removes course `2602800` (*SAP Overview*, `backend/src/recom.py`). It was a quick patch: the course was recommended to many students where it wasn't relevant. The root cause is **thin item text producing vague embeddings**, and the real fixes are richer roadmap descriptions and enriched user input. `courses.is_active` remains as a manual switch, not the fix.
+1. **Hardcoded course exclusion.** `recommend_courses` always removes course `2602800` (*SAP Overview*, `backend/src/recom.py` on `main`). It was a quick patch: the course was recommended to many students where it wasn't relevant. The root cause is **thin item text producing vague embeddings**, and the real fixes are richer roadmap descriptions and enriched user input. `courses.is_active` remains as a manual switch, not the fix.
 2. **Roadmap order encodes learning order.** The prototype ordered concepts by their digit-encoded ids (`util.equalize_digits`) to follow the **arrows of the real roadmaps**: prerequisites and increasing difficulty. `sequence` preserves that order at import. With our own roadmaps, prerequisites may later become explicit graph edges (a DAG rather than a tree); that will be a future ADR.
 3. **Topic embeddings.** Not used today, because of how roadmap.sh roadmaps are structured. The schema can embed any node type, so topics can be embedded if a new roadmap structure makes them meaningful.
 4. **Query vs document prefixes** are per-model settings stored in the registry. This fixes the prototype's embedding of user queries as documents.

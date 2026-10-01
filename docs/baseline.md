@@ -1,6 +1,6 @@
 # Baseline: the research prototype before modernization
 
-A snapshot of the system as it stood on 2026-09-27 (`main` @ `ee74d82`), taken before any modernization changes. Every claim points to where it comes from, so it can be re-checked later. After each phase, the same metrics get re-measured and compared against this page.
+A snapshot of the system as it stood on 2026-09-27 (`main` @ `ee74d82`; the file paths below refer to that branch), taken before any modernization changes. Every claim points to where it comes from, so it can be re-checked later. After each phase, the same metrics get re-measured and compared against this page.
 
 ## Data
 

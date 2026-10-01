@@ -2,7 +2,7 @@
 
 A living document: it shows the **current** architecture and the **target** under way. Each change links to the ADR that justified it. Measured characteristics of the starting point are in [baseline.md](baseline.md). The consolidated database design is in [schema.md](schema.md).
 
-## Current (research prototype)
+## Before: the research prototype (on the `main` branch)
 
 ```
 Browser ──► Nuxt 3 (SSR + server route /api/recommend)
@@ -73,10 +73,10 @@ Browser ──► Nuxt 3 (skill board + linked results; the Nuxt server proxies 
                                                             background worker: services/explanations.py)
            retrieval.py  LangChain retriever over repository/ (xcrs search-courses; future chat tool)
 
-Offline: uv run xcrs import-prototype | register-model | embed-catalog
+Offline: uv run xcrs import-research-data | register-model | embed-catalog
          (catalog vectors, threshold statistics, top-20 concept → course matches)
 ```
 
-The prototype (`backend/src/`, `embedding-generation/`) stays runnable next to it until the quality comparison passes. First measurements are in [baseline.md](baseline.md#new-system-first-measurements).
+The research prototype was removed from this branch on 2026-10-01 (it remains on `main` and in the Zenodo release); the seed data moved to `data/research-2024/`. First measurements are in [baseline.md](baseline.md#new-system-first-measurements).
 
 Still open: frontend framework, a chat/agent feature and LLM tracing, deployment (CD), and the cloud target. See [adr/README.md](adr/README.md#upcoming-decisions).

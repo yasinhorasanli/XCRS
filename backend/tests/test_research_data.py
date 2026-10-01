@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from xcrs.ingest.import_prototype import legacy_parent_id, legacy_role_id, parse_price
+from xcrs.ingest.research_data import legacy_parent_id, legacy_role_id, parse_price
 
 
 def test_legacy_role_id_decodes_digit_encoded_ids():

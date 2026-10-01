@@ -1,6 +1,6 @@
 """XCRS admin commands.
 
-uv run xcrs import-prototype
+uv run xcrs import-research-data
 uv run xcrs register-model qwen3-embedding:0.6b --id 1 --status active
 uv run xcrs embed-catalog qwen3-embedding:0.6b
 uv run xcrs search "Docker"
@@ -16,7 +16,7 @@ from sqlalchemy.dialects.postgresql import insert
 from xcrs.db.models import EmbeddingModel, RoadmapNode, Role
 from xcrs.db.session import new_session
 from xcrs.embeddings import embedder_for
-from xcrs.ingest import embed_catalog, import_prototype
+from xcrs.ingest import embed_catalog, research_data
 from xcrs.repository import vectors
 from xcrs.retrieval import CourseRetriever
 
@@ -36,9 +36,9 @@ MODEL_PRESETS = {
 }
 
 
-def cmd_import_prototype(args) -> None:
+def cmd_import_research_data(args) -> None:
     with new_session() as session:
-        print(json.dumps(import_prototype.run(session), indent=2))
+        print(json.dumps(research_data.run(session), indent=2))
 
 
 def cmd_register_model(args) -> None:
@@ -93,8 +93,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(prog="xcrs")
     sub = parser.add_subparsers(required=True)
 
-    p = sub.add_parser("import-prototype", help="import the prototype's CSV data")
-    p.set_defaults(func=cmd_import_prototype)
+    p = sub.add_parser("import-research-data", help="import the research dataset (data/research-2024)")
+    p.set_defaults(func=cmd_import_research_data)
 
     p = sub.add_parser("register-model", help="add or update an embedding model in the registry")
     p.add_argument("name")

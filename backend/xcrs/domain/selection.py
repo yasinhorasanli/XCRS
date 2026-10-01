@@ -1,5 +1,5 @@
-"""Course selection and topic coverage, ported from the prototype
-(backend/src/recom.py:recommend_courses, util.top_n_courses_for_concept, util.calculate_topic_coverage)."""
+"""Course selection and topic coverage, ported from the research prototype
+(on `main`: backend/src/recom.py:recommend_courses, util.top_n_courses_for_concept, util.calculate_topic_coverage)."""
 
 from collections.abc import Iterable, Mapping, Sequence
 

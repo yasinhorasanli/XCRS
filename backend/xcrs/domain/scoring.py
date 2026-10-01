@@ -1,4 +1,5 @@
-"""Role scoring, ported from the prototype (backend/src/recom.py:recommend_role, util.custom_activation)."""
+"""Role scoring, ported from the research prototype (on `main`: backend/src/recom.py:recommend_role,
+util.custom_activation)."""
 
 import math
 from collections.abc import Iterable, Mapping

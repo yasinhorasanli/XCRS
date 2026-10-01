@@ -14,7 +14,7 @@ def match(concept_id: int, role_id: int, category: Category, text: str = "x") ->
 
 @pytest.mark.parametrize(
     ("x", "expected"),
-    # from the comment in backend/src/recom.py:recommend_role
+    # from the comment in the research prototype (on `main`: backend/src/recom.py:recommend_role)
     [(-25, 0.0), (0, 0.67), (10.67, 5.39), (23.645, 43.27), (32.5, 81.76), (50, 99.33), (75, 100.0)],
 )
 def test_activation_matches_prototype(x, expected):

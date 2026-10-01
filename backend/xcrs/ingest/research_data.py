@@ -1,12 +1,12 @@
-"""One-time import of the prototype's data (CSV files) into PostgreSQL.
+"""Import of the research dataset (2024) into PostgreSQL: the seed catalog of roles, roadmaps and courses.
 
 Idempotent: re-running updates existing rows instead of duplicating them.
 
-Sources (embedding-generation/data/):
-  - roadmap_nodes_final.csv: 1,104 nodes with digit-encoded ids (role 6 → topic 602 → concept 60203).
-    Rows are in depth-first roadmap order, which the prototype relied on as learning order
+Sources (data/research-2024/, see its README):
+  - roadmap_nodes.csv: 1,104 nodes with digit-encoded ids (role 6 → topic 602 → concept 60203).
+    Rows are in depth-first roadmap order, which the research prototype relied on as learning order
     (docs/schema.md, note 2), so the row order becomes `sequence`.
-  - udemy_courses_final.csv: 453 courses. Paid prices are in Turkish lira (e.g. "₺299.99").
+  - udemy_courses.csv: 453 courses. Paid prices are in Turkish lira (e.g. "₺299.99").
 """
 
 import csv
@@ -20,9 +20,9 @@ from sqlalchemy.orm import Session
 from xcrs.config import REPO_ROOT
 from xcrs.db.models import Course, RoadmapNode, Role
 
-DATA_DIR = REPO_ROOT / "embedding-generation" / "data"
+DATA_DIR = REPO_ROOT / "data" / "research-2024"
 
-# Prototype role ids 1–10 and roadmap.sh file names (embedding-generation/src/main.py).
+# Research-prototype role ids 1–10 and roadmap.sh file names (data/research-2024/roadmaps/).
 ROLES = [
     (1, "ai-data-scientist", "AI Data Scientist"),
     (2, "android", "Android Developer"),
@@ -36,8 +36,8 @@ ROLES = [
     (10, "ux-design", "UX Designer"),
 ]
 
-# The prototype always excluded this course (SAP Overview) because it was recommended where
-# irrelevant (docs/schema.md, note 1). Kept inactive for parity with the prototype.
+# The research prototype always excluded this course (SAP Overview) because it was recommended where
+# irrelevant (docs/schema.md, note 1). Kept inactive for parity with it.
 PROTOTYPE_EXCLUDED_COURSES = {"2602800"}
 
 
@@ -64,7 +64,7 @@ def import_roles(session: Session) -> None:
 
 
 def import_roadmap_nodes(session: Session) -> int:
-    with open(DATA_DIR / "roadmap_nodes_final.csv", encoding="utf-8") as f:
+    with open(DATA_DIR / "roadmap_nodes.csv", encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
 
     sequence_by_role: dict[int, int] = {}
@@ -91,7 +91,7 @@ def import_roadmap_nodes(session: Session) -> int:
             "sequence": sequence_by_role[role_id],
             "legacy_id": legacy_id,
             "source": "roadmap.sh",
-            "source_version": "prototype-2024",
+            "source_version": "research-2024",
             "content_hash": sha256(row["content"]),
         }
         stmt = insert(RoadmapNode).values(values)
@@ -111,7 +111,7 @@ def parse_price(price: str) -> Decimal | None:
 
 
 def import_courses(session: Session) -> int:
-    with open(DATA_DIR / "udemy_courses_final.csv", encoding="utf-8") as f:
+    with open(DATA_DIR / "udemy_courses.csv", encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
 
     for row in rows:

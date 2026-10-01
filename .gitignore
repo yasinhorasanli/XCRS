@@ -1,25 +1,4 @@
 .vscode/
-backend/src/test.py
-backend/src/test.ipynb
-backend/user_inputs/*
-
-embedding-generation/api_keys/*
-embedding-generation/src/test.ipynb
-embedding-generation/data/palm_emb/*
-embedding-generation/data/google_emb/*
-embedding-generation/data/voyage_emb/*
-embedding-generation/data/openai_emb/*
-embedding-generation/data/mistral_emb/*
-embedding-generation/data/cohere_emb/*
-embedding-generation/data/test_data/
-
-
-backend/charts/
-backend/statistical_tests/
-backend/src/thesis_graphs.ipynb
-backend/src/topic.ipynb
-backend/src/histogram.ipynb
-
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

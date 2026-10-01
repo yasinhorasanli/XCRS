@@ -39,7 +39,6 @@ xcrs = "xcrs.cli:main"
 [tool.ruff]
 line-length = 120
 target-version = "py313"
-extend-exclude = ["src"]  # the research prototype (backend/src) stays as it was
 
 [tool.ruff.lint]
 # E/W pycodestyle · F pyflakes (real bugs) · I import order · B bugbear (likely bugs)
