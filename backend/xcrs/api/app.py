@@ -22,15 +22,29 @@ from xcrs.api.schemas import (
     RelatedUnitsV1,
     RelatedUnitV1,
 )
-from xcrs.api.schemas_v2 import MatchedSkillV2, PhraseMatchV2, SkillMatchRequestV2, SkillMatchResponseV2
+from xcrs.api.schemas_v2 import (
+    FeedbackV2Request,
+    MatchedSkillV2,
+    PhraseMatchV2,
+    RecommendationRequestV2,
+    RecommendationResponseV2,
+    SkillGroupsV2,
+    SkillGroupV2,
+    SkillMatchRequestV2,
+    SkillMatchResponseV2,
+    SkillSearchV2,
+    SkillSuggestionV2,
+)
 from xcrs.config import get_settings
 from xcrs.db.session import new_session
+from xcrs.domain.role_scoring import Category as CategoryV2
 from xcrs.explain import get_explainer
 from xcrs.repository import activity, catalog_store
 from xcrs.repository import catalog as catalog_repo
 from xcrs.services.explanations import ExplanationWorker
 from xcrs.services.knowledge_units import KnowledgeUnitService
 from xcrs.services.recommend import RecommendationService
+from xcrs.services.recommend_v2 import Chip, RecommendationServiceV2
 from xcrs.services.skill_matching import SkillMatcher, build_matcher
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
@@ -72,6 +86,12 @@ def get_knowledge_units(session: Session = Depends(get_session)) -> KnowledgeUni
 
 def get_skill_matcher(session: Session = Depends(get_session)) -> SkillMatcher:
     return build_matcher(session)
+
+
+def get_service_v2(
+    session: Session = Depends(get_session), matcher: SkillMatcher = Depends(get_skill_matcher)
+) -> RecommendationServiceV2:
+    return RecommendationServiceV2(session, matcher)
 
 
 @app.get("/api/v1/health")
@@ -156,5 +176,73 @@ def match_skills(
                 phrase=r.phrase, skills=[MatchedSkillV2(id=s, name=names[s]) for s in r.skills], method=r.method
             )
             for r in results
+        ]
+    )
+
+
+def _response_v2(row) -> RecommendationResponseV2:
+    return RecommendationResponseV2(
+        id=str(row.id),
+        created_at=row.created_at.isoformat(),
+        status=row.status,
+        algorithm_version=row.algorithm_version,
+        catalog_version=row.catalog_checksum[:12],
+        **row.result,
+    )
+
+
+@app.post("/api/v2/recommendations", response_model=RecommendationResponseV2)
+def create_recommendation_v2(
+    body: RecommendationRequestV2, service: RecommendationServiceV2 = Depends(get_service_v2)
+) -> RecommendationResponseV2:
+    """Roles for the board's chips (ADR-0031): score, estimated level, coverage per level, the skills that
+    count most, and the gaps to the next level in learning order."""
+    chips = []
+    for c in body.chips:
+        if bool(c.skill) == bool(c.text and c.text.strip()):
+            raise HTTPException(422, "each chip needs exactly one of `skill` (picked) or `text` (typed)")
+        chips.append(Chip(CategoryV2(c.category), c.skill, c.text.strip()[:100] if c.text else None, c.proficiency))
+    return _response_v2(service.recommend(chips))
+
+
+@app.get("/api/v2/recommendations/{recommendation_id}", response_model=RecommendationResponseV2)
+def get_recommendation_v2(
+    recommendation_id: uuid.UUID, service: RecommendationServiceV2 = Depends(get_service_v2)
+) -> RecommendationResponseV2:
+    row = service.get(recommendation_id)
+    if row is None:
+        raise HTTPException(404, "recommendation not found")
+    return _response_v2(row)
+
+
+@app.post("/api/v2/recommendations/{recommendation_id}/feedback", status_code=201)
+def create_feedback_v2(
+    recommendation_id: uuid.UUID, body: FeedbackV2Request, service: RecommendationServiceV2 = Depends(get_service_v2)
+) -> dict:
+    if service.get(recommendation_id) is None:
+        raise HTTPException(404, "recommendation not found")
+    service.feedback(recommendation_id, body.role, body.rating, body.comment)
+    return {"status": "saved"}
+
+
+@app.get("/api/v2/skills", response_model=SkillSearchV2)
+def search_skills_v2(
+    q: str = Query(min_length=1, max_length=100),
+    limit: int = Query(default=20, ge=1, le=50),
+    session: Session = Depends(get_session),
+) -> SkillSearchV2:
+    """Catalog skills for the board's picker."""
+    return SkillSearchV2(
+        skills=[SkillSuggestionV2(id=s, name=n, kind=k) for s, n, k in catalog_store.search_skills(session, q, limit)]
+    )
+
+
+@app.get("/api/v2/skills/groups", response_model=SkillGroupsV2)
+def skill_groups_v2(session: Session = Depends(get_session)) -> SkillGroupsV2:
+    """Suggested skills per role family, for a quick start on the board."""
+    return SkillGroupsV2(
+        groups=[
+            SkillGroupV2(family=f, name=n, skills=[SkillSuggestionV2(id=s, name=sn, kind=k) for s, sn, k in skills])
+            for f, n, skills in catalog_store.skill_groups(session)
         ]
     )

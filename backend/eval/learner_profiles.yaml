@@ -1,0 +1,441 @@
+# Labeled learner profiles for engine v2 role scoring (ADR-0031): what a learner puts on the skill board,
+# and which roles and level a career adviser would expect. Used to calibrate the score's weights
+# (eval/bench_role_scoring.py) and to check level estimates.
+#
+#   liked / neutral / disliked / curious: catalog skills, "skill:proficiency" (1-4) or "skill" (unrated)
+#   expect: the role(s) that should rank first; the first one is the main expectation (hit@1, hit@3, level)
+#   accept: also a fine first answer (adjacent roles)
+#   level:  the level the learner would start at in the main role (entry / mid / senior / staff)
+#
+# Drafted by Claude (2026-10-02) while the decider slept (delegated, ADR-0031); to be reviewed by sampling,
+# like the matching set (ADR-0029). Kinds: role (one per role), student, career-change, mixed, senior.
+
+profiles:
+  # --- one typical learner per role ---------------------------------------------------------------
+  - id: frontend-react-mid
+    liked: [react:3, typescript:3, css:3, html:3, responsive-design:2, frontend-testing:2, state-management:2]
+    neutral: [nodejs:1]
+    disliked: [sql:1]
+    curious: [web-performance, accessibility]
+    expect: [frontend-engineer]
+    accept: [full-stack-engineer]
+    level: mid
+    kind: role
+  - id: backend-java-mid
+    liked: [java:3, spring-boot:3, sql:3, postgresql:2, rest-api-design:3, unit-testing:2, git:3]
+    neutral: [html:1, docker:2]
+    disliked: [php:1]
+    curious: [kafka, microservices]
+    expect: [backend-engineer]
+    accept: []
+    level: mid
+    kind: role
+  - id: fullstack-js
+    liked: [react:2, nodejs:2, javascript:3, typescript:2, html:2, css:2, rest-api-design:2, mongodb:2]
+    neutral: [sql:1]
+    curious: [nextjs, docker]
+    expect: [full-stack-engineer]
+    accept: [frontend-engineer, backend-engineer]
+    level: entry
+    kind: role
+  - id: android-kotlin
+    liked: [kotlin:3, android-sdk:3, jetpack-compose:2, kotlin-coroutines:2, mobile-architecture:2, git:2]
+    neutral: [java:2]
+    curious: [mobile-testing, app-store-release]
+    expect: [android-engineer]
+    accept: []
+    level: mid
+    kind: role
+  - id: ios-swift
+    liked: [swift:3, swiftui:3, ios-sdk:3, swift-concurrency:2, mobile-data-persistence:2]
+    neutral: [git:2]
+    disliked: [javascript:1]
+    curious: [mobile-architecture]
+    expect: [ios-engineer]
+    accept: []
+    level: mid
+    kind: role
+  - id: game-unity
+    liked: [unity:3, csharp:3, game-math:2, game-physics:2, game-design-basics:2]
+    neutral: [computer-graphics:1]
+    curious: [shaders, multiplayer-networking]
+    expect: [game-developer]
+    accept: []
+    level: entry
+    kind: role
+  - id: embedded-c
+    liked: [c:3, microcontrollers:3, rtos:2, communication-protocols:2, digital-electronics:2, hardware-debugging:2]
+    neutral: [cpp:2, linux:2]
+    curious: [embedded-linux]
+    expect: [embedded-software-engineer]
+    accept: []
+    level: mid
+    kind: role
+  - id: qa-automation
+    liked: [test-automation:3, selenium:3, api-testing:2, java:2, testing-fundamentals:3, e2e-testing:2]
+    neutral: [manual-testing:3, sql:1]
+    curious: [performance-testing, ci-cd]
+    expect: [qa-automation-engineer]
+    accept: []
+    level: mid
+    kind: role
+  - id: devops-mid
+    liked: [docker:3, ci-cd:3, github-actions:2, linux:3, terraform:2, shell-scripting:2]
+    neutral: [aws:2, python:2]
+    disliked: [css:1]
+    curious: [kubernetes, observability]
+    expect: [devops-engineer]
+    accept: [cloud-engineer, platform-engineer]
+    level: mid
+    kind: role
+  - id: cloud-aws
+    liked: [aws:3, cloud-networking:2, identity-access-management:2, terraform:2, serverless:2, cloud-fundamentals:3]
+    neutral: [linux:2, docker:1]
+    curious: [cloud-architecture, finops]
+    expect: [cloud-engineer]
+    accept: [devops-engineer]
+    level: mid
+    kind: role
+  - id: sre
+    liked: [observability:3, prometheus-grafana:3, incident-management:3, sre-practices:3, kubernetes:3, linux:3]
+    neutral: [go:2, docker:3]
+    curious: [chaos-engineering, capacity-planning]
+    expect: [site-reliability-engineer]
+    accept: [platform-engineer, devops-engineer]
+    level: mid
+    kind: role
+  - id: ai-reliability
+    liked: [llm-evaluation:3, ai-guardrails:2, observability:3, incident-management:2, sre-practices:2, llm-fundamentals:2]
+    neutral: [kubernetes:2, python:3]
+    curious: [model-monitoring, llm-serving]
+    expect: [ai-reliability-engineer]
+    accept: [site-reliability-engineer]
+    level: mid
+    kind: role
+  - id: platform
+    liked: [kubernetes:3, internal-developer-platforms:2, gitops:2, helm:3, terraform:3, ci-cd:3]
+    neutral: [go:2]
+    curious: [service-mesh, developer-experience]
+    expect: [platform-engineer]
+    accept: [devops-engineer, site-reliability-engineer]
+    level: mid
+    kind: role
+  - id: data-analyst
+    liked: [sql:3, spreadsheets:3, data-visualization:3, bi-tools:3, statistics:2]
+    neutral: [python:1]
+    disliked: [javascript:1]
+    curious: [ab-testing, pandas]
+    expect: [data-analyst]
+    accept: []
+    level: mid
+    kind: role
+  - id: analytics-eng
+    liked: [dbt:3, sql:3, data-modeling:3, data-warehousing:2, snowflake:2, data-quality:2]
+    neutral: [bi-tools:2, git:2]
+    curious: [semantic-layer]
+    expect: [analytics-engineer]
+    accept: [data-engineer]
+    level: mid
+    kind: role
+  - id: data-engineer
+    liked: [python:3, sql:3, etl-pipelines:3, airflow:3, spark:2, data-warehousing:2]
+    neutral: [docker:2]
+    curious: [stream-processing, kafka, data-lakehouse]
+    expect: [data-engineer]
+    accept: [analytics-engineer]
+    level: mid
+    kind: role
+  - id: data-scientist
+    liked: [python:3, pandas:3, statistics:3, machine-learning-fundamentals:3, scikit-learn:3, exploratory-data-analysis:3]
+    neutral: [sql:2, data-visualization:2]
+    curious: [deep-learning, ab-testing]
+    expect: [data-scientist]
+    accept: [machine-learning-engineer]
+    level: mid
+    kind: role
+  - id: ml-engineer
+    liked: [pytorch:3, deep-learning:3, model-serving:2, ml-pipelines:2, python:3, feature-engineering:2]
+    neutral: [docker:2]
+    curious: [experiment-tracking, model-monitoring, transformers]
+    expect: [machine-learning-engineer]
+    accept: [mlops-engineer, data-scientist]
+    level: mid
+    kind: role
+  - id: applied-scientist
+    liked: [research-methods:3, deep-learning:3, pytorch:3, transformers:2, ml-optimization:2, linear-algebra:3, calculus:3]
+    neutral: [statistics:3]
+    curious: [reinforcement-learning, distributed-training]
+    expect: [applied-scientist]
+    accept: [machine-learning-engineer]
+    level: entry
+    kind: role
+  - id: mlops
+    liked: [ml-pipelines:3, experiment-tracking:3, model-serving:3, kubernetes:2, docker:3, ci-cd:2]
+    neutral: [machine-learning-fundamentals:2, python:3]
+    curious: [model-monitoring, feature-stores]
+    expect: [mlops-engineer]
+    accept: [machine-learning-engineer, ai-platform-engineer]
+    level: mid
+    kind: role
+  - id: ai-platform
+    liked: [llm-serving:3, gpu-infrastructure:2, kubernetes:3, vector-databases:2, docker:3]
+    neutral: [python:2, terraform:2]
+    curious: [llm-evaluation, finops]
+    expect: [ai-platform-engineer]
+    accept: [mlops-engineer, platform-engineer]
+    level: mid
+    kind: role
+  - id: ai-engineer
+    liked: [llm-fundamentals:3, prompt-engineering:3, rag:3, llm-frameworks:2, python:3, fastapi:2, embeddings-vector-search:2]
+    neutral: [docker:2]
+    curious: [ai-agents, llm-evaluation]
+    expect: [ai-engineer]
+    accept: [forward-deployed-engineer]
+    level: mid
+    kind: role
+  - id: security-eng
+    liked: [security-fundamentals:3, network-security:3, cloud-security:2, threat-modeling:2, vulnerability-management:2, siem:2]
+    neutral: [linux:3, python:2]
+    curious: [devsecops, security-incident-response]
+    expect: [security-engineer]
+    accept: [penetration-tester]
+    level: mid
+    kind: role
+  - id: pentester
+    liked: [penetration-testing:3, security-testing-tools:3, web-security:3, network-security:2, exploit-development:2]
+    neutral: [python:2, linux:3]
+    curious: [active-directory]
+    expect: [penetration-tester]
+    accept: [security-engineer]
+    level: mid
+    kind: role
+  - id: blockchain
+    liked: [solidity:3, ethereum:3, smart-contract-testing:2, web3-libraries:2, blockchain-fundamentals:3]
+    neutral: [javascript:2]
+    curious: [smart-contract-security, defi-protocols]
+    expect: [blockchain-engineer]
+    accept: []
+    level: mid
+    kind: role
+  - id: fde
+    liked: [python:3, enterprise-integration:2, customer-discovery:2, rag:2, ai-agents:2, technical-demos:2, rest-api-design:3]
+    neutral: [sql:2, stakeholder-communication:2]
+    curious: [mcp, solution-design]
+    expect: [forward-deployed-engineer]
+    accept: [ai-engineer, solutions-engineer]
+    level: mid
+    kind: role
+  - id: solutions-eng
+    liked: [presales:3, technical-demos:3, customer-discovery:3, stakeholder-communication:3, public-speaking:2]
+    neutral: [rest-api-design:2, python:1, cloud-fundamentals:2]
+    curious: [solution-design]
+    expect: [solutions-engineer]
+    accept: [forward-deployed-engineer]
+    level: mid
+    kind: role
+  - id: devrel
+    liked: [developer-content:3, public-speaking:3, community-building:2, technical-writing:3, javascript:3]
+    neutral: [rest-api-design:2, git:2]
+    curious: [developer-experience]
+    expect: [developer-advocate]
+    accept: []
+    level: mid
+    kind: role
+  - id: architect-senior
+    liked: [system-design:4, distributed-systems:3, architecture-patterns:3, domain-driven-design:3, architecture-decision-records:3, microservices:3]
+    neutral: [java:3, kafka:3, cloud-architecture:2]
+    curious: [technical-leadership]
+    expect: [software-architect]
+    accept: [backend-engineer]
+    level: senior
+    kind: senior
+  - id: eng-manager
+    liked: [people-management:3, hiring:3, mentoring:3, project-planning:3, engineering-processes:2, stakeholder-communication:3]
+    neutral: [agile-scrum:3, system-design:2]
+    curious: [technical-leadership]
+    expect: [engineering-manager]
+    accept: []
+    level: senior
+    kind: senior
+
+  # --- students: few skills, little or no rating ---------------------------------------------------
+  - id: student-web
+    liked: [html, css, javascript]
+    neutral: [python]
+    curious: [react]
+    expect: [frontend-engineer]
+    accept: [full-stack-engineer]
+    level: entry
+    kind: student
+  - id: student-data
+    liked: [python, statistics, spreadsheets]
+    curious: [machine-learning-fundamentals, sql]
+    expect: [data-analyst]
+    accept: [data-scientist]
+    level: entry
+    kind: student
+  - id: student-security
+    liked: [linux, computer-networking]
+    curious: [penetration-testing, web-security]
+    expect: [penetration-tester]
+    accept: [security-engineer]
+    level: entry
+    kind: student
+  - id: student-games
+    liked: [cpp, game-math]
+    curious: [unreal-engine, computer-graphics]
+    expect: [game-developer]
+    accept: []
+    level: entry
+    kind: student
+  - id: student-mobile
+    liked: [kotlin]
+    neutral: [java]
+    curious: [android-sdk, jetpack-compose]
+    expect: [android-engineer]
+    accept: []
+    level: entry
+    kind: student
+
+  # --- career changers: strong in one role, curious about another ----------------------------------
+  - id: backend-to-data
+    liked: [python:3, sql:3, postgresql:3, rest-api-design:3, django:3]
+    neutral: [docker:2]
+    curious: [airflow, spark, etl-pipelines, data-warehousing, stream-processing]
+    expect: [data-engineer]
+    accept: [backend-engineer]
+    level: entry
+    kind: career-change
+  - id: analyst-to-ds
+    liked: [sql:3, statistics:3, ab-testing:2, bi-tools:3]
+    disliked: [spreadsheets:3]
+    curious: [machine-learning-fundamentals, scikit-learn, python, feature-engineering]
+    expect: [data-scientist]
+    accept: [data-analyst, analytics-engineer]
+    level: entry
+    kind: career-change
+  - id: frontend-to-mobile
+    liked: [react:3, javascript:3, typescript:3]
+    neutral: [css:3]
+    curious: [react-native, mobile-architecture, app-store-release, flutter]
+    expect: [frontend-engineer]
+    accept: [android-engineer, ios-engineer, full-stack-engineer]
+    level: mid
+    kind: career-change
+  - id: qa-to-devops
+    liked: [test-automation:3, ci-cd:2, shell-scripting:2]
+    disliked: [manual-testing:3]
+    curious: [docker, kubernetes, terraform, infrastructure-as-code]
+    expect: [devops-engineer]
+    accept: [qa-automation-engineer]
+    level: entry
+    kind: career-change
+
+  # --- mixed and disliked-driven ----------------------------------------------------------------------
+  - id: likes-backend-hates-frontend
+    liked: [python:3, rest-api-design:3, relational-databases:3, fastapi:3]
+    disliked: [css:2, html:2, javascript:2, react:1]
+    neutral: [docker:2]
+    expect: [backend-engineer]
+    accept: []
+    level: mid
+    kind: mixed
+  - id: llm-curious-backend
+    liked: [python:3, fastapi:3, rest-api-design:3, postgresql:2]
+    curious: [rag, llm-fundamentals, prompt-engineering, ai-agents]
+    expect: [ai-engineer]
+    accept: [backend-engineer, forward-deployed-engineer]
+    level: entry
+    kind: mixed
+
+  # --- neighbours compete; interest and existing skills point different ways --------------------------
+  # Labeled before any run on them (2026-10-02, 01:15): an adviser's call, not tuned to the scores.
+  - id: backend-dev-curious-k8s
+    liked: [go:3, rest-api-design:3, postgresql:3, grpc:2, microservices:2]
+    neutral: [docker:2]
+    curious: [kubernetes, observability]
+    expect: [backend-engineer]
+    accept: [platform-engineer]
+    level: mid
+    kind: neighbours
+  - id: fullstack-leaning-backend
+    liked: [django:3, python:3, rest-api-design:3, postgresql:3]
+    neutral: [react:2, html:2, css:2]
+    expect: [backend-engineer]
+    accept: [full-stack-engineer]
+    level: mid
+    kind: neighbours
+  - id: frontend-dev-who-does-some-api
+    liked: [react:3, typescript:3, css:3, design-systems:2]
+    neutral: [nodejs:2, rest-api-design:2]
+    expect: [frontend-engineer]
+    accept: [full-stack-engineer]
+    level: mid
+    kind: neighbours
+  - id: ds-vs-mle-deploying
+    liked: [scikit-learn:3, pandas:3, model-serving:3, docker:2, ml-pipelines:2, python:3]
+    neutral: [statistics:2]
+    curious: [model-monitoring]
+    expect: [machine-learning-engineer]
+    accept: [mlops-engineer, data-scientist]
+    level: mid
+    kind: neighbours
+  - id: ds-vs-applied-research
+    liked: [statistics:3, research-methods:2, deep-learning:2, linear-algebra:3, pytorch:2]
+    neutral: [sql:2]
+    curious: [transformers, ml-optimization]
+    expect: [applied-scientist]
+    accept: [data-scientist, machine-learning-engineer]
+    level: entry
+    kind: neighbours
+  - id: sre-vs-platform
+    liked: [incident-management:3, sre-practices:3, observability:3, prometheus-grafana:3]
+    neutral: [kubernetes:2, terraform:2]
+    expect: [site-reliability-engineer]
+    accept: [platform-engineer]
+    level: mid
+    kind: neighbours
+  - id: devops-vs-cloud
+    liked: [azure:3, cloud-fundamentals:3, identity-access-management:3, cloud-networking:2]
+    neutral: [ci-cd:2, docker:2]
+    expect: [cloud-engineer]
+    accept: [devops-engineer]
+    level: mid
+    kind: neighbours
+  - id: analyst-vs-analytics-eng
+    liked: [sql:3, bi-tools:3, data-visualization:3, stakeholder-communication:2]
+    neutral: [dbt:1, data-modeling:1]
+    expect: [data-analyst]
+    accept: [analytics-engineer]
+    level: mid
+    kind: neighbours
+  - id: security-vs-pentest
+    liked: [siem:3, security-incident-response:3, vulnerability-management:2, cloud-security:2]
+    neutral: [penetration-testing:1]
+    expect: [security-engineer]
+    accept: [penetration-tester]
+    level: mid
+    kind: neighbours
+  - id: senior-backend-lukewarm
+    liked: [mentoring:3, technical-writing:2]
+    neutral: [java:4, spring-boot:4, system-design:3, distributed-systems:3, kafka:3, sql:4, microservices:3]
+    disliked: [css:2]
+    expect: [backend-engineer]
+    accept: [software-architect, engineering-manager]
+    level: senior
+    kind: neighbours
+  - id: competent-but-dislikes-it
+    disliked: [spreadsheets:3, bi-tools:3, data-visualization:3]
+    liked: [python:3, pandas:2]
+    curious: [machine-learning-fundamentals, deep-learning]
+    expect: [data-scientist]
+    accept: [machine-learning-engineer]
+    level: entry
+    kind: neighbours
+  - id: ai-eng-vs-fde
+    liked: [rag:3, ai-agents:3, llm-frameworks:3, prompt-engineering:3, python:3]
+    neutral: [stakeholder-communication:1]
+    expect: [ai-engineer]
+    accept: [forward-deployed-engineer]
+    level: mid
+    kind: neighbours

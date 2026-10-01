@@ -24,3 +24,113 @@ class PhraseMatchV2(BaseModel):
 
 class SkillMatchResponseV2(BaseModel):
     matches: list[PhraseMatchV2]
+
+
+Category = Literal["liked", "neutral", "disliked", "curious"]
+
+
+class ChipV2(BaseModel):
+    """A skill on the board: a catalog skill id (picked) or typed text (matched), at most one of each."""
+
+    category: Category
+    skill: str | None = Field(default=None, max_length=80)
+    text: str | None = Field(default=None, max_length=100)
+    proficiency: int | None = Field(default=None, ge=1, le=4)
+
+
+class RecommendationRequestV2(BaseModel):
+    chips: list[ChipV2] = Field(min_length=1, max_length=60)
+
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "chips": [
+                        {"category": "liked", "skill": "python", "proficiency": 3},
+                        {"category": "liked", "text": "building REST APIs with Django"},
+                        {"category": "curious", "skill": "kubernetes"},
+                        {"category": "disliked", "text": "CSS"},
+                    ]
+                }
+            ]
+        }
+    }
+
+
+class SkillRefV2(BaseModel):
+    id: str
+    name: str
+
+
+class LevelV2(BaseModel):
+    id: str
+    title: str | None
+    coverage: float
+
+
+class GapV2(BaseModel):
+    skills: list[SkillRefV2]  # several = any one of them
+    need: int
+    have: int
+    stage: str
+
+
+class BecauseV2(SkillRefV2):
+    category: Category
+
+
+class RoleV2(BaseModel):
+    id: str
+    name: str
+    family: str
+    score: float
+    interest: float
+    coverage: float
+    level: LevelV2 | None  # None: start at the role's first level
+    target_level: LevelV2
+    levels: list[LevelV2]
+    because: list[BecauseV2]
+    gaps: list[GapV2]
+    gaps_total: int
+
+
+class MatchedChipV2(BaseModel):
+    text: str | None
+    category: Category
+    proficiency: int | None
+    method: str
+    skills: list[SkillRefV2]
+
+
+class RecommendationResponseV2(BaseModel):
+    id: str
+    created_at: str
+    status: Literal["ok", "insufficient_input"]
+    algorithm_version: str
+    catalog_version: str
+    matched: list[MatchedChipV2]
+    roles: list[RoleV2]
+
+
+class FeedbackV2Request(BaseModel):
+    role: str | None = Field(default=None, max_length=80)
+    rating: Literal[-1, 1] | None = None
+    comment: str | None = Field(default=None, max_length=2000)
+
+
+class SkillSuggestionV2(SkillRefV2):
+    kind: str
+
+
+class SkillSearchV2(BaseModel):
+    skills: list[SkillSuggestionV2]
+
+
+class SkillGroupV2(BaseModel):
+    family: str
+    name: str
+    skills: list[SkillSuggestionV2]
+
+
+class SkillGroupsV2(BaseModel):
+    groups: list[SkillGroupV2]
