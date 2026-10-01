@@ -1,6 +1,6 @@
 # ADR-0023: Skill-board input with suggestions; results as linked roles and courses; thumbs feedback
 
-- **Status:** Accepted (delegated: the decider asked for a drag-and-drop input page with knowledge-unit suggestions, "or a better idea", and a results page that visually connects courses to roles; the details below were chosen without further questions; pending the decider's review)
+- **Status:** Accepted. Delegated: made by Claude on 2026-09-30 while the decider asked for the work to be finished without questions; on 2026-10-01 the decider accepted it without a separate review.
 - **Date:** 2026-09-30
 - **Decider:** Muhammed Yasin Horasanli
 

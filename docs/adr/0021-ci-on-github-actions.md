@@ -1,6 +1,6 @@
 # ADR-0021: Continuous integration on GitHub Actions; container images for backend and frontend
 
-- **Status:** Accepted (delegated: made on 2026-09-30 while the decider asked for the remaining work to be finished without questions; pending the decider's review)
+- **Status:** Accepted. Delegated: made by Claude on 2026-09-30 while the decider asked for the work to be finished without questions; on 2026-10-01 the decider accepted it without a separate review.
 - **Date:** 2026-09-30
 - **Decider:** Muhammed Yasin Horasanli
 
