@@ -8,7 +8,9 @@ uv run xcrs search-courses "Docker"
 """
 
 import argparse
+import hashlib
 import json
+import subprocess
 from pathlib import Path
 
 from sqlalchemy import select
@@ -19,7 +21,7 @@ from xcrs.db.models import EmbeddingModel, RoadmapNode, Role
 from xcrs.db.session import new_session
 from xcrs.embeddings import embedder_for
 from xcrs.ingest import embed_catalog, research_data
-from xcrs.repository import vectors
+from xcrs.repository import catalog_store, vectors
 from xcrs.retrieval import CourseRetriever
 
 # Known model settings, so registration doesn't depend on remembering prefixes.
@@ -129,6 +131,49 @@ def cmd_catalog_bridge(args) -> None:
     print(f"{len(gap)} skills to learn or deepen")
 
 
+def _catalog_source(directory: Path) -> tuple[str | None, bool, str]:
+    """Git commit, whether catalog/ has uncommitted changes, and a checksum of the YAML files."""
+
+    def git(*cmd: str) -> str | None:
+        try:
+            return subprocess.run(["git", *cmd], cwd=directory, capture_output=True, text=True, check=True).stdout
+        except (OSError, subprocess.CalledProcessError):
+            return None
+
+    commit = git("rev-parse", "--short", "HEAD")
+    dirty = bool(git("status", "--porcelain", "--", "."))
+    digest = hashlib.sha256()
+    for path in sorted(directory.rglob("*.yaml")):
+        digest.update(str(path.relative_to(directory)).encode() + b"\0" + path.read_bytes())
+    return commit.strip() if commit else None, dirty, digest.hexdigest()
+
+
+def cmd_catalog_import(args) -> None:
+    """Load catalog/*.yaml into the `catalog` schema (ADR-0028), in one transaction; only a valid catalog."""
+    cat = model.load_catalog(args.dir)
+    report = validate.validate(cat)
+    if not report.ok:
+        for error in report.errors:
+            print(f"ERROR: {error}")
+        raise SystemExit("not imported: run `xcrs catalog validate` and fix the errors first")
+    commit, dirty, checksum = _catalog_source(Path(args.dir))
+    with new_session() as session:
+        if not args.force and catalog_store.last_import_checksum(session) == checksum:
+            print(f"catalog unchanged since the last import (checksum {checksum[:12]}); --force to re-import")
+            return
+        changes = catalog_store.import_catalog(
+            session, cat, git_commit=commit, git_dirty=dirty, checksum=checksum, stats=report.stats
+        )
+        session.commit()
+    print(f"imported catalog from {commit or 'unknown commit'}{' (uncommitted changes)' if dirty else ''}")
+    for name in ("skills", "roles", "families", "levels"):
+        c = changes[name]
+        print(f"  {name:9} +{len(c['added'])} ~{len(c['updated'])} -{len(c['removed'])}", end="")
+        listed = [f"{sign}{x}" for sign, key in (("-", "removed"), ("~", "updated")) for x in c[key]][:8]
+        print(f"   {' '.join(listed)}" if listed and len(c["added"]) < 50 else "")
+    print("  parts    " + ", ".join(f"{k} {v}" for k, v in changes["parts"].items()))
+
+
 def cmd_catalog_moves(args) -> None:
     """Every other role ranked by how much of it someone already covers (ADR-0027); * = common path."""
     cat = model.load_catalog(args.dir)
@@ -181,6 +226,9 @@ def main() -> None:
     p.add_argument("source")
     p.add_argument("target")
     p.set_defaults(func=cmd_catalog_bridge)
+    p = catalog_sub.add_parser("import", help="load the catalog YAML into the database (validated first)")
+    p.add_argument("--force", action="store_true", help="import even if nothing changed since the last import")
+    p.set_defaults(func=cmd_catalog_import)
     p = catalog_sub.add_parser("moves", help="rank every other role by distance, e.g. backend-engineer@mid")
     p.add_argument("role_level")
     p.add_argument("--top", type=int, default=25)
