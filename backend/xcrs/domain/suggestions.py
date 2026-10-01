@@ -3,7 +3,7 @@
 from collections.abc import Iterable
 from dataclasses import dataclass, field
 
-from xcrs.domain.labels import display_label
+from xcrs.domain.labels import skill_label
 
 
 @dataclass
@@ -27,7 +27,9 @@ def merge_units(curated: Iterable[str], concepts: Iterable[tuple[str, str]]) -> 
     for label in curated:
         units.setdefault(label.lower(), KnowledgeUnit(label, "curated"))
     for name, role in concepts:
-        label = display_label(name)
+        label = skill_label(name)
+        if label is None:  # roadmap filler like "learn the basics"
+            continue
         unit = units.setdefault(label.lower(), KnowledgeUnit(label, "roadmap"))
         if role not in unit.roles:
             unit.roles.append(role)
@@ -58,16 +60,28 @@ def search(units: Iterable[KnowledgeUnit], query: str, limit: int) -> list[Knowl
 
 
 def related(
-    hits: Iterable[tuple[str, str, float]], entered: Iterable[str], limit: int, min_similarity: float
+    hits: Iterable[tuple[str, str, float]],
+    avoid_hits: Iterable[tuple[str, str, float]],
+    entered: Iterable[str],
+    limit: int,
+    min_similarity: float,
 ) -> list[RelatedUnit]:
-    """Suggestions from (phrase, concept name, similarity) hits: the best hit per label, leaving out
-    what the learner already entered and anything too far from it."""
+    """Suggestions from (phrase, concept name, similarity) hits of what the learner enjoyed or is curious
+    about: the best hit per label, leaving out what they already entered, anything too far from it, roadmap
+    filler, and anything at least as close to something they didn't enjoy (`avoid_hits`)."""
     taken = {e.strip().lower() for e in entered}
+    avoid: dict[str, float] = {}
+    for _, name, similarity in avoid_hits:
+        label = skill_label(name)
+        if label:
+            avoid[label.lower()] = max(similarity, avoid.get(label.lower(), 0.0))
     best: dict[str, RelatedUnit] = {}
     for phrase, name, similarity in hits:
-        label = display_label(name)
+        label = skill_label(name)
+        if label is None or similarity < min_similarity:
+            continue
         key = label.lower()
-        if key in taken or similarity < min_similarity:
+        if key in taken or avoid.get(key, 0.0) >= similarity:
             continue
         if key not in best or similarity > best[key].similarity:
             best[key] = RelatedUnit(label, phrase, round(similarity, 3))

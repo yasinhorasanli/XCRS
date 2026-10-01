@@ -123,6 +123,9 @@ def search_knowledge_units(
 def related_knowledge_units(
     body: RelatedRequestV1, service: KnowledgeUnitService = Depends(get_knowledge_units)
 ) -> RelatedUnitsV1:
-    """Suggestions close to what the learner already entered (one embedding call)."""
-    units = service.related([p[:100] for p in body.phrases], body.limit)
+    """Suggestions close to what the learner enjoyed or is curious about, away from what they didn't enjoy
+    (one embedding call)."""
+    units = service.related(
+        [p[:100] for p in body.phrases], [a[:100] for a in body.avoid], [e[:100] for e in body.exclude], body.limit
+    )
     return RelatedUnitsV1(units=[RelatedUnitV1(**vars(u)) for u in units])

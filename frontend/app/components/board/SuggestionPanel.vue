@@ -2,7 +2,7 @@
 import { CATEGORIES, CATEGORY_META } from '~/composables/useBoard'
 import type { KnowledgeUnit, KnowledgeUnitGroup, RelatedUnit } from '~/types/api'
 
-const { all, active, add, categoryOf } = useBoard()
+const { board, all, active, add, categoryOf } = useBoard()
 const api = useXcrsApi()
 
 const tab = ref<'for-you' | 'browse'>('browse')
@@ -14,17 +14,18 @@ const { data: groupData } = await useAsyncData('knowledge-unit-groups', () => ap
 const openGroup = ref<string | null>(null)
 const groups = computed(() => groupData.value.groups)
 
-// --- For you: related to what's on the board, refreshed as it changes ---
+// --- For you: near what the learner enjoyed or is curious about, away from what they didn't enjoy ---
+const sources = computed(() => [...board.value.liked, ...board.value.curious])
 const related = ref<RelatedUnit[]>([])
 const relatedLoading = ref(false)
 let relatedTimer: ReturnType<typeof setTimeout> | undefined
 let relatedCall = 0
 
 watch(
-  () => all.value.join('|'),
+  () => all.value.join('|') + '#' + board.value.disliked.join('|'),
   () => {
     clearTimeout(relatedTimer)
-    if (!all.value.length) {
+    if (!sources.value.length) {
       related.value = []
       return
     }
@@ -32,7 +33,8 @@ watch(
       const call = ++relatedCall
       relatedLoading.value = true
       try {
-        const { units } = await api.related(all.value, 16)
+        const request = { phrases: sources.value, avoid: board.value.disliked, exclude: board.value.neutral }
+        const { units } = await api.related(request, 16)
         if (call === relatedCall) related.value = units
       } catch {
         // suggestions are optional; keep the previous ones
@@ -126,7 +128,7 @@ watch(query, (q) => {
           type="button"
           role="tab"
           :aria-selected="tab === t.id"
-          class="-mb-px border-b-2 py-2 text-sm font-medium transition"
+          class="-mb-px rounded-t-md border-b-2 py-2 text-sm font-medium transition"
           :class="tab === t.id ? 'border-indigo-600 text-indigo-700' : 'border-transparent text-slate-500 hover:text-slate-700'"
           @click="tab = t.id"
         >
@@ -139,14 +141,18 @@ watch(query, (q) => {
 
       <div class="max-h-[32rem] overflow-y-auto p-4">
         <div v-if="tab === 'for-you'">
-          <p v-if="!all.length" class="text-sm text-slate-500">
-            Add a few things you know, and this list fills with related skills from the career roadmaps.
+          <p v-if="!sources.length" class="text-sm text-slate-500">
+            Add things you <strong>enjoyed</strong> or are <strong>curious about</strong>, and this list fills with
+            related skills from the career roadmaps. Things you didn't enjoy steer suggestions away.
           </p>
           <div v-else-if="relatedLoading && !related.length" class="flex flex-wrap gap-1.5">
             <span v-for="i in 8" :key="i" class="shimmer h-10 rounded-lg" :style="{ width: `${70 + ((i * 37) % 60)}px` }" />
           </div>
           <template v-else>
-            <p class="mb-2 text-xs text-slate-500">Close to what you've added. The small text shows which of your skills each one relates to.</p>
+            <p class="mb-2 text-xs text-slate-500">
+              Close to what you enjoyed or are curious about, and away from what you didn't enjoy. The small text shows
+              which of your skills each one relates to.
+            </p>
             <div class="flex flex-wrap gap-1.5" :class="relatedLoading ? 'opacity-60' : ''">
               <BoardSkillChip
                 v-for="u in related"

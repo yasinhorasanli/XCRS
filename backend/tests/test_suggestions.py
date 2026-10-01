@@ -1,6 +1,6 @@
 """Knowledge-unit suggestions (ADR-0023): pure functions, no database."""
 
-from xcrs.domain.labels import display_label
+from xcrs.domain.labels import display_label, skill_label
 from xcrs.domain.suggestions import KnowledgeUnit, merge_units, related, search
 
 
@@ -47,5 +47,32 @@ def test_related_leaves_out_what_was_entered_and_weak_hits():
         ("Docker", "podman", 0.30),  # below the minimum
         ("Linux", "bash", 0.58),
     ]
-    units = related(hits, ["Docker", "Linux"], limit=10, min_similarity=0.35)
+    units = related(hits, [], ["Docker", "Linux"], limit=10, min_similarity=0.35)
     assert [(u.label, u.because) for u in units] == [("Kubernetes", "Docker"), ("Bash", "Linux")]
+
+
+def test_related_steers_away_from_what_the_learner_did_not_enjoy():
+    """Liked Python, disliked HTML: "Writing semantic HTML" is closer to the dislike, so it isn't suggested.
+    A concept nearer to the like than to the dislike still is."""
+    hits = [("Python", "writing semantic html", 0.40), ("Python", "django", 0.70), ("Python", "jinja", 0.50)]
+    avoid_hits = [("HTML", "writing semantic html", 0.80), ("HTML", "jinja", 0.45)]
+    units = related(hits, avoid_hits, ["Python", "HTML"], limit=10, min_similarity=0.35)
+    assert [u.label for u in units] == ["Django", "Jinja"]
+
+
+def test_related_drops_roadmap_filler_and_unwraps_phrased_skills():
+    hits = [("HTML", "learn the basics", 0.9), ("HTML", "what is http", 0.8), ("SQL", "basics of kotlin", 0.4)]
+    assert [u.label for u in related(hits, [], ["HTML", "SQL"], 10, 0.35)] == ["HTTP", "Kotlin"]
+
+
+def test_skill_labels():
+    assert skill_label("learn the basics") is None
+    assert skill_label("checkpoint static websites") is None
+    assert skill_label("how does the internet work") is None
+    assert skill_label("what is http") == "HTTP"
+    assert skill_label("learn dom manipulation") == "DOM manipulation"
+    assert skill_label("basic usage of git") == "Git"
+    assert skill_label("basic authentication") == "Basic authentication"  # a real concept, not a prefix
+    assert display_label("ethers js") == "ethers.js"
+    assert display_label("next js") == "Next.js"
+    assert display_label("gke eks aks") == "GKE / EKS / AKS"

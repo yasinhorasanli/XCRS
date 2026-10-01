@@ -123,7 +123,9 @@ class KnowledgeUnitsV1(BaseModel):
 
 
 class RelatedRequestV1(BaseModel):
-    phrases: list[str] = Field(max_length=120)
+    phrases: list[str] = Field(max_length=60)  # what the learner enjoyed or is curious about
+    avoid: list[str] = Field(default_factory=list, max_length=30)  # what they didn't enjoy
+    exclude: list[str] = Field(default_factory=list, max_length=60)  # anything else entered (neutral)
     limit: int = Field(default=12, ge=1, le=30)
 
 

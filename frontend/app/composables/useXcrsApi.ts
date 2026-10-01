@@ -22,10 +22,11 @@ export function useXcrsApi() {
     search: (q: string, limit = 8) =>
       $fetch<{ units: KnowledgeUnit[] }>('/api/v1/knowledge-units', { query: { q, limit } }),
 
-    related: (phrases: string[], limit = 14) =>
+    // phrases: enjoyed + curious (what to suggest near); avoid: didn't enjoy; exclude: anything else entered
+    related: (body: { phrases: string[]; avoid: string[]; exclude: string[] }, limit = 14) =>
       $fetch<{ units: RelatedUnit[] }>('/api/v1/knowledge-units/related', {
         method: 'POST',
-        body: { phrases, limit },
+        body: { ...body, limit },
       }),
   }
 }

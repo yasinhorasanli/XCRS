@@ -9,6 +9,18 @@ body {
   @apply bg-slate-50 text-slate-800 antialiased;
 }
 
+/* Focus: no ring after a mouse click; a soft, rounded ring for keyboard users (instead of the browser's
+   default rectangle). Nuxt UI components bring their own focus styles. */
+@layer base {
+  :where(button, a, [role="tab"], [role="radio"]):focus:not(:focus-visible) {
+    outline: none;
+  }
+  :where(button, a, [role="tab"], [role="radio"]):focus-visible {
+    outline: 2px solid var(--color-indigo-400);
+    outline-offset: 2px;
+  }
+}
+
 /* Explanations arriving in the background: a soft shimmer instead of a spinner. */
 .shimmer {
   background: linear-gradient(90deg, rgb(226 232 240) 0%, rgb(241 245 249) 50%, rgb(226 232 240) 100%);

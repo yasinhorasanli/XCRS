@@ -39,13 +39,19 @@ class KnowledgeUnitService:
         units = suggestions.merge_units(curated, catalog_repo.concept_names(self.session))
         return suggestions.search(units, query, limit)
 
-    def related(self, phrases: list[str], limit: int) -> list[RelatedUnit]:
+    def related(self, phrases: list[str], avoid: list[str], exclude: list[str], limit: int) -> list[RelatedUnit]:
+        """Suggestions near `phrases` (what the learner enjoyed or is curious about), steering away from
+        `avoid` (what they didn't enjoy) and never repeating anything in `exclude` (everything entered)."""
         phrases = [p.strip() for p in phrases if p.strip()]
+        avoid = [a.strip() for a in avoid if a.strip()]
         if not phrases:
             return []
         model = catalog_repo.active_model(self.session)
-        vecs = self.embedder_factory(model).embed_query(phrases)
+        texts = phrases + avoid  # one embedding call for both
+        vecs = self.embedder_factory(model).embed_query(texts)
         matches = vectors.nearest_concepts(self.session, model, vecs, RELATED_PER_PHRASE)
         catalog = catalog_repo.load_roadmap_catalog(self.session)
-        hits = [(phrases[m.phrase_index], catalog.node_names[m.concept_id], m.similarity) for m in matches]
-        return suggestions.related(hits, phrases, limit, RELATED_MIN_SIMILARITY)
+        hits = [(texts[m.phrase_index], catalog.node_names[m.concept_id], m.similarity) for m in matches]
+        positive = [h for h, m in zip(hits, matches, strict=True) if m.phrase_index < len(phrases)]
+        negative = [h for h, m in zip(hits, matches, strict=True) if m.phrase_index >= len(phrases)]
+        return suggestions.related(positive, negative, [*phrases, *avoid, *exclude], limit, RELATED_MIN_SIMILARITY)

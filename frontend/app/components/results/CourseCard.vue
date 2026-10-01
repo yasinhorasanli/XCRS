@@ -47,14 +47,27 @@ const shared = computed(() => props.course.links.length > 1)
           <UIcon name="i-heroicons-arrow-top-right-on-square" class="mt-0.5 h-4 w-4 shrink-0 text-slate-400 group-hover:text-indigo-500" />
         </a>
       </div>
-      <ResultsFeedback :request-id="requestId" :course-id="course.course_id" :subject="course.title" />
+      <!-- One role: the vote is for this course in that role. Shared: one vote per role, below. -->
+      <ResultsFeedback
+        v-if="!shared && course.links[0]"
+        :request-id="requestId"
+        :role-id="course.links[0].roleId"
+        :course-id="course.course_id"
+        :subject="course.title"
+      />
     </header>
 
     <div class="mt-3 space-y-2.5">
       <div v-for="l in course.links" :key="l.roleId" :class="shared && highlightedRole && highlightedRole !== l.roleId ? 'opacity-50' : ''">
-        <p v-if="shared" class="mb-0.5 text-[11px] font-semibold uppercase tracking-wide" :class="roleColor(l.roleIndex).text">
-          For {{ l.role }}
-        </p>
+        <div v-if="shared" class="mb-0.5 flex items-center justify-between gap-2">
+          <p class="text-[11px] font-semibold uppercase tracking-wide" :class="roleColor(l.roleIndex).text">For {{ l.role }}</p>
+          <ResultsFeedback
+            :request-id="requestId"
+            :role-id="l.roleId"
+            :course-id="course.course_id"
+            :subject="`${course.title} for ${l.role}`"
+          />
+        </div>
         <ResultsExplanation :text="l.explanation" :status="l.status" :lines="2" />
       </div>
     </div>

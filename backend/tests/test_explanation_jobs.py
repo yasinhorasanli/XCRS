@@ -295,9 +295,13 @@ def test_knowledge_unit_endpoints(db, embedder):
         found = client.get("/api/v1/knowledge-units", params={"q": "python"}).json()["units"]
         assert found[0]["label"] == "Python" and len(found[0]["roles"]) >= 2
 
-        phrase = next(iter(embedder.vectors))
+        phrase, other = list(embedder.vectors)[:2]
         related_units = client.post("/api/v1/knowledge-units/related", json={"phrases": [phrase]}).json()["units"]
         assert related_units and all(u["because"] == phrase for u in related_units)
         assert all(u["label"].lower() != phrase.lower() for u in related_units)
+
+        # Disliking the same thing removes every suggestion: each is at least as close to the dislike.
+        body = {"phrases": [phrase], "avoid": [phrase], "exclude": [other]}
+        assert client.post("/api/v1/knowledge-units/related", json=body).json()["units"] == []
     finally:
         app.dependency_overrides.clear()
