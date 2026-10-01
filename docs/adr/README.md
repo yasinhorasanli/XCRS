@@ -28,12 +28,17 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0022](0022-threshold-fallback-for-unmatched-phrases.md) | Keep the 2.5σ threshold, with a fallback for phrases that match nothing | Accepted | 2026-09-30 |
 | [0023](0023-skill-board-input-and-linked-results.md) | Skill-board input with suggestions; results as linked roles and courses; thumbs feedback | Accepted | 2026-09-30 |
 | [0024](0024-frontend-nuxt-4-and-nuxt-ui-4.md) | Frontend on Nuxt 4 with Nuxt UI 4 and Tailwind CSS 4 | Accepted | 2026-10-01 |
+| [0025](0025-skills-catalog-from-onet-esco-with-llm-learning-paths.md) | A shared skills catalog from O*NET and ESCO, with LLM-drafted learning paths reviewed by a human | Accepted | 2026-10-01 |
+| [0026](0026-learning-resources-courses-videos-docs.md) | Learning resources: courses, YouTube and documentation in one model; free and paid; English first | Accepted | 2026-10-01 |
 
 ## Upcoming decisions
 
 - Re-run the explainer benchmark on the VMs before launch (ADR-0020)
 - Threshold constants re-tuned against the prototype once its comparison can run (ADR-0022)
-- (Later) Data quality: enriching user input, richer generated roadmaps, prerequisite graph and roadmap visualization
+- Catalog schema for ADR-0025/0026 (skills, roles, role_skills, prerequisites, learning_resources, resource_skills) and the migration from the research dataset
+- First resource providers, and where raw ingested data lives (ADR-0004, proposed)
+- Learning-path review workflow (where drafts are reviewed, by whom)
+- (Later) Enriching user input, roadmap visualization
 - Map suggestion chips to concept ids (ADR-0023), then normalize the request input (ADR-0013)
 - Chat/agent feature (LangGraph) and LLM tracing (LangSmith or self-hosted); see ADR-0019
 - CD (deployment to the VMs) and the cloud deployment target
