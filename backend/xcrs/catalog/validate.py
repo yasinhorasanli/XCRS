@@ -277,7 +277,7 @@ def bridge(cat: Catalog, source: RoleLevel, target: RoleLevel) -> dict[str, tupl
 # --- Distance between roles (ADR-0027): any move is possible; this measures how far it is -----------
 
 # Someone is taken to start a role at the highest level whose requirements they already cover this much.
-STARTING_COVERAGE = 0.6
+STARTING_COVERAGE = 0.55
 
 
 def skill_weights(cat: Catalog) -> dict[str, float]:
@@ -316,13 +316,14 @@ def _covered(
 class Move:
     role: str
     coverage: float  # of the role's first level
-    starting_level: str | None  # highest level covered >= STARTING_COVERAGE, if any
+    starting_level: str | None  # highest level, up to the source's, covered >= STARTING_COVERAGE, if any
     starting_coverage: float | None
     common: tuple[str, ...]  # target levels listed as common paths from the source
 
 
 def moves(cat: Catalog, source: RoleLevel) -> list[Move]:
-    """Every other role, nearest first, with the level the source would likely start at."""
+    """Every other role, nearest first, with the level the source would likely start at: the highest level
+    covered enough, never above the source's own level (changing roles doesn't promote anyone)."""
     weights = skill_weights(cat)
     result = []
     for rid, role in cat.roles.items():
@@ -330,6 +331,8 @@ def moves(cat: Catalog, source: RoleLevel) -> list[Move]:
             continue
         start, start_cov = None, None
         for level in role.levels:
+            if source.level in LADDER and LADDER.index(level) > LADDER.index(source.level):
+                break
             cov = coverage(cat, source, RoleLevel(rid, level), weights)
             if cov >= STARTING_COVERAGE:
                 start, start_cov = level, cov

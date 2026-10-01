@@ -1,7 +1,7 @@
 # ADR-0027: Career roles as specializations on one level ladder, connected by transitions
 
-- **Status:** Accepted. Delegated: the decider asked Claude to decide the career roles and roadmaps (2026-10-01); pending the decider's review of the catalog pull request.
-- **Changed during review (2026-10-01):** "any role to any other?" (PR #9) → any move is possible and measured; the listed transitions became common paths (decisions 4–5). "Missing roles" (PR #9) → 7 roles added and market titles recorded as aliases, with a measurable rule for which is which (decisions 1 and 7).
+- **Status:** Accepted. Delegated: the decider asked Claude to decide the career roles and roadmaps (2026-10-01); reviewed by the decider in PR #9 and merged.
+- **Changed during review (2026-10-01):** "any role to any other?" (PR #9) → any move is possible and measured; the listed transitions became common paths (decisions 4–5). "Missing roles" (PR #9) → 7 roles added and market titles recorded as aliases, with a measurable rule for which is which (decisions 1 and 7). The decider kept the alias comparison at mid level, and lowered the starting-level bar from 60% to 55% (decision 4).
 - **Date:** 2026-10-01
 - **Decider:** Muhammed Yasin Horasanli
 
@@ -46,7 +46,7 @@
 3. **Within a role, moving up a level is implied**; each roadmap level lists what it adds (senior adds system design, incident leadership, mentoring…).
 4. **Any role can move to any other.** For every pair the catalog computes:
    - **coverage:** the share of the target's requirements someone already meets, each skill weighted by how *distinctive* it is (rare across roles weighs more: dbt says "data engineer", Git doesn't) and by proficiency, partial proficiency counting partly;
-   - **starting level:** the highest target level at least 60% covered (a senior backend engineer typically starts data engineering at entry, Cloud at senior).
+   - **starting level:** the highest target level at least 55% covered, never above the person's current level, since changing roles doesn't promote anyone (a senior backend engineer typically starts data engineering at entry, Software Architect at senior). The bar was 60% in the draft; the decider lowered it to 55% because moves people commonly make at the same level (Backend → Full-Stack, Data Analyst → Analytics Engineer) fell just short of 60%.
 
    `xcrs catalog moves ROLE@LEVEL` ranks every other role; `xcrs catalog bridge` lists the skills to learn. Results match practice, e.g. from DevOps@senior: Cloud 100%, Platform 91%, SRE 79% (starting at mid); from Data Analyst@mid: Data Scientist 62% (starting at entry).
 5. **65 common paths** (e.g. Backend@senior → Software Architect@senior, "lead", typically 8+ years) record moves people really make, typed broaden / specialize / pivot / lead. They are evidence, not a whitelist. The validator flags a non-leadership common path whose target is in the far half of the source's ranked moves (today: Backend → Blockchain, Backend@senior → Platform, Data Engineer → ML Engineer), for a reviewer to confirm.
@@ -59,7 +59,7 @@
 - Years per level are guidance; real promotion depends on scope and impact.
 - Dropping UX Designer narrows the product to software engineering.
 - 30 roadmaps to keep current; the catalog workflow (ADR-0028) makes changes reviewable.
-- The distance is only as good as the roadmaps, and the weights, the 60% starting threshold and the 80% alias threshold are judgement calls; they are constants in `xcrs/catalog/validate.py`, to tune with real feedback.
+- The distance is only as good as the roadmaps, and the weights, the 55% starting threshold and the 80% alias threshold are judgement calls; they are constants in `xcrs/catalog/validate.py`, to tune with real feedback.
 
 ## Revisit when
 

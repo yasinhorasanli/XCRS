@@ -27,7 +27,7 @@ uv run xcrs catalog bridge backend-engineer@mid data-engineer@mid        # the s
 
 `validate` rejects: unknown skills or roles, prerequisite cycles, a skill asked for before its prerequisites (or at too little proficiency), proficiency that drops at a higher level, common paths inside one role or to levels a role doesn't have, and roles without a roadmap. It warns about skills no roadmap uses and about common paths whose target is far from the source.
 
-**Moving between roles:** any move is possible. `moves` ranks every other role by coverage (the share of its requirements already met, skills weighted by how distinctive they are) and estimates the starting level (highest level ≥ 60% covered). `common_paths` in `roles.yaml` lists the moves people commonly make, as evidence.
+**Moving between roles:** any move is possible. `moves` ranks every other role by coverage (the share of its requirements already met, skills weighted by how distinctive they are) and estimates the starting level (highest level ≥ 55% covered). `common_paths` in `roles.yaml` lists the moves people commonly make, as evidence.
 
 **Role or alias:** other market titles go in a role's `also_called`. A title can list `adds`, the skills it asks for on top of the role; `validate` rejects a title the role covers less than 80% of at mid level, because that is a different job and needs its own role and roadmap.
 

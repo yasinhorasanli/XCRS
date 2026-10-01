@@ -190,6 +190,14 @@ def test_starting_level_is_the_highest_level_already_mostly_covered():
     assert by_role["data-analyst"].starting_level is None  # would start from scratch
 
 
+def test_changing_roles_never_starts_above_the_current_level():
+    cat = model.load_catalog()
+    for source in [RoleLevel("devops-engineer", "senior"), RoleLevel("data-scientist", "mid")]:
+        for move in validate.moves(cat, source):
+            if move.starting_level:
+                assert model.LADDER.index(move.starting_level) <= model.LADDER.index(source.level), move
+
+
 def test_far_common_paths_are_flagged_for_review(tmp_path):
     roles = ROLES.replace(
         "roles:\n",

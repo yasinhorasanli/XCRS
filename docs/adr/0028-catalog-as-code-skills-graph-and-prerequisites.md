@@ -1,6 +1,6 @@
 # ADR-0028: Catalog as code: one skills graph, prerequisites as AND-of-OR with proficiency, reviewed as pull requests
 
-- **Status:** Accepted. Delegated: the decider asked Claude to decide the structure ("make the things make sense", 2026-10-01); pending the decider's review of the catalog pull request.
+- **Status:** Accepted. Delegated: the decider asked Claude to decide the structure ("make the things make sense", 2026-10-01); reviewed by the decider in PR #9 and merged.
 - **Date:** 2026-10-01
 - **Decider:** Muhammed Yasin Horasanli
 

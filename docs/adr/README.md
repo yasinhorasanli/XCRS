@@ -30,8 +30,8 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0024](0024-frontend-nuxt-4-and-nuxt-ui-4.md) | Frontend on Nuxt 4 with Nuxt UI 4 and Tailwind CSS 4 | Accepted | 2026-10-01 |
 | [0025](0025-skills-catalog-from-onet-esco-with-llm-learning-paths.md) | A shared skills catalog from O*NET and ESCO, with LLM-drafted learning paths reviewed by a human | Accepted | 2026-10-01 |
 | [0026](0026-learning-resources-courses-videos-docs.md) | Learning resources: courses, YouTube and documentation in one model; free and paid; English first | Accepted | 2026-10-01 |
-| [0027](0027-career-roles-levels-and-transitions.md) | Career roles as specializations on one level ladder, connected by transitions | Accepted (delegated) | 2026-10-01 |
-| [0028](0028-catalog-as-code-skills-graph-and-prerequisites.md) | Catalog as code: one skills graph, prerequisites as AND-of-OR with proficiency, reviewed as pull requests | Accepted (delegated) | 2026-10-01 |
+| [0027](0027-career-roles-levels-and-transitions.md) | Career roles as specializations on one level ladder, connected by transitions | Accepted (delegated, reviewed) | 2026-10-01 |
+| [0028](0028-catalog-as-code-skills-graph-and-prerequisites.md) | Catalog as code: one skills graph, prerequisites as AND-of-OR with proficiency, reviewed as pull requests | Accepted (delegated, reviewed) | 2026-10-01 |
 
 ## Upcoming decisions
 
