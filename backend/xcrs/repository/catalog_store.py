@@ -10,11 +10,12 @@ The caller owns the transaction.
 
 from collections.abc import Iterable, Sequence
 
-from sqlalchemy import Table, delete, literal_column, or_, select, tuple_
+from sqlalchemy import Table, delete, func, literal_column, or_, select, tuple_
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
 
 from xcrs.catalog.model import LADDER, Catalog, Requirement
+from xcrs.catalog.snapshot import cumulative_requirements
 from xcrs.db.models import (
     CareerRole,
     CareerRoleLevel,
@@ -30,6 +31,7 @@ from xcrs.db.models import (
     Skill,
     SkillPrerequisite,
 )
+from xcrs.domain.role_scoring import CatalogSnapshot, RoleSnapshot
 
 
 def _upsert(session: Session, table: Table, key: Sequence[str], rows: list[dict]) -> tuple[list, list]:
@@ -231,3 +233,97 @@ def skill_display_names(session: Session, slugs: Iterable[str]) -> dict[str, str
     if not slugs:
         return {}
     return dict(session.execute(select(Skill.slug, Skill.name).where(Skill.slug.in_(slugs))).all())
+
+
+_snapshots: dict[str, CatalogSnapshot] = {}
+
+
+def load_snapshot(session: Session) -> CatalogSnapshot:
+    """The imported catalog as the scoring engine sees it (xcrs.domain.role_scoring), cached per import
+    checksum: a new `xcrs catalog import` is picked up on the next request."""
+    checksum = last_import_checksum(session) or ""
+    if checksum in _snapshots:
+        return _snapshots[checksum]
+    skills = dict(session.execute(select(Skill.id, Skill.slug)).all())
+    names = dict(session.execute(select(Skill.slug, Skill.name)).all())
+    prerequisites: dict[str, dict[int, tuple[list[str], int]]] = {}
+    for row in session.execute(select(SkillPrerequisite)).scalars():
+        group = prerequisites.setdefault(skills[row.skill_id], {}).setdefault(row.group_no, ([], row.min_level))
+        group[0].append(skills[row.option_skill_id])
+    level_slugs = dict(session.execute(select(Level.id, Level.slug)).all())
+    items: dict[int, dict[int, tuple[list[str], int]]] = {}
+    for row in session.execute(select(RoadmapItem)).scalars():
+        item = items.setdefault(row.stage_id, {}).setdefault(row.item_no, ([], row.min_level))
+        item[0].append(skills[row.option_skill_id])
+    stages: dict[tuple[int, int], list] = {}
+    for st in session.execute(select(RoadmapStage).order_by(RoadmapStage.position)).scalars():
+        stage_items = [(tuple(sorted(o)), lv) for _, (o, lv) in sorted(items.get(st.id, {}).items())]
+        stages.setdefault((st.role_id, st.level_id), []).append((st.name, st.optional, stage_items))
+    role_rows = session.execute(
+        select(CareerRole.id, CareerRole.slug, CareerRole.name, Family.slug).join(Family).order_by(CareerRole.id)
+    ).all()
+    role_levels = session.execute(
+        select(CareerRoleLevel.role_id, CareerRoleLevel.level_id, CareerRoleLevel.title).order_by(
+            CareerRoleLevel.role_id, CareerRoleLevel.level_id
+        )
+    ).all()
+    roles = {}
+    for role_id, slug, name, family in role_rows:
+        levels = [(level_slugs[lv], title, lv) for rid, lv, title in role_levels if rid == role_id]
+        roles[slug] = RoleSnapshot(
+            id=slug,
+            name=name,
+            family=family,
+            levels=[lv for lv, _, _ in levels],
+            titles={lv: title for lv, title, _ in levels},
+            requirements=cumulative_requirements([(lv, stages.get((role_id, lid), [])) for lv, _, lid in levels]),
+        )
+    snapshot = CatalogSnapshot(
+        roles=roles,
+        skill_names=names,
+        prerequisites={s: [(tuple(o), lv) for _, (o, lv) in sorted(g.items())] for s, g in prerequisites.items()},
+    )
+    _snapshots.clear()
+    _snapshots[checksum] = snapshot
+    return snapshot
+
+
+def search_skills(session: Session, query: str, limit: int = 20) -> list[tuple[str, str, str]]:
+    """(slug, name, kind) of skills whose name, slug or O*NET names contain the query; names that start
+    with it first. For the board's picker."""
+    q = query.strip().lower()
+    if not q:
+        return []
+    like = f"%{q}%"
+    rows = session.execute(
+        select(Skill.slug, Skill.name, Skill.kind)
+        .where(
+            or_(
+                func.lower(Skill.name).like(like),
+                Skill.slug.like(like.replace(" ", "-")),
+                func.array_to_string(Skill.onet, " ").ilike(like),
+            )
+        )
+        .order_by(func.lower(Skill.name).like(f"{q}%").desc(), func.length(Skill.name), Skill.name)
+        .limit(limit)
+    ).all()
+    return [tuple(r) for r in rows]
+
+
+def skill_groups(session: Session, per_group: int = 12) -> list[tuple[str, str, list[tuple[str, str, str]]]]:
+    """Suggested skills per role family: skills required at the first level of the family's roles, ranked by
+    how many of its roles ask for them times how distinctive they are, so the board can offer a quick start."""
+    snapshot = load_snapshot(session)
+    families = dict(session.execute(select(Family.slug, Family.name).order_by(Family.id)).all())
+    kinds = dict(session.execute(select(Skill.slug, Skill.kind)).all())
+    groups = []
+    for family, name in families.items():
+        counts: dict[str, int] = {}
+        for role in (r for r in snapshot.roles.values() if r.family == family):
+            for req in role.requirements[role.levels[0]]:
+                for option in req.options:
+                    counts[option] = counts.get(option, 0) + 1
+        # Common in the family and telling of it: Git is everywhere, dbt says "data".
+        ranked = sorted(counts, key=lambda s: (-counts[s] * snapshot.weights[s] ** 2, s))[:per_group]
+        groups.append((family, name, [(s, snapshot.skill_names[s], kinds[s]) for s in ranked]))
+    return groups

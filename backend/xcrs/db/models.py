@@ -444,3 +444,35 @@ class PhraseMatch(Base):
     picked: Mapped[list[str]] = mapped_column(ARRAY(Text))  # what the LLM answered, for auditing
     llm_ms: Mapped[int | None]
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+
+# --- Engine v2 activity (ADR-0029, ADR-0031): JSONB input and result, as ADR-0013 ---------------------
+
+
+class RecommendationV2(Base):
+    __tablename__ = "recommendations_v2"
+    __table_args__ = (
+        CheckConstraint("status IN ('ok', 'insufficient_input')", name="recommendations_v2_status_check"),
+        Index("recommendations_v2_created_idx", "created_at"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, server_default=text("gen_random_uuid()"))
+    created_at: Mapped[datetime] = created_at()
+    catalog_checksum: Mapped[str] = mapped_column(Text)
+    algorithm_version: Mapped[str] = mapped_column(Text)
+    status: Mapped[str] = mapped_column(Text)
+    input: Mapped[dict] = mapped_column(JSONB)
+    result: Mapped[dict] = mapped_column(JSONB)
+
+
+class FeedbackV2(Base):
+    __tablename__ = "feedback_v2"
+    __table_args__ = (Index("feedback_v2_recommendation_idx", "recommendation_id"),)
+
+    id: Mapped[int] = mapped_column(BigInteger, Identity(always=True), primary_key=True)
+    recommendation_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey("recommendations_v2.id", ondelete="CASCADE"))
+    role: Mapped[str | None] = mapped_column(Text)
+    resource_id: Mapped[int | None] = mapped_column(BigInteger)
+    rating: Mapped[int | None] = mapped_column(SmallInteger)
+    comment: Mapped[str | None] = mapped_column(Text)
+    created_at: Mapped[datetime] = created_at()
