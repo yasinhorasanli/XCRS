@@ -166,3 +166,9 @@ CLAUDE.md
 # Editor swap files
 *.swp
 *.swo
+
+# Downloaded taxonomy releases (O*NET, ESCO); fetched by command, not committed
+/data/taxonomy/raw/
+
+# Database backups (scripts/db-backup.sh); never committed
+/backups/
