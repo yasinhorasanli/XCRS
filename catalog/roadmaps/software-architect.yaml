@@ -1,0 +1,24 @@
+# Roadmap for software-architect (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: software-architect
+levels:
+  senior:
+    title: Software Architect
+    summary: "Shapes system structure and technology choices across teams. Entered after years as a senior engineer; this level lists the whole profile."
+    stages:
+      - name: Engineering foundation
+        skills: [programming-fundamentals:3, "java|csharp|go|python:3", data-structures:2, algorithms:2, oop:3, design-patterns:3, clean-code:3, git:2, code-review:3, testing-fundamentals:2, unit-testing:2, integration-testing:2]
+      - name: Systems
+        skills: [computer-networking:2, http:2, operating-systems:1, concurrency:2, sql:2, relational-databases:2, database-design:3, caching:2, message-brokers:2, distributed-systems:3, rest-api-design:3, system-design:3, microservices:3, event-driven-architecture:2, domain-driven-design:3, architecture-patterns:3]
+      - name: Cloud and security
+        skills: [linux:1, cloud-fundamentals:2, cloud-networking:2, cloud-architecture:2, observability:2, web-security:2, authentication-authorization:2, api-security:2, security-fundamentals:2, threat-modeling:1]
+      - name: Leadership
+        skills: [architecture-decision-records:3, technical-writing:3, stakeholder-communication:3, technical-leadership:2, mentoring:2, product-thinking:2]
+  staff:
+    title: Principal Architect
+    summary: "Owns enterprise-wide architecture: platforms, data, cost and governance."
+    stages:
+      - name: Enterprise architecture
+        skills: [cloud-architecture:3, data-modeling:3, data-warehousing:2, data-architecture:2, finops:2, security-compliance:1]
+      - name: Direction
+        skills: [technical-leadership:4, stakeholder-communication:4, architecture-decision-records:4, agile-scrum:2, engineering-processes:2]

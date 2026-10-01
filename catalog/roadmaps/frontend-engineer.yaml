@@ -1,0 +1,40 @@
+# Roadmap for frontend-engineer (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: frontend-engineer
+levels:
+  entry:
+    summary: "Builds accessible, responsive UI components and pages from designs, with guidance."
+    stages:
+      - name: Web foundations
+        skills: [programming-fundamentals:2, html:2, css:2, javascript:2, typescript:2, git:2, computer-networking:1, http:1, browser-devtools:2]
+      - name: Building interfaces
+        skills: [dom:2, responsive-design:2, "react|vue|angular:2", frontend-build-tools:1, accessibility:1, ui-ux-basics:1]
+      - name: Quality
+        skills: [testing-fundamentals:1, unit-testing:1, code-review:1]
+  mid:
+    summary: "Owns features across the front end: application state, data fetching, testing and performance."
+    stages:
+      - name: Application architecture
+        skills: [http:2, rest-api-design:1, typescript:3, state-management:2, "nextjs|nuxt:2"]
+      - name: Quality and performance
+        skills: [testing-fundamentals:2, frontend-testing:2, e2e-testing:2, web-performance:2, accessibility:2, web-security:1, authentication-authorization:1]
+      - name: Delivery
+        skills: [ci-cd:1, tailwind-css:2, code-review:2]
+      - name: Good to know
+        optional: true
+        skills: [graphql:1, functional-programming:1]
+  senior:
+    summary: "Shapes front-end architecture and design systems, and mentors others."
+    stages:
+      - name: Architecture
+        skills: [css:3, frontend-architecture:2, design-systems:2, web-performance:3, accessibility:3, web-security:2]
+      - name: Leadership
+        skills: [mentoring:2, technical-writing:2, product-thinking:2, project-planning:2, code-review:3]
+      - name: Good to know
+        optional: true
+        skills: [react-native:1]
+  staff:
+    summary: "Sets front-end direction across products and teams."
+    stages:
+      - name: Direction
+        skills: [frontend-architecture:3, design-systems:3, architecture-decision-records:2, technical-leadership:3, stakeholder-communication:3]

@@ -1,0 +1,35 @@
+# Roadmap for cloud-engineer (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: cloud-engineer
+levels:
+  entry:
+    summary: "Provisions and operates cloud resources and networking, under guidance."
+    stages:
+      - name: Foundations
+        skills: [programming-fundamentals:1, linux:2, computer-networking:2, "python|shell-scripting:2", git:1]
+      - name: Cloud basics
+        skills: [cloud-fundamentals:2, "aws|azure|gcp:2", identity-access-management:1, cloud-networking:1]
+      - name: Good to know
+        optional: true
+        skills: [windows-server:1, powershell:1]
+  mid:
+    summary: "Owns cloud environments as code: networking, identity, serverless and cost."
+    stages:
+      - name: Infrastructure as code
+        skills: [git:2, infrastructure-as-code:2, terraform:2, ci-cd:1, docker:2, serverless:2]
+      - name: Operating the cloud
+        skills: [cloud-networking:2, identity-access-management:2, secrets-management:1, observability:1, finops:1]
+  senior:
+    summary: "Designs secure, resilient cloud environments and mentors others."
+    stages:
+      - name: Design
+        skills: [kubernetes:2, cloud-security:2, finops:2, incident-management:1, "aws|azure|gcp:3", terraform:3]
+      - name: Leadership
+        skills: [mentoring:2, technical-writing:2]
+  staff:
+    summary: "Sets cloud architecture direction across the organization."
+    stages:
+      - name: Systems thinking
+        skills: [programming-fundamentals:2, data-structures:1, caching:2, sql:2, relational-databases:2, database-design:2, operating-systems:1, concurrency:2, distributed-systems:2, system-design:2]
+      - name: Direction
+        skills: [cloud-architecture:3, architecture-decision-records:2, technical-leadership:3, stakeholder-communication:3]

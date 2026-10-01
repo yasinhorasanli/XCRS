@@ -1,0 +1,32 @@
+# Roadmap for ai-engineer (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: ai-engineer
+levels:
+  entry:
+    summary: "Builds LLM-powered features (prompts, retrieval, simple tools) behind APIs, under guidance."
+    stages:
+      - name: Engineering foundations
+        skills: [programming-fundamentals:2, python:2, git:2, computer-networking:1, http:2, rest-api-design:2, fastapi:2, sql:1]
+      - name: LLM basics
+        skills: [llm-fundamentals:2, prompt-engineering:2, embeddings-vector-search:1, llm-frameworks:1, testing-fundamentals:1, unit-testing:1]
+  mid:
+    summary: "Owns LLM features end to end: retrieval, agents, evaluation and deployment."
+    stages:
+      - name: LLM applications
+        skills: [embeddings-vector-search:2, vector-databases:2, rag:2, ai-agents:2, llm-frameworks:2, llm-evaluation:2]
+      - name: Shipping
+        skills: [linux:2, docker:1, ci-cd:1, observability:1, authentication-authorization:1, statistics:1]
+  senior:
+    summary: "Designs reliable, safe and cost-aware AI systems, and mentors others."
+    stages:
+      - name: Reliable AI systems
+        skills: [ai-guardrails:2, llm-evaluation:3, docker:2, llm-serving:2, statistics:2, linear-algebra:1, machine-learning-fundamentals:1, web-security:1]
+      - name: System design
+        skills: [data-structures:2, caching:2, relational-databases:2, sql:2, database-design:2, operating-systems:1, concurrency:2, computer-networking:2, distributed-systems:2, system-design:2]
+      - name: Leadership
+        skills: [mentoring:2, technical-writing:2, product-thinking:2]
+  staff:
+    summary: "Sets AI product and platform direction across teams."
+    stages:
+      - name: Direction
+        skills: [ai-agents:3, rag:3, ai-guardrails:3, cloud-fundamentals:2, finops:1, architecture-decision-records:2, product-thinking:3, technical-leadership:3, stakeholder-communication:3]

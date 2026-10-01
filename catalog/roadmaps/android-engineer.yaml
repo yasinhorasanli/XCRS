@@ -1,0 +1,37 @@
+# Roadmap for android-engineer (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: android-engineer
+levels:
+  entry:
+    summary: "Builds Android screens and features from designs, consuming APIs, with guidance."
+    stages:
+      - name: Foundations
+        skills: [programming-fundamentals:2, kotlin:2, oop:2, data-structures:1, git:2, debugging:2]
+      - name: Android basics
+        skills: [android-sdk:2, jetpack-compose:2, computer-networking:1, http:2, rest-api-design:1, ui-ux-basics:1]
+      - name: Quality
+        skills: [testing-fundamentals:1, unit-testing:1, code-review:1]
+  mid:
+    summary: "Owns app features end to end: architecture, async work, offline data, testing and releases."
+    stages:
+      - name: App architecture
+        skills: [design-patterns:2, mobile-architecture:2, operating-systems:1, concurrency:1, kotlin-coroutines:2, mobile-data-persistence:2, sql:1]
+      - name: Quality and release
+        skills: [unit-testing:2, mobile-testing:2, app-store-release:2, ci-cd:1]
+      - name: Security
+        skills: [authentication-authorization:1]
+  senior:
+    summary: "Designs app architecture and performance work, and mentors other mobile engineers."
+    stages:
+      - name: Architecture and performance
+        skills: [mobile-architecture:3, profiling:2, concurrency:2, web-security:1, secure-coding:2]
+      - name: Leadership
+        skills: [mentoring:2, technical-writing:2, product-thinking:2, code-review:3]
+      - name: Cross-platform, good to know
+        optional: true
+        skills: [dart:2, flutter:1]
+  staff:
+    summary: "Sets mobile direction across apps and teams."
+    stages:
+      - name: Direction
+        skills: [mobile-architecture:4, architecture-decision-records:2, technical-leadership:3, stakeholder-communication:3]

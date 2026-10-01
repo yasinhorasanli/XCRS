@@ -45,7 +45,8 @@ Browser ──► Nuxt 4 (skill board, linked results; proxies /api/v1/**)
 |---|---|---|
 | [`backend/`](backend) | Python 3.13, FastAPI, SQLAlchemy, Alembic, LangChain, uv | API, recommendation algorithm, explanation worker, admin CLI (`xcrs`), evaluation tools (`eval/`) |
 | [`frontend/`](frontend) | Nuxt 4, Nuxt UI 4, Tailwind 4 | Skill board and results pages |
-| [`data/research-2024/`](data/research-2024) | CSV, JSON | Seed catalog: 453 courses, 10 roadmaps (1,104 nodes) |
+| [`catalog/`](catalog) | YAML | **New catalog (in progress):** skills graph, 30 career roles with levels and paths between them, roadmaps; reviewed as pull requests |
+| [`data/research-2024/`](data/research-2024) | CSV, JSON | Legacy research catalog (453 courses, 10 roadmap.sh roadmaps) that serves the current recommender until the new catalog replaces it |
 | [`docs/`](docs) | Markdown | [Decision records](docs/adr/README.md), [architecture](docs/architecture.md), [schema](docs/schema.md), [measurements](docs/baseline.md) |
 
 ## Run it locally
