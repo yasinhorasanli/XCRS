@@ -1,3 +1,8 @@
+<script setup lang="ts">
+const route = useRoute()
+const isV2 = computed(() => route.path.startsWith('/v2'))
+</script>
+
 <template>
   <header class="sticky top-0 z-30 border-b border-slate-200 bg-white/85 backdrop-blur">
     <div class="mx-auto flex h-14 max-w-7xl items-center justify-between px-4">
@@ -6,6 +11,15 @@
         <span class="font-semibold tracking-tight">XCRS</span>
         <span class="hidden text-sm text-slate-400 sm:inline">Explainable course recommendations</span>
       </NuxtLink>
+      <div class="flex items-center gap-1">
+      <UButton
+        :to="isV2 ? '/' : '/v2'"
+        color="neutral"
+        variant="ghost"
+        size="sm"
+        :icon="isV2 ? 'i-heroicons-arrow-uturn-left' : 'i-heroicons-sparkles'"
+        :label="isV2 ? 'Classic' : 'New engine (beta)'"
+      />
       <UButton
         to="https://github.com/yasinhorasanli/XCRS"
         target="_blank"
@@ -15,6 +29,7 @@
         label="Source"
         size="sm"
       />
+      </div>
     </div>
   </header>
 </template>
