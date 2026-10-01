@@ -1,0 +1,36 @@
+# Roadmap for machine-learning-engineer (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: machine-learning-engineer
+levels:
+  entry:
+    summary: "Trains and evaluates models and helps ship them, under guidance."
+    stages:
+      - name: Foundations
+        skills: [programming-fundamentals:2, python:2, data-structures:2, git:2, linux:1, debugging:2, statistics:2, linear-algebra:1, pandas:2, numpy:2, sql:1]
+      - name: Machine learning
+        skills: [machine-learning-fundamentals:2, scikit-learn:2, model-evaluation:2, feature-engineering:1]
+      - name: Quality
+        skills: [testing-fundamentals:1, unit-testing:1, code-review:1]
+  mid:
+    summary: "Owns models from training to a served, tracked production version."
+    stages:
+      - name: Deep learning
+        skills: [calculus:1, deep-learning:2, pytorch:2, feature-engineering:2, experiment-tracking:2, ml-pipelines:2]
+      - name: Shipping models
+        skills: [computer-networking:1, http:2, rest-api-design:1, linux:2, docker:2, model-serving:2]
+  senior:
+    summary: "Builds advanced models and the systems around them, and mentors others."
+    stages:
+      - name: Advanced models
+        skills: [transformers:2, "nlp|computer-vision:2", fine-tuning:2, profiling:2]
+      - name: Production systems
+        skills: [observability:1, model-monitoring:2, computer-networking:2, operating-systems:1, concurrency:2, distributed-systems:1]
+      - name: Leadership
+        skills: [mentoring:2, technical-writing:2]
+  staff:
+    summary: "Sets ML system architecture and direction across teams."
+    stages:
+      - name: Architecture
+        skills: [llm-fundamentals:2, llm-serving:2, distributed-systems:2, sql:2, relational-databases:2, database-design:2, caching:2, system-design:2]
+      - name: Direction
+        skills: [architecture-decision-records:2, technical-leadership:3, stakeholder-communication:3]

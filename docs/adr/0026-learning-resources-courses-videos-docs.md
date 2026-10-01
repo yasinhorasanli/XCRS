@@ -27,7 +27,7 @@
 
 ## Decision
 
-1. **Courses, YouTube videos and playlists, and documentation/tutorials**, in one **`learning_resources`** model with a `type` (course, video, playlist, docs), `provider`, `url`, title, description, language, level, duration, `is_free`, price + currency, published / last-updated dates, quality signals, `fetched_at` / `last_checked_at`, and `is_active`. `courses` migrates into it.
+1. **Courses, YouTube videos and playlists, and documentation/tutorials**, in one **`learning_resources`** model with a `type` (course, video, playlist, docs), `provider`, `url`, title, description, language, level, duration, `is_free`, price + currency, published / last-updated dates, quality signals, `fetched_at` / `last_checked_at`, and `is_active`. `courses` migrates into it. *(Changed 2026-10-01 by [ADR-0028](0028-catalog-as-code-skills-graph-and-prerequisites.md): no 2024 Udemy data is carried over; resources are collected from zero, and the research courses stay in the legacy catalog until it is removed.)*
 2. **Resources link to skills** (`resource_skills`, tagged by an LLM from the resource's text with a confidence, reviewable), replacing concept → course matches built from roadmap-node text.
 3. **Free and paid, with a free filter**, and the aim of at least one free option per role.
 4. **English only for now**; `language` is stored so other languages can be added.

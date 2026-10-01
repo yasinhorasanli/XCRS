@@ -1,0 +1,30 @@
+# Roadmap for data-analyst (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: data-analyst
+levels:
+  entry:
+    summary: "Answers business questions with SQL, spreadsheets and dashboards, under guidance."
+    stages:
+      - name: Analysis foundations
+        skills: [spreadsheets:2, sql:2, statistics:2]
+      - name: Reporting
+        skills: [data-visualization:2, bi-tools:2, data-cleaning:1, exploratory-data-analysis:1, stakeholder-communication:1]
+  mid:
+    summary: "Owns analyses end to end, including Python, experiments and data models."
+    stages:
+      - name: Python for analysis
+        skills: [programming-fundamentals:1, python:2, pandas:2, jupyter:1, git:1]
+      - name: Deeper analysis
+        skills: [data-cleaning:2, exploratory-data-analysis:2, ab-testing:2, data-modeling:1, product-thinking:1]
+  senior:
+    summary: "Leads analytics for an area: experiments, metrics and data models, and mentors analysts."
+    stages:
+      - name: Analytics engineering
+        skills: [sql:3, data-modeling:2, data-warehousing:1, dbt:1]
+      - name: Influence
+        skills: [statistics:3, ab-testing:3, stakeholder-communication:3, product-thinking:2, mentoring:2, technical-writing:2]
+  staff:
+    summary: "Sets analytics direction and metrics strategy across the organization."
+    stages:
+      - name: Direction
+        skills: [ab-testing:4, product-thinking:3, stakeholder-communication:4, mentoring:3, technical-leadership:2, project-planning:2]

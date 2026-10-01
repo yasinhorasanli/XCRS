@@ -1,0 +1,33 @@
+# Roadmap for penetration-tester (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: penetration-tester
+levels:
+  entry:
+    summary: "Runs scoped tests with standard tools and writes up findings, under guidance."
+    stages:
+      - name: Foundations
+        skills: [programming-fundamentals:2, python:2, linux:2, shell-scripting:2, computer-networking:2, operating-systems:1, http:2]
+      - name: Offensive basics
+        skills: [security-fundamentals:2, web-security:2, network-security:2, security-testing-tools:2, penetration-testing:1]
+  mid:
+    summary: "Leads web, network and Active Directory assessments and reports findings clearly."
+    stages:
+      - name: Assessments
+        skills: [penetration-testing:2, cryptography-basics:1, active-directory:2, powershell:1, javascript:1, authentication-authorization:2, api-security:1]
+      - name: Cloud and reporting
+        skills: [cloud-fundamentals:2, cloud-networking:1, identity-access-management:2, cloud-security:1, technical-writing:2]
+  senior:
+    summary: "Handles complex engagements and exploit development, and mentors testers."
+    stages:
+      - name: Advanced offense
+        skills: [c:2, operating-systems:3, exploit-development:2, penetration-testing:3, threat-modeling:2]
+      - name: Good to know
+        optional: true
+        skills: [rust:1, regular-expressions:2]
+      - name: Leadership
+        skills: [mentoring:2, stakeholder-communication:2]
+  staff:
+    summary: "Sets offensive security strategy and red-team practice."
+    stages:
+      - name: Direction
+        skills: [exploit-development:3, penetration-testing:4, security-compliance:2, technical-leadership:3, stakeholder-communication:3]

@@ -52,6 +52,9 @@ jobs:
           uv run alembic upgrade head
       - name: ORM matches the migrations
         run: uv run alembic check
+      # Catalog-as-code (ADR-0028): roles, skills and roadmaps must pass validation to be merged.
+      - name: Catalog
+        run: uv run xcrs catalog validate
       # Registering the model needs no Ollama and lets the index-shape tests run (ADR-0009).
       # Tests that need catalog vectors (embedded by Ollama) skip themselves; the rest run.
       - name: Tests

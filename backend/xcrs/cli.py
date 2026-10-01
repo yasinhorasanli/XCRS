@@ -9,10 +9,12 @@ uv run xcrs search-courses "Docker"
 
 import argparse
 import json
+from pathlib import Path
 
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
 
+from xcrs.catalog import model, validate
 from xcrs.db.models import EmbeddingModel, RoadmapNode, Role
 from xcrs.db.session import new_session
 from xcrs.embeddings import embedder_for
@@ -89,6 +91,44 @@ def cmd_search_courses(args) -> None:
             print(f"  {doc.metadata['similarity']:.3f}  {doc.metadata['title']}")
 
 
+def cmd_catalog_validate(args) -> None:
+    """Check catalog/*.yaml (ADR-0028). Exit code 1 on errors, so CI blocks the pull request."""
+    report = validate.validate(model.load_catalog(args.dir))
+    for warning in report.warnings:
+        print(f"warning: {warning}")
+    for error in report.errors:
+        print(f"ERROR: {error}")
+    print(json.dumps(report.stats, indent=2))
+    print(f"{len(report.errors)} errors, {len(report.warnings)} warnings")
+    if not report.ok:
+        raise SystemExit(1)
+
+
+def cmd_catalog_path(args) -> None:
+    """A role's roadmap up to a level, stage by stage, for reviewing."""
+    cat = model.load_catalog(args.dir)
+    target = model.RoleLevel.parse(args.role_level)
+    for level in cat.roadmaps[target.role].levels:
+        print(f"== {target.role}@{level.level}: {level.summary}")
+        for stage in level.stages:
+            items = ", ".join(
+                f"{'|'.join(cat.skills[o].name for o in i.options)} ({model.PROFICIENCY[i.level]})" for i in stage.items
+            )
+            print(f"   {stage.name}: {items}")
+        if level.level == target.level:
+            break
+
+
+def cmd_catalog_bridge(args) -> None:
+    """Skills to learn for a move between roles (ADR-0027 transitions)."""
+    cat = model.load_catalog(args.dir)
+    gap = validate.bridge(cat, model.RoleLevel.parse(args.source), model.RoleLevel.parse(args.target))
+    for skill, (have, need) in sorted(gap.items(), key=lambda g: (-g[1][1] + g[1][0], g[0])):
+        name = " or ".join(cat.skills[o].name for o in skill.split("|"))
+        print(f"  {name:45} {model.PROFICIENCY.get(have, '-'):>8} -> {model.PROFICIENCY[need]}")
+    print(f"{len(gap)} skills to learn or deepen")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(prog="xcrs")
     sub = parser.add_subparsers(required=True)
@@ -118,6 +158,20 @@ def main() -> None:
     p.add_argument("--model", default="qwen3-embedding:0.6b")
     p.add_argument("--limit", type=int, default=10)
     p.set_defaults(func=cmd_search_courses)
+
+    catalog = sub.add_parser("catalog", help="the skills/roles/roadmaps catalog in catalog/ (ADR-0028)")
+    catalog_sub = catalog.add_subparsers(required=True)
+    p = catalog_sub.add_parser("validate", help="check the catalog; exit 1 on errors")
+    p.set_defaults(func=cmd_catalog_validate)
+    p = catalog_sub.add_parser("path", help="show a role's roadmap up to a level, e.g. backend-engineer@senior")
+    p.add_argument("role_level")
+    p.set_defaults(func=cmd_catalog_path)
+    p = catalog_sub.add_parser("bridge", help="skills needed to move between roles, e.g. A@senior B@senior")
+    p.add_argument("source")
+    p.add_argument("target")
+    p.set_defaults(func=cmd_catalog_bridge)
+    for p in (catalog_sub.choices["validate"], catalog_sub.choices["path"], catalog_sub.choices["bridge"]):
+        p.add_argument("--dir", type=Path, default=model.CATALOG_DIR, help="catalog folder (default: repo catalog/)")
 
     args = parser.parse_args()
     args.func(args)

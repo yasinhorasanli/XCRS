@@ -1,0 +1,32 @@
+# Roadmap for security-engineer (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: security-engineer
+levels:
+  entry:
+    summary: "Supports security reviews, scanning and monitoring, under guidance."
+    stages:
+      - name: Foundations
+        skills: [programming-fundamentals:2, python:2, linux:2, shell-scripting:1, git:1, computer-networking:2, operating-systems:1, http:2]
+      - name: Security basics
+        skills: [security-fundamentals:2, web-security:2, cryptography-basics:1, network-security:1, cloud-fundamentals:1, identity-access-management:1]
+  mid:
+    summary: "Owns security work for applications and cloud: threat models, scanning, detection and response."
+    stages:
+      - name: Application security
+        skills: [secure-coding:2, threat-modeling:2, vulnerability-management:2, authentication-authorization:2]
+      - name: Detection and response
+        skills: [observability:1, siem:2, security-incident-response:1]
+      - name: Cloud and pipelines
+        skills: [cloud-fundamentals:2, cloud-networking:1, identity-access-management:2, cloud-security:2, "aws|azure|gcp:1", git:2, ci-cd:2, devsecops:1]
+  senior:
+    summary: "Designs security architecture and programs, leads incidents and mentors others."
+    stages:
+      - name: Security architecture
+        skills: [threat-modeling:3, cloud-security:3, api-security:2, devsecops:2, network-security:2, cryptography-basics:2, active-directory:1, security-incident-response:2]
+      - name: Governance and leadership
+        skills: [security-compliance:2, mentoring:2, technical-writing:2, stakeholder-communication:2]
+  staff:
+    summary: "Sets security strategy and architecture across the organization."
+    stages:
+      - name: Direction
+        skills: [threat-modeling:4, security-compliance:3, architecture-decision-records:2, technical-leadership:3, stakeholder-communication:3]

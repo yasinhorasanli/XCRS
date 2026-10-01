@@ -1,0 +1,239 @@
+# Career roles, levels and transitions (ADR-0027).
+#
+# A role is a kind of work (Backend Engineer), not a seniority. Seniority is a level on one shared
+# ladder; each role's roadmap (roadmaps/<role>.yaml) says what each level adds. Moving up a level
+# inside a role is implied; moving to another role is a transition (below).
+#
+# onet: the O*NET-SOC occupation the role belongs to. O*NET occupations are broader than market
+# titles (DevOps, SRE and mobile all sit under 15-1252/15-1299.08), so several roles share one.
+# esco: filled in by the taxonomy import (ESCO occupation URI), then reviewed.
+
+levels:
+  entry:
+    name: Entry
+    typical_years: "0-2"
+    scope: Delivers well-defined tasks with guidance; learns the team's stack and practices.
+  mid:
+    name: Mid-level
+    typical_years: "2-5"
+    scope: Owns features end to end without close supervision; reviews peers' work.
+  senior:
+    name: Senior
+    typical_years: "5+"
+    scope: Owns systems, makes design trade-offs, mentors others and handles the hard incidents.
+  staff:
+    name: Staff / Principal
+    typical_years: "8+"
+    scope: Sets technical direction across teams; solves problems no single team owns.
+
+families:
+  product-engineering: Product engineering
+  quality-engineering: Quality engineering
+  infrastructure: Infrastructure and reliability
+  data-ai: Data and AI
+  security: Security
+  web3: Web3
+  leadership: Architecture and leadership
+
+roles:
+  frontend-engineer:
+    name: Frontend Engineer
+    family: product-engineering
+    summary: "Builds the user-facing parts of web applications: interfaces, interactivity, accessibility and performance in the browser."
+    onet: 15-1254.00
+    levels: [entry, mid, senior, staff]
+  backend-engineer:
+    name: Backend Engineer
+    family: product-engineering
+    summary: "Builds the server side of applications: APIs, business logic, data storage and integrations."
+    onet: 15-1252.00
+    levels: [entry, mid, senior, staff]
+  full-stack-engineer:
+    name: Full-Stack Engineer
+    family: product-engineering
+    summary: Builds features across front end and back end, from the database to the screen.
+    onet: 15-1254.00
+    levels: [entry, mid, senior, staff]
+  android-engineer:
+    name: Android Engineer
+    family: product-engineering
+    summary: Builds native Android apps in Kotlin.
+    onet: 15-1252.00
+    levels: [entry, mid, senior, staff]
+  ios-engineer:
+    name: iOS Engineer
+    family: product-engineering
+    summary: Builds native apps for iPhone and iPad in Swift.
+    onet: 15-1252.00
+    levels: [entry, mid, senior, staff]
+  game-developer:
+    name: Game Developer
+    family: product-engineering
+    summary: "Programs games: gameplay, engines, graphics and performance."
+    onet: 15-1255.01
+    levels: [entry, mid, senior, staff]
+  embedded-software-engineer:
+    name: Embedded Software Engineer
+    family: product-engineering
+    summary: Writes software for devices and microcontrollers that interacts directly with hardware.
+    onet: 15-1252.00
+    levels: [entry, mid, senior, staff]
+  qa-automation-engineer:
+    name: QA Automation Engineer
+    family: quality-engineering
+    summary: Ensures software quality through test strategy and automated tests across UI, API and performance (also called SDET).
+    onet: 15-1253.00
+    levels: [entry, mid, senior, staff]
+  devops-engineer:
+    name: DevOps Engineer
+    family: infrastructure
+    summary: Automates how software is built, tested, deployed and run, bridging development and operations.
+    onet: 15-1299.08
+    levels: [entry, mid, senior, staff]
+  cloud-engineer:
+    name: Cloud Engineer
+    family: infrastructure
+    summary: Designs, builds and operates infrastructure on cloud platforms.
+    onet: 15-1299.08
+    levels: [entry, mid, senior, staff]
+  site-reliability-engineer:
+    name: Site Reliability Engineer
+    family: infrastructure
+    summary: "Keeps production systems reliable with software engineering: SLOs, automation, incident response and capacity."
+    onet: 15-1299.08
+    levels: [mid, senior, staff]
+  platform-engineer:
+    name: Platform Engineer
+    family: infrastructure
+    summary: Builds internal platforms and golden paths so product teams can ship and run services on their own.
+    onet: 15-1299.08
+    levels: [mid, senior, staff]
+  data-analyst:
+    name: Data Analyst
+    family: data-ai
+    summary: Turns data into answers and dashboards that guide business decisions.
+    onet: 15-2051.01
+    levels: [entry, mid, senior, staff]
+  data-engineer:
+    name: Data Engineer
+    family: data-ai
+    summary: Builds the pipelines, warehouses and data models that make data reliable and usable.
+    onet: 15-1243.00
+    levels: [entry, mid, senior, staff]
+  data-scientist:
+    name: Data Scientist
+    family: data-ai
+    summary: Uses statistics and machine learning to explain data, run experiments and build predictive models.
+    onet: 15-2051.00
+    levels: [entry, mid, senior, staff]
+  machine-learning-engineer:
+    name: Machine Learning Engineer
+    family: data-ai
+    summary: Builds, trains and ships machine learning models into production systems.
+    onet: 15-2051.00
+    levels: [entry, mid, senior, staff]
+  mlops-engineer:
+    name: MLOps Engineer
+    family: data-ai
+    summary: Runs the infrastructure and pipelines that train, deploy and monitor ML models.
+    onet: 15-1299.08
+    levels: [mid, senior, staff]
+  ai-engineer:
+    name: AI Engineer
+    family: data-ai
+    summary: "Builds products on large language models: prompting, retrieval, agents, evaluation and guardrails."
+    onet: 15-1252.00
+    levels: [entry, mid, senior, staff]
+  security-engineer:
+    name: Security Engineer
+    family: security
+    summary: "Protects applications, cloud and infrastructure: secure design, detection, response and compliance."
+    onet: 15-1299.05
+    levels: [entry, mid, senior, staff]
+  penetration-tester:
+    name: Penetration Tester
+    family: security
+    summary: Finds and demonstrates vulnerabilities through authorized attacks on applications and networks.
+    onet: 15-1299.04
+    levels: [entry, mid, senior, staff]
+  blockchain-engineer:
+    name: Blockchain Engineer
+    family: web3
+    summary: Builds smart contracts and decentralized applications.
+    onet: 15-1299.07
+    levels: [entry, mid, senior, staff]
+  software-architect:
+    name: Software Architect
+    family: leadership
+    summary: "Shapes the structure of systems across teams: architecture, technology choices and long-term trade-offs. Usually reached after years as a senior engineer."
+    onet: 15-1299.08
+    levels: [senior, staff]
+  engineering-manager:
+    name: Engineering Manager
+    family: leadership
+    summary: "Leads an engineering team: people, delivery and process. The management track, entered from a senior engineering role."
+    onet: 11-3021.00
+    levels: [senior, staff]
+
+# Cross-role moves. kind: broaden (adjacent stack) · specialize (narrower, deeper) · pivot (different
+# field, bigger gap) · lead (architecture or management track). The skills to bridge come from the
+# difference between the two roadmaps; typical_years is total experience when the move is common.
+transitions:
+  - {from: frontend-engineer@mid, to: full-stack-engineer@mid, kind: broaden}
+  - {from: backend-engineer@mid, to: full-stack-engineer@mid, kind: broaden}
+  - {from: full-stack-engineer@mid, to: backend-engineer@mid, kind: specialize}
+  - {from: full-stack-engineer@mid, to: frontend-engineer@mid, kind: specialize}
+  - {from: android-engineer@mid, to: ios-engineer@mid, kind: broaden}
+  - {from: ios-engineer@mid, to: android-engineer@mid, kind: broaden}
+  - {from: frontend-engineer@mid, to: android-engineer@entry, kind: pivot}
+  - {from: backend-engineer@mid, to: data-engineer@mid, kind: pivot}
+  - {from: backend-engineer@mid, to: devops-engineer@mid, kind: pivot}
+  - {from: backend-engineer@mid, to: ai-engineer@mid, kind: specialize}
+  - {from: full-stack-engineer@mid, to: ai-engineer@mid, kind: specialize}
+  - {from: backend-engineer@mid, to: blockchain-engineer@mid, kind: pivot}
+  - {from: backend-engineer@senior, to: platform-engineer@senior, kind: specialize, typical_years: "5+"}
+  - {from: backend-engineer@senior, to: site-reliability-engineer@senior, kind: specialize, typical_years: "5+"}
+  - {from: backend-engineer@senior, to: security-engineer@mid, kind: pivot, typical_years: "5+"}
+  - {from: qa-automation-engineer@mid, to: backend-engineer@entry, kind: pivot}
+  - {from: qa-automation-engineer@mid, to: devops-engineer@entry, kind: pivot}
+  - {from: devops-engineer@mid, to: site-reliability-engineer@mid, kind: specialize}
+  - {from: devops-engineer@mid, to: platform-engineer@mid, kind: specialize}
+  - {from: devops-engineer@mid, to: cloud-engineer@mid, kind: broaden}
+  - {from: cloud-engineer@mid, to: devops-engineer@mid, kind: broaden}
+  - {from: devops-engineer@mid, to: mlops-engineer@mid, kind: specialize}
+  - {from: devops-engineer@senior, to: security-engineer@mid, kind: pivot, typical_years: "5+"}
+  - {from: cloud-engineer@senior, to: security-engineer@mid, kind: pivot, typical_years: "5+"}
+  - {from: site-reliability-engineer@senior, to: platform-engineer@senior, kind: broaden}
+  - {from: data-analyst@mid, to: data-scientist@entry, kind: pivot}
+  - {from: data-analyst@mid, to: data-engineer@entry, kind: pivot}
+  - {from: data-engineer@mid, to: machine-learning-engineer@mid, kind: pivot}
+  - {from: data-scientist@mid, to: machine-learning-engineer@mid, kind: specialize}
+  - {from: machine-learning-engineer@mid, to: mlops-engineer@mid, kind: specialize}
+  - {from: machine-learning-engineer@mid, to: ai-engineer@mid, kind: broaden}
+  - {from: security-engineer@mid, to: penetration-tester@mid, kind: specialize}
+  - {from: penetration-tester@mid, to: security-engineer@mid, kind: broaden}
+  - {from: backend-engineer@senior, to: software-architect@senior, kind: lead, typical_years: "8+"}
+  - {from: full-stack-engineer@senior, to: software-architect@senior, kind: lead, typical_years: "8+"}
+  - {from: platform-engineer@senior, to: software-architect@senior, kind: lead, typical_years: "8+"}
+  - {from: data-engineer@senior, to: software-architect@senior, kind: lead, typical_years: "8+"}
+  - {from: backend-engineer@senior, to: engineering-manager@senior, kind: lead, typical_years: "6+"}
+  - {from: frontend-engineer@senior, to: engineering-manager@senior, kind: lead, typical_years: "6+"}
+  - {from: full-stack-engineer@senior, to: engineering-manager@senior, kind: lead, typical_years: "6+"}
+  - {from: android-engineer@senior, to: engineering-manager@senior, kind: lead, typical_years: "6+"}
+  - {from: ios-engineer@senior, to: engineering-manager@senior, kind: lead, typical_years: "6+"}
+  - {from: data-engineer@senior, to: engineering-manager@senior, kind: lead, typical_years: "6+"}
+  - {from: devops-engineer@senior, to: engineering-manager@senior, kind: lead, typical_years: "6+"}
+
+# The research-2024 roles (roadmap.sh), kept as a separate legacy catalog until the new catalog
+# proves better; mapped to the closest new role for comparison.
+legacy_roles:
+  ai-data-scientist: data-scientist
+  android: android-engineer
+  backend: backend-engineer
+  blockchain: blockchain-engineer
+  devops: devops-engineer
+  frontend: frontend-engineer
+  full-stack: full-stack-engineer
+  game-developer: game-developer
+  qa: qa-automation-engineer
+  ux-design: null  # a design role, outside the software-engineering scope of the new catalog
