@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { CATEGORY_META } from '~/composables/useBoard'
+import { roleColor } from '~/composables/useRoleColors'
 import type { Category, RecommendationResponse } from '~/types/api'
 
 const route = useRoute()
@@ -33,7 +35,7 @@ onMounted(() => {
 })
 onBeforeUnmount(() => clearInterval(poller))
 
-useHead(() => ({ title: roles.value.length ? `${roles.value[0].role} and more · XCRS` : 'Your results · XCRS' }))
+useHead(() => ({ title: roles.value[0] ? `${roles.value[0].role} and more · XCRS` : 'Your results · XCRS' }))
 
 // --- Hover: a role lights up its courses and lines; a course lights up its roles ---
 const hover = ref<{ kind: 'role' | 'course'; id: number } | null>(null)
@@ -140,9 +142,9 @@ function editAnswers() {
 async function copyLink() {
   try {
     await navigator.clipboard.writeText(window.location.href)
-    toast.add({ title: 'Link copied', icon: 'i-heroicons-link', timeout: 2000 })
+    toast.add({ title: 'Link copied', icon: 'i-heroicons-link', duration: 2000 })
   } catch {
-    toast.add({ title: 'Could not copy the link', color: 'amber' })
+    toast.add({ title: 'Could not copy the link', color: 'warning' })
   }
 }
 
@@ -171,8 +173,8 @@ const inputSummary = computed(() =>
           </h1>
         </div>
         <div class="flex gap-2">
-          <UButton color="gray" variant="soft" icon="i-heroicons-pencil-square" label="Edit my answers" @click="editAnswers" />
-          <UButton color="gray" variant="ghost" icon="i-heroicons-link" label="Copy link" @click="copyLink" />
+          <UButton color="neutral" variant="soft" icon="i-heroicons-pencil-square" label="Edit my answers" @click="editAnswers" />
+          <UButton color="neutral" variant="ghost" icon="i-heroicons-link" label="Copy link" @click="copyLink" />
         </div>
       </div>
 
@@ -190,7 +192,7 @@ const inputSummary = computed(() =>
       </div>
 
       <!-- Nothing matched -->
-      <div v-if="!roles.length" class="mt-10 max-w-xl rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      <div v-if="!roles.length" class="mt-10 max-w-xl rounded-2xl bg-white p-6 shadow-xs ring-1 ring-slate-200">
         <h2 class="font-semibold">We couldn't connect your input to the career roadmaps</h2>
         <p class="mt-2 text-sm text-slate-600">
           Try naming specific technologies or subjects you've studied, like “Python”, “SQL”, “React” or “Linux”,

@@ -27,12 +27,12 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0021](0021-ci-on-github-actions.md) | Continuous integration on GitHub Actions; container images for backend and frontend | Accepted | 2026-09-30 |
 | [0022](0022-threshold-fallback-for-unmatched-phrases.md) | Keep the 2.5σ threshold, with a fallback for phrases that match nothing | Accepted | 2026-09-30 |
 | [0023](0023-skill-board-input-and-linked-results.md) | Skill-board input with suggestions; results as linked roles and courses; thumbs feedback | Accepted | 2026-09-30 |
+| [0024](0024-frontend-nuxt-4-and-nuxt-ui-4.md) | Frontend on Nuxt 4 with Nuxt UI 4 and Tailwind CSS 4 | Accepted | 2026-10-01 |
 
 ## Upcoming decisions
 
 - Re-run the explainer benchmark on the VMs before launch (ADR-0020)
 - Threshold constants re-tuned against the prototype once its comparison can run (ADR-0022)
-- Frontend framework
 - (Later) Data quality: enriching user input, richer generated roadmaps, prerequisite graph and roadmap visualization
 - Map suggestion chips to concept ids (ADR-0023), then normalize the request input (ADR-0013)
 - Chat/agent feature (LangGraph) and LLM tracing (LangSmith or self-hosted); see ADR-0019

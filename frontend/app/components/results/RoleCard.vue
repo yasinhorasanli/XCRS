@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { roleColor } from '~/composables/useRoleColors'
 import type { Role } from '~/types/api'
 
 const props = defineProps<{
@@ -15,7 +16,7 @@ const fitLabel = computed(() => (props.index === 0 ? 'Best match' : props.relati
 
 <template>
   <article
-    class="relative rounded-2xl bg-white p-5 shadow-sm ring-1 transition duration-200"
+    class="relative rounded-2xl bg-white p-5 shadow-xs ring-1 transition duration-200"
     :class="[
       state === 'highlighted' ? `ring-2 ${color.ring} shadow-md` : 'ring-slate-200',
       state === 'dimmed' ? 'opacity-40' : '',

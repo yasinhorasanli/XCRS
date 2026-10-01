@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { CATEGORY_META, MAX_LENGTH, MAX_PER_CATEGORY } from '~/composables/useBoard'
+import { DRAG_TYPE } from '~/composables/useXcrsApi'
 import type { Category, KnowledgeUnit } from '~/types/api'
 
 const props = defineProps<{ category: Category }>()
@@ -25,7 +27,7 @@ function onDrop(event: DragEvent) {
 function place(label: string) {
   const outcome = add(label, props.category)
   if (outcome === 'full') {
-    toast.add({ title: `“${meta.value.title}” is full`, description: `Up to ${MAX_PER_CATEGORY} items per box.`, color: 'amber' })
+    toast.add({ title: `“${meta.value.title}” is full`, description: `Up to ${MAX_PER_CATEGORY} items per box.`, color: 'warning' })
   }
 }
 
@@ -78,7 +80,7 @@ function onKeydown(event: KeyboardEvent) {
     highlighted.value = (highlighted.value - 1 + options.value.length) % options.value.length
   } else if (event.key === 'Enter') {
     event.preventDefault()
-    commit(open.value && highlighted.value >= 0 ? options.value[highlighted.value].label : undefined)
+    commit(open.value ? options.value[highlighted.value]?.label : undefined)
   } else if (event.key === 'Escape') {
     open.value = false
   } else if (event.key === 'Backspace' && !text.value && skills.value.length) {
@@ -93,7 +95,7 @@ function onBlur() {
 
 <template>
   <section
-    class="relative flex min-h-[11rem] flex-col rounded-2xl bg-white p-3 shadow-sm ring-1 transition"
+    class="relative flex min-h-[11rem] flex-col rounded-2xl bg-white p-3 shadow-xs ring-1 transition"
     :class="[
       isOver ? `ring-2 ${meta.ring} ${meta.soft} scale-[1.01]` : isActive ? `ring-2 ${meta.ring}` : 'ring-slate-200',
     ]"
@@ -137,7 +139,7 @@ function onBlur() {
         v-model="text"
         type="text"
         :maxlength="MAX_LENGTH * 3"
-        class="w-full rounded-lg border-0 bg-slate-50 px-3 py-2 text-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        class="w-full rounded-lg border-0 bg-slate-50 px-3 py-2 text-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-400"
         :placeholder="`Type and press Enter…`"
         :aria-label="`Add to ${meta.title}`"
         role="combobox"

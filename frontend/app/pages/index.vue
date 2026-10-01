@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { CATEGORIES, EXAMPLE_BOARD } from '~/composables/useBoard'
 const { board, total, clear, fill } = useBoard()
 const api = useXcrsApi()
 const toast = useToast()
@@ -13,7 +14,7 @@ async function submit() {
     toast.add({
       title: 'Could not get recommendations',
       description: 'The server did not answer. Please try again in a moment.',
-      color: 'red',
+      color: 'error',
       icon: 'i-heroicons-exclamation-triangle',
     })
   } finally {
@@ -47,8 +48,8 @@ async function submit() {
         </div>
 
         <div class="mt-5 flex flex-wrap items-center gap-2">
-          <UButton color="gray" variant="soft" icon="i-heroicons-sparkles" label="Try an example" @click="fill(EXAMPLE_BOARD)" />
-          <UButton v-if="total" color="gray" variant="ghost" icon="i-heroicons-trash" label="Clear all" @click="clear()" />
+          <UButton color="neutral" variant="soft" icon="i-heroicons-sparkles" label="Try an example" @click="fill(EXAMPLE_BOARD)" />
+          <UButton v-if="total" color="neutral" variant="ghost" icon="i-heroicons-trash" label="Clear all" @click="clear()" />
           <div class="ml-auto flex items-center gap-3">
             <span class="hidden text-sm text-slate-500 sm:inline">
               {{ total ? `${total} ${total === 1 ? 'skill' : 'skills'} added` : 'Add at least one skill' }}

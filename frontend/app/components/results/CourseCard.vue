@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { roleColor } from '~/composables/useRoleColors'
 import type { CourseGroup } from '~/composables/useResultView'
 
 const props = defineProps<{
@@ -15,7 +16,7 @@ const shared = computed(() => props.course.links.length > 1)
 
 <template>
   <article
-    class="rounded-2xl bg-white p-4 shadow-sm ring-1 transition duration-200"
+    class="rounded-2xl bg-white p-4 shadow-xs ring-1 transition duration-200"
     :class="[
       state === 'highlighted' ? 'shadow-md ring-2 ring-slate-400' : 'ring-slate-200',
       state === 'dimmed' ? 'opacity-40' : '',

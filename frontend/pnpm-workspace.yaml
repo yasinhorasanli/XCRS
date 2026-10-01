@@ -1,21 +1,24 @@
 # pnpm >= 10 reads settings from here; the "pnpm" field in package.json is ignored.
 
-# Security overrides pinning patched versions of transitive dependencies.
+# Security overrides for transitive dependencies of nuxt / @nuxt/ui that still resolve to
+# vulnerable versions (Dependabot / `pnpm audit`, 2026-10-01). Each selector matches only the
+# vulnerable range and lifts it to the patched release in the same major. Remove an entry once
+# `pnpm why <package>` shows upstream ranges have moved past it.
 overrides:
-  "vite": ">=5.1.7"
-  "undici": ">=5.28.4"
-  "tar": ">=6.2.1"
-  "ws": ">=8.17.1"
-  "@nuxt/devtools": ">=1.3.9"
-  "micromatch": ">=4.0.8"
-  "path-to-regexp": ">=6.3.0"
-  "rollup": ">=4.22.4"
-  "serve-static": ">=1.16.0"
-  "send": ">=0.19.0"
-  "cross-spawn": ">=7.0.5"
-  "braces": ">=3.0.3"
+  "@babel/core@<7.29.1": "^7.29.1"
+  "baseline-browser-mapping@<2.11.0": "^2.11.0"
+  "brace-expansion@>=2.0.0 <2.1.7": "^2.1.7"
+  "brace-expansion@>=5.0.0 <5.0.12": "^5.0.12"
+  "browserslist@<4.28.7": "^4.28.7"
+  "esbuild@>=0.27.3 <0.28.1": "^0.28.1"
+  "nanoid@<3.3.18": "^3.3.18"
+  "postcss@<8.5.23": "^8.5.23"
+  "postcss-selector-parser@>=7.1.0 <7.1.3": "^7.1.3"
+  "tar@<7.5.21": "^7.5.21"
+  "vite@>=8.0.0 <8.0.16": "^8.0.16"
 
 # Dependencies allowed to run install scripts (pnpm blocks them by default).
 allowBuilds:
   esbuild: true
   "@parcel/watcher": true
+  vue-demi: false  # Vue 2/3 shim; its postinstall is not needed on Vue 3

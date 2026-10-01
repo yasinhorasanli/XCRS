@@ -41,6 +41,7 @@ Decided so far:
 - **CI and containers:** GitHub Actions runs Ruff, migrations (up, down, up), `alembic check`, the tests against pgvector, the frontend build and both image builds. Backend and frontend have container images; `docker compose --profile app` runs the full stack. [ADR-0021](adr/0021-ci-on-github-actions.md)
 - **Phrase matching:** everything above mean + 2.5σ counts; a phrase with no match falls back to its near-best concepts above 1.5σ, so short generic phrases ("Python") aren't dropped. [ADR-0022](adr/0022-threshold-fallback-for-unmatched-phrases.md)
 - **Frontend:** a skill board (drag-and-drop or click chips into four categories, with curated, searched and "related to what you added" suggestions) and a results page that links each role to its courses with colored connectors; thumbs feedback per role and course. [ADR-0023](adr/0023-skill-board-input-and-linked-results.md)
+- **Frontend stack:** Nuxt 4 (`app/` layout), Nuxt UI 4 and Tailwind CSS 4; transitive vulnerabilities pinned to patched releases with pnpm overrides. [ADR-0024](adr/0024-frontend-nuxt-4-and-nuxt-ui-4.md)
 - **Explanation model and placement:** `qwen3.5:4b` on the CPU VM, `qwen3.5:9b` on GPUs; the embedding model runs on VM-A and the explanation LLM alone on VM-B, because on a shared CPU an explanation made embeddings ~200× slower. [ADR-0020](adr/0020-explanation-model-per-hardware.md)
 - **Evaluation tools** (`backend/eval/`): synthetic learner profiles, the explainer benchmark (speed and grounding per model and device) and the prototype-vs-new comparison with threshold diagnostics.
 
@@ -58,7 +59,7 @@ Browser ──► Frontend (TBD)
 ## New system (runs locally on the MacBook, natively or in containers; 2026-09-30)
 
 ```
-Browser ──► Nuxt 3 (skill board + linked results; the Nuxt server proxies /api/v1/** to the API)
+Browser ──► Nuxt 4 (skill board + linked results; the Nuxt server proxies /api/v1/** to the API)
                  │  POST once, then GET while explanations arrive; suggestions via /knowledge-units
                  ▼
          FastAPI  POST /api/v1/recommendations → roles + courses at once   (backend/xcrs/)
@@ -79,4 +80,4 @@ Offline: uv run xcrs import-research-data | register-model | embed-catalog
 
 The research prototype was removed from this branch on 2026-10-01 (it remains on `main` and in the Zenodo release); the seed data moved to `data/research-2024/`. First measurements are in [baseline.md](baseline.md#new-system-first-measurements).
 
-Still open: frontend framework, a chat/agent feature and LLM tracing, deployment (CD), and the cloud target. See [adr/README.md](adr/README.md#upcoming-decisions).
+Still open: a chat/agent feature and LLM tracing, deployment (CD), and the cloud target. See [adr/README.md](adr/README.md#upcoming-decisions).

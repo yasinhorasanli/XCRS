@@ -32,7 +32,7 @@ Roles: AI Data Scientist · Android Developer · Backend Developer · Blockchain
 ## Architecture
 
 ```
-Browser ──► Nuxt (skill board, linked results; proxies /api/v1/**)
+Browser ──► Nuxt 4 (skill board, linked results; proxies /api/v1/**)
                  │
                  ▼
          FastAPI /api/v1  ──  api/ → services/ → pure domain/ + adapters
@@ -44,7 +44,7 @@ Browser ──► Nuxt (skill board, linked results; proxies /api/v1/**)
 | Folder | Stack | Purpose |
 |---|---|---|
 | [`backend/`](backend) | Python 3.13, FastAPI, SQLAlchemy, Alembic, LangChain, uv | API, recommendation algorithm, explanation worker, admin CLI (`xcrs`), evaluation tools (`eval/`) |
-| [`frontend/`](frontend) | Nuxt, Nuxt UI, Tailwind | Skill board and results pages |
+| [`frontend/`](frontend) | Nuxt 4, Nuxt UI 4, Tailwind 4 | Skill board and results pages |
 | [`data/research-2024/`](data/research-2024) | CSV, JSON | Seed catalog: 453 courses, 10 roadmaps (1,104 nodes) |
 | [`docs/`](docs) | Markdown | [Decision records](docs/adr/README.md), [architecture](docs/architecture.md), [schema](docs/schema.md), [measurements](docs/baseline.md) |
 

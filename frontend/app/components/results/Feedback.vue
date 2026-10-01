@@ -25,8 +25,8 @@ async function send(rating: 1 | -1) {
     <template v-else>
       <span class="mr-1 hidden text-xs text-slate-400 sm:inline">Useful?</span>
       <UButton
-        size="2xs"
-        color="gray"
+        size="xs"
+        color="neutral"
         variant="ghost"
         icon="i-heroicons-hand-thumb-up"
         :aria-label="`${subject} is useful`"
@@ -34,8 +34,8 @@ async function send(rating: 1 | -1) {
         @click="send(1)"
       />
       <UButton
-        size="2xs"
-        color="gray"
+        size="xs"
+        color="neutral"
         variant="ghost"
         icon="i-heroicons-hand-thumb-down"
         :aria-label="`${subject} is not useful`"

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { CATEGORY_META } from '~/composables/useBoard'
+import { DRAG_TYPE } from '~/composables/useXcrsApi'
 import type { Category } from '~/types/api'
 
 const props = defineProps<{
@@ -43,7 +45,7 @@ function onDragStart(event: DragEvent) {
     v-else
     type="button"
     draggable="true"
-    class="inline-flex max-w-full cursor-grab flex-col items-start rounded-lg bg-white px-2.5 py-1 text-left text-sm shadow-sm ring-1 ring-inset ring-slate-200 transition hover:-translate-y-px hover:ring-indigo-300 hover:shadow active:cursor-grabbing"
+    class="inline-flex max-w-full cursor-grab flex-col items-start rounded-lg bg-white px-2.5 py-1 text-left text-sm shadow-xs ring-1 ring-inset ring-slate-200 transition hover:-translate-y-px hover:ring-indigo-300 hover:shadow active:cursor-grabbing"
     :class="placed ? 'opacity-60' : ''"
     :title="placed ? `Already in “${placedMeta!.title}”. Click to move it to the selected box.` : 'Click to add, or drag into a box'"
     @dragstart="onDragStart"

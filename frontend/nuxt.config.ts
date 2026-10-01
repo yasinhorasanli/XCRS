@@ -1,24 +1,20 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxt/ui', '@nuxtjs/tailwindcss'],
+  compatibilityDate: '2026-10-01',
+  modules: ['@nuxt/ui'],
   devtools: { enabled: false },
-  colorMode: { preference: 'light', fallback: 'light' },
   css: ['~/assets/css/main.css'],
+  // Light theme only (the design has no dark variant yet); fonts load through @nuxt/fonts (Inter, main.css).
+  ui: { colorMode: false },
   app: {
     head: {
       title: 'XCRS · Explainable course recommendations',
       htmlAttrs: { lang: 'en' },
       meta: [
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           name: 'description',
           content: 'Tell XCRS what you know and what you are curious about; get career roles and courses, with the reasons.',
         },
-      ],
-      link: [
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' },
       ],
     },
   },

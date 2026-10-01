@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { CATEGORIES, CATEGORY_META } from '~/composables/useBoard'
 import type { KnowledgeUnit, KnowledgeUnitGroup, RelatedUnit } from '~/types/api'
 
 const { all, active, add, categoryOf } = useBoard()
@@ -70,7 +71,7 @@ watch(query, (q) => {
 </script>
 
 <template>
-  <aside class="flex flex-col rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
+  <aside class="flex flex-col rounded-2xl bg-white shadow-xs ring-1 ring-slate-200">
     <div class="border-b border-slate-100 p-4">
       <h2 class="font-semibold">Suggestions</h2>
       <p class="mt-0.5 text-xs text-slate-500">Drag a skill into a box, or click it to add it to:</p>
@@ -91,14 +92,13 @@ watch(query, (q) => {
       </div>
       <UInput
         v-model="query"
-        class="mt-3"
+        class="mt-3 w-full"
         icon="i-heroicons-magnifying-glass-20-solid"
         placeholder="Search skills, tools, concepts…"
         aria-label="Search suggestions"
-        :ui="{ icon: { trailing: { pointer: '' } } }"
       >
         <template #trailing>
-          <UButton v-show="query" color="gray" variant="link" icon="i-heroicons-x-mark-20-solid" :padded="false" aria-label="Clear search" @click="query = ''" />
+          <UButton v-show="query" color="neutral" variant="link" icon="i-heroicons-x-mark-20-solid" aria-label="Clear search" @click="query = ''" />
         </template>
       </UInput>
     </div>

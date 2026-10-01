@@ -32,4 +32,4 @@ export const ROLE_COLORS = [
 
 export type RoleColor = (typeof ROLE_COLORS)[number]
 
-export const roleColor = (index: number): RoleColor => ROLE_COLORS[index % ROLE_COLORS.length]
+export const roleColor = (index: number): RoleColor => ROLE_COLORS[index % ROLE_COLORS.length]!
