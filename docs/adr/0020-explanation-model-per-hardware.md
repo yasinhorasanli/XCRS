@@ -17,6 +17,8 @@ Explanations run in a background worker ([ADR-0018](0018-decoupled-per-role-expl
 | `qwen3.5:4b` / GPU | 40 | 11.0 | 16.4 | 214 | 24.5 | 392 | 68% | 73% |
 | `qwen3.5:4b` / CPU | 15 | **33.6** | 47.3 | 201 | 10.8 | 62 | 73% | 73% |
 
+*(Corrected 2026-10-01: the prefill column is unreliable. Ollama reuses the cached system prompt between calls, so its prompt timings don't measure a cold prefill; single runs showed over 5,000 tok/s. No part of the decision used it; the benchmark no longer reports it. Readable summary: `backend/eval/results/bench-explainer-20260930-0237-MacBook-Pro.md`.)*
+
 "Clean" means no automatic grounding flag (invented curiosity, a matched concept attributed to the learner, unknown or missing courses, over-length, mentions of scores). The flags are heuristics that mark explanations to read, not proof. No run produced invalid JSON or failed.
 
 **Request-path embedding latency while an explanation is generating on the same machine** (10 phrases, `qwen3-embedding:0.6b`):

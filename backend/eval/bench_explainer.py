@@ -6,16 +6,25 @@
 Uses Ollama's native API: it reports token timings and can force CPU inference (num_gpu=0), which the
 OpenAI-compatible endpoint can't. The prompt and the output schema are the objects the app uses
 (xcrs.explain), so the results carry over. Explanation inputs come from the real algorithm run on the
-profiles in eval/profiles.json. Results: printed as Markdown and saved to eval/results/.
+profiles in eval/profiles.json.
+
+Results go to eval/results/bench-explainer-<date>-<host>.json (every run) and a .md summary next to it.
+Both are rewritten after each model/device phase, so an interrupted run keeps the finished phases.
+    uv run python eval/bench_explainer.py --summarize eval/results/<file>.json   # (re)write the .md only
+
+Prefill speed is not reported: Ollama reuses the cached system prompt between calls, so its prompt
+timings don't measure a cold prefill (the raw prompt_eval_s per run is kept in the JSON).
 """
 
 import argparse
 import json
 import os
 import statistics
+import sys
 import threading
 import time
 from datetime import UTC, datetime
+from pathlib import Path
 
 import httpx
 from common import RESULTS_DIR, grounding_flags, load_profiles, to_user_input
@@ -114,11 +123,64 @@ def summarize(runs: list[dict]) -> dict:
         "p90_s": round(sorted(totals)[int(0.9 * (len(totals) - 1))], 1) if totals else None,
         "prompt_tokens": round(statistics.median(r["prompt_tokens"] for r in ok)) if ok else None,
         "output_tokens": round(statistics.median(r["output_tokens"] for r in ok)) if ok else None,
-        "prefill_tok_s": round(statistics.median(r["prefill_tok_s"] for r in ok), 1) if ok else None,
         "decode_tok_s": round(statistics.median(r["decode_tok_s"] for r in ok), 1) if ok else None,
         "clean_pct": round(100 * sum(not r["flags"] for r in ok) / len(ok)) if ok else None,
         "flags": sorted({f.split(":")[0] for r in ok for f in r["flags"]}),
     }
+
+
+def markdown_summary(report: dict) -> str:
+    lines = [
+        "# Explainer benchmark",
+        "",
+        f"- Date: {report['date']}; host: {report['host']}; CPU threads: {report['threads']}"
+        + (f"; prompt: {report['prompt_version']}" if "prompt_version" in report else ""),
+        "- Inputs: explanation contexts from the algorithm on `eval/profiles.json`; the app's prompt and schema.",
+        "- Clean = no automatic grounding flag (heuristics that mark explanations to read, not proof).",
+        "- Prefill speed is not reported: Ollama's prompt cache makes its prompt timings unreliable.",
+        "",
+        "| Model / device | Cases | Errors | Median s/role | p90 s | Prompt tok | Output tok | Decode tok/s | Clean % "
+        "| Flags | Model load s |",
+        "|---|---|---|---|---|---|---|---|---|---|---|",
+    ]
+    for key, value in report["runs"].items():
+        s = value["summary"]
+        lines.append(
+            f"| {key} | {s['cases']} | {s['errors']} | {s['median_s']} | {s['p90_s']} | {s['prompt_tokens']} "
+            f"| {s['output_tokens']} | {s['decode_tok_s']} | {s['clean_pct']} | {', '.join(s['flags']) or '-'} "
+            f"| {s.get('load_s', '-')} |"
+        )
+    lines += [
+        "",
+        "## Request-path embedding while an explanation generates on the same device",
+        "",
+        "| Model / device | Idle ms | During generation ms |",
+        "|---|---|---|",
+    ]
+    for key, value in report["runs"].items():
+        c = value["summary"].get("contention")
+        if c:
+            during = f"{c['during_llm_ms']:.0f}" if c["during_llm_ms"] else "n/a"
+            lines.append(f"| {key} | {c['idle_ms']:.0f} | {during} |")
+    lines += ["", "## Flagged explanations", ""]
+    for key, value in report["runs"].items():
+        flagged = [r for r in value["runs"] if r.get("flags")]
+        if not flagged:
+            continue
+        lines += [f"### {key}", ""]
+        for r in flagged:
+            output = r.get("output")
+            text = output.get("role_explanation", "") if isinstance(output, dict) else str(output)[:200]
+            lines.append(f"- **{r['profile']} / {r['role']}**: `{', '.join(r['flags'])}`. {text}")
+        lines.append("")
+    return "\n".join(lines)
+
+
+def save(report: dict, path: Path) -> None:
+    """Rewrite the JSON (every run) and its Markdown summary."""
+    path.parent.mkdir(exist_ok=True)
+    path.write_text(json.dumps(report, indent=2, ensure_ascii=False))
+    path.with_suffix(".md").write_text(markdown_summary(report))
 
 
 def main() -> None:
@@ -129,12 +191,26 @@ def main() -> None:
     parser.add_argument("--threads", type=int, default=os.cpu_count())
     parser.add_argument("--max-roles", type=int, default=3, help="roles per profile on GPU")
     parser.add_argument("--cpu-max-roles", type=int, default=1, help="roles per profile on CPU (slow)")
+    parser.add_argument("--summarize", type=Path, help="only (re)write the .md summary of an existing results file")
     args = parser.parse_args()
 
+    if args.summarize:
+        args.summarize.with_suffix(".md").write_text(markdown_summary(json.loads(args.summarize.read_text())))
+        print(f"Wrote {args.summarize.with_suffix('.md')}")
+        return
+
+    sys.stdout.reconfigure(line_buffering=True)  # progress shows up in a redirected log as it happens
     cases = build_cases(max(args.max_roles, args.cpu_max_roles))
     print(f"{len(cases)} explanation inputs from {len(load_profiles())} profiles; prompt {PROMPT_VERSION}")
     client = httpx.Client(base_url=args.ollama, timeout=900)
-    report = {"date": datetime.now(UTC).isoformat(), "host": os.uname().nodename, "threads": args.threads, "runs": {}}
+    report = {
+        "date": datetime.now(UTC).isoformat(),
+        "host": os.uname().nodename,
+        "threads": args.threads,
+        "prompt_version": PROMPT_VERSION,
+        "runs": {},
+    }
+    path = RESULTS_DIR / f"bench-explainer-{datetime.now(UTC):%Y%m%d-%H%M}-{os.uname().nodename.split('.')[0]}.json"
 
     for model in args.models:
         for device in args.devices:
@@ -151,8 +227,7 @@ def main() -> None:
                         "total_s": r["total_duration"] / NS,
                         "prompt_tokens": r.get("prompt_eval_count", 0),
                         "output_tokens": r["eval_count"],
-                        "prefill_tok_s": r.get("prompt_eval_count", 0)
-                        / max(r.get("prompt_eval_duration", 1) / NS, 1e-9),
+                        "prompt_eval_s": r.get("prompt_eval_duration", 0) / NS,  # cache-affected, see docstring
                         "decode_tok_s": r["eval_count"] / (r["eval_duration"] / NS),
                     }
                     if r["eval_count"] >= MAX_TOKENS:
@@ -172,25 +247,10 @@ def main() -> None:
             summary["load_s"] = round(warm.get("load_duration", 0) / NS, 1)
             summary["contention"] = contention(client, model, device, args.threads, selected[0][2])
             report["runs"][key] = {"summary": summary, "runs": runs}
+            save(report, path)  # after every phase: an interrupted run keeps what finished
+            print(f"Saved {key} to {path.relative_to(RESULTS_DIR.parent.parent)}")
 
-    RESULTS_DIR.mkdir(exist_ok=True)
-    path = RESULTS_DIR / f"bench-explainer-{datetime.now(UTC):%Y%m%d-%H%M}-{os.uname().nodename.split('.')[0]}.json"
-    path.write_text(json.dumps(report, indent=2, ensure_ascii=False))
-
-    print(
-        "\n| Model / device | Cases | Median s/role | p90 s | Prompt tok | Output tok | Prefill tok/s "
-        "| Decode tok/s | Clean % | Flags | Embed idle → during LLM (ms) |"
-    )
-    print("|---|---|---|---|---|---|---|---|---|---|---|")
-    for key, value in report["runs"].items():
-        s, c = value["summary"], value["summary"]["contention"]
-        during = f"{c['during_llm_ms']:.0f}" if c["during_llm_ms"] else "n/a"
-        print(
-            f"| {key} | {s['cases']} | {s['median_s']} | {s['p90_s']} | {s['prompt_tokens']} | {s['output_tokens']} "
-            f"| {s['prefill_tok_s']} | {s['decode_tok_s']} | {s['clean_pct']} | {', '.join(s['flags']) or '-'} "
-            f"| {c['idle_ms']:.0f} → {during} |"
-        )
-    print(f"\nSaved {path.relative_to(RESULTS_DIR.parent.parent)}")
+    print("\n" + markdown_summary(report))
 
 
 if __name__ == "__main__":
