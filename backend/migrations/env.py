@@ -26,6 +26,14 @@ target_metadata = Base.metadata
 UNMODELLED_INDEXES = {"embedding_models_one_active_idx"}
 
 
+# Schemas Alembic compares: the default one and the catalog (ADR-0028).
+SCHEMAS = {None, "public", "catalog"}
+
+
+def include_name(name, type_, parent_names):
+    return name in SCHEMAS if type_ == "schema" else True
+
+
 def include_object(obj, name, type_, reflected, compare_to):
     return not (type_ == "index" and reflected and (name in UNMODELLED_INDEXES or name.endswith("_hnsw")))
 
@@ -74,7 +82,13 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(connection=connection, target_metadata=target_metadata, include_object=include_object)
+        context.configure(
+            connection=connection,
+            target_metadata=target_metadata,
+            include_object=include_object,
+            include_schemas=True,
+            include_name=include_name,
+        )
 
         with context.begin_transaction():
             context.run_migrations()

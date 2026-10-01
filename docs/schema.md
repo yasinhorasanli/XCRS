@@ -1,6 +1,6 @@
 # Database schema
 
-The PostgreSQL + pgvector schema, consolidated from ADRs [0003](adr/0003-postgresql-pgvector-primary-store.md) and [0008](adr/0008-embedding-tables-per-entity.md)–[0013](adr/0013-user-activity-hybrid-then-normalized.md). This is the blueprint for the initial Alembic migration. When a decision changes, the ADR changes first and this document follows.
+The PostgreSQL + pgvector schema, consolidated from ADRs [0003](adr/0003-postgresql-pgvector-primary-store.md) and [0008](adr/0008-embedding-tables-per-entity.md)–[0013](adr/0013-user-activity-hybrid-then-normalized.md). This is the blueprint for the initial Alembic migration. When a decision changes, the ADR changes first and this document follows. The new catalog lives in its own `catalog` schema ([below](#catalog-v2-schema-catalog-adr-0028)); the tables above it are the legacy research catalog and the activity data.
 
 ## Overview
 
@@ -169,6 +169,50 @@ Primary key: `(request_id, role_id, rank)`. Foreign key: `(request_id, role_id)`
 `id` bigint PK · `request_id` → `recommendation_requests` ON DELETE CASCADE · `role_id` NULL · `course_id` NULL · `rating` smallint NULL (format decided with the frontend) · `comment` text NULL · `created_at`.
 Both target columns NULL means feedback on the request as a whole (what the Google Form collected).
 
+## Catalog v2 (schema `catalog`, ADR-0028)
+
+Loaded from `catalog/*.yaml` by `xcrs catalog import` (migration `0005`). The YAML is the source of truth; the database is a projection of it that the engine and future tables can join against.
+
+```mermaid
+erDiagram
+    families ||--o{ roles : groups
+    roles ||--o{ role_titles : "also called"
+    role_titles ||--o{ role_title_skills : adds
+    roles ||--o{ role_levels : "has level"
+    levels ||--o{ role_levels : ""
+    role_levels ||--o{ roadmap_stages : "roadmap of"
+    roadmap_stages ||--o{ roadmap_items : requires
+    skills ||--o{ roadmap_items : "option"
+    skills ||--o{ skill_prerequisites : "requires"
+    skills ||--o{ skill_prerequisites : "option"
+    role_levels ||--o{ common_paths : "from / to"
+```
+
+| Table | Key | What it holds |
+|---|---|---|
+| `levels` | `id` smallint = ladder position (1 entry … 4 staff), `slug` UNIQUE | name, typical years, scope |
+| `families` | `id`, `slug` UNIQUE | role families |
+| `skills` | `id` int, `slug` UNIQUE | name, `kind` (CHECK), description, `onet` text[] (O\*NET names), created/updated |
+| `skill_prerequisites` | (`skill_id`, `group_no`, `option_skill_id`) | `min_level` 1–4. Rows sharing `group_no` are alternatives (OR); groups are all required (AND) |
+| `roles` | `id` smallint, `slug` UNIQUE | name, family, summary, `onet_code` (CHECK format), `esco_uri` (filled by the taxonomy import) |
+| `role_titles` | `id`, `title` UNIQUE | other market titles of a role (`also_called`) |
+| `role_title_skills` | (`title_id`, `item_no`, `option_skill_id`) | the skills a title adds on top of its role |
+| `role_levels` | (`role_id`, `level_id`) | the levels a role has; level title (e.g. "Principal Scientist") and summary |
+| `roadmap_stages` | `id`; UNIQUE (`role_id`, `level_id`, `position`) | stage name, `optional` |
+| `roadmap_items` | (`stage_id`, `item_no`, `option_skill_id`) | `min_level`; rows sharing `item_no` are one requirement with alternatives (`python\|go:2`) |
+| `common_paths` | `id`; UNIQUE (from role/level, to role/level) | `kind` (CHECK), typical years |
+| `legacy_roles` | `legacy_slug` | research role → new role (NULL = no counterpart) |
+| `imports` | `id` | git commit, dirty flag, SHA-256 of the YAML, validation stats, what changed |
+
+**Import rules:**
+- One transaction, and only a catalog that passes `xcrs catalog validate`. It's skipped when the YAML checksum equals the last import's; `--force` imports anyway.
+- **Entities** (levels, families, skills, roles, role levels) are upserted by natural key, so their ids stay stable for future references (resources, activity). Rows whose values didn't change aren't touched.
+- **Parts** (prerequisites, titles, stages, items, common paths, legacy map) are replaced on every import: nothing outside the catalog refers to them.
+- **Entities removed from the YAML are deleted.** If something outside the catalog still refers to one, the delete fails and the whole import rolls back, rather than silently losing data.
+- Each import records what was added, updated and removed (`imports.changes`).
+
+Resource tables (`learning_resources`, resource–skill links, series; ADR-0026) are added with resource ingestion, once the providers and the raw store are decided.
+
 ## Size today
 
 | Table | Rows (1 model) |
@@ -179,6 +223,10 @@ Both target columns NULL means feedback on the request as a whole (what the Goog
 | node_embeddings (concepts only) | 869 |
 | course_embeddings | 453 |
 | concept_course_matches | ≤ 17,380 (869 × 20) |
+| catalog.skills / skill_prerequisites | 257 / 358 |
+| catalog.roles / role_levels / role_titles | 30 / 110 / 11 |
+| catalog.roadmap_stages / roadmap_items | 247 / 1,412 (rows per option) |
+| catalog.common_paths | 65 |
 
 Vector storage is ~5 MB at 1,024 dimensions. The whole database is tiny; the design targets growth, not the current size.
 

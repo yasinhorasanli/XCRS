@@ -239,3 +239,179 @@ class Feedback(Base):
     rating: Mapped[int | None] = mapped_column(SmallInteger)
     comment: Mapped[str | None] = mapped_column(Text)
     created_at: Mapped[datetime] = created_at()
+
+
+# --- Catalog v2 (schema "catalog", ADR-0028; loaded from catalog/*.yaml by `xcrs catalog import`) -------
+
+CATALOG = "catalog"
+
+
+class CatalogImport(Base):
+    __tablename__ = "imports"
+    __table_args__ = ({"schema": CATALOG},)
+
+    id: Mapped[int] = mapped_column(BigInteger, Identity(always=True), primary_key=True)
+    git_commit: Mapped[str | None] = mapped_column(Text)
+    git_dirty: Mapped[bool]
+    checksum: Mapped[str] = mapped_column(Text)
+    stats: Mapped[dict] = mapped_column(JSONB)
+    changes: Mapped[dict] = mapped_column(JSONB)
+    imported_at: Mapped[datetime] = created_at()
+
+
+class Level(Base):
+    __tablename__ = "levels"
+    __table_args__ = ({"schema": CATALOG},)
+
+    id: Mapped[int] = mapped_column(SmallInteger, primary_key=True, autoincrement=False)  # position on the ladder
+    slug: Mapped[str] = mapped_column(Text, unique=True)
+    name: Mapped[str] = mapped_column(Text)
+    typical_years: Mapped[str] = mapped_column(Text)
+    scope: Mapped[str] = mapped_column(Text)
+
+
+class Family(Base):
+    __tablename__ = "families"
+    __table_args__ = ({"schema": CATALOG},)
+
+    id: Mapped[int] = mapped_column(SmallInteger, Identity(always=True), primary_key=True)
+    slug: Mapped[str] = mapped_column(Text, unique=True)
+    name: Mapped[str] = mapped_column(Text)
+
+
+class Skill(Base):
+    __tablename__ = "skills"
+    __table_args__ = ({"schema": CATALOG},)
+
+    id: Mapped[int] = mapped_column(Identity(always=True), primary_key=True)
+    slug: Mapped[str] = mapped_column(Text, unique=True)
+    name: Mapped[str] = mapped_column(Text)
+    kind: Mapped[str] = mapped_column(Text)
+    description: Mapped[str] = mapped_column(Text)
+    onet: Mapped[list[str]] = mapped_column(ARRAY(Text), server_default="{}")
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+
+class SkillPrerequisite(Base):
+    """One option of one AND-group: rows with the same (skill_id, group_no) are alternatives."""
+
+    __tablename__ = "skill_prerequisites"
+    __table_args__ = (Index("skill_prerequisites_option_idx", "option_skill_id"), {"schema": CATALOG})
+
+    skill_id: Mapped[int] = mapped_column(ForeignKey("catalog.skills.id", ondelete="CASCADE"), primary_key=True)
+    group_no: Mapped[int] = mapped_column(SmallInteger, primary_key=True)
+    option_skill_id: Mapped[int] = mapped_column(ForeignKey("catalog.skills.id", ondelete="CASCADE"), primary_key=True)
+    min_level: Mapped[int] = mapped_column(SmallInteger)
+
+
+class CareerRole(Base):
+    __tablename__ = "roles"
+    __table_args__ = ({"schema": CATALOG},)
+
+    id: Mapped[int] = mapped_column(SmallInteger, Identity(always=True), primary_key=True)
+    slug: Mapped[str] = mapped_column(Text, unique=True)
+    name: Mapped[str] = mapped_column(Text)
+    family_id: Mapped[int] = mapped_column(SmallInteger, ForeignKey("catalog.families.id"))
+    summary: Mapped[str] = mapped_column(Text)
+    onet_code: Mapped[str] = mapped_column(Text)
+    esco_uri: Mapped[str | None] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+
+class RoleTitle(Base):
+    __tablename__ = "role_titles"
+    __table_args__ = (Index("role_titles_role_idx", "role_id"), {"schema": CATALOG})
+
+    id: Mapped[int] = mapped_column(Identity(always=True), primary_key=True)
+    role_id: Mapped[int] = mapped_column(SmallInteger, ForeignKey("catalog.roles.id", ondelete="CASCADE"))
+    title: Mapped[str] = mapped_column(Text, unique=True)
+
+
+class RoleTitleSkill(Base):
+    __tablename__ = "role_title_skills"
+    __table_args__ = ({"schema": CATALOG},)
+
+    title_id: Mapped[int] = mapped_column(ForeignKey("catalog.role_titles.id", ondelete="CASCADE"), primary_key=True)
+    item_no: Mapped[int] = mapped_column(SmallInteger, primary_key=True)
+    option_skill_id: Mapped[int] = mapped_column(ForeignKey("catalog.skills.id", ondelete="CASCADE"), primary_key=True)
+    min_level: Mapped[int] = mapped_column(SmallInteger)
+
+
+class CareerRoleLevel(Base):
+    __tablename__ = "role_levels"
+    __table_args__ = ({"schema": CATALOG},)
+
+    role_id: Mapped[int] = mapped_column(
+        SmallInteger, ForeignKey("catalog.roles.id", ondelete="CASCADE"), primary_key=True
+    )
+    level_id: Mapped[int] = mapped_column(SmallInteger, ForeignKey("catalog.levels.id"), primary_key=True)
+    title: Mapped[str | None] = mapped_column(Text)
+    summary: Mapped[str] = mapped_column(Text)
+
+
+class RoadmapStage(Base):
+    __tablename__ = "roadmap_stages"
+    __table_args__ = (
+        UniqueConstraint("role_id", "level_id", "position"),
+        ForeignKeyConstraint(
+            ["role_id", "level_id"],
+            ["catalog.role_levels.role_id", "catalog.role_levels.level_id"],
+            ondelete="CASCADE",
+        ),
+        {"schema": CATALOG},
+    )
+
+    id: Mapped[int] = mapped_column(Identity(always=True), primary_key=True)
+    role_id: Mapped[int] = mapped_column(SmallInteger)
+    level_id: Mapped[int] = mapped_column(SmallInteger)
+    position: Mapped[int] = mapped_column(SmallInteger)
+    name: Mapped[str] = mapped_column(Text)
+    optional: Mapped[bool] = mapped_column(server_default="false")
+
+
+class RoadmapItem(Base):
+    """One option of one roadmap requirement: rows with the same (stage_id, item_no) are alternatives."""
+
+    __tablename__ = "roadmap_items"
+    __table_args__ = (Index("roadmap_items_skill_idx", "option_skill_id"), {"schema": CATALOG})
+
+    stage_id: Mapped[int] = mapped_column(ForeignKey("catalog.roadmap_stages.id", ondelete="CASCADE"), primary_key=True)
+    item_no: Mapped[int] = mapped_column(SmallInteger, primary_key=True)
+    option_skill_id: Mapped[int] = mapped_column(ForeignKey("catalog.skills.id", ondelete="CASCADE"), primary_key=True)
+    min_level: Mapped[int] = mapped_column(SmallInteger)
+
+
+class CommonPath(Base):
+    __tablename__ = "common_paths"
+    __table_args__ = (
+        UniqueConstraint("from_role_id", "from_level_id", "to_role_id", "to_level_id"),
+        ForeignKeyConstraint(
+            ["from_role_id", "from_level_id"],
+            ["catalog.role_levels.role_id", "catalog.role_levels.level_id"],
+            ondelete="CASCADE",
+        ),
+        ForeignKeyConstraint(
+            ["to_role_id", "to_level_id"],
+            ["catalog.role_levels.role_id", "catalog.role_levels.level_id"],
+            ondelete="CASCADE",
+        ),
+        {"schema": CATALOG},
+    )
+
+    id: Mapped[int] = mapped_column(Identity(always=True), primary_key=True)
+    from_role_id: Mapped[int] = mapped_column(SmallInteger)
+    from_level_id: Mapped[int] = mapped_column(SmallInteger)
+    to_role_id: Mapped[int] = mapped_column(SmallInteger)
+    to_level_id: Mapped[int] = mapped_column(SmallInteger)
+    kind: Mapped[str] = mapped_column(Text)
+    typical_years: Mapped[str | None] = mapped_column(Text)
+
+
+class LegacyRoleMap(Base):
+    __tablename__ = "legacy_roles"
+    __table_args__ = ({"schema": CATALOG},)
+
+    legacy_slug: Mapped[str] = mapped_column(Text, primary_key=True)
+    role_id: Mapped[int | None] = mapped_column(SmallInteger, ForeignKey("catalog.roles.id", ondelete="SET NULL"))

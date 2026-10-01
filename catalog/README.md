@@ -23,6 +23,7 @@ uv run xcrs catalog validate                                            # what C
 uv run xcrs catalog path backend-engineer@senior                        # a roadmap, level by level
 uv run xcrs catalog moves backend-engineer@mid                          # every other role, nearest first, with a starting level
 uv run xcrs catalog bridge backend-engineer@mid data-engineer@mid        # the skills a move asks for
+uv run xcrs catalog import                                              # load into the database (after merging)
 ```
 
 `validate` rejects: unknown skills or roles, prerequisite cycles, a skill asked for before its prerequisites (or at too little proficiency), proficiency that drops at a higher level, common paths inside one role or to levels a role doesn't have, and roles without a roadmap. It warns about skills no roadmap uses and about common paths whose target is far from the source.
