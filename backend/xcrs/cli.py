@@ -129,6 +129,17 @@ def cmd_catalog_bridge(args) -> None:
     print(f"{len(gap)} skills to learn or deepen")
 
 
+def cmd_catalog_moves(args) -> None:
+    """Every other role ranked by how much of it someone already covers (ADR-0027); * = common path."""
+    cat = model.load_catalog(args.dir)
+    source = model.RoleLevel.parse(args.role_level)
+    print(f"From {source}: share of each role's first level already covered; start = likely starting level")
+    for m in validate.moves(cat, source)[: args.top]:
+        start = f"{m.starting_level} ({m.starting_coverage:.0%})" if m.starting_level else "-"
+        common = f"  * common path to {', '.join(m.common)}" if m.common else ""
+        print(f"  {m.coverage:4.0%}  {cat.roles[m.role].name:30} start: {start:16}{common}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(prog="xcrs")
     sub = parser.add_subparsers(required=True)
@@ -166,11 +177,15 @@ def main() -> None:
     p = catalog_sub.add_parser("path", help="show a role's roadmap up to a level, e.g. backend-engineer@senior")
     p.add_argument("role_level")
     p.set_defaults(func=cmd_catalog_path)
-    p = catalog_sub.add_parser("bridge", help="skills needed to move between roles, e.g. A@senior B@senior")
+    p = catalog_sub.add_parser("bridge", help="skills to learn for a move, e.g. backend-engineer@mid data-engineer@mid")
     p.add_argument("source")
     p.add_argument("target")
     p.set_defaults(func=cmd_catalog_bridge)
-    for p in (catalog_sub.choices["validate"], catalog_sub.choices["path"], catalog_sub.choices["bridge"]):
+    p = catalog_sub.add_parser("moves", help="rank every other role by distance, e.g. backend-engineer@mid")
+    p.add_argument("role_level")
+    p.add_argument("--top", type=int, default=25)
+    p.set_defaults(func=cmd_catalog_moves)
+    for p in catalog_sub.choices.values():
         p.add_argument("--dir", type=Path, default=model.CATALOG_DIR, help="catalog folder (default: repo catalog/)")
 
     args = parser.parse_args()

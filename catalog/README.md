@@ -21,10 +21,13 @@ The reviewed source of truth for what XCRS recommends ([ADR-0025](../docs/adr/00
 ```bash
 uv run xcrs catalog validate                                            # what CI runs
 uv run xcrs catalog path backend-engineer@senior                        # a roadmap, level by level
-uv run xcrs catalog bridge backend-engineer@mid data-engineer@mid        # skills a transition asks for
+uv run xcrs catalog moves backend-engineer@mid                          # every other role, nearest first, with a starting level
+uv run xcrs catalog bridge backend-engineer@mid data-engineer@mid        # the skills a move asks for
 ```
 
-`validate` rejects: unknown skills or roles, prerequisite cycles, a skill asked for before its prerequisites (or at too little proficiency), proficiency that drops at a higher level, transitions inside one role or to levels a role doesn't have, and roles without a roadmap. It warns about skills no roadmap uses.
+`validate` rejects: unknown skills or roles, prerequisite cycles, a skill asked for before its prerequisites (or at too little proficiency), proficiency that drops at a higher level, common paths inside one role or to levels a role doesn't have, and roles without a roadmap. It warns about skills no roadmap uses and about common paths whose target is far from the source.
+
+**Moving between roles:** any move is possible. `moves` ranks every other role by coverage (the share of its requirements already met, skills weighted by how distinctive they are) and estimates the starting level (highest level ≥ 60% covered). `common_paths` in `roles.yaml` lists the moves people commonly make, as evidence.
 
 ## Reviewing a change
 
@@ -34,7 +37,7 @@ CI proves the files are consistent; the review is about whether they are **true*
 2. **Levels:** would a hiring manager agree with what each level adds? Is anything missing that every job ad asks for, or is anything niche presented as required? Use `path` to read a whole roadmap.
 3. **Proficiency:** is `working` vs `advanced` right for that level?
 4. **Prerequisites:** is it truly required first, or just related? (Only real prerequisites belong in `requires`.)
-5. **Transitions:** is it a move people really make? Does `bridge` show a believable gap?
+5. **Common paths:** is it a move people really make? Do `moves` and `bridge` show a believable distance and gap?
 
 ## Sources and attribution
 

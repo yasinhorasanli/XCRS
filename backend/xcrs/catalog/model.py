@@ -16,7 +16,7 @@ CATALOG_DIR = REPO_ROOT / "catalog"
 
 LADDER = ("entry", "mid", "senior", "staff")
 SKILL_KINDS = {"language", "framework", "library", "tool", "platform", "concept", "practice"}
-TRANSITION_KINDS = {"broaden", "specialize", "pivot", "lead"}
+PATH_KINDS = {"broaden", "specialize", "pivot", "lead"}
 PROFICIENCY = {1: "basic", 2: "working", 3: "advanced", 4: "expert"}
 
 _REQUIREMENT = re.compile(r"^(?P<options>[a-z0-9-]+(\|[a-z0-9-]+)*):(?P<level>[1-4])$")
@@ -86,7 +86,9 @@ class RoleLevel:
 
 
 @dataclass(frozen=True)
-class Transition:
+class CommonPath:
+    """A move between roles that people commonly make (ADR-0027). Any move is possible; these are evidence."""
+
     source: RoleLevel
     target: RoleLevel
     kind: str
@@ -120,7 +122,7 @@ class Catalog:
     families: dict[str, str]
     skills: dict[str, Skill]
     roles: dict[str, Role]
-    transitions: list[Transition]
+    common_paths: list[CommonPath]
     legacy_roles: dict[str, str | None]
     roadmaps: dict[str, Roadmap] = field(default_factory=dict)
     roadmap_files: dict[str, str] = field(default_factory=dict)  # role id -> file name, to check naming
@@ -179,9 +181,9 @@ def load_catalog(directory: Path = CATALOG_DIR) -> Catalog:
             rid: Role(rid, body["name"], body["family"], body["summary"], str(body["onet"]), tuple(body["levels"]))
             for rid, body in (roles_raw.get("roles") or {}).items()
         },
-        transitions=[
-            Transition(RoleLevel.parse(t["from"]), RoleLevel.parse(t["to"]), t["kind"], t.get("typical_years"))
-            for t in roles_raw.get("transitions") or ()
+        common_paths=[
+            CommonPath(RoleLevel.parse(t["from"]), RoleLevel.parse(t["to"]), t["kind"], t.get("typical_years"))
+            for t in roles_raw.get("common_paths") or ()
         ],
         legacy_roles=roles_raw.get("legacy_roles") or {},
     )

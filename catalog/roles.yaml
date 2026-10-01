@@ -175,10 +175,13 @@ roles:
     onet: 11-3021.00
     levels: [senior, staff]
 
-# Cross-role moves. kind: broaden (adjacent stack) · specialize (narrower, deeper) · pivot (different
-# field, bigger gap) · lead (architecture or management track). The skills to bridge come from the
-# difference between the two roadmaps; typical_years is total experience when the move is common.
-transitions:
+# Moving between roles. ANY move is possible: `xcrs catalog moves ROLE@LEVEL` ranks every other role by
+# how much of its requirements someone already covers (skills weighted by how distinctive they are) and
+# estimates the level they would start at. The paths below are the COMMON ones, moves people really make,
+# kept as evidence about the real world (not a whitelist). kind: broaden (adjacent stack) · specialize
+# (narrower, deeper) · pivot (different field) · lead (architecture or management track); typical_years is
+# total experience when the move is common. The validator warns when a common path is far apart.
+common_paths:
   - {from: frontend-engineer@mid, to: full-stack-engineer@mid, kind: broaden}
   - {from: backend-engineer@mid, to: full-stack-engineer@mid, kind: broaden}
   - {from: full-stack-engineer@mid, to: backend-engineer@mid, kind: specialize}

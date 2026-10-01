@@ -18,7 +18,7 @@ families: {eng: Engineering}
 roles:
   dev: {name: Developer, family: eng, summary: x, onet: 15-1252.00, levels: [entry, mid]}
   ops: {name: Operator, family: eng, summary: x, onet: 15-1299.08, levels: [entry, mid]}
-transitions:
+common_paths:
   - {from: dev@mid, to: ops@mid, kind: pivot}
 legacy_roles: {old: dev}
 """
@@ -147,10 +147,10 @@ def test_unknown_references_and_missing_roadmaps_are_reported(tmp_path):
     assert "role ops: no roadmap file roadmaps/ops.yaml" in found
 
 
-def test_transitions_must_cross_roles_and_use_existing_levels(tmp_path):
+def test_common_paths_must_cross_roles_and_use_existing_levels(tmp_path):
     roles = ROLES.replace("{from: dev@mid, to: ops@mid, kind: pivot}", "{from: dev@mid, to: dev@staff, kind: pivot}")
     found = errors(make(tmp_path, roles=roles))
-    assert "transition dev@mid -> dev@staff: dev has no level 'staff'" in found
+    assert "common path dev@mid -> dev@staff: dev has no level 'staff'" in found
     assert any("moving up inside a role is implied" in e for e in found)
 
 
@@ -158,3 +158,50 @@ def test_bridge_lists_gaps_and_treats_a_choice_as_one_requirement(tmp_path):
     cat = model.load_catalog(make(tmp_path, dev_entry="basics:1, python|go:2", dev_mid="docker:1"))
     gap = validate.bridge(cat, RoleLevel("dev", "mid"), RoleLevel("ops", "mid"))
     assert gap == {"docker": (1, 2), "kubernetes": (0, 2)}  # go:2 is covered by dev's python|go choice
+
+
+def test_distinctive_skills_weigh_more_than_shared_ones():
+    cat = model.load_catalog()
+    weights = validate.skill_weights(cat)
+    assert weights["dbt"] > weights["git"]  # dbt says "data engineer"; Git says little
+
+
+def test_coverage_is_one_for_the_same_role_and_less_for_another():
+    cat = model.load_catalog()
+    backend = RoleLevel("backend-engineer", "mid")
+    assert validate.coverage(cat, backend, backend) == 1.0
+    assert 0 < validate.coverage(cat, backend, RoleLevel("data-engineer", "entry")) < 1
+
+
+def test_any_move_is_ranked_and_nearest_roles_make_sense():
+    """Any role can move to any other; the measure puts the common, close moves first."""
+    cat = model.load_catalog()
+    ranked = validate.moves(cat, RoleLevel("devops-engineer", "senior"))
+    assert len(ranked) == len(cat.roles) - 1
+    assert {m.role for m in ranked[:3]} == {"cloud-engineer", "platform-engineer", "site-reliability-engineer"}
+    assert ranked[-1].coverage < 0.15  # e.g. data analysis is a long way from DevOps
+
+
+def test_starting_level_is_the_highest_level_already_mostly_covered():
+    cat = model.load_catalog()
+    by_role = {m.role: m for m in validate.moves(cat, RoleLevel("devops-engineer", "senior"))}
+    assert by_role["cloud-engineer"].starting_level == "senior"
+    assert by_role["site-reliability-engineer"].starting_level == "mid"
+    assert by_role["data-analyst"].starting_level is None  # would start from scratch
+
+
+def test_far_common_paths_are_flagged_for_review(tmp_path):
+    roles = ROLES.replace(
+        "roles:\n",
+        "roles:\n  ana: {name: Analyst, family: eng, summary: x, onet: 15-2051.01, levels: [entry, mid]}\n",
+    ).replace("{from: dev@mid, to: ops@mid, kind: pivot}", "{from: dev@mid, to: ana@mid, kind: pivot}")
+    skills = (
+        SKILLS
+        + "  sql: {name: SQL, kind: language, description: x}\n"
+        + "  stats: {name: Statistics, kind: concept, description: x}\n"
+    )
+    path = make(tmp_path, roles=roles, skills=skills)
+    (path / "roadmaps" / "ana.yaml").write_text(roadmap("ana", "sql:2", "stats:2"))
+    report = validate.validate(model.load_catalog(path))
+    assert report.errors == []
+    assert any("common path dev@mid -> ana@mid: ana is only #2 of 2 nearest roles" in w for w in report.warnings)

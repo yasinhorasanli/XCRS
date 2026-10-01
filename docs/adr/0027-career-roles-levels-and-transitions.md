@@ -1,6 +1,7 @@
 # ADR-0027: Career roles as specializations on one level ladder, connected by transitions
 
 - **Status:** Accepted. Delegated: the decider asked Claude to decide the career roles and roadmaps (2026-10-01); pending the decider's review of the catalog pull request.
+- **Changed during review (2026-10-01):** "any role to any other?" (PR #9) → any move is possible and measured; the listed transitions became common paths (decisions 4–5).
 - **Date:** 2026-10-01
 - **Decider:** Muhammed Yasin Horasanli
 
@@ -27,7 +28,8 @@
 
 ### Moving between roles
 - **None (each role isolated).** ❌ Unrealistic; career changes are a main use case.
-- **Explicit transitions** between role levels, typed broaden / specialize / pivot / lead, with the skills to bridge computed from the two roadmaps. ✅ Realistic paths; the gap is derived, not hand-written.
+- **Only explicit, hand-listed transitions.** ✅ Realistic examples. ❌ Implies every other move is impossible, which isn't true: people retrain into anything.
+- **Any move, measured; common ones listed as evidence.** Distance computed for every pair from the two roadmaps, plus a curated list of moves people commonly make. ✅ Answers "how far am I from X?" for every role. ❌ The measure needs care: raw counts of missing skills made small roadmaps look near (Backend looked as close to Embedded as to Data Engineer).
 
 ## Decision
 
@@ -41,8 +43,13 @@
    - Architecture and leadership: Software Architect, Engineering Manager
 2. **One ladder:** entry (0–2 years), mid (2–5), senior (5+), staff/principal (8+), each with a scope statement. Roles start where the market hires: SRE, Platform and MLOps at mid; Software Architect and Engineering Manager at senior (entered from senior engineering roles).
 3. **Within a role, moving up a level is implied**; each roadmap level lists what it adds (senior adds system design, incident leadership, mentoring…).
-4. **44 transitions** between roles (e.g. Backend@senior → Software Architect@senior, "lead", typically 8+ years; Data Analyst@mid → Data Scientist@entry, "pivot"). `xcrs catalog bridge` shows the skills to learn.
-5. **The research roles become a separate legacy catalog**, mapped to the closest new role for comparison (UX Designer has no counterpart: design is outside this catalog's software-engineering scope). They are removed once the new catalog proves better.
+4. **Any role can move to any other.** For every pair the catalog computes:
+   - **coverage:** the share of the target's requirements someone already meets, each skill weighted by how *distinctive* it is (rare across roles weighs more: dbt says "data engineer", Git doesn't) and by proficiency, partial proficiency counting partly;
+   - **starting level:** the highest target level at least 60% covered (a senior backend engineer typically starts data engineering at entry, Cloud at senior).
+
+   `xcrs catalog moves ROLE@LEVEL` ranks every other role; `xcrs catalog bridge` lists the skills to learn. Results match practice, e.g. from DevOps@senior: Cloud 100%, Platform 91%, SRE 79% (starting at mid); from Data Analyst@mid: Data Scientist 62% (starting at entry).
+5. **44 common paths** (e.g. Backend@senior → Software Architect@senior, "lead", typically 8+ years) record moves people really make, typed broaden / specialize / pivot / lead. They are evidence, not a whitelist. The validator flags a non-leadership common path whose target is in the far half of the source's ranked moves (today: Backend → Blockchain, Backend@senior → Platform), for a reviewer to confirm.
+6. **The research roles become a separate legacy catalog**, mapped to the closest new role for comparison (UX Designer has no counterpart: design is outside this catalog's software-engineering scope). They are removed once the new catalog proves better.
 
 ## Trade-offs accepted
 
@@ -50,6 +57,7 @@
 - Years per level are guidance; real promotion depends on scope and impact.
 - Dropping UX Designer narrows the product to software engineering.
 - 23 roadmaps to keep current; the catalog workflow (ADR-0028) makes changes reviewable.
+- The distance is only as good as the roadmaps, and the weights and the 60% starting threshold are judgement calls; they are constants in `xcrs/catalog/validate.py`, to tune with real feedback.
 
 ## Revisit when
 
