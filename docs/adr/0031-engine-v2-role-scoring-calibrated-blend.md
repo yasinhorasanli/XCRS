@@ -1,6 +1,7 @@
 # ADR-0031: Engine v2 role scoring: a calibrated blend of interest and coverage, levels from each level's additions
 
 - **Status:** Accepted. The decider chose the approach (S2, a calibrated blend) on 2026-10-01. The calibration, the labeled profiles and the level rule were done while the decider slept, under their instruction to proceed autonomously; to be reviewed.
+- **Reviewed (2026-10-02):** the decider confirmed the delegated choices.
 - **Date:** 2026-10-02
 - **Revised the same night (2026-10-02, 01:30), before the decider saw it:**
   - Comparing with the legacy engine exposed two flaws. Optional "good to know" skills were ignored for interest, so a Node/React/MongoDB learner tied Full-Stack with Blockchain. And a skill counted equally for every role that asked for it, so "SQL" alone ranked Solutions Engineer (basic SQL) above Data Analyst (expert SQL).

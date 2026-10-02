@@ -34,12 +34,12 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0028](0028-catalog-as-code-skills-graph-and-prerequisites.md) | Catalog as code: one skills graph, prerequisites as AND-of-OR with proficiency, reviewed as pull requests | Accepted (delegated, reviewed) | 2026-10-01 |
 | [0029](0029-engine-v2-skills-input-proficiency-and-coverage-scoring.md) | Engine v2: catalog skills with free-text fallback, optional proficiency, coverage × interest scoring, matching thresholds set by measurement | Accepted | 2026-10-01 |
 | [0030](0030-skill-matching-lookup-llm-pick-confirmed-by-similarity.md) | Skill matching: name lookup, then the LLM picks from the catalog, confirmed by embedding similarity | Accepted | 2026-10-02 |
-| [0031](0031-engine-v2-role-scoring-calibrated-blend.md) | Engine v2 role scoring: a calibrated blend of interest and coverage, levels from each level's additions | Accepted (approach decided; calibration delegated, revised) | 2026-10-02 |
+| [0031](0031-engine-v2-role-scoring-calibrated-blend.md) | Engine v2 role scoring: a calibrated blend of interest and coverage, levels from each level's additions | Accepted (calibration delegated, reviewed) | 2026-10-02 |
 | [0032](0032-raw-ingested-data-in-postgres-jsonb.md) | Raw ingested data in PostgreSQL (JSONB, an `ingest` schema), not MongoDB | Accepted | 2026-10-02 |
-| [0033](0033-first-learning-resource-sources.md) | First learning-resource sources: curated list as code, freeCodeCamp's open curriculum, YouTube adapter off until a key | Accepted (approach decided; sources delegated) | 2026-10-02 |
-| [0034](0034-deployment-ghcr-images-compose-per-vm-caddy.md) | Deployment: images published to GHCR, one Compose file per VM, Caddy in front, a pull-based deploy script | Accepted (delegated) | 2026-10-02 |
-| [0035](0035-abuse-protection-rate-limits-and-llm-caps.md) | Abuse protection: per-client rate limits on expensive endpoints, and a cap on new LLM matches per request | Accepted (delegated) | 2026-10-02 |
-| [0036](0036-backups-nightly-verified-copied-to-the-other-vm.md) | Backups: nightly verified dumps on VM-A, copied to VM-B, weekly restore test | Accepted (delegated) | 2026-10-02 |
+| [0033](0033-first-learning-resource-sources.md) | First learning-resource sources: curated list as code, freeCodeCamp's open curriculum, YouTube adapter off until a key | Accepted (sources delegated, reviewed) | 2026-10-02 |
+| [0034](0034-deployment-ghcr-images-compose-per-vm-caddy.md) | Deployment: images published to GHCR, one Compose file per VM, Caddy in front, a pull-based deploy script | Accepted (delegated, reviewed) | 2026-10-02 |
+| [0035](0035-abuse-protection-rate-limits-and-llm-caps.md) | Abuse protection: per-client rate limits on expensive endpoints, and a cap on new LLM matches per request | Accepted (delegated, reviewed) | 2026-10-02 |
+| [0036](0036-backups-nightly-verified-copied-to-the-other-vm.md) | Backups: nightly verified dumps on VM-A, copied to VM-B, weekly restore test | Accepted (delegated, reviewed) | 2026-10-02 |
 | [0037](0037-engine-v2-becomes-the-main-site-with-grounded-explanations.md) | Engine v2 becomes the main site, with grounded LLM explanations per role; the classic engine moves to /classic | Accepted | 2026-10-02 |
 
 ## Upcoming decisions

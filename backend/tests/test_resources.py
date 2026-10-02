@@ -186,6 +186,16 @@ def test_youtube_discovery_ranks_candidates_and_resumes(tmp_path):
     from xcrs.ingest.resources import youtube_discovery
 
     def handler(request):
+        if request.url.path.endswith("/playlistItems"):
+            return httpx.Response(200, json={"items": [{"contentDetails": {"videoId": "v1"}}]})
+        if request.url.path.endswith("/videos"):
+            stats = {"viewCount": "50000", "likeCount": "1500"}
+            return httpx.Response(
+                200,
+                json={"items": [{"id": "v1", "statistics": stats, "snippet": {"publishedAt": "2025-01-01T00:00:00Z"}}]},
+            )
+        if request.url.path.endswith("/channels"):
+            return httpx.Response(200, json={"items": [{"id": "UC1", "statistics": {"subscriberCount": "100000"}}]})
         if request.url.path.endswith("/search"):
             ids = ["PLgood", "PLnoise"] if "Docker" in request.url.params["q"] else []
             return httpx.Response(200, json={"items": [{"id": {"playlistId": i}} for i in ids]})
@@ -211,10 +221,36 @@ def test_youtube_discovery_ranks_candidates_and_resumes(tmp_path):
     with httpx.Client(transport=httpx.MockTransport(handler)) as client:
         found, used = youtube_discovery.discover(client, "key", skills, done={"git"}, max_searches=1)
     assert used == 1 and list(found) == ["docker"]  # git was done; the budget stopped before linux
-    assert [c["id"] for c in found["docker"]] == ["PLgood", "PLnoise"]
+    assert [c["id"] for c in found["docker"]] == ["PLgood"]  # "Cooking tips" doesn't name the skill
+    assert found["docker"][0]["median_views"] == 50000 and found["docker"][0]["like_ratio"] == 0.03
     path, review = tmp_path / "candidates.yaml", tmp_path / "review.md"
     data = youtube_discovery.load_candidates(path)
     youtube_discovery.save(path, review, data, found, {s: n for s, n in skills})
     saved = youtube_discovery.load_candidates(path)
     assert saved["searched"] == ["docker"] and saved["candidates"][0] == {"skill": "docker", "playlist": "PLgood"}
-    assert "Cooking tips" not in path.read_text() and "Docker full course" in review.read_text()
+    assert "Docker full course" not in path.read_text() and "Docker full course" in review.read_text()
+
+
+def test_discovery_drops_titles_that_dont_name_the_skill_and_prefers_trusted_channels():
+    from xcrs.ingest.resources.youtube_discovery import rank
+
+    candidates = [
+        {"id": "a", "title": "IELTS Full Course", "channel": "X", "videos": 60},
+        {"id": "b", "title": "Docker Tutorial for Beginners", "channel": "Random", "videos": 30},
+        {"id": "c", "title": "Docker course", "channel": "TechWorld with Nana", "videos": 12},
+    ]
+    assert [c["id"] for c in rank("Docker and containers", candidates, {"techworld with nana"})] == ["c", "b"]
+    arabic = [{"id": "d", "title": "Docker | دورة", "channel": "Y", "videos": 20}, *candidates]
+    assert "d" not in [c["id"] for c in rank("Docker and containers", arabic)]
+    hindi = [{"id": "e", "title": "Docker Tutorial in Hindi", "channel": "Z", "videos": 20}]
+    assert rank("Docker and containers", hindi) == []
+    assert [c["id"] for c in rank("Docker and containers", candidates, blocked={"random"})] == ["c"]
+
+
+def test_quality_prefers_watched_liked_recent_playlists():
+    from xcrs.ingest.resources.youtube_discovery import quality
+
+    popular = {"median_views": 200_000, "like_ratio": 0.03, "subscribers": 1_000_000, "latest": "2025-05-01"}
+    stale = {"median_views": 200_000, "like_ratio": 0.03, "subscribers": 1_000_000, "latest": "2012-05-01"}
+    obscure = {"median_views": 300, "like_ratio": 0.01, "subscribers": 2_000, "latest": "2025-05-01"}
+    assert quality(popular) > quality(stale) > quality(obscure)
