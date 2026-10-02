@@ -16,6 +16,9 @@ levels:
         skills: [programming-fundamentals:1, python:2, pandas:2, jupyter:1, git:1]
       - name: Deeper analysis
         skills: [data-cleaning:2, exploratory-data-analysis:2, ab-testing:2, data-modeling:1, product-thinking:1]
+      - name: Good to know
+        optional: true
+        skills: [r:1]  # O*NET 31.0 in demand (docs/catalog-coverage.md)
   senior:
     summary: "Leads analytics for an area: experiments, metrics and data models, and mentors analysts."
     stages:
@@ -23,6 +26,9 @@ levels:
         skills: [sql:3, data-modeling:2, data-warehousing:1, dbt:1]
       - name: Influence
         skills: [statistics:3, ab-testing:3, stakeholder-communication:3, product-thinking:2, mentoring:2, technical-writing:2]
+      - name: Good to know
+        optional: true
+        skills: [snowflake:1]  # O*NET 31.0 in demand (docs/catalog-coverage.md)
   staff:
     summary: "Sets analytics direction and metrics strategy across the organization."
     stages:

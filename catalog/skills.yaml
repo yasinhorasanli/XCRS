@@ -303,6 +303,7 @@ skills:
     kind: practice
     description: Driving the real app in a browser with Playwright or Cypress.
     requires: [testing-fundamentals:2, javascript|typescript|python|java:2]
+    onet: [Microsoft Playwright]
   web-performance:
     name: Web performance
     kind: practice
@@ -330,6 +331,7 @@ skills:
     kind: concept
     description: Resources, methods, status codes, pagination, versioning and error formats.
     requires: [http:2]
+    onet: [RESTful API]
   graphql:
     name: GraphQL
     kind: framework
@@ -434,6 +436,7 @@ skills:
     kind: concept
     description: Sessions, tokens (JWT), OAuth 2.0/OIDC and access control.
     requires: [http:2]
+    onet: [Single sign-on SSO]
   message-brokers:
     name: Message brokers and queues
     kind: concept
@@ -529,6 +532,7 @@ skills:
     kind: practice
     description: Unit, UI and device testing for apps.
     requires: [unit-testing:1, android-sdk|ios-sdk|flutter|react-native:1]
+    onet: [Appium]
   app-store-release:
     name: App store release and distribution
     kind: practice
@@ -551,11 +555,13 @@ skills:
     kind: platform
     description: Game engine using C#.
     requires: [csharp:2]
+    onet: [Unity Technologies Unity]
   unreal-engine:
     name: Unreal Engine
     kind: platform
     description: Game engine using C++ and Blueprints.
     requires: [cpp:2]
+    onet: [Unreal Technology Unreal Engine]
   game-math:
     name: Game math
     kind: concept
@@ -650,6 +656,7 @@ skills:
     kind: practice
     description: Automated build, test and deploy pipelines.
     requires: [git:2]
+    onet: [Microsoft Azure DevOps Services]
   github-actions:
     name: GitHub Actions
     kind: tool
@@ -703,12 +710,13 @@ skills:
     kind: concept
     description: Declaring infrastructure in versioned code, with plans and reviews.
     requires: [cloud-fundamentals:1, git:1]
+    onet: [Amazon Web Services AWS CloudFormation]
   terraform:
     name: Terraform
     kind: tool
     description: Declarative infrastructure provisioning across providers.
     requires: [infrastructure-as-code:1]
-    onet: [IBM Terraform, Amazon Web Services AWS CloudFormation]
+    onet: [IBM Terraform]
   ansible:
     name: Ansible
     kind: tool
@@ -993,6 +1001,7 @@ skills:
     kind: concept
     description: Attention, transformer architectures and pretrained models.
     requires: [deep-learning:2]
+    onet: [Hugging Face]
   fine-tuning:
     name: Fine-tuning models
     kind: practice
@@ -1018,6 +1027,7 @@ skills:
     kind: platform
     description: Storing and indexing embeddings (pgvector, Qdrant, Pinecone).
     requires: [embeddings-vector-search:1]
+    onet: [Vector database software]
   rag:
     name: Retrieval-augmented generation
     kind: practice
@@ -1028,6 +1038,7 @@ skills:
     kind: library
     description: LangChain, LlamaIndex and similar libraries for chains and tools.
     requires: [llm-fundamentals:1]
+    onet: [LangChain]
   ai-agents:
     name: AI agents and tool use
     kind: practice
@@ -1058,6 +1069,7 @@ skills:
     kind: practice
     description: Reproducible training pipelines from data to model.
     requires: [machine-learning-fundamentals:1, python:2]
+    onet: [Amazon Web Services AWS SageMaker]
   model-serving:
     name: Model serving
     kind: practice
@@ -1121,6 +1133,7 @@ skills:
     kind: concept
     description: Firewalls, segmentation, VPNs, IDS/IPS and secure protocols.
     requires: [computer-networking:2, security-fundamentals:1]
+    onet: [Firewall software]
   secure-coding:
     name: Secure coding
     kind: practice
@@ -1131,6 +1144,7 @@ skills:
     kind: practice
     description: Finding what can go wrong in a design and prioritizing defences (e.g. STRIDE).
     requires: [security-fundamentals:2]
+    onet: [MITRE ATT&CK software]
   vulnerability-management:
     name: Vulnerability management
     kind: practice
@@ -1173,6 +1187,7 @@ skills:
     kind: tool
     description: Nmap, Burp Suite, Metasploit and similar tools.
     requires: [linux:2, computer-networking:2]
+    onet: [Kali Linux, Metasploit]
   exploit-development:
     name: Exploit development
     kind: practice
@@ -1237,6 +1252,7 @@ skills:
     kind: practice
     description: Maintainable automated test suites and frameworks.
     requires: [testing-fundamentals:2, python|java|javascript|typescript|csharp:2]
+    onet: [TestNG]
   selenium:
     name: Selenium
     kind: tool
@@ -1248,11 +1264,13 @@ skills:
     kind: practice
     description: Testing HTTP APIs with Postman/REST clients and code.
     requires: [http:2, test-automation:1]
+    onet: [Postman, REST Assured]
   performance-testing:
     name: Performance and load testing
     kind: practice
     description: Load, stress and soak tests with k6 or JMeter.
     requires: [http:2, test-automation:2]
+    onet: [Apache JMeter]
   test-strategy:
     name: Test strategy
     kind: practice

@@ -60,18 +60,27 @@ def _substitution_cost(length: int) -> int:
 @dataclass
 class LexicalIndex:
     keys: dict[str, set[str]] = field(default_factory=dict)  # normalized name -> skill ids
+    exact_only: set[str] = field(default_factory=set)  # keys never matched with typos (product names)
 
-    def add(self, name: str, skill_id: str) -> None:
+    def add(self, name: str, skill_id: str, exact: bool = False) -> None:
         key = normalize(name)
         if key:
             self.keys.setdefault(key, set()).add(skill_id)
+            if exact:
+                self.exact_only.add(key)
+            else:  # also a skill's own name: typos allowed after all
+                self.exact_only.discard(key)
 
     @classmethod
     def build(cls, skills: Iterable[tuple[str, str, Iterable[str]]]) -> "LexicalIndex":
         """`skills`: (id, name, other names such as O*NET technology names)."""
         index = cls()
         for skill_id, name, others in skills:
-            for text in (name, skill_id, *others):
+            # Other names (O*NET products such as "TestNG") match only exactly: one dropped letter turns
+            # "testing" into "testng", and those names are not what learners misspell.
+            for other in others:
+                index.add(other, skill_id, exact=True)
+            for text in (name, skill_id):
                 index.add(text, skill_id)
                 inside = _PARENS.findall(text)
                 outside = _PARENS.sub(" ", text)
@@ -96,7 +105,7 @@ class LexicalIndex:
             return set()
         best, found = limit + 1, set()
         for candidate, ids in self.keys.items():
-            if len(candidate) < 5:
+            if len(candidate) < 5 or candidate in self.exact_only:
                 continue
             distance = _edit_distance(key, candidate, limit, _substitution_cost(len(key)))
             if distance < best:

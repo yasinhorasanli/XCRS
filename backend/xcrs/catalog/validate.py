@@ -25,6 +25,7 @@ from xcrs.catalog.model import (
 )
 
 _SLUG = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
+_ESCO = re.compile(r"^http://data\.europa\.eu/esco/occupation/[0-9a-f-]{36}$")
 _ONET = re.compile(r"^\d{2}-\d{4}\.\d{2}$")
 
 
@@ -86,6 +87,8 @@ def _check_roles(cat: Catalog, report: Report) -> None:
             report.errors.append(f"{where}: id must be lowercase-kebab-case")
         if role.family not in cat.families:
             report.errors.append(f"{where}: unknown family {role.family!r}")
+        if role.esco is not None and not _ESCO.match(role.esco):
+            report.errors.append(f"{where}: ESCO {role.esco!r} must be an ESCO occupation URI")
         if not _ONET.match(role.onet):
             report.errors.append(f"{where}: O*NET code {role.onet!r} must look like 15-1252.00")
         positions = [LADDER.index(lv) for lv in role.levels if lv in LADDER]

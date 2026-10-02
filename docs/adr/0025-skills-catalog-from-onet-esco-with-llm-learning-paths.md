@@ -3,6 +3,9 @@
 - **Status:** Accepted
 - **Date:** 2026-10-01
 - **Decider:** Muhammed Yasin Horasanli
+- **Note (2026-10-02):** the taxonomy check ran overnight, delegated:
+  - **ESCO:** links for 26 of 30 roles (`esco:` in `catalog/roles.yaml`, chosen by hand from ESCO API results and verified). DevRel, MLOps, AI Platform and AI Reliability have no close ESCO occupation.
+  - **O\*NET 31.0:** a coverage report (`docs/catalog-coverage.md`, `xcrs catalog coverage`). It led to 19 missing O\*NET names on existing skills ("RESTful API", Unity, Unreal, Postman, Hugging Face…; CloudFormation moved to infrastructure as code) and five good-to-know additions marked in the roadmaps.
 
 ## Context
 

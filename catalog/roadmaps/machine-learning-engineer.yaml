@@ -18,6 +18,9 @@ levels:
         skills: [calculus:1, deep-learning:2, pytorch:2, feature-engineering:2, experiment-tracking:2, ml-pipelines:2]
       - name: Shipping models
         skills: [computer-networking:1, http:2, rest-api-design:1, linux:2, docker:2, model-serving:2]
+      - name: Good to know
+        optional: true
+        skills: [tensorflow:1]  # O*NET 31.0 in demand (docs/catalog-coverage.md)
   senior:
     summary: "Builds advanced models and the systems around them, and mentors others."
     stages:
