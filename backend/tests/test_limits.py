@@ -40,6 +40,10 @@ def test_forwarded_for_counts_only_from_a_trusted_proxy():
     trusted = [ipaddress.ip_network("172.16.0.0/12")]
     assert limits.client_ip(request("172.18.0.5", "198.51.100.7"), trusted) == "198.51.100.7"
     assert limits.client_ip(request("203.0.113.9", "198.51.100.7"), trusted) == "203.0.113.9"  # spoofed header
+    # Funnel → Docker → Caddy: the visitor is the rightmost entry that isn't one of our proxies
+    chain = "203.0.113.50, 172.18.0.1"
+    assert limits.client_ip(request("172.18.0.5", chain), trusted) == "203.0.113.50"
+    assert limits.client_ip(request("172.18.0.5", "172.18.0.1"), trusted) == "172.18.0.1"  # only proxies: first
 
 
 def test_an_exhausted_bucket_answers_429_with_retry_after():

@@ -56,11 +56,18 @@ def _trusted(address: str, networks: list) -> bool:
 
 
 def client_ip(request: Request, trusted: list) -> str:
+    """The visitor's address: the rightmost X-Forwarded-For entry that isn't one of our proxies. Behind
+    Tailscale Funnel the chain is "visitor, Docker gateway" (tailscaled → Docker → Caddy → API), so the last
+    entry alone would put every visitor in one bucket. The header is only read from a trusted peer."""
     peer = request.client.host if request.client else "unknown"
     forwarded = request.headers.get("x-forwarded-for")
-    if forwarded and _trusted(peer, trusted):
-        return forwarded.split(",")[-1].strip()
-    return peer
+    if not forwarded or not _trusted(peer, trusted):
+        return peer
+    hops = [h.strip() for h in forwarded.split(",") if h.strip()]
+    for hop in reversed(hops):
+        if not _trusted(hop, trusted):
+            return hop
+    return hops[0] if hops else peer
 
 
 class Limiter:

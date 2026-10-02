@@ -206,6 +206,8 @@ def main() -> None:
     parser.add_argument("--threads", type=int, default=os.cpu_count())
     parser.add_argument("--max-roles", type=int, default=3, help="roles per profile on GPU")
     parser.add_argument("--cpu-max-roles", type=int, default=1, help="roles per profile on CPU (slow)")
+    parser.add_argument("--limit", type=int, help="at most this many cases per model/device (slow CPUs)")
+    parser.add_argument("--no-contention", action="store_true", help="skip the embedding-contention check")
     parser.add_argument("--summarize", type=Path, help="only (re)write the .md summary of an existing results file")
     args = parser.parse_args()
 
@@ -230,7 +232,7 @@ def main() -> None:
     for model in args.models:
         for device in args.devices:
             limit = args.max_roles if device == "gpu" else args.cpu_max_roles
-            selected = [(p, role, ctx) for p, role, ctx, rank in cases if rank < limit]
+            selected = [(p, role, ctx) for p, role, ctx, rank in cases if rank < limit][: args.limit]
             key = f"{model} / {device}"
             warm = explain(client, model, device, args.threads, selected[0][2])  # load; not counted
             runs = []
@@ -260,7 +262,8 @@ def main() -> None:
                 print(f"  {key:22} {profile_id:22} {role:22} {run.get('total_s', 0):6.1f}s {outcome}")
             summary = summarize(runs)
             summary["load_s"] = round(warm.get("load_duration", 0) / NS, 1)
-            summary["contention"] = contention(client, model, device, args.threads, selected[0][2])
+            if not args.no_contention:
+                summary["contention"] = contention(client, model, device, args.threads, selected[0][2])
             report["runs"][key] = {"summary": summary, "runs": runs}
             save(report, path)  # after every phase: an interrupted run keeps what finished
             print(f"Saved {key} to {path.relative_to(RESULTS_DIR.parent.parent)}")
