@@ -36,6 +36,17 @@ uv run xcrs catalog import                                              # load i
 
 `resources.yaml` lists curated learning resources (ADR-0033): URL, title, provider, `type` (docs, course, tutorial, video, playlist, book), `level` (beginner, intermediate, advanced), `free`, and `teaches` (skills with the proficiency the resource gets you to). `validate` checks structure and skill references; `uv run xcrs resources check-links` checks the links (needs the network, never in CI). `sources/youtube.yaml` lists YouTube playlists for the YouTube adapter.
 
+### YouTube playlists (ADR-0033)
+
+1. **Get an API key** (free, no billing):
+   - In the [Google Cloud console](https://console.cloud.google.com/), create a project.
+   - *APIs & Services → Library* → enable **YouTube Data API v3**.
+   - *Credentials → Create credentials → API key*, then restrict the key to the YouTube Data API v3.
+   - Put it in the repository's `.env` as `XCRS_YOUTUBE_API_KEY=...` (never commit it).
+2. `uv run xcrs resources youtube-discover` searches playlists for the skills most roles rely on first, at most 90 searches a run (the free quota allows about 95 a day; later runs continue). Candidate ids go to `sources/youtube-candidates.yaml`; titles go to `untracked/youtube-candidates.md` for review.
+3. Approve a candidate by moving its playlist id to `sources/youtube.yaml`. Then run `uv run xcrs resources ingest youtube` and `uv run xcrs resources tag`.
+4. YouTube data must be refreshed within 30 days: re-run `ingest youtube` regularly; `xcrs resources expire` deletes what wasn't refreshed.
+
 ## Taxonomy evidence
 
 - **ESCO:** each role's `esco:` is the closest ESCO occupation (ESCO © European Union; reuse under the ESCO terms with attribution). It is `null` where ESCO has none (DevRel, MLOps, AI Platform, AI Reliability).
