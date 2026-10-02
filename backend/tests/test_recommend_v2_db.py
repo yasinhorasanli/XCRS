@@ -77,6 +77,11 @@ def test_input_that_matches_no_skill_is_reported(client):
     assert body["status"] == "insufficient_input" and body["roles"] == []
 
 
+def test_health_answers_and_the_classic_api_is_gone(client):
+    assert client.get("/api/v2/health").json() == {"status": "ok"}
+    assert client.post("/api/v1/recommendations", json={"liked": ["Java"]}).status_code == 404
+
+
 def test_a_chip_needs_exactly_one_of_skill_or_text(client):
     both = {"category": "liked", "skill": "java", "text": "Java"}
     assert client.post("/api/v2/recommendations", json={"chips": [both]}).status_code == 422

@@ -1,8 +1,3 @@
-<script setup lang="ts">
-const route = useRoute()
-const isClassic = computed(() => route.path.startsWith('/classic'))
-</script>
-
 <template>
   <header class="sticky top-0 z-30 border-b border-slate-200 bg-white/85 backdrop-blur">
     <div class="mx-auto flex h-14 max-w-7xl items-center justify-between px-4">
@@ -12,14 +7,6 @@ const isClassic = computed(() => route.path.startsWith('/classic'))
         <span class="hidden text-sm text-slate-400 sm:inline">Explainable course recommendations</span>
       </NuxtLink>
       <div class="flex items-center gap-1">
-      <UButton
-        :to="isClassic ? '/' : '/classic'"
-        color="neutral"
-        variant="ghost"
-        size="sm"
-        :icon="isClassic ? 'i-heroicons-sparkles' : 'i-heroicons-clock'"
-        :label="isClassic ? 'New engine' : 'Classic engine'"
-      />
       <UButton
         to="https://github.com/yasinhorasanli/XCRS"
         target="_blank"

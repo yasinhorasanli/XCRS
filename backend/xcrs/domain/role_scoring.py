@@ -279,34 +279,81 @@ def score_roles(
 TYPE_PREFERENCE = {"course": 3, "tutorial": 2, "docs": 2, "playlist": 2, "video": 1, "book": 1}
 
 
+VIDEO_TYPES = {"video", "playlist"}
+VIDEO_GAPS = 3  # the video slot is for the first gaps only
+
+
 def suggest_resources(
-    snapshot: CatalogSnapshot, gaps: list[Gap], relevant: set[str] | None = None, limit: int = 3
+    snapshot: CatalogSnapshot,
+    gaps: list[Gap],
+    relevant: set[str] | None = None,
+    limit: int = 3,
+    known: set[str] | None = None,
 ) -> list[tuple[ResourceRef, list[str]]]:
     """Up to `limit` resources for the earliest gaps, in roadmap order, each with the gap skills it covers.
-    Prefers resources that are curated, free, cover several gaps at once, stay on topic (teach nothing
-    outside `relevant`: the role's skills and the learner's), and reach the proficiency asked."""
+        Prefers resources that are curated, free, cover several gaps at once, stay on topic (teach nothing
+        outside `relevant`: the role's skills and the learner's), teach few skills that are neither a gap nor in
+    `known` (the learner's: a Python learner gets Python material, not Java, where both fit the role), and reach
+    the proficiency asked.
+
+        One slot is kept for a video (ADR-0038): if none of the others is a video or playlist and one teaches
+        one of the first gaps and nothing beyond the gaps and the learner's skills, it takes the last slot,
+    even for a gap already covered."""
     need = {o: g.need for g in gaps for o in g.options}
     chosen: list[tuple[ResourceRef, list[str]]] = []
     covered: set[str] = set()
-    for gap in gaps:
-        if len(chosen) >= limit:
-            break
-        if any(o in covered for o in gap.options):
-            continue
-        candidates = {r.id: r for o in gap.options for r in snapshot.teaching.get(o, ())}
-        candidates = {k: r for k, r in candidates.items() if k not in {c.id for c, _ in chosen}}
-        if not candidates:
-            continue
 
-        def rank(r: ResourceRef, gap: Gap = gap) -> tuple:
-            teaches = dict(r.teaches)
-            gaps_hit = [s for s in teaches if s in need and s not in covered]
-            off_topic = sum(1 for s in teaches if relevant is not None and s not in relevant and s not in need)
-            reach = min(1.0, max(teaches.get(o, 0) / gap.need for o in gap.options))
-            return (r.curated, r.free, len(gaps_hit), -off_topic, reach, TYPE_PREFERENCE.get(r.type, 0), r.title)
+    def off_topic(r: ResourceRef) -> int:
+        return sum(1 for s, _ in r.teaches if relevant is not None and s not in relevant and s not in need)
 
-        best = max(candidates.values(), key=rank)
-        hits = [s for s, _ in best.teaches if s in need and s not in covered]
-        covered.update(hits)
-        chosen.append((best, hits))
+    def extras(r: ResourceRef) -> int:
+        return sum(1 for s, _ in r.teaches if known is not None and s not in need and s not in known)
+
+    def rank(r: ResourceRef, gap: Gap) -> tuple:
+        teaches = dict(r.teaches)
+        gaps_hit = [s for s in teaches if s in need and s not in covered]
+        reach = min(1.0, max(teaches.get(o, 0) / gap.need for o in gap.options))
+        return (
+            r.curated,
+            r.free,
+            len(gaps_hit),
+            -off_topic(r),
+            -extras(r),
+            reach,
+            TYPE_PREFERENCE.get(r.type, 0),
+            r.title,
+        )
+
+    def fill(until: int) -> None:
+        for gap in gaps:
+            if len(chosen) >= until:
+                return
+            if any(o in covered for o in gap.options):
+                continue
+            taken = {c.id for c, _ in chosen}
+            candidates = [r for o in gap.options for r in snapshot.teaching.get(o, ()) if r.id not in taken]
+            if not candidates:
+                continue
+            best = max(candidates, key=lambda r: rank(r, gap))
+            hits = [s for s, _ in best.teaches if s in need and s not in covered]
+            covered.update(hits)
+            chosen.append((best, hits))
+
+    fill(limit - 1 if limit > 1 else limit)
+    if len(chosen) < limit and not any(r.type in VIDEO_TYPES for r, _ in chosen):
+        taken = {c.id for c, _ in chosen}
+        for gap in gaps[:VIDEO_GAPS]:
+            videos = [
+                r
+                for o in gap.options
+                for r in snapshot.teaching.get(o, ())
+                if r.type in VIDEO_TYPES and r.id not in taken and not off_topic(r) and not extras(r)
+            ]
+            if videos:
+                best = max(videos, key=lambda r: rank(r, gap))
+                hits = [s for s, _ in best.teaches if s in need]
+                covered.update(hits)
+                chosen.append((best, hits))
+                break
+    fill(limit)
     return chosen

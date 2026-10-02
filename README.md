@@ -1,52 +1,51 @@
 # XCRS — Explainable Course Recommendation System
 
-XCRS recommends **career roles** and **online courses** based on what you have already learned and what you are curious about, and explains **why** it recommends each one, in plain language built from your own input.
+XCRS recommends **career roles** and **free learning resources** based on what you have already learned and what you are curious about, and explains **why** it recommends each one, in plain language built from your own input.
 
 > **Status:** the `modernization` branch is a work in progress toward a production-ready, self-hosted XCRS. The original research prototype lives on the `main` branch and in the [Zenodo release](#research-origin--citation).
 
-| Tell it what you know | See roles, courses and why |
+| Tell it what you know | See roles, your level, what to learn and why |
 |---|---|
-| ![Skill board: drag skills into four categories, with suggestions related to what you added](docs/images/home.png) | ![Results: career roles linked to their courses, with explanations](docs/images/results.png) |
+| ![Skill board: catalog skills and your own words in four boxes, with a 1–4 rating and quick-start suggestions](docs/images/home.png) | ![Results: a role with its explanation, first step, level estimate, free resources and the skills to learn next](docs/images/results.png) |
 
 ## How it works
 
-You sort skills, subjects and courses into four boxes (drag, click a suggestion, or type):
+You sort skills into four boxes (search the catalog, click a suggestion, or type your own words), optionally rating how well you know each one (1–4):
 
 | Box | Meaning | Weight |
 |---|---|---|
 | Curious about | Things you want to learn | `1.0` |
-| I enjoyed | Things you studied and liked | `0.75` |
+| I enjoyed | Things you studied and liked | `1.0` |
 | Neutral about | Things you studied, no strong feelings | `0.5` |
-| Didn't enjoy | Things you studied and would rather avoid | `-0.25` |
+| Didn't enjoy | Things you studied and would rather avoid | `-0.5` |
 
 XCRS then:
 
-1. **Embeds** each item with a self-hosted embedding model (`qwen3-embedding:0.6b`).
-2. **Matches** it to concepts from 10 [roadmap.sh](https://roadmap.sh) career roadmaps: every concept above a statistical threshold (mean + 2.5σ), with a fallback so short, generic items such as "Python" aren't dropped.
-3. **Scores the 10 career roles** by weighted concept coverage, squashed through a sigmoid, and keeps the top 3.
-4. **Recommends up to 3 Udemy courses per role**, aimed at the roadmap concepts you haven't covered yet, from precomputed concept → course matches, down-weighting courses similar to what you didn't enjoy.
-5. **Explains** each role and course with a local LLM, given only the facts the algorithm used. The recommendation returns in under a second; explanations arrive in the background.
+1. **Reads your words as catalog skills.** Picked chips are exact; typed text goes through a name lookup, then a local LLM picks from the catalog and embedding similarity confirms the pick ([ADR-0030](docs/adr/0030-skill-matching-lookup-llm-pick-confirmed-by-similarity.md)).
+2. **Scores 30 career roles** as a blend of interest (how much of what you enjoy or are curious about the role relies on) and coverage (how much of the role you already have), with an estimated starting level and the gaps to the next one in learning order ([ADR-0031](docs/adr/0031-engine-v2-role-scoring-calibrated-blend.md)).
+3. **Suggests free resources** for each role's first gaps: curated documentation and courses, freeCodeCamp courses, and one approved YouTube playlist ([ADR-0033](docs/adr/0033-first-learning-resource-sources.md), [ADR-0038](docs/adr/0038-one-video-slot-in-each-roles-resources.md)).
+4. **Explains** each role with a local LLM, given only the facts the engine used. The result returns at once; explanations arrive in the background ([ADR-0037](docs/adr/0037-engine-v2-becomes-the-main-site-with-grounded-explanations.md)).
 
-Roles: AI Data Scientist · Android Developer · Backend Developer · Blockchain Developer · DevOps Engineer · Frontend Developer · Full Stack Developer · Game Developer · QA Engineer · UX Designer
+The catalog (257 skills, 30 roles on an entry → staff ladder, roadmaps per role and level, 254 curated resources) is YAML in [`catalog/`](catalog), reviewed as pull requests and checked against O*NET and ESCO. Adapters add freeCodeCamp courses and approved YouTube playlists; 371 resources in all are tagged with skills.
 
 ## Architecture
 
 ```
-Browser ──► Nuxt 4 (skill board, linked results; proxies /api/v1/**)
-                 │
-                 ▼
-         FastAPI /api/v1  ──  api/ → services/ → pure domain/ + adapters
-           ├─ embeddings ──► Ollama  qwen3-embedding:0.6b
-           ├─ explanations (background worker, LangChain) ──► Ollama  qwen3.5:9b (GPU) / 4b (CPU)
-           └─ repository ──► PostgreSQL + pgvector (catalog, per-model vectors, activity, job queue)
+Browser ──► Caddy ──► Nuxt 4 (skill board, results; proxies /api/v2/**)
+                           │
+                           ▼
+                 FastAPI /api/v2  ──  api/ → services/ → pure domain/ + adapters
+                   ├─ skill matching ──► Ollama  qwen3-embedding:0.6b + the LLM
+                   ├─ explanations (background worker, LangChain) ──► Ollama  qwen3.5:9b (GPU) / 4b (CPU)
+                   └─ repository ──► PostgreSQL + pgvector (catalog schema, ingest schema, activity, job queue)
 ```
 
 | Folder | Stack | Purpose |
 |---|---|---|
-| [`backend/`](backend) | Python 3.13, FastAPI, SQLAlchemy, Alembic, LangChain, uv | API, recommendation algorithm, explanation worker, admin CLI (`xcrs`), evaluation tools (`eval/`) |
+| [`backend/`](backend) | Python 3.13, FastAPI, SQLAlchemy, Alembic, LangChain, uv | API, engine, explanation worker, admin CLI (`xcrs`), evaluation tools (`eval/`) |
 | [`frontend/`](frontend) | Nuxt 4, Nuxt UI 4, Tailwind 4 | Skill board and results pages |
-| [`catalog/`](catalog) | YAML | **New catalog (in progress):** skills graph, 30 career roles with levels and paths between them, roadmaps; reviewed as pull requests |
-| [`data/research-2024/`](data/research-2024) | CSV, JSON | Legacy research catalog (453 courses, 10 roadmap.sh roadmaps) that serves the current recommender until the new catalog replaces it |
+| [`catalog/`](catalog) | YAML | Skills graph, career roles with levels and paths between them, roadmaps, curated resources |
+| [`deploy/`](deploy) | Compose, Caddy, systemd | The two-VM deployment, backups |
 | [`docs/`](docs) | Markdown | [Decision records](docs/adr/README.md), [architecture](docs/architecture.md), [schema](docs/schema.md), [measurements](docs/baseline.md) |
 
 ## Run it locally
@@ -62,9 +61,9 @@ docker compose up -d postgres
 cd backend
 uv sync
 uv run alembic upgrade head                   # create the schema
-uv run xcrs import-research-data              # seed catalog → Postgres
 uv run xcrs register-model qwen3-embedding:0.6b --id 1 --status active
-uv run xcrs embed-catalog qwen3-embedding:0.6b
+uv run xcrs catalog import && uv run xcrs catalog embed   # catalog/ → Postgres, skill vectors
+uv run xcrs resources ingest freecodecamp && uv run xcrs resources tag   # optional: adapter resources
 uv run pytest
 
 uv run uvicorn xcrs.api.app:app --port 8000   # API docs: http://localhost:8000/docs
@@ -90,7 +89,7 @@ Backups stay on the machine that made them; `scripts/db-offsite-copy.sh` copies 
 
 **Deployment** to the two VMs (images from GHCR, Caddy, a deploy script with backup and smoke test): see [deploy/README.md](deploy/README.md).
 
-**CI** (GitHub Actions) runs Ruff, the migrations (up, down, up), the tests, the frontend type check and build, and both image builds on every push. **Evaluation** (`backend/eval/`): `bench_explainer.py` measures explanation speed and grounding per model and device; `compare_prototype.py` gives threshold diagnostics and, with the research prototype running from `main`, a prototype-vs-new comparison.
+**CI** (GitHub Actions) runs Ruff, the migrations (up, down, up), the tests, the frontend type check and build, and both image builds on every push. **Evaluation** (`backend/eval/`): `bench_skill_matching.py` (349 labeled phrases), `bench_role_scoring.py` (53 learner profiles) and `bench_explainer.py` (explanation speed and grounding per model and device).
 
 ## Research origin & citation
 
@@ -100,8 +99,9 @@ XCRS started as an academic research project: five embedding providers compared 
 
 ## Credits
 
-- Courses: [Udemy](https://udemy.com)
-- Roadmaps: [roadmap.sh](https://roadmap.sh) ([GitHub](https://github.com/kamranahmedse/developer-roadmap))
+- Occupations and technologies: [O*NET 31.0](https://www.onetcenter.org/database.html) by USDOL/ETA (CC BY 4.0) and [ESCO](https://esco.ec.europa.eu) (attribution in [`catalog/README.md`](catalog/README.md))
+- Courses: [freeCodeCamp](https://www.freecodecamp.org) (curriculum BSD-3-Clause) and the providers linked in `catalog/resources.yaml`; videos from YouTube
+- The research prototype used [roadmap.sh](https://roadmap.sh) roadmaps and Udemy courses
 
 ## License
 

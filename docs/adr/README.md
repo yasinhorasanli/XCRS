@@ -41,16 +41,15 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0035](0035-abuse-protection-rate-limits-and-llm-caps.md) | Abuse protection: per-client rate limits on expensive endpoints, and a cap on new LLM matches per request | Accepted (delegated, reviewed) | 2026-10-02 |
 | [0036](0036-backups-nightly-verified-copied-to-the-other-vm.md) | Backups: nightly verified dumps on VM-A, copied to VM-B, weekly restore test | Accepted (delegated, reviewed) | 2026-10-02 |
 | [0037](0037-engine-v2-becomes-the-main-site-with-grounded-explanations.md) | Engine v2 becomes the main site, with grounded LLM explanations per role; the classic engine moves to /classic | Accepted | 2026-10-02 |
+| [0038](0038-one-video-slot-in-each-roles-resources.md) | Each role's resources keep one slot for an on-topic video | Accepted | 2026-10-02 |
+| [0039](0039-retire-the-classic-engine.md) | Retire the classic engine: code, API, tables and research data removed after an archive | Accepted | 2026-10-02 |
 
 ## Upcoming decisions
 
-- Re-run the explainer benchmark on the VMs before launch (ADR-0020)
-- Threshold constants re-tuned against the prototype once its comparison can run (ADR-0022)
-- Retire the legacy engine (`/classic`, `/api/v1`, its tables and research catalog) after a backup (ADR-0037)
-- Review the overnight work: learner profiles (ADR-0031), resources.yaml (ADR-0033), ESCO choices (ADR-0025 note), delegated ADRs 0034–0036
-- A YouTube Data API key, to switch on the YouTube adapter (ADR-0033)
+- Re-run the explainer benchmark (now on v2 explanations) on the new LLM VM before launch: 4B or 9B (ADR-0020)
 - (Later) Roadmap visualization
-- Map suggestion chips to concept ids (ADR-0023), then normalize the request input (ADR-0013)
-- Chat/agent feature (LangGraph) and LLM tracing (LangSmith or self-hosted); see ADR-0019
+- LLM tracing: Langfuse (cloud, then self-hosted on the LLM VM) or LangSmith; see ADR-0019
+- Chat/agent feature (LangGraph)
+- The domain name (a free subdomain for the first deployment; a bought domain later)
 - First real deployment to the VMs (checklist in `deploy/README.md`); push-based CD once there are users (ADR-0034)
 - The cloud deployment target (AWS phase)

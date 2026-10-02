@@ -86,6 +86,12 @@ def test_suggestions_prefer_curated_free_on_topic_resources_for_the_earliest_gap
     picked = suggest_resources(snap, gaps, relevant={"oop", "git", "java"})
     assert [(r.id, hits) for r, hits in picked] == [("java", ["oop"]), ("git", ["git"])]
 
+    video = ResourceRef("yt", "OOP playlist", "u6", "YouTube · X", "playlist", None, True, False, (("oop", 2),))
+    snap.teaching["oop"].append(video)
+    picked = suggest_resources(snap, gaps, relevant={"oop", "git", "java"})
+    assert [(r.id, hits) for r, hits in picked] == [("java", ["oop"]), ("git", ["git"]), ("yt", ["oop"])]
+    assert [r.id for r, _ in suggest_resources(snap, gaps, relevant={"oop", "git", "java"}, limit=2)] == ["java", "yt"]
+
 
 @pytest.fixture
 def session():

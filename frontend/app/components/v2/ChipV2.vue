@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CATEGORY_META } from '~/composables/useBoard'
+import { CATEGORY_META } from '~/composables/categories'
 import type { Chip } from '~/composables/useBoardV2'
 import { PROFICIENCY_NAMES } from '~/composables/useXcrsApiV2'
 

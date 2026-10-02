@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { CATEGORY_META } from '~/composables/useBoard'
+import { CATEGORY_META } from '~/composables/categories'
 import { MAX_CHIPS } from '~/composables/useBoardV2'
-import type { Category } from '~/types/api'
+import type { Category } from '~/types/apiV2'
 import type { SkillSuggestion } from '~/types/apiV2'
 
 const props = defineProps<{ category: Category }>()

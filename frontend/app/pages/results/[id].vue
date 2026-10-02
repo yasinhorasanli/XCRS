@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CATEGORY_META } from '~/composables/useBoard'
+import { CATEGORY_META } from '~/composables/categories'
 
 const route = useRoute()
 const id = route.params.id as string

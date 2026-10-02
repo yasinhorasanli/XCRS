@@ -1,6 +1,8 @@
 # Database schema
 
-The PostgreSQL + pgvector schema, consolidated from ADRs [0003](adr/0003-postgresql-pgvector-primary-store.md) and [0008](adr/0008-embedding-tables-per-entity.md)–[0013](adr/0013-user-activity-hybrid-then-normalized.md). This is the blueprint for the initial Alembic migration. When a decision changes, the ADR changes first and this document follows. The new catalog lives in its own `catalog` schema ([below](#catalog-v2-schema-catalog-adr-0028)); the tables above it are the legacy research catalog and the activity data.
+The PostgreSQL + pgvector schema, consolidated from ADRs [0003](adr/0003-postgresql-pgvector-primary-store.md) and [0008](adr/0008-embedding-tables-per-entity.md)–[0013](adr/0013-user-activity-hybrid-then-normalized.md). This is the blueprint for the initial Alembic migration. When a decision changes, the ADR changes first and this document follows. The new catalog lives in its own `catalog` schema ([below](#catalog-v2-schema-catalog-adr-0028)).
+
+> **Removed on 2026-10-02 (migration 0010, [ADR-0039](adr/0039-retire-the-classic-engine.md)):** the classic engine's tables: `roles`, `roadmap_nodes`, `courses`, `node_embeddings`, `course_embeddings`, `concept_course_matches`, `recommendation_requests`, `recommended_roles`, `recommended_courses`, `feedback`. Their sections below are kept as history. In `public` today: `embedding_models` (the model registry, used by `catalog.skill_embeddings`) and the engine v2 activity (`recommendations_v2`, `explanations_v2`, `feedback_v2`).
 
 ## Overview
 
@@ -235,17 +237,11 @@ Curated resources (`catalog/resources.yaml`) are loaded by `xcrs catalog import`
 
 | Table | Rows (1 model) |
 |---|---|
-| roles | 10 |
-| roadmap_nodes | 1,104 |
-| courses | 453 |
-| node_embeddings (concepts only) | 869 |
-| course_embeddings | 453 |
-| concept_course_matches | ≤ 17,380 (869 × 20) |
 | catalog.skills / skill_prerequisites | 257 / 358 |
 | catalog.roles / role_levels / role_titles | 30 / 110 / 11 |
 | catalog.roadmap_stages / roadmap_items | 247 / 1,412 (rows per option) |
 | catalog.common_paths | 65 |
-| catalog.learning_resources / resource_skills | 330 (254 curated, 76 freeCodeCamp) / 511 |
+| catalog.learning_resources / resource_skills | 374 stored (254 curated, 76 freeCodeCamp, 44 YouTube), 371 with skill tags (3 freeCodeCamp courses match no catalog skill) / 590 |
 
 Vector storage is ~5 MB at 1,024 dimensions. The whole database is tiny; the design targets growth, not the current size.
 

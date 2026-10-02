@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CATEGORY_META } from '~/composables/useBoard'
+import { CATEGORY_META } from '~/composables/categories'
 import type { SkillGroup } from '~/types/apiV2'
 
 const { chips, active, add } = useBoardV2()

@@ -1,4 +1,4 @@
-import type { Category } from '~/types/api'
+import type { Category } from '~/types/apiV2'
 import type { ChipInput, SkillRef } from '~/types/apiV2'
 
 export const MAX_CHIPS = 60 // the API's limit

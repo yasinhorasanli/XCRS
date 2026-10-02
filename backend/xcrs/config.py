@@ -22,10 +22,9 @@ class Settings(BaseSettings):
     llm_timeout_s: float = 180.0
     llm_disable_thinking: bool = True
     llm_api_key: str | None = None  # only for hosted endpoints; Ollama needs none
-    # Cap on generated tokens. Answers need ~200–350 (benchmark median 201–244). Insurance against a known
-    # failure mode of small models in JSON mode (endless whitespace), which would hold the worker until the timeout.
-    llm_max_tokens: int = 700
-    explain_threads: int = 1  # background explanation workers (ADR-0018); 1 suits a CPU-bound LLM
+    # Cap on generated tokens. A v2 explanation needs ~100–200. Insurance against a known failure mode of small
+    # models in JSON mode (endless whitespace), which would hold the worker until the timeout.
+    llm_max_tokens: int = 500
     # Skill matching (ADR-0030) uses the same LLM; a new phrase takes ~2 s on a GPU, ~5 s or more on a CPU VM.
     match_llm_timeout_s: float = 60.0
     youtube_api_key: str | None = None  # XCRS_YOUTUBE_API_KEY; the YouTube adapter is off without it (ADR-0033)
