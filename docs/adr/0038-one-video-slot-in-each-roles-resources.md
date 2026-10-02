@@ -3,6 +3,7 @@
 - **Status:** Accepted
 - **Date:** 2026-10-02
 - **Decider:** Muhammed Yasin Horasanli
+- **Note (2026-10-02):** a gap that offers a choice ("Go or Python") now follows the option the learner already has: a Python learner gets Python material for it, not a Go playlist. On the 53 profiles, picks for the other option of such a choice went from 8 to 0; video coverage 78% (was 79%). `ALGORITHM_VERSION` v2.7.
 
 ## Context
 

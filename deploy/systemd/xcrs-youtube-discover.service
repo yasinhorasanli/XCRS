@@ -1,0 +1,16 @@
+# Daily YouTube discovery on VM-A (ADR-0033): one quota day of searches, continuing where the last run
+# stopped. Candidates go to /srv/xcrs-discovery for review; `scripts/youtube-candidates-pull.sh` on the Mac
+# copies them into the repo. Nothing is ingested until the decider approves ids in catalog/sources/youtube.yaml.
+[Unit]
+Description=XCRS daily YouTube playlist discovery
+Wants=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/xcrs
+Environment=COMPOSE_FILE=/opt/xcrs/deploy/vm-a/compose.yaml
+EnvironmentFile=/opt/xcrs/deploy/vm-a/.env
+ExecStart=/usr/bin/docker compose run --rm --no-deps -v /srv/xcrs-discovery:/discovery:Z api \
+  xcrs resources youtube-discover --max-searches 85 \
+  --candidates /discovery/youtube-candidates.yaml --review /discovery/youtube-candidates.md

@@ -236,8 +236,9 @@ def cmd_resources_youtube_discover(args) -> None:
     config = yaml.safe_load((model.CATALOG_DIR / "sources" / "youtube.yaml").read_text()) or {}
     trusted = {c.lower() for c in config.get("trusted_channels") or []}
     blocked = {c.lower() for c in config.get("blocked_channels") or []}
-    path = model.CATALOG_DIR / "sources" / "youtube-candidates.yaml"
-    review = REPO_ROOT / "untracked" / "youtube-candidates.md"
+    # On VM-A the catalog is read-only: the daily timer writes to a state directory instead (deploy/systemd).
+    path = Path(args.candidates) if args.candidates else model.CATALOG_DIR / "sources" / "youtube-candidates.yaml"
+    review = Path(args.review) if args.review else REPO_ROOT / "untracked" / "youtube-candidates.md"
     data = youtube_discovery.load_candidates(path)
     with httpx.Client(timeout=30) as client:
         found, used = youtube_discovery.discover(
@@ -321,6 +322,8 @@ def main() -> None:
     p.set_defaults(func=cmd_resources_tag)
     p = resources_sub.add_parser("youtube-discover", help="find candidate playlists per skill (needs the API key)")
     p.add_argument("--max-searches", type=int, default=90, help="search calls this run (100 quota units each)")
+    p.add_argument("--candidates", help="candidates file (default catalog/sources/youtube-candidates.yaml)")
+    p.add_argument("--review", help="review table (default untracked/youtube-candidates.md)")
     p.set_defaults(func=cmd_resources_youtube_discover)
     p = resources_sub.add_parser("check-links", help="record each resource's HTTP status")
     p.set_defaults(func=cmd_resources_check_links)
