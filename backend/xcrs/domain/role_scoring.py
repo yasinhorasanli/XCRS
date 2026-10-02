@@ -300,7 +300,13 @@ def suggest_resources(
         One slot is kept for a video (ADR-0038): if none of the others is a video or playlist and one teaches
         one of the first gaps and nothing beyond the gaps and the learner's skills, it takes the last slot,
     even for a gap already covered."""
-    need = {o: g.need for g in gaps for o in g.options}
+
+    def options(gap: Gap) -> tuple[str, ...]:
+        """A choice ("Go or Python") follows what the learner already has: Python material for a Python learner."""
+        mine = tuple(o for o in gap.options if known and o in known)
+        return mine or gap.options
+
+    need = {o: g.need for g in gaps for o in options(g)}
     chosen: list[tuple[ResourceRef, list[str]]] = []
     covered: set[str] = set()
 
@@ -319,7 +325,7 @@ def suggest_resources(
     def rank(r: ResourceRef, gap: Gap) -> tuple:
         teaches = dict(r.teaches)
         gaps_hit = [s for s in teaches if s in need and s not in covered]
-        reach = min(1.0, max(teaches.get(o, 0) / gap.need for o in gap.options))
+        reach = min(1.0, max(teaches.get(o, 0) / gap.need for o in options(gap)))
         return (
             -other_languages(r),
             r.curated,
@@ -339,7 +345,7 @@ def suggest_resources(
             if any(o in covered for o in gap.options):
                 continue
             taken = {c.id for c, _ in chosen}
-            candidates = [r for o in gap.options for r in snapshot.teaching.get(o, ()) if r.id not in taken]
+            candidates = [r for o in options(gap) for r in snapshot.teaching.get(o, ()) if r.id not in taken]
             if not candidates:
                 continue
             best = max(candidates, key=lambda r: rank(r, gap))
@@ -353,7 +359,7 @@ def suggest_resources(
         for gap in gaps[:VIDEO_GAPS]:
             videos = [
                 r
-                for o in gap.options
+                for o in options(gap)
                 for r in snapshot.teaching.get(o, ())
                 if r.type in VIDEO_TYPES and r.id not in taken and not off_topic(r) and not extras(r)
             ]

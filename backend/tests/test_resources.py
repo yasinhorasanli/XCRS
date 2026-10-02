@@ -61,6 +61,21 @@ def test_freecodecamp_keeps_current_courses_only():
     assert rows[0]["url"] == "https://www.freecodecamp.org/learn/python-v9" and rows[0]["quality"] == {"lessons": 2}
 
 
+def test_a_choice_gap_follows_the_option_the_learner_already_has():
+    snap = snapshot_from_catalog(model.load_catalog())
+    snap.teaching = {}
+    for r in [
+        ResourceRef("go", "Go playlist", "u1", "YouTube · X", "playlist", None, True, False, (("go", 2),)),
+        ResourceRef("py", "Python playlist", "u2", "YouTube · Y", "playlist", None, True, False, (("python", 2),)),
+    ]:
+        for skill, _ in r.teaches:
+            snap.teaching.setdefault(skill, []).append(r)
+    gaps = [Gap(("go", "python"), 2, 1, "Foundations")]
+    assert [r.id for r, _ in suggest_resources(snap, gaps, known={"python"})] == ["py"]
+    assert [r.id for r, _ in suggest_resources(snap, gaps, known={"go"})] == ["go"]
+    assert len(suggest_resources(snap, gaps, known=set())) == 1  # no preference: either
+
+
 def test_youtube_needs_a_key_and_normalizes_playlists():
     with pytest.raises(youtube.NoApiKey):
         youtube.ingest(None, None, None, ["PL1"])
