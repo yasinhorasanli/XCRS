@@ -255,6 +255,33 @@ def cmd_resources_tag(args) -> None:
     print(json.dumps(stats, indent=2))
 
 
+def cmd_resources_youtube_discover(args) -> None:
+    """Find candidate playlists for the skills most roles rely on (ADR-0033); within the daily search quota."""
+    from collections import Counter
+
+    from xcrs.config import get_settings
+    from xcrs.ingest.resources import youtube_discovery
+
+    key = get_settings().youtube_api_key
+    if not key:
+        raise SystemExit("set XCRS_YOUTUBE_API_KEY in .env first (README: getting a YouTube API key)")
+    cat = model.load_catalog()
+    usage: Counter = Counter()
+    for rid, role in cat.roles.items():
+        usage.update({o for opts in validate.requirements(cat, model.RoleLevel(rid, role.levels[-1])) for o in opts})
+    skills = sorted(((s.id, s.name) for s in cat.skills.values()), key=lambda s: (-usage[s[0]], s[1]))
+    path = model.CATALOG_DIR / "sources" / "youtube-candidates.yaml"
+    review = REPO_ROOT / "untracked" / "youtube-candidates.md"
+    data = youtube_discovery.load_candidates(path)
+    with httpx.Client(timeout=30) as client:
+        found, used = youtube_discovery.discover(client, key, skills, set(data["searched"]), args.max_searches)
+    review.parent.mkdir(exist_ok=True)
+    youtube_discovery.save(path, review, data, found, {s.id: s.name for s in cat.skills.values()})
+    left = len([s for s in skills if s[0] not in data["searched"]])
+    print(f"{used} searches, {sum(map(len, found.values()))} candidates for {len(found)} skills; {left} skills left")
+    print(f"review: {review}  (approve by moving ids to catalog/sources/youtube.yaml)")
+
+
 def cmd_resources_check_links(args) -> None:
     """Fetch every active resource's URL and record its status (never in CI)."""
     from xcrs.ingest.resources.links import check_links
@@ -344,6 +371,9 @@ def main() -> None:
     p = resources_sub.add_parser("tag", help="tag untagged resources with skills (LLM + embeddings)")
     p.add_argument("--limit", type=int, default=None)
     p.set_defaults(func=cmd_resources_tag)
+    p = resources_sub.add_parser("youtube-discover", help="find candidate playlists per skill (needs the API key)")
+    p.add_argument("--max-searches", type=int, default=90, help="search calls this run (100 quota units each)")
+    p.set_defaults(func=cmd_resources_youtube_discover)
     p = resources_sub.add_parser("check-links", help="record each resource's HTTP status")
     p.set_defaults(func=cmd_resources_check_links)
     p = resources_sub.add_parser("expire", help="delete YouTube data older than 30 days")

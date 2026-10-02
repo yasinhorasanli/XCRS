@@ -180,3 +180,41 @@ def test_youtube_data_older_than_30_days_is_deleted(session):
     )
     session.flush()
     assert youtube.expire(session) == 1
+
+
+def test_youtube_discovery_ranks_candidates_and_resumes(tmp_path):
+    from xcrs.ingest.resources import youtube_discovery
+
+    def handler(request):
+        if request.url.path.endswith("/search"):
+            ids = ["PLgood", "PLnoise"] if "Docker" in request.url.params["q"] else []
+            return httpx.Response(200, json={"items": [{"id": {"playlistId": i}} for i in ids]})
+        return httpx.Response(
+            200,
+            json={
+                "items": [
+                    {
+                        "id": "PLnoise",
+                        "snippet": {"title": "Cooking tips", "channelTitle": "C"},
+                        "contentDetails": {"itemCount": 40},
+                    },
+                    {
+                        "id": "PLgood",
+                        "snippet": {"title": "Docker full course", "channelTitle": "D"},
+                        "contentDetails": {"itemCount": 30},
+                    },
+                ]
+            },
+        )
+
+    skills = [("docker", "Docker and containers"), ("git", "Git"), ("linux", "Linux")]
+    with httpx.Client(transport=httpx.MockTransport(handler)) as client:
+        found, used = youtube_discovery.discover(client, "key", skills, done={"git"}, max_searches=1)
+    assert used == 1 and list(found) == ["docker"]  # git was done; the budget stopped before linux
+    assert [c["id"] for c in found["docker"]] == ["PLgood", "PLnoise"]
+    path, review = tmp_path / "candidates.yaml", tmp_path / "review.md"
+    data = youtube_discovery.load_candidates(path)
+    youtube_discovery.save(path, review, data, found, {s: n for s, n in skills})
+    saved = youtube_discovery.load_candidates(path)
+    assert saved["searched"] == ["docker"] and saved["candidates"][0] == {"skill": "docker", "playlist": "PLgood"}
+    assert "Cooking tips" not in path.read_text() and "Docker full course" in review.read_text()
