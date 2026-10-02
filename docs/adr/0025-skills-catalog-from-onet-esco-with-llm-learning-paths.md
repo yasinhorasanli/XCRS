@@ -1,6 +1,7 @@
 # ADR-0025: A shared skills catalog from O*NET and ESCO, with LLM-drafted learning paths reviewed by a human
 
 - **Status:** Accepted
+- **Reviewed (2026-10-02):** the decider confirmed the delegated choices.
 - **Date:** 2026-10-01
 - **Decider:** Muhammed Yasin Horasanli
 - **Note (2026-10-02):** the taxonomy check ran overnight, delegated:

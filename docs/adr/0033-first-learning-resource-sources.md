@@ -1,6 +1,7 @@
 # ADR-0033: First learning-resource sources: a curated list as code, freeCodeCamp's open curriculum, and a YouTube adapter switched off until there is an API key
 
 - **Status:** Accepted. The decider chose "curated YAML + adapters" (2026-10-01). The specific sources and rules were chosen by Claude overnight under the decider's instruction to proceed alone, and are to be reviewed.
+- **Reviewed (2026-10-02):** the decider confirmed the delegated choices.
 - **Date:** 2026-10-02
 - **Decider:** Muhammed Yasin Horasanli
 - **Note (2026-10-02):** `xcrs resources youtube-discover` proposes playlists per skill, the skills most roles rely on first, within the daily search quota. Ids are kept for review; titles go to a local file (API terms). The decider approves before ingestion.

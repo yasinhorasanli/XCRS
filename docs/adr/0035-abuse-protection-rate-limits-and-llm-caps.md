@@ -1,6 +1,7 @@
 # ADR-0035: Abuse protection: per-client rate limits on expensive endpoints, and a cap on new LLM matches per request
 
 - **Status:** Accepted. Delegated (overnight, 2026-10-02); to be reviewed.
+- **Reviewed (2026-10-02):** the decider confirmed the delegated choices.
 - **Date:** 2026-10-02
 - **Decider:** Muhammed Yasin Horasanli
 

@@ -14,6 +14,7 @@ import subprocess
 from pathlib import Path
 
 import httpx
+import yaml
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
 
@@ -269,12 +270,21 @@ def cmd_resources_youtube_discover(args) -> None:
     usage: Counter = Counter()
     for rid, role in cat.roles.items():
         usage.update({o for opts in validate.requirements(cat, model.RoleLevel(rid, role.levels[-1])) for o in opts})
-    skills = sorted(((s.id, s.name) for s in cat.skills.values()), key=lambda s: (-usage[s[0]], s[1]))
+    # Technical skills first (YouTube search is weak for practices such as mentoring), then by how many roles need them.
+    skills = sorted(
+        ((s.id, s.name) for s in cat.skills.values()),
+        key=lambda s: (cat.skills[s[0]].kind == "practice", -usage[s[0]], s[1]),
+    )
+    config = yaml.safe_load((model.CATALOG_DIR / "sources" / "youtube.yaml").read_text()) or {}
+    trusted = {c.lower() for c in config.get("trusted_channels") or []}
+    blocked = {c.lower() for c in config.get("blocked_channels") or []}
     path = model.CATALOG_DIR / "sources" / "youtube-candidates.yaml"
     review = REPO_ROOT / "untracked" / "youtube-candidates.md"
     data = youtube_discovery.load_candidates(path)
     with httpx.Client(timeout=30) as client:
-        found, used = youtube_discovery.discover(client, key, skills, set(data["searched"]), args.max_searches)
+        found, used = youtube_discovery.discover(
+            client, key, skills, set(data["searched"]), args.max_searches, trusted=trusted, blocked=blocked
+        )
     review.parent.mkdir(exist_ok=True)
     youtube_discovery.save(path, review, data, found, {s.id: s.name for s in cat.skills.values()})
     left = len([s for s in skills if s[0] not in data["searched"]])

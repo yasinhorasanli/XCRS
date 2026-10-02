@@ -1,4 +1,89 @@
 # YouTube playlists to ingest (ADR-0033): playlist ids (the `list=` part of a playlist URL), reviewed like the
 # rest of the catalog. Ingested with `uv run xcrs resources ingest youtube` once XCRS_YOUTUBE_API_KEY is set;
 # the data must be refreshed within 30 days (`xcrs resources expire` deletes what wasn't).
-playlists: []
+# Approved by the decider (2026-10-02) from the discovery shortlist.
+playlists:
+  - PL-osiE80TeTuRUfjRe54Eea17-YfnOOAx  # Git: Corey Schafer
+  - PLBlnK6fEyqRgMCUAG0XRw78UA8qnv6jEx  # Computer networking: Neso Academy
+  - PLBlnK6fEyqRiVhbXDGLXDk_OQAeuVcp2O  # Operating systems: Neso Academy
+  - PLWKjhJtqVAbnqBxcdjVGgT3uVR10bzTEB  # Python: freeCodeCamp.org
+  - PLNcg_FV9n7qZY_2eAtUzEUulNjTJREhQe  # SQL: Data with Baraa
+  - PLS1QulWo1RIb9WVQGJ_vh-RQusbZgO_As  # Linux and the command line: Bash Terminal
+  - PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4  # Concurrency: Jakob Jenkov
+  - PLOspHqNVtKAC-_ZAGresP-i0okHe5FjcJ  # Cloud fundamentals: IBM Technology
+  - PLdo5W4Nhv31bbKJzrsKfMpo_grxuLl8LU  # Data structures: Jenny's Lectures CS IT
+  - PLdpzxOOAlwvJUIfwmmVDoPYqXXUNbdBmb  # Observability: Abhishek.Veeramalla
+  - PLsyeobzWxl7ps4Z1C4VMtvZEx5-PgyoYI  # REST API design: Restful Web Service
+  - PLUDwpEzHYYLseflPNg0bUKfLmAbO2JnE9  # Testing fundamentals: SDET- QA
+  - PLy7NrYWoggjzfAHlUusx2wuDwfCrmJYcs  # Docker and containers: TechWorld with Nana
+  - PLeKd45zvjcDFUEv_ohr_HdUFe97RItdiB  # Distributed systems: Martin Kleppmann
+  - PLBlnK6fEyqRjEKl1Yg00jHTbfOPqIfJrs  # Relational databases: Chapter 2
+  - PLahhVEj9XNTc3cKjd28NUDFPrV4QcfxH5  # Security fundamentals: Microsoft Learn
+  - PL1y1iaEtjSYiiSGVlL1cHsXN_kvJOOhu-  # Web security: Feross
+  - PLdpzxOOAlwvLNOxX0RfndiYSt1Le9azze  # AWS: Abhishek.Veeramalla
+  - PLIivdWyY5sqKh1gDR0WpP9iIOY00IE0xL  # Google Cloud: Google Cloud Tech
+  - PLahhVEj9XNTd6H2vpsvm_kBSMsMw9EMUL  # Microsoft Azure: Microsoft Learn
+  - PLTjRvDozrdlxEIuOBZkMAK5uiqp8rHUax  # JavaScript: Programming with Mosh
+  - PLy7NrYWoggjziYQIDorlXjTvvwweTYoNC  # Kubernetes: TechWorld with Nana
+  - PLS1QulWo1RIYmaxcEqw5JhK3b-6rgdWO_  # Shell scripting: ProgrammingKnowledge
+  - PLOspHqNVtKAA_5N3pI49wkH4WsTkeZ_iQ  # Cloud networking: IBM Technology
+  - PLrhzvIcii6GNjpARdnO4ueTUAVR9eMBpc  # Design patterns: Christopher Okhravi
+  - PLy7NrYWoggjzmPAyfDQgthSgx6VEVlS0-  # Infrastructure as code: TechWorld with Nana
+  - PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab  # Linear algebra: 3Blue1Brown
+  - PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF  # Machine learning fundamentals: StatQuest with Josh Starmer
+  - PLy4OcwImJzBLWhUqduwLs30YHiDpX4Xp7  # Data modeling for analytics: Kahan Data Solutions
+  - PL4cUxeGkcC9gC88BEo9czgyS72A3doDeM  # Go: Net Ninja
+  - PLahhVEj9XNTf6lWUbZLBNULQ7uVqM5Sad  # Identity and access management: Microsoft Learn
+  - PL4cUxeGkcC9gUgr39Q_yD6v-bSyMwKPUI  # TypeScript: Net Ninja
+  - PLlOuZAcnp6h4aJROJUb45z_y3hxo-MAnK  # Data warehousing: nullQueries
+  - PLyicRj904Z9_50dH2eD5prLZ8b9A-fdgt  # Internal developer platforms: DevOps & AI Toolkit
+  - PL-osiE80TeTsWmV9i9c58mdDCSskIFdDS  # pandas: Corey Schafer
+  - PL79i7SgJCJ9hf7JgG3S-3lOpsk2QCpWkD  # Apache Airflow: Data with Marc
+  - PLA1qgQLL41SRsHMtsb4up5fTytDeHV_yJ  # Applied cryptography: Cryptography 101
+  - PLPV2KyIb3jR4CtEelGPsmPzlvP7ISPYzR  # C#: Brackeys
+  - PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr  # Calculus: 3Blue1Brown
+  - PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16  # Computer vision: Stanford Online
+  - PLUl4u3cNGP60YyhMjYmXuVmX562QcClSp  # Deep learning: MIT OpenCourseWare
+  - PLIUOU7oqGTLhlWpTz4NnuT3FekouIVlqc  # Embeddings and vector search: James Briggs
+  - PLWKjhJtqVAbnSe1qUNMG7AbPmjIG54u88  # HTML: freeCodeCamp.org
+  - PLsyeobzWxl7pe_IiTfNyr55kwJPWbgxB5  # Java: Telusko
+
+# Channels whose playlists rank first in `xcrs resources youtube-discover` (exact channel titles).
+trusted_channels:
+  - freeCodeCamp.org
+  - Google for Developers
+  - Google Cloud Tech
+  - Microsoft Developer
+  - Microsoft Learn
+  - Amazon Web Services
+  - IBM Technology
+  - MIT OpenCourseWare
+  - Stanford Online
+  - CS50
+  - Fireship
+  - Traversy Media
+  - Programming with Mosh
+  - Corey Schafer
+  - TechWorld with Nana
+  - NetworkChuck
+  - The Net Ninja
+  - Hussein Nasser
+  - Kunal Kushwaha
+  - Docker
+  - Kubernetes
+  - Hugging Face
+  - DeepLearningAI
+  - 3Blue1Brown
+  - StatQuest with Josh Starmer
+  - Sentdex
+  - Andrej Karpathy
+  - Computerphile
+  - OWASP Foundation
+  - John Hammond
+  - Patrick Collins
+  - Brackeys
+  - GDC
+
+# Channels never proposed (e.g. English titles over another spoken language; English only for now, ADR-0026).
+blocked_channels:
+  - Elzero Web School

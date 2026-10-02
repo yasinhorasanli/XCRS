@@ -1,6 +1,7 @@
 # ADR-0036: Backups: nightly verified dumps on VM-A, copied to VM-B, with a weekly restore test
 
 - **Status:** Accepted. Delegated (overnight, 2026-10-02); to be reviewed.
+- **Reviewed (2026-10-02):** the decider confirmed the delegated choices.
 - **Date:** 2026-10-02
 - **Decider:** Muhammed Yasin Horasanli
 

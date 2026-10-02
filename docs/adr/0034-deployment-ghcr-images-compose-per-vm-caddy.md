@@ -1,6 +1,7 @@
 # ADR-0034: Deployment: images published to GHCR, one Compose file per VM, Caddy in front, a pull-based deploy script
 
 - **Status:** Accepted. Delegated: the decider asked Claude to complete operations overnight (2026-10-02); to be reviewed before the first real deployment.
+- **Reviewed (2026-10-02):** the decider confirmed the delegated choices.
 - **Date:** 2026-10-02
 - **Note (2026-10-02):** the decider confirmed Caddy as the reverse proxy (over nginx and Traefik) for its automatic HTTPS and small configuration.
 - **Decider:** Muhammed Yasin Horasanli
