@@ -37,15 +37,19 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0031](0031-engine-v2-role-scoring-calibrated-blend.md) | Engine v2 role scoring: a calibrated blend of interest and coverage, levels from each level's additions | Accepted (approach decided; calibration delegated, revised) | 2026-10-02 |
 | [0032](0032-raw-ingested-data-in-postgres-jsonb.md) | Raw ingested data in PostgreSQL (JSONB, an `ingest` schema), not MongoDB | Accepted | 2026-10-02 |
 | [0033](0033-first-learning-resource-sources.md) | First learning-resource sources: curated list as code, freeCodeCamp's open curriculum, YouTube adapter off until a key | Accepted (approach decided; sources delegated) | 2026-10-02 |
+| [0034](0034-deployment-ghcr-images-compose-per-vm-caddy.md) | Deployment: images published to GHCR, one Compose file per VM, Caddy in front, a pull-based deploy script | Accepted (delegated) | 2026-10-02 |
+| [0035](0035-abuse-protection-rate-limits-and-llm-caps.md) | Abuse protection: per-client rate limits on expensive endpoints, and a cap on new LLM matches per request | Accepted (delegated) | 2026-10-02 |
+| [0036](0036-backups-nightly-verified-copied-to-the-other-vm.md) | Backups: nightly verified dumps on VM-A, copied to VM-B, weekly restore test | Accepted (delegated) | 2026-10-02 |
 
 ## Upcoming decisions
 
 - Re-run the explainer benchmark on the VMs before launch (ADR-0020)
 - Threshold constants re-tuned against the prototype once its comparison can run (ADR-0022)
-- Engine v2 board and results UI; comparison with the legacy engine before switching over
-- Taxonomy import: ESCO links and an O*NET coverage check of the drafted roadmaps (ADR-0025)
+- Switch the site over to engine v2 (`/v2` → `/`) and retire the legacy engine and its tables; explanations for v2 roles
+- Review the overnight work: learner profiles (ADR-0031), resources.yaml (ADR-0033), ESCO choices (ADR-0025 note), delegated ADRs 0034–0036
 - A YouTube Data API key, to switch on the YouTube adapter (ADR-0033)
 - (Later) Roadmap visualization
 - Map suggestion chips to concept ids (ADR-0023), then normalize the request input (ADR-0013)
 - Chat/agent feature (LangGraph) and LLM tracing (LangSmith or self-hosted); see ADR-0019
-- CD (deployment to the VMs) and the cloud deployment target
+- First real deployment to the VMs (checklist in `deploy/README.md`); push-based CD once there are users (ADR-0034)
+- The cloud deployment target (AWS phase)
