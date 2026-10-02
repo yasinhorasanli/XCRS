@@ -4,6 +4,7 @@ The YAML is the reviewed source of truth (changes arrive as pull requests); `val
 import loads it into the database. Plain data and parsing only; no database access here.
 """
 
+import os
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -12,7 +13,8 @@ import yaml
 
 from xcrs.config import REPO_ROOT
 
-CATALOG_DIR = REPO_ROOT / "catalog"
+# Overridable for containers, where the package is installed and the catalog is mounted (deploy/vm-a).
+CATALOG_DIR = Path(os.environ.get("XCRS_CATALOG_DIR", REPO_ROOT / "catalog"))
 
 LADDER = ("entry", "mid", "senior", "staff")
 SKILL_KINDS = {"language", "framework", "library", "tool", "platform", "concept", "practice"}

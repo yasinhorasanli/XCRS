@@ -86,7 +86,9 @@ scripts/db-verify-backup.sh              # restores the newest dump into a throw
 scripts/db-restore.sh DUMP xcrs_copy     # restore into a new database (--replace to overwrite the live one)
 ```
 
-Backups stay on the machine that made them; copy them elsewhere too.
+Backups stay on the machine that made them; `scripts/db-offsite-copy.sh` copies them to another host (on the VMs a nightly systemd timer does both, ADR-0036).
+
+**Deployment** to the two VMs (images from GHCR, Caddy, a deploy script with backup and smoke test): see [deploy/README.md](deploy/README.md).
 
 **CI** (GitHub Actions) runs Ruff, the migrations (up, down, up), the tests, the frontend type check and build, and both image builds on every push. **Evaluation** (`backend/eval/`): `bench_explainer.py` measures explanation speed and grounding per model and device; `compare_prototype.py` gives threshold diagnostics and, with the research prototype running from `main`, a prototype-vs-new comparison.
 

@@ -1,0 +1,77 @@
+# VM-A (8 GB): Caddy (the only public service), web, API, PostgreSQL and the embedding model (ADR-0014,
+# ADR-0020, ADR-0034). Images come from GHCR, pinned by XCRS_IMAGE_TAG in .env (see .env.example).
+#
+#   cd deploy/vm-a && cp .env.example .env && $EDITOR .env
+#   ../deploy.sh <image tag>                  # backup, pull, migrate, restart, smoke test
+name: xcrs-vm-a   # not "xcrs": the dev stack (docker-compose.yml) already uses that project and its volumes
+
+services:
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "${XCRS_HTTP_PORT:-80}:80"
+      - "${XCRS_HTTPS_PORT:-443}:443"
+    environment:
+      XCRS_DOMAIN: ${XCRS_DOMAIN:-:80}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on: [web]
+
+  web:
+    image: ghcr.io/${XCRS_IMAGE_OWNER:-yasinhorasanli}/xcrs-web:${XCRS_IMAGE_TAG:?set XCRS_IMAGE_TAG}
+    restart: unless-stopped
+    environment:
+      XCRS_API_URL: http://api:8000
+    depends_on:
+      api:
+        condition: service_healthy
+
+  api:
+    image: ghcr.io/${XCRS_IMAGE_OWNER:-yasinhorasanli}/xcrs-api:${XCRS_IMAGE_TAG:?set XCRS_IMAGE_TAG}
+    restart: unless-stopped
+    environment:
+      XCRS_DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-xcrs}:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-xcrs}
+      XCRS_EMBEDDING_BASE_URL: http://ollama-embed:11434/v1
+      XCRS_LLM_BASE_URL: ${XCRS_LLM_BASE_URL:?set XCRS_LLM_BASE_URL to VM-B's Ollama}
+      XCRS_LLM_MODEL: ${XCRS_LLM_MODEL:-qwen3.5:4b}
+      XCRS_LLM_ENABLED: ${XCRS_LLM_ENABLED:-true}
+      XCRS_CATALOG_DIR: /catalog
+      XCRS_YOUTUBE_API_KEY: ${XCRS_YOUTUBE_API_KEY:-}
+      XCRS_RATE_HEAVY_PER_MINUTE: ${XCRS_RATE_HEAVY_PER_MINUTE:-10}
+    volumes:
+      - ../../catalog:/catalog:ro      # the reviewed catalog of this checkout (xcrs catalog import)
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: pgvector/pgvector:pg18
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-xcrs}
+      POSTGRES_USER: ${POSTGRES_USER:-xcrs}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  ollama-embed:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    environment:
+      OLLAMA_KEEP_ALIVE: "24h"
+    volumes:
+      - ollama_embed:/root/.ollama
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:
+  ollama_embed:

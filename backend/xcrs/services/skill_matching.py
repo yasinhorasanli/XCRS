@@ -59,10 +59,14 @@ class MatchStore(Protocol):
 
 
 class SkillMatcher:
-    def __init__(self, index: LexicalIndex, store: MatchStore, embedder: Embedder, picker: Picker | None):
+    def __init__(
+        self, index: LexicalIndex, store: MatchStore, embedder: Embedder, picker: Picker | None, max_new: int = 12
+    ):
         self.index, self.store, self.embedder, self.picker = index, store, embedder, picker
+        self.max_new = max_new  # new LLM calls per `match` call (ADR-0035); later phrases use the fallback
 
     def match(self, phrases: list[str]) -> list[PhraseResult]:
+        self._llm_calls = 0
         return [self._match(p) for p in phrases]
 
     def _match(self, phrase: str) -> PhraseResult:
@@ -81,6 +85,8 @@ class SkillMatcher:
             cached = self.store.cached(key, self.picker)
             if cached is not None:
                 return with_found(cached, "cache")
+        if self.picker is not None and self._llm_calls < self.max_new:
+            self._llm_calls += 1
             try:
                 started = time.perf_counter()
                 picked = self.picker.pick(phrase)
@@ -163,4 +169,6 @@ def build_matcher(session: Session, use_llm: bool | None = None) -> SkillMatcher
             api_key=settings.llm_api_key,
         )
     embedder = embedder_for(model, query_prefix=QUERY_INSTRUCTION)  # the instruction measured for skills
-    return SkillMatcher(lexical_index(session), DatabaseMatchStore(session, model), embedder, picker)
+    return SkillMatcher(
+        lexical_index(session), DatabaseMatchStore(session, model), embedder, picker, settings.match_llm_max_new
+    )

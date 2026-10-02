@@ -11,6 +11,7 @@ from contextlib import asynccontextmanager
 from fastapi import Depends, FastAPI, HTTPException, Query, Request
 from sqlalchemy.orm import Session
 
+from xcrs.api.limits import heavy, light
 from xcrs.api.schemas import (
     FeedbackV1,
     KnowledgeUnitGroupsV1,
@@ -101,7 +102,7 @@ def health(session: Session = Depends(get_session)) -> dict:
 
 
 # Synchronous on purpose (ADR-0015): FastAPI runs `def` endpoints in a thread pool.
-@app.post("/api/v1/recommendations", response_model=RecommendationResponseV1)
+@app.post("/api/v1/recommendations", response_model=RecommendationResponseV1, dependencies=[Depends(heavy)])
 def create_recommendation(
     body: RecommendationRequestV1, service: RecommendationService = Depends(get_service)
 ) -> RecommendationResponseV1:
@@ -145,7 +146,7 @@ def search_knowledge_units(
     return KnowledgeUnitsV1(units=[KnowledgeUnitV1(**vars(u)) for u in service.search(q, limit)])
 
 
-@app.post("/api/v1/knowledge-units/related", response_model=RelatedUnitsV1)
+@app.post("/api/v1/knowledge-units/related", response_model=RelatedUnitsV1, dependencies=[Depends(light)])
 def related_knowledge_units(
     body: RelatedRequestV1, service: KnowledgeUnitService = Depends(get_knowledge_units)
 ) -> RelatedUnitsV1:
@@ -160,7 +161,7 @@ def related_knowledge_units(
 # --- /api/v2: engine v2 on the new catalog (ADR-0029); /api/v1 serves the legacy engine until the switch-over.
 
 
-@app.post("/api/v2/skills/match", response_model=SkillMatchResponseV2)
+@app.post("/api/v2/skills/match", response_model=SkillMatchResponseV2, dependencies=[Depends(heavy)])
 def match_skills(
     body: SkillMatchRequestV2,
     matcher: SkillMatcher = Depends(get_skill_matcher),
@@ -191,7 +192,7 @@ def _response_v2(row) -> RecommendationResponseV2:
     )
 
 
-@app.post("/api/v2/recommendations", response_model=RecommendationResponseV2)
+@app.post("/api/v2/recommendations", response_model=RecommendationResponseV2, dependencies=[Depends(heavy)])
 def create_recommendation_v2(
     body: RecommendationRequestV2, service: RecommendationServiceV2 = Depends(get_service_v2)
 ) -> RecommendationResponseV2:

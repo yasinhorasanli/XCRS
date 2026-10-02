@@ -1,0 +1,16 @@
+# The only public entry point (ADR-0034). XCRS_DOMAIN = a real domain gives automatic HTTPS (Let's Encrypt);
+# ":80" serves plain HTTP (local checks, or before DNS points here). The API is not exposed: the web
+# server proxies /api/** to it (frontend/server/api), so the browser only ever talks to Caddy.
+{$XCRS_DOMAIN} {
+	encode zstd gzip
+	request_body {
+		max_size 64KB
+	}
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		X-Frame-Options DENY
+		-Server
+	}
+	reverse_proxy web:3000
+}

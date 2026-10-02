@@ -29,6 +29,15 @@ class Settings(BaseSettings):
     # Skill matching (ADR-0030) uses the same LLM; a new phrase takes ~2 s on a GPU, ~5 s or more on a CPU VM.
     match_llm_timeout_s: float = 60.0
     youtube_api_key: str | None = None  # XCRS_YOUTUBE_API_KEY; the YouTube adapter is off without it (ADR-0033)
+    # Abuse protection (ADR-0035): per-client-IP token buckets; at most this many new phrases per request go
+    # to the LLM, the rest use the embedding fallback.
+    rate_limits_enabled: bool = True
+    rate_heavy_per_minute: float = 10
+    rate_heavy_burst: int = 5
+    rate_light_per_minute: float = 60
+    rate_light_burst: int = 20
+    trusted_proxies: str = "127.0.0.1/32,::1/128,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+    match_llm_max_new: int = 12
 
 
 @lru_cache
