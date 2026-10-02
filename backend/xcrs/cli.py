@@ -13,6 +13,7 @@ import json
 import subprocess
 from pathlib import Path
 
+import httpx
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
 
@@ -173,6 +174,7 @@ def cmd_catalog_import(args) -> None:
         listed = [f"{sign}{x}" for sign, key in (("-", "removed"), ("~", "updated")) for x in c[key]][:8]
         print(f"   {' '.join(listed)}" if listed and len(c["added"]) < 50 else "")
     print("  parts    " + ", ".join(f"{k} {v}" for k, v in changes["parts"].items()))
+    print("  resources " + ", ".join(f"{k} {v}" for k, v in changes["resources"].items()))
 
 
 def cmd_catalog_embed(args) -> None:
@@ -202,6 +204,76 @@ def cmd_catalog_moves(args) -> None:
         start = f"{m.starting_level} ({m.starting_coverage:.0%})" if m.starting_level else "-"
         common = f"  * common path to {', '.join(m.common)}" if m.common else ""
         print(f"  {m.coverage:4.0%}  {cat.roles[m.role].name:30} start: {start:16}{common}")
+
+
+def cmd_resources_ingest(args) -> None:
+    """Fetch a source into ingest.raw_records and catalog.learning_resources (ADR-0032, ADR-0033)."""
+    from xcrs.config import get_settings
+    from xcrs.ingest.resources import freecodecamp, youtube
+
+    with new_session() as session, httpx.Client(timeout=60, follow_redirects=True) as client:
+        if args.source == "freecodecamp":
+            stats = freecodecamp.ingest(session, client)
+        else:
+            try:
+                stats = youtube.ingest(session, client, get_settings().youtube_api_key, youtube.configured_playlists())
+            except youtube.NoApiKey as exc:
+                raise SystemExit(str(exc)) from exc
+        session.commit()
+    print(json.dumps(stats, indent=2))
+
+
+def cmd_resources_tag(args) -> None:
+    """Tag untagged (non-curated) resources with skills: the LLM picks, embeddings confirm (ADR-0030)."""
+    from xcrs.config import get_settings
+    from xcrs.ingest.resources.tagging import tag_untagged
+    from xcrs.matching.picker import LLMSkillPicker
+    from xcrs.matching.prompts import QUERY_INSTRUCTION, RESOURCE_PROMPT_VERSION, RESOURCE_SYSTEM
+
+    settings = get_settings()
+    with new_session() as session:
+        model = session.scalars(select(EmbeddingModel).where(EmbeddingModel.status == "active")).one()
+        embedder = embedder_for(model, query_prefix=QUERY_INSTRUCTION)
+        picker = LLMSkillPicker(
+            settings.llm_base_url,
+            settings.llm_model,
+            skill_matching.skill_names(session),
+            timeout_s=settings.match_llm_timeout_s,
+            disable_thinking=settings.llm_disable_thinking,
+            api_key=settings.llm_api_key,
+            system=RESOURCE_SYSTEM,
+            prompt_version=RESOURCE_PROMPT_VERSION,
+        )
+        stats = tag_untagged(
+            session,
+            picker,
+            lambda t: vectors.skill_similarities(session, model, embedder.embed_query([t])[0]),
+            args.limit,
+        )
+        session.commit()
+    print(json.dumps(stats, indent=2))
+
+
+def cmd_resources_check_links(args) -> None:
+    """Fetch every active resource's URL and record its status (never in CI)."""
+    from xcrs.ingest.resources.links import check_links
+
+    with new_session() as session:
+        result = check_links(session)
+        session.commit()
+    print(f"{result['checked']} checked, {len(result['broken'])} broken")
+    for url, status in result["broken"]:
+        print(f"  {status or 'unreachable'}  {url}")
+
+
+def cmd_resources_expire(args) -> None:
+    """Delete YouTube data not refreshed within 30 days (API terms, ADR-0033)."""
+    from xcrs.ingest.resources import youtube
+
+    with new_session() as session:
+        count = youtube.expire(session)
+        session.commit()
+    print(f"{count} expired YouTube resources deleted")
 
 
 def main() -> None:
@@ -248,6 +320,18 @@ def main() -> None:
     p = catalog_sub.add_parser("import", help="load the catalog YAML into the database (validated first)")
     p.add_argument("--force", action="store_true", help="import even if nothing changed since the last import")
     p.set_defaults(func=cmd_catalog_import)
+    resources = sub.add_parser("resources", help="learning resources: ingest, tag, check links (ADR-0033)")
+    resources_sub = resources.add_subparsers(required=True)
+    p = resources_sub.add_parser("ingest", help="fetch a source: freecodecamp, or youtube (needs an API key)")
+    p.add_argument("source", choices=["freecodecamp", "youtube"])
+    p.set_defaults(func=cmd_resources_ingest)
+    p = resources_sub.add_parser("tag", help="tag untagged resources with skills (LLM + embeddings)")
+    p.add_argument("--limit", type=int, default=None)
+    p.set_defaults(func=cmd_resources_tag)
+    p = resources_sub.add_parser("check-links", help="record each resource's HTTP status")
+    p.set_defaults(func=cmd_resources_check_links)
+    p = resources_sub.add_parser("expire", help="delete YouTube data older than 30 days")
+    p.set_defaults(func=cmd_resources_expire)
     p = catalog_sub.add_parser("embed", help="embed catalog skills with the active model (after import)")
     p.set_defaults(func=cmd_catalog_embed)
     p = catalog_sub.add_parser("match", help="match typed phrases to skills, e.g. k8s Jira 'neural networks'")

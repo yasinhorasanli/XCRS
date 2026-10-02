@@ -24,9 +24,12 @@ class LLMSkillPicker:
         timeout_s: float = 60.0,
         disable_thinking: bool = True,
         api_key: str | None = None,
+        system: str = PICK_SYSTEM_2,
+        prompt_version: str = PICK_PROMPT_VERSION_2,
     ):
         self.model = model
-        self._system = PICK_SYSTEM_2.format(catalog="\n".join(f"{sid}: {name}" for sid, name in skills))
+        self.prompt_version = prompt_version
+        self._system = system.format(catalog="\n".join(f"{sid}: {name}" for sid, name in skills))
         llm = ChatOpenAI(
             base_url=base_url,
             model=model,

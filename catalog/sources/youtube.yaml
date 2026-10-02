@@ -1,0 +1,4 @@
+# YouTube playlists to ingest (ADR-0033): playlist ids (the `list=` part of a playlist URL), reviewed like the
+# rest of the catalog. Ingested with `uv run xcrs resources ingest youtube` once XCRS_YOUTUBE_API_KEY is set;
+# the data must be refreshed within 30 days (`xcrs resources expire` deletes what wasn't).
+playlists: []

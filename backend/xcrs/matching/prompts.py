@@ -68,3 +68,16 @@ PICK_LIMIT = 5
 
 class SkillPick(BaseModel):
     skills: list[str]
+
+
+RESOURCE_PROMPT_VERSION = "resource-1"
+
+# Tagging a learning resource (ADR-0033): which catalog skills it teaches, from its title and description.
+RESOURCE_SYSTEM = """\
+A learning resource (a course, tutorial or documentation) is described below by its title and description.
+Choose the catalog skills it mainly teaches from the list below (id: name), most central first, at most 5.
+Choose only skills it clearly teaches, not ones it merely mentions or assumes. Choose none if it doesn't \
+teach a software, data, IT, security or engineering-practice skill.
+Answer with JSON only: {{"skills": [ids]}}.
+
+{catalog}"""

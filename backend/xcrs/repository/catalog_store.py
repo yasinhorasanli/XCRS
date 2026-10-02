@@ -10,7 +10,7 @@ The caller owns the transaction.
 
 from collections.abc import Iterable, Sequence
 
-from sqlalchemy import Table, delete, func, literal_column, or_, select, tuple_
+from sqlalchemy import Table, delete, func, literal_column, or_, select, tuple_, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
 
@@ -22,8 +22,10 @@ from xcrs.db.models import (
     CatalogImport,
     CommonPath,
     Family,
+    LearningResource,
     LegacyRoleMap,
     Level,
+    ResourceSkill,
     RoadmapItem,
     RoadmapStage,
     RoleTitle,
@@ -31,7 +33,7 @@ from xcrs.db.models import (
     Skill,
     SkillPrerequisite,
 )
-from xcrs.domain.role_scoring import CatalogSnapshot, RoleSnapshot
+from xcrs.domain.role_scoring import CatalogSnapshot, ResourceRef, RoleSnapshot
 
 
 def _upsert(session: Session, table: Table, key: Sequence[str], rows: list[dict]) -> tuple[list, list]:
@@ -182,6 +184,8 @@ def import_catalog(
             [{"legacy_slug": k, "role_id": role_ids.get(v) if v else None} for k, v in cat.legacy_roles.items()],
         )
 
+    changes["resources"] = _import_curated_resources(session, cat, skill_ids)
+
     # Entities that left the YAML, once nothing in the catalog refers to them.
     track("roles", *role_changes, _remove_absent(session, roles, "slug", cat.roles))
     track("skills", *skill_changes, _remove_absent(session, skills, "slug", cat.skills))
@@ -197,6 +201,60 @@ def import_catalog(
     session.add(record)
     session.flush()
     return changes
+
+
+CURATED = "curated"
+
+
+def _import_curated_resources(session: Session, cat: Catalog, skill_ids: dict[str, int]) -> dict:
+    """catalog/resources.yaml → learning_resources (source "curated", keyed by URL) and their skill tags.
+    A curated entry replaces an adapter's row for the same URL; one removed from the YAML is deactivated,
+    not deleted, so feedback that refers to it stays valid."""
+    resources = LearningResource.__table__
+    urls = [r.url for r in cat.resources]
+    if urls:
+        session.execute(delete(resources).where(resources.c.url.in_(urls), resources.c.source != CURATED))
+    rows = [
+        {
+            "source": CURATED,
+            "external_id": r.url,
+            "url": r.url,
+            "type": r.type,
+            "provider": r.provider,
+            "title": r.title,
+            "description": r.description,
+            "level": r.level,
+            "is_free": r.free,
+            "is_active": True,
+        }
+        for r in cat.resources
+    ]
+    inserted, updated = _upsert(session, resources, ["source", "external_id"], rows)
+    deactivated = list(
+        session.scalars(
+            update(resources)
+            .where(resources.c.source == CURATED, resources.c.external_id.not_in(urls), resources.c.is_active)
+            .values(is_active=False, updated_at=literal_column("now()"))
+            .returning(resources.c.url)
+        )
+    )
+    ids = dict(session.execute(select(resources.c.url, resources.c.id).where(resources.c.source == CURATED)).all())
+    session.execute(delete(ResourceSkill).where(ResourceSkill.tagged_by == CURATED))
+    tags = [
+        {
+            "resource_id": ids[r.url],
+            "skill_id": skill_ids[req.options[0]],
+            "relation": "teaches",
+            "level": req.level,
+            "confidence": 1.0,
+            "tagged_by": CURATED,
+        }
+        for r in cat.resources
+        for req in r.teaches
+    ]
+    if tags:
+        session.execute(insert(ResourceSkill), tags)
+    return {"added": len(inserted), "updated": len(updated), "deactivated": len(deactivated), "tags": len(tags)}
 
 
 def last_import_checksum(session: Session) -> str | None:
@@ -240,8 +298,13 @@ _snapshots: dict[str, CatalogSnapshot] = {}
 
 def load_snapshot(session: Session) -> CatalogSnapshot:
     """The imported catalog as the scoring engine sees it (xcrs.domain.role_scoring), cached per import
-    checksum: a new `xcrs catalog import` is picked up on the next request."""
-    checksum = last_import_checksum(session) or ""
+    checksum and resource state: a new `xcrs catalog import` or ingestion is picked up on the next request."""
+    # Keyed by the catalog import and the state of the resources, which adapters change between imports.
+    resources_state = session.execute(
+        select(func.count(LearningResource.id), func.max(LearningResource.updated_at)).where(LearningResource.is_active)
+    ).one()
+    tags = session.scalar(select(func.count()).select_from(ResourceSkill))
+    checksum = f"{last_import_checksum(session) or ''}|{resources_state[0]}|{resources_state[1]}|{tags}"
     if checksum in _snapshots:
         return _snapshots[checksum]
     skills = dict(session.execute(select(Skill.id, Skill.slug)).all())
@@ -279,9 +342,33 @@ def load_snapshot(session: Session) -> CatalogSnapshot:
             requirements=cumulative_requirements([(lv, stages.get((role_id, lid), [])) for lv, _, lid in levels]),
             optional=optional_skills([(lv, stages.get((role_id, lid), [])) for lv, _, lid in levels]),
         )
+    tagged: dict[int, list[tuple[str, int]]] = {}
+    for resource_id, skill_id, level in session.execute(
+        select(ResourceSkill.resource_id, ResourceSkill.skill_id, ResourceSkill.level).where(
+            ResourceSkill.relation == "teaches"
+        )
+    ):
+        tagged.setdefault(resource_id, []).append((skills[skill_id], level or 1))
+    resource_rows = session.execute(select(LearningResource).where(LearningResource.is_active)).scalars().all()
+    resources = [
+        ResourceRef(
+            str(r.id),
+            r.title,
+            r.url,
+            r.provider,
+            r.type,
+            r.level,
+            r.is_free,
+            r.source == CURATED,
+            tuple(tagged.get(r.id, ())),
+        )
+        for r in resource_rows
+        if r.id in tagged
+    ]
     snapshot = CatalogSnapshot(
         roles=roles,
         skill_names=names,
+        resources=resources,
         prerequisites={s: [(tuple(o), lv) for _, (o, lv) in sorted(g.items())] for s, g in prerequisites.items()},
     )
     _snapshots.clear()

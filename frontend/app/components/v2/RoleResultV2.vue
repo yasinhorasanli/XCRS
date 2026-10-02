@@ -82,6 +82,28 @@ async function send(rating: 1 | -1) {
       </div>
     </div>
 
+    <div v-if="role.resources?.length" class="mt-4">
+      <h3 class="text-xs font-medium uppercase tracking-wide text-slate-500">Start learning</h3>
+      <ul class="mt-1.5 grid gap-2 sm:grid-cols-3">
+        <li v-for="res in role.resources" :key="res.id">
+          <a
+            :href="res.url"
+            target="_blank"
+            rel="noopener"
+            class="flex h-full flex-col rounded-xl p-3 ring-1 ring-inset ring-slate-200 transition hover:-translate-y-px hover:ring-indigo-300"
+          >
+            <span class="flex items-center gap-1.5 text-[11px] text-slate-500">
+              <span class="rounded bg-slate-100 px-1.5 py-0.5 capitalize">{{ res.type }}</span>
+              <span v-if="res.free" class="rounded bg-emerald-50 px-1.5 py-0.5 text-emerald-700">Free</span>
+              <span class="truncate">{{ res.provider }}</span>
+            </span>
+            <span class="mt-1 text-sm font-medium leading-snug">{{ res.title }}</span>
+            <span class="mt-auto pt-1 text-[11px] text-slate-400">For {{ res.skills.map((s) => s.name).join(', ') }}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
     <div v-if="role.gaps.length" class="mt-4">
       <h3 class="text-xs font-medium uppercase tracking-wide text-slate-500">
         To reach {{ levelName(role.target_level.id, role.target_level.title) }}: {{ role.gaps_total }} {{ role.gaps_total === 1 ? 'skill' : 'skills' }} to learn<span v-if="role.gaps_total > role.gaps.length">, first {{ role.gaps.length }}</span>

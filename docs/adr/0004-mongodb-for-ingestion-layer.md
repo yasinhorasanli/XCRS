@@ -1,6 +1,6 @@
 # ADR-0004: MongoDB for the ingestion layer (raw scraped data and roadmap drafts)
 
-- **Status:** Proposed. To be decided at the start of the data-growth phase.
+- **Status:** Superseded by [ADR-0032](0032-raw-ingested-data-in-postgres-jsonb.md) (2026-10-02: raw data in PostgreSQL JSONB; roadmap drafts became reviewed YAML in git, ADR-0028).
 - **Date:** 2026-09-27
 - **Decider:** Muhammed Yasin Horasanli
 

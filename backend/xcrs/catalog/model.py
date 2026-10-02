@@ -126,6 +126,24 @@ class Roadmap:
     levels: tuple[RoadmapLevel, ...]  # in ladder order
 
 
+RESOURCE_TYPES = {"docs", "course", "tutorial", "video", "playlist", "book"}
+RESOURCE_LEVELS = {"beginner", "intermediate", "advanced"}
+
+
+@dataclass(frozen=True)
+class CuratedResource:
+    """A learning resource from catalog/resources.yaml (ADR-0033)."""
+
+    url: str
+    title: str
+    provider: str
+    type: str
+    level: str | None
+    free: bool
+    teaches: tuple[Requirement, ...]
+    description: str | None = None
+
+
 @dataclass
 class Catalog:
     levels: dict[str, dict]
@@ -136,6 +154,7 @@ class Catalog:
     legacy_roles: dict[str, str | None]
     roadmaps: dict[str, Roadmap] = field(default_factory=dict)
     roadmap_files: dict[str, str] = field(default_factory=dict)  # role id -> file name, to check naming
+    resources: list[CuratedResource] = field(default_factory=list)
 
 
 def _read(path: Path) -> dict:
@@ -222,4 +241,22 @@ def load_catalog(directory: Path = CATALOG_DIR) -> Catalog:
         roadmap = _roadmap(path)
         catalog.roadmaps[roadmap.role] = roadmap
         catalog.roadmap_files[roadmap.role] = path.stem
+    if (directory / "resources.yaml").exists():
+        catalog.resources = [_resource(r) for r in _read(directory / "resources.yaml").get("resources") or ()]
     return catalog
+
+
+def _resource(raw: dict) -> CuratedResource:
+    try:
+        return CuratedResource(
+            url=str(raw["url"]),
+            title=str(raw["title"]),
+            provider=str(raw["provider"]),
+            type=str(raw["type"]),
+            level=raw.get("level"),
+            free=bool(raw["free"]),
+            teaches=tuple(Requirement.parse(t) for t in raw.get("teaches") or ()),
+            description=raw.get("description"),
+        )
+    except KeyError as exc:
+        raise CatalogError(f"resources.yaml: {raw.get('url', raw)!r} lacks {exc}") from exc

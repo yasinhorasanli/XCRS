@@ -32,6 +32,10 @@ uv run xcrs catalog import                                              # load i
 
 **Role or alias:** other market titles go in a role's `also_called`. A title can list `adds`, the skills it asks for on top of the role; `validate` rejects a title the role covers less than 80% of at mid level, because that is a different job and needs its own role and roadmap.
 
+## Learning resources
+
+`resources.yaml` lists curated learning resources (ADR-0033): URL, title, provider, `type` (docs, course, tutorial, video, playlist, book), `level` (beginner, intermediate, advanced), `free`, and `teaches` (skills with the proficiency the resource gets you to). `validate` checks structure and skill references; `uv run xcrs resources check-links` checks the links (needs the network, never in CI). `sources/youtube.yaml` lists YouTube playlists for the YouTube adapter.
+
 ## Reviewing a change
 
 CI proves the files are consistent; the review is about whether they are **true**. For each changed file, ask:
@@ -40,7 +44,8 @@ CI proves the files are consistent; the review is about whether they are **true*
 2. **Levels:** would a hiring manager agree with what each level adds? Is anything missing that every job ad asks for, or is anything niche presented as required? Use `path` to read a whole roadmap.
 3. **Proficiency:** is `working` vs `advanced` right for that level?
 4. **Prerequisites:** is it truly required first, or just related? (Only real prerequisites belong in `requires`.)
-5. **Common paths:** is it a move people really make? Do `moves` and `bridge` show a believable distance and gap?
+5. **Resources:** is it the best free resource for that skill, and does it really get a learner to the proficiency listed?
+6. **Common paths:** is it a move people really make? Do `moves` and `bridge` show a believable distance and gap?
 
 ## Sources and attribution
 
