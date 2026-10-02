@@ -18,7 +18,7 @@ from xcrs.explain.v2 import build_facts
 from xcrs.repository import catalog_store
 from xcrs.services.skill_matching import SkillMatcher
 
-ALGORITHM_VERSION = "v2.3"
+ALGORITHM_VERSION = "v2.6"
 LEVEL_NAMES = {
     "entry": "entry level",
     "mid": "mid level",
@@ -158,6 +158,6 @@ class RecommendationServiceV2:
                     "curated": ref.curated,
                     "skills": [{"id": sk, "name": names[sk]} for sk in hits],
                 }
-                for ref, hits in suggest_resources(snapshot, r.gaps, relevant)
+                for ref, hits in suggest_resources(snapshot, r.gaps, relevant, known=known)
             ],
         }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CATEGORIES } from '~/composables/useBoard'
+import { CATEGORIES } from '~/composables/categories'
 
 const { total, pending, clear, fillExample, asInput } = useBoardV2()
 const api = useXcrsApiV2()

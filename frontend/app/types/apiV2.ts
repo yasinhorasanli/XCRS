@@ -1,5 +1,6 @@
 // The /api/v2 contract (engine v2 on the new catalog: ADR-0029, ADR-0030, ADR-0031).
-import type { Category } from '~/types/api'
+
+export type Category = 'liked' | 'neutral' | 'disliked' | 'curious'
 
 export interface SkillRef {
   id: string

@@ -41,8 +41,10 @@ Decided so far:
 - **CI and containers:** GitHub Actions runs Ruff, migrations (up, down, up), `alembic check`, the tests against pgvector, the frontend build and both image builds. Backend and frontend have container images; `docker compose --profile app` runs the full stack. [ADR-0021](adr/0021-ci-on-github-actions.md)
 - **Phrase matching:** everything above mean + 2.5σ counts; a phrase with no match falls back to its near-best concepts above 1.5σ, so short generic phrases ("Python") aren't dropped. [ADR-0022](adr/0022-threshold-fallback-for-unmatched-phrases.md)
 - **Frontend:** a skill board (drag-and-drop or click chips into four categories, with curated, searched and "related to what you added" suggestions) and a results page that links each role to its courses with colored connectors; thumbs feedback per role and course. [ADR-0023](adr/0023-skill-board-input-and-linked-results.md)
-- **Engine v2 is the main site** (ADR-0037): the board at `/`, results at `/results/{id}` with grounded LLM explanations per role written in the background (`explanations_v2`), the classic engine at `/classic` until it is retired.
-- **Engine v2 UI:** the board searches the catalog (picked chips are exact skills), accepts free text that is matched in the background as each chip is added (it shows "→ Django, REST API design" or "not a skill we know"), and takes an optional 1–4 rating per known skill. The results page shows each role's estimated level, interest and coverage, the learner's skills that count most, and the gaps to the next level grouped by roadmap stage, with thumbs feedback. The classic engine stays at `/` until the comparison and the switch-over. ([ADR-0029](adr/0029-engine-v2-skills-input-proficiency-and-coverage-scoring.md), [ADR-0031](adr/0031-engine-v2-role-scoring-calibrated-blend.md))
+- **Engine v2 is the main site** (ADR-0037): the board at `/`, results at `/results/{id}` with grounded LLM explanations per role written in the background (`explanations_v2`).
+- **The classic engine is retired** ([ADR-0039](adr/0039-retire-the-classic-engine.md)): its API, code, tables and the 2024 research data were removed on 2026-10-02 after a verified dump and a JSON export of its activity. The bullets above about the research catalog, concept → course matches, `/api/v1` and the 2.5σ threshold describe that engine and are kept as history.
+- **Resources per role** ([ADR-0038](adr/0038-one-video-slot-in-each-roles-resources.md)): two from the usual ranking, plus one approved YouTube playlist when one teaches an early gap and nothing beyond the gaps and the learner's skills.
+- **Engine v2 UI:** the board searches the catalog (picked chips are exact skills), accepts free text that is matched in the background as each chip is added (it shows "→ Django, REST API design" or "not a skill we know"), and takes an optional 1–4 rating per known skill. The results page shows each role's estimated level, interest and coverage, the learner's skills that count most, and the gaps to the next level grouped by roadmap stage, with thumbs feedback. ([ADR-0029](adr/0029-engine-v2-skills-input-proficiency-and-coverage-scoring.md), [ADR-0031](adr/0031-engine-v2-role-scoring-calibrated-blend.md))
 - **Frontend stack:** Nuxt 4 (`app/` layout), Nuxt UI 4 and Tailwind CSS 4; transitive vulnerabilities pinned to patched releases with pnpm overrides. [ADR-0024](adr/0024-frontend-nuxt-4-and-nuxt-ui-4.md)
 - **Explanation model and placement:** `qwen3.5:4b` on the CPU VM, `qwen3.5:9b` on GPUs; the embedding model runs on VM-A and the explanation LLM alone on VM-B, because on a shared CPU an explanation made embeddings ~200× slower. [ADR-0020](adr/0020-explanation-model-per-hardware.md)
 - **Catalog v2 (in progress):** a shared skills graph (prerequisites as AND-of-OR groups with proficiency), 30 career roles on one entry → staff ladder (any role can move to any other, measured), and roadmaps per role and level, kept as reviewed YAML in `catalog/`, validated in CI and loaded into a separate `catalog` schema by `xcrs catalog import` (idempotent, with an import log); engine v2 is under way: free text reaches skills through a name lookup, then the LLM picking from the catalog, confirmed by embedding similarity (ADR-0030; measured on a 349-phrase evaluation set), served at `POST /api/v2/skills/match`; roles are scored as a calibrated blend of interest and coverage with an estimated level and the gaps to the next one (ADR-0031), served at `POST /api/v2/recommendations`. Resources are collected from zero: a curated list as code (254 official docs and free courses, every skill covered, links checked) plus adapters (freeCodeCamp's open curriculum, LLM-tagged with the matching pipeline; YouTube built but off until an API key), with raw records kept in a PostgreSQL `ingest` schema (ADR-0032, ADR-0033). Each recommended role lists up to three resources for its first gaps. [ADR-0025](adr/0025-skills-catalog-from-onet-esco-with-llm-learning-paths.md), [ADR-0026](adr/0026-learning-resources-courses-videos-docs.md), [ADR-0027](adr/0027-career-roles-levels-and-transitions.md), [ADR-0028](adr/0028-catalog-as-code-skills-graph-and-prerequisites.md), [ADR-0029](adr/0029-engine-v2-skills-input-proficiency-and-coverage-scoring.md), [ADR-0030](adr/0030-skill-matching-lookup-llm-pick-confirmed-by-similarity.md)
@@ -55,39 +57,25 @@ Decided so far:
   ([ADR-0034](adr/0034-deployment-ghcr-images-compose-per-vm-caddy.md), [ADR-0035](adr/0035-abuse-protection-rate-limits-and-llm-caps.md), [ADR-0036](adr/0036-backups-nightly-verified-copied-to-the-other-vm.md))
 - **Evaluation tools** (`backend/eval/`): synthetic learner profiles, the explainer benchmark (speed and grounding per model and device), the prototype-vs-new comparison with threshold diagnostics, and the skill-matching benchmark (349 labeled phrases, 16 pipelines, cross-validated thresholds).
 
-```
-Browser ──► Frontend (TBD)
-                 │
-                 ▼
-         Backend API (/api/v1, layered)
-                 │
-                 ▼
-         PostgreSQL + pgvector ◄── ingestion pipeline ◄── (MongoDB raw/drafts, proposed)
-                                                      ◄── scraper / roadmap generator (future)
-```
-
-## New system (runs locally on the MacBook, natively or in containers; 2026-09-30)
+## The system today (2026-10-02)
 
 ```
-Browser ──► Nuxt 4 (skill board + linked results; the Nuxt server proxies /api/v1/** to the API)
-                 │  POST once, then GET while explanations arrive; suggestions via /knowledge-units
-                 ▼
-         FastAPI  POST /api/v1/recommendations → roles + courses at once   (backend/xcrs/)
-                  GET  /api/v1/recommendations/{id} → the same, with explanations as they arrive
-           api/       validation, dependency wiring
-           services/  order of steps, saves the request and its results
-           domain/    role scoring, course selection (pure Python, no I/O)
-           adapters:
-             embeddings/ ──► Ollama  qwen3-embedding:0.6b   (native, Apple GPU)
-             repository/ ──► PostgreSQL 18 + pgvector 0.8   (Docker)
-             explain/    ──► Ollama  qwen3.5:9b             (LangChain chain, one call per role,
-                                                            background worker: services/explanations.py)
-           retrieval.py  LangChain retriever over repository/ (xcrs search-courses; future chat tool)
+Browser ──► Caddy (VM-A, the only public service) ──► Nuxt 4 (board, results; proxies /api/v2/**)
+                                                          │
+                                                          ▼
+   FastAPI /api/v2   POST /skills/match · POST /recommendations · GET /recommendations/{id} · feedback
+     api/       validation, rate limits (ADR-0035)
+     services/  skill matching (lookup → LLM pick → similarity), recommend, explanation worker
+     domain/    role scoring, levels, gaps, resource choice (pure Python)
+     adapters:
+       embeddings/ ──► Ollama  qwen3-embedding:0.6b   (VM-A)
+       matching/, explain/ ──► Ollama  qwen3.5:4b / 9b (VM-B, private network; LangChain)
+       repository/ ──► PostgreSQL 18 + pgvector       (schemas: public = activity, catalog, ingest)
 
-Offline: uv run xcrs import-research-data | register-model | embed-catalog
-         (catalog vectors, threshold statistics, top-20 concept → course matches)
+Offline: xcrs catalog import | embed   (catalog/*.yaml → catalog schema, skill vectors)
+         xcrs resources ingest freecodecamp|youtube | tag | check-links | expire
 ```
 
-The research prototype was removed from this branch on 2026-10-01 (it remains on `main` and in the Zenodo release); the seed data moved to `data/research-2024/`. First measurements are in [baseline.md](baseline.md#new-system-first-measurements).
+The research prototype is on `main` and in the Zenodo release; the classic engine that replaced it on this branch was retired on 2026-10-02 (ADR-0039). Measurements are in [baseline.md](baseline.md).
 
-Still open: a chat/agent feature and LLM tracing, deployment (CD), and the cloud target. See [adr/README.md](adr/README.md#upcoming-decisions).
+Still open: LLM tracing, a chat/agent feature, the domain name, and the cloud target. See [adr/README.md](adr/README.md#upcoming-decisions).

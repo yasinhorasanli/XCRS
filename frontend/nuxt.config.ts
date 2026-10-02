@@ -19,7 +19,7 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    // Default target of the /api/v1/** proxy; XCRS_API_URL overrides it at runtime (server/api/v1/[...path].ts).
+    // Default target of the /api/v2/** proxy; XCRS_API_URL overrides it at runtime (server/api/v2/[...path].ts).
     apiUrl: 'http://localhost:8000',
   },
 })

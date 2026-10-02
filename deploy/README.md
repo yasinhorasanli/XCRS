@@ -40,8 +40,8 @@ How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036), and 
    `cp deploy/systemd/xcrs-backup.* /etc/systemd/system/ && systemctl enable --now xcrs-backup.timer`
 5. Check:
    - `systemctl list-timers | grep xcrs`;
-   - `curl -s http://<VM-A>/api/v1/health`;
-   - the site at `/v2`.
+   - `curl -s http://<VM-A>/api/v2/health`;
+   - the site at `/`.
 6. **Restrict the YouTube API key** to VM-A's public IP: Google Cloud console → *Credentials* → the key → *Application restrictions* → *IP addresses*. It was created without that restriction for local use.
 7. **Measure on the VMs:** `uv run python eval/bench_explainer.py --devices cpu` on VM-B (ADR-0020), and the matching latency (ADR-0030).
 
@@ -60,4 +60,3 @@ How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036), and 
 - At most 12 new phrases per request go to the LLM (`XCRS_MATCH_LLM_MAX_NEW`).
 - Request bodies are capped at 64 KB in Caddy.
 
-**The classic engine** (`/`) needs the 2024 research data, which isn't part of this deployment (`data/research-2024`, `xcrs import-research-data`). The deployment targets the new engine at `/v2` until the switch-over.

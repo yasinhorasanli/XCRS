@@ -1,10 +1,8 @@
 """XCRS admin commands.
 
-uv run xcrs import-research-data
 uv run xcrs register-model qwen3-embedding:0.6b --id 1 --status active
-uv run xcrs embed-catalog qwen3-embedding:0.6b
-uv run xcrs search "Docker"
-uv run xcrs search-courses "Docker"
+uv run xcrs catalog import && uv run xcrs catalog embed
+uv run xcrs catalog match k8s "neural networks"
 """
 
 import argparse
@@ -20,12 +18,11 @@ from sqlalchemy.dialects.postgresql import insert
 
 from xcrs.catalog import model, validate
 from xcrs.config import REPO_ROOT
-from xcrs.db.models import EmbeddingModel, RoadmapNode, Role
+from xcrs.db.models import EmbeddingModel
 from xcrs.db.session import new_session
 from xcrs.embeddings import embedder_for
-from xcrs.ingest import embed_catalog, embed_skills, research_data
+from xcrs.ingest import embed_skills
 from xcrs.repository import catalog_store, vectors
-from xcrs.retrieval import CourseRetriever
 from xcrs.services import skill_matching
 
 # Known model settings, so registration doesn't depend on remembering prefixes.
@@ -44,11 +41,6 @@ MODEL_PRESETS = {
 }
 
 
-def cmd_import_research_data(args) -> None:
-    with new_session() as session:
-        print(json.dumps(research_data.run(session), indent=2))
-
-
 def cmd_register_model(args) -> None:
     preset = MODEL_PRESETS.get(args.name)
     if preset is None:
@@ -61,40 +53,6 @@ def cmd_register_model(args) -> None:
         )
         session.commit()
     print(f"registered {args.name} as model {args.id} ({args.status})")
-
-
-def cmd_embed_catalog(args) -> None:
-    with new_session() as session:
-        print(json.dumps(embed_catalog.run(session, args.model), indent=2))
-
-
-def cmd_search(args) -> None:
-    """Smoke test: which concepts does a phrase match above the model's 2.5-sigma threshold?"""
-    with new_session() as session:
-        model = embed_catalog.get_model(session, args.model)
-        threshold = model.sim_mean + args.sigma * model.sim_std
-        vector = embedder_for(model).embed_query([args.phrase])[0]
-        matches = vectors.concepts_above_threshold(session, model, [vector], threshold)
-        print(
-            f"threshold {threshold:.3f} (mean {model.sim_mean:.3f} + {args.sigma}σ {model.sim_std:.3f}); "
-            f"{len(matches)} matches"
-        )
-        names = dict(
-            session.execute(
-                select(RoadmapNode.id, Role.name + " › " + RoadmapNode.name).join(Role, Role.id == RoadmapNode.role_id)
-            ).all()
-        )
-        for m in matches[: args.limit]:
-            print(f"  {m.similarity:.3f}  {names[m.concept_id]}")
-
-
-def cmd_search_courses(args) -> None:
-    """Smoke test for the LangChain retriever: courses nearest to a phrase (k-NN via the HNSW index)."""
-    with new_session() as session:
-        model = embed_catalog.get_model(session, args.model)
-        retriever = CourseRetriever(session=session, model=model, embedder=embedder_for(model), k=args.limit)
-        for doc in retriever.invoke(args.phrase):
-            print(f"  {doc.metadata['similarity']:.3f}  {doc.metadata['title']}")
 
 
 def cmd_catalog_validate(args) -> None:
@@ -333,31 +291,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(prog="xcrs")
     sub = parser.add_subparsers(required=True)
 
-    p = sub.add_parser("import-research-data", help="import the research dataset (data/research-2024)")
-    p.set_defaults(func=cmd_import_research_data)
-
     p = sub.add_parser("register-model", help="add or update an embedding model in the registry")
     p.add_argument("name")
     p.add_argument("--id", type=int, required=True)
     p.add_argument("--status", choices=["candidate", "active", "retired"], default="candidate")
     p.set_defaults(func=cmd_register_model)
-
-    p = sub.add_parser("embed-catalog", help="embed new/changed items, compute stats and top-k matches")
-    p.add_argument("model")
-    p.set_defaults(func=cmd_embed_catalog)
-
-    p = sub.add_parser("search", help="smoke test: concepts matching a phrase")
-    p.add_argument("phrase")
-    p.add_argument("--model", default="qwen3-embedding:0.6b")
-    p.add_argument("--sigma", type=float, default=2.5)
-    p.add_argument("--limit", type=int, default=15)
-    p.set_defaults(func=cmd_search)
-
-    p = sub.add_parser("search-courses", help="smoke test: courses nearest to a phrase (LangChain retriever)")
-    p.add_argument("phrase")
-    p.add_argument("--model", default="qwen3-embedding:0.6b")
-    p.add_argument("--limit", type=int, default=10)
-    p.set_defaults(func=cmd_search_courses)
 
     catalog = sub.add_parser("catalog", help="the skills/roles/roadmaps catalog in catalog/ (ADR-0028)")
     catalog_sub = catalog.add_subparsers(required=True)

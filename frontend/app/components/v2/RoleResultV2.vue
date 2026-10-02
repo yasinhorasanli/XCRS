@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CATEGORY_META } from '~/composables/useBoard'
+import { CATEGORY_META } from '~/composables/categories'
 import { LEVEL_NAMES, PROFICIENCY_NAMES } from '~/composables/useXcrsApiV2'
 import type { RoleResult } from '~/types/apiV2'
 

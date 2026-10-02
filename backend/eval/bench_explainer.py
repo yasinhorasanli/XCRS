@@ -5,8 +5,8 @@
 
 Uses Ollama's native API: it reports token timings and can force CPU inference (num_gpu=0), which the
 OpenAI-compatible endpoint can't. The prompt and the output schema are the objects the app uses
-(xcrs.explain), so the results carry over. Explanation inputs come from the real algorithm run on the
-profiles in eval/profiles.json.
+(xcrs.explain.v2, ADR-0037), so the results carry over. Explanation inputs (facts) come from engine v2 run
+on the learner profiles in eval/learner_profiles.yaml, built exactly as the app builds them; nothing is saved.
 
 Results go to eval/results/bench-explainer-<date>-<host>.json (every run) and a .md summary next to it.
 Both are rewritten after each model/device phase, so an interrupted run keeps the finished phases.
@@ -27,33 +27,49 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 import httpx
-from common import RESULTS_DIR, grounding_flags, load_profiles, to_user_input
+from bench_role_scoring import load_profiles
+from common import RESULTS_DIR, grounding_flags
 from pydantic import ValidationError
+from sqlalchemy import select
 
+from xcrs.db.models import CareerRole
 from xcrs.db.session import new_session
-from xcrs.explain.base import RoleContext
-from xcrs.explain.llm import RoleExplanationOut
-from xcrs.explain.prompts import PROMPT_VERSION, build_payload, build_system_prompt
-from xcrs.services.recommend import RecommendationService
+from xcrs.domain.role_scoring import score_roles
+from xcrs.explain.v2 import PROMPT_VERSION_V2 as PROMPT_VERSION
+from xcrs.explain.v2 import RoleExplanationV2Out, build_facts, system_prompt
+from xcrs.repository import catalog_store
+from xcrs.services.recommend_v2 import LEVEL_NAMES, ROLES_SHOWN, RecommendationServiceV2
 
 NS = 1e9
 EMBED_MODEL = "qwen3-embedding:0.6b"
 EMBED_PHRASES = ["Java", "SQL", "Spring Boot", "HTML", "PHP", "Docker", "Kubernetes", "React", "Python", "Linux"]
 
 
-def build_cases(max_roles: int) -> list[tuple[str, str, RoleContext, int]]:
-    """(profile id, role, explanation input, rank) for the first `max_roles` roles of every profile."""
+def build_cases(max_roles: int) -> list[tuple[str, str, dict, int]]:
+    """(profile id, role, facts, rank) for the first `max_roles` roles of every profile."""
     cases = []
     with new_session() as session:
-        service = RecommendationService(session, explanations=None)
-        for profile in load_profiles():
-            computed = service.compute(to_user_input(profile))
-            for rank, role in enumerate(computed.roles[:max_roles]):
-                cases.append((profile["id"], role.role, computed.contexts[role.role_id], rank))
+        snapshot = catalog_store.load_snapshot(session)
+        summaries = dict(session.execute(select(CareerRole.slug, CareerRole.summary)).all())
+    for profile in load_profiles():
+        mentions = profile["mentions"]
+        category = {m.skill: m.category for m in mentions}
+        matched = [
+            {
+                "text": snapshot.skill_names[m.skill],
+                "category": m.category.value,
+                "skills": [{"id": m.skill, "name": snapshot.skill_names[m.skill]}],
+            }
+            for m in mentions
+        ]
+        for rank, score in enumerate(score_roles(snapshot, mentions)[: min(max_roles, ROLES_SHOWN)]):
+            role = RecommendationServiceV2._role(snapshot, score, category, set(category))
+            facts = build_facts(role, matched, summaries.get(role["id"]), LEVEL_NAMES)
+            cases.append((profile["id"], role["id"], facts, rank))
     return cases
 
 
-MAX_TOKENS = 700  # same cap as the app (XCRS_LLM_MAX_TOKENS); hitting it means a runaway generation
+MAX_TOKENS = 500  # same cap as the app (XCRS_LLM_MAX_TOKENS); hitting it means a runaway generation
 
 
 def options(device: str, threads: int) -> dict:
@@ -63,17 +79,16 @@ def options(device: str, threads: int) -> dict:
     return opts
 
 
-def explain(client: httpx.Client, model: str, device: str, threads: int, context: RoleContext) -> dict:
-    payload = build_payload(context)
+def explain(client: httpx.Client, model: str, device: str, threads: int, facts: dict) -> dict:
     response = client.post(
         "/api/chat",
         json={
             "model": model,
             "messages": [
-                {"role": "system", "content": build_system_prompt(payload)},
-                {"role": "user", "content": json.dumps(payload, ensure_ascii=False)},
+                {"role": "system", "content": system_prompt(facts)},
+                {"role": "user", "content": json.dumps(facts, ensure_ascii=False)},
             ],
-            "format": RoleExplanationOut.model_json_schema(),
+            "format": RoleExplanationV2Out.model_json_schema(),
             "think": False,
             "stream": False,
             "keep_alive": "15m",
@@ -92,7 +107,7 @@ def embed_ms(client: httpx.Client, device: str, threads: int) -> float:
     return (time.perf_counter() - started) * 1000
 
 
-def contention(client: httpx.Client, model: str, device: str, threads: int, context: RoleContext) -> dict:
+def contention(client: httpx.Client, model: str, device: str, threads: int, context: dict) -> dict:
     """Request-path embedding latency, idle vs while an explanation is generating on the same machine."""
     embed_ms(client, device, threads)  # load
     idle = [embed_ms(client, device, threads) for _ in range(5)]
@@ -135,7 +150,7 @@ def markdown_summary(report: dict) -> str:
         "",
         f"- Date: {report['date']}; host: {report['host']}; CPU threads: {report['threads']}"
         + (f"; prompt: {report['prompt_version']}" if "prompt_version" in report else ""),
-        "- Inputs: explanation contexts from the algorithm on `eval/profiles.json`; the app's prompt and schema.",
+        "- Inputs: engine v2 facts for `eval/learner_profiles.yaml`; the app's v2 prompt and schema.",
         "- Clean = no automatic grounding flag (heuristics that mark explanations to read, not proof).",
         "- Prefill speed is not reported: Ollama's prompt cache makes its prompt timings unreliable.",
         "",
@@ -170,7 +185,7 @@ def markdown_summary(report: dict) -> str:
         lines += [f"### {key}", ""]
         for r in flagged:
             output = r.get("output")
-            text = output.get("role_explanation", "") if isinstance(output, dict) else str(output)[:200]
+            text = output.get("explanation", "") if isinstance(output, dict) else str(output)[:200]
             lines.append(f"- **{r['profile']} / {r['role']}**: `{', '.join(r['flags'])}`. {text}")
         lines.append("")
     return "\n".join(lines)
@@ -234,7 +249,7 @@ def main() -> None:
                         run |= {"flags": ["runaway"], "output": r["message"]["content"][:2000]}
                     else:
                         try:
-                            out = RoleExplanationOut.model_validate_json(r["message"]["content"])
+                            out = RoleExplanationV2Out.model_validate_json(r["message"]["content"])
                             run |= {"flags": grounding_flags(context, out), "output": out.model_dump()}
                         except ValidationError:
                             run |= {"flags": ["invalid_json"], "output": r["message"]["content"]}

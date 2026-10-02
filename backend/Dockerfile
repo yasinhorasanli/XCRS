@@ -3,7 +3,7 @@
 #   docker compose --profile app up -d          (see docker-compose.yml)
 # The same image runs migrations and admin jobs:
 #   docker compose run --rm api alembic upgrade head
-#   docker compose run --rm api xcrs embed-catalog qwen3-embedding:0.6b
+#   docker compose run --rm api xcrs catalog import && docker compose run --rm api xcrs catalog embed
 
 FROM python:3.13-slim AS build
 COPY --from=ghcr.io/astral-sh/uv:0.12.19 /uv /bin/uv
@@ -30,5 +30,5 @@ ENV PATH="/app/.venv/bin:$PATH" PYTHONUNBUFFERED=1
 USER xcrs
 EXPOSE 8000
 HEALTHCHECK --interval=10s --timeout=3s --start-period=10s --retries=3 \
-    CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health', timeout=2)"]
+    CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v2/health', timeout=2)"]
 CMD ["uvicorn", "xcrs.api.app:app", "--host", "0.0.0.0", "--port", "8000"]

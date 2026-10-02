@@ -4,6 +4,7 @@
 - **Reviewed (2026-10-02):** the decider confirmed the delegated choices.
 - **Date:** 2026-10-02
 - **Decider:** Muhammed Yasin Horasanli
+- **Note (2026-10-02):** decision 4's order is revised by [ADR-0038](0038-one-video-slot-in-each-roles-resources.md): the learner's languages rank above "curated", and the last slot is kept for a video.
 - **Note (2026-10-02):** `xcrs resources youtube-discover` proposes playlists per skill, the skills most roles rely on first, within the daily search quota. Ids are kept for review; titles go to a local file (API terms). The decider approves before ingestion.
 
 ## Context
