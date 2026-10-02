@@ -18,6 +18,7 @@ from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
 
 from xcrs.catalog import model, validate
+from xcrs.config import REPO_ROOT
 from xcrs.db.models import EmbeddingModel, RoadmapNode, Role
 from xcrs.db.session import new_session
 from xcrs.embeddings import embedder_for
@@ -276,6 +277,21 @@ def cmd_resources_expire(args) -> None:
     print(f"{count} expired YouTube resources deleted")
 
 
+def cmd_catalog_coverage(args) -> None:
+    """O*NET coverage report of the roadmaps (ADR-0025): writes docs/catalog-coverage.md."""
+    from xcrs.catalog import taxonomy
+
+    cat = model.load_catalog(args.dir)
+    onet_dir = Path(args.onet_dir)
+    if not (onet_dir / taxonomy.SOFTWARE_SKILLS).exists():
+        raise SystemExit(f"O*NET text files not found in {onet_dir}; download O*NET 31.0 (data/taxonomy/raw/)")
+    reports = taxonomy.coverage(cat, onet_dir)
+    Path(args.out).write_text(taxonomy.markdown(cat, reports))
+    for r in sorted(reports, key=lambda r: r.share)[:10]:
+        print(f"  {r.share:4.0%}  {r.role}")
+    print(f"wrote {args.out}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(prog="xcrs")
     sub = parser.add_subparsers(required=True)
@@ -332,6 +348,10 @@ def main() -> None:
     p.set_defaults(func=cmd_resources_check_links)
     p = resources_sub.add_parser("expire", help="delete YouTube data older than 30 days")
     p.set_defaults(func=cmd_resources_expire)
+    p = catalog_sub.add_parser("coverage", help="O*NET coverage report of the roadmaps (docs/catalog-coverage.md)")
+    p.add_argument("--onet-dir", default=str(REPO_ROOT / "data" / "taxonomy" / "raw" / "db_31_0_text"))
+    p.add_argument("--out", default=str(REPO_ROOT / "docs" / "catalog-coverage.md"))
+    p.set_defaults(func=cmd_catalog_coverage)
     p = catalog_sub.add_parser("embed", help="embed catalog skills with the active model (after import)")
     p.set_defaults(func=cmd_catalog_embed)
     p = catalog_sub.add_parser("match", help="match typed phrases to skills, e.g. k8s Jira 'neural networks'")

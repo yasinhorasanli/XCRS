@@ -77,6 +77,7 @@ class Role:
     onet: str
     levels: tuple[str, ...]
     also_called: tuple[Alias, ...] = ()
+    esco: str | None = None  # the closest ESCO occupation URI
 
 
 @dataclass(frozen=True)
@@ -218,6 +219,7 @@ def _role(role_id: str, body: dict) -> Role:
             str(body["onet"]),
             tuple(body["levels"]),
             tuple(_alias(a) for a in body.get("also_called") or ()),
+            body.get("esco"),
         )
     except KeyError as exc:
         raise CatalogError(f"roles.yaml: role {role_id!r} lacks {exc}") from exc

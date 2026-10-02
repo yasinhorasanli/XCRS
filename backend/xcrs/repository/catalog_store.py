@@ -102,7 +102,14 @@ def import_catalog(
 
     roles = CareerRole.__table__
     rows = [
-        {"slug": r.id, "name": r.name, "family_id": family_ids[r.family], "summary": r.summary, "onet_code": r.onet}
+        {
+            "slug": r.id,
+            "name": r.name,
+            "family_id": family_ids[r.family],
+            "summary": r.summary,
+            "onet_code": r.onet,
+            "esco_uri": r.esco,
+        }
         for r in cat.roles.values()
     ]
     role_changes = _upsert(session, roles, ["slug"], rows)

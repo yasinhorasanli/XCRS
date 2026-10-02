@@ -25,6 +25,9 @@ levels:
         skills: [threat-modeling:3, cloud-security:3, api-security:2, devsecops:2, network-security:2, cryptography-basics:2, active-directory:1, security-incident-response:2]
       - name: Governance and leadership
         skills: [security-compliance:2, mentoring:2, technical-writing:2, stakeholder-communication:2]
+      - name: Good to know
+        optional: true
+        skills: [infrastructure-as-code:1, terraform:1]  # O*NET 31.0 in demand (docs/catalog-coverage.md)
   staff:
     summary: "Sets security strategy and architecture across the organization."
     stages:

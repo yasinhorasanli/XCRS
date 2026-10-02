@@ -36,6 +36,11 @@ uv run xcrs catalog import                                              # load i
 
 `resources.yaml` lists curated learning resources (ADR-0033): URL, title, provider, `type` (docs, course, tutorial, video, playlist, book), `level` (beginner, intermediate, advanced), `free`, and `teaches` (skills with the proficiency the resource gets you to). `validate` checks structure and skill references; `uv run xcrs resources check-links` checks the links (needs the network, never in CI). `sources/youtube.yaml` lists YouTube playlists for the YouTube adapter.
 
+## Taxonomy evidence
+
+- **ESCO:** each role's `esco:` is the closest ESCO occupation (ESCO © European Union; reuse under the ESCO terms with attribution). It is `null` where ESCO has none (DevRel, MLOps, AI Platform, AI Reliability).
+- **O\*NET:** `uv run xcrs catalog coverage` writes `docs/catalog-coverage.md`, comparing each role's roadmap with the technologies O\*NET 31.0 marks hot or in demand for its occupation. It needs the O\*NET text files in `data/taxonomy/raw/` and is evidence for review, not an automatic change.
+
 ## Reviewing a change
 
 CI proves the files are consistent; the review is about whether they are **true**. For each changed file, ask:
