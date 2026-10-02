@@ -199,6 +199,7 @@ def test_youtube_discovery_ranks_candidates_and_resumes(tmp_path):
     from xcrs.ingest.resources import youtube_discovery
 
     def handler(request):
+        assert "key" not in request.url.params and request.headers["X-Goog-Api-Key"] == "key"  # never in a URL
         if request.url.path.endswith("/playlistItems"):
             return httpx.Response(200, json={"items": [{"contentDetails": {"videoId": "v1"}}]})
         if request.url.path.endswith("/videos"):
@@ -242,6 +243,25 @@ def test_youtube_discovery_ranks_candidates_and_resumes(tmp_path):
     saved = youtube_discovery.load_candidates(path)
     assert saved["searched"] == ["docker"] and saved["candidates"][0] == {"skill": "docker", "playlist": "PLgood"}
     assert "Docker full course" not in path.read_text() and "Docker full course" in review.read_text()
+
+
+def test_discovery_stops_at_the_quota_and_keeps_what_it_found():
+    from xcrs.ingest.resources import youtube_discovery
+
+    calls = []
+
+    def handler(request):
+        if request.url.path.endswith("/search"):
+            calls.append(request.url.params["q"])
+            if len(calls) > 1:
+                return httpx.Response(403, json={"error": {"errors": [{"reason": "quotaExceeded"}]}})
+            return httpx.Response(200, json={"items": []})
+        return httpx.Response(200, json={"items": []})
+
+    skills = [("docker", "Docker"), ("git", "Git"), ("linux", "Linux")]
+    with httpx.Client(transport=httpx.MockTransport(handler)) as client:
+        found, used = youtube_discovery.discover(client, "key", skills, done=set(), max_searches=10)
+    assert used == 1 and list(found) == ["docker"] and len(calls) == 2
 
 
 def test_discovery_drops_titles_that_dont_name_the_skill_and_prefers_trusted_channels():

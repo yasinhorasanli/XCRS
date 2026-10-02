@@ -1,0 +1,46 @@
+# The VMs, as an inventory (the Ansible convention: hosts, how to reach them, their role).
+# Copy to deploy/inventory.local.yaml (gitignored) and fill it in:
+#   cp deploy/inventory.example.yaml deploy/inventory.local.yaml && chmod 600 deploy/inventory.local.yaml
+#
+# Conventions:
+# - No secrets in git. This template is committed; the .local copy never is.
+# - Log in with SSH keys, not passwords. If the server owner gave you a password, use it once to install
+#   your public key (ssh-copy-id), then disable password login. Keep any password in a password manager,
+#   not in this file.
+# - App secrets (POSTGRES_PASSWORD, XCRS_YOUTUBE_API_KEY) live in deploy/vm-a/.env on the VM itself.
+# - Access goes over Tailscale (private VPN): use the MagicDNS name or the 100.x address below.
+
+tailnet:
+  name: ""                 # e.g. tail5b9946.ts.net (from `tailscale status` or the admin console)
+  owner: ""                # whose tailnet: yours, or the server owner's (then the VMs are shared to you)
+  funnel_enabled: false    # Funnel = public HTTPS at https://<host>.<tailnet>/ (see deploy/README.md)
+
+hosts:
+  vm-a:
+    role: web, api, postgres, embedding model, Caddy   # ADR-0014, ADR-0034
+    tailscale_name: ""     # MagicDNS name, e.g. xcrs-a
+    tailscale_ip: ""       # 100.x.y.z
+    private_ip: ""         # LAN address between the two VMs, if any (else they talk over Tailscale)
+    public_egress_ip: ""   # what the internet sees when the VM calls out: `curl -s https://ifconfig.me`
+                           # (restrict the YouTube API key to this address)
+    ssh_user: ""
+    ssh_port: 22
+    ssh_key: ~/.ssh/id_ed25519_xcrs
+    sudo: true             # can ssh_user run sudo?
+    expected: { vcpu: 8, ram_gb: 8, disk_gb: 40 }
+
+  vm-b:
+    role: LLM (Ollama, qwen3.5 4b/9b), backup target   # ADR-0020, ADR-0036
+    tailscale_name: ""
+    tailscale_ip: ""
+    private_ip: ""
+    public_egress_ip: ""
+    ssh_user: ""
+    ssh_port: 22
+    ssh_key: ~/.ssh/id_ed25519_xcrs
+    sudo: true
+    expected: { vcpu: 24, ram_gb: 32, disk_gb: 40 }
+
+server_owner:
+  contact: ""              # who to ask for resizes, reboots, port forwards
+  notes: ""

@@ -25,6 +25,29 @@ class NoApiKey(RuntimeError):
     pass
 
 
+class QuotaExceeded(RuntimeError):
+    """The daily quota (10,000 units) or a rate limit is used up; try again after midnight Pacific time."""
+
+
+class YouTubeError(RuntimeError):
+    pass
+
+
+def api_get(client: httpx.Client, url: str, api_key: str, params: dict) -> dict:
+    """GET a YouTube Data API endpoint. The key goes in a header, never the URL, so it can't leak into
+    error messages, logs or the runs table; errors carry only the endpoint and status."""
+    response = client.get(url, params=params, headers={"X-Goog-Api-Key": api_key})
+    if response.status_code in (403, 429):
+        reasons = (
+            {e.get("reason") for e in response.json().get("error", {}).get("errors", [])} if response.content else set()
+        )
+        if response.status_code == 429 or reasons & {"quotaExceeded", "rateLimitExceeded", "dailyLimitExceeded"}:
+            raise QuotaExceeded(f"{url.rsplit('/', 1)[-1]}: quota or rate limit reached ({response.status_code})")
+    if response.is_error:
+        raise YouTubeError(f"{url.rsplit('/', 1)[-1]}: HTTP {response.status_code}")
+    return response.json()
+
+
 def configured_playlists(path=CATALOG_DIR / "sources" / "youtube.yaml") -> list[str]:
     data = yaml.safe_load(path.read_text()) if path.exists() else None
     return [str(p) for p in (data or {}).get("playlists") or []]
@@ -54,17 +77,19 @@ def ingest(session: Session, client: httpx.Client, api_key: str | None, playlist
     try:
         for i in range(0, len(playlists), 50):
             ids = ",".join(playlists[i : i + 50])
-            response = client.get(
-                API, params={"part": "snippet,contentDetails", "id": ids, "key": api_key, "maxResults": 50}
-            )
-            response.raise_for_status()
-            for item in response.json().get("items", []):
+            page = api_get(client, API, api_key, {"part": "snippet,contentDetails", "id": ids, "maxResults": 50})
+            for item in page.get("items", []):
                 store_raw(session, run, SOURCE, item["id"], item)
                 stats["upserted"] += upsert_resource(session, normalize(item)) is not None
         finish_run(session, run, stats)
         return stats
-    except httpx.HTTPError as exc:
-        finish_run(session, run, stats, error=str(exc))
+    except (httpx.HTTPError, QuotaExceeded, YouTubeError) as exc:
+        finish_run(
+            session,
+            run,
+            stats,
+            error=f"{type(exc).__name__}: {exc}" if not isinstance(exc, httpx.HTTPError) else type(exc).__name__,
+        )
         raise
 
 

@@ -172,3 +172,6 @@ CLAUDE.md
 
 # Database backups (scripts/db-backup.sh); never committed
 /backups/
+
+# Filled-in VM inventory (hosts, users, addresses); the template is deploy/inventory.example.yaml
+deploy/*.local.yaml
