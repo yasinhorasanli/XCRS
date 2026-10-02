@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
-const isV2 = computed(() => route.path.startsWith('/v2'))
+const isClassic = computed(() => route.path.startsWith('/classic'))
 </script>
 
 <template>
@@ -13,12 +13,12 @@ const isV2 = computed(() => route.path.startsWith('/v2'))
       </NuxtLink>
       <div class="flex items-center gap-1">
       <UButton
-        :to="isV2 ? '/' : '/v2'"
+        :to="isClassic ? '/' : '/classic'"
         color="neutral"
         variant="ghost"
         size="sm"
-        :icon="isV2 ? 'i-heroicons-arrow-uturn-left' : 'i-heroicons-sparkles'"
-        :label="isV2 ? 'Classic' : 'New engine (beta)'"
+        :icon="isClassic ? 'i-heroicons-sparkles' : 'i-heroicons-clock'"
+        :label="isClassic ? 'New engine' : 'Classic engine'"
       />
       <UButton
         to="https://github.com/yasinhorasanli/XCRS"

@@ -105,6 +105,9 @@ class RoleV2(BaseModel):
     gaps: list[GapV2]
     gaps_total: int
     resources: list[ResourceV2] = []
+    explanation_status: Literal["pending", "done", "failed", "disabled"] = "disabled"
+    explanation: str | None = None  # written by the local LLM in the background (ADR-0037)
+    next_step: str | None = None
 
 
 class MatchedChipV2(BaseModel):

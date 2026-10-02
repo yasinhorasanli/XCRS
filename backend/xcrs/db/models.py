@@ -552,3 +552,28 @@ class ResourceSkill(Base):
     level: Mapped[int | None] = mapped_column(SmallInteger)
     confidence: Mapped[float | None]
     tagged_by: Mapped[str] = mapped_column(Text)
+
+
+class ExplanationV2(Base):
+    """An engine v2 role's explanation job and result (ADR-0037); the rows are the queue (ADR-0018)."""
+
+    __tablename__ = "explanations_v2"
+    __table_args__ = (
+        CheckConstraint("status IN ('pending', 'done', 'failed', 'disabled')", name="explanations_v2_status_check"),
+        Index("explanations_v2_pending_idx", "created_at", postgresql_where=text("status = 'pending'")),
+    )
+
+    recommendation_id: Mapped[uuid.UUID] = mapped_column(
+        UUID, ForeignKey("recommendations_v2.id", ondelete="CASCADE"), primary_key=True
+    )
+    role: Mapped[str] = mapped_column(Text, primary_key=True)
+    rank: Mapped[int] = mapped_column(SmallInteger)
+    status: Mapped[str] = mapped_column(Text, server_default="pending")
+    input: Mapped[dict] = mapped_column(JSONB)
+    explanation: Mapped[str | None] = mapped_column(Text)
+    next_step: Mapped[str | None] = mapped_column(Text)
+    prompt_version: Mapped[str | None] = mapped_column(Text)
+    attempts: Mapped[int] = mapped_column(SmallInteger, server_default="0")
+    ms: Mapped[int | None]
+    created_at: Mapped[datetime] = created_at()
+    explained_at: Mapped[datetime | None]
