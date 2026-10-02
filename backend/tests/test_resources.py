@@ -92,6 +92,13 @@ def test_suggestions_prefer_curated_free_on_topic_resources_for_the_earliest_gap
     assert [(r.id, hits) for r, hits in picked] == [("java", ["oop"]), ("git", ["git"]), ("yt", ["oop"])]
     assert [r.id for r, _ in suggest_resources(snap, gaps, relevant={"oop", "git", "java"}, limit=2)] == ["java", "yt"]
 
+    # The learner's language comes before "curated": a Python learner gets Python OOP, not Java OOP.
+    snap.languages = frozenset({"java", "python", "cpp"})
+    py = ResourceRef("py", "OOP in Python", "u7", "P", "course", None, True, False, (("oop", 2), ("python", 2)))
+    snap.teaching["oop"].append(py)
+    picked = suggest_resources(snap, gaps, relevant={"oop", "git", "java", "python"}, known={"python"})
+    assert picked[0][0].id == "py"
+
 
 @pytest.fixture
 def session():

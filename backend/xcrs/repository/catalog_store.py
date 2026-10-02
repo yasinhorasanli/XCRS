@@ -377,6 +377,7 @@ def load_snapshot(session: Session) -> CatalogSnapshot:
         skill_names=names,
         resources=resources,
         prerequisites={s: [(tuple(o), lv) for _, (o, lv) in sorted(g.items())] for s, g in prerequisites.items()},
+        languages=frozenset(session.scalars(select(Skill.slug).where(Skill.kind == "language"))),
     )
     _snapshots.clear()
     _snapshots[checksum] = snapshot

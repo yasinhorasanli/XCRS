@@ -1,4 +1,4 @@
-# ADR-0038: Each role's resources keep one slot for a video
+# ADR-0038: Each role's resources keep one slot for a video, and the learner's languages rank first
 
 - **Status:** Accepted
 - **Date:** 2026-10-02
@@ -30,15 +30,20 @@ Two resources from the usual ranking, then the best video or playlist that teach
 
 `suggest_resources` fills the first two slots with the usual ranking (curated, free, gaps covered, on topic, reach, type). If none of them is a video or playlist, the last slot goes to the best video that teaches one of the first three gaps **and nothing beyond the gaps and the learner's own skills**. With no such video, the slot falls back to the usual ranking.
 
-The video must fit the learner, not only the role: a first version accepted any skill of the role and showed a C# playlist to a learner who enjoys Python and Django (the backend roadmap accepts C#, Java, Go or Python). The same rule, "fewest skills beyond the gaps and the learner's", is also a tie-break in the usual ranking, after "on topic". `ALGORITHM_VERSION` v2.5.
+The video must fit the learner, not only the role: a first version accepted any skill of the role and showed a C# playlist to a learner who enjoys Python and Django (the backend roadmap accepts C#, Java, Go or Python).
 
-Measured on the 53 learner profiles (159 role results): 125 (79%) show a video; 63 different role–video pairs. The looser first version reached 91%, by including playlists for languages the learner never mentioned.
+**The learner's languages come first in the whole ranking** (decided by the decider on 2026-10-02, after Oracle's "Learn Java" was shown to a Python learner for object-oriented programming): a resource that teaches a programming language (catalog `kind: language`) the learner didn't mention and the gaps don't ask for ranks below every resource that doesn't, even a curated one. This revises the order of ADR-0033 decision 4. The new order: learner's languages, curated, free, gaps covered, on topic, fewest other skills beyond the gaps and the learner's, reach, type. `ALGORITHM_VERSION` v2.6.
+
+Two broader versions were measured and rejected: ranking "fewest extra skills of any kind" first picked "Python Certification" over CS50 for frontend roles (22 language mismatches), and ranking "on topic" first made it 34. Restricting the rule to languages brought it to 0.
+
+Measured on the 53 learner profiles (159 role results, 477 picks): 125 (79%) show a video; 0 picks teach a language the learner didn't mention and the gaps don't need (18 with curated first). Picks: 322 curated, 125 YouTube, 30 freeCodeCamp (0 freeCodeCamp before this ADR). The looser first video rule reached 91% video coverage by including playlists in languages the learner never mentioned.
 
 ## Trade-offs accepted
 
 - The video can repeat a skill the first two already cover. That's accepted: it's the same gap in a different format.
 - Video coverage depends on the approved playlists (44 of 257 skills so far); discovery continues within the daily quota.
-- "Curated first" still outranks fit to the learner in the first two slots: a Python learner can get Oracle's "Learn Java" for object-oriented programming although freeCodeCamp's "Introduction to OOP in Python" exists. Changing that order would revise ADR-0033 and is left to the decider.
+- A language-neutral curated resource still beats one in the learner's language (a Python learner gets the curated "Design Patterns" tutorial for OOP rather than freeCodeCamp's "Introduction to OOP in Python"). Preferring the learner's language positively is a possible next step.
+- The rule relies on skill kinds; a resource tagged only with a concept (not its language) escapes it.
 
 ## Revisit when
 

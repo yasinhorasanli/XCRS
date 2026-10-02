@@ -18,7 +18,7 @@ from xcrs.explain.v2 import build_facts
 from xcrs.repository import catalog_store
 from xcrs.services.skill_matching import SkillMatcher
 
-ALGORITHM_VERSION = "v2.5"
+ALGORITHM_VERSION = "v2.6"
 LEVEL_NAMES = {
     "entry": "entry level",
     "mid": "mid level",

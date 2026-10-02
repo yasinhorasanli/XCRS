@@ -41,7 +41,7 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0035](0035-abuse-protection-rate-limits-and-llm-caps.md) | Abuse protection: per-client rate limits on expensive endpoints, and a cap on new LLM matches per request | Accepted (delegated, reviewed) | 2026-10-02 |
 | [0036](0036-backups-nightly-verified-copied-to-the-other-vm.md) | Backups: nightly verified dumps on VM-A, copied to VM-B, weekly restore test | Accepted (delegated, reviewed) | 2026-10-02 |
 | [0037](0037-engine-v2-becomes-the-main-site-with-grounded-explanations.md) | Engine v2 becomes the main site, with grounded LLM explanations per role; the classic engine moves to /classic | Accepted | 2026-10-02 |
-| [0038](0038-one-video-slot-in-each-roles-resources.md) | Each role's resources keep one slot for an on-topic video | Accepted | 2026-10-02 |
+| [0038](0038-one-video-slot-in-each-roles-resources.md) | Each role's resources keep one slot for an on-topic video; the learner's languages rank first | Accepted | 2026-10-02 |
 | [0039](0039-retire-the-classic-engine.md) | Retire the classic engine: code, API, tables and research data removed after an archive | Accepted | 2026-10-02 |
 
 ## Upcoming decisions

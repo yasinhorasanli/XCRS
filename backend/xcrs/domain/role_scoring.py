@@ -117,6 +117,7 @@ class CatalogSnapshot:
     prerequisites: dict[str, list[tuple[tuple[str, ...], int]]] = field(default_factory=dict)  # skill -> requires
     weights: dict[str, float] = field(default_factory=dict)  # distinctiveness per skill
     resources: list[ResourceRef] = field(default_factory=list)
+    languages: frozenset[str] = frozenset()  # skills of kind "language" (resource choice, ADR-0038)
 
     def __post_init__(self) -> None:
         if not self.weights:
@@ -306,6 +307,12 @@ def suggest_resources(
     def off_topic(r: ResourceRef) -> int:
         return sum(1 for s, _ in r.teaches if relevant is not None and s not in relevant and s not in need)
 
+    def other_languages(r: ResourceRef) -> int:
+        """Languages it teaches that the learner didn't mention and the gaps don't ask for."""
+        if known is None:
+            return 0
+        return sum(1 for s, _ in r.teaches if s in snapshot.languages and s not in need and s not in known)
+
     def extras(r: ResourceRef) -> int:
         return sum(1 for s, _ in r.teaches if known is not None and s not in need and s not in known)
 
@@ -314,6 +321,7 @@ def suggest_resources(
         gaps_hit = [s for s in teaches if s in need and s not in covered]
         reach = min(1.0, max(teaches.get(o, 0) / gap.need for o in gap.options))
         return (
+            -other_languages(r),
             r.curated,
             r.free,
             len(gaps_hit),
