@@ -11,11 +11,11 @@ from dataclasses import dataclass
 from sqlalchemy.orm import Session
 
 from xcrs.db.models import FeedbackV2, RecommendationV2
-from xcrs.domain.role_scoring import Category, Mention, RoleScore, score_roles
+from xcrs.domain.role_scoring import Category, Mention, RoleScore, score_roles, suggest_resources
 from xcrs.repository import catalog_store
 from xcrs.services.skill_matching import SkillMatcher
 
-ALGORITHM_VERSION = "v2.2"  # bump when scoring, weights or matching change (results stay comparable)
+ALGORITHM_VERSION = "v2.3"  # bump when scoring, weights or matching change (results stay comparable)
 ROLES_SHOWN = 3
 GAPS_SHOWN = 8
 
@@ -58,7 +58,8 @@ class RecommendationServiceV2:
         status = "ok" if mentions else "insufficient_input"
         roles = score_roles(snapshot, mentions)[:ROLES_SHOWN] if mentions else []
         category = {m.skill: m.category for m in mentions}
-        result = {"matched": echo, "roles": [self._role(snapshot, r, category) for r in roles]}
+        known = {m.skill for m in mentions}
+        result = {"matched": echo, "roles": [self._role(snapshot, r, category, known) for r in roles]}
         row = RecommendationV2(
             catalog_checksum=catalog_store.last_import_checksum(self.session) or "none",
             algorithm_version=ALGORITHM_VERSION,
@@ -83,8 +84,9 @@ class RecommendationServiceV2:
         self.session.commit()
 
     @staticmethod
-    def _role(snapshot, r: RoleScore, category: dict[str, Category]) -> dict:
+    def _role(snapshot, r: RoleScore, category: dict[str, Category], known: set[str]) -> dict:
         role = snapshot.roles[r.role]
+        relevant = known | {o for q in role.requirements[role.levels[-1]] for o in q.options} | set(role.optional)
         names = snapshot.skill_names
 
         def level(lv: str | None) -> dict | None:
@@ -113,4 +115,18 @@ class RecommendationServiceV2:
                 for g in r.gaps[:GAPS_SHOWN]
             ],
             "gaps_total": len(r.gaps),
+            "resources": [
+                {
+                    "id": ref.id,
+                    "title": ref.title,
+                    "url": ref.url,
+                    "provider": ref.provider,
+                    "type": ref.type,
+                    "level": ref.level,
+                    "free": ref.free,
+                    "curated": ref.curated,
+                    "skills": [{"id": sk, "name": names[sk]} for sk in hits],
+                }
+                for ref, hits in suggest_resources(snapshot, r.gaps, relevant)
+            ],
         }

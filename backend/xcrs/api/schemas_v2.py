@@ -79,6 +79,18 @@ class BecauseV2(SkillRefV2):
     category: Category
 
 
+class ResourceV2(BaseModel):
+    id: str
+    title: str
+    url: str
+    provider: str
+    type: str
+    level: str | None
+    free: bool
+    curated: bool
+    skills: list[SkillRefV2]  # the role's gaps this resource covers
+
+
 class RoleV2(BaseModel):
     id: str
     name: str
@@ -92,6 +104,7 @@ class RoleV2(BaseModel):
     because: list[BecauseV2]
     gaps: list[GapV2]
     gaps_total: int
+    resources: list[ResourceV2] = []
 
 
 class MatchedChipV2(BaseModel):

@@ -476,3 +476,79 @@ class FeedbackV2(Base):
     rating: Mapped[int | None] = mapped_column(SmallInteger)
     comment: Mapped[str | None] = mapped_column(Text)
     created_at: Mapped[datetime] = created_at()
+
+
+# --- Learning resources (ADR-0026, ADR-0032, ADR-0033) ------------------------------------------------
+
+INGEST = "ingest"
+
+
+class IngestRun(Base):
+    __tablename__ = "runs"
+    __table_args__ = ({"schema": INGEST},)
+
+    id: Mapped[int] = mapped_column(BigInteger, Identity(always=True), primary_key=True)
+    source: Mapped[str] = mapped_column(Text)
+    started_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    finished_at: Mapped[datetime | None]
+    status: Mapped[str] = mapped_column(Text, server_default="running")
+    stats: Mapped[dict] = mapped_column(JSONB, server_default="{}")
+    error: Mapped[str | None] = mapped_column(Text)
+
+
+class RawRecord(Base):
+    __tablename__ = "raw_records"
+    __table_args__ = (
+        UniqueConstraint("source", "external_id", "content_hash"),
+        Index("raw_records_latest_idx", "source", "external_id", text("fetched_at DESC")),
+        {"schema": INGEST},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, Identity(always=True), primary_key=True)
+    source: Mapped[str] = mapped_column(Text)
+    external_id: Mapped[str] = mapped_column(Text)
+    content_hash: Mapped[str] = mapped_column(Text)
+    payload: Mapped[dict] = mapped_column(JSONB)
+    run_id: Mapped[int | None] = mapped_column(BigInteger, ForeignKey("ingest.runs.id", ondelete="SET NULL"))
+    fetched_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+
+class LearningResource(Base):
+    __tablename__ = "learning_resources"
+    __table_args__ = (UniqueConstraint("source", "external_id"), {"schema": CATALOG})
+
+    id: Mapped[int] = mapped_column(BigInteger, Identity(always=True), primary_key=True)
+    source: Mapped[str] = mapped_column(Text)
+    external_id: Mapped[str] = mapped_column(Text)
+    type: Mapped[str] = mapped_column(Text)
+    provider: Mapped[str] = mapped_column(Text)
+    url: Mapped[str] = mapped_column(Text, unique=True)
+    title: Mapped[str] = mapped_column(Text)
+    description: Mapped[str | None] = mapped_column(Text)
+    language: Mapped[str] = mapped_column(Text, server_default="en")
+    level: Mapped[str | None] = mapped_column(Text)
+    duration_minutes: Mapped[int | None]
+    is_free: Mapped[bool]
+    price: Mapped[Decimal | None] = mapped_column(Numeric)
+    currency: Mapped[str | None] = mapped_column(Text)
+    quality: Mapped[dict] = mapped_column(JSONB, server_default="{}")
+    fetched_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    last_checked_at: Mapped[datetime | None]
+    last_status: Mapped[int | None] = mapped_column(SmallInteger)
+    is_active: Mapped[bool] = mapped_column(server_default="true")
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+
+class ResourceSkill(Base):
+    __tablename__ = "resource_skills"
+    __table_args__ = (Index("resource_skills_skill_idx", "skill_id", "relation"), {"schema": CATALOG})
+
+    resource_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey("catalog.learning_resources.id", ondelete="CASCADE"), primary_key=True
+    )
+    skill_id: Mapped[int] = mapped_column(ForeignKey("catalog.skills.id", ondelete="CASCADE"), primary_key=True)
+    relation: Mapped[str] = mapped_column(Text, primary_key=True, server_default="teaches")
+    level: Mapped[int | None] = mapped_column(SmallInteger)
+    confidence: Mapped[float | None]
+    tagged_by: Mapped[str] = mapped_column(Text)

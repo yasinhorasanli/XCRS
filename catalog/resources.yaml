@@ -1,0 +1,293 @@
+# Curated learning resources (ADR-0026, ADR-0033): official documentation and well-known free courses,
+# reviewed as pull requests like the rest of the catalog. `teaches` lists catalog skills with the
+# proficiency the resource gets a learner to (1 basic · 2 working · 3 advanced · 4 expert).
+#
+# type: docs | course | tutorial | video | playlist | book     level: beginner | intermediate | advanced
+# Links are checked with `uv run xcrs resources check-links` (never in CI). Drafted by Claude
+# (2026-10-02), links verified live (fastapi.tiangolo.com could not be resolved from the build machine);
+# which resource is *best* per skill is for review.
+
+resources:
+  # --- Computing foundations ----------------------------------------------------------------------
+  - {url: https://cs50.harvard.edu/x/, title: "CS50: Introduction to Computer Science", provider: Harvard University, type: course, level: beginner, free: true, teaches: [programming-fundamentals:2, c:1, data-structures:1, algorithms:1, sql:1, html:1]}
+  - {url: https://www.freecodecamp.org/learn/algorithms-and-data-structure, title: "Algorithms and Data Structures Certification", provider: freeCodeCamp, type: course, level: intermediate, free: true, teaches: [data-structures:2, algorithms:2, python:2]}
+  - {url: https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/, title: "Introduction to Algorithms (6.006)", provider: MIT OpenCourseWare, type: course, level: intermediate, free: true, teaches: [algorithms:3, data-structures:3]}
+  - {url: https://refactoring.guru/design-patterns, title: "Design Patterns", provider: Refactoring.Guru, type: tutorial, level: intermediate, free: true, teaches: [design-patterns:2, oop:2]}
+  - {url: https://refactoring.guru/refactoring, title: "Refactoring", provider: Refactoring.Guru, type: tutorial, level: intermediate, free: true, teaches: [clean-code:2]}
+  - {url: https://pages.cs.wisc.edu/~remzi/OSTEP/, title: "Operating Systems: Three Easy Pieces", provider: University of Wisconsin-Madison, type: book, level: intermediate, free: true, teaches: [operating-systems:2, concurrency:2]}
+  - {url: https://gaia.cs.umass.edu/kurose_ross/online_lectures.htm, title: "Computer Networking: a Top-Down Approach (video lectures)", provider: Kurose and Ross, type: course, level: intermediate, free: true, teaches: [computer-networking:2]}
+  - {url: https://mostly-adequate.gitbook.io/mostly-adequate-guide, title: "Professor Frisby's Mostly Adequate Guide to Functional Programming", provider: Brian Lonsdorf, type: book, level: intermediate, free: true, teaches: [functional-programming:2]}
+  - {url: https://docs.python.org/3/library/profile.html, title: "The Python Profilers", provider: Python Software Foundation, type: docs, level: intermediate, free: true, teaches: [profiling:2]}
+  - {url: https://www.brendangregg.com/perf.html, title: "Linux perf examples", provider: Brendan Gregg, type: tutorial, level: advanced, free: true, teaches: [profiling:3]}
+  - {url: https://developer.mozilla.org/en-US/docs/Web/HTTP, title: "HTTP", provider: MDN Web Docs, type: docs, level: beginner, free: true, teaches: [http:2]}
+  - {url: https://www.freecodecamp.org/learn/introduction-to-bash, title: "Introduction to Bash", provider: freeCodeCamp, type: course, level: beginner, free: true, teaches: [linux:1, shell-scripting:1]}
+  - {url: https://ubuntu.com/tutorials/command-line-for-beginners, title: "The Linux command line for beginners", provider: Canonical (Ubuntu), type: tutorial, level: beginner, free: true, teaches: [linux:2]}
+  - {url: https://www.gnu.org/software/bash/manual/bash.html, title: "Bash Reference Manual", provider: GNU Project, type: docs, level: intermediate, free: true, teaches: [shell-scripting:2]}
+  - {url: https://learn.microsoft.com/en-us/powershell/scripting/overview, title: "PowerShell documentation", provider: Microsoft Learn, type: docs, level: beginner, free: true, teaches: [powershell:2]}
+  - {url: https://git-scm.com/book/en/v2, title: "Pro Git", provider: Git project, type: book, level: beginner, free: true, teaches: [git:3]}
+  - {url: https://google.github.io/eng-practices/review/, title: "Google Engineering Practices: Code Review", provider: Google, type: docs, level: intermediate, free: true, teaches: [code-review:2]}
+  - {url: https://martinfowler.com/articles/practical-test-pyramid.html, title: "The Practical Test Pyramid", provider: martinfowler.com, type: tutorial, level: intermediate, free: true, teaches: [testing-fundamentals:2, unit-testing:2, integration-testing:2]}
+  - {url: https://docs.pytest.org/en/stable/getting-started.html, title: "Get started with pytest", provider: pytest, type: docs, level: beginner, free: true, teaches: [unit-testing:2, python:1]}
+  - {url: https://martinfowler.com/bliki/TestDrivenDevelopment.html, title: "Test Driven Development", provider: martinfowler.com, type: tutorial, level: intermediate, free: true, teaches: [tdd:1]}
+  - {url: https://regexone.com/, title: "RegexOne", provider: RegexOne, type: tutorial, level: beginner, free: true, teaches: [regular-expressions:2]}
+
+  # --- Languages -------------------------------------------------------------------------------------
+  - {url: https://docs.python.org/3/tutorial/, title: "The Python Tutorial", provider: Python Software Foundation, type: docs, level: beginner, free: true, teaches: [python:2]}
+  - {url: https://www.freecodecamp.org/learn/python-v9, title: "Python Certification", provider: freeCodeCamp, type: course, level: beginner, free: true, teaches: [python:2, programming-fundamentals:2]}
+  - {url: https://javascript.info/, title: "The Modern JavaScript Tutorial", provider: javascript.info, type: tutorial, level: beginner, free: true, teaches: [javascript:3, dom:2]}
+  - {url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide, title: "JavaScript Guide", provider: MDN Web Docs, type: docs, level: beginner, free: true, teaches: [javascript:2]}
+  - {url: https://www.typescriptlang.org/docs/handbook/intro.html, title: "The TypeScript Handbook", provider: Microsoft, type: docs, level: intermediate, free: true, teaches: [typescript:2]}
+  - {url: https://dev.java/learn/, title: "Learn Java", provider: Oracle, type: docs, level: beginner, free: true, teaches: [java:2, oop:2]}
+  - {url: https://kotlinlang.org/docs/getting-started.html, title: "Get started with Kotlin", provider: JetBrains, type: docs, level: beginner, free: true, teaches: [kotlin:2]}
+  - {url: https://docs.swift.org/latest/documentation/the-swift-programming-language/, title: "The Swift Programming Language", provider: Apple, type: book, level: beginner, free: true, teaches: [swift:2]}
+  - {url: https://learn.microsoft.com/en-us/dotnet/csharp/, title: "C# documentation", provider: Microsoft Learn, type: docs, level: beginner, free: true, teaches: [csharp:2]}
+  - {url: https://go.dev/tour/, title: "A Tour of Go", provider: The Go Authors, type: tutorial, level: beginner, free: true, teaches: [go:2]}
+  - {url: https://doc.rust-lang.org/book/, title: "The Rust Programming Language", provider: Rust Foundation, type: book, level: beginner, free: true, teaches: [rust:2]}
+  - {url: https://www.learn-c.org/, title: "Learn C", provider: learn-c.org, type: tutorial, level: beginner, free: true, teaches: [c:2]}
+  - {url: https://www.learncpp.com/, title: "LearnCpp.com", provider: LearnCpp.com, type: tutorial, level: beginner, free: true, teaches: [cpp:2, oop:2]}
+  - {url: https://www.php.net/manual/en/getting-started.php, title: "Getting started with PHP", provider: The PHP Group, type: docs, level: beginner, free: true, teaches: [php:2]}
+  - {url: https://dart.dev/language, title: "Introduction to Dart", provider: Google, type: docs, level: beginner, free: true, teaches: [dart:2]}
+  - {url: https://r4ds.hadley.nz/, title: "R for Data Science", provider: Hadley Wickham et al., type: book, level: beginner, free: true, teaches: [r:2, data-cleaning:2, data-visualization:2]}
+  - {url: https://sqlbolt.com/, title: "SQLBolt", provider: SQLBolt, type: tutorial, level: beginner, free: true, teaches: [sql:2]}
+  - {url: https://www.freecodecamp.org/learn/relational-databases-v9, title: "Relational Databases Certification", provider: freeCodeCamp, type: course, level: beginner, free: true, teaches: [sql:2, relational-databases:2, postgresql:1, shell-scripting:1]}
+  - {url: https://docs.soliditylang.org/en/latest/, title: "Solidity documentation", provider: Solidity, type: docs, level: intermediate, free: true, teaches: [solidity:2]}
+
+  # --- Web front end ---------------------------------------------------------------------------------
+  - {url: https://developer.mozilla.org/en-US/docs/Learn_web_development, title: "Learn web development", provider: MDN Web Docs, type: course, level: beginner, free: true, teaches: [html:2, css:2, javascript:1, accessibility:1]}
+  - {url: https://www.freecodecamp.org/learn/responsive-web-design-v9, title: "Responsive Web Design Certification", provider: freeCodeCamp, type: course, level: beginner, free: true, teaches: [html:2, css:2, responsive-design:2, accessibility:1]}
+  - {url: https://web.dev/learn/css, title: "Learn CSS", provider: web.dev (Google), type: course, level: beginner, free: true, teaches: [css:3]}
+  - {url: https://web.dev/learn/design, title: "Learn Responsive Design", provider: web.dev (Google), type: course, level: intermediate, free: true, teaches: [responsive-design:3]}
+  - {url: https://web.dev/learn/accessibility, title: "Learn Accessibility", provider: web.dev (Google), type: course, level: intermediate, free: true, teaches: [accessibility:2]}
+  - {url: https://www.w3.org/WAI/fundamentals/, title: "Accessibility Fundamentals", provider: W3C Web Accessibility Initiative, type: docs, level: beginner, free: true, teaches: [accessibility:2]}
+  - {url: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model, title: "Document Object Model (DOM)", provider: MDN Web Docs, type: docs, level: intermediate, free: true, teaches: [dom:2]}
+  - {url: https://developer.chrome.com/docs/devtools, title: "Chrome DevTools", provider: Google, type: docs, level: beginner, free: true, teaches: [browser-devtools:2, debugging:1]}
+  - {url: https://react.dev/learn, title: "Learn React", provider: Meta, type: docs, level: beginner, free: true, teaches: [react:2, state-management:1]}
+  - {url: https://vuejs.org/guide/introduction.html, title: "Vue.js Guide", provider: Vue.js, type: docs, level: beginner, free: true, teaches: [vue:2]}
+  - {url: https://angular.dev/tutorials, title: "Angular tutorials", provider: Google, type: tutorial, level: beginner, free: true, teaches: [angular:2]}
+  - {url: https://nextjs.org/learn, title: "Learn Next.js", provider: Vercel, type: course, level: intermediate, free: true, teaches: [nextjs:2, react:2]}
+  - {url: https://nuxt.com/docs/getting-started/introduction, title: "Nuxt documentation", provider: Nuxt, type: docs, level: intermediate, free: true, teaches: [nuxt:2]}
+  - {url: https://redux.js.org/tutorials/essentials/part-1-overview-concepts, title: "Redux Essentials", provider: Redux, type: tutorial, level: intermediate, free: true, teaches: [state-management:2]}
+  - {url: https://tailwindcss.com/docs, title: "Tailwind CSS documentation", provider: Tailwind Labs, type: docs, level: beginner, free: true, teaches: [tailwind-css:2]}
+  - {url: https://vite.dev/guide/, title: "Vite guide", provider: Vite, type: docs, level: intermediate, free: true, teaches: [frontend-build-tools:2]}
+  - {url: https://testing-library.com/docs/, title: "Testing Library", provider: Testing Library, type: docs, level: intermediate, free: true, teaches: [frontend-testing:2]}
+  - {url: https://playwright.dev/docs/intro, title: "Playwright documentation", provider: Microsoft, type: docs, level: intermediate, free: true, teaches: [e2e-testing:2, test-automation:2]}
+  - {url: https://web.dev/learn/performance, title: "Learn Performance", provider: web.dev (Google), type: course, level: intermediate, free: true, teaches: [web-performance:2]}
+  - {url: https://www.designsystems.com/, title: "Design Systems", provider: Figma, type: tutorial, level: intermediate, free: true, teaches: [design-systems:2]}
+  - {url: https://www.patterns.dev/, title: "Patterns.dev", provider: patterns.dev, type: book, level: advanced, free: true, teaches: [frontend-architecture:2, design-patterns:2]}
+  - {url: https://www.nngroup.com/articles/ten-usability-heuristics/, title: "10 Usability Heuristics for User Interface Design", provider: Nielsen Norman Group, type: tutorial, level: beginner, free: true, teaches: [ui-ux-basics:2]}
+
+  # --- Back end -------------------------------------------------------------------------------------
+  - {url: https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design, title: "RESTful web API design", provider: Microsoft Learn, type: docs, level: intermediate, free: true, teaches: [rest-api-design:2]}
+  - {url: https://graphql.org/learn/, title: "Learn GraphQL", provider: GraphQL Foundation, type: docs, level: beginner, free: true, teaches: [graphql:2]}
+  - {url: https://grpc.io/docs/what-is-grpc/introduction/, title: "Introduction to gRPC", provider: gRPC Authors, type: docs, level: intermediate, free: true, teaches: [grpc:2]}
+  - {url: https://nodejs.org/learn, title: "Learn Node.js", provider: OpenJS Foundation, type: docs, level: beginner, free: true, teaches: [nodejs:2]}
+  - {url: https://www.freecodecamp.org/learn/back-end-development-and-apis-v9, title: "Back-End Development and APIs Certification", provider: freeCodeCamp, type: course, level: beginner, free: true, teaches: [nodejs:2, rest-api-design:1, mongodb:1]}
+  - {url: https://docs.djangoproject.com/en/stable/intro/tutorial01/, title: "Writing your first Django app", provider: Django Software Foundation, type: tutorial, level: beginner, free: true, teaches: [django:2, orm:1]}
+  - {url: https://fastapi.tiangolo.com/tutorial/, title: "FastAPI tutorial", provider: FastAPI, type: tutorial, level: beginner, free: true, teaches: [fastapi:2, rest-api-design:1]}
+  - {url: https://spring.io/guides, title: "Spring guides", provider: Broadcom (Spring), type: tutorial, level: beginner, free: true, teaches: [spring-boot:2]}
+  - {url: https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core, title: "Overview of ASP.NET Core", provider: Microsoft Learn, type: docs, level: beginner, free: true, teaches: [aspnet-core:2]}
+  - {url: https://go.dev/doc/tutorial/web-service-gin, title: "Tutorial: Developing a RESTful API with Go and Gin", provider: The Go Authors, type: tutorial, level: intermediate, free: true, teaches: [go-web-services:2]}
+  - {url: https://www.postgresql.org/docs/current/tutorial.html, title: "PostgreSQL tutorial", provider: PostgreSQL Global Development Group, type: docs, level: beginner, free: true, teaches: [postgresql:2, relational-databases:2]}
+  - {url: https://www.mysqltutorial.org/, title: "MySQL Tutorial", provider: mysqltutorial.org, type: docs, level: beginner, free: true, teaches: [mysql:2]}
+  - {url: https://use-the-index-luke.com/, title: "Use The Index, Luke", provider: Markus Winand, type: book, level: intermediate, free: true, teaches: [database-design:3, sql:3]}
+  - {url: https://docs.sqlalchemy.org/en/20/tutorial/, title: "SQLAlchemy Unified Tutorial", provider: SQLAlchemy, type: tutorial, level: intermediate, free: true, teaches: [orm:2]}
+  - {url: https://www.mongodb.com/docs/manual/, title: "The MongoDB manual", provider: MongoDB, type: docs, level: beginner, free: true, teaches: [mongodb:2, nosql-databases:2]}
+  - {url: https://redis.io/docs/latest/develop/, title: "Develop with Redis", provider: Redis, type: docs, level: beginner, free: true, teaches: [redis:2, caching:1]}
+  - {url: https://aws.amazon.com/caching/, title: "Caching overview", provider: Amazon Web Services, type: docs, level: beginner, free: true, teaches: [caching:2]}
+  - {url: https://www.elastic.co/docs/get-started, title: "Get started with Elasticsearch", provider: Elastic, type: docs, level: beginner, free: true, teaches: [elasticsearch:2]}
+  - {url: https://api-security.owasp.org/, title: "OWASP API Security Project", provider: OWASP, type: docs, level: intermediate, free: true, teaches: [api-security:2, authentication-authorization:1]}
+  - {url: https://auth0.com/intro-to-iam, title: "Introduction to Identity and Access Management", provider: Auth0, type: tutorial, level: beginner, free: true, teaches: [authentication-authorization:2]}
+  - {url: https://www.rabbitmq.com/tutorials, title: "RabbitMQ tutorials", provider: RabbitMQ, type: tutorial, level: beginner, free: true, teaches: [message-brokers:2]}
+  - {url: https://kafka.apache.org/documentation/, title: "Apache Kafka documentation", provider: Apache Software Foundation, type: docs, level: intermediate, free: true, teaches: [kafka:2, event-driven-architecture:1]}
+  - {url: https://github.com/donnemartin/system-design-primer, title: "The System Design Primer", provider: Donne Martin (GitHub), type: tutorial, level: intermediate, free: true, teaches: [system-design:2, distributed-systems:1, caching:2]}
+  - {url: https://pdos.csail.mit.edu/6.824/, title: "Distributed Systems (6.5840)", provider: MIT, type: course, level: advanced, free: true, teaches: [distributed-systems:3]}
+  - {url: https://microservices.io/patterns/, title: "Microservice patterns", provider: microservices.io, type: docs, level: intermediate, free: true, teaches: [microservices:2, architecture-patterns:2]}
+  - {url: https://martinfowler.com/articles/201701-event-driven.html, title: "What do you mean by \"Event-Driven\"?", provider: martinfowler.com, type: tutorial, level: intermediate, free: true, teaches: [event-driven-architecture:2]}
+  - {url: https://martinfowler.com/bliki/DomainDrivenDesign.html, title: "Domain Driven Design", provider: martinfowler.com, type: tutorial, level: intermediate, free: true, teaches: [domain-driven-design:1]}
+  - {url: https://learn.microsoft.com/en-us/azure/architecture/patterns/, title: "Cloud design patterns", provider: Microsoft Learn, type: docs, level: advanced, free: true, teaches: [architecture-patterns:3, cloud-architecture:2]}
+
+  # --- Mobile ----------------------------------------------------------------------------------------
+  - {url: https://developer.android.com/courses, title: "Android developer courses", provider: Google, type: course, level: beginner, free: true, teaches: [android-sdk:2, kotlin:2, jetpack-compose:2]}
+  - {url: https://developer.android.com/develop/ui/compose/documentation, title: "Jetpack Compose documentation", provider: Google, type: docs, level: intermediate, free: true, teaches: [jetpack-compose:2]}
+  - {url: https://kotlinlang.org/docs/coroutines-overview.html, title: "Coroutines", provider: JetBrains, type: docs, level: intermediate, free: true, teaches: [kotlin-coroutines:2]}
+  - {url: https://developer.android.com/topic/architecture, title: "Guide to app architecture", provider: Google, type: docs, level: intermediate, free: true, teaches: [mobile-architecture:2]}
+  - {url: https://developer.android.com/training/data-storage/room, title: "Save data in a local database using Room", provider: Google, type: docs, level: intermediate, free: true, teaches: [mobile-data-persistence:2]}
+  - {url: https://developer.android.com/training/testing, title: "Test apps on Android", provider: Google, type: docs, level: intermediate, free: true, teaches: [mobile-testing:2]}
+  - {url: https://developer.apple.com/tutorials/swiftui, title: "SwiftUI tutorials", provider: Apple, type: tutorial, level: beginner, free: true, teaches: [swiftui:2, ios-sdk:1]}
+  - {url: https://developer.apple.com/documentation/swift/concurrency, title: "Swift concurrency", provider: Apple, type: docs, level: intermediate, free: true, teaches: [swift-concurrency:2]}
+  - {url: https://developer.apple.com/app-store/review/guidelines/, title: "App Review Guidelines", provider: Apple, type: docs, level: intermediate, free: true, teaches: [app-store-release:2]}
+  - {url: https://docs.flutter.dev/learn/pathway, title: "Learn Flutter", provider: Google, type: tutorial, level: beginner, free: true, teaches: [flutter:2, dart:1]}
+  - {url: https://reactnative.dev/docs/getting-started, title: "React Native documentation", provider: Meta, type: docs, level: beginner, free: true, teaches: [react-native:2]}
+
+  # --- Games -------------------------------------------------------------------------------------------
+  - {url: https://learn.unity.com/pathway/unity-essentials, title: "Unity Essentials", provider: Unity, type: course, level: beginner, free: true, teaches: [unity:2]}
+  - {url: https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-engine-5-6-documentation, title: "Unreal Engine documentation", provider: Epic Games, type: docs, level: beginner, free: true, teaches: [unreal-engine:2]}
+  - {url: https://gameprogrammingpatterns.com/, title: "Game Programming Patterns", provider: Robert Nystrom, type: book, level: intermediate, free: true, teaches: [game-optimization:1, design-patterns:2]}
+  - {url: https://learnopengl.com/, title: "LearnOpenGL", provider: Joey de Vries, type: tutorial, level: intermediate, free: true, teaches: [computer-graphics:2, shaders:2, game-math:1]}
+  - {url: https://thebookofshaders.com/, title: "The Book of Shaders", provider: Patricio Gonzalez Vivo, type: book, level: intermediate, free: true, teaches: [shaders:2]}
+  - {url: https://gamemath.com/book/intro.html, title: "3D Math Primer for Graphics and Game Development", provider: gamemath.com, type: book, level: intermediate, free: true, teaches: [game-math:2, linear-algebra:1]}
+  - {url: https://gafferongames.com/categories/game-physics/, title: "Game Physics", provider: Gaffer On Games, type: tutorial, level: intermediate, free: true, teaches: [game-physics:2]}
+  - {url: https://gdcvault.com/free, title: "GDC Vault free talks", provider: Game Developers Conference, type: video, level: intermediate, free: true, teaches: [game-design-basics:2]}
+  - {url: https://gafferongames.com/categories/game-networking/, title: "Game Networking", provider: Gaffer On Games, type: tutorial, level: advanced, free: true, teaches: [multiplayer-networking:2]}
+
+  # --- Embedded ------------------------------------------------------------------------------------------
+  - {url: https://www.freertos.org/Documentation/02-Kernel/01-About-the-FreeRTOS-kernel/01-FreeRTOS-kernel, title: "The FreeRTOS kernel", provider: FreeRTOS, type: docs, level: intermediate, free: true, teaches: [rtos:2]}
+  - {url: https://docs.arduino.cc/learn/, title: "Arduino documentation", provider: Arduino, type: docs, level: beginner, free: true, teaches: [microcontrollers:2, digital-electronics:1]}
+  - {url: https://learn.sparkfun.com/tutorials/i2c/all, title: "I2C", provider: SparkFun, type: tutorial, level: beginner, free: true, teaches: [communication-protocols:2]}
+  - {url: https://learn.sparkfun.com/tutorials/serial-peripheral-interface-spi/all, title: "Serial Peripheral Interface (SPI)", provider: SparkFun, type: tutorial, level: beginner, free: true, teaches: [communication-protocols:2]}
+  - {url: https://openocd.org/doc/html/index.html, title: "OpenOCD user's guide", provider: OpenOCD, type: docs, level: advanced, free: true, teaches: [hardware-debugging:2]}
+  - {url: https://learn.sparkfun.com/tutorials/how-to-use-a-multimeter/all, title: "How to use a multimeter", provider: SparkFun, type: tutorial, level: beginner, free: true, teaches: [hardware-debugging:1, digital-electronics:1]}
+  - {url: https://docs.yoctoproject.org/brief-yoctoprojectqs/index.html, title: "Yocto Project quick build", provider: Yocto Project, type: docs, level: advanced, free: true, teaches: [embedded-linux:2]}
+  - {url: https://www.nand2tetris.org/, title: "From Nand to Tetris", provider: nand2tetris.org, type: course, level: intermediate, free: true, teaches: [computer-architecture:2, digital-electronics:2]}
+
+  # --- DevOps, cloud and reliability ---------------------------------------------------------------------
+  - {url: https://docs.docker.com/get-started/, title: "Get started with Docker", provider: Docker, type: docs, level: beginner, free: true, teaches: [docker:2]}
+  - {url: https://kubernetes.io/docs/tutorials/kubernetes-basics/, title: "Learn Kubernetes Basics", provider: The Kubernetes Authors, type: tutorial, level: beginner, free: true, teaches: [kubernetes:2]}
+  - {url: https://helm.sh/docs/intro/quickstart/, title: "Helm quickstart", provider: Helm, type: docs, level: intermediate, free: true, teaches: [helm:2]}
+  - {url: https://docs.github.com/en/actions, title: "GitHub Actions documentation", provider: GitHub, type: docs, level: beginner, free: true, teaches: [github-actions:2, ci-cd:2]}
+  - {url: https://www.jenkins.io/doc/tutorials/, title: "Jenkins tutorials", provider: Jenkins, type: tutorial, level: intermediate, free: true, teaches: [jenkins:2]}
+  - {url: https://martinfowler.com/articles/continuousIntegration.html, title: "Continuous Integration", provider: martinfowler.com, type: tutorial, level: beginner, free: true, teaches: [ci-cd:2]}
+  - {url: https://aws.amazon.com/getting-started/, title: "Getting started with AWS", provider: Amazon Web Services, type: docs, level: beginner, free: true, teaches: [aws:2, cloud-fundamentals:2]}
+  - {url: https://learn.microsoft.com/en-us/training/azure/, title: "Azure training", provider: Microsoft Learn, type: course, level: beginner, free: true, teaches: [azure:2, cloud-fundamentals:2]}
+  - {url: https://docs.cloud.google.com/docs/get-started, title: "Get started with Google Cloud", provider: Google Cloud, type: docs, level: beginner, free: true, teaches: [gcp:2, cloud-fundamentals:1]}
+  - {url: https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html, title: "What is IAM?", provider: Amazon Web Services, type: docs, level: beginner, free: true, teaches: [identity-access-management:2]}
+  - {url: https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html, title: "What is Amazon VPC?", provider: Amazon Web Services, type: docs, level: intermediate, free: true, teaches: [cloud-networking:2]}
+  - {url: https://docs.aws.amazon.com/lambda/latest/dg/welcome.html, title: "What is AWS Lambda?", provider: Amazon Web Services, type: docs, level: beginner, free: true, teaches: [serverless:2]}
+  - {url: https://developer.hashicorp.com/terraform/tutorials, title: "Terraform tutorials", provider: HashiCorp, type: tutorial, level: beginner, free: true, teaches: [terraform:2, infrastructure-as-code:2]}
+  - {url: https://docs.ansible.com/projects/ansible/latest/getting_started/index.html, title: "Getting started with Ansible", provider: Red Hat, type: docs, level: beginner, free: true, teaches: [ansible:2]}
+  - {url: https://opentelemetry.io/docs/what-is-opentelemetry/, title: "What is OpenTelemetry?", provider: OpenTelemetry, type: docs, level: intermediate, free: true, teaches: [opentelemetry:2, observability:2]}
+  - {url: https://prometheus.io/docs/introduction/overview/, title: "Prometheus overview", provider: Prometheus, type: docs, level: intermediate, free: true, teaches: [prometheus-grafana:2]}
+  - {url: https://grafana.com/tutorials/grafana-fundamentals/, title: "Grafana fundamentals", provider: Grafana Labs, type: tutorial, level: beginner, free: true, teaches: [prometheus-grafana:2]}
+  - {url: https://sre.google/sre-book/table-of-contents/, title: "Site Reliability Engineering", provider: Google, type: book, level: intermediate, free: true, teaches: [sre-practices:3, incident-management:2, capacity-planning:2]}
+  - {url: https://sre.google/workbook/table-of-contents/, title: "The Site Reliability Workbook", provider: Google, type: book, level: advanced, free: true, teaches: [sre-practices:3, incident-management:3]}
+  - {url: https://principlesofchaos.org/, title: "Principles of Chaos Engineering", provider: principlesofchaos.org, type: docs, level: advanced, free: true, teaches: [chaos-engineering:1]}
+  - {url: https://opengitops.dev/, title: "OpenGitOps principles", provider: CNCF OpenGitOps, type: docs, level: intermediate, free: true, teaches: [gitops:1]}
+  - {url: https://argo-cd.readthedocs.io/en/stable/getting_started/, title: "Argo CD getting started", provider: Argo Project, type: docs, level: intermediate, free: true, teaches: [gitops:2]}
+  - {url: https://istio.io/latest/about/service-mesh/, title: "The Istio service mesh", provider: Istio, type: docs, level: advanced, free: true, teaches: [service-mesh:2]}
+  - {url: https://backstage.io/docs/overview/what-is-backstage, title: "What is Backstage?", provider: Backstage (CNCF), type: docs, level: intermediate, free: true, teaches: [internal-developer-platforms:2]}
+  - {url: https://developer.hashicorp.com/vault/tutorials/get-started, title: "Get started with Vault", provider: HashiCorp, type: tutorial, level: intermediate, free: true, teaches: [secrets-management:2]}
+  - {url: https://www.finops.org/introduction/what-is-finops/, title: "What is FinOps?", provider: FinOps Foundation, type: docs, level: beginner, free: true, teaches: [finops:1]}
+  - {url: https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html, title: "AWS Well-Architected Framework", provider: Amazon Web Services, type: docs, level: advanced, free: true, teaches: [cloud-architecture:3]}
+  - {url: https://learn.microsoft.com/en-us/windows-server/, title: "Windows Server documentation", provider: Microsoft Learn, type: docs, level: intermediate, free: true, teaches: [windows-server:2]}
+  - {url: https://openfeature.dev/docs/reference/intro, title: "OpenFeature introduction", provider: OpenFeature (CNCF), type: docs, level: intermediate, free: true, teaches: [feature-flags:2]}
+  - {url: https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/index.html, title: "NVIDIA GPU Operator", provider: NVIDIA, type: docs, level: advanced, free: true, teaches: [gpu-infrastructure:2]}
+
+  # --- Data -------------------------------------------------------------------------------------------
+  - {url: https://www.khanacademy.org/math/statistics-probability, title: "Statistics and probability", provider: Khan Academy, type: course, level: beginner, free: true, teaches: [statistics:2]}
+  - {url: https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/, title: "Linear Algebra (18.06SC)", provider: MIT OpenCourseWare, type: course, level: intermediate, free: true, teaches: [linear-algebra:3]}
+  - {url: https://www.khanacademy.org/math/calculus-1, title: "Calculus 1", provider: Khan Academy, type: course, level: beginner, free: true, teaches: [calculus:2]}
+  - {url: https://support.microsoft.com/en-us/excel, title: "Excel help and learning", provider: Microsoft, type: docs, level: beginner, free: true, teaches: [spreadsheets:2]}
+  - {url: https://clauswilke.com/dataviz/, title: "Fundamentals of Data Visualization", provider: Claus O. Wilke, type: book, level: intermediate, free: true, teaches: [data-visualization:2]}
+  - {url: https://learn.microsoft.com/en-us/training/powerplatform/power-bi, title: "Power BI training", provider: Microsoft Learn, type: course, level: beginner, free: true, teaches: [bi-tools:2]}
+  - {url: https://pandas.pydata.org/docs/getting_started/index.html, title: "Getting started with pandas", provider: pandas, type: docs, level: beginner, free: true, teaches: [pandas:2, data-cleaning:1]}
+  - {url: https://numpy.org/doc/stable/user/absolute_beginners.html, title: "NumPy: the absolute basics for beginners", provider: NumPy, type: docs, level: beginner, free: true, teaches: [numpy:2]}
+  - {url: https://docs.jupyter.org/en/latest/, title: "Jupyter documentation", provider: Project Jupyter, type: docs, level: beginner, free: true, teaches: [jupyter:2]}
+  - {url: https://www.freecodecamp.org/learn/data-analysis-with-python, title: "Data Analysis with Python", provider: freeCodeCamp, type: course, level: beginner, free: true, teaches: [pandas:2, numpy:1, exploratory-data-analysis:2, data-visualization:1]}
+  - {url: https://wesmckinney.com/book/, title: "Python for Data Analysis", provider: Wes McKinney, type: book, level: intermediate, free: true, teaches: [pandas:3, data-cleaning:2, exploratory-data-analysis:2]}
+  - {url: https://exp-platform.com/, title: "Experimentation Platform", provider: ExP (Kohavi et al.), type: docs, level: advanced, free: true, teaches: [ab-testing:2]}
+  - {url: https://docs.getdbt.com/docs/introduction, title: "What is dbt?", provider: dbt Labs, type: docs, level: beginner, free: true, teaches: [dbt:2, data-modeling:1]}
+  - {url: https://learn.getdbt.com/catalog, title: "dbt Learn courses", provider: dbt Labs, type: course, level: beginner, free: true, teaches: [dbt:2, data-quality:1]}
+  - {url: https://docs.getdbt.com/docs/use-dbt-semantic-layer/dbt-sl, title: "dbt Semantic Layer", provider: dbt Labs, type: docs, level: intermediate, free: true, teaches: [semantic-layer:2]}
+  - {url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/, title: "Dimensional modeling techniques", provider: Kimball Group, type: docs, level: intermediate, free: true, teaches: [data-modeling:2, data-warehousing:2]}
+  - {url: https://docs.snowflake.com/en/user-guide-getting-started, title: "Getting started with Snowflake", provider: Snowflake, type: docs, level: beginner, free: true, teaches: [snowflake:2]}
+  - {url: https://github.com/DataTalksClub/data-engineering-zoomcamp, title: "Data Engineering Zoomcamp", provider: DataTalks.Club, type: course, level: intermediate, free: true, teaches: [etl-pipelines:2, data-warehousing:2, airflow:1, spark:1, stream-processing:1]}
+  - {url: https://airflow.apache.org/docs/apache-airflow/stable/tutorial/index.html, title: "Airflow tutorials", provider: Apache Software Foundation, type: tutorial, level: intermediate, free: true, teaches: [airflow:2]}
+  - {url: https://spark.apache.org/docs/latest/quick-start.html, title: "Spark quick start", provider: Apache Software Foundation, type: docs, level: intermediate, free: true, teaches: [spark:2]}
+  - {url: https://docs.scala-lang.org/tour/tour-of-scala.html, title: "Tour of Scala", provider: Scala Center, type: tutorial, level: beginner, free: true, teaches: [scala-or-java-for-data:2]}
+  - {url: https://nightlies.apache.org/flink/flink-docs-stable/docs/learn-flink/overview/, title: "Learn Flink", provider: Apache Software Foundation, type: tutorial, level: advanced, free: true, teaches: [stream-processing:2]}
+  - {url: https://delta.io/learn/getting-started/, title: "Getting started with Delta Lake", provider: Delta Lake (Linux Foundation), type: docs, level: intermediate, free: true, teaches: [data-lakehouse:2]}
+  - {url: https://docs.greatexpectations.io/docs/home/, title: "Great Expectations documentation", provider: Great Expectations, type: docs, level: intermediate, free: true, teaches: [data-quality:2]}
+  - {url: https://gdpr.eu/what-is-gdpr/, title: "What is GDPR?", provider: gdpr.eu, type: docs, level: beginner, free: true, teaches: [data-governance:1]}
+  - {url: https://martinfowler.com/articles/data-mesh-principles.html, title: "Data Mesh Principles and Logical Architecture", provider: martinfowler.com, type: docs, level: advanced, free: true, teaches: [data-architecture:2]}
+  - {url: https://posthog.com/docs/product-analytics, title: "Product analytics", provider: PostHog, type: docs, level: beginner, free: true, teaches: [product-analytics:2]}
+
+  # --- Machine learning and AI ---------------------------------------------------------------------------
+  - {url: https://developers.google.com/machine-learning/crash-course, title: "Machine Learning Crash Course", provider: Google, type: course, level: beginner, free: true, teaches: [machine-learning-fundamentals:2, model-evaluation:1, feature-engineering:1]}
+  - {url: https://scikit-learn.org/stable/getting_started.html, title: "Getting started with scikit-learn", provider: scikit-learn, type: docs, level: beginner, free: true, teaches: [scikit-learn:2]}
+  - {url: https://www.kaggle.com/learn/feature-engineering, title: "Feature Engineering", provider: Kaggle, type: course, level: intermediate, free: true, teaches: [feature-engineering:2]}
+  - {url: https://scikit-learn.org/stable/modules/model_evaluation.html, title: "Metrics and scoring: quantifying the quality of predictions", provider: scikit-learn, type: docs, level: intermediate, free: true, teaches: [model-evaluation:2]}
+  - {url: https://course.fast.ai/, title: "Practical Deep Learning for Coders", provider: fast.ai, type: course, level: intermediate, free: true, teaches: [deep-learning:2, pytorch:1, computer-vision:1]}
+  - {url: https://d2l.ai/, title: "Dive into Deep Learning", provider: d2l.ai, type: book, level: intermediate, free: true, teaches: [deep-learning:3, pytorch:2, ml-optimization:2, transformers:2]}
+  - {url: https://docs.pytorch.org/tutorials/beginner/basics/intro.html, title: "Learn the Basics (PyTorch)", provider: PyTorch Foundation, type: tutorial, level: beginner, free: true, teaches: [pytorch:2]}
+  - {url: https://www.tensorflow.org/tutorials, title: "TensorFlow tutorials", provider: Google, type: tutorial, level: beginner, free: true, teaches: [tensorflow:2]}
+  - {url: https://huggingface.co/learn/llm-course/chapter1/1, title: "Hugging Face LLM Course", provider: Hugging Face, type: course, level: intermediate, free: true, teaches: [transformers:2, nlp:2, fine-tuning:2]}
+  - {url: https://cs231n.github.io/, title: "CS231n: Deep Learning for Computer Vision", provider: Stanford University, type: course, level: advanced, free: true, teaches: [computer-vision:3, deep-learning:2]}
+  - {url: https://web.stanford.edu/~jurafsky/slp3/, title: "Speech and Language Processing", provider: Stanford University, type: book, level: advanced, free: true, teaches: [nlp:3]}
+  - {url: https://developers.openai.com/api/docs/guides/prompt-engineering, title: "Prompt engineering guide", provider: OpenAI, type: docs, level: beginner, free: true, teaches: [prompt-engineering:2, llm-fundamentals:1]}
+  - {url: https://www.promptingguide.ai/, title: "Prompt Engineering Guide", provider: DAIR.AI, type: tutorial, level: beginner, free: true, teaches: [prompt-engineering:2, llm-fundamentals:2, rag:1]}
+  - {url: https://www.anthropic.com/engineering/building-effective-agents, title: "Building effective agents", provider: Anthropic, type: tutorial, level: intermediate, free: true, teaches: [ai-agents:2]}
+  - {url: https://modelcontextprotocol.io/docs/getting-started/intro, title: "Model Context Protocol introduction", provider: Model Context Protocol, type: docs, level: intermediate, free: true, teaches: [mcp:2]}
+  - {url: https://www.freecodecamp.org/learn/learn-rag-mcp-fundamentals, title: "Learn RAG and MCP Fundamentals", provider: freeCodeCamp, type: course, level: beginner, free: true, teaches: [rag:2, mcp:1, embeddings-vector-search:1]}
+  - {url: https://docs.langchain.com/oss/python/langchain/overview, title: "LangChain documentation", provider: LangChain, type: tutorial, level: intermediate, free: true, teaches: [llm-frameworks:2, rag:2]}
+  - {url: https://github.com/pgvector/pgvector, title: "pgvector", provider: pgvector (GitHub), type: docs, level: intermediate, free: true, teaches: [vector-databases:2, embeddings-vector-search:2]}
+  - {url: https://www.sbert.net/, title: "Sentence Transformers documentation", provider: SBERT.net, type: docs, level: intermediate, free: true, teaches: [embeddings-vector-search:2]}
+  - {url: https://hamel.dev/blog/posts/evals/, title: "Your AI Product Needs Evals", provider: Hamel Husain, type: tutorial, level: intermediate, free: true, teaches: [llm-evaluation:2]}
+  - {url: https://genai.owasp.org/llm-top-10/, title: "OWASP Top 10 for LLM Applications", provider: OWASP, type: docs, level: intermediate, free: true, teaches: [ai-guardrails:2]}
+  - {url: https://docs.vllm.ai/en/latest/, title: "vLLM documentation", provider: vLLM, type: docs, level: advanced, free: true, teaches: [llm-serving:2]}
+  - {url: https://mlflow.org/docs/latest/index.html, title: "MLflow documentation", provider: MLflow (Linux Foundation), type: docs, level: intermediate, free: true, teaches: [experiment-tracking:2, model-serving:1]}
+  - {url: https://github.com/DataTalksClub/mlops-zoomcamp, title: "MLOps Zoomcamp", provider: DataTalks.Club, type: course, level: intermediate, free: true, teaches: [ml-pipelines:2, experiment-tracking:2, model-serving:2, model-monitoring:2]}
+  - {url: https://madewithml.com/, title: "Made With ML", provider: Anyscale (Goku Mohandas), type: course, level: intermediate, free: true, teaches: [ml-pipelines:2, model-serving:2]}
+  - {url: https://docs.evidentlyai.com/introduction, title: "Evidently documentation", provider: Evidently AI, type: docs, level: intermediate, free: true, teaches: [model-monitoring:2]}
+  - {url: https://docs.feast.dev/, title: "Feast documentation", provider: Feast, type: docs, level: advanced, free: true, teaches: [feature-stores:2]}
+  - {url: https://huggingface.co/learn/deep-rl-course/unit0/introduction, title: "Deep Reinforcement Learning Course", provider: Hugging Face, type: course, level: intermediate, free: true, teaches: [reinforcement-learning:2]}
+  - {url: https://docs.pytorch.org/tutorials/beginner/dist_overview.html, title: "PyTorch Distributed overview", provider: PyTorch Foundation, type: docs, level: advanced, free: true, teaches: [distributed-training:2]}
+  - {url: https://www.deeplearningbook.org/, title: "Deep Learning", provider: Goodfellow, Bengio and Courville, type: book, level: advanced, free: true, teaches: [ml-optimization:3, deep-learning:3, research-methods:1]}
+  - {url: https://web.stanford.edu/class/cs197/, title: "CS197: Computer Science Research", provider: Stanford University, type: course, level: advanced, free: true, teaches: [research-methods:2]}
+
+  # --- Security -----------------------------------------------------------------------------------------
+  - {url: https://www.freecodecamp.org/learn/information-security, title: "Information Security", provider: freeCodeCamp, type: course, level: beginner, free: true, teaches: [security-fundamentals:2, web-security:1]}
+  - {url: https://owasp.org/projects/top-ten, title: "OWASP Top Ten", provider: OWASP, type: docs, level: beginner, free: true, teaches: [web-security:2, secure-coding:1]}
+  - {url: https://portswigger.net/web-security, title: "Web Security Academy", provider: PortSwigger, type: course, level: intermediate, free: true, teaches: [web-security:3, penetration-testing:2, security-testing-tools:2]}
+  - {url: https://cheatsheetseries.owasp.org/, title: "OWASP Cheat Sheet Series", provider: OWASP, type: docs, level: intermediate, free: true, teaches: [secure-coding:2]}
+  - {url: https://cryptopals.com/, title: "The Cryptopals Crypto Challenges", provider: cryptopals.com, type: tutorial, level: advanced, free: true, teaches: [cryptography-basics:2]}
+  - {url: https://www.cisa.gov/resources-tools/resources/secure-by-design, title: "Secure by Design", provider: CISA, type: docs, level: intermediate, free: true, teaches: [secure-coding:1, threat-modeling:1]}
+  - {url: https://community.owasp.org/Threat_Modeling, title: "Threat Modeling", provider: OWASP, type: docs, level: intermediate, free: true, teaches: [threat-modeling:2]}
+  - {url: https://www.cisa.gov/known-exploited-vulnerabilities-catalog, title: "Known Exploited Vulnerabilities Catalog", provider: CISA, type: docs, level: intermediate, free: true, teaches: [vulnerability-management:1]}
+  - {url: https://www.elastic.co/security-labs, title: "Elastic Security Labs", provider: Elastic, type: tutorial, level: advanced, free: true, teaches: [siem:1, security-incident-response:1]}
+  - {url: https://csrc.nist.gov/pubs/sp/800/61/r3/final, title: "Incident Response Recommendations (SP 800-61r3)", provider: NIST, type: docs, level: advanced, free: true, teaches: [security-incident-response:2]}
+  - {url: https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview, title: "Active Directory Domain Services overview", provider: Microsoft Learn, type: docs, level: intermediate, free: true, teaches: [active-directory:2]}
+  - {url: https://docs.aws.amazon.com/security/, title: "AWS security documentation", provider: Amazon Web Services, type: docs, level: intermediate, free: true, teaches: [cloud-security:2]}
+  - {url: https://owasp.org/projects/devsecops-guideline, title: "OWASP DevSecOps Guideline", provider: OWASP, type: docs, level: intermediate, free: true, teaches: [devsecops:2]}
+  - {url: https://www.nist.gov/cyberframework, title: "NIST Cybersecurity Framework", provider: NIST, type: docs, level: intermediate, free: true, teaches: [security-compliance:2, security-fundamentals:1]}
+  - {url: https://nmap.org/book/toc.html, title: "Nmap Network Scanning", provider: Nmap Project, type: book, level: intermediate, free: true, teaches: [network-security:2, security-testing-tools:2]}
+  - {url: https://overthewire.org/wargames/, title: "OverTheWire wargames", provider: OverTheWire, type: tutorial, level: intermediate, free: true, teaches: [penetration-testing:2, linux:2]}
+  - {url: https://exploit.education/, title: "Exploit Education", provider: exploit.education, type: tutorial, level: advanced, free: true, teaches: [exploit-development:2]}
+
+  # --- Blockchain ----------------------------------------------------------------------------------------
+  - {url: https://ethereum.org/developers/docs/, title: "Ethereum development documentation", provider: Ethereum Foundation, type: docs, level: beginner, free: true, teaches: [ethereum:2, blockchain-fundamentals:2]}
+  - {url: https://cryptozombies.io/, title: "CryptoZombies", provider: CryptoZombies, type: course, level: beginner, free: true, teaches: [solidity:2]}
+  - {url: https://hardhat.org/docs/getting-started, title: "Hardhat documentation", provider: Nomic Foundation, type: docs, level: intermediate, free: true, teaches: [smart-contract-testing:2]}
+  - {url: https://docs.openzeppelin.com/contracts/5.x/, title: "OpenZeppelin Contracts", provider: OpenZeppelin, type: docs, level: intermediate, free: true, teaches: [smart-contract-security:2]}
+  - {url: https://docs.ethers.org/v6/, title: "ethers.js documentation", provider: ethers.js, type: docs, level: intermediate, free: true, teaches: [web3-libraries:2]}
+  - {url: https://ethereum.org/defi/, title: "Decentralized finance (DeFi)", provider: Ethereum Foundation, type: docs, level: beginner, free: true, teaches: [defi-protocols:1]}
+  - {url: https://ethereum.org/layer-2/, title: "Layer 2", provider: Ethereum Foundation, type: docs, level: intermediate, free: true, teaches: [layer2-scaling:1]}
+
+  # --- Quality engineering -------------------------------------------------------------------------------
+  - {url: https://www.ministryoftesting.com/, title: "Ministry of Testing", provider: Ministry of Testing, type: tutorial, level: beginner, free: true, teaches: [manual-testing:1, test-planning:1]}
+  - {url: https://www.selenium.dev/documentation/, title: "Selenium documentation", provider: Selenium, type: docs, level: beginner, free: true, teaches: [selenium:2, test-automation:2]}
+  - {url: https://learning.postman.com/docs/getting-started/overview/, title: "Postman documentation", provider: Postman, type: docs, level: beginner, free: true, teaches: [api-testing:2]}
+  - {url: https://grafana.com/docs/k6/latest/, title: "Grafana k6 documentation", provider: Grafana Labs, type: docs, level: intermediate, free: true, teaches: [performance-testing:2]}
+  - {url: https://www.freecodecamp.org/learn/quality-assurance, title: "Quality Assurance", provider: freeCodeCamp, type: course, level: beginner, free: true, teaches: [unit-testing:1, integration-testing:1, test-automation:1]}
+  - {url: https://martinfowler.com/testing/, title: "Software Testing Guide", provider: martinfowler.com, type: tutorial, level: intermediate, free: true, teaches: [test-strategy:2, testing-fundamentals:2]}
+
+  # --- Customer-facing engineering and developer relations ---------------------------------------------------
+  - {url: https://developerrelations.com/what-is-developer-relations/, title: "What is developer relations?", provider: DevRelCon, type: tutorial, level: beginner, free: true, teaches: [community-building:1, developer-content:1]}
+  - {url: https://developers.google.com/tech-writing, title: "Technical Writing courses", provider: Google, type: course, level: beginner, free: true, teaches: [technical-writing:2, developer-content:1]}
+  - {url: https://diataxis.fr/, title: "Diátaxis", provider: Daniele Procida, type: docs, level: intermediate, free: true, teaches: [technical-writing:2, developer-experience:1]}
+  - {url: https://www.toastmasters.org/resources/public-speaking-tips, title: "Public speaking tips", provider: Toastmasters International, type: tutorial, level: beginner, free: true, teaches: [public-speaking:1]}
+  - {url: https://www.presalescollective.com/, title: "PreSales Collective", provider: PreSales Collective, type: tutorial, level: beginner, free: true, teaches: [presales:1, technical-demos:1, customer-discovery:1]}
+  - {url: https://learn.microsoft.com/en-us/azure/architecture/guide/, title: "Azure Application Architecture Guide", provider: Microsoft Learn, type: docs, level: advanced, free: true, teaches: [solution-design:2, enterprise-integration:1]}
+  - {url: https://www.enterpriseintegrationpatterns.com/patterns/messaging/, title: "Enterprise Integration Patterns", provider: Gregor Hohpe, type: docs, level: advanced, free: true, teaches: [enterprise-integration:2, message-brokers:2]}
+
+  # --- Working practices, architecture and leadership -------------------------------------------------------
+  - {url: https://scrumguides.org/scrum-guide.html, title: "The Scrum Guide", provider: Scrum.org, type: docs, level: beginner, free: true, teaches: [agile-scrum:2]}
+  - {url: https://adr.github.io/, title: "Architectural Decision Records", provider: adr.github.io, type: docs, level: intermediate, free: true, teaches: [architecture-decision-records:2]}
+  - {url: https://staffeng.com/guides/, title: "StaffEng guides", provider: Will Larson, type: tutorial, level: advanced, free: true, teaches: [technical-leadership:2, mentoring:1]}
+  - {url: https://lethain.com/, title: "Irrational Exuberance", provider: Will Larson, type: tutorial, level: advanced, free: true, teaches: [people-management:1, engineering-processes:1, technical-leadership:1]}
+  - {url: https://rework.withgoogle.com/intl/en/guides/managers-research-behind-great-managers, title: "The research behind great managers", provider: Google re:Work, type: tutorial, level: intermediate, free: true, teaches: [people-management:2, mentoring:2]}
+  - {url: https://rework.withgoogle.com/intl/en/guides/hiring-use-structured-interviewing, title: "Guide: Use structured interviewing", provider: Google re:Work, type: tutorial, level: intermediate, free: true, teaches: [hiring:2]}
+  - {url: https://dora.dev/research/, title: "DORA research", provider: DORA (Google Cloud), type: docs, level: intermediate, free: true, teaches: [engineering-processes:2]}
+  - {url: https://www.atlassian.com/agile/project-management/estimation, title: "Agile estimation", provider: Atlassian, type: tutorial, level: beginner, free: true, teaches: [project-planning:1]}
+  - {url: https://www.svpg.com/articles/, title: "SVPG articles", provider: Silicon Valley Product Group, type: tutorial, level: intermediate, free: true, teaches: [product-thinking:2]}
+  - {url: https://www.nngroup.com/articles/which-ux-research-methods/, title: "When to Use Which User-Experience Research Methods", provider: Nielsen Norman Group, type: tutorial, level: intermediate, free: true, teaches: [user-research:2]}
+  - {url: https://hbr.org/topic/subject/business-communication, title: "Business communication", provider: Harvard Business Review, type: tutorial, level: intermediate, free: false, teaches: [stakeholder-communication:1]}

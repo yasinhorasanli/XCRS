@@ -27,7 +27,7 @@ UNMODELLED_INDEXES = {"embedding_models_one_active_idx"}
 
 
 # Schemas Alembic compares: the default one and the catalog (ADR-0028).
-SCHEMAS = {None, "public", "catalog"}
+SCHEMAS = {None, "public", "catalog", "ingest"}
 
 
 def include_name(name, type_, parent_names):

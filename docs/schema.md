@@ -220,7 +220,16 @@ erDiagram
 
 **Engine v2 activity (migration `0007`, ADR-0031), in `public`:** `recommendations_v2` (`id` uuid, `created_at`, `catalog_checksum`, `algorithm_version`, `status` CHECK ok/insufficient_input, `input` jsonb = chips, `result` jsonb = matched chips and roles with levels and gaps) and `feedback_v2` (→ `recommendations_v2` ON DELETE CASCADE, `role` slug, `resource_id`, `rating` −1/1, `comment`). JSONB first, normalized once the format settles (ADR-0013).
 
-Resource tables (`learning_resources`, resource–skill links, series; ADR-0026) are added with resource ingestion, once the providers and the raw store are decided.
+**Learning resources (migration `0008`, ADR-0026, ADR-0032, ADR-0033):**
+
+| Table | Key | What it holds |
+|---|---|---|
+| `ingest.runs` | `id` | one ingestion run: source, start/finish, status (CHECK), stats, error |
+| `ingest.raw_records` | `id`; UNIQUE (`source`, `external_id`, `content_hash`) | what a source returned, as received (JSONB); a new version only when the content changes |
+| `catalog.learning_resources` | `id`; UNIQUE (`source`, `external_id`), UNIQUE `url` | normalized resource: `type` (course, video, playlist, docs, tutorial, book), provider, title, description, language, `level`, duration, `is_free`, price + currency, `quality` (JSONB), fetch and link-check times, `last_status`, `is_active` |
+| `catalog.resource_skills` | (`resource_id`, `skill_id`, `relation`) | `relation` teaches/requires, `level` 1–4, `confidence`, `tagged_by` curated/llm/reviewed |
+
+Curated resources (`catalog/resources.yaml`) are loaded by `xcrs catalog import` (source `curated`; they win over an adapter's row for the same URL; removed ones are deactivated). Adapters (`xcrs resources ingest freecodecamp|youtube`) write raw records and resources; `xcrs resources tag` adds LLM tags; `xcrs resources check-links` records link status. Series links (resource → resource) come when a source has real series.
 
 ## Size today
 
@@ -236,6 +245,7 @@ Resource tables (`learning_resources`, resource–skill links, series; ADR-0026)
 | catalog.roles / role_levels / role_titles | 30 / 110 / 11 |
 | catalog.roadmap_stages / roadmap_items | 247 / 1,412 (rows per option) |
 | catalog.common_paths | 65 |
+| catalog.learning_resources / resource_skills | 330 (254 curated, 76 freeCodeCamp) / 511 |
 
 Vector storage is ~5 MB at 1,024 dimensions. The whole database is tiny; the design targets growth, not the current size.
 

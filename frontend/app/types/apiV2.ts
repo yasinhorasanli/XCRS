@@ -44,6 +44,18 @@ export interface Gap {
   stage: string
 }
 
+export interface Resource {
+  id: string
+  title: string
+  url: string
+  provider: string
+  type: string
+  level: string | null
+  free: boolean
+  curated: boolean
+  skills: SkillRef[] // the role's gaps it covers
+}
+
 export interface RoleResult {
   id: string
   name: string
@@ -57,6 +69,7 @@ export interface RoleResult {
   because: (SkillRef & { category: Category })[]
   gaps: Gap[]
   gaps_total: number
+  resources: Resource[]
 }
 
 export interface MatchedChip {

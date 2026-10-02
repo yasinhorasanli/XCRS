@@ -7,7 +7,7 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0001](0001-record-architecture-decisions.md) | Record architecture decisions | Accepted | 2026-09-27 |
 | [0002](0002-self-hosted-first-cloud-last.md) | Self-hosted first, cloud last | Accepted | 2026-09-27 |
 | [0003](0003-postgresql-pgvector-primary-store.md) | PostgreSQL + pgvector as the primary data store | Accepted | 2026-09-27 |
-| [0004](0004-mongodb-for-ingestion-layer.md) | MongoDB for the ingestion layer | Proposed | 2026-09-27 |
+| [0004](0004-mongodb-for-ingestion-layer.md) | MongoDB for the ingestion layer | Superseded by 0032 | 2026-09-27 |
 | [0005](0005-local-embedding-models.md) | Self-hosted embedding models instead of hosted APIs | Accepted | 2026-09-27 |
 | [0006](0006-own-embedding-interface.md) | Own embedding interface with an OpenAI-compatible adapter (LangChain deferred) | Accepted | 2026-09-27 |
 | [0007](0007-ollama-qwen3-embedding.md) | Ollama as the model runtime, `qwen3-embedding:0.6b` as the embedding model | Accepted | 2026-09-28 |
@@ -35,6 +35,8 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0029](0029-engine-v2-skills-input-proficiency-and-coverage-scoring.md) | Engine v2: catalog skills with free-text fallback, optional proficiency, coverage × interest scoring, matching thresholds set by measurement | Accepted | 2026-10-01 |
 | [0030](0030-skill-matching-lookup-llm-pick-confirmed-by-similarity.md) | Skill matching: name lookup, then the LLM picks from the catalog, confirmed by embedding similarity | Accepted | 2026-10-02 |
 | [0031](0031-engine-v2-role-scoring-calibrated-blend.md) | Engine v2 role scoring: a calibrated blend of interest and coverage, levels from each level's additions | Accepted (approach decided; calibration delegated, revised) | 2026-10-02 |
+| [0032](0032-raw-ingested-data-in-postgres-jsonb.md) | Raw ingested data in PostgreSQL (JSONB, an `ingest` schema), not MongoDB | Accepted | 2026-10-02 |
+| [0033](0033-first-learning-resource-sources.md) | First learning-resource sources: curated list as code, freeCodeCamp's open curriculum, YouTube adapter off until a key | Accepted (approach decided; sources delegated) | 2026-10-02 |
 
 ## Upcoming decisions
 
@@ -42,7 +44,7 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 - Threshold constants re-tuned against the prototype once its comparison can run (ADR-0022)
 - Engine v2 board and results UI; comparison with the legacy engine before switching over
 - Taxonomy import: ESCO links and an O*NET coverage check of the drafted roadmaps (ADR-0025)
-- First resource providers, and where raw ingested data lives (ADR-0004, proposed)
+- A YouTube Data API key, to switch on the YouTube adapter (ADR-0033)
 - (Later) Roadmap visualization
 - Map suggestion chips to concept ids (ADR-0023), then normalize the request input (ADR-0013)
 - Chat/agent feature (LangGraph) and LLM tracing (LangSmith or self-hosted); see ADR-0019

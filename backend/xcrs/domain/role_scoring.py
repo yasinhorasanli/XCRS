@@ -95,17 +95,37 @@ class RoleSnapshot:
         return out
 
 
+@dataclass(frozen=True)
+class ResourceRef:
+    """A learning resource as the engine sees it (ADR-0026, ADR-0033)."""
+
+    id: str
+    title: str
+    url: str
+    provider: str
+    type: str
+    level: str | None
+    free: bool
+    curated: bool
+    teaches: tuple[tuple[str, int], ...]  # (skill, proficiency it gets you to)
+
+
 @dataclass
 class CatalogSnapshot:
     roles: dict[str, RoleSnapshot]
     skill_names: dict[str, str]
     prerequisites: dict[str, list[tuple[tuple[str, ...], int]]] = field(default_factory=dict)  # skill -> requires
     weights: dict[str, float] = field(default_factory=dict)  # distinctiveness per skill
+    resources: list[ResourceRef] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         if not self.weights:
             self.weights = distinctiveness(self.roles.values(), self.skill_names)
         self._reliance = {rid: role.reliance() for rid, role in self.roles.items()}
+        self.teaching: dict[str, list[ResourceRef]] = {}
+        for r in self.resources:
+            for skill, _ in r.teaches:
+                self.teaching.setdefault(skill, []).append(r)
 
     def reliance(self, role: str) -> dict[str, float]:
         return self._reliance[role]
@@ -254,3 +274,39 @@ def score_roles(
         )
         results.append(RoleScore(role.id, score, interest, coverage, level_coverage, level, target, gaps, because))
     return sorted(results, key=lambda r: -r.score)
+
+
+TYPE_PREFERENCE = {"course": 3, "tutorial": 2, "docs": 2, "playlist": 2, "video": 1, "book": 1}
+
+
+def suggest_resources(
+    snapshot: CatalogSnapshot, gaps: list[Gap], relevant: set[str] | None = None, limit: int = 3
+) -> list[tuple[ResourceRef, list[str]]]:
+    """Up to `limit` resources for the earliest gaps, in roadmap order, each with the gap skills it covers.
+    Prefers resources that are curated, free, cover several gaps at once, stay on topic (teach nothing
+    outside `relevant`: the role's skills and the learner's), and reach the proficiency asked."""
+    need = {o: g.need for g in gaps for o in g.options}
+    chosen: list[tuple[ResourceRef, list[str]]] = []
+    covered: set[str] = set()
+    for gap in gaps:
+        if len(chosen) >= limit:
+            break
+        if any(o in covered for o in gap.options):
+            continue
+        candidates = {r.id: r for o in gap.options for r in snapshot.teaching.get(o, ())}
+        candidates = {k: r for k, r in candidates.items() if k not in {c.id for c, _ in chosen}}
+        if not candidates:
+            continue
+
+        def rank(r: ResourceRef, gap: Gap = gap) -> tuple:
+            teaches = dict(r.teaches)
+            gaps_hit = [s for s in teaches if s in need and s not in covered]
+            off_topic = sum(1 for s in teaches if relevant is not None and s not in relevant and s not in need)
+            reach = min(1.0, max(teaches.get(o, 0) / gap.need for o in gap.options))
+            return (r.curated, r.free, len(gaps_hit), -off_topic, reach, TYPE_PREFERENCE.get(r.type, 0), r.title)
+
+        best = max(candidates.values(), key=rank)
+        hits = [s for s, _ in best.teaches if s in need and s not in covered]
+        covered.update(hits)
+        chosen.append((best, hits))
+    return chosen

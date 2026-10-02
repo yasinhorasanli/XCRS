@@ -28,6 +28,7 @@ class Settings(BaseSettings):
     explain_threads: int = 1  # background explanation workers (ADR-0018); 1 suits a CPU-bound LLM
     # Skill matching (ADR-0030) uses the same LLM; a new phrase takes ~2 s on a GPU, ~5 s or more on a CPU VM.
     match_llm_timeout_s: float = 60.0
+    youtube_api_key: str | None = None  # XCRS_YOUTUBE_API_KEY; the YouTube adapter is off without it (ADR-0033)
 
 
 @lru_cache

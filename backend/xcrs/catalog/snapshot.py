@@ -2,7 +2,7 @@
 The served API builds the same snapshot from the database (repository.catalog_store.load_snapshot)."""
 
 from xcrs.catalog.model import Catalog
-from xcrs.domain.role_scoring import CatalogSnapshot, Requirement, RoleSnapshot
+from xcrs.domain.role_scoring import CatalogSnapshot, Requirement, ResourceRef, RoleSnapshot
 
 
 def cumulative_requirements(levels) -> dict[str, list[Requirement]]:
@@ -57,4 +57,18 @@ def snapshot_from_catalog(cat: Catalog) -> CatalogSnapshot:
         roles=roles,
         skill_names={s.id: s.name for s in cat.skills.values()},
         prerequisites={s.id: [(r.options, r.level) for r in s.requires] for s in cat.skills.values()},
+        resources=[
+            ResourceRef(
+                r.url,
+                r.title,
+                r.url,
+                r.provider,
+                r.type,
+                r.level,
+                r.free,
+                True,
+                tuple((t.options[0], t.level) for t in r.teaches),
+            )
+            for r in cat.resources
+        ],
     )

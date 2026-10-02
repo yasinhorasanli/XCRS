@@ -11,7 +11,18 @@ import re
 from collections import Counter
 from dataclasses import dataclass, field
 
-from xcrs.catalog.model import LADDER, PATH_KINDS, SKILL_KINDS, Alias, Catalog, Requirement, Role, RoleLevel
+from xcrs.catalog.model import (
+    LADDER,
+    PATH_KINDS,
+    RESOURCE_LEVELS,
+    RESOURCE_TYPES,
+    SKILL_KINDS,
+    Alias,
+    Catalog,
+    Requirement,
+    Role,
+    RoleLevel,
+)
 
 _SLUG = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 _ONET = re.compile(r"^\d{2}-\d{4}\.\d{2}$")
@@ -342,9 +353,39 @@ def moves(cat: Catalog, source: RoleLevel) -> list[Move]:
     return sorted(result, key=lambda m: -m.coverage)
 
 
+def _check_resources(cat: Catalog, report: Report) -> None:
+    seen: set[str] = set()
+    for r in cat.resources:
+        where = f"resource {r.url}"
+        if not r.url.startswith("https://"):
+            report.errors.append(f"{where}: URL must be https")
+        if r.url in seen:
+            report.errors.append(f"{where}: listed twice")
+        seen.add(r.url)
+        if r.type not in RESOURCE_TYPES:
+            report.errors.append(f"{where}: unknown type {r.type!r}")
+        if r.level is not None and r.level not in RESOURCE_LEVELS:
+            report.errors.append(f"{where}: unknown level {r.level!r}")
+        if not r.title.strip() or not r.provider.strip():
+            report.errors.append(f"{where}: needs a title and a provider")
+        if not r.teaches:
+            report.errors.append(f"{where}: teaches no skill")
+        for req in r.teaches:
+            if req.is_choice:
+                report.errors.append(f"{where}: teaches a choice {req}; list the skills separately")
+            for option in req.options:
+                if option not in cat.skills:
+                    report.errors.append(f"{where}: unknown skill {option!r}")
+    taught = {o for r in cat.resources for req in r.teaches for o in req.options}
+    missing = sorted(set(cat.skills) - taught)
+    if cat.resources and missing:
+        report.warnings.append(f"{len(missing)} skills have no curated resource yet: {', '.join(missing)}")
+
+
 def validate(cat: Catalog) -> Report:
     report = Report()
     _check_skills(cat, report)
+    _check_resources(cat, report)
     _check_roles(cat, report)
     usage = _check_roadmaps(cat, report)
     if not report.errors:
@@ -361,6 +402,7 @@ def validate(cat: Catalog) -> Report:
         "roles": len(cat.roles),
         "common_paths": len(cat.common_paths),
         "titles": len(cat.roles) + sum(len(r.also_called) for r in cat.roles.values()),
+        "resources": len(cat.resources),
         "roadmap_items": sum(len(st.items) for rm in cat.roadmaps.values() for lv in rm.levels for st in lv.stages),
         "most_shared_skills": [f"{s} ({n} roles)" for s, n in usage.most_common(10)],
     }
