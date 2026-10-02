@@ -10,6 +10,9 @@
 # somewhere else too (another disk or host), or a lost machine loses them with the database.
 set -euo pipefail
 
+# sha256sum on Linux, shasum on macOS
+sha256() { if command -v sha256sum >/dev/null; then sha256sum "$1"; else shasum -a 256 "$1"; fi; }
+
 cd "$(dirname "$0")/.."
 BACKUP_DIR="${XCRS_BACKUP_DIR:-backups}"
 KEEP="${KEEP:-14}"
@@ -31,7 +34,7 @@ mv "$DUMP.partial" "$DUMP"   # a dump only gets its final name once it is comple
   echo "postgres: $(psql_q 'SHOW server_version')"
   echo "alembic_revision: $(psql_q 'SELECT version_num FROM alembic_version' 2>/dev/null || echo none)"
   echo "git_commit: $(git rev-parse --short HEAD 2>/dev/null || echo unknown)"
-  echo "sha256: $(shasum -a 256 "$DUMP" | cut -d' ' -f1)"
+  echo "sha256: $(sha256 "$DUMP" | cut -d' ' -f1)"
   echo "bytes: $(wc -c < "$DUMP" | tr -d ' ')"
   echo "row_counts:"
   for table in $(psql_q "SELECT table_schema || '.' || table_name FROM information_schema.tables

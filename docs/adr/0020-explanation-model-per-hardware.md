@@ -3,6 +3,7 @@
 - **Status:** Accepted. Delegated: made by Claude on 2026-09-30 while the decider asked for the work to be finished without questions; on 2026-10-01 the decider accepted it without a separate review.
 - **Date:** 2026-09-30
 - **Decider:** Muhammed Yasin Horasanli
+- **Note (2026-10-02), measured on the real LLM VM:** VM-B (24 vCPU Xeon E5-2690 v4, AVX2, 30 GiB), engine v2 prompt, 20 cases each: `qwen3.5:4b` median 12.2 s per role (p90 13.1 s, 11.7 tok/s), `qwen3.5:9b` median 20.2 s (8.3 tok/s); both 100% clean on the grounding checks. Skill matching with 4B: about 5.7 s per new phrase. The decision stands: 4B on this CPU. Results: `backend/eval/results/bench-explainer-20261002-1352-xcrs-b-cpu.md`.
 
 ## Context
 
