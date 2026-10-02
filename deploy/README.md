@@ -1,49 +1,59 @@
 # Deploying XCRS to the two VMs
 
-How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036), and the checklist for the first one. Verified end to end on the Mac (Docker Desktop, with the Mac's Ollama standing in for VM-B), not yet on the real VMs.
+How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036, ADR-0040), and the checklist for the first one. The VMs run **Oracle Linux 10** (SELinux enforcing) on a private network of a server someone else owns; they are managed over **Tailscale**, and the site is published with **Tailscale Funnel**.
 
 ```
-            Internet
-               │ 80/443
-┌──────────────▼──────────── VM-A (8 GB) ──────────────────┐        ┌──── VM-B (16 GB) ────┐
-│ caddy ─► web (Nuxt) ─► api (FastAPI) ─► postgres          │ private│ ollama  qwen3.5:4b   │
-│                           └──► ollama-embed (0.6B)        │───────►│ (explanations and    │
-│ systemd: nightly backup ──────────── rsync over SSH ──────┼───────►│  matching), backups  │
-└───────────────────────────────────────────────────────────┘        └──────────────────────┘
+ Visitors ──HTTPS──► Tailscale Funnel (https://xcrs-a.<tailnet>.ts.net)
+                         │ tailscaled on VM-A → 127.0.0.1:8080
+┌──────────── VM-A (8 vCPU, 8 GB) ─────────▼───────────────┐          ┌──── VM-B (24 vCPU, 32 GB) ────┐
+│ caddy ─► web (Nuxt) ─► api (FastAPI) ─► postgres          │ private  │ ollama (host network,         │
+│                           └──► ollama-embed (0.6B)        │ ───────► │  192.168.99.171:11434)        │
+│ systemd: nightly backup ─────────── rsync over SSH ───────┼────────► │ qwen3.5 4b/9b; backups        │
+└───────────────────────────────────────────────────────────┘          └───────────────────────────────┘
+ Admin: the Mac, VM-A and VM-B in one tailnet (ssh xcrs-a-ts / xcrs-b-ts), or the owner's VPN
 ```
 
 - **Images:** `.github/workflows/release.yml` publishes `ghcr.io/<owner>/xcrs-api` and `xcrs-web` on every push to `modernization` and `main`, tagged with the commit SHA and the branch name.
-- **VM-A:** `deploy/vm-a/compose.yaml`. Only Caddy is public; PostgreSQL, the API and the embedding model stay on the internal Docker network. The API reads the reviewed catalog from this checkout's `catalog/` (mounted read-only).
-- **VM-B:** `deploy/vm-b/compose.yaml`. Ollama is published only on the private address; the firewall allows only VM-A.
-- **Deploy:** `deploy/deploy.sh <tag>` on VM-A. It takes a verified backup, pulls the images, migrates, imports and embeds the catalog, restarts, and smoke-tests through Caddy. **Rollback** is `deploy/deploy.sh <previous tag>`.
+- **VM-A:** `deploy/vm-a/compose.yaml`. Caddy listens on `127.0.0.1:8080` only; Funnel publishes it. PostgreSQL, the API and the embedding model stay on the internal Docker network. The API reads the reviewed catalog from this checkout's `catalog/` (mounted read-only).
+- **VM-B:** `deploy/vm-b/compose.yaml`. Ollama has no authentication: it uses host networking on the private address, and firewalld allows port 11434 from VM-A only (a published Docker port would bypass firewalld).
+- **Deploy:** `deploy/deploy.sh <tag>` on VM-A: verified backup, pull, migrate, import and embed the catalog, restart, smoke test through Caddy. **Rollback** is `deploy/deploy.sh <previous tag>`.
+- **Your local notes:** `deploy/inventory.local.yaml` (gitignored; template `inventory.example.yaml`) holds addresses and users; passwords stay in the macOS Keychain. `scripts/vm-facts.sh` prints a VM's facts read-only: `ssh xcrs-b 'bash -s' < scripts/vm-facts.sh`.
 
-## First deployment checklist
+## First deployment checklist (Oracle Linux 10)
+
+**Both VMs (once)**
+1. SSH key login: `ssh-copy-id -i ~/.ssh/id_ed25519_xcrs.pub <user>@<vm>`; `Host` entries in `~/.ssh/config`.
+2. Docker CE from Docker's repository (Oracle Linux 10 still uses dnf 4's `--add-repo`):
+   ```
+   sudo dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
+   sudo dnf -y --setopt=install_weak_deps=False install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin git
+   echo '{"log-driver":"json-file","log-opts":{"max-size":"10m","max-file":"3"}}' | sudo tee /etc/docker/daemon.json
+   sudo systemctl enable --now docker && sudo usermod -aG docker $USER
+   ```
+3. Tailscale: `curl -fsSL https://tailscale.com/install.sh | sh && sudo tailscale up --hostname xcrs-a` (or `xcrs-b`); approve the link; disable key expiry for the machine in the admin console.
+4. Clone: `sudo mkdir -p /opt/xcrs && sudo chown $USER /opt/xcrs && git clone https://github.com/yasinhorasanli/XCRS.git /opt/xcrs`.
 
 **VM-B (once)**
-1. Install Docker. Clone the repository to `/opt/xcrs`.
-2. `cd /opt/xcrs/deploy/vm-b && cp .env.example .env`, and set `XCRS_PRIVATE_IP` to VM-B's private address.
-3. `docker compose up -d && docker compose exec ollama ollama pull qwen3.5:4b`
-4. Firewall: allow port 11434 only from VM-A, for example:
-   `ufw allow from <VM-A private IP> to any port 11434 proto tcp && ufw deny 11434 && ufw enable` (keep SSH allowed).
-5. Backups target: `useradd -m backup && mkdir -p /srv/xcrs-backups && chown backup /srv/xcrs-backups`, then add VM-A's backup public key to `~backup/.ssh/authorized_keys`.
-6. Weekly restore test: `cp deploy/systemd/xcrs-backup-verify.* /etc/systemd/system/ && systemctl enable --now xcrs-backup-verify.timer`
+1. Firewall (keep the owner's services open), with an automatic undo while testing:
+   ```
+   sudo systemd-run --unit=fw-rollback --on-active=300 systemctl stop firewalld
+   sudo firewall-offline-cmd --add-service=ssh --add-service=cockpit --add-port=9100/tcp --add-port=41641/udp
+   sudo firewall-offline-cmd --add-rich-rule='rule family="ipv4" source address="<VM-A private IP>/32" port port="11434" protocol="tcp" accept'
+   sudo systemctl enable --now firewalld && sudo systemctl restart docker
+   # test a new SSH session, then: sudo systemctl stop fw-rollback.timer
+   ```
+2. `cd /opt/xcrs/deploy/vm-b && cp .env.example .env` (set `XCRS_PRIVATE_IP`), `docker compose up -d`, then `docker compose exec ollama ollama pull qwen3.5:4b` (and `qwen3.5:9b` for the benchmark).
+3. Backups target: `sudo useradd -m backup && sudo mkdir -p /srv/xcrs-backups && sudo chown backup /srv/xcrs-backups`; add VM-A root's backup public key to `~backup/.ssh/authorized_keys`.
+4. Weekly restore test: `sudo cp deploy/systemd/xcrs-backup-verify.* /etc/systemd/system/ && sudo systemctl enable --now xcrs-backup-verify.timer`.
 
 **VM-A (once)**
-1. Install Docker. Clone the repository to `/opt/xcrs`.
-2. `cd /opt/xcrs/deploy/vm-a && cp .env.example .env`, then set:
-   - `POSTGRES_PASSWORD`;
-   - `XCRS_LLM_BASE_URL=http://<VM-B private IP>:11434/v1`;
-   - `XCRS_DOMAIN` (`:80` until DNS points at VM-A);
-   - `XCRS_BACKUP_REMOTE=backup@<VM-B private IP>:/srv/xcrs-backups`.
-3. Pick an image tag: a commit SHA from the GHCR packages page (or `modernization`). Then run `/opt/xcrs/deploy/deploy.sh <tag>`.
-4. Backups: create an SSH key for root (`ssh-keygen -t ed25519`), give its public key to VM-B (step 5 above), then:
-   `cp deploy/systemd/xcrs-backup.* /etc/systemd/system/ && systemctl enable --now xcrs-backup.timer`
-5. Check:
-   - `systemctl list-timers | grep xcrs`;
-   - `curl -s http://<VM-A>/api/v2/health`;
-   - the site at `/`.
-6. **Restrict the YouTube API key** to VM-A's public IP: Google Cloud console → *Credentials* → the key → *Application restrictions* → *IP addresses*. It was created without that restriction for local use.
-7. **Measure on the VMs:** `uv run python eval/bench_explainer.py --devices cpu` on VM-B (ADR-0020), and the matching latency (ADR-0030).
+1. `cd /opt/xcrs/deploy/vm-a && cp .env.example .env && chmod 600 .env`, then set `POSTGRES_PASSWORD`, `XCRS_LLM_BASE_URL=http://<VM-B private IP>:11434/v1`, `XCRS_LLM_MODEL`, `XCRS_YOUTUBE_API_KEY`, `XCRS_BACKUP_REMOTE=backup@<VM-B private IP>:/srv/xcrs-backups`.
+2. Pick an image tag (a commit SHA from the GHCR packages page, or `modernization`) and run `/opt/xcrs/deploy/deploy.sh <tag>`.
+3. Resources from the adapters: `docker compose -f deploy/vm-a/compose.yaml run --rm api xcrs resources ingest freecodecamp`, `… ingest youtube`, `… tag`.
+4. Backups: `sudo ssh-keygen -t ed25519 -f /root/.ssh/id_ed25519 -N ""`, give its public key to VM-B (above), then `sudo cp deploy/systemd/xcrs-backup.* /etc/systemd/system/ && sudo systemctl enable --now xcrs-backup.timer`.
+5. Publish: `sudo tailscale funnel --bg 8080`. The first time, Tailscale prints a link to allow Funnel (and HTTPS certificates) for the tailnet; open it while signed in as the tailnet admin. Check `tailscale funnel status`, then open `https://xcrs-a.<tailnet>.ts.net`.
+6. **Restrict the YouTube API key** to the VMs' egress address: Google Cloud console → *Credentials* → the key → *Application restrictions* → *IP addresses* (the shared NAT IPv4 and the VMs' IPv6 addresses; see the inventory). Do this once discovery runs on VM-A, or the Mac's calls stop working.
+7. **Measure on the VMs:** the explainer benchmark against VM-B (ADR-0020), and the matching latency (ADR-0030).
 
 ## Everyday operations
 
@@ -53,10 +63,13 @@ How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036), and 
 | Logs | `docker compose -f deploy/vm-a/compose.yaml logs -f api` |
 | Admin command | `docker compose -f deploy/vm-a/compose.yaml run --rm api xcrs <command>` (e.g. `resources ingest freecodecamp`, `resources tag`, `resources check-links`) |
 | Backup now | `COMPOSE_FILE=deploy/vm-a/compose.yaml scripts/db-backup.sh && scripts/db-verify-backup.sh` |
+| Funnel on / off / status | `sudo tailscale funnel --bg 8080` / `sudo tailscale funnel --https=443 off` / `tailscale funnel status` |
+| VM facts (read-only) | `ssh xcrs-a 'bash -s' < scripts/vm-facts.sh` |
 | Restore into a new database | `COMPOSE_FILE=deploy/vm-a/compose.yaml scripts/db-restore.sh backups/<dump> xcrs_restored` |
 
 **Limits** (ADR-0035):
 - Expensive endpoints allow 10 requests a minute per client IP, in bursts of 5. `XCRS_RATE_*` changes that.
 - At most 12 new phrases per request go to the LLM (`XCRS_MATCH_LLM_MAX_NEW`).
 - Request bodies are capped at 64 KB in Caddy.
+- Behind Funnel, the visitor's address comes from `X-Forwarded-For`: Caddy trusts private ranges, and the API takes the rightmost entry that isn't a trusted proxy.
 
