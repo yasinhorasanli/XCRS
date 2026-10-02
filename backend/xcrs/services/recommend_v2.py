@@ -7,15 +7,24 @@ ADR-0013), and can be read back by id.
 
 import uuid
 from dataclasses import dataclass
+from typing import Protocol
 
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from xcrs.db.models import FeedbackV2, RecommendationV2
+from xcrs.db.models import CareerRole, ExplanationV2, FeedbackV2, RecommendationV2
 from xcrs.domain.role_scoring import Category, Mention, RoleScore, score_roles, suggest_resources
+from xcrs.explain.v2 import build_facts
 from xcrs.repository import catalog_store
 from xcrs.services.skill_matching import SkillMatcher
 
-ALGORITHM_VERSION = "v2.3"  # bump when scoring, weights or matching change (results stay comparable)
+ALGORITHM_VERSION = "v2.3"
+LEVEL_NAMES = {
+    "entry": "entry level",
+    "mid": "mid level",
+    "senior": "senior level",
+    "staff": "staff level",
+}  # bump when scoring, weights or matching change (results stay comparable)
 ROLES_SHOWN = 3
 GAPS_SHOWN = 8
 
@@ -28,9 +37,13 @@ class Chip:
     proficiency: int | None = None
 
 
+class ExplanationQueueV2(Protocol):
+    def submit(self, recommendation_id: uuid.UUID, role: str) -> None: ...
+
+
 class RecommendationServiceV2:
-    def __init__(self, session: Session, matcher: SkillMatcher):
-        self.session, self.matcher = session, matcher
+    def __init__(self, session: Session, matcher: SkillMatcher, explanations: ExplanationQueueV2 | None = None):
+        self.session, self.matcher, self.explanations = session, matcher, explanations
 
     def recommend(self, chips: list[Chip]) -> RecommendationV2:
         snapshot = catalog_store.load_snapshot(self.session)
@@ -73,7 +86,25 @@ class RecommendationServiceV2:
             result=result,
         )
         self.session.add(row)
+        self.session.flush()
+        # One explanation job per role (ADR-0037): the facts the LLM may use, stored with the job.
+        summaries = dict(
+            self.session.execute(
+                select(CareerRole.slug, CareerRole.summary).where(
+                    CareerRole.slug.in_([r["id"] for r in result["roles"]])
+                )
+            ).all()
+        )
+        status = "pending" if self.explanations else "disabled"
+        for rank, role in enumerate(result["roles"], 1):
+            facts = build_facts(role, result["matched"], summaries.get(role["id"]), LEVEL_NAMES)
+            self.session.add(
+                ExplanationV2(recommendation_id=row.id, role=role["id"], rank=rank, status=status, input=facts)
+            )
         self.session.commit()
+        if self.explanations:
+            for role in result["roles"]:
+                self.explanations.submit(row.id, role["id"])
         return row
 
     def get(self, recommendation_id: uuid.UUID) -> RecommendationV2 | None:

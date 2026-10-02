@@ -39,10 +39,12 @@ from xcrs.api.schemas_v2 import (
 from xcrs.config import get_settings
 from xcrs.db.session import new_session
 from xcrs.domain.role_scoring import Category as CategoryV2
-from xcrs.explain import get_explainer
+from xcrs.explain import get_explainer, get_explainer_v2
 from xcrs.repository import activity, catalog_store
 from xcrs.repository import catalog as catalog_repo
+from xcrs.services import explanations_v2
 from xcrs.services.explanations import ExplanationWorker
+from xcrs.services.explanations_v2 import ExplanationWorkerV2
 from xcrs.services.knowledge_units import KnowledgeUnitService
 from xcrs.services.recommend import RecommendationService
 from xcrs.services.recommend_v2 import Chip, RecommendationServiceV2
@@ -62,9 +64,17 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         worker.start()
         log.info("explanation worker started; %d pending roles re-queued", worker.requeue_pending())
     app.state.explanations = worker
+    worker_v2 = None
+    if settings.llm_enabled:
+        worker_v2 = ExplanationWorkerV2(get_explainer_v2(), new_session)
+        worker_v2.start()
+        log.info("v2 explanation worker started; %d pending roles re-queued", worker_v2.requeue_pending())
+    app.state.explanations_v2 = worker_v2
     yield
     if worker:
         worker.stop()
+    if worker_v2:
+        worker_v2.stop()
 
 
 app = FastAPI(
@@ -90,9 +100,9 @@ def get_skill_matcher(session: Session = Depends(get_session)) -> SkillMatcher:
 
 
 def get_service_v2(
-    session: Session = Depends(get_session), matcher: SkillMatcher = Depends(get_skill_matcher)
+    request: Request, session: Session = Depends(get_session), matcher: SkillMatcher = Depends(get_skill_matcher)
 ) -> RecommendationServiceV2:
-    return RecommendationServiceV2(session, matcher)
+    return RecommendationServiceV2(session, matcher, getattr(request.app.state, "explanations_v2", None))
 
 
 @app.get("/api/v1/health")
@@ -181,14 +191,26 @@ def match_skills(
     )
 
 
-def _response_v2(row) -> RecommendationResponseV2:
+def _response_v2(row, session: Session) -> RecommendationResponseV2:
+    """The stored result, with each role's explanation as far as it has been written."""
+    explained = explanations_v2.for_recommendation(session, row.id)
+    roles = [
+        {
+            **role,
+            "explanation_status": explained[role["id"]].status if role["id"] in explained else "disabled",
+            "explanation": explained[role["id"]].explanation if role["id"] in explained else None,
+            "next_step": explained[role["id"]].next_step if role["id"] in explained else None,
+        }
+        for role in row.result["roles"]
+    ]
     return RecommendationResponseV2(
         id=str(row.id),
         created_at=row.created_at.isoformat(),
         status=row.status,
         algorithm_version=row.algorithm_version,
         catalog_version=row.catalog_checksum[:12],
-        **row.result,
+        matched=row.result["matched"],
+        roles=roles,
     )
 
 
@@ -203,7 +225,7 @@ def create_recommendation_v2(
         if bool(c.skill) == bool(c.text and c.text.strip()):
             raise HTTPException(422, "each chip needs exactly one of `skill` (picked) or `text` (typed)")
         chips.append(Chip(CategoryV2(c.category), c.skill, c.text.strip()[:100] if c.text else None, c.proficiency))
-    return _response_v2(service.recommend(chips))
+    return _response_v2(service.recommend(chips), service.session)
 
 
 @app.get("/api/v2/recommendations/{recommendation_id}", response_model=RecommendationResponseV2)
@@ -213,7 +235,7 @@ def get_recommendation_v2(
     row = service.get(recommendation_id)
     if row is None:
         raise HTTPException(404, "recommendation not found")
-    return _response_v2(row)
+    return _response_v2(row, service.session)
 
 
 @app.post("/api/v2/recommendations/{recommendation_id}/feedback", status_code=201)

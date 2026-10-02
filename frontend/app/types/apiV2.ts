@@ -70,6 +70,9 @@ export interface RoleResult {
   gaps: Gap[]
   gaps_total: number
   resources: Resource[]
+  explanation_status: 'pending' | 'done' | 'failed' | 'disabled'
+  explanation: string | null // written by the local LLM in the background
+  next_step: string | null
 }
 
 export interface MatchedChip {

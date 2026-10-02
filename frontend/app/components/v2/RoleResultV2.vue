@@ -48,6 +48,18 @@ async function send(rating: 1 | -1) {
       </div>
     </header>
 
+    <div v-if="role.explanation_status === 'pending'" class="mt-3 flex items-center gap-2 text-sm text-slate-500" aria-live="polite">
+      <UIcon name="i-heroicons-arrow-path" class="h-4 w-4 animate-spin" />
+      Writing an explanation for you…
+    </div>
+    <div v-else-if="role.explanation" class="mt-3 space-y-2 text-[15px] leading-relaxed text-slate-700" aria-live="polite">
+      <p>{{ role.explanation }}</p>
+      <p v-if="role.next_step" class="rounded-lg bg-indigo-50/60 px-3 py-2 text-sm text-slate-700">
+        <span class="font-medium text-indigo-700">First step:</span> {{ role.next_step }}
+      </p>
+      <p class="text-[11px] text-slate-400">Written by a local language model from the facts below; it can be imperfect.</p>
+    </div>
+
     <div class="mt-4 grid gap-3 sm:grid-cols-2">
       <div>
         <div class="flex justify-between text-xs text-slate-500"><span>Interest</span><span class="tabular-nums">{{ pct(role.interest) }}</span></div>
