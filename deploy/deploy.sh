@@ -52,10 +52,10 @@ docker compose up -d
 sed -i.bak "s/^XCRS_IMAGE_TAG=.*/XCRS_IMAGE_TAG=$TAG/" "$ENV_FILE" && rm -f "$ENV_FILE.bak"
 
 step "Smoke test through Caddy"
-if [ "${XCRS_DOMAIN:-:80}" = ":80" ]; then BASE="http://localhost:${XCRS_HTTP_PORT:-80}"; else BASE="https://$XCRS_DOMAIN"; fi
+if [ "${XCRS_DOMAIN:-:80}" = ":80" ]; then BASE="http://localhost:${XCRS_HTTP_PORT:-8080}"; else BASE="https://$XCRS_DOMAIN"; fi
 for i in $(seq 1 60); do curl -fsS "$BASE/api/v2/health" >/dev/null 2>&1 && break; sleep 2; done
 curl -fsS "$BASE/api/v2/health"; echo
 # A v2 endpoint only this code serves: proves the new image answers, not just that something is healthy.
 curl -fsS "$BASE/api/v2/skills?q=kubernetes" | grep -q '"id":"kubernetes"' && echo "v2 catalog search: ok"
-curl -fsS -o /dev/null -w "home page: %{http_code}\n" "$BASE/v2"
+curl -fsS -o /dev/null -w "home page: %{http_code}\n" "$BASE/"
 echo "deployed $TAG"

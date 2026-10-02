@@ -1,5 +1,6 @@
-# VM-B (16 GB): the explanation and matching LLM only (ADR-0020, ADR-0034). Ollama has no authentication,
-# so it is published only on VM-B's private address, and the host firewall allows only VM-A (deploy/README.md).
+# VM-B (24 vCPU, 32 GB): the explanation and matching LLM only (ADR-0020, ADR-0034). Ollama has no
+# authentication, so it listens only on VM-B's private address, and firewalld allows port 11434 from VM-A only.
+# Host networking on purpose: a published Docker port would bypass firewalld (deploy/README.md).
 #
 #   cd deploy/vm-b && cp .env.example .env && docker compose up -d
 #   docker compose exec ollama ollama pull qwen3.5:4b
@@ -9,9 +10,9 @@ services:
   ollama:
     image: ollama/ollama:latest
     restart: unless-stopped
-    ports:
-      - "${XCRS_PRIVATE_IP:?set XCRS_PRIVATE_IP}:11434:11434"
+    network_mode: host
     environment:
+      OLLAMA_HOST: "${XCRS_PRIVATE_IP:?set XCRS_PRIVATE_IP}:11434"
       OLLAMA_KEEP_ALIVE: "24h"
       OLLAMA_NUM_PARALLEL: "1"     # one generation at a time on CPU (ADR-0020 benchmark)
     volumes:

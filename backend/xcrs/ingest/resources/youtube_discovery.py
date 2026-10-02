@@ -2,13 +2,15 @@
 
 `search.list` costs 100 quota units of the free 10,000 a day (and searches are capped separately), so one
 run searches at most `max_searches` skills, the ones most roles rely on first, and later runs continue
-where the last stopped. Candidates are ranked by how well their title names the skill and by playlist size.
+where the last stopped (a run that hits the quota keeps what it found). The key is sent in a header, never
+in a URL. Candidates are ranked by title match, trusted channels and a quality score.
 
 Storage follows the API terms: only playlist ids and the skill go into catalog/sources/youtube-candidates.yaml
 (committed, reviewed); titles and channels go to a local review file that the next run overwrites.
 Approved ids move into catalog/sources/youtube.yaml and are ingested by `xcrs resources ingest youtube`.
 """
 
+import logging
 import math
 import re
 import statistics
@@ -17,6 +19,10 @@ from pathlib import Path
 
 import httpx
 import yaml
+
+from xcrs.ingest.resources.youtube import QuotaExceeded, YouTubeError, api_get
+
+log = logging.getLogger(__name__)
 
 SEARCH = "https://www.googleapis.com/youtube/v3/search"
 PLAYLISTS = "https://www.googleapis.com/youtube/v3/playlists"
@@ -84,15 +90,17 @@ def add_quality(client: httpx.Client, api_key: str, candidates: list[dict]) -> N
         return
     videos_of: dict[str, list[str]] = {}
     for c in candidates:
-        params = {"part": "contentDetails", "playlistId": c["id"], "maxResults": SAMPLE_VIDEOS, "key": api_key}
-        r = client.get(ITEMS, params=params)
-        videos_of[c["id"]] = [i["contentDetails"]["videoId"] for i in r.json().get("items", [])] if r.is_success else []
+        params = {"part": "contentDetails", "playlistId": c["id"], "maxResults": SAMPLE_VIDEOS}
+        try:  # a playlist can be private or gone by now; a quota error still stops the run
+            items = api_get(client, ITEMS, api_key, params).get("items", [])
+        except YouTubeError:
+            items = []
+        videos_of[c["id"]] = [i["contentDetails"]["videoId"] for i in items]
     all_ids = [v for ids in videos_of.values() for v in ids][:50]
     stats: dict[str, dict] = {}
     if all_ids:
-        r = client.get(VIDEOS, params={"part": "statistics,snippet", "id": ",".join(all_ids), "key": api_key})
-        r.raise_for_status()
-        for v in r.json().get("items", []):
+        r = api_get(client, VIDEOS, api_key, {"part": "statistics,snippet", "id": ",".join(all_ids)})
+        for v in r.get("items", []):
             st = v.get("statistics", {})
             stats[v["id"]] = {
                 "views": int(st.get("viewCount", 0)),
@@ -102,9 +110,8 @@ def add_quality(client: httpx.Client, api_key: str, candidates: list[dict]) -> N
     channel_ids = sorted({c["channel_id"] for c in candidates if c.get("channel_id")})
     subscribers: dict[str, int] = {}
     if channel_ids:
-        r = client.get(CHANNELS, params={"part": "statistics", "id": ",".join(channel_ids), "key": api_key})
-        r.raise_for_status()
-        for ch in r.json().get("items", []):
+        r = api_get(client, CHANNELS, api_key, {"part": "statistics", "id": ",".join(channel_ids)})
+        for ch in r.get("items", []):
             subscribers[ch["id"]] = int(ch.get("statistics", {}).get("subscriberCount", 0) or 0)
     for c in candidates:
         sample = [stats[v] for v in videos_of.get(c["id"], []) if v in stats]
@@ -149,27 +156,22 @@ def discover(
             break
         topic = re.sub(r"\(.*?\)", "", name).strip()  # "BI tools (Power BI, ...)" -> "BI tools"
         query = f"{topic} tutorial"
-        response = client.get(
-            SEARCH,
-            params={
-                "part": "snippet",
-                "q": query,
-                "type": "playlist",
-                "maxResults": 8,
-                "relevanceLanguage": "en",
-                "safeSearch": "strict",
-                "key": api_key,
-            },
-        )
-        used += 1
-        response.raise_for_status()
-        ids = [item["id"]["playlistId"] for item in response.json().get("items", [])]
-        details = []
-        if ids:
-            meta = client.get(PLAYLISTS, params={"part": "snippet,contentDetails", "id": ",".join(ids), "key": api_key})
-            meta.raise_for_status()
-            for item in meta.json().get("items", []):
-                details.append(
+        params = {
+            "part": "snippet",
+            "q": query,
+            "type": "playlist",
+            "maxResults": 8,
+            "relevanceLanguage": "en",
+            "safeSearch": "strict",
+        }
+        try:
+            result = api_get(client, SEARCH, api_key, params)
+            used += 1
+            ids = [item["id"]["playlistId"] for item in result.get("items", [])]
+            details = []
+            if ids:
+                meta = api_get(client, PLAYLISTS, api_key, {"part": "snippet,contentDetails", "id": ",".join(ids)})
+                details = [
                     {
                         "id": item["id"],
                         "title": item["snippet"]["title"],
@@ -177,9 +179,13 @@ def discover(
                         "videos": item.get("contentDetails", {}).get("itemCount"),
                         "channel_id": item["snippet"].get("channelId", ""),
                     }
-                )
-        kept = rank(name, details, trusted, blocked)[:ENRICH]
-        add_quality(client, api_key, kept)
+                    for item in meta.get("items", [])
+                ]
+            kept = rank(name, details, trusted, blocked)[:ENRICH]
+            add_quality(client, api_key, kept)
+        except QuotaExceeded as exc:
+            log.warning("stopping: %s; what was found so far is kept", exc)
+            break
         kept.sort(key=lambda c: (c.get("channel", "").lower() in trusted, c.get("quality", 0)), reverse=True)
         found[skill_id] = kept[:per_skill]
     return found, used
