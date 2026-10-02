@@ -122,3 +122,16 @@ Measured with `backend/eval/compare_engines.py` (results in `backend/eval/result
 
 v2 was calibrated on the same profiles (ADR-0031), so its in-sample numbers flatter it; the cross-validated figure is 98% top-1. Level estimates are weak (about 55% exact from about ten chips) and are shown as estimates.
 
+
+## First deployment on the VMs (2026-10-02)
+
+Oracle Linux 10 VMs (Xeon E5-2690 v4, AVX2, no GPU), deployed with `deploy/deploy.sh` behind Tailscale (ADR-0040). The LLM is `qwen3.5:4b` on VM-B (24 vCPU), the embedding model on VM-A (8 vCPU).
+
+| Measure | Value |
+|---|---|
+| Explanation per role, 4B on VM-B (benchmark, 20 cases) | median 12.2 s, p90 13.1 s, 100% clean |
+| Explanation per role, 9B on VM-B (same) | median 20.2 s |
+| Three explanations for one result, through the app | 38 s |
+| Skill matching, three new typed phrases (LLM on VM-B) | 17.1 s (about 5.7 s each) |
+| Recommendation once phrases are matched (through Caddy) | 72 ms |
+| Database dump (catalog, resources, activity) | 1.4 MB |

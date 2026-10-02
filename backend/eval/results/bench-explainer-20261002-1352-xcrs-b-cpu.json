@@ -1,0 +1,600 @@
+{
+  "date": "2026-10-02T13:52:47.043136+00:00",
+  "host": "xcrs-b (VM-B: 24 vCPU Xeon E5-2690 v4, 30 GiB; Ollama reached through an SSH tunnel from the Mac)",
+  "threads": 24,
+  "prompt_version": "explain-role-v2.1",
+  "runs": {
+    "qwen3.5:4b / cpu": {
+      "summary": {
+        "cases": 20,
+        "errors": 0,
+        "median_s": 12.2,
+        "p90_s": 13.1,
+        "prompt_tokens": 671,
+        "output_tokens": 92,
+        "decode_tok_s": 11.7,
+        "clean_pct": 100,
+        "flags": [],
+        "load_s": 0.0
+      },
+      "runs": [
+        {
+          "profile": "frontend-react-mid",
+          "role": "frontend-engineer",
+          "total_s": 8.271546994,
+          "prompt_tokens": 672,
+          "output_tokens": 90,
+          "prompt_eval_s": 0.158324,
+          "decode_tok_s": 11.111080932866603,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you already enjoy working with CSS, TypeScript, responsive design, and front-end testing, which aligns well with building user-facing web interfaces. Your curiosity about web accessibility and performance shows an interest in the core responsibilities of a Frontend Engineer.",
+            "next_step": "Start by learning Git using Pro Git or Corey Schafer's YouTube tutorials to manage your code effectively."
+          }
+        },
+        {
+          "profile": "backend-java-mid",
+          "role": "backend-engineer",
+          "total_s": 12.699663122,
+          "prompt_tokens": 679,
+          "output_tokens": 90,
+          "prompt_eval_s": 4.656356,
+          "decode_tok_s": 11.472851536457025,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy working with Java, Spring Boot, PostgreSQL, and unit testing, while being curious about microservices and Apache Kafka. The recommendation aligns your existing technical interests with the core responsibilities of building server-side applications.",
+            "next_step": "Start by learning data structures using MIT OpenCourseWare's Introduction to Algorithms (6.006) course."
+          }
+        },
+        {
+          "profile": "fullstack-js",
+          "role": "full-stack-engineer",
+          "total_s": 12.627675409,
+          "prompt_tokens": 662,
+          "output_tokens": 93,
+          "prompt_eval_s": 4.15151,
+          "decode_tok_s": 11.238653038974078,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you have enjoyed learning React, Node.js, and TypeScript while being curious about Next.js, which aligns with building features across the front end and back end. Your existing knowledge of HTML and CSS provides a strong foundation for working from the database to the screen.",
+            "next_step": "Start by learning programming fundamentals and object-oriented programming using The Odin Project - freeCodeCamp Remix."
+          }
+        },
+        {
+          "profile": "android-kotlin",
+          "role": "android-engineer",
+          "total_s": 12.780535206,
+          "prompt_tokens": 668,
+          "output_tokens": 95,
+          "prompt_eval_s": 4.119509,
+          "decode_tok_s": 11.23358876149211,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you enjoyed learning about mobile app architecture, Kotlin, the Android SDK, Jetpack Compose, and coroutines. While you are curious about mobile testing, your strong foundation in these core technologies makes you a good starting point for building native Android apps.",
+            "next_step": "Start by learning data structures using MIT OpenCourseWare's Introduction to Algorithms (6.006) course."
+          }
+        },
+        {
+          "profile": "ios-swift",
+          "role": "ios-engineer",
+          "total_s": 12.022839161,
+          "prompt_tokens": 661,
+          "output_tokens": 86,
+          "prompt_eval_s": 4.157604999,
+          "decode_tok_s": 11.243502628234108,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you enjoyed learning Swift, SwiftUI, and iOS SDK development, which aligns directly with building native apps. Your curiosity about mobile app architecture provides a strong foundation for this entry-level position.",
+            "next_step": "Start by learning Object-oriented programming using the Design Patterns resource from Refactoring.Guru to solidify your coding fundamentals before tackling data structures."
+          }
+        },
+        {
+          "profile": "game-unity",
+          "role": "game-developer",
+          "total_s": 13.06042163,
+          "prompt_tokens": 661,
+          "output_tokens": 100,
+          "prompt_eval_s": 4.356189,
+          "decode_tok_s": 11.782802881366615,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you have already enjoyed working with Unity, game math, physics, and C#, while being curious about shader programming and multiplayer networking. The recommendation builds on your existing interest in core game mechanics to guide you toward a career where you program gameplay, engines, graphics, and performance.",
+            "next_step": "Start by learning programming fundamentals using the freeCodeCamp Rosetta Code resource, which covers both algorithms and complexity basics."
+          }
+        },
+        {
+          "profile": "embedded-c",
+          "role": "embedded-software-engineer",
+          "total_s": 10.993129463,
+          "prompt_tokens": 651,
+          "output_tokens": 83,
+          "prompt_eval_s": 3.878224,
+          "decode_tok_s": 11.974242394733064,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy working with C, microcontroller programming, real-time operating systems, and hardware debugging. Your curiosity about Embedded Linux aligns well with the day-to-day work of writing software for devices that interact directly with hardware.",
+            "next_step": "Start by learning Git using the Pro Git resource to manage your code effectively."
+          }
+        },
+        {
+          "profile": "qa-automation",
+          "role": "qa-automation-engineer",
+          "total_s": 13.329847771,
+          "prompt_tokens": 667,
+          "output_tokens": 109,
+          "prompt_eval_s": 3.934754,
+          "decode_tok_s": 11.777619950467002,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy working with Java, Selenium, API testing, and end-to-end testing, which aligns well with the core responsibilities of a QA Automation Engineer. Your curiosity about performance and load testing suggests you are ready to expand into that area while building on your existing automation skills.",
+            "next_step": "Start by learning JavaScript using the MDN Web Docs guide, as it is listed as one of the first skills you need to master for this role."
+          }
+        },
+        {
+          "profile": "devops-mid",
+          "role": "devops-engineer",
+          "total_s": 11.752260682,
+          "prompt_tokens": 676,
+          "output_tokens": 90,
+          "prompt_eval_s": 4.065577,
+          "decode_tok_s": 11.9486843834678,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you already enjoy working with Terraform, GitHub Actions, Docker, and shell scripting, which are core to automating software delivery. Your curiosity about Kubernetes and observability shows an interest in the operational side of bridging development and operations.",
+            "next_step": "Start by learning programming fundamentals using the Python Certification from freeCodeCamp to build a strong foundation for automation."
+          }
+        },
+        {
+          "profile": "cloud-aws",
+          "role": "cloud-engineer",
+          "total_s": 11.73901229,
+          "prompt_tokens": 656,
+          "output_tokens": 92,
+          "prompt_eval_s": 3.935121,
+          "decode_tok_s": 12.01423320984791,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you have enjoyed working with AWS, Terraform, and serverless concepts, which aligns well with designing cloud infrastructure. While you are curious about cloud architecture, your hands-on experience with identity management and networking provides a strong foundation for building and operating systems.",
+            "next_step": "Start by learning Python fundamentals using the freeCodeCamp Python Certification to begin writing scripts for automation."
+          }
+        },
+        {
+          "profile": "sre",
+          "role": "site-reliability-engineer",
+          "total_s": 11.633637637,
+          "prompt_tokens": 672,
+          "output_tokens": 89,
+          "prompt_eval_s": 4.121508,
+          "decode_tok_s": 12.071967372591914,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you enjoyed SRE practices, incident management, and tools like Prometheus, Grafana, and Kubernetes. Your curiosity about capacity planning and chaos engineering aligns well with the core responsibilities of keeping production systems reliable through automation and software engineering.",
+            "next_step": "Start by learning programming fundamentals using the Go Tutorial (Golang) for Beginners from Net Ninja on YouTube."
+          }
+        },
+        {
+          "profile": "ai-reliability",
+          "role": "ai-reliability-engineer",
+          "total_s": 12.243481246,
+          "prompt_tokens": 677,
+          "output_tokens": 97,
+          "prompt_eval_s": 4.02765,
+          "decode_tok_s": 11.993433533318685,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of AI safety, LLM evaluation, and incident management aligns directly with the core responsibilities of an AI Reliability Engineer. While you are curious about model monitoring and serving, your existing comfort with SRE practices provides a strong foundation for this position.",
+            "next_step": "Start by learning programming fundamentals using the freeCodeCamp Python Certification to build the technical base required for production work."
+          }
+        },
+        {
+          "profile": "platform",
+          "role": "platform-engineer",
+          "total_s": 11.945376088,
+          "prompt_tokens": 673,
+          "output_tokens": 94,
+          "prompt_eval_s": 3.982733,
+          "decode_tok_s": 11.998219157939452,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you enjoyed building internal developer platforms, working with Kubernetes, GitOps, Helm, and Terraform, and are curious about service mesh. The Platform Engineer position aligns with your experience in creating golden paths that allow product teams to ship and run services independently.",
+            "next_step": "Start by learning programming fundamentals using the Go Tutorial (Golang) for Beginners from Net Ninja on YouTube."
+          }
+        },
+        {
+          "profile": "data-analyst",
+          "role": "data-analyst",
+          "total_s": 11.543526288,
+          "prompt_tokens": 676,
+          "output_tokens": 88,
+          "prompt_eval_s": 4.065088,
+          "decode_tok_s": 11.970626259636354,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of statistics, spreadsheets, and BI tools aligns directly with the core tasks of turning data into business answers. Your curiosity about A/B testing and pandas suggests a strong foundation for experimentation and analysis.",
+            "next_step": "Start by learning Python using The Python Tutorial from the Python Software Foundation to build the coding skills needed for this role."
+          }
+        },
+        {
+          "profile": "analytics-eng",
+          "role": "analytics-engineer",
+          "total_s": 12.56818733,
+          "prompt_tokens": 675,
+          "output_tokens": 97,
+          "prompt_eval_s": 4.109475,
+          "decode_tok_s": 11.648251621448635,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy data warehousing, SQL, dbt, and data quality testing, which form the core of an Analytics Engineer's work. While you are curious about semantic layers, your strong foundation in modeling and testing makes this a natural next step.",
+            "next_step": "Start by learning Spreadsheets using Microsoft's Excel help and learning resources to understand how business users often interact with data."
+          }
+        },
+        {
+          "profile": "data-engineer",
+          "role": "data-engineer",
+          "total_s": 13.60695221,
+          "prompt_tokens": 671,
+          "output_tokens": 109,
+          "prompt_eval_s": 4.213868999,
+          "decode_tok_s": 11.792755201984473,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you have already enjoyed working with ETL/ELT pipelines, data warehousing, and Apache Airflow, which are core to building reliable data systems. Your curiosity about stream processing and Kafka suggests an interest in the full lifecycle of data movement that a Data Engineer handles.",
+            "next_step": "Start by learning relational databases and shell scripting using the freeCodeCamp Relational Databases Certification, as these form the foundation for managing and automating your future pipelines."
+          }
+        },
+        {
+          "profile": "data-scientist",
+          "role": "data-scientist",
+          "total_s": 11.237279222,
+          "prompt_tokens": 671,
+          "output_tokens": 81,
+          "prompt_eval_s": 4.059652,
+          "decode_tok_s": 11.496753870254448,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy statistics, machine learning fundamentals, and exploratory data analysis. Your curiosity about A/B testing and deep learning suggests a strong foundation for building predictive models.",
+            "next_step": "Start by learning programming fundamentals using the Python Certification from freeCodeCamp to prepare for working with NumPy and Jupyter notebooks."
+          }
+        },
+        {
+          "profile": "ml-engineer",
+          "role": "machine-learning-engineer",
+          "total_s": 12.844607476,
+          "prompt_tokens": 656,
+          "output_tokens": 94,
+          "prompt_eval_s": 4.28789,
+          "decode_tok_s": 11.16022401181559,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you enjoyed working with ML pipelines, PyTorch, and deep learning while also being curious about model monitoring and transformer models. Your interest in model serving aligns well with the core responsibility of shipping trained models into production systems.",
+            "next_step": "Start by learning programming fundamentals using the Python Certification from freeCodeCamp to build a strong foundation before moving on to data structures and Git."
+          }
+        },
+        {
+          "profile": "applied-scientist",
+          "role": "applied-scientist",
+          "total_s": 12.811620996,
+          "prompt_tokens": 683,
+          "output_tokens": 96,
+          "prompt_eval_s": 4.467926,
+          "decode_tok_s": 11.68160330147439,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you enjoyed research methods, optimization for machine learning, and deep learning while being curious about distributed training. Your background in PyTorch and transformer models aligns well with the work of framing problems, running experiments, and adapting published research.",
+            "next_step": "Start by learning programming fundamentals using Rosetta Code from freeCodeCamp to build a strong foundation before moving on to data analysis tools."
+          }
+        },
+        {
+          "profile": "mlops",
+          "role": "mlops-engineer",
+          "total_s": 12.208492219,
+          "prompt_tokens": 670,
+          "output_tokens": 87,
+          "prompt_eval_s": 4.357621,
+          "decode_tok_s": 11.28735237894574,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy working with ML pipelines, model serving, experiment tracking, Kubernetes, and Docker. Your curiosity about model monitoring further aligns with the core responsibilities of running infrastructure for trained models.",
+            "next_step": "Start by learning programming fundamentals using the Python Certification from freeCodeCamp to build a strong foundation before moving to cloud and infrastructure tools."
+          }
+        }
+      ]
+    },
+    "qwen3.5:9b / cpu": {
+      "summary": {
+        "cases": 20,
+        "errors": 0,
+        "median_s": 20.2,
+        "p90_s": 89.7,
+        "prompt_tokens": 671,
+        "output_tokens": 104,
+        "decode_tok_s": 8.3,
+        "clean_pct": 100,
+        "flags": [],
+        "load_s": 0.0
+      },
+      "runs": [
+        {
+          "profile": "frontend-react-mid",
+          "role": "frontend-engineer",
+          "total_s": 12.420454686,
+          "prompt_tokens": 672,
+          "output_tokens": 105,
+          "prompt_eval_s": 0.172627,
+          "decode_tok_s": 8.580564596247253,
+          "flags": [],
+          "output": {
+            "explanation": "This Frontend Engineer role fits you because you have already enjoyed working with CSS, TypeScript, responsive design, and front-end testing, while also being curious about web accessibility and performance. You are estimated to start at an entry level where you will cover some of the role's requirements immediately.",
+            "next_step": "To get started, focus on learning Git first using the 'Pro Git' resource from the Git project or watching Corey Schafer's tutorials on YouTube."
+          }
+        },
+        {
+          "profile": "backend-java-mid",
+          "role": "backend-engineer",
+          "total_s": 18.186653667,
+          "prompt_tokens": 679,
+          "output_tokens": 95,
+          "prompt_eval_s": 7.134258,
+          "decode_tok_s": 8.676619205559613,
+          "flags": [],
+          "output": {
+            "explanation": "This Backend Engineer role fits well because you have expressed enjoyment with Java, Spring Boot, PostgreSQL, and unit testing, while also being curious about microservices and Apache Kafka. You currently cover some of the necessary skills for this position, making it a strong estimated entry-level opportunity.",
+            "next_step": "To get started, focus on learning data structures first using the Introduction to Algorithms course from MIT OpenCourseWare."
+          }
+        },
+        {
+          "profile": "fullstack-js",
+          "role": "full-stack-engineer",
+          "total_s": 20.601150008,
+          "prompt_tokens": 662,
+          "output_tokens": 99,
+          "prompt_eval_s": 8.188127,
+          "decode_tok_s": 8.074334114151346,
+          "flags": [],
+          "output": {
+            "explanation": "This Full-Stack Engineer role fits you because you have expressed enjoyment in React, Node.js, HTML, CSS, and TypeScript, along with curiosity about Next.js. While you already cover some of the necessary skills, this role also requires foundational knowledge in areas like programming fundamentals and data structures.",
+            "next_step": "To get started, focus on learning Programming fundamentals and Object-oriented programming using The Odin Project - freeCodeCamp Remix."
+          }
+        },
+        {
+          "profile": "android-kotlin",
+          "role": "android-engineer",
+          "total_s": 18.807502884,
+          "prompt_tokens": 668,
+          "output_tokens": 86,
+          "prompt_eval_s": 8.354219999,
+          "decode_tok_s": 8.366321121390554,
+          "flags": [],
+          "output": {
+            "explanation": "This Android Engineer role fits you because you already enjoy working with Kotlin, the Android SDK, Jetpack Compose, and mobile app architecture. Your interest in mobile testing also aligns well with the practical aspects of building native apps.",
+            "next_step": "To get started, focus on learning data structures first using the Introduction to Algorithms course from MIT OpenCourseWare."
+          }
+        },
+        {
+          "profile": "ios-swift",
+          "role": "ios-engineer",
+          "total_s": 19.325414932,
+          "prompt_tokens": 661,
+          "output_tokens": 94,
+          "prompt_eval_s": 8.212197,
+          "decode_tok_s": 8.587396169016401,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you already enjoyed working with Swift, SwiftUI, and iOS SDK concepts while being curious about mobile app architecture. You have some of the necessary skills covered, making this an ideal entry-level path for you to build native apps for iPhone and iPad.",
+            "next_step": "To get started, focus on learning Object-oriented programming first using the 'Design Patterns' resource from Refactoring.Guru."
+          }
+        },
+        {
+          "profile": "game-unity",
+          "role": "game-developer",
+          "total_s": 89.739828329,
+          "prompt_tokens": 661,
+          "output_tokens": 108,
+          "prompt_eval_s": 6.611042,
+          "decode_tok_s": 1.3018233422108443,
+          "flags": [],
+          "output": {
+            "explanation": "This Game Developer role fits you because you have already enjoyed working with Unity, C#, game math, and physics while remaining curious about shader programming and multiplayer networking. Although you cover some aspects of the job, there are still core technical foundations to build before you can fully program gameplay and engines.",
+            "next_step": "Start by learning programming fundamentals using the freeCodeCamp Rosetta Code resource or watch Brackeys' 'HOW TO PROGRAM in C#' video on YouTube."
+          }
+        },
+        {
+          "profile": "embedded-c",
+          "role": "embedded-software-engineer",
+          "total_s": 426.332150685,
+          "prompt_tokens": 651,
+          "output_tokens": 93,
+          "prompt_eval_s": 20.004685,
+          "decode_tok_s": 0.22896961651235515,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits well because you have expressed enjoyment for C, microcontroller programming, real-time operating systems, embedded communication protocols, and hardware debugging. You also cover much of the core requirements already, while your curiosity about Embedded Linux aligns with the path forward.",
+            "next_step": "Start by learning Git using Pro Git or Git Tutorials from YouTube, followed by practicing debugging with Chrome DevTools."
+          }
+        },
+        {
+          "profile": "qa-automation",
+          "role": "qa-automation-engineer",
+          "total_s": 112.790689087,
+          "prompt_tokens": 667,
+          "output_tokens": 103,
+          "prompt_eval_s": 20.529989,
+          "decode_tok_s": 1.1181335688925949,
+          "flags": [],
+          "output": {
+            "explanation": "This QA Automation Engineer role fits you because you have already enjoyed working with test automation, API testing, Java, end-to-end testing, and Selenium. Your curiosity about performance and load testing also aligns well with the responsibilities of this position.",
+            "next_step": "To get started, focus on strengthening your programming fundamentals using Rosetta Code from freeCodeCamp, followed by learning JavaScript via the MDN Web Docs guide or Programming with Mosh tutorials."
+          }
+        },
+        {
+          "profile": "devops-mid",
+          "role": "devops-engineer",
+          "total_s": 21.608477577,
+          "prompt_tokens": 676,
+          "output_tokens": 121,
+          "prompt_eval_s": 6.716988,
+          "decode_tok_s": 8.19139041540978,
+          "flags": [],
+          "output": {
+            "explanation": "This DevOps Engineer role fits you because you have already enjoyed working with Terraform, GitHub Actions, Shell scripting, and Docker, while also being curious about Kubernetes and Observability. You currently cover some of the necessary skills for this position, making it a strong entry-level opportunity. The recommendation bridges your existing automation interests with the foundational knowledge needed to build, test, and deploy software effectively.",
+            "next_step": "To get started, focus on programming fundamentals first, which you can learn through the Python Certification course offered by freeCodeCamp."
+          }
+        },
+        {
+          "profile": "cloud-aws",
+          "role": "cloud-engineer",
+          "total_s": 17.875009027,
+          "prompt_tokens": 656,
+          "output_tokens": 94,
+          "prompt_eval_s": 6.483999,
+          "decode_tok_s": 8.339003560044818,
+          "flags": [],
+          "output": {
+            "explanation": "This Cloud Engineer role fits well because you have expressed enjoyment with Serverless, Terraform, AWS, Identity and access management, and Cloud networking. Your curiosity about Cloud architecture further aligns with the core responsibilities of designing and operating cloud infrastructure.",
+            "next_step": "To get started, focus on Programming fundamentals and Python or Shell scripting using the freeCodeCamp Python Certification, then practice Git with Pro Git."
+          }
+        },
+        {
+          "profile": "sre",
+          "role": "site-reliability-engineer",
+          "total_s": 18.099091658,
+          "prompt_tokens": 672,
+          "output_tokens": 94,
+          "prompt_eval_s": 6.670204,
+          "decode_tok_s": 8.31210430735898,
+          "flags": [],
+          "output": {
+            "explanation": "This Site Reliability Engineer role fits you because you have expressed enjoyment of SRE practices, incident management, Prometheus and Grafana, and Kubernetes. Your curiosity about capacity planning and chaos engineering further aligns with the core responsibilities of keeping production systems reliable through automation and incident response.",
+            "next_step": "To get started, focus on building programming fundamentals using the Go Tutorial for Beginners from Net Ninja on YouTube."
+          }
+        },
+        {
+          "profile": "ai-reliability",
+          "role": "ai-reliability-engineer",
+          "total_s": 21.745764109,
+          "prompt_tokens": 677,
+          "output_tokens": 125,
+          "prompt_eval_s": 6.616485,
+          "decode_tok_s": 8.327172890828699,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy AI safety, LLM evaluation, SRE practices, and incident management. You are curious about model monitoring and LLM serving, which aligns well with the core responsibilities of keeping AI features dependable in production. Since you have covered much of what the role asks for, this position offers a strong match for your current interests and skills.",
+            "next_step": "To get started, focus on programming fundamentals using the freeCodeCamp Python Certification or learn Git via the official Pro Git guide or Corey Schafer's YouTube tutorials."
+          }
+        },
+        {
+          "profile": "platform",
+          "role": "platform-engineer",
+          "total_s": 17.500513043,
+          "prompt_tokens": 673,
+          "output_tokens": 88,
+          "prompt_eval_s": 6.867057,
+          "decode_tok_s": 8.369381909733173,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you have expressed enjoyment in Internal developer platforms, Kubernetes, GitOps, Helm, and Terraform. You are also curious about service mesh, which aligns with the responsibilities of building internal platforms for product teams.",
+            "next_step": "To get started, focus on programming fundamentals using the Go Tutorial (Golang) for Beginners from YouTube · Net Ninja."
+          }
+        },
+        {
+          "profile": "data-analyst",
+          "role": "data-analyst",
+          "total_s": 19.252181248,
+          "prompt_tokens": 676,
+          "output_tokens": 104,
+          "prompt_eval_s": 6.761092,
+          "decode_tok_s": 8.404481172386333,
+          "flags": [],
+          "output": {
+            "explanation": "This Data Analyst role fits well because you already enjoy working with statistics, spreadsheets, BI tools, and data visualization. Your curiosity about A/B testing and pandas aligns with the analytical nature of this position, while your experience covers some of the core requirements.",
+            "next_step": "To get started, focus on developing stakeholder communication skills using resources from Harvard Business Review, followed by learning Python through tutorials from the Python Software Foundation or freeCodeCamp."
+          }
+        },
+        {
+          "profile": "analytics-eng",
+          "role": "analytics-engineer",
+          "total_s": 18.658419608,
+          "prompt_tokens": 675,
+          "output_tokens": 100,
+          "prompt_eval_s": 6.613294,
+          "decode_tok_s": 8.394839524247654,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you have expressed enjoyment in data modeling, dbt, data quality, warehousing, and SQL, while also being curious about the semantic layer. You already cover much of what an Analytics Engineer does by turning raw warehouse data into trusted models and metrics.",
+            "next_step": "To get started, focus on learning spreadsheets using the Excel help from Microsoft, followed by CI/CD concepts from martinfowler.com."
+          }
+        },
+        {
+          "profile": "data-engineer",
+          "role": "data-engineer",
+          "total_s": 22.608452594,
+          "prompt_tokens": 671,
+          "output_tokens": 132,
+          "prompt_eval_s": 6.702719,
+          "decode_tok_s": 8.362380463097226,
+          "flags": [],
+          "output": {
+            "explanation": "This Data Engineer role fits you because you have already enjoyed working with ETL/ELT pipelines, Apache Spark, and data warehousing. Your curiosity about stream processing and Apache Kafka also aligns well with the core responsibilities of building reliable data systems. You currently cover some of the necessary skills, making this a strong entry-level opportunity for you.",
+            "next_step": "To get started, focus on learning relational databases and Git first. You can use the freeCodeCamp Relational Databases Certification to cover database concepts and shell scripting, or watch Corey Schafer's YouTube tutorials to master Git."
+          }
+        },
+        {
+          "profile": "data-scientist",
+          "role": "data-scientist",
+          "total_s": 20.412398319,
+          "prompt_tokens": 671,
+          "output_tokens": 114,
+          "prompt_eval_s": 6.69706,
+          "decode_tok_s": 8.386348172780252,
+          "flags": [],
+          "output": {
+            "explanation": "This Data Scientist role fits you because you have already enjoyed learning machine learning fundamentals, statistics, and exploratory data analysis. Your curiosity about A/B testing and deep learning further aligns with the core responsibilities of using statistics to build predictive models. While you cover some of the necessary skills, there are still foundational areas to explore before starting.",
+            "next_step": "To get started, focus on programming fundamentals by taking the Python Certification from freeCodeCamp, then move on to NumPy and Jupyter notebooks."
+          }
+        },
+        {
+          "profile": "ml-engineer",
+          "role": "machine-learning-engineer",
+          "total_s": 20.005966739,
+          "prompt_tokens": 656,
+          "output_tokens": 112,
+          "prompt_eval_s": 6.364986,
+          "decode_tok_s": 8.286948005098544,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you have expressed enjoyment with PyTorch, deep learning, and model serving, while also being curious about model monitoring and transformer models. Although you currently cover some aspects of the job, there are foundational skills like programming fundamentals and data structures that you will need to learn first.",
+            "next_step": "To get started, consider taking the Python Certification from freeCodeCamp to build your programming fundamentals, or watching Corey Schafer's Git Tutorials on YouTube to learn version control."
+          }
+        },
+        {
+          "profile": "applied-scientist",
+          "role": "applied-scientist",
+          "total_s": 23.182499552,
+          "prompt_tokens": 683,
+          "output_tokens": 130,
+          "prompt_eval_s": 7.265471,
+          "decode_tok_s": 8.255812314141025,
+          "flags": [],
+          "output": {
+            "explanation": "This Applied Scientist role fits you because you have expressed enjoyment for research methods, optimization, deep learning, PyTorch, and Transformer models. While you are curious about distributed training, the role also values your existing interest in building new models for products. You currently cover some of what this role asks, making it a strong estimated entry-level fit.",
+            "next_step": "To get started, focus on programming fundamentals using Rosetta Code from freeCodeCamp, then move on to data analysis with NumPy and pandas via the Data Analysis with Python course or Corey Schafer's YouTube tutorials."
+          }
+        },
+        {
+          "profile": "mlops",
+          "role": "mlops-engineer",
+          "total_s": 22.760887312,
+          "prompt_tokens": 670,
+          "output_tokens": 122,
+          "prompt_eval_s": 7.582151,
+          "decode_tok_s": 8.12758171467325,
+          "flags": [],
+          "output": {
+            "explanation": "This MLOps Engineer role fits you because you have expressed enjoyment in building ML pipelines, model serving, experiment tracking, and working with Kubernetes and Docker containers. You are also curious about model monitoring, which is a key part of this position. While you cover some of the necessary skills, there are foundational areas like programming fundamentals and cloud infrastructure that need attention first.",
+            "next_step": "To get started, focus on strengthening your programming fundamentals using the freeCodeCamp Python Certification, followed by learning shell scripting through their Relational Databases Certification."
+          }
+        }
+      ]
+    }
+  }
+}

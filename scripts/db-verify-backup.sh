@@ -6,6 +6,9 @@
 #   scripts/db-verify-backup.sh backups/xcrs-....dump
 set -euo pipefail
 
+# sha256sum on Linux, shasum on macOS
+sha256() { if command -v sha256sum >/dev/null; then sha256sum "$1"; else shasum -a 256 "$1"; fi; }
+
 cd "$(dirname "$0")/.."
 DUMP="${1:-$(ls -1t "${XCRS_BACKUP_DIR:-backups}"/xcrs-*.dump | head -1)}"
 MANIFEST="${DUMP%.dump}.manifest"
@@ -14,7 +17,7 @@ IMAGE="pgvector/pgvector:pg18"
 
 [ -f "$MANIFEST" ] || { echo "no manifest for $DUMP"; exit 1; }
 expected_sha="$(grep '^sha256:' "$MANIFEST" | cut -d' ' -f2)"
-actual_sha="$(shasum -a 256 "$DUMP" | cut -d' ' -f1)"
+actual_sha="$(sha256 "$DUMP" | cut -d' ' -f1)"
 [ "$expected_sha" = "$actual_sha" ] || { echo "CHECKSUM MISMATCH: $DUMP is damaged"; exit 1; }
 
 cleanup() { docker rm -f "$NAME" >/dev/null 2>&1 || true; }
