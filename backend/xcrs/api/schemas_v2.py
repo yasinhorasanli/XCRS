@@ -38,8 +38,12 @@ class ChipV2(BaseModel):
     proficiency: int | None = Field(default=None, ge=1, le=4)
 
 
+Experience = Literal["student", "0-2", "2-5", "5-10", "10+"]
+
+
 class RecommendationRequestV2(BaseModel):
     chips: list[ChipV2] = Field(min_length=1, max_length=60)
+    experience: Experience | None = None  # years in software, optional (ADR-0041)
 
     model_config = {
         "json_schema_extra": {
@@ -102,8 +106,9 @@ class RoleV2(BaseModel):
     target_level: LevelV2
     levels: list[LevelV2]
     because: list[BecauseV2]
-    gaps: list[GapV2]
+    gaps: list[GapV2]  # what the next level adds (ADR-0041)
     gaps_total: int
+    basics: list[GapV2] = []  # unlisted skills of the levels reached: assumed, for the learner to check
     resources: list[ResourceV2] = []
     explanation_status: Literal["pending", "done", "failed", "disabled"] = "disabled"
     explanation: str | None = None  # written by the local LLM in the background (ADR-0037)
@@ -126,6 +131,7 @@ class RecommendationResponseV2(BaseModel):
     catalog_version: str
     matched: list[MatchedChipV2]
     roles: list[RoleV2]
+    experience: Experience | None = None  # as given on the board (ADR-0041)
 
 
 class FeedbackV2Request(BaseModel):

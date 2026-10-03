@@ -4,7 +4,7 @@ import { CATEGORY_META } from '~/composables/categories'
 const route = useRoute()
 const id = route.params.id as string
 const api = useXcrsApiV2()
-const { chips, add, clear } = useBoardV2()
+const { chips, add, clear, experience } = useBoardV2()
 
 const { data, error } = await useAsyncData(`recommendation-v2-${id}`, () => api.recommendation(id))
 if (error.value && import.meta.server) {
@@ -39,6 +39,7 @@ function edit() {
       const picked = m.method === 'picked' ? m.skills[0] : undefined
       add(m.text ?? picked?.name ?? '', m.category, picked, m.proficiency ?? undefined)
     }
+    experience.value = data.value.experience ?? null
   }
   navigateTo('/')
 }

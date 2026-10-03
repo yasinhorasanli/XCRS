@@ -118,7 +118,8 @@ async function send(rating: 1 | -1) {
 
     <div v-if="role.gaps.length" class="mt-4">
       <h3 class="text-xs font-medium uppercase tracking-wide text-slate-500">
-        To reach {{ levelName(role.target_level.id, role.target_level.title) }}: {{ role.gaps_total }} {{ role.gaps_total === 1 ? 'skill' : 'skills' }} to learn<span v-if="role.gaps_total > role.gaps.length">, first {{ role.gaps.length }}</span>
+        <template v-if="role.level?.id === role.target_level.id">Still to cover at {{ levelName(role.target_level.id, role.target_level.title) }}</template>
+        <template v-else>To reach {{ levelName(role.target_level.id, role.target_level.title) }}</template>: {{ role.gaps_total }} {{ role.gaps_total === 1 ? 'skill' : 'skills' }} to learn<span v-if="role.gaps_total > role.gaps.length">, first {{ role.gaps.length }}</span>
       </h3>
       <div v-for="s in stages" :key="s.stage" class="mt-2">
         <p class="text-xs text-slate-400">{{ s.stage }}</p>
@@ -130,5 +131,17 @@ async function send(rating: 1 | -1) {
         </ul>
       </div>
     </div>
+
+    <details v-if="role.basics?.length" class="mt-3 text-sm">
+      <summary class="cursor-pointer text-slate-500 hover:text-slate-700">
+        Assumed at your level: {{ role.basics.length }} {{ role.basics.length === 1 ? 'basic' : 'basics' }} you didn't list. Worth a quick check
+      </summary>
+      <ul class="mt-2 flex flex-wrap gap-1.5">
+        <li v-for="g in role.basics" :key="g.skills.map((x) => x.id).join('|')" class="rounded-lg px-2.5 py-1 text-xs text-slate-600 ring-1 ring-inset ring-slate-200">
+          {{ g.skills.map((x) => x.name).join(' or ') }}
+          <span class="text-slate-400">· {{ PROFICIENCY_NAMES[g.need]?.toLowerCase() }}</span>
+        </li>
+      </ul>
+    </details>
   </article>
 </template>

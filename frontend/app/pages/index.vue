@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { CATEGORIES } from '~/composables/categories'
+import { EXPERIENCE_OPTIONS } from '~/composables/useXcrsApiV2'
 
-const { total, pending, clear, fillExample, asInput } = useBoardV2()
+const { total, pending, clear, fillExample, asInput, experience } = useBoardV2()
 const api = useXcrsApiV2()
 const toast = useToast()
 const submitting = ref(false)
@@ -11,7 +12,7 @@ useHead({ title: 'XCRS · Which software career fits you?' })
 async function submit() {
   submitting.value = true
   try {
-    const result = await api.recommend(asInput())
+    const result = await api.recommend(asInput(), experience.value)
     await navigateTo(`/results/${result.id}`)
   } catch {
     toast.add({
@@ -44,7 +45,25 @@ async function submit() {
         <div class="grid gap-4 sm:grid-cols-2">
           <V2BucketV2 v-for="c in CATEGORIES" :key="c" :category="c" />
         </div>
-        <div class="mt-5 flex flex-wrap items-center gap-2">
+        <div class="mt-5 flex flex-wrap items-center gap-2 rounded-2xl bg-white px-3 py-2.5 shadow-xs ring-1 ring-slate-200">
+          <span class="mr-1 text-sm font-medium">Years in software</span>
+          <span class="mr-2 text-xs text-slate-500">(optional; improves the level estimate)</span>
+          <div class="flex flex-wrap gap-1.5" role="radiogroup" aria-label="Years in software">
+            <button
+              v-for="o in EXPERIENCE_OPTIONS"
+              :key="o.value"
+              type="button"
+              role="radio"
+              :aria-checked="experience === o.value"
+              class="rounded-full px-3 py-1 text-sm ring-1 ring-inset transition"
+              :class="experience === o.value ? 'bg-indigo-600 text-white ring-indigo-600' : 'bg-white text-slate-700 ring-slate-200 hover:bg-slate-50'"
+              @click="experience = experience === o.value ? null : o.value"
+            >
+              {{ o.label }}
+            </button>
+          </div>
+        </div>
+        <div class="mt-4 flex flex-wrap items-center gap-2">
           <UButton color="neutral" variant="soft" icon="i-heroicons-sparkles" label="Try an example" @click="fillExample()" />
           <UButton v-if="total" color="neutral" variant="ghost" icon="i-heroicons-trash" label="Clear all" @click="clear()" />
           <div class="ml-auto flex items-center gap-3">

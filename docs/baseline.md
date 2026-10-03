@@ -135,3 +135,14 @@ Oracle Linux 10 VMs (Xeon E5-2690 v4, AVX2, no GPU), deployed with `deploy/deplo
 | Skill matching, three new typed phrases (LLM on VM-B) | 17.1 s (about 5.7 s each) |
 | Recommendation once phrases are matched (through Caddy) | 72 ms |
 | Database dump (catalog, resources, activity) | 1.4 MB |
+
+## Levels, gaps and resources (2026-10-03, ADR-0041)
+
+On the 15 test profiles of `/dev/profiles` (student to staff, with years of experience) and the 53 calibration profiles:
+
+| | Before (v2.7) | After (v3.0) |
+|---|---|---|
+| Test: expected role first / exact level / within one | 14 / 4 / – of 15 | 15 / 14 / 15 of 15 |
+| Calibration: exact level (no experience given) | 19/53 | 21/53 |
+| Gaps of leveled profiles containing Git, debugging, DS, algorithms or fundamentals | most | 0 |
+| Most repeated resource across the 15 | Git Tutorials ×6 | System Design Primer ×3 |

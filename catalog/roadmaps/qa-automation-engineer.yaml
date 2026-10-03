@@ -6,7 +6,7 @@ levels:
     summary: "Tests features manually and automates UI and API checks, under guidance."
     stages:
       - name: Testing foundations
-        skills: [programming-fundamentals:2, "python|java|javascript|typescript:2", javascript:2, testing-fundamentals:2, manual-testing:2, test-planning:1, git:2, sql:1, agile-scrum:1]
+        skills: [programming-fundamentals:2, "python|java|javascript|typescript:2", javascript:2, testing-fundamentals:2, manual-testing:2, test-planning:1, git:2, sql:1, agile-scrum:1, operating-systems:1]
       - name: Automation
         skills: [test-automation:2, e2e-testing:2, selenium:1, computer-networking:1, http:2, api-testing:1]
   mid:
@@ -20,7 +20,7 @@ levels:
     summary: "Designs the test strategy for a product and mentors testers and developers."
     stages:
       - name: Strategy
-        skills: [test-planning:3, test-strategy:2, performance-testing:2, observability:1, operating-systems:1, security-fundamentals:1, web-security:1]
+        skills: [test-planning:3, test-strategy:2, performance-testing:2, observability:1, security-fundamentals:1, web-security:1]
       - name: Leadership
         skills: [mentoring:2, technical-writing:2, stakeholder-communication:2]
   staff:
@@ -28,3 +28,5 @@ levels:
     stages:
       - name: Direction
         skills: [test-strategy:3, agile-scrum:2, engineering-processes:2, technical-leadership:3, stakeholder-communication:3]
+      - name: Depth and influence
+        skills: [mentoring:3, product-thinking:3, test-planning:4, test-strategy:4]

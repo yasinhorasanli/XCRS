@@ -6,7 +6,7 @@ levels:
     summary: "Builds small features from database to UI in a JavaScript/TypeScript stack, with guidance."
     stages:
       - name: Foundations
-        skills: [programming-fundamentals:2, javascript:2, typescript:2, oop:1, data-structures:2, git:2, linux:1, computer-networking:1, http:2, debugging:2]
+        skills: [programming-fundamentals:2, javascript:2, typescript:2, oop:2, data-structures:2, git:2, linux:1, computer-networking:2, http:2, debugging:2, operating-systems:1]
       - name: Front end
         skills: [html:2, css:2, dom:2, "react|vue:2", responsive-design:1, browser-devtools:1]
       - name: Back end
@@ -29,7 +29,7 @@ levels:
     summary: "Designs features and systems across the stack, balancing product needs and technical quality."
     stages:
       - name: System design
-        skills: [computer-networking:2, operating-systems:1, concurrency:2, distributed-systems:2, caching:2, system-design:2, oop:2, design-patterns:2, browser-devtools:2, web-performance:2]
+        skills: [concurrency:2, distributed-systems:2, caching:2, system-design:2, design-patterns:2, browser-devtools:2, web-performance:2]
       - name: Leadership
         skills: [mentoring:2, technical-writing:2, product-thinking:3, code-review:3, project-planning:2]
   staff:
@@ -37,3 +37,5 @@ levels:
     stages:
       - name: Direction
         skills: [architecture-patterns:3, system-design:3, frontend-architecture:2, architecture-decision-records:3, technical-leadership:3, stakeholder-communication:3]
+      - name: Depth and influence
+        skills: [agile-scrum:2, mentoring:3, engineering-processes:2, architecture-patterns:4, code-review:4]

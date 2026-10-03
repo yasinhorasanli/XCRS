@@ -6,7 +6,7 @@ levels:
     summary: "Builds customer-specific features, integrations and AI workflows on the company's platform, alongside a senior FDE."
     stages:
       - name: Engineering foundations
-        skills: [programming-fundamentals:2, python:2, git:2, debugging:2, linux:1, computer-networking:1, http:2, rest-api-design:2, sql:2, testing-fundamentals:1]
+        skills: [programming-fundamentals:2, python:2, git:2, debugging:2, linux:1, computer-networking:2, http:2, rest-api-design:2, sql:2, testing-fundamentals:1, data-structures:2, operating-systems:1, relational-databases:2]
       - name: Building for customers
         skills: [llm-fundamentals:1, prompt-engineering:1, stakeholder-communication:1, customer-discovery:1, technical-writing:1]
   mid:
@@ -22,7 +22,7 @@ levels:
     summary: "Leads complex deployments, designs solutions across customers' systems and turns patterns from the field into product."
     stages:
       - name: System design
-        skills: [data-structures:2, operating-systems:1, caching:2, relational-databases:2, database-design:2, concurrency:2, computer-networking:2, distributed-systems:2, system-design:2]
+        skills: [caching:2, database-design:2, concurrency:2, distributed-systems:2, system-design:2]
       - name: Production AI
         skills: [llm-evaluation:2, ai-guardrails:2, observability:1, security-fundamentals:1, cloud-fundamentals:2]
       - name: Field to product
@@ -32,3 +32,5 @@ levels:
     stages:
       - name: Direction
         skills: [solution-design:4, architecture-decision-records:2, product-thinking:3, technical-leadership:3, stakeholder-communication:3]
+      - name: Depth and influence
+        skills: [agile-scrum:2, architecture-decision-records:3, mentoring:3, engineering-processes:2, system-design:3, customer-discovery:4]

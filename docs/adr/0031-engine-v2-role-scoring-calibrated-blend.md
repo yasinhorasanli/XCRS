@@ -8,6 +8,7 @@
   - Interest is now **weighted by how much the role relies on each skill**, and roles that start above entry get an **entry barrier**.
   - Re-calibrated values below; the first calibration (a = 0.4, curious 1.25, liked 0.75, neutral 0, disliked −0.5) is superseded.
 - **Decider:** Muhammed Yasin Horasanli
+- **Note (2026-10-03):** the level estimate and the gaps are superseded by [ADR-0041](0041-level-from-evidence-and-experience-next-level-gaps.md) (per-level evidence, optional experience, next-level gaps); the score itself is unchanged.
 
 ## Context
 

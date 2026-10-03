@@ -6,7 +6,7 @@ levels:
     summary: "Maintains pipelines, containers and basic cloud resources, under guidance."
     stages:
       - name: Systems foundations
-        skills: [programming-fundamentals:2, linux:2, shell-scripting:2, "python|go:2", git:2, computer-networking:2, http:1, operating-systems:1]
+        skills: [programming-fundamentals:2, linux:2, shell-scripting:2, "python|go:2", git:2, computer-networking:2, http:1, operating-systems:1, data-structures:1, sql:2, relational-databases:2]
       - name: Containers and pipelines
         skills: [docker:2, ci-cd:2, "github-actions|jenkins:2", cloud-fundamentals:1, "aws|azure|gcp:1"]
   mid:
@@ -32,6 +32,6 @@ levels:
     summary: "Sets infrastructure direction across the organization."
     stages:
       - name: Systems thinking
-        skills: [data-structures:1, caching:2, sql:2, relational-databases:2, database-design:2, concurrency:2, distributed-systems:2, system-design:2]
+        skills: [caching:2, database-design:2, concurrency:2, distributed-systems:2, system-design:2]
       - name: Direction
         skills: [internal-developer-platforms:2, cloud-architecture:2, architecture-decision-records:2, finops:2, technical-leadership:3, stakeholder-communication:3]

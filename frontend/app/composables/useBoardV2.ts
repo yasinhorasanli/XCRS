@@ -1,6 +1,6 @@
 import { CATEGORY_META } from '~/composables/categories'
 import type { Category } from '~/types/apiV2'
-import type { ChipInput, SkillRef } from '~/types/apiV2'
+import type { ChipInput, Experience, SkillRef } from '~/types/apiV2'
 
 export const MAX_CHIPS = 60 // the API's limit
 
@@ -30,6 +30,7 @@ export const EXAMPLE_CHIPS: { label: string; category: Category; skill?: string;
 export function useBoardV2() {
   const chips = useState<Chip[]>('board-v2', () => [])
   const active = useState<Category>('board-v2-active', () => 'liked')
+  const experience = useState<Experience | null>('board-v2-experience', () => null) // optional (ADR-0041)
   const api = useXcrsApiV2()
   const toast = useToast()
 
@@ -125,6 +126,7 @@ export function useBoardV2() {
 
   function clear() {
     chips.value = []
+    experience.value = null
   }
 
   function fillExample() {
@@ -143,5 +145,5 @@ export function useBoardV2() {
   const onBoard = (skill: { id: string; name: string }) =>
     chips.value.some((c) => skillsOf(c).includes(skill.id) || c.key === skill.name.trim().toLowerCase())
 
-  return { chips, active, total, pending, byCategory, add, remove, rate, clear, fillExample, asInput, onBoard }
+  return { chips, active, experience, total, pending, byCategory, add, remove, rate, clear, fillExample, asInput, onBoard }
 }

@@ -28,3 +28,5 @@ levels:
     stages:
       - name: Direction
         skills: [solution-design:3, presales:4, technical-leadership:2, product-thinking:3, stakeholder-communication:4]
+      - name: Depth and influence
+        skills: [agile-scrum:2, technical-leadership:3, mentoring:3, engineering-processes:2, technical-demos:4, solution-design:4]

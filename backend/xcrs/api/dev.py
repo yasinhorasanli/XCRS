@@ -41,6 +41,7 @@ class DevProfile(BaseModel):
     background: str
     expect: list[str]
     level: str
+    experience: str | None = None
     chips: list[DevChip]
 
 
@@ -68,7 +69,8 @@ def load_profiles(path: Path = PROFILES) -> tuple[DevProfile, ...]:
             for chip in p.get(category, []):
                 skill, _, level = str(chip).partition(":")
                 chips.append(DevChip(category=category, skill=skill, proficiency=int(level) if level else None))
-        out.append(DevProfile(**{k: p[k] for k in ("id", "title", "background", "expect", "level")}, chips=chips))
+        fields = {k: p[k] for k in ("id", "title", "background", "expect", "level")}
+        out.append(DevProfile(**fields, experience=p.get("experience"), chips=chips))
     return tuple(out)
 
 
@@ -98,7 +100,7 @@ def preview(session: Session = Depends(get_session)) -> list[DevPreview]:
     out = []
     for p in load_profiles():
         known = [m for m in mentions(p) if m.skill in snapshot.skill_names]
-        roles = score_roles(snapshot, known)[:5]
+        roles = score_roles(snapshot, known, experience=p.experience)[:5]
         out.append(
             DevPreview(
                 id=p.id,

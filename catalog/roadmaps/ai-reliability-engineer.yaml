@@ -6,7 +6,7 @@ levels:
     summary: "Keeps AI features dependable in production: evaluations, guardrails, monitoring and AI incidents. Usually entered from SRE, MLOps or AI engineering."
     stages:
       - name: Engineering foundations
-        skills: [programming-fundamentals:2, python:2, linux:2, git:2, computer-networking:2, http:2, rest-api-design:1]
+        skills: [programming-fundamentals:2, python:2, linux:2, git:2, computer-networking:2, http:2, rest-api-design:1, operating-systems:1]
       - name: Reliability
         skills: [docker:2, kubernetes:1, observability:2, prometheus-grafana:1, sre-practices:2, incident-management:2]
       - name: AI quality
@@ -17,7 +17,7 @@ levels:
       - name: AI reliability
         skills: [llm-evaluation:3, ai-guardrails:3, llm-serving:2, statistics:2, linear-algebra:1, machine-learning-fundamentals:2, model-evaluation:1, model-monitoring:2]
       - name: Security and safety
-        skills: [operating-systems:1, security-fundamentals:1, web-security:1]
+        skills: [security-fundamentals:1, web-security:1]
       - name: Leadership
         skills: [kubernetes:2, chaos-engineering:1, mentoring:2, technical-writing:2]
   staff:
@@ -25,3 +25,5 @@ levels:
     stages:
       - name: Direction
         skills: [ai-guardrails:4, llm-evaluation:4, sre-practices:3, technical-leadership:3, stakeholder-communication:3]
+      - name: Depth and influence
+        skills: [agile-scrum:2, mentoring:3, engineering-processes:2, product-thinking:3, sre-practices:4]

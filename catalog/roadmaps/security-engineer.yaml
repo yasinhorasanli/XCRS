@@ -33,3 +33,5 @@ levels:
     stages:
       - name: Direction
         skills: [threat-modeling:4, security-compliance:3, architecture-decision-records:2, technical-leadership:3, stakeholder-communication:3]
+      - name: Depth and influence
+        skills: [agile-scrum:2, architecture-decision-records:3, mentoring:3, engineering-processes:2, product-thinking:3, cloud-security:4, security-compliance:4]

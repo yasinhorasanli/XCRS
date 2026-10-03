@@ -6,7 +6,7 @@ levels:
     summary: "Builds LLM-powered features (prompts, retrieval, simple tools) behind APIs, under guidance."
     stages:
       - name: Engineering foundations
-        skills: [programming-fundamentals:2, python:2, git:2, computer-networking:1, http:2, rest-api-design:2, fastapi:2, sql:1]
+        skills: [programming-fundamentals:2, python:2, git:2, computer-networking:2, http:2, rest-api-design:2, fastapi:2, sql:2, data-structures:2, relational-databases:2, operating-systems:1]
       - name: LLM basics
         skills: [llm-fundamentals:2, prompt-engineering:2, embeddings-vector-search:1, llm-frameworks:1, testing-fundamentals:1, unit-testing:1]
   mid:
@@ -22,7 +22,7 @@ levels:
       - name: Reliable AI systems
         skills: [ai-guardrails:2, llm-evaluation:3, docker:2, llm-serving:2, statistics:2, linear-algebra:1, machine-learning-fundamentals:1, web-security:1]
       - name: System design
-        skills: [data-structures:2, caching:2, relational-databases:2, sql:2, database-design:2, operating-systems:1, concurrency:2, computer-networking:2, distributed-systems:2, system-design:2]
+        skills: [caching:2, database-design:2, concurrency:2, distributed-systems:2, system-design:2]
       - name: Leadership
         skills: [mentoring:2, technical-writing:2, product-thinking:2]
   staff:

@@ -18,7 +18,7 @@ from xcrs.explain.v2 import build_facts
 from xcrs.repository import catalog_store
 from xcrs.services.skill_matching import SkillMatcher
 
-ALGORITHM_VERSION = "v2.7"
+ALGORITHM_VERSION = "v3.0"
 LEVEL_NAMES = {
     "entry": "entry level",
     "mid": "mid level",
@@ -45,7 +45,7 @@ class RecommendationServiceV2:
     def __init__(self, session: Session, matcher: SkillMatcher, explanations: ExplanationQueueV2 | None = None):
         self.session, self.matcher, self.explanations = session, matcher, explanations
 
-    def recommend(self, chips: list[Chip], test: bool = False) -> RecommendationV2:
+    def recommend(self, chips: list[Chip], experience: str | None = None, test: bool = False) -> RecommendationV2:
         """`test` marks results made from the dev test profiles, so activity numbers can leave them out."""
         snapshot = catalog_store.load_snapshot(self.session)
         typed = [c for c in chips if c.skill is None and c.text]
@@ -73,7 +73,7 @@ class RecommendationServiceV2:
         # same; this guards other clients).
         mentions = list({m.skill: m for m in mentions}.values())
         status = "ok" if mentions else "insufficient_input"
-        roles = score_roles(snapshot, mentions)[:ROLES_SHOWN] if mentions else []
+        roles = score_roles(snapshot, mentions, experience=experience)[:ROLES_SHOWN] if mentions else []
         category = {m.skill: m.category for m in mentions}
         known = {m.skill for m in mentions}
         result = {"matched": echo, "roles": [self._role(snapshot, r, category, known) for r in roles]}
@@ -86,6 +86,7 @@ class RecommendationServiceV2:
                     {"category": c.category.value, "skill": c.skill, "text": c.text, "proficiency": c.proficiency}
                     for c in chips
                 ],
+                **({"experience": experience} if experience else {}),
                 **({"test": True} if test else {}),
             },
             result=result,
@@ -151,6 +152,15 @@ class RecommendationServiceV2:
                 for g in r.gaps[:GAPS_SHOWN]
             ],
             "gaps_total": len(r.gaps),
+            "basics": [
+                {
+                    "skills": [{"id": o, "name": names[o]} for o in g.options],
+                    "need": g.need,
+                    "have": g.have,
+                    "stage": g.stage,
+                }
+                for g in r.basics
+            ],
             "resources": [
                 {
                     "id": ref.id,
