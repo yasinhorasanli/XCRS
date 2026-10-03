@@ -126,6 +126,7 @@ def _response_v2(row, session: Session) -> RecommendationResponseV2:
         catalog_version=row.catalog_checksum[:12],
         matched=row.result["matched"],
         roles=roles,
+        experience=row.input.get("experience"),
     )
 
 
@@ -140,7 +141,7 @@ def create_recommendation_v2(
         if bool(c.skill) == bool(c.text and c.text.strip()):
             raise HTTPException(422, "each chip needs exactly one of `skill` (picked) or `text` (typed)")
         chips.append(Chip(CategoryV2(c.category), c.skill, c.text.strip()[:100] if c.text else None, c.proficiency))
-    return _response_v2(service.recommend(chips), service.session)
+    return _response_v2(service.recommend(chips, body.experience), service.session)
 
 
 @app.get("/api/v2/recommendations/{recommendation_id}", response_model=RecommendationResponseV2)
@@ -193,4 +194,4 @@ def run_dev_profile(profile_id: str, service: RecommendationServiceV2 = Depends(
     if profile is None:
         raise HTTPException(404, "no such test profile")
     chips = [Chip(CategoryV2(c.category), c.skill, None, c.proficiency) for c in profile.chips]
-    return {"id": str(service.recommend(chips, test=True).id)}
+    return {"id": str(service.recommend(chips, profile.experience, test=True).id)}

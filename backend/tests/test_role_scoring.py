@@ -111,3 +111,58 @@ def test_roles_entered_from_other_roles_rank_high_only_near_their_start(snapshot
     senior = [Mention(s, L, 4) for s in ("system-design", "distributed-systems", "architecture-patterns")]
     senior += [Mention(s, L, 3) for s in ("architecture-decision-records", "domain-driven-design", "microservices")]
     assert top(snapshot, senior)[0] == "software-architect"
+
+
+# --- ADR-0041: evidence per level, experience, next-level gaps --------------------------------------------
+
+
+def _profile(pid):
+    from xcrs.api import dev
+
+    return next(p for p in dev.load_profiles() if p.id == pid)
+
+
+def _top(snap, profile, experience="as-profile"):
+    from xcrs.api import dev
+
+    exp = profile.experience if experience == "as-profile" else experience
+    roles = score_roles(snap, dev.mentions(profile), experience=exp)
+    return next(r for r in roles if r.role == profile.expect[0])
+
+
+def test_unlisted_basics_dont_stop_a_senior_at_entry():
+    snap = snapshot_from_catalog(model.load_catalog())
+    r = _top(snap, _profile("senior-data-engineer"), experience=None)  # 84% of senior, 49% of entry skills
+    assert r.level == "senior"
+    shown = {o for g in r.gaps for o in g.options}
+    assert not shown & {"git", "debugging", "data-structures", "programming-fundamentals"}  # basics aren't gaps
+    assert any("git" in g.options for g in r.basics)  # they are listed to check instead
+
+
+def test_experience_caps_and_lifts_the_level():
+    snap = snapshot_from_catalog(model.load_catalog())
+    staff = _profile("staff-platform")
+    assert _top(snap, staff, experience="student").level is None  # a student isn't staff
+    assert _top(snap, _profile("python-backend-4y")).level == "mid"  # 2-5 years lifts entry to mid
+    designer = _profile("designer-to-frontend")  # 2-5 years, but in design: no lift in frontend
+    assert _top(snap, designer).level == "entry"
+
+
+def test_test_profiles_reach_their_expected_level():
+    from xcrs.api import dev
+
+    snap = snapshot_from_catalog(model.load_catalog())
+    ladder = ("entry", "mid", "senior", "staff")
+    exact = sum(_top(snap, p).level == p.level for p in dev.load_profiles())
+    near = sum(
+        abs((ladder.index(_top(snap, p).level) if _top(snap, p).level else -1) - ladder.index(p.level)) <= 1
+        for p in dev.load_profiles()
+    )
+    assert exact >= 13 and near == len(dev.load_profiles())  # measured 14/15 and 15/15 (ADR-0041)
+
+
+def test_curious_skills_below_the_level_stay_gaps_not_assumed_basics():
+    snap = snapshot_from_catalog(model.load_catalog())
+    r = _top(snap, _profile("staff-platform"))  # curious about service mesh, a senior platform skill
+    assert any("service-mesh" in g.options for g in r.gaps)
+    assert not any("service-mesh" in g.options for g in r.basics)

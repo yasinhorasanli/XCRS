@@ -6,7 +6,7 @@ levels:
     summary: "Keeps services reliable with SLOs, automation and incident response. Usually entered with software or operations experience."
     stages:
       - name: Engineering foundations
-        skills: [programming-fundamentals:2, "python|go:2", linux:2, shell-scripting:2, git:2, computer-networking:2, operating-systems:2, http:2, data-structures:2, debugging:2]
+        skills: [programming-fundamentals:2, "python|go:2", linux:2, shell-scripting:2, git:2, computer-networking:2, operating-systems:2, http:2, data-structures:2, debugging:2, sql:2, relational-databases:2]
       - name: Operations
         skills: [docker:2, kubernetes:2, ci-cd:2, cloud-fundamentals:2, "aws|azure|gcp:2", infrastructure-as-code:1, terraform:1]
       - name: Reliability
@@ -15,7 +15,7 @@ levels:
     summary: "Designs for reliability and capacity across systems and leads incident practice."
     stages:
       - name: Systems
-        skills: [concurrency:2, distributed-systems:2, sql:2, relational-databases:2, database-design:2, caching:2, system-design:2, profiling:2]
+        skills: [concurrency:2, distributed-systems:2, database-design:2, caching:2, system-design:2, profiling:2]
       - name: Reliability engineering
         skills: [capacity-planning:2, chaos-engineering:1, sre-practices:3, incident-management:3]
       - name: Leadership
@@ -25,3 +25,5 @@ levels:
     stages:
       - name: Direction
         skills: [system-design:3, capacity-planning:3, chaos-engineering:2, architecture-decision-records:2, technical-leadership:3, stakeholder-communication:3]
+      - name: Depth and influence
+        skills: [agile-scrum:2, architecture-decision-records:3, mentoring:3, engineering-processes:2, product-thinking:3, capacity-planning:4, sre-practices:4, incident-management:4]

@@ -8,7 +8,7 @@ import type { Category } from '~/types/apiV2'
 useHead({ title: 'Test profiles · XCRS', meta: [{ name: 'robots', content: 'noindex' }] })
 
 interface DevChip { category: Category; skill: string; name: string; proficiency: number | null }
-interface DevProfile { id: string; title: string; background: string; expect: string[]; level: string; chips: DevChip[] }
+interface DevProfile { id: string; title: string; background: string; expect: string[]; level: string; experience: string | null; chips: DevChip[] }
 interface DevRole { role: string; name: string; score: number; level: string | null; target_level: string | null; coverage: number; interest: number }
 
 const { data: profiles, error } = await useFetch<DevProfile[]>('/api/v2/dev/profiles')
@@ -32,6 +32,7 @@ const running = ref<string | null>(null)
 async function openOnBoard(p: DevProfile) {
   board.clear()
   for (const c of p.chips) board.add(c.name, c.category, { id: c.skill, name: c.name }, c.proficiency ?? undefined)
+  board.experience.value = (p.experience as typeof board.experience.value) ?? null
   await navigateTo('/')
 }
 
@@ -105,6 +106,7 @@ const summary = computed(() => {
               <div class="text-xs uppercase tracking-wide text-slate-400">Expected</div>
               <div class="font-medium">{{ p.expect.join(', ') }}</div>
               <div class="text-slate-600">starts at {{ levelName(p.level) }}</div>
+              <div class="text-xs text-slate-500">experience: {{ p.experience ?? 'not given' }}</div>
             </div>
             <div>
               <div class="text-xs uppercase tracking-wide text-slate-400">Engine (top 5)</div>

@@ -27,3 +27,5 @@ levels:
     stages:
       - name: Direction
         skills: [developer-experience:4, community-building:3, product-thinking:3, technical-leadership:2, stakeholder-communication:4]
+      - name: Depth and influence
+        skills: [agile-scrum:2, technical-leadership:3, mentoring:3, engineering-processes:2, developer-content:4, community-building:4, public-speaking:4]

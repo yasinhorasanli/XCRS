@@ -34,3 +34,5 @@ levels:
     stages:
       - name: Direction
         skills: [ab-testing:4, product-thinking:3, stakeholder-communication:4, mentoring:3, technical-leadership:2, project-planning:2]
+      - name: Depth and influence
+        skills: [agile-scrum:2, technical-leadership:3, engineering-processes:2, statistics:4, sql:4]

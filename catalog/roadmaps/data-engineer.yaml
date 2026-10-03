@@ -6,7 +6,7 @@ levels:
     summary: "Builds and maintains data pipelines and tables, under guidance."
     stages:
       - name: Foundations
-        skills: [programming-fundamentals:2, python:2, sql:2, relational-databases:2, git:2, linux:1, shell-scripting:1, computer-networking:1]
+        skills: [programming-fundamentals:2, python:2, sql:2, relational-databases:2, git:2, linux:1, shell-scripting:1, computer-networking:2, data-structures:2, operating-systems:1]
       - name: Pipelines
         skills: [data-modeling:1, etl-pipelines:2, postgresql:1, cloud-fundamentals:1, testing-fundamentals:1, unit-testing:1]
   mid:
@@ -20,7 +20,7 @@ levels:
     summary: "Designs batch and streaming data systems at scale and mentors others."
     stages:
       - name: Big data and streaming
-        skills: [computer-networking:2, operating-systems:1, concurrency:2, distributed-systems:1, spark:2, message-brokers:2, kafka:2, stream-processing:2, data-lakehouse:1]
+        skills: [concurrency:2, distributed-systems:1, spark:2, message-brokers:2, kafka:2, stream-processing:2, data-lakehouse:1]
       - name: Platform
         skills: [infrastructure-as-code:1, data-governance:1]
       - name: Good to know
@@ -32,6 +32,6 @@ levels:
     summary: "Sets data platform and architecture direction across the organization."
     stages:
       - name: Architecture
-        skills: [data-structures:2, caching:2, distributed-systems:2, system-design:2, data-modeling:3, data-architecture:3, data-governance:2, cloud-fundamentals:2, finops:1]
+        skills: [caching:2, distributed-systems:2, system-design:2, data-modeling:3, data-architecture:3, data-governance:2, cloud-fundamentals:2, finops:1]
       - name: Direction
         skills: [architecture-decision-records:2, technical-leadership:3, stakeholder-communication:3]

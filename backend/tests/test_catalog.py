@@ -186,7 +186,8 @@ def test_starting_level_is_the_highest_level_already_mostly_covered():
     cat = model.load_catalog()
     by_role = {m.role: m for m in validate.moves(cat, RoleLevel("devops-engineer", "senior"))}
     assert by_role["cloud-engineer"].starting_level == "senior"
-    assert by_role["site-reliability-engineer"].starting_level == "mid"
+    # senior since 2026-10-03: SRE's SQL basics moved from senior to its first level (ADR-0041)
+    assert by_role["site-reliability-engineer"].starting_level == "senior"
     assert by_role["data-analyst"].starting_level is None  # would start from scratch
 
 

@@ -25,3 +25,5 @@ levels:
     stages:
       - name: Direction
         skills: [gpu-infrastructure:4, llm-serving:4, finops:2, internal-developer-platforms:2, technical-leadership:3, stakeholder-communication:3]
+      - name: Depth and influence
+        skills: [agile-scrum:2, mentoring:3, engineering-processes:2, product-thinking:3]

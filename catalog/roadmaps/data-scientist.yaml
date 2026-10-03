@@ -31,3 +31,5 @@ levels:
     stages:
       - name: Direction
         skills: [machine-learning-fundamentals:4, ab-testing:4, product-thinking:3, technical-leadership:3, stakeholder-communication:4]
+      - name: Depth and influence
+        skills: [agile-scrum:2, mentoring:3, engineering-processes:2, feature-engineering:4, statistics:4]

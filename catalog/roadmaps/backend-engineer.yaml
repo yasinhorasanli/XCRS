@@ -6,9 +6,9 @@ levels:
     summary: "Builds API endpoints and data access for well-defined features, with tests, under guidance."
     stages:
       - name: Programming foundations
-        skills: [programming-fundamentals:2, "python|java|go|csharp|javascript:2", data-structures:2, oop:2, git:2, linux:1, debugging:2]
+        skills: [programming-fundamentals:2, "python|java|go|csharp|javascript:2", data-structures:2, oop:2, git:2, linux:1, debugging:2, computer-networking:2]
       - name: Web and APIs
-        skills: [computer-networking:1, http:2, rest-api-design:2, "fastapi|django|spring-boot|go-web-services|aspnet-core|nodejs:2"]
+        skills: [http:2, rest-api-design:2, "fastapi|django|spring-boot|go-web-services|aspnet-core|nodejs:2"]
       - name: Data
         skills: [sql:2, relational-databases:2, "postgresql|mysql:2", orm:1]
       - name: Quality
@@ -31,7 +31,7 @@ levels:
     summary: "Designs systems and their trade-offs, handles the hard incidents and grows other engineers."
     stages:
       - name: Distributed systems
-        skills: [computer-networking:2, distributed-systems:2, system-design:2, microservices:2, message-brokers:2, event-driven-architecture:2, kafka:1, domain-driven-design:2]
+        skills: [distributed-systems:2, system-design:2, microservices:2, message-brokers:2, event-driven-architecture:2, kafka:1, domain-driven-design:2]
       - name: Operating at scale
         skills: [kubernetes:1, incident-management:2, profiling:2, api-security:2]
       - name: Good to know

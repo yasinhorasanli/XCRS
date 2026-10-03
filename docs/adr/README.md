@@ -44,6 +44,7 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0038](0038-one-video-slot-in-each-roles-resources.md) | Each role's resources keep one slot for an on-topic video; the learner's languages rank first | Accepted | 2026-10-02 |
 | [0039](0039-retire-the-classic-engine.md) | Retire the classic engine: code, API, tables and research data removed after an archive | Accepted | 2026-10-02 |
 | [0040](0040-public-access-through-tailscale-funnel.md) | Public access through Tailscale Funnel now, a Cloudflare Tunnel once there is a domain; VMs managed over Tailscale | Accepted | 2026-10-02 |
+| [0041](0041-level-from-evidence-and-experience-next-level-gaps.md) | Levels from per-level evidence and optional experience; gaps and resources for the next level only; even staff levels | Accepted | 2026-10-03 |
 
 ## Upcoming decisions
 

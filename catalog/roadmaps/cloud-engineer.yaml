@@ -6,7 +6,7 @@ levels:
     summary: "Provisions and operates cloud resources and networking, under guidance."
     stages:
       - name: Foundations
-        skills: [programming-fundamentals:1, linux:2, computer-networking:2, "python|shell-scripting:2", git:1]
+        skills: [programming-fundamentals:2, linux:2, computer-networking:2, "python|shell-scripting:2", git:1, data-structures:1, sql:2, relational-databases:2, operating-systems:1]
       - name: Cloud basics
         skills: [cloud-fundamentals:2, "aws|azure|gcp:2", identity-access-management:1, cloud-networking:1]
       - name: Good to know
@@ -30,6 +30,6 @@ levels:
     summary: "Sets cloud architecture direction across the organization."
     stages:
       - name: Systems thinking
-        skills: [programming-fundamentals:2, data-structures:1, caching:2, sql:2, relational-databases:2, database-design:2, operating-systems:1, concurrency:2, distributed-systems:2, system-design:2]
+        skills: [caching:2, database-design:2, concurrency:2, distributed-systems:2, system-design:2]
       - name: Direction
         skills: [cloud-architecture:3, architecture-decision-records:2, technical-leadership:3, stakeholder-communication:3]

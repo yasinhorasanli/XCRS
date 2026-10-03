@@ -6,6 +6,7 @@
 #
 #   liked / neutral / disliked / curious: catalog skill ids, "skill:proficiency" (1-4) or "skill" (unrated)
 #   expect: roles that should rank high (first = main); level: where they'd start in the main role
+#   experience: years in software, as the board asks (student, 0-2, 2-5, 5-10, 10+); optional
 
 profiles:
   # --- entry -------------------------------------------------------------------------------------------
@@ -18,6 +19,7 @@ profiles:
     curious: [machine-learning-fundamentals, docker]
     expect: [backend-engineer, full-stack-engineer]
     level: entry
+    experience: "student"
 
   - id: bootcamp-web
     title: Web bootcamp graduate
@@ -28,6 +30,7 @@ profiles:
     curious: [typescript, nextjs]
     expect: [frontend-engineer, full-stack-engineer]
     level: entry
+    experience: "0-2"
 
   - id: designer-to-frontend
     title: UI designer moving to frontend
@@ -38,6 +41,7 @@ profiles:
     curious: [react, typescript]
     expect: [frontend-engineer]
     level: entry
+    experience: "2-5"
 
   - id: manual-qa-to-automation
     title: Manual tester moving to automation
@@ -48,6 +52,7 @@ profiles:
     curious: [api-testing, test-automation]
     expect: [qa-automation-engineer]
     level: entry
+    experience: "2-5"
 
   # --- mid ---------------------------------------------------------------------------------------------
   - id: python-backend-4y
@@ -59,6 +64,7 @@ profiles:
     curious: [kubernetes, distributed-systems]
     expect: [backend-engineer]
     level: mid
+    experience: "2-5"
 
   - id: analyst-to-ds
     title: Data analyst moving toward data science
@@ -69,6 +75,7 @@ profiles:
     curious: [machine-learning-fundamentals, scikit-learn]
     expect: [data-analyst, data-scientist]
     level: mid
+    experience: "2-5"
 
   - id: android-mid
     title: Android developer, 3 years
@@ -79,6 +86,7 @@ profiles:
     curious: [swift, ci-cd]
     expect: [android-engineer]
     level: mid
+    experience: "2-5"
 
   - id: devops-mid
     title: DevOps engineer, 3 years
@@ -89,6 +97,7 @@ profiles:
     curious: [gitops, sre-practices]
     expect: [devops-engineer, platform-engineer, site-reliability-engineer]
     level: mid
+    experience: "2-5"
 
   # --- senior ------------------------------------------------------------------------------------------
   - id: senior-java-8y
@@ -100,6 +109,7 @@ profiles:
     curious: [domain-driven-design, technical-leadership]
     expect: [backend-engineer, software-architect]
     level: senior
+    experience: "5-10"
 
   - id: senior-data-engineer
     title: Senior data engineer, 7 years
@@ -110,6 +120,7 @@ profiles:
     curious: [data-lakehouse, data-architecture]
     expect: [data-engineer]
     level: senior
+    experience: "5-10"
 
   - id: senior-ml-engineer
     title: Senior ML engineer, 6 years
@@ -120,6 +131,7 @@ profiles:
     curious: [llm-serving, fine-tuning]
     expect: [machine-learning-engineer]
     level: senior
+    experience: "5-10"
 
   - id: senior-ios
     title: Senior iOS engineer, 8 years
@@ -130,6 +142,7 @@ profiles:
     curious: [kotlin, technical-leadership]
     expect: [ios-engineer]
     level: senior
+    experience: "5-10"
 
   - id: senior-embedded
     title: Senior embedded C developer, 10 years
@@ -140,6 +153,7 @@ profiles:
     curious: [security-fundamentals, rust]
     expect: [embedded-software-engineer]
     level: senior
+    experience: "10+"
 
   # --- staff -------------------------------------------------------------------------------------------
   - id: staff-platform
@@ -151,6 +165,7 @@ profiles:
     curious: [service-mesh, engineering-processes]
     expect: [platform-engineer, devops-engineer]
     level: staff
+    experience: "10+"
 
   - id: engineering-manager
     title: Engineering manager, 12 years (former backend engineer)
@@ -161,3 +176,4 @@ profiles:
     curious: [finops, product-thinking]
     expect: [engineering-manager]
     level: staff
+    experience: "10+"

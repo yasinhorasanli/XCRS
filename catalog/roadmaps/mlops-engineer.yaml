@@ -6,7 +6,7 @@ levels:
     summary: "Runs the pipelines and infrastructure that train, deploy and monitor models. Usually entered from DevOps or ML engineering."
     stages:
       - name: Engineering foundations
-        skills: [programming-fundamentals:2, python:2, linux:2, shell-scripting:1, git:2, computer-networking:2, http:2]
+        skills: [programming-fundamentals:2, python:2, linux:2, shell-scripting:1, git:2, computer-networking:2, http:2, sql:2]
       - name: Infrastructure
         skills: [docker:2, kubernetes:2, ci-cd:2, cloud-fundamentals:2, "aws|azure|gcp:2", infrastructure-as-code:1, terraform:1, observability:2]
       - name: ML lifecycle
@@ -15,7 +15,7 @@ levels:
     summary: "Designs the ML platform: monitoring, LLM serving, orchestration and cost."
     stages:
       - name: ML platform
-        skills: [machine-learning-fundamentals:2, model-evaluation:1, model-monitoring:2, llm-fundamentals:2, llm-serving:2, sql:2, etl-pipelines:1, airflow:1]
+        skills: [machine-learning-fundamentals:2, model-evaluation:1, model-monitoring:2, llm-fundamentals:2, llm-serving:2, etl-pipelines:1, airflow:1]
       - name: Operations
         skills: [gitops:1, helm:2, prometheus-grafana:2, finops:1]
       - name: Leadership
@@ -25,3 +25,5 @@ levels:
     stages:
       - name: Direction
         skills: [infrastructure-as-code:2, internal-developer-platforms:2, llm-serving:3, finops:2, technical-leadership:3, stakeholder-communication:3]
+      - name: Depth and influence
+        skills: [agile-scrum:2, mentoring:3, engineering-processes:2, product-thinking:3, llm-serving:4]

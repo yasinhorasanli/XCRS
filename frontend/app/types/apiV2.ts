@@ -68,8 +68,9 @@ export interface RoleResult {
   target_level: Level
   levels: Level[]
   because: (SkillRef & { category: Category })[]
-  gaps: Gap[]
+  gaps: Gap[] // what the next level adds (ADR-0041)
   gaps_total: number
+  basics?: Gap[] // unlisted skills of the levels reached: assumed, to check
   resources: Resource[]
   explanation_status: 'pending' | 'done' | 'failed' | 'disabled'
   explanation: string | null // written by the local LLM in the background
@@ -92,4 +93,8 @@ export interface RecommendationV2 {
   catalog_version: string
   matched: MatchedChip[]
   roles: RoleResult[]
+  experience?: Experience | null
 }
+
+/** Years in software, optional on the board (ADR-0041). */
+export type Experience = 'student' | '0-2' | '2-5' | '5-10' | '10+'

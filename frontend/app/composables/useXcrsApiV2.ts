@@ -1,4 +1,4 @@
-import type { ChipInput, PhraseMatch, RecommendationV2, SkillGroup, SkillSuggestion } from '~/types/apiV2'
+import type { ChipInput, Experience, PhraseMatch, RecommendationV2, SkillGroup, SkillSuggestion } from '~/types/apiV2'
 
 /** Calls to the backend's /api/v2 (engine v2), proxied by the Nuxt server. */
 export function useXcrsApiV2() {
@@ -11,8 +11,8 @@ export function useXcrsApiV2() {
     match: (phrases: string[]) =>
       $fetch<{ matches: PhraseMatch[] }>('/api/v2/skills/match', { method: 'POST', body: { phrases } }),
 
-    recommend: (chips: ChipInput[]) =>
-      $fetch<RecommendationV2>('/api/v2/recommendations', { method: 'POST', body: { chips } }),
+    recommend: (chips: ChipInput[], experience?: Experience | null) =>
+      $fetch<RecommendationV2>('/api/v2/recommendations', { method: 'POST', body: { chips, ...(experience ? { experience } : {}) } }),
 
     recommendation: (id: string) => $fetch<RecommendationV2>(`/api/v2/recommendations/${id}`),
 
@@ -29,3 +29,11 @@ export const LEVEL_NAMES: Record<string, string> = {
 }
 
 export const PROFICIENCY_NAMES = ['', 'Basic', 'Working', 'Advanced', 'Expert'] as const
+
+export const EXPERIENCE_OPTIONS: { value: Experience; label: string }[] = [
+  { value: 'student', label: 'Student' },
+  { value: '0-2', label: 'Under 2 years' },
+  { value: '2-5', label: '2–5 years' },
+  { value: '5-10', label: '5–10 years' },
+  { value: '10+', label: '10+ years' },
+]

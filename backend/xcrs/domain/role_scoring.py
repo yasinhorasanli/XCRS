@@ -26,7 +26,20 @@ from dataclasses import dataclass, field
 from enum import StrEnum
 
 LADDER = ("entry", "mid", "senior", "staff")
-STARTING_COVERAGE = 0.55
+STARTING_COVERAGE = 0.55  # entry barrier (roles that start above entry)
+LEVEL_EVIDENCE = 0.45  # a level counts as reached when this much of what it adds is on the board (ADR-0041)
+LIFT_EVIDENCE = 0.25  # experience lifts the level only with at least this much evidence for the role at that level
+
+# Self-reported experience (ADR-0041): (lowest, highest) level it suggests. The highest caps the skill evidence
+# (a student isn't staff); the lowest lifts it, but only where the learner shows some of that level's skills,
+# so ten years in another field don't make someone senior in a role they are new to.
+EXPERIENCE = {
+    "student": (None, "entry"),
+    "0-2": (None, "mid"),
+    "2-5": ("mid", "senior"),
+    "5-10": ("senior", "staff"),
+    "10+": ("senior", "staff"),
+}
 
 
 class Category(StrEnum):
@@ -161,8 +174,9 @@ class RoleScore:
     level_coverage: dict[str, float]
     level: str | None
     target_level: str  # the level the gaps lead to
-    gaps: list[Gap]
+    gaps: list[Gap]  # what the target level adds and the learner doesn't show yet, in learning order
     because: list[str]  # the learner's skills that count most for this role, strongest first
+    basics: list[Gap] = field(default_factory=list)  # unlisted skills of the levels reached (assumed, to check)
 
 
 def with_prerequisites(have: dict[str, int], prerequisites: dict[str, list[tuple[tuple[str, ...], int]]]):
@@ -227,19 +241,41 @@ def level_additions(role: RoleSnapshot) -> dict[str, list[Requirement]]:
     return out
 
 
-def reached_level(role: RoleSnapshot, have: dict[str, int], weights: dict[str, float]) -> str | None:
-    """The highest level whose own additions (and every lower level's) are at least STARTING_COVERAGE met.
-    Cumulative coverage alone overshoots: meeting all of mid also covers most of staff's list."""
+def level_evidence(role: RoleSnapshot, have: dict[str, int], weights: dict[str, float]) -> dict[str, float]:
+    """How much of what each level adds is on the board, level by level."""
+    return {lv: _coverage(added, have, weights) for lv, added in level_additions(role).items()}
+
+
+def reached_level(
+    role: RoleSnapshot, have: dict[str, int], weights: dict[str, float], experience: str | None = None
+) -> str | None:
+    """The highest level with enough evidence: at least LEVEL_EVIDENCE of what that level adds (ADR-0041).
+    Levels are judged independently, so unlisted basics (a senior engineer rarely writes "Git") don't stop
+    the estimate at entry; reaching a level assumes the ones below it. Experience, when given, caps the
+    estimate and can lift it (see EXPERIENCE)."""
+    evidence = level_evidence(role, have, weights)
     reached = None
-    for lv, added in level_additions(role).items():
-        if _coverage(added, have, weights) < STARTING_COVERAGE:
-            break
-        reached = lv
+    for lv, value in evidence.items():
+        if value >= LEVEL_EVIDENCE:
+            reached = lv
+    if experience in EXPERIENCE:
+        low, high = EXPERIENCE[experience]
+        rank = {lv: i for i, lv in enumerate(LADDER)}
+        if high is not None and reached is not None and rank[reached] > rank[high]:
+            capped = [lv for lv in role.levels if rank[lv] <= rank[high]]
+            reached = capped[-1] if capped else None
+        if low is not None and (reached is None or rank[reached] < rank[low]):
+            lifts = [lv for lv in role.levels if rank[lv] <= rank[low] and evidence.get(lv, 0) >= LIFT_EVIDENCE]
+            if lifts and (reached is None or rank[lifts[-1]] > rank[reached]):
+                reached = lifts[-1]
     return reached
 
 
 def score_roles(
-    snapshot: CatalogSnapshot, mentions: Iterable[Mention], weights: Weights = DEFAULT_WEIGHTS
+    snapshot: CatalogSnapshot,
+    mentions: Iterable[Mention],
+    weights: Weights = DEFAULT_WEIGHTS,
+    experience: str | None = None,
 ) -> list[RoleScore]:
     """Every role, best first."""
     mentions = list(mentions)
@@ -260,20 +296,34 @@ def score_roles(
             s: weights.of(c) * snapshot.weights.get(s, 1.0) * reliance[s] for s, c in category.items() if s in reliance
         }
         interest = sum(contributions.values()) / attention
-        level = reached_level(role, have, snapshot.weights)
+        level = reached_level(role, have, snapshot.weights, experience)
         target = (
             role.levels[0] if level is None else role.levels[min(role.levels.index(level) + 1, len(role.levels) - 1)]
         )
-        gaps = [
-            Gap(r.options, r.level, max(have.get(o, 0) for o in r.options), r.stage)
-            for r in role.requirements[target]
-            if max(have.get(o, 0) for o in r.options) < r.level
-        ]
+
+        def missing(requirements: list[Requirement]) -> list[Gap]:
+            return [
+                Gap(r.options, r.level, max(have.get(o, 0) for o in r.options), r.stage)
+                for r in requirements
+                if max(have.get(o, 0) for o in r.options) < r.level
+            ]
+
+        # Gaps: what the next level adds (ADR-0041), not every unlisted skill from entry up; reaching a level
+        # assumes its basics, which are listed separately for the learner to check.
+        gaps = missing(level_additions(role)[target] if level is not None else role.requirements[target])
+        in_gaps = {g.options for g in gaps}
+        below = [g for g in missing(role.requirements[level]) if g.options not in in_gaps] if level else []
+        # What the learner is curious about stays a gap even below their level: they want to learn it.
+        wanted = [g for g in below if any(category.get(o) == Category.CURIOUS for o in g.options)]
+        gaps += wanted
+        basics = [g for g in below if g not in wanted]
         because = [s for s, v in sorted(contributions.items(), key=lambda kv: -kv[1]) if v > 0]
         score = (weights.interest * interest + (1 - weights.interest) * coverage) * entry_barrier(
             role, level_coverage[role.levels[0]]
         )
-        results.append(RoleScore(role.id, score, interest, coverage, level_coverage, level, target, gaps, because))
+        results.append(
+            RoleScore(role.id, score, interest, coverage, level_coverage, level, target, gaps, because, basics)
+        )
     return sorted(results, key=lambda r: -r.score)
 
 
@@ -328,10 +378,10 @@ def suggest_resources(
         reach = min(1.0, max(teaches.get(o, 0) / gap.need for o in options(gap)))
         return (
             -other_languages(r),
+            -off_topic(r),
             r.curated,
             r.free,
             len(gaps_hit),
-            -off_topic(r),
             -extras(r),
             reach,
             TYPE_PREFERENCE.get(r.type, 0),

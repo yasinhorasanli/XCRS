@@ -32,3 +32,5 @@ levels:
     stages:
       - name: Direction
         skills: [research-methods:4, technical-writing:3, product-thinking:3, technical-leadership:3, stakeholder-communication:3]
+      - name: Depth and influence
+        skills: [agile-scrum:2, mentoring:3, engineering-processes:2, statistics:4, technical-writing:4]
