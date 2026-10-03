@@ -351,6 +351,7 @@ class LearningResource(Base):
     quality: Mapped[dict] = mapped_column(JSONB, server_default="{}")
     fetched_at: Mapped[datetime] = mapped_column(server_default=func.now())
     last_checked_at: Mapped[datetime | None]
+    tagged_at: Mapped[datetime | None]  # when `xcrs resources tag` last processed it (migration 0011)
     last_status: Mapped[int | None] = mapped_column(SmallInteger)
     is_active: Mapped[bool] = mapped_column(server_default="true")
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())

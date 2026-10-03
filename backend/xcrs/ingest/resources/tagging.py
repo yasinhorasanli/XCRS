@@ -5,10 +5,11 @@ resource with only a reviewed tag (the skill a YouTube playlist was approved for
 
 import logging
 from collections.abc import Callable
+from datetime import UTC, datetime
 
 import httpx
 import openai
-from sqlalchemy import and_, exists, select
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from xcrs.db.models import LearningResource, ResourceSkill, Skill
@@ -22,8 +23,9 @@ def resource_text(title: str, description: str | None) -> str:
 
 
 def untagged(session: Session, limit: int | None = None, source: str | None = None) -> list[LearningResource]:
-    tagged = exists().where(and_(ResourceSkill.resource_id == LearningResource.id, ResourceSkill.tagged_by == "llm"))
-    stmt = select(LearningResource).where(LearningResource.source != "curated", LearningResource.is_active, ~tagged)
+    stmt = select(LearningResource).where(
+        LearningResource.source != "curated", LearningResource.is_active, LearningResource.tagged_at.is_(None)
+    )
     if source:
         stmt = stmt.where(LearningResource.source == source)
     return list(session.scalars(stmt.order_by(LearningResource.id).limit(limit)))
@@ -52,6 +54,7 @@ def tag_untagged(
         have = set(session.scalars(select(ResourceSkill.skill_id).where(ResourceSkill.resource_id == resource.id)))
         kept = [s for s in picked if s in skill_ids and skill_ids[s] not in have and sims.get(s, 0.0) >= CONFIRM_FLOOR]
         stats["resources"] += 1
+        resource.tagged_at = datetime.now(UTC)  # processed, even if nothing matched: not retried daily
         stats["no_skill"] += not kept and not have
         for skill in kept:
             session.add(
