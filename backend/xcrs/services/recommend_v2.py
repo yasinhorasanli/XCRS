@@ -45,7 +45,8 @@ class RecommendationServiceV2:
     def __init__(self, session: Session, matcher: SkillMatcher, explanations: ExplanationQueueV2 | None = None):
         self.session, self.matcher, self.explanations = session, matcher, explanations
 
-    def recommend(self, chips: list[Chip]) -> RecommendationV2:
+    def recommend(self, chips: list[Chip], test: bool = False) -> RecommendationV2:
+        """`test` marks results made from the dev test profiles, so activity numbers can leave them out."""
         snapshot = catalog_store.load_snapshot(self.session)
         typed = [c for c in chips if c.skill is None and c.text]
         results = self.matcher.match([c.text for c in typed]) if typed else []
@@ -68,6 +69,9 @@ class RecommendationServiceV2:
                     "skills": [{"id": s, "name": snapshot.skill_names[s]} for s in skills],
                 }
             )
+        # One feeling per skill: when two chips read as the same skill, the later chip wins (the board does the
+        # same; this guards other clients).
+        mentions = list({m.skill: m for m in mentions}.values())
         status = "ok" if mentions else "insufficient_input"
         roles = score_roles(snapshot, mentions)[:ROLES_SHOWN] if mentions else []
         category = {m.skill: m.category for m in mentions}
@@ -81,7 +85,8 @@ class RecommendationServiceV2:
                 "chips": [
                     {"category": c.category.value, "skill": c.skill, "text": c.text, "proficiency": c.proficiency}
                     for c in chips
-                ]
+                ],
+                **({"test": True} if test else {}),
             },
             result=result,
         )

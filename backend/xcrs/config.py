@@ -37,6 +37,9 @@ class Settings(BaseSettings):
     rate_light_burst: int = 20
     trusted_proxies: str = "127.0.0.1/32,::1/128,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
     match_llm_max_new: int = 12
+    # Dev tools (/api/v2/dev/*, the /dev/profiles page): off unless set; on the VMs Caddy also hides them from
+    # public (Funnel) requests, so only the tailnet and localhost reach them.
+    dev_tools: bool = False
 
 
 @lru_cache

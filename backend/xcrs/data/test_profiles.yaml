@@ -1,0 +1,163 @@
+# Test profiles for the decider's manual checks (the /dev/profiles page; not shown to users).
+# Each is what a real person with this background would plausibly put on the board: their main skills with a
+# 1-4 rating, a few they didn't enjoy, a few they are curious about. They don't list every basic skill, just as
+# real learners don't. `expect` and `level` are what a career adviser would answer; the page shows them next to
+# the engine's answer, so mismatches stand out.
+#
+#   liked / neutral / disliked / curious: catalog skill ids, "skill:proficiency" (1-4) or "skill" (unrated)
+#   expect: roles that should rank high (first = main); level: where they'd start in the main role
+
+profiles:
+  # --- entry -------------------------------------------------------------------------------------------
+  - id: cs-student
+    title: CS student, final year, no job yet
+    background: Algorithms and OOP courses, Java and Python assignments, a small web project, enjoyed databases.
+    liked: [java:2, python:2, data-structures:2, algorithms:2, sql:2, oop:2]
+    neutral: [html:1, css:1, git:1, linux:1]
+    disliked: [computer-architecture:1]
+    curious: [machine-learning-fundamentals, docker]
+    expect: [backend-engineer, full-stack-engineer]
+    level: entry
+
+  - id: bootcamp-web
+    title: Web bootcamp graduate
+    background: 12-week JavaScript bootcamp, built three React apps, deployed one with Node and MongoDB.
+    liked: [javascript:2, react:2, html:2, css:2, nodejs:1, git:2]
+    neutral: [mongodb:1, rest-api-design:1]
+    disliked: [algorithms:1]
+    curious: [typescript, nextjs]
+    expect: [frontend-engineer, full-stack-engineer]
+    level: entry
+
+  - id: designer-to-frontend
+    title: UI designer moving to frontend
+    background: Four years as a UI designer; knows HTML and CSS well, some JavaScript, cares about accessibility.
+    liked: [ui-ux-basics:4, design-systems:3, css:3, html:3, accessibility:3]
+    neutral: [javascript:1]
+    disliked: [sql:1]
+    curious: [react, typescript]
+    expect: [frontend-engineer]
+    level: entry
+
+  - id: manual-qa-to-automation
+    title: Manual tester moving to automation
+    background: Three years of manual testing; writes test plans, knows SQL, started Selenium with Java.
+    liked: [manual-testing:4, test-planning:3, sql:2, agile-scrum:3]
+    neutral: [selenium:1, java:1]
+    disliked: [css:1]
+    curious: [api-testing, test-automation]
+    expect: [qa-automation-engineer]
+    level: entry
+
+  # --- mid ---------------------------------------------------------------------------------------------
+  - id: python-backend-4y
+    title: Python backend developer, 4 years
+    background: Django and FastAPI services on PostgreSQL, Celery jobs, Docker, code reviews, some on-call.
+    liked: [python:3, django:3, fastapi:3, postgresql:3, rest-api-design:3, docker:2, git:3, unit-testing:3, caching:2]
+    neutral: [linux:2, ci-cd:2, message-brokers:2]
+    disliked: [css:1]
+    curious: [kubernetes, distributed-systems]
+    expect: [backend-engineer]
+    level: mid
+
+  - id: analyst-to-ds
+    title: Data analyst moving toward data science
+    background: Three years of SQL dashboards in Power BI, pandas notebooks, A/B test reports; learning ML.
+    liked: [sql:3, bi-tools:3, data-visualization:3, pandas:2, statistics:2, ab-testing:2]
+    neutral: [python:2, spreadsheets:3]
+    disliked: [java:1]
+    curious: [machine-learning-fundamentals, scikit-learn]
+    expect: [data-analyst, data-scientist]
+    level: mid
+
+  - id: android-mid
+    title: Android developer, 3 years
+    background: Kotlin apps with Jetpack Compose, coroutines, Room, MVVM; ships to the Play Store.
+    liked: [kotlin:3, jetpack-compose:3, android-sdk:3, kotlin-coroutines:2, mobile-architecture:2, git:3]
+    neutral: [mobile-testing:2, rest-api-design:2]
+    disliked: [javascript:1]
+    curious: [swift, ci-cd]
+    expect: [android-engineer]
+    level: mid
+
+  - id: devops-mid
+    title: DevOps engineer, 3 years
+    background: AWS, Terraform, Docker and Kubernetes; GitHub Actions pipelines; Prometheus and Grafana.
+    liked: [aws:3, terraform:3, docker:3, kubernetes:2, github-actions:3, linux:3, prometheus-grafana:2]
+    neutral: [python:2, helm:2]
+    disliked: [css:1]
+    curious: [gitops, sre-practices]
+    expect: [devops-engineer, platform-engineer, site-reliability-engineer]
+    level: mid
+
+  # --- senior ------------------------------------------------------------------------------------------
+  - id: senior-java-8y
+    title: Senior Java backend engineer, 8 years
+    background: Spring Boot microservices on Kafka, designs services, mentors juniors, runs incident reviews.
+    liked: [java:4, spring-boot:4, microservices:4, kafka:3, distributed-systems:3, system-design:3, postgresql:3, kubernetes:3, mentoring:3]
+    neutral: [aws:2, observability:3, incident-management:3]
+    disliked: [css:1, php:1]
+    curious: [domain-driven-design, technical-leadership]
+    expect: [backend-engineer, software-architect]
+    level: senior
+
+  - id: senior-data-engineer
+    title: Senior data engineer, 7 years
+    background: Spark and Kafka pipelines, Airflow, dbt on Snowflake, lakehouse design, mentors two engineers.
+    liked: [spark:4, kafka:3, airflow:4, dbt:3, snowflake:3, sql:4, python:4, data-modeling:4, stream-processing:3, mentoring:3]
+    neutral: [aws:3, data-governance:2]
+    disliked: [javascript:1]
+    curious: [data-lakehouse, data-architecture]
+    expect: [data-engineer]
+    level: senior
+
+  - id: senior-ml-engineer
+    title: Senior ML engineer, 6 years
+    background: Trains and serves PyTorch models, NLP and vision, MLOps pipelines, model monitoring in production.
+    liked: [pytorch:4, deep-learning:4, nlp:3, computer-vision:3, model-serving:3, ml-pipelines:3, python:4, transformers:3, model-monitoring:3]
+    neutral: [docker:3, kubernetes:2, sql:2]
+    disliked: [css:1]
+    curious: [llm-serving, fine-tuning]
+    expect: [machine-learning-engineer]
+    level: senior
+
+  - id: senior-ios
+    title: Senior iOS engineer, 8 years
+    background: Swift and SwiftUI, modular app architecture, performance work, security reviews, mentoring.
+    liked: [swift:4, swiftui:4, ios-sdk:4, swift-concurrency:3, mobile-architecture:4, profiling:3, mentoring:3, secure-coding:3]
+    neutral: [ci-cd:3, mobile-testing:3]
+    disliked: [java:1]
+    curious: [kotlin, technical-leadership]
+    expect: [ios-engineer]
+    level: senior
+
+  - id: senior-embedded
+    title: Senior embedded C developer, 10 years
+    background: Firmware for microcontrollers in C and C++, RTOS, embedded Linux drivers, protocol work.
+    liked: [c:4, cpp:3, microcontrollers:4, rtos:4, embedded-linux:3, communication-protocols:4, hardware-debugging:4]
+    neutral: [python:2, design-patterns:2]
+    disliked: [javascript:1]
+    curious: [security-fundamentals, rust]
+    expect: [embedded-software-engineer]
+    level: senior
+
+  # --- staff -------------------------------------------------------------------------------------------
+  - id: staff-platform
+    title: Staff platform engineer, 12 years
+    background: Leads an internal developer platform on Kubernetes; GitOps, FinOps, writes ADRs, sets direction.
+    liked: [kubernetes:4, internal-developer-platforms:4, gitops:4, infrastructure-as-code:4, cloud-architecture:4, finops:3, architecture-decision-records:3, technical-leadership:3, distributed-systems:3]
+    neutral: [stakeholder-communication:3, go:3]
+    disliked: [css:1]
+    curious: [service-mesh, engineering-processes]
+    expect: [platform-engineer, devops-engineer]
+    level: staff
+
+  - id: engineering-manager
+    title: Engineering manager, 12 years (former backend engineer)
+    background: Manages two teams of eight; hiring, planning, incident management; still reviews designs.
+    liked: [people-management:4, hiring:3, project-planning:4, stakeholder-communication:4, engineering-processes:3, incident-management:3]
+    neutral: [system-design:3, java:2, agile-scrum:3]
+    disliked: [css:1]
+    curious: [finops, product-thinking]
+    expect: [engineering-manager]
+    level: staff

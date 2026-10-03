@@ -41,13 +41,46 @@ export function useBoardV2() {
     return chips.value.find((c) => c.key === label.trim().toLowerCase())
   }
 
+  /** The catalog skills a chip stands for: the picked one, or what its text was matched to. */
+  const skillsOf = (c: Chip) => (c.skill ? [c.skill] : c.match.skills.map((s) => s.id))
+  const sameSkills = (a: string[], b: string[]) => a.length > 0 && a.length === b.length && a.every((s) => b.includes(s))
+
+  function announceMove(chip: Chip, from: Category, why = '') {
+    toast.add({
+      title: `Moved “${chip.label}”`,
+      description: `${why}From “${CATEGORY_META[from].title}” to “${CATEGORY_META[chip.category].title}”: a skill can be in one box only.`,
+      actions: [{ label: 'Undo', color: 'neutral', variant: 'outline', onClick: () => { chip.category = from } }],
+    })
+  }
+
+  /** A typed chip that turns out to be a skill already on the board ("dockerrr" after "Docker") is merged
+   * into the existing chip: the newest box wins, as when the same skill is added twice. */
+  function mergeDuplicate(chip: Chip) {
+    const skills = skillsOf(chip)
+    const other = chips.value.find((c) => c.key !== chip.key && sameSkills(skillsOf(c), skills))
+    if (!other) return
+    chips.value = chips.value.filter((c) => c.key !== chip.key)
+    if (chip.proficiency && !other.proficiency) other.proficiency = chip.proficiency
+    const reads = `“${chip.label}” reads as ${chip.match.skills.map((s) => s.name).join(', ')}. `
+    if (other.category === chip.category) {
+      toast.add({ title: `Already on the board`, description: `${reads}It is already in “${CATEGORY_META[other.category].title}” as “${other.label}”.` })
+    } else {
+      const from = other.category
+      other.category = chip.category
+      announceMove(other, from, reads)
+    }
+  }
+
   async function matchInBackground(key: string) {
     const chip = chips.value.find((c) => c.key === key)
     if (!chip || chip.skill) return
     try {
       const { matches } = await api.match([chip.label])
       const current = chips.value.find((c) => c.key === key)
-      if (current && !current.skill) current.match = { status: 'done', skills: matches[0]?.skills ?? [], method: matches[0]?.method }
+      if (current && !current.skill) {
+        current.match = { status: 'done', skills: matches[0]?.skills ?? [], method: matches[0]?.method }
+        mergeDuplicate(current)
+      }
     } catch {
       const current = chips.value.find((c) => c.key === key)
       if (current) current.match = { status: 'error', skills: [] } // the server matches again on submit
@@ -59,16 +92,12 @@ export function useBoardV2() {
   function add(label: string, category: Category = active.value, skill?: SkillRef, proficiency?: number) {
     const clean = label.replace(/\s+/g, ' ').trim().slice(0, 100)
     if (!clean) return 'empty' as const
-    const existing = find(clean) ?? (skill ? chips.value.find((c) => c.skill === skill.id) : undefined)
+    const existing = find(clean) ?? (skill ? chips.value.find((c) => sameSkills(skillsOf(c), [skill.id])) : undefined)
     if (existing) {
       if (existing.category === category) return 'exists' as const
       const from = existing.category
       existing.category = category
-      toast.add({
-        title: `Moved “${existing.label}”`,
-        description: `From “${CATEGORY_META[from].title}” to “${CATEGORY_META[category].title}”: a skill can be in one box only.`,
-        actions: [{ label: 'Undo', color: 'neutral', variant: 'outline', onClick: () => { existing.category = from } }],
-      })
+      announceMove(existing, from)
       return 'moved' as const
     }
     if (chips.value.length >= MAX_CHIPS) return 'full' as const
@@ -110,9 +139,9 @@ export function useBoardV2() {
       ...(c.proficiency ? { proficiency: c.proficiency } : {}),
     }))
 
-  /** Whether a catalog skill is already on the board (picked, or the label of a chip). */
+  /** Whether a catalog skill is already on the board (picked, matched from typed text, or a chip's label). */
   const onBoard = (skill: { id: string; name: string }) =>
-    chips.value.some((c) => c.skill === skill.id || c.key === skill.name.trim().toLowerCase())
+    chips.value.some((c) => skillsOf(c).includes(skill.id) || c.key === skill.name.trim().toLowerCase())
 
   return { chips, active, total, pending, byCategory, add, remove, rate, clear, fillExample, asInput, onBoard }
 }

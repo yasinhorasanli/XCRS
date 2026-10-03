@@ -12,6 +12,7 @@ from fastapi import Depends, FastAPI, HTTPException, Query, Request
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from xcrs.api import dev
 from xcrs.api.limits import heavy
 from xcrs.api.schemas_v2 import (
     FeedbackV2Request,
@@ -58,6 +59,9 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 app = FastAPI(
     title="XCRS API", version="2.0.0", description="Explainable Course Recommendation System", lifespan=lifespan
 )
+
+
+app.include_router(dev.router)
 
 
 def get_session() -> Iterator[Session]:
@@ -180,3 +184,13 @@ def skill_groups_v2(session: Session = Depends(get_session)) -> SkillGroupsV2:
             for f, n, skills in catalog_store.skill_groups(session)
         ]
     )
+
+
+@app.post("/api/v2/dev/profiles/{profile_id}/run", dependencies=[Depends(dev.dev_tools_on)])
+def run_dev_profile(profile_id: str, service: RecommendationServiceV2 = Depends(get_service_v2)) -> dict:
+    """A real, stored recommendation for a test profile (marked `test`), with explanations, for the results page."""
+    profile = next((p for p in dev.load_profiles() if p.id == profile_id), None)
+    if profile is None:
+        raise HTTPException(404, "no such test profile")
+    chips = [Chip(CategoryV2(c.category), c.skill, None, c.proficiency) for c in profile.chips]
+    return {"id": str(service.recommend(chips, test=True).id)}
