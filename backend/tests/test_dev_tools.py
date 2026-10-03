@@ -38,9 +38,11 @@ def test_dev_endpoints_are_off_unless_enabled(monkeypatch):
 def test_preview_scores_every_profile(monkeypatch):
     try:
         with new_session() as s:
-            s.execute(text("SELECT 1 FROM catalog.roles LIMIT 1"))
+            imported = s.execute(text("SELECT count(*) FROM catalog.roles")).scalar()
     except OperationalError:
         pytest.skip("needs the database")
+    if not imported:
+        pytest.skip("needs the imported catalog (xcrs catalog import)")
     monkeypatch.setattr(get_settings(), "dev_tools", True)
     previews = TestClient(app).get("/api/v2/dev/profiles/preview").json()
     assert len(previews) == len(dev.load_profiles()) and all(p["roles"] for p in previews)
