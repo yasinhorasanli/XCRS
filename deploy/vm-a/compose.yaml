@@ -43,6 +43,7 @@ services:
       XCRS_CATALOG_DIR: /catalog
       XCRS_YOUTUBE_API_KEY: ${XCRS_YOUTUBE_API_KEY:-}
       XCRS_RATE_HEAVY_PER_MINUTE: ${XCRS_RATE_HEAVY_PER_MINUTE:-10}
+      XCRS_DEV_TOOLS: ${XCRS_DEV_TOOLS:-false}   # /dev/profiles; Caddy hides it from public requests
     volumes:
       - ../../catalog:/catalog:ro      # the reviewed catalog of this checkout (xcrs catalog import)
     depends_on:

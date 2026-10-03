@@ -66,6 +66,7 @@ How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036, ADR-0
 | Backup now | `COMPOSE_FILE=deploy/vm-a/compose.yaml scripts/db-backup.sh && scripts/db-verify-backup.sh` |
 | Funnel on / off / status | `sudo tailscale funnel --bg 8080` / `sudo tailscale funnel --https=443 off` / `tailscale funnel status` |
 | YouTube job: run now / results | `sudo systemctl start xcrs-youtube-discover` / `scripts/youtube-candidates-pull.sh` (on the Mac) |
+| Test profiles (tailnet only) | `http://xcrs-a.<tailnet>.ts.net/dev/profiles` with `XCRS_DEV_TOOLS=true` in `.env`; public requests get 404 from Caddy |
 | VM facts (read-only) | `ssh xcrs-a 'bash -s' < scripts/vm-facts.sh` |
 | Restore into a new database | `COMPOSE_FILE=deploy/vm-a/compose.yaml scripts/db-restore.sh backups/<dump> xcrs_restored` |
 

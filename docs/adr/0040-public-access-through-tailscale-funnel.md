@@ -3,6 +3,7 @@
 - **Status:** Accepted
 - **Date:** 2026-10-02
 - **Decider:** Muhammed Yasin Horasanli
+- **Note (2026-10-03):** dev tools (the `/dev/profiles` test page and `/api/v2/dev`) are reachable on localhost and the tailnet only: Funnel marks public requests with `Tailscale-Funnel-Request`, and Caddy answers 404 to those; the API also needs `XCRS_DEV_TOOLS=true`.
 
 ## Context
 

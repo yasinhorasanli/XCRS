@@ -20,5 +20,11 @@
 		X-Frame-Options DENY
 		-Server
 	}
+	# Dev tools (test profiles) are for the tailnet only: public Funnel requests carry this header (ADR-0040).
+	@public_dev {
+		header Tailscale-Funnel-Request *
+		path /dev /dev/* /api/v2/dev /api/v2/dev/*
+	}
+	respond @public_dev 404
 	reverse_proxy web:3000
 }
