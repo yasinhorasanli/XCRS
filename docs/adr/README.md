@@ -45,9 +45,12 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0039](0039-retire-the-classic-engine.md) | Retire the classic engine: code, API, tables and research data removed after an archive | Accepted | 2026-10-02 |
 | [0040](0040-public-access-through-tailscale-funnel.md) | Public access through Tailscale Funnel now, a Cloudflare Tunnel once there is a domain; VMs managed over Tailscale | Accepted | 2026-10-02 |
 | [0041](0041-level-from-evidence-and-experience-next-level-gaps.md) | Levels from per-level evidence and optional experience; gaps and resources for the next level only; even staff levels | Accepted | 2026-10-03 |
+| [0043](0043-accounts-with-social-sign-in-in-the-nuxt-server.md) | Accounts with GitHub, Google and LinkedIn sign-in in the Nuxt server (sealed-cookie sessions, signed identity header to the API); anonymous use stays; export and delete | Accepted | 2026-10-03 |
 
 ## Upcoming decisions
 
+- CV / LinkedIn "Save to PDF" import that pre-fills the board (local LLM extraction → ADR-0030 matching; nothing kept unless the board is saved)
+- Progress tracking: "I took this course" → follow-up questions → updated board ratings; resource thumbs as a quality signal
 - Re-run the explainer benchmark (now on v2 explanations) on the new LLM VM before launch: 4B or 9B (ADR-0020)
 - (Later) Roadmap visualization
 - LLM tracing: Langfuse (cloud, then self-hosted on the LLM VM) or LangSmith; see ADR-0019

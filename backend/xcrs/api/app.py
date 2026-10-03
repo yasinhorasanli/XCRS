@@ -5,14 +5,16 @@ uv run uvicorn xcrs.api.app:app --reload
 
 import logging
 import uuid
-from collections.abc import AsyncIterator, Iterator
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI, HTTPException, Query, Request
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from xcrs.api import dev
+from xcrs.api import accounts, dev
+from xcrs.api.deps import get_session
+from xcrs.api.identity import accounts_on, optional_user
 from xcrs.api.limits import heavy
 from xcrs.api.schemas_v2 import (
     FeedbackV2Request,
@@ -28,11 +30,13 @@ from xcrs.api.schemas_v2 import (
     SkillSuggestionV2,
 )
 from xcrs.config import get_settings
+from xcrs.db.models import User
 from xcrs.db.session import new_session
 from xcrs.domain.role_scoring import Category as CategoryV2
 from xcrs.explain import get_explainer_v2
 from xcrs.repository import catalog_store
 from xcrs.services import explanations_v2
+from xcrs.services.accounts import AccountService, board_input, claimable
 from xcrs.services.explanations_v2 import ExplanationWorkerV2
 from xcrs.services.recommend_v2 import Chip, RecommendationServiceV2
 from xcrs.services.skill_matching import SkillMatcher, build_matcher
@@ -62,11 +66,8 @@ app = FastAPI(
 
 
 app.include_router(dev.router)
-
-
-def get_session() -> Iterator[Session]:
-    with new_session() as session:
-        yield session
+app.include_router(accounts.router)
+app.include_router(accounts.internal)
 
 
 def get_skill_matcher(session: Session = Depends(get_session)) -> SkillMatcher:
@@ -106,8 +107,9 @@ def match_skills(
     )
 
 
-def _response_v2(row, session: Session) -> RecommendationResponseV2:
-    """The stored result, with each role's explanation as far as it has been written."""
+def _response_v2(row, session: Session, user: User | None = None) -> RecommendationResponseV2:
+    """The stored result, with each role's explanation as far as it has been written, and whether it is in the
+    viewer's account or could be saved to one (ADR-0043)."""
     explained = explanations_v2.for_recommendation(session, row.id)
     roles = [
         {
@@ -127,31 +129,41 @@ def _response_v2(row, session: Session) -> RecommendationResponseV2:
         matched=row.result["matched"],
         roles=roles,
         experience=row.input.get("experience"),
+        saved=user is not None and row.user_id == user.id,
+        can_save=accounts_on() and row.user_id is None and claimable(row.created_at, session),
     )
 
 
 @app.post("/api/v2/recommendations", response_model=RecommendationResponseV2, dependencies=[Depends(heavy)])
 def create_recommendation_v2(
-    body: RecommendationRequestV2, service: RecommendationServiceV2 = Depends(get_service_v2)
+    body: RecommendationRequestV2,
+    service: RecommendationServiceV2 = Depends(get_service_v2),
+    user: User | None = Depends(optional_user),
 ) -> RecommendationResponseV2:
     """Roles for the board's chips (ADR-0031): score, estimated level, coverage per level, the skills that
-    count most, and the gaps to the next level in learning order."""
+    count most, and the gaps to the next level in learning order. Signed in (ADR-0043), the result belongs to
+    the account and its board becomes the saved board."""
     chips = []
     for c in body.chips:
         if bool(c.skill) == bool(c.text and c.text.strip()):
             raise HTTPException(422, "each chip needs exactly one of `skill` (picked) or `text` (typed)")
         chips.append(Chip(CategoryV2(c.category), c.skill, c.text.strip()[:100] if c.text else None, c.proficiency))
-    return _response_v2(service.recommend(chips, body.experience), service.session)
+    row = service.recommend(chips, body.experience, user_id=user.id if user else None)
+    if user:
+        AccountService(service.session).save_board(user, board_input(row.input))
+    return _response_v2(row, service.session, user)
 
 
 @app.get("/api/v2/recommendations/{recommendation_id}", response_model=RecommendationResponseV2)
 def get_recommendation_v2(
-    recommendation_id: uuid.UUID, service: RecommendationServiceV2 = Depends(get_service_v2)
+    recommendation_id: uuid.UUID,
+    service: RecommendationServiceV2 = Depends(get_service_v2),
+    user: User | None = Depends(optional_user),
 ) -> RecommendationResponseV2:
     row = service.get(recommendation_id)
     if row is None:
         raise HTTPException(404, "recommendation not found")
-    return _response_v2(row, service.session)
+    return _response_v2(row, service.session, user)
 
 
 @app.post("/api/v2/recommendations/{recommendation_id}/feedback", status_code=201)

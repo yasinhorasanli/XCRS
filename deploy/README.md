@@ -55,6 +55,12 @@ How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036, ADR-0
 6. **Restrict the YouTube API key** to the VMs' egress address: Google Cloud console → *Credentials* → the key → *Application restrictions* → *IP addresses* (the shared NAT IPv4 and the VMs' IPv6 addresses; see the inventory). Do this once discovery runs on VM-A, or the Mac's calls stop working.
 7. **YouTube job** (daily at 11:30, after the quota resets: refresh and ingest the approved playlists, expire data older than 30 days, tag new resources, discover candidates): `sudo install -d -o 10001 -g 10001 /srv/xcrs-discovery`, copy `catalog/sources/youtube-candidates.yaml` there (it carries the skills already searched), then `sudo cp deploy/systemd/xcrs-youtube-discover.* /etc/systemd/system/ && sudo systemctl enable --now xcrs-youtube-discover.timer`. On the Mac, `scripts/youtube-candidates-pull.sh` copies the results into the repo for review.
 8. **Measure on the VMs:** the explainer benchmark against VM-B (ADR-0020), and the matching latency (ADR-0030).
+9. **Accounts (ADR-0043, optional):** in `.env` set `XCRS_PUBLIC_URL` (the Funnel address), `XCRS_INTERNAL_SECRET` and `NUXT_SESSION_PASSWORD` (`openssl rand -hex 32` each), then register the OAuth apps with these callback URLs and set their ids and secrets:
+   - **GitHub:** Settings → Developer settings → OAuth Apps → New; callback `<XCRS_PUBLIC_URL>/auth/github`.
+   - **Google:** Cloud console → Google Auth Platform → Clients → Web application; redirect URI `<XCRS_PUBLIC_URL>/auth/google`; scopes openid, email, profile. Google may ask to verify the domain for the consent screen; if it won't accept the `ts.net` address, Google waits for the bought domain.
+   - **LinkedIn:** Developer portal → Create app → Products → *Sign In with LinkedIn using OpenID Connect*; Auth → redirect URL `<XCRS_PUBLIC_URL>/auth/linkedin`.
+
+   Restart with `deploy/deploy.sh <tag>`; `/sign-in` then shows a button per configured provider. Changing `NUXT_SESSION_PASSWORD` signs everyone out.
 
 ## Everyday operations
 

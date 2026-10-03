@@ -45,8 +45,11 @@ class RecommendationServiceV2:
     def __init__(self, session: Session, matcher: SkillMatcher, explanations: ExplanationQueueV2 | None = None):
         self.session, self.matcher, self.explanations = session, matcher, explanations
 
-    def recommend(self, chips: list[Chip], experience: str | None = None, test: bool = False) -> RecommendationV2:
-        """`test` marks results made from the dev test profiles, so activity numbers can leave them out."""
+    def recommend(
+        self, chips: list[Chip], experience: str | None = None, test: bool = False, user_id: uuid.UUID | None = None
+    ) -> RecommendationV2:
+        """`test` marks results made from the dev test profiles, so activity numbers can leave them out;
+        `user_id` is the signed-in owner (ADR-0043), None for anonymous results."""
         snapshot = catalog_store.load_snapshot(self.session)
         typed = [c for c in chips if c.skill is None and c.text]
         results = self.matcher.match([c.text for c in typed]) if typed else []
@@ -90,6 +93,7 @@ class RecommendationServiceV2:
                 **({"test": True} if test else {}),
             },
             result=result,
+            user_id=user_id,
         )
         self.session.add(row)
         self.session.flush()

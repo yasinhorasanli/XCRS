@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { CATEGORY_META } from '~/composables/categories'
+import { apiError } from '~/composables/useAccount'
 
 const route = useRoute()
 const id = route.params.id as string
 const api = useXcrsApiV2()
 const { chips, add, clear, experience } = useBoardV2()
+const { enabled: accounts, loggedIn, signInPath } = useAccount()
+const toast = useToast()
 
 const { data, error } = await useAsyncData(`recommendation-v2-${id}`, () => api.recommendation(id))
 if (error.value && import.meta.server) {
@@ -29,6 +32,25 @@ onMounted(() => {
 })
 onBeforeUnmount(() => clearInterval(poller))
 
+/** Keep an anonymous result in the account (ADR-0043); signed out, sign in first and come back to save it. */
+const saving = ref(false)
+async function save() {
+  if (!loggedIn.value) return navigateTo(signInPath(`/results/${id}?save=1`))
+  saving.value = true
+  try {
+    await api.saveResult(id)
+    data.value = await api.recommendation(id)
+    toast.add({ title: 'Saved to your account', icon: 'i-heroicons-bookmark', actions: [{ label: 'My account', to: '/account', color: 'neutral', variant: 'outline' }] })
+  } catch (e) {
+    toast.add({ title: 'Could not save these results', description: apiError(e).message, color: 'error', icon: 'i-heroicons-exclamation-triangle' })
+  } finally {
+    saving.value = false
+  }
+}
+onMounted(() => {
+  if (route.query.save && loggedIn.value && data.value?.can_save) save()
+})
+
 useHead(() => ({ title: data.value?.roles[0] ? `${data.value.roles[0].name} and more · XCRS` : 'Your results · XCRS' }))
 
 /** Back to the board with these answers (also works when the link was shared). */
@@ -49,7 +71,11 @@ function edit() {
   <div class="mx-auto max-w-5xl px-4 pb-16 pt-8">
     <div class="flex flex-wrap items-center gap-3">
       <h1 class="text-2xl font-bold tracking-tight">Your roles</h1>
-      <UButton class="ml-auto" color="neutral" variant="soft" icon="i-heroicons-pencil-square" label="Edit my answers" @click="edit" />
+      <div class="ml-auto flex flex-wrap items-center gap-2">
+        <UBadge v-if="data?.saved" color="primary" variant="soft" size="lg" icon="i-heroicons-bookmark-solid" label="Saved to your account" />
+        <UButton v-else-if="accounts && data?.can_save" color="primary" variant="soft" :loading="saving" icon="i-heroicons-bookmark" label="Save to my account" @click="save" />
+        <UButton color="neutral" variant="soft" icon="i-heroicons-pencil-square" label="Edit my answers" @click="edit" />
+      </div>
     </div>
 
     <UAlert v-if="error" class="mt-6" color="error" title="We couldn't find these results" description="The link may be wrong or the results were removed." />

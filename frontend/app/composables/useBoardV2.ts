@@ -89,8 +89,15 @@ export function useBoardV2() {
   }
 
   /** Add a picked skill or typed text. A skill has one feeling, so an existing chip moves to the new category;
-   * the move is announced, with Undo, so it never happens silently. */
-  function add(label: string, category: Category = active.value, skill?: SkillRef, proficiency?: number) {
+   * the move is announced, with Undo, so it never happens silently. `matched`: typed text already matched (a
+   * restored board matches all its phrases in one request), so no background request is made. */
+  function add(
+    label: string,
+    category: Category = active.value,
+    skill?: SkillRef,
+    proficiency?: number,
+    matched?: { skills: SkillRef[]; method?: string },
+  ) {
     const clean = label.replace(/\s+/g, ' ').trim().slice(0, 100)
     if (!clean) return 'empty' as const
     const existing = find(clean) ?? (skill ? chips.value.find((c) => sameSkills(skillsOf(c), [skill.id])) : undefined)
@@ -108,10 +115,14 @@ export function useBoardV2() {
       category,
       skill: skill?.id,
       proficiency,
-      match: skill ? { status: 'picked', skills: [skill] } : { status: 'pending', skills: [] },
+      match: skill
+        ? { status: 'picked', skills: [skill] }
+        : matched
+          ? { status: 'done', skills: matched.skills, method: matched.method }
+          : { status: 'pending', skills: [] },
     }
     chips.value = [...chips.value, chip]
-    if (!skill) matchInBackground(chip.key)
+    if (!skill && !matched) matchInBackground(chip.key)
     return 'added' as const
   }
 

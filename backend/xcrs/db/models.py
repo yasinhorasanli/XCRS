@@ -263,6 +263,51 @@ class PhraseMatch(Base):
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
 
 
+# --- Accounts (ADR-0043) ----------------------------------------------------------------------------
+
+
+class User(Base):
+    """A signed-in learner. `email` only when a provider verified it (lower-case, unique: links providers)."""
+
+    __tablename__ = "users"
+    __table_args__ = (CheckConstraint("email = lower(email)", name="users_email_lower_check"),)
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, server_default=text("gen_random_uuid()"))
+    display_name: Mapped[str | None] = mapped_column(Text)
+    email: Mapped[str | None] = mapped_column(Text, unique=True)
+    created_at: Mapped[datetime] = created_at()
+    last_sign_in_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    sessions_valid_after: Mapped[datetime | None]  # "sign out everywhere": sessions from before it are cut off
+
+
+class UserIdentity(Base):
+    """One provider account (GitHub, Google, LinkedIn) of a user; `subject` is the provider's stable id."""
+
+    __tablename__ = "user_identities"
+    __table_args__ = (
+        CheckConstraint("provider IN ('github', 'google', 'linkedin')", name="user_identities_provider_check"),
+        Index("user_identities_user_idx", "user_id"),
+    )
+
+    provider: Mapped[str] = mapped_column(Text, primary_key=True)
+    subject: Mapped[str] = mapped_column(Text, primary_key=True)
+    user_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey("users.id", ondelete="CASCADE"))
+    email: Mapped[str | None] = mapped_column(Text)
+    created_at: Mapped[datetime] = created_at()
+    last_sign_in_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+
+class Board(Base):
+    """A user's saved board: the chips and experience, in the recommendation request's shape."""
+
+    __tablename__ = "boards"
+
+    id: Mapped[int] = mapped_column(BigInteger, Identity(always=True), primary_key=True)
+    user_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey("users.id", ondelete="CASCADE"), unique=True)
+    input: Mapped[dict] = mapped_column(JSONB)
+    updated_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+
 # --- Engine v2 activity (ADR-0029, ADR-0031): JSONB input and result, as ADR-0013 ---------------------
 
 
@@ -271,6 +316,7 @@ class RecommendationV2(Base):
     __table_args__ = (
         CheckConstraint("status IN ('ok', 'insufficient_input')", name="recommendations_v2_status_check"),
         Index("recommendations_v2_created_idx", "created_at"),
+        Index("recommendations_v2_user_idx", "user_id", "created_at", postgresql_where=text("user_id IS NOT NULL")),
     )
 
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, server_default=text("gen_random_uuid()"))
@@ -280,6 +326,7 @@ class RecommendationV2(Base):
     status: Mapped[str] = mapped_column(Text)
     input: Mapped[dict] = mapped_column(JSONB)
     result: Mapped[dict] = mapped_column(JSONB)
+    user_id: Mapped[uuid.UUID | None] = mapped_column(UUID, ForeignKey("users.id", ondelete="CASCADE"))  # ADR-0043
 
 
 class FeedbackV2(Base):

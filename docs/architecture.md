@@ -58,25 +58,30 @@ Decided so far:
   ([ADR-0034](adr/0034-deployment-ghcr-images-compose-per-vm-caddy.md), [ADR-0035](adr/0035-abuse-protection-rate-limits-and-llm-caps.md), [ADR-0036](adr/0036-backups-nightly-verified-copied-to-the-other-vm.md))
 - **Evaluation tools** (`backend/eval/`): synthetic learner profiles, the explainer benchmark (speed and grounding per model and device), the prototype-vs-new comparison with threshold diagnostics, and the skill-matching benchmark (349 labeled phrases, 16 pipelines, cross-validated thresholds).
 
-## The system today (2026-10-02)
+## The system today (2026-10-03)
 
 ```
-Browser ──► Caddy (VM-A, the only public service) ──► Nuxt 4 (board, results; proxies /api/v2/**)
-                                                          │
-                                                          ▼
+Browser ──► Caddy (VM-A, the only public service) ──► Nuxt 4 (board, results, account; proxies /api/v2/**)
+                                                          │  sign-in: /auth/github|google|linkedin (OAuth,
+                                                          │  sealed session cookie; ADR-0043)
+                                                          │  proxy: drops X-XCRS-*/cookies, adds a signed
+                                                          ▼  X-XCRS-User for a signed-in user
    FastAPI /api/v2   POST /skills/match · POST /recommendations · GET /recommendations/{id} · feedback
-     api/       validation, rate limits (ADR-0035)
+                     /me (board, results, export, sign out everywhere, delete) · /internal/sign-in (web only)
+     api/       validation, rate limits (ADR-0035), identity header check (ADR-0043)
      services/  skill matching (lookup → LLM pick → similarity), recommend, explanation worker
      domain/    role scoring, levels, gaps, resource choice (pure Python)
      adapters:
        embeddings/ ──► Ollama  qwen3-embedding:0.6b   (VM-A)
        matching/, explain/ ──► Ollama  qwen3.5:4b / 9b (VM-B, private network; LangChain)
-       repository/ ──► PostgreSQL 18 + pgvector       (schemas: public = activity, catalog, ingest)
+       repository/ ──► PostgreSQL 18 + pgvector       (schemas: public = activity and accounts, catalog, ingest)
 
 Offline: xcrs catalog import | embed   (catalog/*.yaml → catalog schema, skill vectors)
          xcrs resources ingest freecodecamp|youtube | tag | check-links | expire
 ```
 
 The research prototype is on `main` and in the Zenodo release; the classic engine that replaced it on this branch was retired on 2026-10-02 (ADR-0039). Measurements are in [baseline.md](baseline.md).
+
+Accounts are optional (ADR-0043): without `XCRS_INTERNAL_SECRET` and a session password the site is anonymous only, as before; signed in, results and the board are kept, with JSON export and account deletion.
 
 Still open: LLM tracing, a chat/agent feature, the domain name, and the cloud target. See [adr/README.md](adr/README.md#upcoming-decisions).

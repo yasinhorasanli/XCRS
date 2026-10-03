@@ -132,6 +132,8 @@ class RecommendationResponseV2(BaseModel):
     matched: list[MatchedChipV2]
     roles: list[RoleV2]
     experience: Experience | None = None  # as given on the board (ADR-0041)
+    saved: bool = False  # in the signed-in viewer's account (ADR-0043)
+    can_save: bool = False  # anonymous and recent: "Save to my account" can attach it
 
 
 class FeedbackV2Request(BaseModel):

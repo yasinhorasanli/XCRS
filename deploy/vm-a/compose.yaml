@@ -27,6 +27,16 @@ services:
     restart: unless-stopped
     environment:
       XCRS_API_URL: http://api:8000
+      # Accounts (ADR-0043): all optional; without the secret and session password the site is anonymous only.
+      XCRS_PUBLIC_URL: ${XCRS_PUBLIC_URL:-}   # e.g. https://xcrs-a.<tailnet>.ts.net (OAuth redirect URLs)
+      XCRS_INTERNAL_SECRET: ${XCRS_INTERNAL_SECRET:-}
+      NUXT_SESSION_PASSWORD: ${NUXT_SESSION_PASSWORD:-}
+      NUXT_OAUTH_GITHUB_CLIENT_ID: ${NUXT_OAUTH_GITHUB_CLIENT_ID:-}
+      NUXT_OAUTH_GITHUB_CLIENT_SECRET: ${NUXT_OAUTH_GITHUB_CLIENT_SECRET:-}
+      NUXT_OAUTH_GOOGLE_CLIENT_ID: ${NUXT_OAUTH_GOOGLE_CLIENT_ID:-}
+      NUXT_OAUTH_GOOGLE_CLIENT_SECRET: ${NUXT_OAUTH_GOOGLE_CLIENT_SECRET:-}
+      NUXT_OAUTH_LINKEDIN_CLIENT_ID: ${NUXT_OAUTH_LINKEDIN_CLIENT_ID:-}
+      NUXT_OAUTH_LINKEDIN_CLIENT_SECRET: ${NUXT_OAUTH_LINKEDIN_CLIENT_SECRET:-}
     depends_on:
       api:
         condition: service_healthy
@@ -44,6 +54,7 @@ services:
       XCRS_YOUTUBE_API_KEY: ${XCRS_YOUTUBE_API_KEY:-}
       XCRS_RATE_HEAVY_PER_MINUTE: ${XCRS_RATE_HEAVY_PER_MINUTE:-10}
       XCRS_DEV_TOOLS: ${XCRS_DEV_TOOLS:-false}   # /dev/profiles; Caddy hides it from public requests
+      XCRS_INTERNAL_SECRET: ${XCRS_INTERNAL_SECRET:-}   # the same as web's (ADR-0043)
     volumes:
       - ../../catalog:/catalog:ro      # the reviewed catalog of this checkout (xcrs catalog import)
     depends_on:

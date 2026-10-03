@@ -30,6 +30,7 @@ services:
       XCRS_LLM_BASE_URL: ${XCRS_CONTAINER_OLLAMA_URL:-http://host.docker.internal:11434/v1}
       XCRS_LLM_ENABLED: ${XCRS_LLM_ENABLED:-true}
       XCRS_LLM_MODEL: ${XCRS_LLM_MODEL:-qwen3.5:9b}
+      XCRS_INTERNAL_SECRET: ${XCRS_INTERNAL_SECRET:-}
     ports:
       - "127.0.0.1:8000:8000"
     depends_on:
@@ -41,6 +42,12 @@ services:
     build: ./frontend
     environment:
       XCRS_API_URL: http://api:8000
+      # Accounts (ADR-0043), optional; see deploy/vm-a/.env.example
+      XCRS_PUBLIC_URL: ${XCRS_PUBLIC_URL:-}
+      XCRS_INTERNAL_SECRET: ${XCRS_INTERNAL_SECRET:-}
+      NUXT_SESSION_PASSWORD: ${NUXT_SESSION_PASSWORD:-}
+      NUXT_OAUTH_GITHUB_CLIENT_ID: ${NUXT_OAUTH_GITHUB_CLIENT_ID:-}
+      NUXT_OAUTH_GITHUB_CLIENT_SECRET: ${NUXT_OAUTH_GITHUB_CLIENT_SECRET:-}
     ports:
       - "127.0.0.1:3000:3000"
     depends_on:
