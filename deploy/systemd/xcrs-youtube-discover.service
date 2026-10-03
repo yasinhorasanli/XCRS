@@ -1,8 +1,13 @@
-# Daily YouTube discovery on VM-A (ADR-0033): one quota day of searches, continuing where the last run
-# stopped. Candidates go to /srv/xcrs-discovery for review; `scripts/youtube-candidates-pull.sh` on the Mac
-# copies them into the repo. Nothing is ingested until the decider approves ids in catalog/sources/youtube.yaml.
+# Daily YouTube job on VM-A (ADR-0033), after the quota resets:
+#   1. refresh the approved playlists in catalog/sources/youtube.yaml (also ingests newly approved ones;
+#      the API terms require stored data to be refreshed within 30 days: 1 quota unit per 50 playlists)
+#   2. delete YouTube data not refreshed for 30 days
+#   3. tag untagged resources with skills (LLM on VM-B)
+#   4. discover candidates for skills not yet searched; results go to /srv/xcrs-discovery for review
+#      (`scripts/youtube-candidates-pull.sh` on the Mac). Nothing is ingested before the decider approves it.
+# Steps 1-3 may fail without stopping discovery ("-" prefix); the journal shows each step's result.
 [Unit]
-Description=XCRS daily YouTube playlist discovery
+Description=XCRS daily YouTube refresh, tagging and discovery
 Wants=docker.service
 After=docker.service
 
@@ -11,6 +16,10 @@ Type=oneshot
 WorkingDirectory=/opt/xcrs
 Environment=COMPOSE_FILE=/opt/xcrs/deploy/vm-a/compose.yaml
 EnvironmentFile=/opt/xcrs/deploy/vm-a/.env
+ExecStart=-/usr/bin/docker compose run --rm --no-deps api xcrs resources ingest youtube
+ExecStart=-/usr/bin/docker compose run --rm --no-deps api xcrs resources expire
+ExecStart=-/usr/bin/docker compose run --rm --no-deps api xcrs resources tag
 ExecStart=/usr/bin/docker compose run --rm --no-deps -v /srv/xcrs-discovery:/discovery:Z api \
   xcrs resources youtube-discover --max-searches 85 \
   --candidates /discovery/youtube-candidates.yaml --review /discovery/youtube-candidates.md
+TimeoutStartSec=2h

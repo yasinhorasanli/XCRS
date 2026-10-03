@@ -48,6 +48,56 @@ playlists:
   - PLWKjhJtqVAbnSe1qUNMG7AbPmjIG54u88  # HTML: freeCodeCamp.org
   - PLsyeobzWxl7pe_IiTfNyr55kwJPWbgxB5  # Java: Telusko
 
+  # Approved by the decider (2026-10-03), second batch from discovery on VM-A.
+  - PLoROMvodv4rOaMFbaqxPDoLWjDaRAdP9D  # Natural language processing: Stanford Online
+  - PLC3y8-rFHvwh8shCMHFA5kWxD9PaPwxaY  # Node.js: Codevolution
+  - PLS1QulWo1RIa-sDLWbP01sEnlm_Bxmvqs  # PostgreSQL: ProgrammingKnowledge
+  - PLCC34OHNcOtpcgR9LEYSdi9r7XIbpkpK1  # PyTorch: John Elder
+  - PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d  # React: Net Ninja
+  - PLjiHFwhbHYlHSpAflJwjsKAyMaMhASm0F  # UI/UX basics for engineers: DesignWithArash
+  - PLy4OcwImJzBLJzLYxpxaPUmCWp8j1esvT  # dbt: Kahan Data Solutions
+  - PL5oyXP-xEiGCqYGIHZ-njGaf6pxDikdVv  # Active Directory and identity: Office365Concepts
+  - PLBlnK6fEyqRhoF3cPp0mgOZPuXeu84nAd  # Algorithms and complexity: Neso Academy
+  - PLa7VYi0yPIH0KbnJQcMv5N9iW8HkZHztH  # Apache Kafka: Confluent
+  - PLUaB-1hjhk8HqnmK0gQhfmIdCbxwoAoys  # BI tools (Power BI, Tableau, Looker): Alex The Analyst
+  - PLyuRouwmQCjm3dOz4ea90ZqMRaicX07fo  # Browser developer tools: Steve Griffith
+  - PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb  # C++: The Cherno
+  - PL0Zuz27SZ-6Mx9fd9elt80G1bPcySmWit  # CSS: Dave Gray
+  - PLlOuZAcnp6h5Yknv2X7dzyx9fXSkFcSEx  # Data architecture: nullQueries
+  - PLYpjLpq5ZDGtR5nMKGDCa031hx1jVuHXn  # Domain-driven design: Milan Jovanović
+  - PL-osiE80TeTsak-c-QsVeg0YYG_0TeyXI  # FastAPI: Corey Schafer
+  - PLI9W87-Dqn7j_x6QtR6sUjycJR7nQLBqT  # Front-end architecture: Front-End Engineer
+  - PLahhVEj9XNTd5N_seZDoRXVIn6N1qAp-_  # GitHub Actions: Microsoft Learn
+  - PLqq-6Pq4lTTZSKAFG6aCDVDP86Qx4lNas  # Microservices: Java Brains
+  - PLBlnK6fEyqRgJU3EsOYDTW7m6SUmW6kII  # Network security: Neso Academy
+  - PLC3y8-rFHvwhIEc4I4YsRz5C7GOBnxSJY  # Next.js: Codevolution
+  - PL4cUxeGkcC9haQlqdCQyYmL_27TesCGPC  # Nuxt: Net Ninja
+  - PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1  # Vue.js: Net Ninja
+  - PLcQVY5V2UY4LNmObS0gqNVyNdVfXnHwu8  # scikit-learn: Ryan & Matt Data Science
+  - PLp_RsiLZjwQQ7CxVhnM4G8i5veEClNPfX  # ASP.NET Core: Programentor
+  - PLT98CRl2KxKEUHie1m24-wkyHpEsa4Y70  # Ansible: Learn Linux TV
+  - PL7_h0bRfL52qWoCcS18nXcT1s-5rSa1yp  # Apache Spark: Bryan Cafferky
+  - PLUl4u3cNGP63UUkfL0onkxF6MYgVa04Fn  # Blockchain fundamentals: MIT OpenCourseWare
+  - PLBlnK6fEyqRgLLlzdgiTUKULKJPYc0A4q  # Computer architecture: Neso Academy
+  - PLjrTIwaNiTwn39tg3sR_bPBWGHoznv47D  # DeFi protocols: Finematics
+  - PLowKtXNTBypETld5oX1ZMI-LYoA2LWi8D  # Digital electronics: Ben Eater
+  - PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p  # Django: Corey Schafer
+  - PLEBQazB0HUyTpoJoZecRK6PpDG31Y7RPB  # Embedded Linux: DigiKey
+  - PLgwJf8NK-2e6ZEGXc-LrrgDom6jzu7e1L  # Embedded communication protocols: Engineering Funda
+  - PLZHnYvH1qtOZT788gxa0i-wC2IZ47jTe-  # GPU infrastructure: NVIDIA
+  - PLy7NrYWoggjw_LIiDK1LXdNN82uYuuuiC  # Jenkins: TechWorld with Nana
+  - PLQkwcJG4YTCSpJ2NLhDTHhi6XBNfk9WiC  # Jetpack Compose: Philipp Lackner
+  - PLsyeobzWxl7rooJFZhc3qPLwVROovGCfh  # Kotlin: Telusko
+  - PLQkwcJG4YTCQcFEPuYGuv54nYai_lwil_  # Kotlin coroutines and Flow: Philipp Lackner
+  - PLeo1K3hjS3uu0N_0W6giDXzZIcB07Ng_F  # LLM frameworks: codebasics
+  - PLZPZq0r_RZOMskz6MdsMOgxzheIyjo-BZ  # MySQL: Bro Code
+  - PLkDaE6sCZn6Hn0vK8co82zjQtt3T2Nkqc  # Optimization for machine learning: DeepLearningAI
+  - PLlVtbbG169nFq_hR7FcMYg32xsSAObuq8  # PowerShell: John Savill's Technical Training
+  - PLS1QulWo1RIYZZxQdap7Sd0ARKFI-XVsd  # Redis: ProgrammingKnowledge
+  - PLUDwpEzHYYLtQzEEEldbjPAR-gnStv4sR  # Selenium: SDET- QA
+  - PLsaDw3p1XpJiGHPnA8gZH6gO2gQYz3JH1  # Shader programming: Daniel Ilett
+  - PLsyeobzWxl7qbKoSgR5ub6jolI8-ocxCF  # Spring Boot: Telusko
+
 # Channels whose playlists rank first in `xcrs resources youtube-discover` (exact channel titles).
 trusted_channels:
   - freeCodeCamp.org
@@ -87,3 +137,16 @@ trusted_channels:
 # Channels never proposed (e.g. English titles over another spoken language; English only for now, ADR-0026).
 blocked_channels:
   - Elzero Web School
+  # teach mostly in Hindi under English titles (screening of 2026-10-03)
+  - WsCube Tech
+  - WsCube Tech 2.0
+  - Gate Smashers
+  - 5 Minutes Engineering
+  - KnowledgeGATE by Sanchit Sir
+  - Education 4u
+  - CampusX
+  - Aj_Ai
+  - Code Step By Step
+  - Saumya Singh
+  - Abhishek Sharma
+  - College Wallah

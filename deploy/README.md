@@ -53,7 +53,7 @@ How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036, ADR-0
 4. Backups: `sudo ssh-keygen -t ed25519 -f /root/.ssh/id_ed25519 -N ""`, give its public key to VM-B (above), then `sudo cp deploy/systemd/xcrs-backup.* /etc/systemd/system/ && sudo systemctl enable --now xcrs-backup.timer`.
 5. Publish: `sudo tailscale funnel --bg 8080`. The first time, Tailscale prints a link to allow Funnel (and HTTPS certificates) for the tailnet; open it while signed in as the tailnet admin. Check `tailscale funnel status`, then open `https://xcrs-a.<tailnet>.ts.net`.
 6. **Restrict the YouTube API key** to the VMs' egress address: Google Cloud console → *Credentials* → the key → *Application restrictions* → *IP addresses* (the shared NAT IPv4 and the VMs' IPv6 addresses; see the inventory). Do this once discovery runs on VM-A, or the Mac's calls stop working.
-7. **YouTube discovery** (daily, after the quota resets): `sudo install -d -o 10001 -g 10001 /srv/xcrs-discovery`, copy `catalog/sources/youtube-candidates.yaml` there (it carries the skills already searched), then `sudo cp deploy/systemd/xcrs-youtube-discover.* /etc/systemd/system/ && sudo systemctl enable --now xcrs-youtube-discover.timer`. On the Mac, `scripts/youtube-candidates-pull.sh` copies the results into the repo for review.
+7. **YouTube job** (daily at 11:30, after the quota resets: refresh and ingest the approved playlists, expire data older than 30 days, tag new resources, discover candidates): `sudo install -d -o 10001 -g 10001 /srv/xcrs-discovery`, copy `catalog/sources/youtube-candidates.yaml` there (it carries the skills already searched), then `sudo cp deploy/systemd/xcrs-youtube-discover.* /etc/systemd/system/ && sudo systemctl enable --now xcrs-youtube-discover.timer`. On the Mac, `scripts/youtube-candidates-pull.sh` copies the results into the repo for review.
 8. **Measure on the VMs:** the explainer benchmark against VM-B (ADR-0020), and the matching latency (ADR-0030).
 
 ## Everyday operations
@@ -65,7 +65,7 @@ How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036, ADR-0
 | Admin command | `docker compose -f deploy/vm-a/compose.yaml run --rm api xcrs <command>` (e.g. `resources ingest freecodecamp`, `resources tag`, `resources check-links`) |
 | Backup now | `COMPOSE_FILE=deploy/vm-a/compose.yaml scripts/db-backup.sh && scripts/db-verify-backup.sh` |
 | Funnel on / off / status | `sudo tailscale funnel --bg 8080` / `sudo tailscale funnel --https=443 off` / `tailscale funnel status` |
-| YouTube discovery: run now / results | `sudo systemctl start xcrs-youtube-discover` / `scripts/youtube-candidates-pull.sh` (on the Mac) |
+| YouTube job: run now / results | `sudo systemctl start xcrs-youtube-discover` / `scripts/youtube-candidates-pull.sh` (on the Mac) |
 | VM facts (read-only) | `ssh xcrs-a 'bash -s' < scripts/vm-facts.sh` |
 | Restore into a new database | `COMPOSE_FILE=deploy/vm-a/compose.yaml scripts/db-restore.sh backups/<dump> xcrs_restored` |
 

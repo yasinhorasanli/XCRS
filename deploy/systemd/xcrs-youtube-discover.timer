@@ -1,6 +1,6 @@
 # The YouTube quota resets at midnight Pacific time: 10:00 in Turkey in summer, 11:00 in winter.
 [Unit]
-Description=Run XCRS YouTube discovery daily after the quota resets
+Description=Run the XCRS YouTube job daily after the quota resets
 
 [Timer]
 OnCalendar=*-*-* 11:30:00

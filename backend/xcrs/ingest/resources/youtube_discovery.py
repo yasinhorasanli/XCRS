@@ -46,7 +46,10 @@ NON_LATIN = re.compile(r"[^\x00-\u024f\u2000-\u206f\u2100-\u214f\U0001f000-\U000
 
 OTHER_LANGUAGES = re.compile(
     r"\b(hindi|urdu|bangla|bengali|tamil|telugu|marathi|arabic|español|espanol|português|portugues|türkçe|turkce"
-    r"|indonesia|bahasa|tagalog|vietnamese|russian|deutsch|français|francais|italiano)\b",
+    r"|indonesia|bahasa|tagalog|vietnamese|russian|deutsch|français|francais|italiano"
+    # common words of titles in other Latin-script languages (seen in the 2026-10-03 batch)
+    r"|için|yeni|başlayanlar|eğitim|belajar|pemula|curso|completo|aprende|aula|programação|programación"
+    r"|tutoriel|débutant|anfänger|lernen)\b",
     re.IGNORECASE,
 )
 
