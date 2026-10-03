@@ -3,7 +3,7 @@
 - **Status:** Accepted
 - **Date:** 2026-10-02
 - **Decider:** Muhammed Yasin Horasanli
-- **Note (2026-10-03):** dev tools (the `/dev/profiles` test page and `/api/v2/dev`) are reachable on localhost and the tailnet only: Funnel marks public requests with `Tailscale-Funnel-Request`, and Caddy answers 404 to those; the API also needs `XCRS_DEV_TOOLS=true`.
+- **Note (2026-10-03):** dev tools (the `/dev/profiles` test page and `/api/v2/dev`) are reachable on localhost and the tailnet only: Caddy serves `/dev` only to requests that carry the tailnet user (`Tailscale-User-Login`; public Funnel requests carry `Tailscale-Funnel-Request: ?1` instead) and answers 404 otherwise; the API also needs `XCRS_DEV_TOOLS=true`. A first version blocked on the Funnel header but never loaded: Caddy's single-file mount kept the pre-`git pull` file until a restart, which `deploy.sh` now does.
 
 ## Context
 

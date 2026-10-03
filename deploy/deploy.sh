@@ -49,6 +49,8 @@ run xcrs catalog embed
 
 step "Restart"
 docker compose up -d
+# Caddy mounts its Caddyfile as a single file: after `git pull` replaced it, only a restart sees the new one.
+docker compose restart caddy
 sed -i.bak "s/^XCRS_IMAGE_TAG=.*/XCRS_IMAGE_TAG=$TAG/" "$ENV_FILE" && rm -f "$ENV_FILE.bak"
 
 step "Smoke test through Caddy"
