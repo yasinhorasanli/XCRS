@@ -221,6 +221,7 @@ def test_youtube_ingest_tags_the_approved_skill_and_the_llm_adds_more(session):
         WHERE r.external_id = 'PLx' ORDER BY 1""")
     ).all()
     assert [tuple(t) for t in tags] == [("llm-frameworks", "reviewed", 2), ("rag", "llm", None)]
+    assert tagging.untagged(session, source="youtube") == []  # processed once, not again every day
 
 
 def test_youtube_data_older_than_30_days_is_deleted(session):
