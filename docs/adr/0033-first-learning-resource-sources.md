@@ -2,6 +2,7 @@
 
 - **Status:** Accepted. The decider chose "curated YAML + adapters" (2026-10-01). The specific sources and rules were chosen by Claude overnight under the decider's instruction to proceed alone, and are to be reviewed.
 - **Reviewed (2026-10-02):** the decider confirmed the delegated choices.
+- **Note (2026-10-03, tags):** each approved playlist records the skill it was approved for (`catalog/sources/youtube.yaml`: `{id, skill}`); ingestion always tags that skill (`tagged_by = reviewed`, working level), and the LLM may add more. Fixes the LangChain playlist that lacked "LLM frameworks".
 - **Note (2026-10-03):** a daily systemd job on VM-A refreshes the approved playlists (the 30-day rule), expires stale data, tags new resources and runs discovery; the decider approved a second batch of 48 playlists (92 in all). Discovery's language filter now also drops common Turkish, Indonesian, Portuguese, Spanish, French and German title words, and 12 channels that teach in Hindi under English titles are blocked.
 - **Date:** 2026-10-02
 - **Decider:** Muhammed Yasin Horasanli

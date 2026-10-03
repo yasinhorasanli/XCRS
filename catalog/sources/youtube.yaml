@@ -1,102 +1,103 @@
 # YouTube playlists to ingest (ADR-0033): playlist ids (the `list=` part of a playlist URL), reviewed like the
-# rest of the catalog. Ingested with `uv run xcrs resources ingest youtube` once XCRS_YOUTUBE_API_KEY is set;
+# rest of the catalog. `skill` is the catalog skill the decider approved the playlist for: ingestion always tags
+# it (tagged_by "reviewed"); the LLM may add more skills. Ingested with `uv run xcrs resources ingest youtube` once XCRS_YOUTUBE_API_KEY is set;
 # the data must be refreshed within 30 days (`xcrs resources expire` deletes what wasn't).
 # Approved by the decider (2026-10-02) from the discovery shortlist.
 playlists:
-  - PL-osiE80TeTuRUfjRe54Eea17-YfnOOAx  # Git: Corey Schafer
-  - PLBlnK6fEyqRgMCUAG0XRw78UA8qnv6jEx  # Computer networking: Neso Academy
-  - PLBlnK6fEyqRiVhbXDGLXDk_OQAeuVcp2O  # Operating systems: Neso Academy
-  - PLWKjhJtqVAbnqBxcdjVGgT3uVR10bzTEB  # Python: freeCodeCamp.org
-  - PLNcg_FV9n7qZY_2eAtUzEUulNjTJREhQe  # SQL: Data with Baraa
-  - PLS1QulWo1RIb9WVQGJ_vh-RQusbZgO_As  # Linux and the command line: Bash Terminal
-  - PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4  # Concurrency: Jakob Jenkov
-  - PLOspHqNVtKAC-_ZAGresP-i0okHe5FjcJ  # Cloud fundamentals: IBM Technology
-  - PLdo5W4Nhv31bbKJzrsKfMpo_grxuLl8LU  # Data structures: Jenny's Lectures CS IT
-  - PLdpzxOOAlwvJUIfwmmVDoPYqXXUNbdBmb  # Observability: Abhishek.Veeramalla
-  - PLsyeobzWxl7ps4Z1C4VMtvZEx5-PgyoYI  # REST API design: Restful Web Service
-  - PLUDwpEzHYYLseflPNg0bUKfLmAbO2JnE9  # Testing fundamentals: SDET- QA
-  - PLy7NrYWoggjzfAHlUusx2wuDwfCrmJYcs  # Docker and containers: TechWorld with Nana
-  - PLeKd45zvjcDFUEv_ohr_HdUFe97RItdiB  # Distributed systems: Martin Kleppmann
-  - PLBlnK6fEyqRjEKl1Yg00jHTbfOPqIfJrs  # Relational databases: Chapter 2
-  - PLahhVEj9XNTc3cKjd28NUDFPrV4QcfxH5  # Security fundamentals: Microsoft Learn
-  - PL1y1iaEtjSYiiSGVlL1cHsXN_kvJOOhu-  # Web security: Feross
-  - PLdpzxOOAlwvLNOxX0RfndiYSt1Le9azze  # AWS: Abhishek.Veeramalla
-  - PLIivdWyY5sqKh1gDR0WpP9iIOY00IE0xL  # Google Cloud: Google Cloud Tech
-  - PLahhVEj9XNTd6H2vpsvm_kBSMsMw9EMUL  # Microsoft Azure: Microsoft Learn
-  - PLTjRvDozrdlxEIuOBZkMAK5uiqp8rHUax  # JavaScript: Programming with Mosh
-  - PLy7NrYWoggjziYQIDorlXjTvvwweTYoNC  # Kubernetes: TechWorld with Nana
-  - PLS1QulWo1RIYmaxcEqw5JhK3b-6rgdWO_  # Shell scripting: ProgrammingKnowledge
-  - PLOspHqNVtKAA_5N3pI49wkH4WsTkeZ_iQ  # Cloud networking: IBM Technology
-  - PLrhzvIcii6GNjpARdnO4ueTUAVR9eMBpc  # Design patterns: Christopher Okhravi
-  - PLy7NrYWoggjzmPAyfDQgthSgx6VEVlS0-  # Infrastructure as code: TechWorld with Nana
-  - PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab  # Linear algebra: 3Blue1Brown
-  - PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF  # Machine learning fundamentals: StatQuest with Josh Starmer
-  - PLy4OcwImJzBLWhUqduwLs30YHiDpX4Xp7  # Data modeling for analytics: Kahan Data Solutions
-  - PL4cUxeGkcC9gC88BEo9czgyS72A3doDeM  # Go: Net Ninja
-  - PLahhVEj9XNTf6lWUbZLBNULQ7uVqM5Sad  # Identity and access management: Microsoft Learn
-  - PL4cUxeGkcC9gUgr39Q_yD6v-bSyMwKPUI  # TypeScript: Net Ninja
-  - PLlOuZAcnp6h4aJROJUb45z_y3hxo-MAnK  # Data warehousing: nullQueries
-  - PLyicRj904Z9_50dH2eD5prLZ8b9A-fdgt  # Internal developer platforms: DevOps & AI Toolkit
-  - PL-osiE80TeTsWmV9i9c58mdDCSskIFdDS  # pandas: Corey Schafer
-  - PL79i7SgJCJ9hf7JgG3S-3lOpsk2QCpWkD  # Apache Airflow: Data with Marc
-  - PLA1qgQLL41SRsHMtsb4up5fTytDeHV_yJ  # Applied cryptography: Cryptography 101
-  - PLPV2KyIb3jR4CtEelGPsmPzlvP7ISPYzR  # C#: Brackeys
-  - PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr  # Calculus: 3Blue1Brown
-  - PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16  # Computer vision: Stanford Online
-  - PLUl4u3cNGP60YyhMjYmXuVmX562QcClSp  # Deep learning: MIT OpenCourseWare
-  - PLIUOU7oqGTLhlWpTz4NnuT3FekouIVlqc  # Embeddings and vector search: James Briggs
-  - PLWKjhJtqVAbnSe1qUNMG7AbPmjIG54u88  # HTML: freeCodeCamp.org
-  - PLsyeobzWxl7pe_IiTfNyr55kwJPWbgxB5  # Java: Telusko
+  - {id: PL-osiE80TeTuRUfjRe54Eea17-YfnOOAx, skill: git}  # Git: Corey Schafer
+  - {id: PLBlnK6fEyqRgMCUAG0XRw78UA8qnv6jEx, skill: computer-networking}  # Computer networking: Neso Academy
+  - {id: PLBlnK6fEyqRiVhbXDGLXDk_OQAeuVcp2O, skill: operating-systems}  # Operating systems: Neso Academy
+  - {id: PLWKjhJtqVAbnqBxcdjVGgT3uVR10bzTEB, skill: python}  # Python: freeCodeCamp.org
+  - {id: PLNcg_FV9n7qZY_2eAtUzEUulNjTJREhQe, skill: sql}  # SQL: Data with Baraa
+  - {id: PLS1QulWo1RIb9WVQGJ_vh-RQusbZgO_As, skill: linux}  # Linux and the command line: Bash Terminal
+  - {id: PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4, skill: concurrency}  # Concurrency: Jakob Jenkov
+  - {id: PLOspHqNVtKAC-_ZAGresP-i0okHe5FjcJ, skill: cloud-fundamentals}  # Cloud fundamentals: IBM Technology
+  - {id: PLdo5W4Nhv31bbKJzrsKfMpo_grxuLl8LU, skill: data-structures}  # Data structures: Jenny's Lectures CS IT
+  - {id: PLdpzxOOAlwvJUIfwmmVDoPYqXXUNbdBmb, skill: observability}  # Observability: Abhishek.Veeramalla
+  - {id: PLsyeobzWxl7ps4Z1C4VMtvZEx5-PgyoYI, skill: rest-api-design}  # REST API design: Restful Web Service
+  - {id: PLUDwpEzHYYLseflPNg0bUKfLmAbO2JnE9, skill: testing-fundamentals}  # Testing fundamentals: SDET- QA
+  - {id: PLy7NrYWoggjzfAHlUusx2wuDwfCrmJYcs, skill: docker}  # Docker and containers: TechWorld with Nana
+  - {id: PLeKd45zvjcDFUEv_ohr_HdUFe97RItdiB, skill: distributed-systems}  # Distributed systems: Martin Kleppmann
+  - {id: PLBlnK6fEyqRjEKl1Yg00jHTbfOPqIfJrs, skill: relational-databases}  # Relational databases: Chapter 2
+  - {id: PLahhVEj9XNTc3cKjd28NUDFPrV4QcfxH5, skill: security-fundamentals}  # Security fundamentals: Microsoft Learn
+  - {id: PL1y1iaEtjSYiiSGVlL1cHsXN_kvJOOhu-, skill: web-security}  # Web security: Feross
+  - {id: PLdpzxOOAlwvLNOxX0RfndiYSt1Le9azze, skill: aws}  # AWS: Abhishek.Veeramalla
+  - {id: PLIivdWyY5sqKh1gDR0WpP9iIOY00IE0xL, skill: gcp}  # Google Cloud: Google Cloud Tech
+  - {id: PLahhVEj9XNTd6H2vpsvm_kBSMsMw9EMUL, skill: azure}  # Microsoft Azure: Microsoft Learn
+  - {id: PLTjRvDozrdlxEIuOBZkMAK5uiqp8rHUax, skill: javascript}  # JavaScript: Programming with Mosh
+  - {id: PLy7NrYWoggjziYQIDorlXjTvvwweTYoNC, skill: kubernetes}  # Kubernetes: TechWorld with Nana
+  - {id: PLS1QulWo1RIYmaxcEqw5JhK3b-6rgdWO_, skill: shell-scripting}  # Shell scripting: ProgrammingKnowledge
+  - {id: PLOspHqNVtKAA_5N3pI49wkH4WsTkeZ_iQ, skill: cloud-networking}  # Cloud networking: IBM Technology
+  - {id: PLrhzvIcii6GNjpARdnO4ueTUAVR9eMBpc, skill: design-patterns}  # Design patterns: Christopher Okhravi
+  - {id: PLy7NrYWoggjzmPAyfDQgthSgx6VEVlS0-, skill: infrastructure-as-code}  # Infrastructure as code: TechWorld with Nana
+  - {id: PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab, skill: linear-algebra}  # Linear algebra: 3Blue1Brown
+  - {id: PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF, skill: machine-learning-fundamentals}  # Machine learning fundamentals: StatQuest with Josh Starmer
+  - {id: PLy4OcwImJzBLWhUqduwLs30YHiDpX4Xp7, skill: data-modeling}  # Data modeling for analytics: Kahan Data Solutions
+  - {id: PL4cUxeGkcC9gC88BEo9czgyS72A3doDeM, skill: go}  # Go: Net Ninja
+  - {id: PLahhVEj9XNTf6lWUbZLBNULQ7uVqM5Sad, skill: identity-access-management}  # Identity and access management: Microsoft Learn
+  - {id: PL4cUxeGkcC9gUgr39Q_yD6v-bSyMwKPUI, skill: typescript}  # TypeScript: Net Ninja
+  - {id: PLlOuZAcnp6h4aJROJUb45z_y3hxo-MAnK, skill: data-warehousing}  # Data warehousing: nullQueries
+  - {id: PLyicRj904Z9_50dH2eD5prLZ8b9A-fdgt, skill: internal-developer-platforms}  # Internal developer platforms: DevOps & AI Toolkit
+  - {id: PL-osiE80TeTsWmV9i9c58mdDCSskIFdDS, skill: pandas}  # pandas: Corey Schafer
+  - {id: PL79i7SgJCJ9hf7JgG3S-3lOpsk2QCpWkD, skill: airflow}  # Apache Airflow: Data with Marc
+  - {id: PLA1qgQLL41SRsHMtsb4up5fTytDeHV_yJ, skill: cryptography-basics}  # Applied cryptography: Cryptography 101
+  - {id: PLPV2KyIb3jR4CtEelGPsmPzlvP7ISPYzR, skill: csharp}  # C#: Brackeys
+  - {id: PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr, skill: calculus}  # Calculus: 3Blue1Brown
+  - {id: PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16, skill: computer-vision}  # Computer vision: Stanford Online
+  - {id: PLUl4u3cNGP60YyhMjYmXuVmX562QcClSp, skill: deep-learning}  # Deep learning: MIT OpenCourseWare
+  - {id: PLIUOU7oqGTLhlWpTz4NnuT3FekouIVlqc, skill: embeddings-vector-search}  # Embeddings and vector search: James Briggs
+  - {id: PLWKjhJtqVAbnSe1qUNMG7AbPmjIG54u88, skill: html}  # HTML: freeCodeCamp.org
+  - {id: PLsyeobzWxl7pe_IiTfNyr55kwJPWbgxB5, skill: java}  # Java: Telusko
 
   # Approved by the decider (2026-10-03), second batch from discovery on VM-A.
-  - PLoROMvodv4rOaMFbaqxPDoLWjDaRAdP9D  # Natural language processing: Stanford Online
-  - PLC3y8-rFHvwh8shCMHFA5kWxD9PaPwxaY  # Node.js: Codevolution
-  - PLS1QulWo1RIa-sDLWbP01sEnlm_Bxmvqs  # PostgreSQL: ProgrammingKnowledge
-  - PLCC34OHNcOtpcgR9LEYSdi9r7XIbpkpK1  # PyTorch: John Elder
-  - PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d  # React: Net Ninja
-  - PLjiHFwhbHYlHSpAflJwjsKAyMaMhASm0F  # UI/UX basics for engineers: DesignWithArash
-  - PLy4OcwImJzBLJzLYxpxaPUmCWp8j1esvT  # dbt: Kahan Data Solutions
-  - PL5oyXP-xEiGCqYGIHZ-njGaf6pxDikdVv  # Active Directory and identity: Office365Concepts
-  - PLBlnK6fEyqRhoF3cPp0mgOZPuXeu84nAd  # Algorithms and complexity: Neso Academy
-  - PLa7VYi0yPIH0KbnJQcMv5N9iW8HkZHztH  # Apache Kafka: Confluent
-  - PLUaB-1hjhk8HqnmK0gQhfmIdCbxwoAoys  # BI tools (Power BI, Tableau, Looker): Alex The Analyst
-  - PLyuRouwmQCjm3dOz4ea90ZqMRaicX07fo  # Browser developer tools: Steve Griffith
-  - PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb  # C++: The Cherno
-  - PL0Zuz27SZ-6Mx9fd9elt80G1bPcySmWit  # CSS: Dave Gray
-  - PLlOuZAcnp6h5Yknv2X7dzyx9fXSkFcSEx  # Data architecture: nullQueries
-  - PLYpjLpq5ZDGtR5nMKGDCa031hx1jVuHXn  # Domain-driven design: Milan Jovanović
-  - PL-osiE80TeTsak-c-QsVeg0YYG_0TeyXI  # FastAPI: Corey Schafer
-  - PLI9W87-Dqn7j_x6QtR6sUjycJR7nQLBqT  # Front-end architecture: Front-End Engineer
-  - PLahhVEj9XNTd5N_seZDoRXVIn6N1qAp-_  # GitHub Actions: Microsoft Learn
-  - PLqq-6Pq4lTTZSKAFG6aCDVDP86Qx4lNas  # Microservices: Java Brains
-  - PLBlnK6fEyqRgJU3EsOYDTW7m6SUmW6kII  # Network security: Neso Academy
-  - PLC3y8-rFHvwhIEc4I4YsRz5C7GOBnxSJY  # Next.js: Codevolution
-  - PL4cUxeGkcC9haQlqdCQyYmL_27TesCGPC  # Nuxt: Net Ninja
-  - PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1  # Vue.js: Net Ninja
-  - PLcQVY5V2UY4LNmObS0gqNVyNdVfXnHwu8  # scikit-learn: Ryan & Matt Data Science
-  - PLp_RsiLZjwQQ7CxVhnM4G8i5veEClNPfX  # ASP.NET Core: Programentor
-  - PLT98CRl2KxKEUHie1m24-wkyHpEsa4Y70  # Ansible: Learn Linux TV
-  - PL7_h0bRfL52qWoCcS18nXcT1s-5rSa1yp  # Apache Spark: Bryan Cafferky
-  - PLUl4u3cNGP63UUkfL0onkxF6MYgVa04Fn  # Blockchain fundamentals: MIT OpenCourseWare
-  - PLBlnK6fEyqRgLLlzdgiTUKULKJPYc0A4q  # Computer architecture: Neso Academy
-  - PLjrTIwaNiTwn39tg3sR_bPBWGHoznv47D  # DeFi protocols: Finematics
-  - PLowKtXNTBypETld5oX1ZMI-LYoA2LWi8D  # Digital electronics: Ben Eater
-  - PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p  # Django: Corey Schafer
-  - PLEBQazB0HUyTpoJoZecRK6PpDG31Y7RPB  # Embedded Linux: DigiKey
-  - PLgwJf8NK-2e6ZEGXc-LrrgDom6jzu7e1L  # Embedded communication protocols: Engineering Funda
-  - PLZHnYvH1qtOZT788gxa0i-wC2IZ47jTe-  # GPU infrastructure: NVIDIA
-  - PLy7NrYWoggjw_LIiDK1LXdNN82uYuuuiC  # Jenkins: TechWorld with Nana
-  - PLQkwcJG4YTCSpJ2NLhDTHhi6XBNfk9WiC  # Jetpack Compose: Philipp Lackner
-  - PLsyeobzWxl7rooJFZhc3qPLwVROovGCfh  # Kotlin: Telusko
-  - PLQkwcJG4YTCQcFEPuYGuv54nYai_lwil_  # Kotlin coroutines and Flow: Philipp Lackner
-  - PLeo1K3hjS3uu0N_0W6giDXzZIcB07Ng_F  # LLM frameworks: codebasics
-  - PLZPZq0r_RZOMskz6MdsMOgxzheIyjo-BZ  # MySQL: Bro Code
-  - PLkDaE6sCZn6Hn0vK8co82zjQtt3T2Nkqc  # Optimization for machine learning: DeepLearningAI
-  - PLlVtbbG169nFq_hR7FcMYg32xsSAObuq8  # PowerShell: John Savill's Technical Training
-  - PLS1QulWo1RIYZZxQdap7Sd0ARKFI-XVsd  # Redis: ProgrammingKnowledge
-  - PLUDwpEzHYYLtQzEEEldbjPAR-gnStv4sR  # Selenium: SDET- QA
-  - PLsaDw3p1XpJiGHPnA8gZH6gO2gQYz3JH1  # Shader programming: Daniel Ilett
-  - PLsyeobzWxl7qbKoSgR5ub6jolI8-ocxCF  # Spring Boot: Telusko
+  - {id: PLoROMvodv4rOaMFbaqxPDoLWjDaRAdP9D, skill: nlp}  # Natural language processing: Stanford Online
+  - {id: PLC3y8-rFHvwh8shCMHFA5kWxD9PaPwxaY, skill: nodejs}  # Node.js: Codevolution
+  - {id: PLS1QulWo1RIa-sDLWbP01sEnlm_Bxmvqs, skill: postgresql}  # PostgreSQL: ProgrammingKnowledge
+  - {id: PLCC34OHNcOtpcgR9LEYSdi9r7XIbpkpK1, skill: pytorch}  # PyTorch: John Elder
+  - {id: PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d, skill: react}  # React: Net Ninja
+  - {id: PLjiHFwhbHYlHSpAflJwjsKAyMaMhASm0F, skill: ui-ux-basics}  # UI/UX basics for engineers: DesignWithArash
+  - {id: PLy4OcwImJzBLJzLYxpxaPUmCWp8j1esvT, skill: dbt}  # dbt: Kahan Data Solutions
+  - {id: PL5oyXP-xEiGCqYGIHZ-njGaf6pxDikdVv, skill: active-directory}  # Active Directory and identity: Office365Concepts
+  - {id: PLBlnK6fEyqRhoF3cPp0mgOZPuXeu84nAd, skill: algorithms}  # Algorithms and complexity: Neso Academy
+  - {id: PLa7VYi0yPIH0KbnJQcMv5N9iW8HkZHztH, skill: kafka}  # Apache Kafka: Confluent
+  - {id: PLUaB-1hjhk8HqnmK0gQhfmIdCbxwoAoys, skill: bi-tools}  # BI tools (Power BI, Tableau, Looker): Alex The Analyst
+  - {id: PLyuRouwmQCjm3dOz4ea90ZqMRaicX07fo, skill: browser-devtools}  # Browser developer tools: Steve Griffith
+  - {id: PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb, skill: cpp}  # C++: The Cherno
+  - {id: PL0Zuz27SZ-6Mx9fd9elt80G1bPcySmWit, skill: css}  # CSS: Dave Gray
+  - {id: PLlOuZAcnp6h5Yknv2X7dzyx9fXSkFcSEx, skill: data-architecture}  # Data architecture: nullQueries
+  - {id: PLYpjLpq5ZDGtR5nMKGDCa031hx1jVuHXn, skill: domain-driven-design}  # Domain-driven design: Milan Jovanović
+  - {id: PL-osiE80TeTsak-c-QsVeg0YYG_0TeyXI, skill: fastapi}  # FastAPI: Corey Schafer
+  - {id: PLI9W87-Dqn7j_x6QtR6sUjycJR7nQLBqT, skill: frontend-architecture}  # Front-end architecture: Front-End Engineer
+  - {id: PLahhVEj9XNTd5N_seZDoRXVIn6N1qAp-_, skill: github-actions}  # GitHub Actions: Microsoft Learn
+  - {id: PLqq-6Pq4lTTZSKAFG6aCDVDP86Qx4lNas, skill: microservices}  # Microservices: Java Brains
+  - {id: PLBlnK6fEyqRgJU3EsOYDTW7m6SUmW6kII, skill: network-security}  # Network security: Neso Academy
+  - {id: PLC3y8-rFHvwhIEc4I4YsRz5C7GOBnxSJY, skill: nextjs}  # Next.js: Codevolution
+  - {id: PL4cUxeGkcC9haQlqdCQyYmL_27TesCGPC, skill: nuxt}  # Nuxt: Net Ninja
+  - {id: PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1, skill: vue}  # Vue.js: Net Ninja
+  - {id: PLcQVY5V2UY4LNmObS0gqNVyNdVfXnHwu8, skill: scikit-learn}  # scikit-learn: Ryan & Matt Data Science
+  - {id: PLp_RsiLZjwQQ7CxVhnM4G8i5veEClNPfX, skill: aspnet-core}  # ASP.NET Core: Programentor
+  - {id: PLT98CRl2KxKEUHie1m24-wkyHpEsa4Y70, skill: ansible}  # Ansible: Learn Linux TV
+  - {id: PL7_h0bRfL52qWoCcS18nXcT1s-5rSa1yp, skill: spark}  # Apache Spark: Bryan Cafferky
+  - {id: PLUl4u3cNGP63UUkfL0onkxF6MYgVa04Fn, skill: blockchain-fundamentals}  # Blockchain fundamentals: MIT OpenCourseWare
+  - {id: PLBlnK6fEyqRgLLlzdgiTUKULKJPYc0A4q, skill: computer-architecture}  # Computer architecture: Neso Academy
+  - {id: PLjrTIwaNiTwn39tg3sR_bPBWGHoznv47D, skill: defi-protocols}  # DeFi protocols: Finematics
+  - {id: PLowKtXNTBypETld5oX1ZMI-LYoA2LWi8D, skill: digital-electronics}  # Digital electronics: Ben Eater
+  - {id: PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p, skill: django}  # Django: Corey Schafer
+  - {id: PLEBQazB0HUyTpoJoZecRK6PpDG31Y7RPB, skill: embedded-linux}  # Embedded Linux: DigiKey
+  - {id: PLgwJf8NK-2e6ZEGXc-LrrgDom6jzu7e1L, skill: communication-protocols}  # Embedded communication protocols: Engineering Funda
+  - {id: PLZHnYvH1qtOZT788gxa0i-wC2IZ47jTe-, skill: gpu-infrastructure}  # GPU infrastructure: NVIDIA
+  - {id: PLy7NrYWoggjw_LIiDK1LXdNN82uYuuuiC, skill: jenkins}  # Jenkins: TechWorld with Nana
+  - {id: PLQkwcJG4YTCSpJ2NLhDTHhi6XBNfk9WiC, skill: jetpack-compose}  # Jetpack Compose: Philipp Lackner
+  - {id: PLsyeobzWxl7rooJFZhc3qPLwVROovGCfh, skill: kotlin}  # Kotlin: Telusko
+  - {id: PLQkwcJG4YTCQcFEPuYGuv54nYai_lwil_, skill: kotlin-coroutines}  # Kotlin coroutines and Flow: Philipp Lackner
+  - {id: PLeo1K3hjS3uu0N_0W6giDXzZIcB07Ng_F, skill: llm-frameworks}  # LLM frameworks: codebasics
+  - {id: PLZPZq0r_RZOMskz6MdsMOgxzheIyjo-BZ, skill: mysql}  # MySQL: Bro Code
+  - {id: PLkDaE6sCZn6Hn0vK8co82zjQtt3T2Nkqc, skill: ml-optimization}  # Optimization for machine learning: DeepLearningAI
+  - {id: PLlVtbbG169nFq_hR7FcMYg32xsSAObuq8, skill: powershell}  # PowerShell: John Savill's Technical Training
+  - {id: PLS1QulWo1RIYZZxQdap7Sd0ARKFI-XVsd, skill: redis}  # Redis: ProgrammingKnowledge
+  - {id: PLUDwpEzHYYLtQzEEEldbjPAR-gnStv4sR, skill: selenium}  # Selenium: SDET- QA
+  - {id: PLsaDw3p1XpJiGHPnA8gZH6gO2gQYz3JH1, skill: shaders}  # Shader programming: Daniel Ilett
+  - {id: PLsyeobzWxl7qbKoSgR5ub6jolI8-ocxCF, skill: spring-boot}  # Spring Boot: Telusko
 
 # Channels whose playlists rank first in `xcrs resources youtube-discover` (exact channel titles).
 trusted_channels:

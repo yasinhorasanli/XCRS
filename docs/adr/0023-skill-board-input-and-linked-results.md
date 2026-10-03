@@ -3,6 +3,7 @@
 - **Status:** Accepted. Delegated: made by Claude on 2026-09-30 while the decider asked for the work to be finished without questions; on 2026-10-01 the decider accepted it without a separate review.
 - **Date:** 2026-09-30
 - **Decider:** Muhammed Yasin Horasanli
+- **Note (2026-10-03, engine v2 board):** a skill has one feeling, so adding it to another box moves it; the move is now announced with Undo instead of happening silently, and the search no longer offers skills already on the board.
 
 ## Context
 

@@ -192,6 +192,37 @@ def test_tagging_keeps_llm_picks_the_embedding_confirms(session):
     assert [tuple(t) for t in tags] == [("docker", "llm")]
 
 
+def test_approved_playlists_name_catalog_skills():
+    skills = set(model.load_catalog().skills)
+    approved = youtube.configured_playlists()
+    assert approved and all(skill in skills for _, skill in approved)
+    assert len({pid for pid, _ in approved}) == len(approved)
+
+
+def test_youtube_ingest_tags_the_approved_skill_and_the_llm_adds_more(session):
+    def handler(request):
+        assert "key" not in request.url.params
+        item = {"id": "PLx", "snippet": {"title": "LangChain Tutorials", "channelTitle": "C"}, "contentDetails": {}}
+        return httpx.Response(200, json={"items": [item]})
+
+    with httpx.Client(transport=httpx.MockTransport(handler)) as client:
+        youtube.ingest(session, client, "key", [("PLx", "llm-frameworks")])
+
+    class Picker:
+        prompt_version, model = "resource-1", "fake"
+
+        def pick(self, text):
+            return ["llm-frameworks", "rag"]  # the approved skill again, and one more
+
+    tagging.tag_untagged(session, Picker(), lambda t: {"llm-frameworks": 0.7, "rag": 0.6}, source="youtube")
+    tags = session.execute(
+        text("""SELECT s.slug, rs.tagged_by, rs.level FROM catalog.resource_skills rs
+        JOIN catalog.skills s ON s.id = rs.skill_id JOIN catalog.learning_resources r ON r.id = rs.resource_id
+        WHERE r.external_id = 'PLx' ORDER BY 1""")
+    ).all()
+    assert [tuple(t) for t in tags] == [("llm-frameworks", "reviewed", 2), ("rag", "llm", None)]
+
+
 def test_youtube_data_older_than_30_days_is_deleted(session):
     old = datetime.now(UTC) - timedelta(days=31)
     session.add(
