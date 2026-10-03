@@ -5,7 +5,7 @@ import type { Category } from '~/types/apiV2'
 import type { SkillSuggestion } from '~/types/apiV2'
 
 const props = defineProps<{ category: Category }>()
-const { active, byCategory, add, remove, rate } = useBoardV2()
+const { active, byCategory, add, remove, rate, onBoard } = useBoardV2()
 const api = useXcrsApiV2()
 const toast = useToast()
 
@@ -37,9 +37,9 @@ watch(text, (value) => {
   timer = setTimeout(async () => {
     const call = ++latest
     try {
-      const { skills } = await api.searchSkills(q, 7)
+      const { skills } = await api.searchSkills(q, 12)
       if (call === latest) {
-        options.value = skills
+        options.value = skills.filter((s) => !onBoard(s)).slice(0, 7) // skills already on the board aren't offered again
         highlighted.value = -1
         open.value = true
       }

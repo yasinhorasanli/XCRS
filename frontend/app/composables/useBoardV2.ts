@@ -1,3 +1,4 @@
+import { CATEGORY_META } from '~/composables/categories'
 import type { Category } from '~/types/apiV2'
 import type { ChipInput, SkillRef } from '~/types/apiV2'
 
@@ -30,6 +31,7 @@ export function useBoardV2() {
   const chips = useState<Chip[]>('board-v2', () => [])
   const active = useState<Category>('board-v2-active', () => 'liked')
   const api = useXcrsApiV2()
+  const toast = useToast()
 
   const total = computed(() => chips.value.length)
   const pending = computed(() => chips.value.filter((c) => c.match.status === 'pending').length)
@@ -52,14 +54,21 @@ export function useBoardV2() {
     }
   }
 
-  /** Add a picked skill or typed text; an existing chip moves to the category instead. */
+  /** Add a picked skill or typed text. A skill has one feeling, so an existing chip moves to the new category;
+   * the move is announced, with Undo, so it never happens silently. */
   function add(label: string, category: Category = active.value, skill?: SkillRef, proficiency?: number) {
     const clean = label.replace(/\s+/g, ' ').trim().slice(0, 100)
     if (!clean) return 'empty' as const
     const existing = find(clean) ?? (skill ? chips.value.find((c) => c.skill === skill.id) : undefined)
     if (existing) {
       if (existing.category === category) return 'exists' as const
+      const from = existing.category
       existing.category = category
+      toast.add({
+        title: `Moved “${existing.label}”`,
+        description: `From “${CATEGORY_META[from].title}” to “${CATEGORY_META[category].title}”: a skill can be in one box only.`,
+        actions: [{ label: 'Undo', color: 'neutral', variant: 'outline', onClick: () => { existing.category = from } }],
+      })
       return 'moved' as const
     }
     if (chips.value.length >= MAX_CHIPS) return 'full' as const
@@ -101,5 +110,9 @@ export function useBoardV2() {
       ...(c.proficiency ? { proficiency: c.proficiency } : {}),
     }))
 
-  return { chips, active, total, pending, byCategory, add, remove, rate, clear, fillExample, asInput }
+  /** Whether a catalog skill is already on the board (picked, or the label of a chip). */
+  const onBoard = (skill: { id: string; name: string }) =>
+    chips.value.some((c) => c.skill === skill.id || c.key === skill.name.trim().toLowerCase())
+
+  return { chips, active, total, pending, byCategory, add, remove, rate, clear, fillExample, asInput, onBoard }
 }

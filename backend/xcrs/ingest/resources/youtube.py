@@ -9,11 +9,12 @@ from datetime import UTC, datetime, timedelta
 
 import httpx
 import yaml
-from sqlalchemy import delete
+from sqlalchemy import delete, select
+from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
 
 from xcrs.catalog.model import CATALOG_DIR
-from xcrs.db.models import LearningResource, RawRecord
+from xcrs.db.models import LearningResource, RawRecord, ResourceSkill, Skill
 from xcrs.ingest.resources.base import finish_run, start_run, store_raw, upsert_resource
 
 SOURCE = "youtube"
@@ -48,9 +49,29 @@ def api_get(client: httpx.Client, url: str, api_key: str, params: dict) -> dict:
     return response.json()
 
 
-def configured_playlists(path=CATALOG_DIR / "sources" / "youtube.yaml") -> list[str]:
+def configured_playlists(path=CATALOG_DIR / "sources" / "youtube.yaml") -> list[tuple[str, str | None]]:
+    """(playlist id, the skill it was approved for) from catalog/sources/youtube.yaml; plain ids are allowed."""
     data = yaml.safe_load(path.read_text()) if path.exists() else None
-    return [str(p) for p in (data or {}).get("playlists") or []]
+    out = []
+    for p in (data or {}).get("playlists") or []:
+        out.append((str(p["id"]), p.get("skill")) if isinstance(p, dict) else (str(p), None))
+    return out
+
+
+def tag_reviewed(session: Session, resource_id: int, skill: str) -> None:
+    """The skill the decider approved the playlist for: always a tag, at working level."""
+    skill_id = session.scalar(select(Skill.id).where(Skill.slug == skill))
+    if skill_id is None:
+        raise ValueError(f"catalog/sources/youtube.yaml: unknown skill {skill!r}")
+    stmt = insert(ResourceSkill).values(
+        resource_id=resource_id, skill_id=skill_id, relation="teaches", level=2, confidence=1.0, tagged_by="reviewed"
+    )
+    session.execute(
+        stmt.on_conflict_do_update(
+            index_elements=["resource_id", "skill_id", "relation"],
+            set_={"level": 2, "confidence": 1.0, "tagged_by": "reviewed"},
+        )
+    )
 
 
 def normalize(item: dict) -> dict:
@@ -69,9 +90,13 @@ def normalize(item: dict) -> dict:
     }
 
 
-def ingest(session: Session, client: httpx.Client, api_key: str | None, playlists: list[str]) -> dict:
+def ingest(
+    session: Session, client: httpx.Client, api_key: str | None, playlists: list[str] | list[tuple[str, str | None]]
+) -> dict:
     if not api_key:
         raise NoApiKey("set XCRS_YOUTUBE_API_KEY to use the YouTube adapter (ADR-0033)")
+    approved = dict(p if isinstance(p, tuple) else (p, None) for p in playlists)
+    playlists = list(approved)
     run = start_run(session, SOURCE)
     stats = {"requested": len(playlists), "upserted": 0}
     try:
@@ -80,7 +105,10 @@ def ingest(session: Session, client: httpx.Client, api_key: str | None, playlist
             page = api_get(client, API, api_key, {"part": "snippet,contentDetails", "id": ids, "maxResults": 50})
             for item in page.get("items", []):
                 store_raw(session, run, SOURCE, item["id"], item)
-                stats["upserted"] += upsert_resource(session, normalize(item)) is not None
+                resource_id = upsert_resource(session, normalize(item))
+                stats["upserted"] += resource_id is not None
+                if resource_id is not None and approved.get(item["id"]):
+                    tag_reviewed(session, resource_id, approved[item["id"]])
         finish_run(session, run, stats)
         return stats
     except (httpx.HTTPError, QuotaExceeded, YouTubeError) as exc:

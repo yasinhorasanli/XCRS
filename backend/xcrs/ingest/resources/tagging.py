@@ -1,6 +1,7 @@
 """Tag learning resources with the skills they teach (ADR-0033), reusing skill matching (ADR-0030): the LLM
 picks skills from the catalog for the resource's title and description, and each pick is kept only if the
-embedding of that text is similar enough to the skill. Curated resources are tagged by hand and skipped."""
+embedding of that text is similar enough to the skill. Curated resources are tagged by hand and skipped; a
+resource with only a reviewed tag (the skill a YouTube playlist was approved for) still gets the LLM's tags."""
 
 import logging
 from collections.abc import Callable
@@ -21,7 +22,7 @@ def resource_text(title: str, description: str | None) -> str:
 
 
 def untagged(session: Session, limit: int | None = None, source: str | None = None) -> list[LearningResource]:
-    tagged = exists().where(and_(ResourceSkill.resource_id == LearningResource.id))
+    tagged = exists().where(and_(ResourceSkill.resource_id == LearningResource.id, ResourceSkill.tagged_by == "llm"))
     stmt = select(LearningResource).where(LearningResource.source != "curated", LearningResource.is_active, ~tagged)
     if source:
         stmt = stmt.where(LearningResource.source == source)
@@ -48,9 +49,10 @@ def tag_untagged(
             stats["failed"] += 1
             continue
         sims = similarities(text)
-        kept = [s for s in picked if s in skill_ids and sims.get(s, 0.0) >= CONFIRM_FLOOR]
+        have = set(session.scalars(select(ResourceSkill.skill_id).where(ResourceSkill.resource_id == resource.id)))
+        kept = [s for s in picked if s in skill_ids and skill_ids[s] not in have and sims.get(s, 0.0) >= CONFIRM_FLOOR]
         stats["resources"] += 1
-        stats["no_skill"] += not kept
+        stats["no_skill"] += not kept and not have
         for skill in kept:
             session.add(
                 ResourceSkill(
