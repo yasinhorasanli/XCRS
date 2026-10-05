@@ -163,7 +163,8 @@ All extractors handled Turkish characters. Chrome's PDFs contain ligatures ("Air
   - much better on Turkish CVs. "Phrases" turned "MVVM mimarisi" into Angular, React and Vue, because the matcher sees a phrase without its CV;
   - one LLM call per import, where "phrases" queues up to 12 more on the shared LLM.
 - **Labels corrected after the first run:** 10 skills in 5 CVs moved from `expect` to `accept` because the text doesn't name them (Git and Python, for instance, were never mentioned). The first run's numbers on the original labels: 4B pick 0.97 / 0.81; 4B phrases 0.94 / 0.85. Each move is noted in `cases.yaml`.
-- **VM-B not measured yet** (the decider's OK first). The Mac's CPU stands in for it; VM-B's server CPU is likely slower per thread.
+- **VM-B, measured 2026-10-05 with the decider's OK** (4B, CPU, 24 vCPU, "pick", synthetic CVs): **144 s** for a full one-page CV (2,756 prompt tokens, 1,270 output tokens) and **178–192 s** for a two-page proxy (two CVs joined, 3,476 characters, about 1,900–2,000 output tokens). Output runs at about 11 tokens/s, half the Mac's CPU speed, and it is nearly all of the time. **The target (under 90 s for two pages) is missed.** Imports are background jobs, so nothing breaks; the waiting screen says "one to three minutes"; and each import holds the shared LLM that long. Options: a more compact answer (shorter evidence; skills listed under their jobs), measured on the set; letting the scan's skills skip the LLM's list; or waiting for the GPU.
+- **Context length (found while measuring VM-B):** the app talks to Ollama's OpenAI-compatible API, which can't set a context per request, so it got Ollama's default of 4,096 tokens. A one-page import used 4,010 of them; a two-page one would be truncated. `OLLAMA_CONTEXT_LENGTH=16384` is now set on VM-B (`deploy/vm-b/compose.yaml`); the benchmark already ran with a 16k context.
 
 ## Trade-offs accepted
 

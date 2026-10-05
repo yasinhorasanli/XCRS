@@ -159,7 +159,8 @@ On 18 synthetic CVs (`backend/eval/cv_import/cases.yaml`: LinkedIn-style two-col
 | Scan + 9B on GPU, "pick" | 0.97 | 0.82 | 16/16 | 27 s (56 s) |
 | Target | ≥ 0.85 | ≥ 0.80 | ≥ 80% | < 90 s on VM-B (2 pages) |
 
-- A real 3-page LinkedIn export: 81 s with 4B on the Mac's CPU ("pick"), 40 s with 9B on the GPU. VM-B is not measured yet.
+- A real 3-page LinkedIn export: 81 s with 4B on the Mac's CPU ("pick"), 40 s with 9B on the GPU.
+- **VM-B (4B, 24 vCPU): 144 s for a full one-page CV, 178–192 s for a two-page proxy**; output runs at about 11 tokens/s. Target (< 90 s) missed; options in ADR-0045.
 - In the browser, a 1-page import took 16 s with 9B on the Mac's GPU, from upload to review.
 - PDF text: 60–70 ms per CV, including the child process.
 - Injection checks: both hidden pieces and the instruction line were found in the planted CV; no false alarms on the other CVs, nor on a real LinkedIn export (white text on its dark sidebar).
