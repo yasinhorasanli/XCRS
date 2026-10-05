@@ -28,7 +28,7 @@ from common import EVAL_DIR, RESULTS_DIR
 from sqlalchemy import select
 
 from xcrs.cv.clean import normalize_text, remove_instructions
-from xcrs.cv.extract import CV_PROMPT_VERSION, CvExtraction, answer_model, system_prompt
+from xcrs.cv.extract import CvExtraction, answer_model, parse_answer, prompt_version, system_prompt
 from xcrs.cv.pdf_text import CvInputError, pdf_text
 from xcrs.db.models import EmbeddingModel
 from xcrs.db.session import new_session
@@ -181,7 +181,7 @@ def run(args) -> dict:
             for case in scored_cases:
                 text, hidden = texts[case["id"]]
                 clean, _ = remove_instructions(text)
-                key = cache.key(model, device, shape, CV_PROMPT_VERSION, clean)
+                key = cache.key(model, device, shape, prompt_version(shape), clean)
                 if key not in cache.data:
                     print(f"  {model} {device} {shape} {case['id']} ...", flush=True)
                     cache.data[key] = chat(client, model, system, clean, schema, threads)
@@ -195,7 +195,7 @@ def run(args) -> dict:
                     }
                 )
                 try:
-                    answers[case["id"]] = CvExtraction.model_validate_json(answer["content"])
+                    answers[case["id"]] = parse_answer(shape, answer["content"])
                 except ValueError:
                     answers[case["id"]] = CvExtraction()
             variants = {
@@ -203,7 +203,7 @@ def run(args) -> dict:
                 "no scan": {"index": LexicalIndex()},
                 "no evidence check": {"check_evidence": False},
             }
-            if shape == "pick":
+            if shape in ("pick", "compact"):
                 variants["no similarity check"] = {"confirm": None}
             for variant, overrides in variants.items():
                 rows = []
@@ -343,7 +343,7 @@ def summarize(results: dict) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--models", nargs="*", default=["qwen3.5:9b"])
-    parser.add_argument("--shapes", nargs="*", default=["phrases", "pick"])
+    parser.add_argument("--shapes", nargs="*", default=["phrases", "pick", "compact"])
     parser.add_argument("--cpu-model", default=None)
     parser.add_argument("--threads", type=int, default=12)
     parser.add_argument("--only", nargs="*", default=None)
@@ -358,7 +358,7 @@ def main() -> None:
     results |= {
         "when": f"{datetime.now():%Y-%m-%d %H:%M}",
         "host": platform.node().split(".")[0],
-        "prompt_version": CV_PROMPT_VERSION,
+        "prompt_version": "cv-extract-1 (phrases, pick), cv-extract-2 (compact)",
     }
     stem = RESULTS_DIR / f"cv-import-{datetime.now():%Y%m%d-%H%M}-{platform.node().split('.')[0]}"
     stem.with_suffix(".json").write_text(json.dumps(results, indent=1, ensure_ascii=False))

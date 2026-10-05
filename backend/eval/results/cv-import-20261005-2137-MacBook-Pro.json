@@ -1,0 +1,9876 @@
+{
+ "inputs": [
+  {
+   "id": "li-en-data-senior",
+   "chars": 1606,
+   "hidden": 0,
+   "instructions": 0,
+   "warnings_ok": true,
+   "false_alarm": false,
+   "error_ok": true
+  },
+  {
+   "id": "li-tr-backend-senior",
+   "chars": 1769,
+   "hidden": 0,
+   "instructions": 0,
+   "warnings_ok": true,
+   "false_alarm": false,
+   "error_ok": true
+  },
+  {
+   "id": "li-en-frontend-mid",
+   "chars": 1122,
+   "hidden": 0,
+   "instructions": 0,
+   "warnings_ok": true,
+   "false_alarm": false,
+   "error_ok": true
+  },
+  {
+   "id": "li-en-ml-staff",
+   "chars": 1980,
+   "hidden": 0,
+   "instructions": 0,
+   "warnings_ok": true,
+   "false_alarm": false,
+   "error_ok": true
+  },
+  {
+   "id": "li-tr-devops-mid",
+   "chars": 1190,
+   "hidden": 0,
+   "instructions": 0,
+   "warnings_ok": true,
+   "false_alarm": false,
+   "error_ok": true
+  },
+  {
+   "id": "classic-en-student",
+   "chars": 808,
+   "hidden": 0,
+   "instructions": 0,
+   "warnings_ok": true,
+   "false_alarm": false,
+   "error_ok": true
+  },
+  {
+   "id": "classic-tr-backend",
+   "chars": 844,
+   "hidden": 0,
+   "instructions": 0,
+   "warnings_ok": true,
+   "false_alarm": false,
+   "error_ok": true
+  },
+  {
+   "id": "classic-tr-mobile",
+   "chars": 812,
+   "hidden": 0,
+   "instructions": 0,
+   "warnings_ok": true,
+   "false_alarm": false,
+   "error_ok": true
+  },
+  {
+   "id": "classic-en-security",
+   "chars": 1039,
+   "hidden": 0,
+   "instructions": 0,
+   "warnings_ok": true,
+   "false_alarm": false,
+   "error_ok": true
+  },
+  {
+   "id": "classic-en-career-changer",
+   "chars": 899,
+   "hidden": 0,
+   "instructions": 0,
+   "warnings_ok": true,
+   "false_alarm": false,
+   "error_ok": true
+  },
+  {
+   "id": "classic-en-embedded",
+   "chars": 873,
+   "hidden": 0,
+   "instructions": 0,
+   "warnings_ok": true,
+   "false_alarm": false,
+   "error_ok": true
+  },
+  {
+   "id": "classic-en-qa",
+   "chars": 833,
+   "hidden": 0,
+   "instructions": 0,
+   "warnings_ok": true,
+   "false_alarm": false,
+   "error_ok": true
+  },
+  {
+   "id": "classic-en-thin",
+   "chars": 167,
+   "hidden": 0,
+   "instructions": 0,
+   "warnings_ok": true,
+   "false_alarm": false,
+   "error_ok": true
+  },
+  {
+   "id": "classic-en-injection",
+   "chars": 691,
+   "hidden": 2,
+   "instructions": 1,
+   "warnings_ok": true,
+   "false_alarm": false,
+   "error_ok": true
+  },
+  {
+   "id": "scanned",
+   "error": "scanned",
+   "error_ok": true
+  },
+  {
+   "id": "li-en-eng-manager",
+   "chars": 1494,
+   "hidden": 0,
+   "instructions": 0,
+   "warnings_ok": true,
+   "false_alarm": false,
+   "error_ok": true
+  },
+  {
+   "id": "classic-en-gamedev",
+   "chars": 753,
+   "hidden": 0,
+   "instructions": 0,
+   "warnings_ok": true,
+   "false_alarm": false,
+   "error_ok": true
+  },
+  {
+   "id": "classic-tr-data-analyst",
+   "chars": 605,
+   "hidden": 0,
+   "instructions": 0,
+   "warnings_ok": true,
+   "false_alarm": false,
+   "error_ok": true
+  }
+ ],
+ "runs": [
+  {
+   "model": "-",
+   "device": "-",
+   "shape": "scan only",
+   "variant": "scan only",
+   "precision": 0.984,
+   "recall": 0.635,
+   "f1": 0.772,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 21,
+     "right": 20,
+     "hits": 20,
+     "expected": 27,
+     "wrong": [
+      "git"
+     ],
+     "missed": [
+      "ab-testing",
+      "ci-cd",
+      "data-warehousing",
+      "etl-pipelines",
+      "mentoring",
+      "spreadsheets",
+      "stream-processing"
+     ]
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 18,
+     "right": 18,
+     "hits": 18,
+     "expected": 27,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "code-review",
+      "event-driven-architecture",
+      "incident-management",
+      "integration-testing",
+      "llm-fundamentals",
+      "mentoring",
+      "rest-api-design",
+      "stakeholder-communication"
+     ]
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 12,
+     "right": 12,
+     "hits": 12,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "e2e-testing",
+      "frontend-build-tools",
+      "frontend-testing",
+      "responsive-design",
+      "state-management",
+      "web-performance"
+     ]
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 22,
+     "right": 22,
+     "hits": 22,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "ab-testing",
+      "fine-tuning",
+      "llm-evaluation",
+      "llm-fundamentals",
+      "llm-serving",
+      "machine-learning-fundamentals",
+      "mentoring",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership",
+      "vector-databases"
+     ]
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 13,
+     "right": 13,
+     "hits": 12,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "cloud-networking",
+      "incident-management",
+      "infrastructure-as-code",
+      "observability",
+      "secrets-management"
+     ]
+    },
+    {
+     "id": "classic-en-student",
+     "found": 17,
+     "right": 17,
+     "hits": 16,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "c",
+      "rest-api-design",
+      "unit-testing"
+     ]
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 12,
+     "right": 12,
+     "hits": 12,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "database-design",
+      "integration-testing",
+      "message-brokers",
+      "microservices",
+      "orm",
+      "rest-api-design"
+     ]
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 8,
+     "right": 8,
+     "hits": 7,
+     "expected": 15,
+     "wrong": [],
+     "missed": [
+      "android-sdk",
+      "app-store-release",
+      "ci-cd",
+      "kotlin-coroutines",
+      "mobile-architecture",
+      "mobile-data-persistence",
+      "mobile-testing",
+      "rest-api-design"
+     ]
+    },
+    {
+     "id": "classic-en-security",
+     "found": 9,
+     "right": 9,
+     "hits": 9,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "identity-access-management",
+      "network-security",
+      "penetration-testing",
+      "security-compliance",
+      "security-incident-response",
+      "security-testing-tools",
+      "vulnerability-management",
+      "web-security"
+     ]
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 8,
+     "right": 7,
+     "hits": 7,
+     "expected": 10,
+     "wrong": [
+      "calculus"
+     ],
+     "missed": [
+      "data-cleaning",
+      "data-visualization",
+      "public-speaking"
+     ]
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 8,
+     "right": 7,
+     "hits": 6,
+     "expected": 12,
+     "wrong": [
+      "unity"
+     ],
+     "missed": [
+      "c",
+      "communication-protocols",
+      "hardware-debugging",
+      "mentoring",
+      "rtos",
+      "unit-testing"
+     ]
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 11,
+     "right": 11,
+     "hits": 11,
+     "expected": 16,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "e2e-testing",
+      "performance-testing",
+      "test-planning",
+      "testing-fundamentals"
+     ]
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": []
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 9,
+     "right": 9,
+     "hits": 9,
+     "expected": 11,
+     "wrong": [],
+     "missed": [
+      "rest-api-design",
+      "unit-testing"
+     ]
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 8,
+     "right": 8,
+     "hits": 8,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "engineering-processes",
+      "go",
+      "hiring",
+      "incident-management",
+      "mentoring",
+      "people-management",
+      "project-planning",
+      "stakeholder-communication"
+     ]
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 5,
+     "right": 5,
+     "hits": 5,
+     "expected": 12,
+     "wrong": [],
+     "missed": [
+      "game-design-basics",
+      "game-math",
+      "game-optimization",
+      "game-physics",
+      "multiplayer-networking",
+      "oop",
+      "profiling"
+     ]
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 4,
+     "right": 4,
+     "hits": 4,
+     "expected": 10,
+     "wrong": [],
+     "missed": [
+      "ab-testing",
+      "data-cleaning",
+      "data-visualization",
+      "product-analytics",
+      "spreadsheets",
+      "statistics"
+     ]
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:9b",
+   "device": "gpu",
+   "shape": "phrases",
+   "variant": "full",
+   "precision": 0.935,
+   "recall": 0.835,
+   "f1": 0.882,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 29,
+     "right": 28,
+     "hits": 25,
+     "expected": 27,
+     "wrong": [
+      "git"
+     ],
+     "missed": [
+      "ci-cd",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "data-modeling": 3,
+      "sql": 3,
+      "airflow": 2,
+      "kafka": 2,
+      "spark": 2,
+      "aws": 2,
+      "data-architecture": 2,
+      "data-quality": 2,
+      "dbt": 2,
+      "etl-pipelines": 2,
+      "github-actions": 2,
+      "kubernetes": 2,
+      "mentoring": 2,
+      "snowflake": 2,
+      "terraform": 2,
+      "data-warehousing": 2,
+      "database-design": 2,
+      "docker": 2,
+      "mongodb": 2,
+      "postgresql": 2,
+      "prometheus-grafana": 2,
+      "python": 2,
+      "relational-databases": 2,
+      "ab-testing": 1,
+      "bi-tools": 1,
+      "pandas": 1,
+      "spreadsheets": 1,
+      "git": null,
+      "statistics": null
+     }
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 25,
+     "right": 23,
+     "hits": 21,
+     "expected": 27,
+     "wrong": [
+      "database-design",
+      "security-incident-response"
+     ],
+     "missed": [
+      "ci-cd",
+      "event-driven-architecture",
+      "incident-management",
+      "integration-testing",
+      "llm-fundamentals",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "distributed-systems": 3,
+      "java": 3,
+      "spring-boot": 3,
+      "kafka": 2,
+      "fastapi": 2,
+      "opentelemetry": 2,
+      "python": 2,
+      "security-incident-response": 2,
+      "typescript": 2,
+      "vue": 2,
+      "code-review": 2,
+      "database-design": 2,
+      "docker": 2,
+      "jenkins": 2,
+      "kubernetes": 2,
+      "mentoring": 2,
+      "postgresql": 2,
+      "redis": 2,
+      "relational-databases": 2,
+      "rest-api-design": 2,
+      "testing-fundamentals": 2,
+      "unit-testing": 2,
+      "caching": null,
+      "microservices": null,
+      "observability": null
+     }
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 18,
+     "right": 18,
+     "hits": 17,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "responsive-design",
+      "web-performance"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "design-systems": 2,
+      "e2e-testing": 2,
+      "frontend-architecture": 2,
+      "state-management": 2,
+      "frontend-testing": 2,
+      "graphql": 2,
+      "nextjs": 2,
+      "react": 2,
+      "tailwind-css": 2,
+      "typescript": 2,
+      "accessibility": 2,
+      "code-review": 1,
+      "css": 1,
+      "frontend-build-tools": 1,
+      "git": 1,
+      "html": 1,
+      "javascript": 1,
+      "ui-ux-basics": 1
+     }
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 31,
+     "right": 31,
+     "hits": 29,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "fine-tuning",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "ab-testing": 3,
+      "architecture-decision-records": 3,
+      "deep-learning": 3,
+      "docker": 3,
+      "embeddings-vector-search": 3,
+      "hiring": 3,
+      "kubernetes": 3,
+      "llm-evaluation": 3,
+      "llm-frameworks": 3,
+      "llm-fundamentals": 3,
+      "llm-serving": 3,
+      "machine-learning-fundamentals": 3,
+      "mentoring": 3,
+      "nlp": 3,
+      "pytorch": 3,
+      "rag": 3,
+      "scikit-learn": 3,
+      "system-design": 3,
+      "tensorflow": 3,
+      "vector-databases": 3,
+      "airflow": 1,
+      "spark": 1,
+      "experiment-tracking": 1,
+      "ml-pipelines": 1,
+      "model-monitoring": 1,
+      "aws": 1,
+      "sql": 1,
+      "distributed-training": null,
+      "feature-engineering": null,
+      "gcp": null,
+      "statistics": null
+     }
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 16,
+     "right": 16,
+     "hits": 14,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "cloud-networking",
+      "incident-management",
+      "infrastructure-as-code",
+      "observability"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "aws": 2,
+      "ci-cd": 2,
+      "github-actions": 2,
+      "gitops": 2,
+      "kubernetes": 2,
+      "prometheus-grafana": 2,
+      "secrets-management": 2,
+      "terraform": 2,
+      "ansible": 1,
+      "docker": 1,
+      "postgresql": 1,
+      "python": 1,
+      "shell-scripting": 1,
+      "git": null,
+      "helm": null,
+      "linux": null
+     }
+    },
+    {
+     "id": "classic-en-student",
+     "found": 23,
+     "right": 21,
+     "hits": 19,
+     "expected": 19,
+     "wrong": [
+      "frontend-testing",
+      "integration-testing"
+     ],
+     "missed": [],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "django": 1,
+      "docker": 1,
+      "frontend-testing": 1,
+      "integration-testing": 1,
+      "python": 1,
+      "rest-api-design": 1,
+      "unit-testing": 1,
+      "algorithms": null,
+      "c": null,
+      "css": null,
+      "data-structures": null,
+      "git": null,
+      "html": null,
+      "java": null,
+      "javascript": null,
+      "jupyter": null,
+      "linux": null,
+      "oop": null,
+      "pandas": null,
+      "react": null,
+      "relational-databases": null,
+      "scikit-learn": null,
+      "sql": null
+     }
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 17,
+     "right": 17,
+     "hits": 16,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "database-design",
+      "integration-testing",
+      "microservices"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "java": 3,
+      "spring-boot": 3,
+      "docker": 2,
+      "jenkins": 2,
+      "kubernetes": 2,
+      "linux": 2,
+      "message-brokers": 2,
+      "postgresql": 2,
+      "redis": 2,
+      "rest-api-design": 2,
+      "testing-fundamentals": 2,
+      "unit-testing": 2,
+      "code-review": 1,
+      "git": 1,
+      "orm": 1,
+      "sql": 1,
+      "ci-cd": null
+     }
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 9,
+     "right": 9,
+     "hits": 8,
+     "expected": 15,
+     "wrong": [],
+     "missed": [
+      "android-sdk",
+      "app-store-release",
+      "ci-cd",
+      "mobile-architecture",
+      "mobile-data-persistence",
+      "mobile-testing",
+      "rest-api-design"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "git": 2,
+      "jetpack-compose": 2,
+      "kotlin": 2,
+      "kotlin-coroutines": 2,
+      "unit-testing": 2,
+      "dart": 1,
+      "flutter": 1,
+      "java": 1,
+      "github-actions": null
+     }
+    },
+    {
+     "id": "classic-en-security",
+     "found": 18,
+     "right": 17,
+     "hits": 15,
+     "expected": 17,
+     "wrong": [
+      "observability"
+     ],
+     "missed": [
+      "penetration-testing",
+      "vulnerability-management"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "security-fundamentals": 3,
+      "security-incident-response": 3,
+      "security-testing-tools": 3,
+      "web-security": 3,
+      "cloud-security": 2,
+      "identity-access-management": 2,
+      "azure": 2,
+      "secure-coding": 2,
+      "security-compliance": 2,
+      "threat-modeling": 2,
+      "active-directory": 2,
+      "linux": 2,
+      "network-security": 2,
+      "observability": 2,
+      "powershell": 2,
+      "python": 2,
+      "siem": 2,
+      "windows-server": 2
+     }
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 9,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "calculus"
+     ],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "bi-tools": 1,
+      "pandas": 1,
+      "spreadsheets": 1,
+      "sql": 1,
+      "statistics": 1,
+      "data-visualization": 1,
+      "python": 1,
+      "calculus": null,
+      "exploratory-data-analysis": null
+     }
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 14,
+     "right": 12,
+     "hits": 10,
+     "expected": 12,
+     "wrong": [
+      "observability",
+      "unity"
+     ],
+     "missed": [
+      "hardware-debugging",
+      "unit-testing"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "c": 3,
+      "cpp": 3,
+      "communication-protocols": 3,
+      "embedded-linux": 3,
+      "git": 3,
+      "jenkins": 3,
+      "mentoring": 3,
+      "microcontrollers": 3,
+      "rtos": 3,
+      "unity": 3,
+      "code-review": 2,
+      "observability": 2,
+      "python": 2,
+      "linux": null
+     }
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 13,
+     "right": 13,
+     "hits": 13,
+     "expected": 16,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "test-planning",
+      "testing-fundamentals"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "agile-scrum": 2,
+      "api-testing": 2,
+      "e2e-testing": 2,
+      "git": 2,
+      "java": 2,
+      "javascript": 2,
+      "jenkins": 2,
+      "performance-testing": 2,
+      "selenium": 2,
+      "test-automation": 2,
+      "typescript": 2,
+      "sql": 1,
+      "manual-testing": null
+     }
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "css": null,
+      "html": null,
+      "javascript": null
+     }
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 14,
+     "right": 12,
+     "hits": 11,
+     "expected": 11,
+     "wrong": [
+      "frontend-testing",
+      "javascript"
+     ],
+     "missed": [],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "aws": 2,
+      "django": 2,
+      "docker": 2,
+      "fastapi": 2,
+      "frontend-testing": 2,
+      "git": 2,
+      "integration-testing": 2,
+      "postgresql": 2,
+      "python": 2,
+      "redis": 2,
+      "rest-api-design": 2,
+      "unit-testing": 2,
+      "javascript": 1,
+      "sql": 1
+     }
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 22,
+     "right": 16,
+     "hits": 16,
+     "expected": 17,
+     "wrong": [
+      "caching",
+      "community-building",
+      "linux",
+      "performance-testing",
+      "profiling",
+      "security-incident-response"
+     ],
+     "missed": [
+      "engineering-processes"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "agile-scrum": 3,
+      "architecture-decision-records": 3,
+      "caching": 3,
+      "code-review": 3,
+      "community-building": 3,
+      "hiring": 3,
+      "incident-management": 3,
+      "linux": 3,
+      "mentoring": 3,
+      "people-management": 3,
+      "performance-testing": 3,
+      "profiling": 3,
+      "project-planning": 3,
+      "security-incident-response": 3,
+      "stakeholder-communication": 3,
+      "system-design": 3,
+      "technical-leadership": 3,
+      "aws": 2,
+      "java": 2,
+      "microservices": 2,
+      "kotlin": 1,
+      "go": 2
+     }
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 8,
+     "right": 7,
+     "hits": 6,
+     "expected": 12,
+     "wrong": [
+      "infrastructure-as-code"
+     ],
+     "missed": [
+      "game-design-basics",
+      "game-math",
+      "game-optimization",
+      "game-physics",
+      "multiplayer-networking",
+      "profiling"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "csharp": 2,
+      "computer-graphics": 2,
+      "design-patterns": 2,
+      "git": 2,
+      "infrastructure-as-code": 2,
+      "oop": 2,
+      "shaders": 2,
+      "unity": 2
+     }
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 7,
+     "right": 7,
+     "hits": 7,
+     "expected": 10,
+     "wrong": [],
+     "missed": [
+      "data-cleaning",
+      "product-analytics",
+      "statistics"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "ab-testing": 1,
+      "bi-tools": 1,
+      "data-visualization": 1,
+      "python": 1,
+      "spreadsheets": 1,
+      "sql": 1,
+      "pandas": null
+     }
+    }
+   ],
+   "latency": [
+    {
+     "id": "li-en-data-senior",
+     "chars": 1606,
+     "ms": 38603,
+     "prompt_tokens": 779,
+     "output_tokens": 1228
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "chars": 1769,
+     "ms": 32230,
+     "prompt_tokens": 841,
+     "output_tokens": 1117
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "chars": 1122,
+     "ms": 30168,
+     "prompt_tokens": 664,
+     "output_tokens": 1060
+    },
+    {
+     "id": "li-en-ml-staff",
+     "chars": 1980,
+     "ms": 42545,
+     "prompt_tokens": 876,
+     "output_tokens": 1474
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "chars": 1190,
+     "ms": 23391,
+     "prompt_tokens": 783,
+     "output_tokens": 780
+    },
+    {
+     "id": "classic-en-student",
+     "chars": 808,
+     "ms": 20946,
+     "prompt_tokens": 581,
+     "output_tokens": 715
+    },
+    {
+     "id": "classic-tr-backend",
+     "chars": 844,
+     "ms": 23659,
+     "prompt_tokens": 648,
+     "output_tokens": 807
+    },
+    {
+     "id": "classic-tr-mobile",
+     "chars": 812,
+     "ms": 19415,
+     "prompt_tokens": 628,
+     "output_tokens": 663
+    },
+    {
+     "id": "classic-en-security",
+     "chars": 1039,
+     "ms": 28371,
+     "prompt_tokens": 624,
+     "output_tokens": 998
+    },
+    {
+     "id": "classic-en-career-changer",
+     "chars": 899,
+     "ms": 18131,
+     "prompt_tokens": 604,
+     "output_tokens": 616
+    },
+    {
+     "id": "classic-en-embedded",
+     "chars": 873,
+     "ms": 28211,
+     "prompt_tokens": 597,
+     "output_tokens": 990
+    },
+    {
+     "id": "classic-en-qa",
+     "chars": 833,
+     "ms": 22810,
+     "prompt_tokens": 587,
+     "output_tokens": 760
+    },
+    {
+     "id": "classic-en-thin",
+     "chars": 167,
+     "ms": 6327,
+     "prompt_tokens": 410,
+     "output_tokens": 167
+    },
+    {
+     "id": "classic-en-injection",
+     "chars": 622,
+     "ms": 19842,
+     "prompt_tokens": 538,
+     "output_tokens": 722
+    },
+    {
+     "id": "li-en-eng-manager",
+     "chars": 1494,
+     "ms": 34356,
+     "prompt_tokens": 752,
+     "output_tokens": 1178
+    },
+    {
+     "id": "classic-en-gamedev",
+     "chars": 753,
+     "ms": 14484,
+     "prompt_tokens": 548,
+     "output_tokens": 461
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "chars": 605,
+     "ms": 13270,
+     "prompt_tokens": 573,
+     "output_tokens": 426
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:9b",
+   "device": "gpu",
+   "shape": "phrases",
+   "variant": "no scan",
+   "precision": 0.936,
+   "recall": 0.765,
+   "f1": 0.842,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 27,
+     "right": 27,
+     "hits": 24,
+     "expected": 27,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "statistics",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 22,
+     "right": 20,
+     "hits": 18,
+     "expected": 27,
+     "wrong": [
+      "database-design",
+      "security-incident-response"
+     ],
+     "missed": [
+      "caching",
+      "ci-cd",
+      "event-driven-architecture",
+      "incident-management",
+      "integration-testing",
+      "llm-fundamentals",
+      "microservices",
+      "observability",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 18,
+     "right": 18,
+     "hits": 17,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "responsive-design",
+      "web-performance"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 27,
+     "right": 27,
+     "hits": 25,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "distributed-training",
+      "feature-engineering",
+      "fine-tuning",
+      "gcp",
+      "model-serving",
+      "public-speaking",
+      "statistics",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 13,
+     "right": 13,
+     "hits": 12,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "cloud-networking",
+      "helm",
+      "incident-management",
+      "infrastructure-as-code",
+      "linux",
+      "observability"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-student",
+     "found": 17,
+     "right": 15,
+     "hits": 14,
+     "expected": 19,
+     "wrong": [
+      "frontend-testing",
+      "integration-testing"
+     ],
+     "missed": [
+      "algorithms",
+      "css",
+      "data-structures",
+      "html",
+      "oop"
+     ],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 16,
+     "right": 16,
+     "hits": 15,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "database-design",
+      "integration-testing",
+      "microservices"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 8,
+     "right": 8,
+     "hits": 8,
+     "expected": 15,
+     "wrong": [],
+     "missed": [
+      "android-sdk",
+      "app-store-release",
+      "ci-cd",
+      "mobile-architecture",
+      "mobile-data-persistence",
+      "mobile-testing",
+      "rest-api-design"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-security",
+     "found": 18,
+     "right": 17,
+     "hits": 15,
+     "expected": 17,
+     "wrong": [
+      "observability"
+     ],
+     "missed": [
+      "penetration-testing",
+      "vulnerability-management"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 7,
+     "right": 7,
+     "hits": 7,
+     "expected": 10,
+     "wrong": [],
+     "missed": [
+      "data-cleaning",
+      "exploratory-data-analysis",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 13,
+     "right": 11,
+     "hits": 9,
+     "expected": 12,
+     "wrong": [
+      "observability",
+      "unity"
+     ],
+     "missed": [
+      "hardware-debugging",
+      "linux",
+      "unit-testing"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 12,
+     "right": 12,
+     "hits": 12,
+     "expected": 16,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "manual-testing",
+      "test-planning",
+      "testing-fundamentals"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 14,
+     "right": 12,
+     "hits": 11,
+     "expected": 11,
+     "wrong": [
+      "frontend-testing",
+      "javascript"
+     ],
+     "missed": [],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 22,
+     "right": 16,
+     "hits": 16,
+     "expected": 17,
+     "wrong": [
+      "caching",
+      "community-building",
+      "linux",
+      "performance-testing",
+      "profiling",
+      "security-incident-response"
+     ],
+     "missed": [
+      "engineering-processes"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 8,
+     "right": 7,
+     "hits": 6,
+     "expected": 12,
+     "wrong": [
+      "infrastructure-as-code"
+     ],
+     "missed": [
+      "game-design-basics",
+      "game-math",
+      "game-optimization",
+      "game-physics",
+      "multiplayer-networking",
+      "profiling"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 6,
+     "right": 6,
+     "hits": 6,
+     "expected": 10,
+     "wrong": [],
+     "missed": [
+      "data-cleaning",
+      "pandas",
+      "product-analytics",
+      "statistics"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:9b",
+   "device": "gpu",
+   "shape": "phrases",
+   "variant": "no evidence check",
+   "precision": 0.935,
+   "recall": 0.835,
+   "f1": 0.882,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 29,
+     "right": 28,
+     "hits": 25,
+     "expected": 27,
+     "wrong": [
+      "git"
+     ],
+     "missed": [
+      "ci-cd",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 25,
+     "right": 23,
+     "hits": 21,
+     "expected": 27,
+     "wrong": [
+      "database-design",
+      "security-incident-response"
+     ],
+     "missed": [
+      "ci-cd",
+      "event-driven-architecture",
+      "incident-management",
+      "integration-testing",
+      "llm-fundamentals",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 18,
+     "right": 18,
+     "hits": 17,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "responsive-design",
+      "web-performance"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 31,
+     "right": 31,
+     "hits": 29,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "fine-tuning",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 16,
+     "right": 16,
+     "hits": 14,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "cloud-networking",
+      "incident-management",
+      "infrastructure-as-code",
+      "observability"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-student",
+     "found": 23,
+     "right": 21,
+     "hits": 19,
+     "expected": 19,
+     "wrong": [
+      "frontend-testing",
+      "integration-testing"
+     ],
+     "missed": [],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 17,
+     "right": 17,
+     "hits": 16,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "database-design",
+      "integration-testing",
+      "microservices"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 9,
+     "right": 9,
+     "hits": 8,
+     "expected": 15,
+     "wrong": [],
+     "missed": [
+      "android-sdk",
+      "app-store-release",
+      "ci-cd",
+      "mobile-architecture",
+      "mobile-data-persistence",
+      "mobile-testing",
+      "rest-api-design"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-security",
+     "found": 18,
+     "right": 17,
+     "hits": 15,
+     "expected": 17,
+     "wrong": [
+      "observability"
+     ],
+     "missed": [
+      "penetration-testing",
+      "vulnerability-management"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 9,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "calculus"
+     ],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 14,
+     "right": 12,
+     "hits": 10,
+     "expected": 12,
+     "wrong": [
+      "observability",
+      "unity"
+     ],
+     "missed": [
+      "hardware-debugging",
+      "unit-testing"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 13,
+     "right": 13,
+     "hits": 13,
+     "expected": 16,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "test-planning",
+      "testing-fundamentals"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 14,
+     "right": 12,
+     "hits": 11,
+     "expected": 11,
+     "wrong": [
+      "frontend-testing",
+      "javascript"
+     ],
+     "missed": [],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 22,
+     "right": 16,
+     "hits": 16,
+     "expected": 17,
+     "wrong": [
+      "caching",
+      "community-building",
+      "linux",
+      "performance-testing",
+      "profiling",
+      "security-incident-response"
+     ],
+     "missed": [
+      "engineering-processes"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 8,
+     "right": 7,
+     "hits": 6,
+     "expected": 12,
+     "wrong": [
+      "infrastructure-as-code"
+     ],
+     "missed": [
+      "game-design-basics",
+      "game-math",
+      "game-optimization",
+      "game-physics",
+      "multiplayer-networking",
+      "profiling"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 7,
+     "right": 7,
+     "hits": 7,
+     "expected": 10,
+     "wrong": [],
+     "missed": [
+      "data-cleaning",
+      "product-analytics",
+      "statistics"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:9b",
+   "device": "gpu",
+   "shape": "pick",
+   "variant": "full",
+   "precision": 0.972,
+   "recall": 0.821,
+   "f1": 0.89,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 22,
+     "right": 21,
+     "hits": 21,
+     "expected": 27,
+     "wrong": [
+      "git"
+     ],
+     "missed": [
+      "ab-testing",
+      "ci-cd",
+      "data-warehousing",
+      "etl-pipelines",
+      "spreadsheets",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "data-modeling": 3,
+      "sql": 3,
+      "airflow": 2,
+      "kafka": 2,
+      "spark": 2,
+      "aws": 2,
+      "dbt": 2,
+      "github-actions": 2,
+      "kubernetes": 2,
+      "mentoring": 2,
+      "snowflake": 2,
+      "terraform": 2,
+      "docker": 2,
+      "mongodb": 2,
+      "postgresql": 2,
+      "prometheus-grafana": 2,
+      "python": 2,
+      "bi-tools": 1,
+      "pandas": 1,
+      "data-quality": null,
+      "git": null,
+      "statistics": null
+     }
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 22,
+     "right": 21,
+     "hits": 21,
+     "expected": 27,
+     "wrong": [
+      "hiring"
+     ],
+     "missed": [
+      "ci-cd",
+      "event-driven-architecture",
+      "incident-management",
+      "llm-fundamentals",
+      "mentoring",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "distributed-systems": 3,
+      "java": 3,
+      "spring-boot": 3,
+      "kafka": 2,
+      "fastapi": 2,
+      "opentelemetry": 2,
+      "python": 2,
+      "typescript": 2,
+      "vue": 2,
+      "code-review": 2,
+      "docker": 2,
+      "hiring": 2,
+      "integration-testing": 2,
+      "jenkins": 2,
+      "kubernetes": 2,
+      "postgresql": 2,
+      "redis": 2,
+      "rest-api-design": 2,
+      "unit-testing": 2,
+      "caching": null,
+      "microservices": null,
+      "observability": null
+     }
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "frontend-build-tools",
+      "frontend-testing",
+      "responsive-design",
+      "state-management",
+      "web-performance"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "design-systems": 2,
+      "e2e-testing": 2,
+      "graphql": 2,
+      "nextjs": 2,
+      "react": 2,
+      "tailwind-css": 2,
+      "typescript": 2,
+      "unit-testing": 2,
+      "accessibility": 2,
+      "code-review": 1,
+      "css": 1,
+      "git": 1,
+      "html": 1,
+      "javascript": 1,
+      "ui-ux-basics": null
+     }
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 29,
+     "right": 29,
+     "hits": 28,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "llm-evaluation",
+      "llm-serving",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 1,
+     "levels": {
+      "ab-testing": 3,
+      "architecture-decision-records": 3,
+      "docker": 3,
+      "embeddings-vector-search": 3,
+      "fine-tuning": 3,
+      "gcp": 3,
+      "hiring": 3,
+      "kubernetes": 3,
+      "llm-fundamentals": 3,
+      "machine-learning-fundamentals": 3,
+      "mentoring": 3,
+      "nlp": 3,
+      "pytorch": 3,
+      "rag": 3,
+      "system-design": 3,
+      "vector-databases": 3,
+      "airflow": 1,
+      "spark": 1,
+      "experiment-tracking": 1,
+      "ml-pipelines": 1,
+      "model-monitoring": 1,
+      "scikit-learn": 1,
+      "aws": 1,
+      "distributed-training": 1,
+      "sql": 1,
+      "statistics": 1,
+      "tensorflow": 1,
+      "deep-learning": null,
+      "feature-engineering": null
+     }
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "cloud-networking",
+      "infrastructure-as-code",
+      "observability"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "aws": 2,
+      "gitops": 2,
+      "helm": 2,
+      "incident-management": 2,
+      "kubernetes": 2,
+      "prometheus-grafana": 2,
+      "secrets-management": 2,
+      "terraform": 2,
+      "ansible": 1,
+      "docker": 1,
+      "postgresql": 1,
+      "python": 1,
+      "shell-scripting": 1,
+      "git": null,
+      "linux": null
+     }
+    },
+    {
+     "id": "classic-en-student",
+     "found": 20,
+     "right": 20,
+     "hits": 19,
+     "expected": 19,
+     "wrong": [],
+     "missed": [],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "css": 1,
+      "django": 1,
+      "docker": 1,
+      "html": 1,
+      "javascript": 1,
+      "python": 1,
+      "react": 1,
+      "rest-api-design": 1,
+      "sql": 1,
+      "unit-testing": 1,
+      "algorithms": null,
+      "c": null,
+      "data-structures": null,
+      "git": null,
+      "java": null,
+      "jupyter": null,
+      "linux": null,
+      "oop": null,
+      "pandas": null,
+      "scikit-learn": null
+     }
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 19,
+     "right": 19,
+     "hits": 18,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "database-design"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "java": 3,
+      "relational-databases": 3,
+      "spring-boot": 3,
+      "ci-cd": 2,
+      "docker": 2,
+      "integration-testing": 2,
+      "kubernetes": 2,
+      "message-brokers": 2,
+      "microservices": 2,
+      "rest-api-design": 2,
+      "unit-testing": 2,
+      "code-review": 2,
+      "git": 2,
+      "orm": 2,
+      "jenkins": null,
+      "linux": null,
+      "postgresql": null,
+      "redis": null,
+      "sql": null
+     }
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 15,
+     "wrong": [],
+     "missed": [
+      "mobile-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "android-sdk": 2,
+      "app-store-release": 2,
+      "ci-cd": 2,
+      "jetpack-compose": 2,
+      "kotlin": 2,
+      "kotlin-coroutines": 2,
+      "mobile-architecture": 2,
+      "mobile-data-persistence": 2,
+      "rest-api-design": 2,
+      "unit-testing": 2,
+      "dart": 1,
+      "flutter": 1,
+      "java": 1,
+      "git": null,
+      "github-actions": null
+     }
+    },
+    {
+     "id": "classic-en-security",
+     "found": 17,
+     "right": 17,
+     "hits": 15,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "network-security",
+      "security-testing-tools"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "devsecops": 3,
+      "python": 3,
+      "security-incident-response": 3,
+      "vulnerability-management": 3,
+      "cloud-security": 2,
+      "identity-access-management": 2,
+      "incident-management": 2,
+      "azure": 2,
+      "penetration-testing": 2,
+      "security-compliance": 2,
+      "threat-modeling": 2,
+      "web-security": 2,
+      "active-directory": 2,
+      "linux": 2,
+      "powershell": 2,
+      "siem": 2,
+      "windows-server": 2
+     }
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 10,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "calculus",
+      "powershell"
+     ],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "bi-tools": 1,
+      "pandas": 1,
+      "spreadsheets": 1,
+      "sql": 1,
+      "statistics": 1,
+      "data-visualization": 1,
+      "exploratory-data-analysis": 1,
+      "python": 1,
+      "calculus": null,
+      "powershell": null
+     }
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 14,
+     "right": 13,
+     "hits": 9,
+     "expected": 12,
+     "wrong": [
+      "unity"
+     ],
+     "missed": [
+      "communication-protocols",
+      "hardware-debugging",
+      "rtos"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "c": 3,
+      "cpp": 3,
+      "ci-cd": 3,
+      "embedded-linux": 3,
+      "git": 3,
+      "mentoring": 3,
+      "microcontrollers": 3,
+      "operating-systems": 3,
+      "testing-fundamentals": 3,
+      "unit-testing": 3,
+      "python": 2,
+      "jenkins": null,
+      "linux": null,
+      "unity": null
+     }
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 13,
+     "right": 12,
+     "hits": 12,
+     "expected": 16,
+     "wrong": [
+      "exploratory-data-analysis"
+     ],
+     "missed": [
+      "ci-cd",
+      "e2e-testing",
+      "performance-testing",
+      "test-planning"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "git": 2,
+      "java": 2,
+      "javascript": 2,
+      "sql": 2,
+      "typescript": 2,
+      "exploratory-data-analysis": 1,
+      "manual-testing": 1,
+      "testing-fundamentals": 1,
+      "agile-scrum": null,
+      "api-testing": null,
+      "jenkins": null,
+      "selenium": null,
+      "test-automation": null
+     }
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "css": null,
+      "html": null,
+      "javascript": null
+     }
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 10,
+     "right": 10,
+     "hits": 10,
+     "expected": 11,
+     "wrong": [],
+     "missed": [
+      "rest-api-design"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "django": 2,
+      "docker": 2,
+      "fastapi": 2,
+      "postgresql": 2,
+      "python": 2,
+      "redis": 2,
+      "unit-testing": 2,
+      "aws": null,
+      "git": null,
+      "sql": null
+     }
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "engineering-processes",
+      "project-planning",
+      "stakeholder-communication"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "agile-scrum": 3,
+      "architecture-decision-records": 3,
+      "hiring": 3,
+      "incident-management": 3,
+      "mentoring": 3,
+      "people-management": 3,
+      "product-thinking": 3,
+      "technical-leadership": 3,
+      "java": 2,
+      "aws": 1,
+      "code-review": 1,
+      "kotlin": 1,
+      "microservices": 1,
+      "system-design": 1,
+      "go": 2
+     }
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 8,
+     "right": 8,
+     "hits": 8,
+     "expected": 12,
+     "wrong": [],
+     "missed": [
+      "game-design-basics",
+      "game-math",
+      "oop",
+      "profiling"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "csharp": 2,
+      "design-patterns": 2,
+      "game-optimization": 2,
+      "game-physics": 2,
+      "git": 2,
+      "multiplayer-networking": 2,
+      "shaders": 2,
+      "unity": 2
+     }
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 7,
+     "right": 6,
+     "hits": 6,
+     "expected": 10,
+     "wrong": [
+      "powershell"
+     ],
+     "missed": [
+      "data-cleaning",
+      "data-visualization",
+      "product-analytics",
+      "spreadsheets"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "ab-testing": 1,
+      "pandas": 1,
+      "sql": 1,
+      "statistics": 1,
+      "bi-tools": null,
+      "powershell": null,
+      "python": null
+     }
+    }
+   ],
+   "latency": [
+    {
+     "id": "li-en-data-senior",
+     "chars": 1606,
+     "ms": 37645,
+     "prompt_tokens": 2659,
+     "output_tokens": 974
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "chars": 1769,
+     "ms": 41067,
+     "prompt_tokens": 2721,
+     "output_tokens": 911
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "chars": 1122,
+     "ms": 26247,
+     "prompt_tokens": 2544,
+     "output_tokens": 731
+    },
+    {
+     "id": "li-en-ml-staff",
+     "chars": 1980,
+     "ms": 55608,
+     "prompt_tokens": 2756,
+     "output_tokens": 1413
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "chars": 1190,
+     "ms": 28203,
+     "prompt_tokens": 2663,
+     "output_tokens": 729
+    },
+    {
+     "id": "classic-en-student",
+     "chars": 808,
+     "ms": 28236,
+     "prompt_tokens": 2461,
+     "output_tokens": 780
+    },
+    {
+     "id": "classic-tr-backend",
+     "chars": 844,
+     "ms": 27452,
+     "prompt_tokens": 2528,
+     "output_tokens": 780
+    },
+    {
+     "id": "classic-tr-mobile",
+     "chars": 812,
+     "ms": 27383,
+     "prompt_tokens": 2508,
+     "output_tokens": 707
+    },
+    {
+     "id": "classic-en-security",
+     "chars": 1039,
+     "ms": 29030,
+     "prompt_tokens": 2504,
+     "output_tokens": 834
+    },
+    {
+     "id": "classic-en-career-changer",
+     "chars": 899,
+     "ms": 21436,
+     "prompt_tokens": 2484,
+     "output_tokens": 637
+    },
+    {
+     "id": "classic-en-embedded",
+     "chars": 873,
+     "ms": 21798,
+     "prompt_tokens": 2477,
+     "output_tokens": 677
+    },
+    {
+     "id": "classic-en-qa",
+     "chars": 833,
+     "ms": 16706,
+     "prompt_tokens": 2467,
+     "output_tokens": 483
+    },
+    {
+     "id": "classic-en-thin",
+     "chars": 167,
+     "ms": 5269,
+     "prompt_tokens": 2290,
+     "output_tokens": 119
+    },
+    {
+     "id": "classic-en-injection",
+     "chars": 622,
+     "ms": 15702,
+     "prompt_tokens": 2418,
+     "output_tokens": 491
+    },
+    {
+     "id": "li-en-eng-manager",
+     "chars": 1494,
+     "ms": 26932,
+     "prompt_tokens": 2632,
+     "output_tokens": 827
+    },
+    {
+     "id": "classic-en-gamedev",
+     "chars": 753,
+     "ms": 14672,
+     "prompt_tokens": 2428,
+     "output_tokens": 430
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "chars": 605,
+     "ms": 14098,
+     "prompt_tokens": 2453,
+     "output_tokens": 386
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:9b",
+   "device": "gpu",
+   "shape": "pick",
+   "variant": "no scan",
+   "precision": 0.977,
+   "recall": 0.73,
+   "f1": 0.836,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 19,
+     "right": 19,
+     "hits": 19,
+     "expected": 27,
+     "wrong": [],
+     "missed": [
+      "ab-testing",
+      "ci-cd",
+      "data-quality",
+      "data-warehousing",
+      "etl-pipelines",
+      "spreadsheets",
+      "statistics",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 19,
+     "right": 18,
+     "hits": 18,
+     "expected": 27,
+     "wrong": [
+      "hiring"
+     ],
+     "missed": [
+      "caching",
+      "ci-cd",
+      "event-driven-architecture",
+      "incident-management",
+      "llm-fundamentals",
+      "mentoring",
+      "microservices",
+      "observability",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 14,
+     "right": 14,
+     "hits": 13,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "frontend-build-tools",
+      "frontend-testing",
+      "responsive-design",
+      "state-management",
+      "ui-ux-basics",
+      "web-performance"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 27,
+     "right": 27,
+     "hits": 26,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "deep-learning",
+      "feature-engineering",
+      "llm-evaluation",
+      "llm-serving",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 1
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 13,
+     "right": 13,
+     "hits": 13,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "cloud-networking",
+      "infrastructure-as-code",
+      "linux",
+      "observability"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-student",
+     "found": 19,
+     "right": 19,
+     "hits": 19,
+     "expected": 19,
+     "wrong": [],
+     "missed": [],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 14,
+     "right": 14,
+     "hits": 13,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "database-design",
+      "jenkins",
+      "linux",
+      "postgresql",
+      "redis",
+      "sql"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 13,
+     "right": 13,
+     "hits": 13,
+     "expected": 15,
+     "wrong": [],
+     "missed": [
+      "git",
+      "mobile-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-security",
+     "found": 17,
+     "right": 17,
+     "hits": 15,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "network-security",
+      "security-testing-tools"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 10,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "calculus",
+      "powershell"
+     ],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 11,
+     "right": 11,
+     "hits": 8,
+     "expected": 12,
+     "wrong": [],
+     "missed": [
+      "communication-protocols",
+      "hardware-debugging",
+      "linux",
+      "rtos"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 8,
+     "right": 7,
+     "hits": 7,
+     "expected": 16,
+     "wrong": [
+      "exploratory-data-analysis"
+     ],
+     "missed": [
+      "agile-scrum",
+      "api-testing",
+      "ci-cd",
+      "e2e-testing",
+      "jenkins",
+      "performance-testing",
+      "selenium",
+      "test-automation",
+      "test-planning"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 7,
+     "right": 7,
+     "hits": 7,
+     "expected": 11,
+     "wrong": [],
+     "missed": [
+      "aws",
+      "git",
+      "rest-api-design",
+      "sql"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "engineering-processes",
+      "project-planning",
+      "stakeholder-communication"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 8,
+     "right": 8,
+     "hits": 8,
+     "expected": 12,
+     "wrong": [],
+     "missed": [
+      "game-design-basics",
+      "game-math",
+      "oop",
+      "profiling"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 5,
+     "right": 4,
+     "hits": 4,
+     "expected": 10,
+     "wrong": [
+      "powershell"
+     ],
+     "missed": [
+      "bi-tools",
+      "data-cleaning",
+      "data-visualization",
+      "product-analytics",
+      "python",
+      "spreadsheets"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:9b",
+   "device": "gpu",
+   "shape": "pick",
+   "variant": "no evidence check",
+   "precision": 0.969,
+   "recall": 0.821,
+   "f1": 0.889,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 22,
+     "right": 21,
+     "hits": 21,
+     "expected": 27,
+     "wrong": [
+      "git"
+     ],
+     "missed": [
+      "ab-testing",
+      "ci-cd",
+      "data-warehousing",
+      "etl-pipelines",
+      "spreadsheets",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 22,
+     "right": 21,
+     "hits": 21,
+     "expected": 27,
+     "wrong": [
+      "hiring"
+     ],
+     "missed": [
+      "ci-cd",
+      "event-driven-architecture",
+      "incident-management",
+      "llm-fundamentals",
+      "mentoring",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "frontend-build-tools",
+      "frontend-testing",
+      "responsive-design",
+      "state-management",
+      "web-performance"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 30,
+     "right": 29,
+     "hits": 28,
+     "expected": 33,
+     "wrong": [
+      "data-visualization"
+     ],
+     "missed": [
+      "llm-evaluation",
+      "llm-serving",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "cloud-networking",
+      "infrastructure-as-code",
+      "observability"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-student",
+     "found": 20,
+     "right": 20,
+     "hits": 19,
+     "expected": 19,
+     "wrong": [],
+     "missed": [],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 19,
+     "right": 19,
+     "hits": 18,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "database-design"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 15,
+     "wrong": [],
+     "missed": [
+      "mobile-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-security",
+     "found": 17,
+     "right": 17,
+     "hits": 15,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "network-security",
+      "security-testing-tools"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 10,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "calculus",
+      "powershell"
+     ],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 14,
+     "right": 13,
+     "hits": 9,
+     "expected": 12,
+     "wrong": [
+      "unity"
+     ],
+     "missed": [
+      "communication-protocols",
+      "hardware-debugging",
+      "rtos"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 13,
+     "right": 12,
+     "hits": 12,
+     "expected": 16,
+     "wrong": [
+      "exploratory-data-analysis"
+     ],
+     "missed": [
+      "ci-cd",
+      "e2e-testing",
+      "performance-testing",
+      "test-planning"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 10,
+     "right": 10,
+     "hits": 10,
+     "expected": 11,
+     "wrong": [],
+     "missed": [
+      "rest-api-design"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "engineering-processes",
+      "project-planning",
+      "stakeholder-communication"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 8,
+     "right": 8,
+     "hits": 8,
+     "expected": 12,
+     "wrong": [],
+     "missed": [
+      "game-design-basics",
+      "game-math",
+      "oop",
+      "profiling"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 7,
+     "right": 6,
+     "hits": 6,
+     "expected": 10,
+     "wrong": [
+      "powershell"
+     ],
+     "missed": [
+      "data-cleaning",
+      "data-visualization",
+      "product-analytics",
+      "spreadsheets"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:9b",
+   "device": "gpu",
+   "shape": "pick",
+   "variant": "no similarity check",
+   "precision": 0.969,
+   "recall": 0.821,
+   "f1": 0.889,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 22,
+     "right": 21,
+     "hits": 21,
+     "expected": 27,
+     "wrong": [
+      "git"
+     ],
+     "missed": [
+      "ab-testing",
+      "ci-cd",
+      "data-warehousing",
+      "etl-pipelines",
+      "spreadsheets",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 22,
+     "right": 21,
+     "hits": 21,
+     "expected": 27,
+     "wrong": [
+      "hiring"
+     ],
+     "missed": [
+      "ci-cd",
+      "event-driven-architecture",
+      "incident-management",
+      "llm-fundamentals",
+      "mentoring",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "frontend-build-tools",
+      "frontend-testing",
+      "responsive-design",
+      "state-management",
+      "web-performance"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 29,
+     "right": 29,
+     "hits": 28,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "llm-evaluation",
+      "llm-serving",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 1
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "cloud-networking",
+      "infrastructure-as-code",
+      "observability"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-student",
+     "found": 20,
+     "right": 20,
+     "hits": 19,
+     "expected": 19,
+     "wrong": [],
+     "missed": [],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 20,
+     "right": 20,
+     "hits": 18,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "database-design"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 15,
+     "wrong": [],
+     "missed": [
+      "mobile-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-security",
+     "found": 17,
+     "right": 17,
+     "hits": 15,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "network-security",
+      "security-testing-tools"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 10,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "calculus",
+      "powershell"
+     ],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 16,
+     "right": 14,
+     "hits": 9,
+     "expected": 12,
+     "wrong": [
+      "computer-networking",
+      "unity"
+     ],
+     "missed": [
+      "communication-protocols",
+      "hardware-debugging",
+      "rtos"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 13,
+     "right": 12,
+     "hits": 12,
+     "expected": 16,
+     "wrong": [
+      "exploratory-data-analysis"
+     ],
+     "missed": [
+      "ci-cd",
+      "e2e-testing",
+      "performance-testing",
+      "test-planning"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 10,
+     "right": 10,
+     "hits": 10,
+     "expected": 11,
+     "wrong": [],
+     "missed": [
+      "rest-api-design"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "engineering-processes",
+      "project-planning",
+      "stakeholder-communication"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 8,
+     "right": 8,
+     "hits": 8,
+     "expected": 12,
+     "wrong": [],
+     "missed": [
+      "game-design-basics",
+      "game-math",
+      "oop",
+      "profiling"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 7,
+     "right": 6,
+     "hits": 6,
+     "expected": 10,
+     "wrong": [
+      "powershell"
+     ],
+     "missed": [
+      "data-cleaning",
+      "data-visualization",
+      "product-analytics",
+      "spreadsheets"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:9b",
+   "device": "gpu",
+   "shape": "compact",
+   "variant": "full",
+   "precision": 0.966,
+   "recall": 0.761,
+   "f1": 0.852,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 23,
+     "right": 21,
+     "hits": 20,
+     "expected": 27,
+     "wrong": [
+      "elasticsearch",
+      "git"
+     ],
+     "missed": [
+      "ab-testing",
+      "ci-cd",
+      "data-warehousing",
+      "etl-pipelines",
+      "mentoring",
+      "spreadsheets",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "airflow": 2,
+      "kafka": 2,
+      "spark": 2,
+      "aws": 2,
+      "data-modeling": 2,
+      "dbt": 2,
+      "github-actions": 2,
+      "kubernetes": 2,
+      "snowflake": 2,
+      "terraform": 2,
+      "docker": 2,
+      "mongodb": 2,
+      "postgresql": 2,
+      "prometheus-grafana": 2,
+      "python": 2,
+      "elasticsearch": 2,
+      "sql": 2,
+      "data-visualization": 1,
+      "pandas": 1,
+      "statistics": 1,
+      "bi-tools": null,
+      "data-quality": null,
+      "git": null
+     }
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 21,
+     "right": 20,
+     "hits": 20,
+     "expected": 27,
+     "wrong": [
+      "hiring"
+     ],
+     "missed": [
+      "ci-cd",
+      "event-driven-architecture",
+      "incident-management",
+      "llm-fundamentals",
+      "mentoring",
+      "rest-api-design",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "distributed-systems": 3,
+      "java": 3,
+      "spring-boot": 3,
+      "kafka": 2,
+      "fastapi": 2,
+      "opentelemetry": 2,
+      "python": 2,
+      "typescript": 2,
+      "vue": 2,
+      "code-review": 2,
+      "hiring": 2,
+      "integration-testing": 2,
+      "jenkins": 2,
+      "postgresql": 2,
+      "redis": 2,
+      "unit-testing": 2,
+      "caching": null,
+      "docker": null,
+      "kubernetes": null,
+      "microservices": null,
+      "observability": null
+     }
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 17,
+     "right": 17,
+     "hits": 15,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "frontend-build-tools",
+      "frontend-testing",
+      "responsive-design",
+      "web-performance"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "design-systems": 2,
+      "e2e-testing": 2,
+      "state-management": 2,
+      "graphql": 2,
+      "nextjs": 2,
+      "react": 2,
+      "tailwind-css": 2,
+      "testing-fundamentals": 2,
+      "typescript": 2,
+      "unit-testing": 2,
+      "accessibility": 2,
+      "code-review": 1,
+      "css": null,
+      "git": null,
+      "html": null,
+      "javascript": null,
+      "ui-ux-basics": null
+     }
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 26,
+     "right": 26,
+     "hits": 26,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "ab-testing",
+      "llm-evaluation",
+      "llm-serving",
+      "mentoring",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "docker": 3,
+      "embeddings-vector-search": 3,
+      "fine-tuning": 3,
+      "kubernetes": 3,
+      "llm-fundamentals": 3,
+      "machine-learning-fundamentals": 3,
+      "pytorch": 3,
+      "rag": 3,
+      "vector-databases": 3,
+      "airflow": 1,
+      "spark": 1,
+      "experiment-tracking": 1,
+      "ml-pipelines": 1,
+      "model-monitoring": 1,
+      "scikit-learn": 1,
+      "aws": 1,
+      "nlp": 1,
+      "tensorflow": 1,
+      "architecture-decision-records": null,
+      "deep-learning": null,
+      "distributed-training": null,
+      "feature-engineering": null,
+      "gcp": null,
+      "hiring": null,
+      "sql": null,
+      "statistics": null
+     }
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 13,
+     "right": 13,
+     "hits": 12,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "cloud-networking",
+      "incident-management",
+      "infrastructure-as-code",
+      "observability",
+      "secrets-management"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "aws": 2,
+      "gitops": 2,
+      "helm": 2,
+      "kubernetes": 2,
+      "prometheus-grafana": 2,
+      "terraform": 2,
+      "ansible": 1,
+      "docker": 1,
+      "linux": 1,
+      "postgresql": 1,
+      "python": 1,
+      "git": null,
+      "shell-scripting": null
+     }
+    },
+    {
+     "id": "classic-en-student",
+     "found": 17,
+     "right": 17,
+     "hits": 16,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "c",
+      "rest-api-design",
+      "unit-testing"
+     ],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "algorithms": 1,
+      "data-structures": 1,
+      "django": 1,
+      "git": 1,
+      "java": 1,
+      "linux": 1,
+      "python": 1,
+      "react": 1,
+      "sql": 1,
+      "css": null,
+      "docker": null,
+      "html": null,
+      "javascript": null,
+      "jupyter": null,
+      "oop": null,
+      "pandas": null,
+      "scikit-learn": null
+     }
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 15,
+     "right": 15,
+     "hits": 15,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "database-design",
+      "message-brokers",
+      "orm"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "java": 3,
+      "spring-boot": 3,
+      "ci-cd": 2,
+      "docker": 2,
+      "integration-testing": 2,
+      "jenkins": 2,
+      "kubernetes": 2,
+      "linux": 2,
+      "microservices": 2,
+      "postgresql": 2,
+      "redis": 2,
+      "rest-api-design": 2,
+      "unit-testing": 2,
+      "git": null,
+      "sql": null
+     }
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 15,
+     "wrong": [],
+     "missed": [
+      "mobile-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "android-sdk": 2,
+      "app-store-release": 2,
+      "ci-cd": 2,
+      "jetpack-compose": 2,
+      "kotlin": 2,
+      "kotlin-coroutines": 2,
+      "mobile-architecture": 2,
+      "mobile-data-persistence": 2,
+      "rest-api-design": 2,
+      "unit-testing": 2,
+      "dart": 1,
+      "flutter": 1,
+      "java": 1,
+      "git": null,
+      "github-actions": null
+     }
+    },
+    {
+     "id": "classic-en-security",
+     "found": 13,
+     "right": 13,
+     "hits": 12,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "identity-access-management",
+      "network-security",
+      "security-compliance",
+      "security-testing-tools",
+      "web-security"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "active-directory": 3,
+      "incident-management": 3,
+      "cloud-security": 2,
+      "penetration-testing": 2,
+      "powershell": 2,
+      "python": 2,
+      "security-incident-response": 2,
+      "siem": 2,
+      "vulnerability-management": 2,
+      "linux": null,
+      "azure": null,
+      "threat-modeling": null,
+      "windows-server": null
+     }
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 10,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "calculus",
+      "clean-code"
+     ],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 1,
+     "levels": {
+      "clean-code": 1,
+      "data-visualization": 1,
+      "pandas": 1,
+      "sql": 1,
+      "exploratory-data-analysis": 1,
+      "python": 1,
+      "statistics": 1,
+      "bi-tools": null,
+      "calculus": null,
+      "spreadsheets": null
+     }
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 12,
+     "right": 11,
+     "hits": 9,
+     "expected": 12,
+     "wrong": [
+      "unity"
+     ],
+     "missed": [
+      "communication-protocols",
+      "hardware-debugging",
+      "mentoring"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "c": 3,
+      "cpp": 3,
+      "ci-cd": 3,
+      "embedded-linux": 3,
+      "git": 3,
+      "linux": 3,
+      "microcontrollers": 3,
+      "rtos": 3,
+      "unit-testing": 3,
+      "python": 2,
+      "jenkins": null,
+      "unity": null
+     }
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 13,
+     "right": 13,
+     "hits": 13,
+     "expected": 16,
+     "wrong": [],
+     "missed": [
+      "e2e-testing",
+      "test-planning",
+      "testing-fundamentals"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "api-testing": 2,
+      "ci-cd": 2,
+      "git": 2,
+      "java": 2,
+      "javascript": 2,
+      "performance-testing": 2,
+      "selenium": 2,
+      "sql": 2,
+      "test-automation": 2,
+      "manual-testing": 1,
+      "agile-scrum": null,
+      "jenkins": null,
+      "typescript": null
+     }
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "css": null,
+      "html": null,
+      "javascript": null
+     }
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 9,
+     "right": 9,
+     "hits": 9,
+     "expected": 11,
+     "wrong": [],
+     "missed": [
+      "rest-api-design",
+      "unit-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "django": 2,
+      "docker": 2,
+      "fastapi": 2,
+      "git": 2,
+      "postgresql": 2,
+      "python": 2,
+      "redis": 2,
+      "aws": null,
+      "sql": null
+     }
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 12,
+     "right": 12,
+     "hits": 12,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "engineering-processes",
+      "go",
+      "project-planning",
+      "stakeholder-communication"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "agile-scrum": 3,
+      "architecture-decision-records": 3,
+      "hiring": 3,
+      "incident-management": 3,
+      "mentoring": 3,
+      "people-management": 3,
+      "technical-leadership": 3,
+      "aws": null,
+      "java": null,
+      "kotlin": null,
+      "microservices": null,
+      "system-design": null
+     }
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 8,
+     "right": 7,
+     "hits": 7,
+     "expected": 12,
+     "wrong": [
+      "vector-databases"
+     ],
+     "missed": [
+      "game-design-basics",
+      "game-math",
+      "multiplayer-networking",
+      "oop",
+      "profiling"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "csharp": 2,
+      "game-optimization": 2,
+      "game-physics": 2,
+      "git": 2,
+      "shaders": 2,
+      "unity": 2,
+      "vector-databases": 2,
+      "design-patterns": null
+     }
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 7,
+     "right": 6,
+     "hits": 6,
+     "expected": 10,
+     "wrong": [
+      "powershell"
+     ],
+     "missed": [
+      "data-visualization",
+      "product-analytics",
+      "spreadsheets",
+      "statistics"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "ab-testing": 1,
+      "data-cleaning": 1,
+      "powershell": 1,
+      "python": 1,
+      "sql": 1,
+      "bi-tools": null,
+      "pandas": null
+     }
+    }
+   ],
+   "latency": [
+    {
+     "id": "li-en-data-senior",
+     "chars": 1606,
+     "ms": 22137,
+     "prompt_tokens": 2660,
+     "output_tokens": 405
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "chars": 1769,
+     "ms": 12919,
+     "prompt_tokens": 2722,
+     "output_tokens": 365
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "chars": 1122,
+     "ms": 10677,
+     "prompt_tokens": 2545,
+     "output_tokens": 289
+    },
+    {
+     "id": "li-en-ml-staff",
+     "chars": 1980,
+     "ms": 15147,
+     "prompt_tokens": 2757,
+     "output_tokens": 424
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "chars": 1190,
+     "ms": 10327,
+     "prompt_tokens": 2664,
+     "output_tokens": 264
+    },
+    {
+     "id": "classic-en-student",
+     "chars": 808,
+     "ms": 7388,
+     "prompt_tokens": 2462,
+     "output_tokens": 190
+    },
+    {
+     "id": "classic-tr-backend",
+     "chars": 844,
+     "ms": 11407,
+     "prompt_tokens": 2529,
+     "output_tokens": 298
+    },
+    {
+     "id": "classic-tr-mobile",
+     "chars": 812,
+     "ms": 13593,
+     "prompt_tokens": 2509,
+     "output_tokens": 370
+    },
+    {
+     "id": "classic-en-security",
+     "chars": 1039,
+     "ms": 8702,
+     "prompt_tokens": 2505,
+     "output_tokens": 236
+    },
+    {
+     "id": "classic-en-career-changer",
+     "chars": 899,
+     "ms": 10488,
+     "prompt_tokens": 2485,
+     "output_tokens": 255
+    },
+    {
+     "id": "classic-en-embedded",
+     "chars": 873,
+     "ms": 9994,
+     "prompt_tokens": 2478,
+     "output_tokens": 260
+    },
+    {
+     "id": "classic-en-qa",
+     "chars": 833,
+     "ms": 9319,
+     "prompt_tokens": 2468,
+     "output_tokens": 244
+    },
+    {
+     "id": "classic-en-thin",
+     "chars": 167,
+     "ms": 3412,
+     "prompt_tokens": 2291,
+     "output_tokens": 59
+    },
+    {
+     "id": "classic-en-injection",
+     "chars": 622,
+     "ms": 7644,
+     "prompt_tokens": 2419,
+     "output_tokens": 184
+    },
+    {
+     "id": "li-en-eng-manager",
+     "chars": 1494,
+     "ms": 10051,
+     "prompt_tokens": 2633,
+     "output_tokens": 263
+    },
+    {
+     "id": "classic-en-gamedev",
+     "chars": 753,
+     "ms": 7566,
+     "prompt_tokens": 2429,
+     "output_tokens": 180
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "chars": 605,
+     "ms": 7370,
+     "prompt_tokens": 2454,
+     "output_tokens": 176
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:9b",
+   "device": "gpu",
+   "shape": "compact",
+   "variant": "no scan",
+   "precision": 0.972,
+   "recall": 0.586,
+   "f1": 0.731,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 20,
+     "right": 19,
+     "hits": 18,
+     "expected": 27,
+     "wrong": [
+      "elasticsearch"
+     ],
+     "missed": [
+      "ab-testing",
+      "bi-tools",
+      "ci-cd",
+      "data-quality",
+      "data-warehousing",
+      "etl-pipelines",
+      "mentoring",
+      "spreadsheets",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 16,
+     "right": 15,
+     "hits": 15,
+     "expected": 27,
+     "wrong": [
+      "hiring"
+     ],
+     "missed": [
+      "caching",
+      "ci-cd",
+      "docker",
+      "event-driven-architecture",
+      "incident-management",
+      "kubernetes",
+      "llm-fundamentals",
+      "mentoring",
+      "microservices",
+      "observability",
+      "rest-api-design",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 12,
+     "right": 12,
+     "hits": 10,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "css",
+      "frontend-build-tools",
+      "frontend-testing",
+      "git",
+      "html",
+      "javascript",
+      "responsive-design",
+      "ui-ux-basics",
+      "web-performance"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 18,
+     "right": 18,
+     "hits": 18,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "ab-testing",
+      "architecture-decision-records",
+      "deep-learning",
+      "distributed-training",
+      "feature-engineering",
+      "gcp",
+      "hiring",
+      "llm-evaluation",
+      "llm-serving",
+      "mentoring",
+      "model-serving",
+      "public-speaking",
+      "sql",
+      "statistics",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 11,
+     "right": 11,
+     "hits": 11,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "cloud-networking",
+      "incident-management",
+      "infrastructure-as-code",
+      "observability",
+      "secrets-management",
+      "shell-scripting"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-student",
+     "found": 9,
+     "right": 9,
+     "hits": 9,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "c",
+      "css",
+      "docker",
+      "html",
+      "javascript",
+      "oop",
+      "pandas",
+      "rest-api-design",
+      "scikit-learn",
+      "unit-testing"
+     ],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 13,
+     "right": 13,
+     "hits": 13,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "database-design",
+      "git",
+      "message-brokers",
+      "orm",
+      "sql"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 13,
+     "right": 13,
+     "hits": 13,
+     "expected": 15,
+     "wrong": [],
+     "missed": [
+      "git",
+      "mobile-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-security",
+     "found": 9,
+     "right": 9,
+     "hits": 8,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "azure",
+      "identity-access-management",
+      "linux",
+      "network-security",
+      "security-compliance",
+      "security-testing-tools",
+      "threat-modeling",
+      "web-security",
+      "windows-server"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 7,
+     "right": 6,
+     "hits": 6,
+     "expected": 10,
+     "wrong": [
+      "clean-code"
+     ],
+     "missed": [
+      "bi-tools",
+      "data-cleaning",
+      "public-speaking",
+      "spreadsheets"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 1
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 10,
+     "right": 10,
+     "hits": 9,
+     "expected": 12,
+     "wrong": [],
+     "missed": [
+      "communication-protocols",
+      "hardware-debugging",
+      "mentoring"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 10,
+     "right": 10,
+     "hits": 10,
+     "expected": 16,
+     "wrong": [],
+     "missed": [
+      "agile-scrum",
+      "e2e-testing",
+      "jenkins",
+      "test-planning",
+      "testing-fundamentals",
+      "typescript"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 7,
+     "right": 7,
+     "hits": 7,
+     "expected": 11,
+     "wrong": [],
+     "missed": [
+      "aws",
+      "rest-api-design",
+      "sql",
+      "unit-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 7,
+     "right": 7,
+     "hits": 7,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "aws",
+      "code-review",
+      "engineering-processes",
+      "go",
+      "java",
+      "kotlin",
+      "microservices",
+      "project-planning",
+      "stakeholder-communication",
+      "system-design"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 7,
+     "right": 6,
+     "hits": 6,
+     "expected": 12,
+     "wrong": [
+      "vector-databases"
+     ],
+     "missed": [
+      "design-patterns",
+      "game-design-basics",
+      "game-math",
+      "multiplayer-networking",
+      "oop",
+      "profiling"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 5,
+     "right": 4,
+     "hits": 4,
+     "expected": 10,
+     "wrong": [
+      "powershell"
+     ],
+     "missed": [
+      "bi-tools",
+      "data-visualization",
+      "pandas",
+      "product-analytics",
+      "spreadsheets",
+      "statistics"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:9b",
+   "device": "gpu",
+   "shape": "compact",
+   "variant": "no evidence check",
+   "precision": 0.962,
+   "recall": 0.761,
+   "f1": 0.85,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 23,
+     "right": 21,
+     "hits": 20,
+     "expected": 27,
+     "wrong": [
+      "elasticsearch",
+      "git"
+     ],
+     "missed": [
+      "ab-testing",
+      "ci-cd",
+      "data-warehousing",
+      "etl-pipelines",
+      "mentoring",
+      "spreadsheets",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 21,
+     "right": 20,
+     "hits": 20,
+     "expected": 27,
+     "wrong": [
+      "hiring"
+     ],
+     "missed": [
+      "ci-cd",
+      "event-driven-architecture",
+      "incident-management",
+      "llm-fundamentals",
+      "mentoring",
+      "rest-api-design",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 17,
+     "right": 17,
+     "hits": 15,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "frontend-build-tools",
+      "frontend-testing",
+      "responsive-design",
+      "web-performance"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 26,
+     "right": 26,
+     "hits": 26,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "ab-testing",
+      "llm-evaluation",
+      "llm-serving",
+      "mentoring",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 13,
+     "right": 13,
+     "hits": 12,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "cloud-networking",
+      "incident-management",
+      "infrastructure-as-code",
+      "observability",
+      "secrets-management"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-student",
+     "found": 17,
+     "right": 17,
+     "hits": 16,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "c",
+      "rest-api-design",
+      "unit-testing"
+     ],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 15,
+     "right": 15,
+     "hits": 15,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "database-design",
+      "message-brokers",
+      "orm"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 15,
+     "wrong": [],
+     "missed": [
+      "mobile-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-security",
+     "found": 13,
+     "right": 13,
+     "hits": 12,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "identity-access-management",
+      "network-security",
+      "security-compliance",
+      "security-testing-tools",
+      "web-security"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 11,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "calculus",
+      "clean-code",
+      "powershell"
+     ],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 12,
+     "right": 11,
+     "hits": 9,
+     "expected": 12,
+     "wrong": [
+      "unity"
+     ],
+     "missed": [
+      "communication-protocols",
+      "hardware-debugging",
+      "mentoring"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 13,
+     "right": 13,
+     "hits": 13,
+     "expected": 16,
+     "wrong": [],
+     "missed": [
+      "e2e-testing",
+      "test-planning",
+      "testing-fundamentals"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 9,
+     "right": 9,
+     "hits": 9,
+     "expected": 11,
+     "wrong": [],
+     "missed": [
+      "rest-api-design",
+      "unit-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 12,
+     "right": 12,
+     "hits": 12,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "engineering-processes",
+      "go",
+      "project-planning",
+      "stakeholder-communication"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 8,
+     "right": 7,
+     "hits": 7,
+     "expected": 12,
+     "wrong": [
+      "vector-databases"
+     ],
+     "missed": [
+      "game-design-basics",
+      "game-math",
+      "multiplayer-networking",
+      "oop",
+      "profiling"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 7,
+     "right": 6,
+     "hits": 6,
+     "expected": 10,
+     "wrong": [
+      "powershell"
+     ],
+     "missed": [
+      "data-visualization",
+      "product-analytics",
+      "spreadsheets",
+      "statistics"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:9b",
+   "device": "gpu",
+   "shape": "compact",
+   "variant": "no similarity check",
+   "precision": 0.954,
+   "recall": 0.772,
+   "f1": 0.853,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 23,
+     "right": 21,
+     "hits": 20,
+     "expected": 27,
+     "wrong": [
+      "elasticsearch",
+      "git"
+     ],
+     "missed": [
+      "ab-testing",
+      "ci-cd",
+      "data-warehousing",
+      "etl-pipelines",
+      "mentoring",
+      "spreadsheets",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 22,
+     "right": 21,
+     "hits": 21,
+     "expected": 27,
+     "wrong": [
+      "hiring"
+     ],
+     "missed": [
+      "ci-cd",
+      "event-driven-architecture",
+      "incident-management",
+      "llm-fundamentals",
+      "rest-api-design",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 17,
+     "right": 17,
+     "hits": 15,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "frontend-build-tools",
+      "frontend-testing",
+      "responsive-design",
+      "web-performance"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 26,
+     "right": 26,
+     "hits": 26,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "ab-testing",
+      "llm-evaluation",
+      "llm-serving",
+      "mentoring",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 13,
+     "right": 13,
+     "hits": 12,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "cloud-networking",
+      "incident-management",
+      "infrastructure-as-code",
+      "observability",
+      "secrets-management"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-student",
+     "found": 18,
+     "right": 18,
+     "hits": 17,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "rest-api-design",
+      "unit-testing"
+     ],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 15,
+     "right": 15,
+     "hits": 15,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "database-design",
+      "message-brokers",
+      "orm"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 16,
+     "right": 15,
+     "hits": 14,
+     "expected": 15,
+     "wrong": [
+      "hiring"
+     ],
+     "missed": [
+      "mobile-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-security",
+     "found": 13,
+     "right": 13,
+     "hits": 12,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "identity-access-management",
+      "network-security",
+      "security-compliance",
+      "security-testing-tools",
+      "web-security"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 10,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "calculus",
+      "clean-code"
+     ],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 1
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 13,
+     "right": 11,
+     "hits": 9,
+     "expected": 12,
+     "wrong": [
+      "caching",
+      "unity"
+     ],
+     "missed": [
+      "communication-protocols",
+      "hardware-debugging",
+      "mentoring"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 14,
+     "right": 13,
+     "hits": 13,
+     "expected": 16,
+     "wrong": [
+      "csharp"
+     ],
+     "missed": [
+      "e2e-testing",
+      "test-planning",
+      "testing-fundamentals"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 9,
+     "right": 9,
+     "hits": 9,
+     "expected": 11,
+     "wrong": [],
+     "missed": [
+      "rest-api-design",
+      "unit-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 13,
+     "right": 13,
+     "hits": 13,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "go",
+      "project-planning",
+      "stakeholder-communication"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 8,
+     "right": 7,
+     "hits": 7,
+     "expected": 12,
+     "wrong": [
+      "vector-databases"
+     ],
+     "missed": [
+      "game-design-basics",
+      "game-math",
+      "multiplayer-networking",
+      "oop",
+      "profiling"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 7,
+     "right": 6,
+     "hits": 6,
+     "expected": 10,
+     "wrong": [
+      "powershell"
+     ],
+     "missed": [
+      "data-visualization",
+      "product-analytics",
+      "spreadsheets",
+      "statistics"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:4b",
+   "device": "cpu",
+   "shape": "phrases",
+   "variant": "full",
+   "precision": 0.935,
+   "recall": 0.87,
+   "f1": 0.901,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 25,
+     "right": 24,
+     "hits": 23,
+     "expected": 27,
+     "wrong": [
+      "git"
+     ],
+     "missed": [
+      "ab-testing",
+      "ci-cd",
+      "mentoring",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "kafka": 3,
+      "spark": 3,
+      "data-modeling": 3,
+      "dbt": 3,
+      "sql": 3,
+      "airflow": 2,
+      "github-actions": 2,
+      "snowflake": 2,
+      "terraform": 2,
+      "data-warehousing": 2,
+      "docker": 2,
+      "mongodb": 2,
+      "postgresql": 2,
+      "prometheus-grafana": 2,
+      "python": 2,
+      "bi-tools": 1,
+      "pandas": 1,
+      "spreadsheets": 1,
+      "aws": null,
+      "cloud-fundamentals": null,
+      "data-quality": null,
+      "etl-pipelines": null,
+      "git": null,
+      "kubernetes": null,
+      "statistics": null
+     }
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 24,
+     "right": 23,
+     "hits": 22,
+     "expected": 27,
+     "wrong": [
+      "security-incident-response"
+     ],
+     "missed": [
+      "ci-cd",
+      "event-driven-architecture",
+      "incident-management",
+      "llm-fundamentals",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "distributed-systems": 3,
+      "java": 3,
+      "kafka": 2,
+      "opentelemetry": 2,
+      "security-incident-response": 2,
+      "code-review": 2,
+      "docker": 2,
+      "integration-testing": 2,
+      "jenkins": 2,
+      "kubernetes": 2,
+      "mentoring": 2,
+      "postgresql": 2,
+      "redis": 2,
+      "rest-api-design": 2,
+      "spring-boot": 2,
+      "testing-fundamentals": 2,
+      "unit-testing": 2,
+      "caching": null,
+      "fastapi": null,
+      "microservices": null,
+      "observability": null,
+      "python": null,
+      "typescript": null,
+      "vue": null
+     }
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 16,
+     "right": 16,
+     "hits": 16,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "responsive-design",
+      "web-performance"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "e2e-testing": 2,
+      "state-management": 2,
+      "frontend-testing": 2,
+      "graphql": 2,
+      "nextjs": 2,
+      "react": 2,
+      "tailwind-css": 2,
+      "typescript": 2,
+      "accessibility": 2,
+      "css": 1,
+      "frontend-build-tools": 1,
+      "git": 1,
+      "html": 1,
+      "javascript": 1,
+      "ui-ux-basics": 1,
+      "design-systems": null
+     }
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 31,
+     "right": 31,
+     "hits": 29,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "mentoring",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "ab-testing": 3,
+      "architecture-decision-records": 3,
+      "deep-learning": 3,
+      "docker": 3,
+      "embeddings-vector-search": 3,
+      "fine-tuning": 3,
+      "hiring": 3,
+      "kubernetes": 3,
+      "llm-evaluation": 3,
+      "llm-frameworks": 3,
+      "llm-fundamentals": 3,
+      "llm-serving": 3,
+      "machine-learning-fundamentals": 3,
+      "pytorch": 3,
+      "rag": 3,
+      "scikit-learn": 3,
+      "tensorflow": 3,
+      "vector-databases": 3,
+      "spark": 2,
+      "feature-engineering": 2,
+      "airflow": 1,
+      "experiment-tracking": 1,
+      "ml-pipelines": 1,
+      "model-monitoring": 1,
+      "aws": 1,
+      "distributed-training": 1,
+      "gpu-infrastructure": 1,
+      "nlp": 1,
+      "sql": 1,
+      "statistics": 1,
+      "gcp": null
+     }
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 17,
+     "right": 17,
+     "hits": 15,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "incident-management",
+      "infrastructure-as-code",
+      "observability"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "aws": 2,
+      "ci-cd": 2,
+      "cloud-networking": 2,
+      "github-actions": 2,
+      "gitops": 2,
+      "helm": 2,
+      "kubernetes": 2,
+      "prometheus-grafana": 2,
+      "secrets-management": 2,
+      "terraform": 2,
+      "ansible": 1,
+      "docker": 1,
+      "postgresql": 1,
+      "python": 1,
+      "shell-scripting": 1,
+      "git": null,
+      "linux": null
+     }
+    },
+    {
+     "id": "classic-en-student",
+     "found": 23,
+     "right": 21,
+     "hits": 19,
+     "expected": 19,
+     "wrong": [
+      "frontend-testing",
+      "integration-testing"
+     ],
+     "missed": [],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "django": 1,
+      "docker": 1,
+      "frontend-testing": 1,
+      "git": 1,
+      "integration-testing": 1,
+      "linux": 1,
+      "python": 1,
+      "rest-api-design": 1,
+      "sql": 1,
+      "unit-testing": 1,
+      "algorithms": null,
+      "c": null,
+      "css": null,
+      "data-structures": null,
+      "html": null,
+      "java": null,
+      "javascript": null,
+      "jupyter": null,
+      "oop": null,
+      "pandas": null,
+      "react": null,
+      "relational-databases": null,
+      "scikit-learn": null
+     }
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 20,
+     "right": 20,
+     "hits": 18,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "database-design"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "java": 3,
+      "rest-api-design": 3,
+      "ci-cd": 2,
+      "docker": 2,
+      "integration-testing": 2,
+      "jenkins": 2,
+      "kubernetes": 2,
+      "message-brokers": 2,
+      "microservices": 2,
+      "postgresql": 2,
+      "spring-boot": 2,
+      "testing-fundamentals": 2,
+      "unit-testing": 2,
+      "clean-code": 2,
+      "code-review": 2,
+      "git": 2,
+      "orm": 2,
+      "sql": 2,
+      "linux": null,
+      "redis": null
+     }
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 16,
+     "right": 12,
+     "hits": 10,
+     "expected": 15,
+     "wrong": [
+      "angular",
+      "frontend-architecture",
+      "react",
+      "vue"
+     ],
+     "missed": [
+      "android-sdk",
+      "app-store-release",
+      "mobile-architecture",
+      "mobile-data-persistence",
+      "mobile-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "angular": 2,
+      "ci-cd": 2,
+      "frontend-architecture": 2,
+      "state-management": 2,
+      "git": 2,
+      "jetpack-compose": 2,
+      "kotlin": 2,
+      "kotlin-coroutines": 2,
+      "react": 2,
+      "rest-api-design": 2,
+      "unit-testing": 2,
+      "vue": 2,
+      "dart": 1,
+      "flutter": 1,
+      "java": 1,
+      "github-actions": null
+     }
+    },
+    {
+     "id": "classic-en-security",
+     "found": 19,
+     "right": 18,
+     "hits": 16,
+     "expected": 17,
+     "wrong": [
+      "observability"
+     ],
+     "missed": [
+      "vulnerability-management"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "security-fundamentals": 3,
+      "security-incident-response": 3,
+      "security-testing-tools": 3,
+      "siem": 3,
+      "web-security": 3,
+      "cloud-security": 2,
+      "identity-access-management": 2,
+      "azure": 2,
+      "penetration-testing": 2,
+      "secure-coding": 2,
+      "security-compliance": 2,
+      "threat-modeling": 2,
+      "active-directory": 2,
+      "network-security": 2,
+      "observability": 2,
+      "powershell": 2,
+      "python": 2,
+      "windows-server": 2,
+      "linux": null
+     }
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 9,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "calculus"
+     ],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "bi-tools": 1,
+      "pandas": 1,
+      "spreadsheets": 1,
+      "sql": 1,
+      "data-visualization": 1,
+      "exploratory-data-analysis": 1,
+      "python": 1,
+      "statistics": 1,
+      "calculus": null
+     }
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 17,
+     "right": 14,
+     "hits": 11,
+     "expected": 12,
+     "wrong": [
+      "manual-testing",
+      "observability",
+      "unity"
+     ],
+     "missed": [
+      "communication-protocols"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "c": 3,
+      "cpp": 3,
+      "digital-electronics": 3,
+      "embedded-linux": 3,
+      "git": 3,
+      "hardware-debugging": 3,
+      "jenkins": 3,
+      "mentoring": 3,
+      "microcontrollers": 3,
+      "rtos": 3,
+      "unit-testing": 3,
+      "unity": 3,
+      "code-review": 2,
+      "manual-testing": 2,
+      "observability": 2,
+      "python": 2,
+      "linux": null
+     }
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 17,
+     "right": 17,
+     "hits": 15,
+     "expected": 16,
+     "wrong": [],
+     "missed": [
+      "ci-cd"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "agile-scrum": 2,
+      "api-testing": 2,
+      "e2e-testing": 2,
+      "git": 2,
+      "java": 2,
+      "javascript": 2,
+      "jenkins": 2,
+      "performance-testing": 2,
+      "selenium": 2,
+      "test-automation": 2,
+      "typescript": 2,
+      "integration-testing": 1,
+      "manual-testing": 1,
+      "sql": 1,
+      "test-planning": 1,
+      "test-strategy": 1,
+      "testing-fundamentals": 1
+     }
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "css": null,
+      "html": null,
+      "javascript": null
+     }
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 14,
+     "right": 12,
+     "hits": 11,
+     "expected": 11,
+     "wrong": [
+      "frontend-testing",
+      "shell-scripting"
+     ],
+     "missed": [],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "aws": 2,
+      "django": 2,
+      "docker": 2,
+      "fastapi": 2,
+      "frontend-testing": 2,
+      "git": 2,
+      "integration-testing": 2,
+      "postgresql": 2,
+      "python": 2,
+      "redis": 2,
+      "rest-api-design": 2,
+      "unit-testing": 2,
+      "shell-scripting": 1,
+      "sql": 1
+     }
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 22,
+     "right": 19,
+     "hits": 16,
+     "expected": 17,
+     "wrong": [
+      "performance-testing",
+      "profiling",
+      "security-incident-response"
+     ],
+     "missed": [
+      "engineering-processes"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "agile-scrum": 3,
+      "architecture-decision-records": 3,
+      "hiring": 3,
+      "mentoring": 3,
+      "people-management": 3,
+      "performance-testing": 3,
+      "product-thinking": 3,
+      "profiling": 3,
+      "project-planning": 3,
+      "public-speaking": 3,
+      "security-incident-response": 3,
+      "stakeholder-communication": 3,
+      "technical-leadership": 3,
+      "architecture-patterns": 1,
+      "aws": 1,
+      "code-review": 1,
+      "go": 1,
+      "incident-management": 1,
+      "java": 1,
+      "kotlin": 1,
+      "microservices": 1,
+      "system-design": 1
+     }
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 11,
+     "right": 10,
+     "hits": 9,
+     "expected": 12,
+     "wrong": [
+      "infrastructure-as-code"
+     ],
+     "missed": [
+      "game-design-basics",
+      "game-physics",
+      "multiplayer-networking"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "csharp": 2,
+      "computer-graphics": 2,
+      "design-patterns": 2,
+      "game-math": 2,
+      "game-optimization": 2,
+      "git": 2,
+      "infrastructure-as-code": 2,
+      "oop": 2,
+      "profiling": 2,
+      "shaders": 2,
+      "unity": 2
+     }
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 7,
+     "right": 7,
+     "hits": 7,
+     "expected": 10,
+     "wrong": [],
+     "missed": [
+      "data-cleaning",
+      "product-analytics",
+      "statistics"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "ab-testing": 1,
+      "bi-tools": 1,
+      "data-visualization": 1,
+      "pandas": 1,
+      "python": 1,
+      "spreadsheets": 1,
+      "sql": 1
+     }
+    }
+   ],
+   "latency": [
+    {
+     "id": "li-en-data-senior",
+     "chars": 1606,
+     "ms": 63636,
+     "prompt_tokens": 779,
+     "output_tokens": 1069
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "chars": 1769,
+     "ms": 52510,
+     "prompt_tokens": 841,
+     "output_tokens": 1099
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "chars": 1122,
+     "ms": 43651,
+     "prompt_tokens": 664,
+     "output_tokens": 941
+    },
+    {
+     "id": "li-en-ml-staff",
+     "chars": 1980,
+     "ms": 85686,
+     "prompt_tokens": 876,
+     "output_tokens": 2066
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "chars": 1190,
+     "ms": 34360,
+     "prompt_tokens": 783,
+     "output_tokens": 860
+    },
+    {
+     "id": "classic-en-student",
+     "chars": 808,
+     "ms": 28124,
+     "prompt_tokens": 581,
+     "output_tokens": 744
+    },
+    {
+     "id": "classic-tr-backend",
+     "chars": 844,
+     "ms": 42914,
+     "prompt_tokens": 648,
+     "output_tokens": 1186
+    },
+    {
+     "id": "classic-tr-mobile",
+     "chars": 812,
+     "ms": 31084,
+     "prompt_tokens": 628,
+     "output_tokens": 841
+    },
+    {
+     "id": "classic-en-security",
+     "chars": 1039,
+     "ms": 43380,
+     "prompt_tokens": 624,
+     "output_tokens": 1224
+    },
+    {
+     "id": "classic-en-career-changer",
+     "chars": 899,
+     "ms": 26045,
+     "prompt_tokens": 604,
+     "output_tokens": 691
+    },
+    {
+     "id": "classic-en-embedded",
+     "chars": 873,
+     "ms": 44585,
+     "prompt_tokens": 597,
+     "output_tokens": 1275
+    },
+    {
+     "id": "classic-en-qa",
+     "chars": 833,
+     "ms": 32638,
+     "prompt_tokens": 587,
+     "output_tokens": 902
+    },
+    {
+     "id": "classic-en-thin",
+     "chars": 167,
+     "ms": 8400,
+     "prompt_tokens": 410,
+     "output_tokens": 176
+    },
+    {
+     "id": "classic-en-injection",
+     "chars": 622,
+     "ms": 27281,
+     "prompt_tokens": 538,
+     "output_tokens": 716
+    },
+    {
+     "id": "li-en-eng-manager",
+     "chars": 1494,
+     "ms": 37946,
+     "prompt_tokens": 752,
+     "output_tokens": 1037
+    },
+    {
+     "id": "classic-en-gamedev",
+     "chars": 753,
+     "ms": 23093,
+     "prompt_tokens": 548,
+     "output_tokens": 612
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "chars": 605,
+     "ms": 19444,
+     "prompt_tokens": 573,
+     "output_tokens": 494
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:4b",
+   "device": "cpu",
+   "shape": "phrases",
+   "variant": "no scan",
+   "precision": 0.938,
+   "recall": 0.825,
+   "f1": 0.878,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 21,
+     "right": 21,
+     "hits": 20,
+     "expected": 27,
+     "wrong": [],
+     "missed": [
+      "ab-testing",
+      "ci-cd",
+      "data-quality",
+      "kubernetes",
+      "mentoring",
+      "statistics",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 21,
+     "right": 20,
+     "hits": 19,
+     "expected": 27,
+     "wrong": [
+      "security-incident-response"
+     ],
+     "missed": [
+      "caching",
+      "ci-cd",
+      "event-driven-architecture",
+      "incident-management",
+      "llm-fundamentals",
+      "microservices",
+      "observability",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 15,
+     "right": 15,
+     "hits": 15,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "design-systems",
+      "responsive-design",
+      "web-performance"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 30,
+     "right": 30,
+     "hits": 28,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "gcp",
+      "mentoring",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "incident-management",
+      "infrastructure-as-code",
+      "linux",
+      "observability"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-student",
+     "found": 21,
+     "right": 19,
+     "hits": 17,
+     "expected": 19,
+     "wrong": [
+      "frontend-testing",
+      "integration-testing"
+     ],
+     "missed": [
+      "algorithms",
+      "data-structures"
+     ],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 20,
+     "right": 20,
+     "hits": 18,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "database-design"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 15,
+     "right": 11,
+     "hits": 10,
+     "expected": 15,
+     "wrong": [
+      "angular",
+      "frontend-architecture",
+      "react",
+      "vue"
+     ],
+     "missed": [
+      "android-sdk",
+      "app-store-release",
+      "mobile-architecture",
+      "mobile-data-persistence",
+      "mobile-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-security",
+     "found": 18,
+     "right": 17,
+     "hits": 15,
+     "expected": 17,
+     "wrong": [
+      "observability"
+     ],
+     "missed": [
+      "linux",
+      "vulnerability-management"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 8,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 16,
+     "right": 13,
+     "hits": 10,
+     "expected": 12,
+     "wrong": [
+      "manual-testing",
+      "observability",
+      "unity"
+     ],
+     "missed": [
+      "communication-protocols",
+      "linux"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 17,
+     "right": 17,
+     "hits": 15,
+     "expected": 16,
+     "wrong": [],
+     "missed": [
+      "ci-cd"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 14,
+     "right": 12,
+     "hits": 11,
+     "expected": 11,
+     "wrong": [
+      "frontend-testing",
+      "shell-scripting"
+     ],
+     "missed": [],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 22,
+     "right": 19,
+     "hits": 16,
+     "expected": 17,
+     "wrong": [
+      "performance-testing",
+      "profiling",
+      "security-incident-response"
+     ],
+     "missed": [
+      "engineering-processes"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 11,
+     "right": 10,
+     "hits": 9,
+     "expected": 12,
+     "wrong": [
+      "infrastructure-as-code"
+     ],
+     "missed": [
+      "game-design-basics",
+      "game-physics",
+      "multiplayer-networking"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 7,
+     "right": 7,
+     "hits": 7,
+     "expected": 10,
+     "wrong": [],
+     "missed": [
+      "data-cleaning",
+      "product-analytics",
+      "statistics"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:4b",
+   "device": "cpu",
+   "shape": "phrases",
+   "variant": "no evidence check",
+   "precision": 0.935,
+   "recall": 0.87,
+   "f1": 0.901,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 25,
+     "right": 24,
+     "hits": 23,
+     "expected": 27,
+     "wrong": [
+      "git"
+     ],
+     "missed": [
+      "ab-testing",
+      "ci-cd",
+      "mentoring",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 24,
+     "right": 23,
+     "hits": 22,
+     "expected": 27,
+     "wrong": [
+      "security-incident-response"
+     ],
+     "missed": [
+      "ci-cd",
+      "event-driven-architecture",
+      "incident-management",
+      "llm-fundamentals",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 16,
+     "right": 16,
+     "hits": 16,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "responsive-design",
+      "web-performance"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 31,
+     "right": 31,
+     "hits": 29,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "mentoring",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 17,
+     "right": 17,
+     "hits": 15,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "incident-management",
+      "infrastructure-as-code",
+      "observability"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-student",
+     "found": 23,
+     "right": 21,
+     "hits": 19,
+     "expected": 19,
+     "wrong": [
+      "frontend-testing",
+      "integration-testing"
+     ],
+     "missed": [],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 20,
+     "right": 20,
+     "hits": 18,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "database-design"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 16,
+     "right": 12,
+     "hits": 10,
+     "expected": 15,
+     "wrong": [
+      "angular",
+      "frontend-architecture",
+      "react",
+      "vue"
+     ],
+     "missed": [
+      "android-sdk",
+      "app-store-release",
+      "mobile-architecture",
+      "mobile-data-persistence",
+      "mobile-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-security",
+     "found": 19,
+     "right": 18,
+     "hits": 16,
+     "expected": 17,
+     "wrong": [
+      "observability"
+     ],
+     "missed": [
+      "vulnerability-management"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 9,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "calculus"
+     ],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 17,
+     "right": 14,
+     "hits": 11,
+     "expected": 12,
+     "wrong": [
+      "manual-testing",
+      "observability",
+      "unity"
+     ],
+     "missed": [
+      "communication-protocols"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 17,
+     "right": 17,
+     "hits": 15,
+     "expected": 16,
+     "wrong": [],
+     "missed": [
+      "ci-cd"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 14,
+     "right": 12,
+     "hits": 11,
+     "expected": 11,
+     "wrong": [
+      "frontend-testing",
+      "shell-scripting"
+     ],
+     "missed": [],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 22,
+     "right": 19,
+     "hits": 16,
+     "expected": 17,
+     "wrong": [
+      "performance-testing",
+      "profiling",
+      "security-incident-response"
+     ],
+     "missed": [
+      "engineering-processes"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 11,
+     "right": 10,
+     "hits": 9,
+     "expected": 12,
+     "wrong": [
+      "infrastructure-as-code"
+     ],
+     "missed": [
+      "game-design-basics",
+      "game-physics",
+      "multiplayer-networking"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 7,
+     "right": 7,
+     "hits": 7,
+     "expected": 10,
+     "wrong": [],
+     "missed": [
+      "data-cleaning",
+      "product-analytics",
+      "statistics"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:4b",
+   "device": "cpu",
+   "shape": "pick",
+   "variant": "full",
+   "precision": 0.966,
+   "recall": 0.839,
+   "f1": 0.898,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 25,
+     "right": 22,
+     "hits": 21,
+     "expected": 27,
+     "wrong": [
+      "git",
+      "system-design",
+      "tdd"
+     ],
+     "missed": [
+      "ci-cd",
+      "data-warehousing",
+      "etl-pipelines",
+      "mentoring",
+      "spreadsheets",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "snowflake": 3,
+      "airflow": 2,
+      "kafka": 2,
+      "spark": 2,
+      "aws": 2,
+      "dbt": 2,
+      "github-actions": 2,
+      "kubernetes": 2,
+      "terraform": 2,
+      "tdd": 2,
+      "docker": 2,
+      "mongodb": 2,
+      "postgresql": 2,
+      "prometheus-grafana": 2,
+      "python": 2,
+      "sql": 2,
+      "system-design": 2,
+      "ab-testing": 1,
+      "data-visualization": 1,
+      "pandas": 1,
+      "bi-tools": null,
+      "data-modeling": null,
+      "data-quality": null,
+      "git": null,
+      "statistics": null
+     }
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 24,
+     "right": 24,
+     "hits": 23,
+     "expected": 27,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "llm-fundamentals",
+      "mentoring",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "distributed-systems": 3,
+      "java": 3,
+      "kafka": 2,
+      "caching": 2,
+      "event-driven-architecture": 2,
+      "incident-management": 2,
+      "observability": 2,
+      "profiling": 2,
+      "code-review": 2,
+      "docker": 2,
+      "integration-testing": 2,
+      "jenkins": 2,
+      "kubernetes": 2,
+      "postgresql": 2,
+      "redis": 2,
+      "rest-api-design": 2,
+      "spring-boot": 2,
+      "unit-testing": 2,
+      "fastapi": null,
+      "microservices": null,
+      "opentelemetry": null,
+      "python": null,
+      "typescript": null,
+      "vue": null
+     }
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 16,
+     "right": 16,
+     "hits": 15,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "frontend-build-tools",
+      "frontend-testing",
+      "responsive-design",
+      "state-management"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "design-systems": 2,
+      "e2e-testing": 2,
+      "graphql": 2,
+      "nextjs": 2,
+      "react": 2,
+      "tailwind-css": 2,
+      "typescript": 2,
+      "unit-testing": 2,
+      "accessibility": 2,
+      "web-performance": 2,
+      "code-review": 1,
+      "css": 1,
+      "git": 1,
+      "html": 1,
+      "javascript": 1,
+      "ui-ux-basics": null
+     }
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 30,
+     "right": 30,
+     "hits": 28,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "llm-evaluation",
+      "mentoring",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "ab-testing": 3,
+      "embeddings-vector-search": 3,
+      "fine-tuning": 3,
+      "kubernetes": 3,
+      "llm-fundamentals": 3,
+      "llm-serving": 3,
+      "machine-learning-fundamentals": 3,
+      "prompt-engineering": 3,
+      "pytorch": 3,
+      "vector-databases": 3,
+      "sql": 2,
+      "airflow": 1,
+      "spark": 1,
+      "docker": 1,
+      "experiment-tracking": 1,
+      "ml-pipelines": 1,
+      "model-monitoring": 1,
+      "scikit-learn": 1,
+      "aws": 1,
+      "distributed-training": 1,
+      "gpu-infrastructure": 1,
+      "nlp": 1,
+      "statistics": 1,
+      "tensorflow": 1,
+      "architecture-decision-records": null,
+      "deep-learning": null,
+      "feature-engineering": null,
+      "gcp": null,
+      "hiring": null,
+      "rag": null
+     }
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 16,
+     "right": 16,
+     "hits": 15,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "infrastructure-as-code",
+      "observability"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "aws": 2,
+      "cloud-networking": 2,
+      "gitops": 2,
+      "helm": 2,
+      "incident-management": 2,
+      "kubernetes": 2,
+      "prometheus-grafana": 2,
+      "secrets-management": 2,
+      "terraform": 2,
+      "ansible": 1,
+      "docker": 1,
+      "postgresql": 1,
+      "shell-scripting": 1,
+      "git": null,
+      "linux": null,
+      "python": null
+     }
+    },
+    {
+     "id": "classic-en-student",
+     "found": 19,
+     "right": 19,
+     "hits": 18,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "rest-api-design"
+     ],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "django": 1,
+      "docker": 1,
+      "python": 1,
+      "unit-testing": 1,
+      "algorithms": null,
+      "c": null,
+      "css": null,
+      "data-structures": null,
+      "git": null,
+      "html": null,
+      "java": null,
+      "javascript": null,
+      "jupyter": null,
+      "linux": null,
+      "oop": null,
+      "pandas": null,
+      "react": null,
+      "scikit-learn": null,
+      "sql": null
+     }
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 17,
+     "right": 17,
+     "hits": 17,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "orm"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 1,
+     "levels": {
+      "java": 3,
+      "spring-boot": 3,
+      "ci-cd": 2,
+      "database-design": 2,
+      "docker": 2,
+      "integration-testing": 2,
+      "jenkins": 2,
+      "kubernetes": 2,
+      "message-brokers": 2,
+      "microservices": 2,
+      "postgresql": 2,
+      "rest-api-design": 2,
+      "unit-testing": 2,
+      "git": null,
+      "linux": null,
+      "redis": null,
+      "sql": null
+     }
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 17,
+     "right": 15,
+     "hits": 14,
+     "expected": 15,
+     "wrong": [
+      "nodejs",
+      "relational-databases"
+     ],
+     "missed": [
+      "mobile-architecture"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "android-sdk": 2,
+      "app-store-release": 2,
+      "ci-cd": 2,
+      "github-actions": 2,
+      "jetpack-compose": 2,
+      "kotlin": 2,
+      "kotlin-coroutines": 2,
+      "mobile-data-persistence": 2,
+      "mobile-testing": 2,
+      "nodejs": 2,
+      "relational-databases": 2,
+      "rest-api-design": 2,
+      "unit-testing": 2,
+      "dart": 1,
+      "flutter": 1,
+      "java": 1,
+      "git": null
+     }
+    },
+    {
+     "id": "classic-en-security",
+     "found": 18,
+     "right": 17,
+     "hits": 16,
+     "expected": 17,
+     "wrong": [
+      "cloud-networking"
+     ],
+     "missed": [
+      "security-compliance"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "security-incident-response": 3,
+      "vulnerability-management": 3,
+      "cloud-networking": 2,
+      "cloud-security": 2,
+      "identity-access-management": 2,
+      "incident-management": 2,
+      "azure": 2,
+      "penetration-testing": 2,
+      "security-testing-tools": 2,
+      "threat-modeling": 2,
+      "web-security": 2,
+      "active-directory": 2,
+      "linux": 2,
+      "network-security": 2,
+      "powershell": 2,
+      "python": 2,
+      "siem": 2,
+      "windows-server": 2
+     }
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 10,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "calculus",
+      "powershell"
+     ],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "pandas": 1,
+      "sql": 1,
+      "statistics": 1,
+      "data-visualization": 1,
+      "python": 1,
+      "calculus": 3,
+      "bi-tools": null,
+      "exploratory-data-analysis": null,
+      "powershell": null,
+      "spreadsheets": null
+     }
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 14,
+     "right": 13,
+     "hits": 11,
+     "expected": 12,
+     "wrong": [
+      "unity"
+     ],
+     "missed": [
+      "hardware-debugging"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "c": 3,
+      "cpp": 3,
+      "ci-cd": 3,
+      "communication-protocols": 3,
+      "embedded-linux": 3,
+      "git": 3,
+      "jenkins": 3,
+      "mentoring": 3,
+      "microcontrollers": 3,
+      "rtos": 3,
+      "unit-testing": 3,
+      "python": 2,
+      "linux": null,
+      "unity": null
+     }
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 11,
+     "right": 11,
+     "hits": 11,
+     "expected": 16,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "e2e-testing",
+      "performance-testing",
+      "test-planning",
+      "testing-fundamentals"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 1,
+     "levels": {
+      "selenium": 2,
+      "agile-scrum": null,
+      "api-testing": null,
+      "git": null,
+      "java": null,
+      "javascript": null,
+      "jenkins": null,
+      "manual-testing": null,
+      "sql": null,
+      "test-automation": null,
+      "typescript": null
+     }
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "css": null,
+      "html": null,
+      "javascript": null
+     }
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 10,
+     "right": 10,
+     "hits": 9,
+     "expected": 11,
+     "wrong": [],
+     "missed": [
+      "rest-api-design",
+      "unit-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "django": 2,
+      "docker": 2,
+      "fastapi": 2,
+      "git": 2,
+      "postgresql": 2,
+      "python": 2,
+      "redis": 2,
+      "testing-fundamentals": 2,
+      "aws": null,
+      "sql": null
+     }
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "engineering-processes",
+      "people-management",
+      "stakeholder-communication"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "architecture-patterns": 3,
+      "hiring": 3,
+      "mentoring": 3,
+      "project-planning": 3,
+      "technical-leadership": 3,
+      "agile-scrum": 1,
+      "aws": 1,
+      "code-review": 1,
+      "go": 1,
+      "incident-management": 1,
+      "java": 1,
+      "microservices": 1,
+      "system-design": 1,
+      "architecture-decision-records": null,
+      "kotlin": null
+     }
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 9,
+     "right": 9,
+     "hits": 8,
+     "expected": 12,
+     "wrong": [],
+     "missed": [
+      "game-design-basics",
+      "game-math",
+      "game-optimization",
+      "multiplayer-networking"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "cpp": 2,
+      "design-patterns": 2,
+      "game-physics": 2,
+      "oop": 2,
+      "profiling": 2,
+      "shaders": 2,
+      "unity": 2,
+      "csharp": null,
+      "git": null
+     }
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 8,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [],
+     "missed": [
+      "data-cleaning",
+      "spreadsheets"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "ab-testing": 1,
+      "data-visualization": 1,
+      "pandas": 1,
+      "product-analytics": 1,
+      "python": 1,
+      "sql": 1,
+      "statistics": 1,
+      "bi-tools": null
+     }
+    }
+   ],
+   "latency": [
+    {
+     "id": "li-en-data-senior",
+     "chars": 1606,
+     "ms": 74033,
+     "prompt_tokens": 2659,
+     "output_tokens": 1140
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "chars": 1769,
+     "ms": 45499,
+     "prompt_tokens": 2721,
+     "output_tokens": 890
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "chars": 1122,
+     "ms": 40070,
+     "prompt_tokens": 2544,
+     "output_tokens": 815
+    },
+    {
+     "id": "li-en-ml-staff",
+     "chars": 1980,
+     "ms": 58113,
+     "prompt_tokens": 2756,
+     "output_tokens": 1291
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "chars": 1190,
+     "ms": 35598,
+     "prompt_tokens": 2663,
+     "output_tokens": 730
+    },
+    {
+     "id": "classic-en-student",
+     "chars": 808,
+     "ms": 26288,
+     "prompt_tokens": 2461,
+     "output_tokens": 551
+    },
+    {
+     "id": "classic-tr-backend",
+     "chars": 844,
+     "ms": 41283,
+     "prompt_tokens": 2528,
+     "output_tokens": 974
+    },
+    {
+     "id": "classic-tr-mobile",
+     "chars": 812,
+     "ms": 37887,
+     "prompt_tokens": 2508,
+     "output_tokens": 884
+    },
+    {
+     "id": "classic-en-security",
+     "chars": 1039,
+     "ms": 35896,
+     "prompt_tokens": 2504,
+     "output_tokens": 880
+    },
+    {
+     "id": "classic-en-career-changer",
+     "chars": 899,
+     "ms": 25039,
+     "prompt_tokens": 2484,
+     "output_tokens": 550
+    },
+    {
+     "id": "classic-en-embedded",
+     "chars": 873,
+     "ms": 30867,
+     "prompt_tokens": 2477,
+     "output_tokens": 720
+    },
+    {
+     "id": "classic-en-qa",
+     "chars": 833,
+     "ms": 15306,
+     "prompt_tokens": 2467,
+     "output_tokens": 259
+    },
+    {
+     "id": "classic-en-thin",
+     "chars": 167,
+     "ms": 10897,
+     "prompt_tokens": 2290,
+     "output_tokens": 178
+    },
+    {
+     "id": "classic-en-injection",
+     "chars": 622,
+     "ms": 22116,
+     "prompt_tokens": 2418,
+     "output_tokens": 477
+    },
+    {
+     "id": "li-en-eng-manager",
+     "chars": 1494,
+     "ms": 33081,
+     "prompt_tokens": 2632,
+     "output_tokens": 746
+    },
+    {
+     "id": "classic-en-gamedev",
+     "chars": 753,
+     "ms": 23560,
+     "prompt_tokens": 2428,
+     "output_tokens": 524
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "chars": 605,
+     "ms": 23959,
+     "prompt_tokens": 2453,
+     "output_tokens": 522
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:4b",
+   "device": "cpu",
+   "shape": "pick",
+   "variant": "no scan",
+   "precision": 0.966,
+   "recall": 0.663,
+   "f1": 0.787,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 20,
+     "right": 18,
+     "hits": 17,
+     "expected": 27,
+     "wrong": [
+      "system-design",
+      "tdd"
+     ],
+     "missed": [
+      "bi-tools",
+      "ci-cd",
+      "data-modeling",
+      "data-quality",
+      "data-warehousing",
+      "etl-pipelines",
+      "mentoring",
+      "spreadsheets",
+      "statistics",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 18,
+     "right": 18,
+     "hits": 17,
+     "expected": 27,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "fastapi",
+      "llm-fundamentals",
+      "mentoring",
+      "microservices",
+      "opentelemetry",
+      "python",
+      "stakeholder-communication",
+      "typescript",
+      "vue"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "frontend-build-tools",
+      "frontend-testing",
+      "responsive-design",
+      "state-management",
+      "ui-ux-basics"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 24,
+     "right": 24,
+     "hits": 22,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "architecture-decision-records",
+      "deep-learning",
+      "feature-engineering",
+      "gcp",
+      "hiring",
+      "llm-evaluation",
+      "mentoring",
+      "model-serving",
+      "public-speaking",
+      "rag",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 13,
+     "right": 13,
+     "hits": 13,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "infrastructure-as-code",
+      "linux",
+      "observability",
+      "python"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-student",
+     "found": 11,
+     "right": 11,
+     "hits": 11,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "algorithms",
+      "data-structures",
+      "git",
+      "linux",
+      "oop",
+      "pandas",
+      "rest-api-design",
+      "scikit-learn"
+     ],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 15,
+     "right": 15,
+     "hits": 15,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "git",
+      "orm",
+      "sql"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 1
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 16,
+     "right": 14,
+     "hits": 13,
+     "expected": 15,
+     "wrong": [
+      "nodejs",
+      "relational-databases"
+     ],
+     "missed": [
+      "git",
+      "mobile-architecture"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-security",
+     "found": 18,
+     "right": 17,
+     "hits": 16,
+     "expected": 17,
+     "wrong": [
+      "cloud-networking"
+     ],
+     "missed": [
+      "security-compliance"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 7,
+     "right": 5,
+     "hits": 5,
+     "expected": 10,
+     "wrong": [
+      "calculus",
+      "powershell"
+     ],
+     "missed": [
+      "bi-tools",
+      "data-cleaning",
+      "exploratory-data-analysis",
+      "public-speaking",
+      "spreadsheets"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 12,
+     "right": 12,
+     "hits": 10,
+     "expected": 12,
+     "wrong": [],
+     "missed": [
+      "hardware-debugging",
+      "linux"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 1,
+     "right": 1,
+     "hits": 1,
+     "expected": 16,
+     "wrong": [],
+     "missed": [
+      "agile-scrum",
+      "api-testing",
+      "ci-cd",
+      "e2e-testing",
+      "git",
+      "java",
+      "javascript",
+      "jenkins",
+      "manual-testing",
+      "performance-testing",
+      "sql",
+      "test-automation",
+      "test-planning",
+      "testing-fundamentals",
+      "typescript"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 1
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 8,
+     "right": 8,
+     "hits": 7,
+     "expected": 11,
+     "wrong": [],
+     "missed": [
+      "aws",
+      "rest-api-design",
+      "sql",
+      "unit-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 13,
+     "right": 13,
+     "hits": 12,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "architecture-decision-records",
+      "engineering-processes",
+      "kotlin",
+      "people-management",
+      "stakeholder-communication"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 7,
+     "right": 7,
+     "hits": 6,
+     "expected": 12,
+     "wrong": [],
+     "missed": [
+      "csharp",
+      "game-design-basics",
+      "game-math",
+      "game-optimization",
+      "git",
+      "multiplayer-networking"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 7,
+     "right": 7,
+     "hits": 7,
+     "expected": 10,
+     "wrong": [],
+     "missed": [
+      "bi-tools",
+      "data-cleaning",
+      "spreadsheets"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:4b",
+   "device": "cpu",
+   "shape": "pick",
+   "variant": "no evidence check",
+   "precision": 0.958,
+   "recall": 0.839,
+   "f1": 0.894,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 25,
+     "right": 22,
+     "hits": 21,
+     "expected": 27,
+     "wrong": [
+      "git",
+      "system-design",
+      "tdd"
+     ],
+     "missed": [
+      "ci-cd",
+      "data-warehousing",
+      "etl-pipelines",
+      "mentoring",
+      "spreadsheets",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 24,
+     "right": 24,
+     "hits": 23,
+     "expected": 27,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "llm-fundamentals",
+      "mentoring",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 16,
+     "right": 16,
+     "hits": 15,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "frontend-build-tools",
+      "frontend-testing",
+      "responsive-design",
+      "state-management"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 30,
+     "right": 30,
+     "hits": 28,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "llm-evaluation",
+      "mentoring",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 16,
+     "right": 16,
+     "hits": 15,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "infrastructure-as-code",
+      "observability"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-student",
+     "found": 19,
+     "right": 19,
+     "hits": 18,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "rest-api-design"
+     ],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 18,
+     "right": 17,
+     "hits": 17,
+     "expected": 19,
+     "wrong": [
+      "jupyter"
+     ],
+     "missed": [
+      "code-review",
+      "orm"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 17,
+     "right": 15,
+     "hits": 14,
+     "expected": 15,
+     "wrong": [
+      "nodejs",
+      "relational-databases"
+     ],
+     "missed": [
+      "mobile-architecture"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-security",
+     "found": 18,
+     "right": 17,
+     "hits": 16,
+     "expected": 17,
+     "wrong": [
+      "cloud-networking"
+     ],
+     "missed": [
+      "security-compliance"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 10,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "calculus",
+      "powershell"
+     ],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 14,
+     "right": 13,
+     "hits": 11,
+     "expected": 12,
+     "wrong": [
+      "unity"
+     ],
+     "missed": [
+      "hardware-debugging"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 12,
+     "right": 11,
+     "hits": 11,
+     "expected": 16,
+     "wrong": [
+      "cryptography-basics"
+     ],
+     "missed": [
+      "ci-cd",
+      "e2e-testing",
+      "performance-testing",
+      "test-planning",
+      "testing-fundamentals"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 10,
+     "right": 10,
+     "hits": 9,
+     "expected": 11,
+     "wrong": [],
+     "missed": [
+      "rest-api-design",
+      "unit-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "engineering-processes",
+      "people-management",
+      "stakeholder-communication"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 9,
+     "right": 9,
+     "hits": 8,
+     "expected": 12,
+     "wrong": [],
+     "missed": [
+      "game-design-basics",
+      "game-math",
+      "game-optimization",
+      "multiplayer-networking"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 8,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [],
+     "missed": [
+      "data-cleaning",
+      "spreadsheets"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:4b",
+   "device": "cpu",
+   "shape": "pick",
+   "variant": "no similarity check",
+   "precision": 0.944,
+   "recall": 0.839,
+   "f1": 0.888,
+   "band_exact": 1.0,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 26,
+     "right": 22,
+     "hits": 21,
+     "expected": 27,
+     "wrong": [
+      "git",
+      "system-design",
+      "tdd",
+      "web-performance"
+     ],
+     "missed": [
+      "ci-cd",
+      "data-warehousing",
+      "etl-pipelines",
+      "mentoring",
+      "spreadsheets",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 24,
+     "right": 24,
+     "hits": 23,
+     "expected": 27,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "llm-fundamentals",
+      "mentoring",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 17,
+     "right": 16,
+     "hits": 15,
+     "expected": 19,
+     "wrong": [
+      "vulnerability-management"
+     ],
+     "missed": [
+      "frontend-build-tools",
+      "frontend-testing",
+      "responsive-design",
+      "state-management"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 30,
+     "right": 30,
+     "hits": 28,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "llm-evaluation",
+      "mentoring",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 16,
+     "right": 16,
+     "hits": 15,
+     "expected": 18,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "infrastructure-as-code",
+      "observability"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-student",
+     "found": 19,
+     "right": 19,
+     "hits": 18,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "rest-api-design"
+     ],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 17,
+     "right": 17,
+     "hits": 17,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "orm"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 1
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 17,
+     "right": 15,
+     "hits": 14,
+     "expected": 15,
+     "wrong": [
+      "nodejs",
+      "relational-databases"
+     ],
+     "missed": [
+      "mobile-architecture"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-security",
+     "found": 18,
+     "right": 17,
+     "hits": 16,
+     "expected": 17,
+     "wrong": [
+      "cloud-networking"
+     ],
+     "missed": [
+      "security-compliance"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 10,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "calculus",
+      "powershell"
+     ],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 15,
+     "right": 13,
+     "hits": 11,
+     "expected": 12,
+     "wrong": [
+      "caching",
+      "unity"
+     ],
+     "missed": [
+      "hardware-debugging"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 11,
+     "right": 11,
+     "hits": 11,
+     "expected": 16,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "e2e-testing",
+      "performance-testing",
+      "test-planning",
+      "testing-fundamentals"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 1
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": null,
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 10,
+     "right": 10,
+     "hits": 9,
+     "expected": 11,
+     "wrong": [],
+     "missed": [
+      "rest-api-design",
+      "unit-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 15,
+     "right": 15,
+     "hits": 14,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "engineering-processes",
+      "people-management",
+      "stakeholder-communication"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 11,
+     "right": 9,
+     "hits": 8,
+     "expected": 12,
+     "wrong": [
+      "c",
+      "hiring"
+     ],
+     "missed": [
+      "game-design-basics",
+      "game-math",
+      "game-optimization",
+      "multiplayer-networking"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 9,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "powershell"
+     ],
+     "missed": [
+      "data-cleaning",
+      "spreadsheets"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:4b",
+   "device": "cpu",
+   "shape": "compact",
+   "variant": "full",
+   "precision": 0.959,
+   "recall": 0.779,
+   "f1": 0.86,
+   "band_exact": 0.882,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 22,
+     "right": 21,
+     "hits": 21,
+     "expected": 27,
+     "wrong": [
+      "git"
+     ],
+     "missed": [
+      "ci-cd",
+      "data-warehousing",
+      "etl-pipelines",
+      "mentoring",
+      "spreadsheets",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "airflow": 3,
+      "kafka": 2,
+      "spark": 2,
+      "data-modeling": 2,
+      "dbt": 2,
+      "github-actions": 2,
+      "snowflake": 2,
+      "terraform": 2,
+      "docker": 2,
+      "mongodb": 2,
+      "postgresql": 2,
+      "prometheus-grafana": 2,
+      "python": 2,
+      "sql": 2,
+      "ab-testing": 1,
+      "pandas": 1,
+      "aws": null,
+      "bi-tools": null,
+      "data-quality": null,
+      "git": null,
+      "kubernetes": null,
+      "statistics": null
+     }
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 24,
+     "right": 23,
+     "hits": 22,
+     "expected": 27,
+     "wrong": [
+      "hiring"
+     ],
+     "missed": [
+      "ci-cd",
+      "incident-management",
+      "llm-fundamentals",
+      "mentoring",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "kafka": 2,
+      "distributed-systems": 2,
+      "event-driven-architecture": 2,
+      "fastapi": 2,
+      "observability": 2,
+      "opentelemetry": 2,
+      "performance-testing": 2,
+      "python": 2,
+      "typescript": 2,
+      "vue": 2,
+      "code-review": 2,
+      "docker": 2,
+      "hiring": 2,
+      "integration-testing": 2,
+      "java": 2,
+      "jenkins": 2,
+      "kubernetes": 2,
+      "postgresql": 2,
+      "redis": 2,
+      "rest-api-design": 2,
+      "spring-boot": 2,
+      "unit-testing": 2,
+      "caching": null,
+      "microservices": null
+     }
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 17,
+     "right": 16,
+     "hits": 16,
+     "expected": 19,
+     "wrong": [
+      "vulnerability-management"
+     ],
+     "missed": [
+      "e2e-testing",
+      "frontend-build-tools",
+      "frontend-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "design-systems": 2,
+      "state-management": 2,
+      "graphql": 2,
+      "nextjs": 2,
+      "react": 2,
+      "tailwind-css": 2,
+      "typescript": 2,
+      "vulnerability-management": 2,
+      "web-performance": 2,
+      "code-review": 1,
+      "css": 1,
+      "git": 1,
+      "html": 1,
+      "javascript": 1,
+      "responsive-design": 1,
+      "ui-ux-basics": null,
+      "accessibility": null
+     }
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 29,
+     "right": 29,
+     "hits": 28,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "llm-evaluation",
+      "mentoring",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "ab-testing": 3,
+      "embeddings-vector-search": 3,
+      "fine-tuning": 3,
+      "gcp": 3,
+      "kubernetes": 3,
+      "llm-fundamentals": 3,
+      "llm-serving": 3,
+      "machine-learning-fundamentals": 3,
+      "prompt-engineering": 3,
+      "pytorch": 3,
+      "vector-databases": 3,
+      "airflow": 1,
+      "spark": 1,
+      "docker": 1,
+      "experiment-tracking": 1,
+      "feature-engineering": 1,
+      "ml-pipelines": 1,
+      "model-monitoring": 1,
+      "scikit-learn": 1,
+      "nlp": 1,
+      "sql": 1,
+      "statistics": 1,
+      "tensorflow": 1,
+      "architecture-decision-records": null,
+      "aws": null,
+      "deep-learning": null,
+      "distributed-training": null,
+      "hiring": null,
+      "rag": null
+     }
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 19,
+     "right": 18,
+     "hits": 17,
+     "expected": 18,
+     "wrong": [
+      "relational-databases"
+     ],
+     "missed": [
+      "infrastructure-as-code"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "aws": 2,
+      "ci-cd": 2,
+      "cloud-networking": 2,
+      "gitops": 2,
+      "incident-management": 2,
+      "kubernetes": 2,
+      "observability": 2,
+      "prometheus-grafana": 2,
+      "secrets-management": 2,
+      "terraform": 2,
+      "ansible": 1,
+      "docker": 1,
+      "python": 1,
+      "relational-databases": 1,
+      "shell-scripting": 1,
+      "git": null,
+      "helm": null,
+      "linux": null,
+      "postgresql": null
+     }
+    },
+    {
+     "id": "classic-en-student",
+     "found": 17,
+     "right": 17,
+     "hits": 16,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "c",
+      "rest-api-design",
+      "unit-testing"
+     ],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "django": 1,
+      "git": 1,
+      "java": 1,
+      "linux": 1,
+      "oop": 1,
+      "python": 1,
+      "sql": 1,
+      "algorithms": null,
+      "css": null,
+      "data-structures": null,
+      "docker": null,
+      "html": null,
+      "javascript": null,
+      "jupyter": null,
+      "pandas": null,
+      "react": null,
+      "scikit-learn": null
+     }
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 12,
+     "right": 12,
+     "hits": 12,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "database-design",
+      "integration-testing",
+      "message-brokers",
+      "microservices",
+      "orm",
+      "rest-api-design"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 1,
+     "levels": {
+      "docker": 2,
+      "jenkins": 2,
+      "kubernetes": 2,
+      "postgresql": 2,
+      "spring-boot": 2,
+      "java": 2,
+      "ci-cd": null,
+      "git": null,
+      "linux": null,
+      "redis": null,
+      "sql": null,
+      "unit-testing": null
+     }
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 14,
+     "right": 12,
+     "hits": 10,
+     "expected": 15,
+     "wrong": [
+      "architecture-patterns",
+      "concurrency"
+     ],
+     "missed": [
+      "android-sdk",
+      "app-store-release",
+      "ci-cd",
+      "mobile-architecture",
+      "mobile-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 1,
+     "levels": {
+      "architecture-patterns": 2,
+      "concurrency": 2,
+      "state-management": 2,
+      "jetpack-compose": 2,
+      "kotlin": 2,
+      "kotlin-coroutines": 2,
+      "mobile-data-persistence": 2,
+      "rest-api-design": 2,
+      "dart": 1,
+      "flutter": 1,
+      "java": 1,
+      "git": null,
+      "github-actions": null,
+      "unit-testing": null
+     }
+    },
+    {
+     "id": "classic-en-security",
+     "found": 13,
+     "right": 13,
+     "hits": 12,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "identity-access-management",
+      "network-security",
+      "security-compliance",
+      "security-incident-response",
+      "security-testing-tools"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "incident-management": 3,
+      "python": 3,
+      "cloud-security": 2,
+      "azure": 2,
+      "penetration-testing": 2,
+      "web-security": 2,
+      "active-directory": 2,
+      "linux": 2,
+      "powershell": 2,
+      "siem": 2,
+      "vulnerability-management": 2,
+      "windows-server": 2,
+      "threat-modeling": null
+     }
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 9,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "calculus"
+     ],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 3,
+     "levels": {
+      "bi-tools": 1,
+      "data-visualization": 1,
+      "exploratory-data-analysis": 1,
+      "pandas": 1,
+      "python": 1,
+      "spreadsheets": 1,
+      "sql": 1,
+      "statistics": 1,
+      "calculus": null
+     }
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 11,
+     "right": 10,
+     "hits": 9,
+     "expected": 12,
+     "wrong": [
+      "unity"
+     ],
+     "missed": [
+      "communication-protocols",
+      "hardware-debugging",
+      "mentoring"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "c": 3,
+      "cpp": 3,
+      "embedded-linux": 3,
+      "microcontrollers": 3,
+      "rtos": 3,
+      "unit-testing": 3,
+      "python": 2,
+      "git": null,
+      "jenkins": null,
+      "linux": null,
+      "unity": null
+     }
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 14,
+     "right": 13,
+     "hits": 12,
+     "expected": 16,
+     "wrong": [
+      "exploratory-data-analysis"
+     ],
+     "missed": [
+      "ci-cd",
+      "e2e-testing",
+      "performance-testing",
+      "testing-fundamentals"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 2,
+     "levels": {
+      "git": 2,
+      "java": 2,
+      "javascript": 2,
+      "selenium": 2,
+      "sql": 2,
+      "test-automation": 2,
+      "unit-testing": 2,
+      "exploratory-data-analysis": 1,
+      "test-planning": 1,
+      "agile-scrum": null,
+      "api-testing": null,
+      "jenkins": null,
+      "manual-testing": null,
+      "typescript": null
+     }
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": "0-2",
+     "band_ok": false,
+     "dropped": 0,
+     "levels": {
+      "css": null,
+      "html": null,
+      "javascript": null
+     }
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 10,
+     "right": 10,
+     "hits": 9,
+     "expected": 11,
+     "wrong": [],
+     "missed": [
+      "rest-api-design",
+      "unit-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "django": 2,
+      "docker": 2,
+      "fastapi": 2,
+      "git": 2,
+      "postgresql": 2,
+      "python": 2,
+      "redis": 2,
+      "testing-fundamentals": 2,
+      "aws": null,
+      "sql": null
+     }
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 11,
+     "right": 11,
+     "hits": 11,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "engineering-processes",
+      "incident-management",
+      "mentoring",
+      "project-planning",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": false,
+     "dropped": 0,
+     "levels": {
+      "agile-scrum": 3,
+      "hiring": 3,
+      "people-management": 3,
+      "technical-leadership": 3,
+      "aws": 1,
+      "go": 1,
+      "java": 1,
+      "kotlin": 1,
+      "microservices": 1,
+      "architecture-decision-records": null,
+      "system-design": null
+     }
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 8,
+     "right": 8,
+     "hits": 8,
+     "expected": 12,
+     "wrong": [],
+     "missed": [
+      "game-design-basics",
+      "multiplayer-networking",
+      "oop",
+      "profiling"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "game-math": 2,
+      "game-optimization": 2,
+      "game-physics": 2,
+      "shaders": 2,
+      "unity": 2,
+      "csharp": null,
+      "design-patterns": null,
+      "git": null
+     }
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 9,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "powershell"
+     ],
+     "missed": [
+      "data-visualization",
+      "spreadsheets"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0,
+     "levels": {
+      "ab-testing": 1,
+      "data-cleaning": 1,
+      "pandas": 1,
+      "powershell": 1,
+      "product-analytics": 1,
+      "sql": 1,
+      "statistics": 1,
+      "bi-tools": null,
+      "python": null
+     }
+    }
+   ],
+   "latency": [
+    {
+     "id": "li-en-data-senior",
+     "chars": 1606,
+     "ms": 47060,
+     "prompt_tokens": 2660,
+     "output_tokens": 391
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "chars": 1769,
+     "ms": 31025,
+     "prompt_tokens": 2722,
+     "output_tokens": 431
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "chars": 1122,
+     "ms": 23750,
+     "prompt_tokens": 2545,
+     "output_tokens": 348
+    },
+    {
+     "id": "li-en-ml-staff",
+     "chars": 1980,
+     "ms": 34589,
+     "prompt_tokens": 2757,
+     "output_tokens": 516
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "chars": 1190,
+     "ms": 31016,
+     "prompt_tokens": 2664,
+     "output_tokens": 358
+    },
+    {
+     "id": "classic-en-student",
+     "chars": 808,
+     "ms": 16665,
+     "prompt_tokens": 2462,
+     "output_tokens": 175
+    },
+    {
+     "id": "classic-tr-backend",
+     "chars": 844,
+     "ms": 27844,
+     "prompt_tokens": 2529,
+     "output_tokens": 214
+    },
+    {
+     "id": "classic-tr-mobile",
+     "chars": 812,
+     "ms": 37470,
+     "prompt_tokens": 2509,
+     "output_tokens": 382
+    },
+    {
+     "id": "classic-en-security",
+     "chars": 1039,
+     "ms": 28429,
+     "prompt_tokens": 2505,
+     "output_tokens": 277
+    },
+    {
+     "id": "classic-en-career-changer",
+     "chars": 899,
+     "ms": 32481,
+     "prompt_tokens": 2485,
+     "output_tokens": 285
+    },
+    {
+     "id": "classic-en-embedded",
+     "chars": 873,
+     "ms": 23447,
+     "prompt_tokens": 2478,
+     "output_tokens": 251
+    },
+    {
+     "id": "classic-en-qa",
+     "chars": 833,
+     "ms": 16193,
+     "prompt_tokens": 2468,
+     "output_tokens": 257
+    },
+    {
+     "id": "classic-en-thin",
+     "chars": 167,
+     "ms": 8212,
+     "prompt_tokens": 2291,
+     "output_tokens": 80
+    },
+    {
+     "id": "classic-en-injection",
+     "chars": 622,
+     "ms": 16486,
+     "prompt_tokens": 2419,
+     "output_tokens": 214
+    },
+    {
+     "id": "li-en-eng-manager",
+     "chars": 1494,
+     "ms": 20143,
+     "prompt_tokens": 2633,
+     "output_tokens": 266
+    },
+    {
+     "id": "classic-en-gamedev",
+     "chars": 753,
+     "ms": 15430,
+     "prompt_tokens": 2429,
+     "output_tokens": 202
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "chars": 605,
+     "ms": 15462,
+     "prompt_tokens": 2454,
+     "output_tokens": 214
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:4b",
+   "device": "cpu",
+   "shape": "compact",
+   "variant": "no scan",
+   "precision": 0.962,
+   "recall": 0.6,
+   "f1": 0.739,
+   "band_exact": 0.882,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 16,
+     "right": 16,
+     "hits": 16,
+     "expected": 27,
+     "wrong": [],
+     "missed": [
+      "aws",
+      "bi-tools",
+      "ci-cd",
+      "data-quality",
+      "data-warehousing",
+      "etl-pipelines",
+      "kubernetes",
+      "mentoring",
+      "spreadsheets",
+      "statistics",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 22,
+     "right": 21,
+     "hits": 20,
+     "expected": 27,
+     "wrong": [
+      "hiring"
+     ],
+     "missed": [
+      "caching",
+      "ci-cd",
+      "incident-management",
+      "llm-fundamentals",
+      "mentoring",
+      "microservices",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 15,
+     "right": 14,
+     "hits": 14,
+     "expected": 19,
+     "wrong": [
+      "vulnerability-management"
+     ],
+     "missed": [
+      "accessibility",
+      "e2e-testing",
+      "frontend-build-tools",
+      "frontend-testing",
+      "ui-ux-basics"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 23,
+     "right": 23,
+     "hits": 22,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "architecture-decision-records",
+      "aws",
+      "deep-learning",
+      "distributed-training",
+      "hiring",
+      "llm-evaluation",
+      "mentoring",
+      "model-serving",
+      "public-speaking",
+      "rag",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 15,
+     "right": 14,
+     "hits": 14,
+     "expected": 18,
+     "wrong": [
+      "relational-databases"
+     ],
+     "missed": [
+      "helm",
+      "infrastructure-as-code",
+      "linux",
+      "postgresql"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-student",
+     "found": 8,
+     "right": 8,
+     "hits": 8,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "algorithms",
+      "c",
+      "css",
+      "data-structures",
+      "docker",
+      "html",
+      "javascript",
+      "pandas",
+      "rest-api-design",
+      "scikit-learn",
+      "unit-testing"
+     ],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 6,
+     "right": 6,
+     "hits": 6,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "ci-cd",
+      "code-review",
+      "database-design",
+      "git",
+      "integration-testing",
+      "linux",
+      "message-brokers",
+      "microservices",
+      "orm",
+      "redis",
+      "rest-api-design",
+      "sql",
+      "unit-testing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 1
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 11,
+     "right": 9,
+     "hits": 8,
+     "expected": 15,
+     "wrong": [
+      "architecture-patterns",
+      "concurrency"
+     ],
+     "missed": [
+      "android-sdk",
+      "app-store-release",
+      "ci-cd",
+      "git",
+      "mobile-architecture",
+      "mobile-testing",
+      "unit-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 1
+    },
+    {
+     "id": "classic-en-security",
+     "found": 12,
+     "right": 12,
+     "hits": 11,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "identity-access-management",
+      "network-security",
+      "security-compliance",
+      "security-incident-response",
+      "security-testing-tools",
+      "threat-modeling"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 8,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 3
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 7,
+     "right": 7,
+     "hits": 7,
+     "expected": 12,
+     "wrong": [],
+     "missed": [
+      "communication-protocols",
+      "git",
+      "hardware-debugging",
+      "linux",
+      "mentoring"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 9,
+     "right": 8,
+     "hits": 7,
+     "expected": 16,
+     "wrong": [
+      "exploratory-data-analysis"
+     ],
+     "missed": [
+      "agile-scrum",
+      "api-testing",
+      "ci-cd",
+      "e2e-testing",
+      "jenkins",
+      "manual-testing",
+      "performance-testing",
+      "testing-fundamentals",
+      "typescript"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 2
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": "0-2",
+     "band_ok": false,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 8,
+     "right": 8,
+     "hits": 7,
+     "expected": 11,
+     "wrong": [],
+     "missed": [
+      "aws",
+      "rest-api-design",
+      "sql",
+      "unit-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 9,
+     "right": 9,
+     "hits": 9,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "architecture-decision-records",
+      "code-review",
+      "engineering-processes",
+      "incident-management",
+      "mentoring",
+      "project-planning",
+      "stakeholder-communication",
+      "system-design"
+     ],
+     "band": "5-10",
+     "band_ok": false,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 5,
+     "right": 5,
+     "hits": 5,
+     "expected": 12,
+     "wrong": [],
+     "missed": [
+      "csharp",
+      "design-patterns",
+      "game-design-basics",
+      "git",
+      "multiplayer-networking",
+      "oop",
+      "profiling"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 7,
+     "right": 6,
+     "hits": 6,
+     "expected": 10,
+     "wrong": [
+      "powershell"
+     ],
+     "missed": [
+      "bi-tools",
+      "data-visualization",
+      "python",
+      "spreadsheets"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:4b",
+   "device": "cpu",
+   "shape": "compact",
+   "variant": "no evidence check",
+   "precision": 0.947,
+   "recall": 0.782,
+   "f1": 0.857,
+   "band_exact": 0.882,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 22,
+     "right": 21,
+     "hits": 21,
+     "expected": 27,
+     "wrong": [
+      "git"
+     ],
+     "missed": [
+      "ci-cd",
+      "data-warehousing",
+      "etl-pipelines",
+      "mentoring",
+      "spreadsheets",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 24,
+     "right": 23,
+     "hits": 22,
+     "expected": 27,
+     "wrong": [
+      "hiring"
+     ],
+     "missed": [
+      "ci-cd",
+      "incident-management",
+      "llm-fundamentals",
+      "mentoring",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 17,
+     "right": 16,
+     "hits": 16,
+     "expected": 19,
+     "wrong": [
+      "vulnerability-management"
+     ],
+     "missed": [
+      "e2e-testing",
+      "frontend-build-tools",
+      "frontend-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 29,
+     "right": 29,
+     "hits": 28,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "llm-evaluation",
+      "mentoring",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 19,
+     "right": 18,
+     "hits": 17,
+     "expected": 18,
+     "wrong": [
+      "relational-databases"
+     ],
+     "missed": [
+      "infrastructure-as-code"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-student",
+     "found": 17,
+     "right": 17,
+     "hits": 16,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "c",
+      "rest-api-design",
+      "unit-testing"
+     ],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 13,
+     "right": 12,
+     "hits": 12,
+     "expected": 19,
+     "wrong": [
+      "jupyter"
+     ],
+     "missed": [
+      "code-review",
+      "database-design",
+      "integration-testing",
+      "message-brokers",
+      "microservices",
+      "orm",
+      "rest-api-design"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 15,
+     "right": 13,
+     "hits": 11,
+     "expected": 15,
+     "wrong": [
+      "architecture-patterns",
+      "concurrency"
+     ],
+     "missed": [
+      "app-store-release",
+      "ci-cd",
+      "mobile-architecture",
+      "mobile-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-security",
+     "found": 13,
+     "right": 13,
+     "hits": 12,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "identity-access-management",
+      "network-security",
+      "security-compliance",
+      "security-incident-response",
+      "security-testing-tools"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 12,
+     "right": 9,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "calculus",
+      "powershell",
+      "secrets-management"
+     ],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 11,
+     "right": 10,
+     "hits": 9,
+     "expected": 12,
+     "wrong": [
+      "unity"
+     ],
+     "missed": [
+      "communication-protocols",
+      "hardware-debugging",
+      "mentoring"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 14,
+     "right": 13,
+     "hits": 12,
+     "expected": 16,
+     "wrong": [
+      "exploratory-data-analysis"
+     ],
+     "missed": [
+      "ci-cd",
+      "e2e-testing",
+      "performance-testing",
+      "testing-fundamentals"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": "0-2",
+     "band_ok": false,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 10,
+     "right": 10,
+     "hits": 9,
+     "expected": 11,
+     "wrong": [],
+     "missed": [
+      "rest-api-design",
+      "unit-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 11,
+     "right": 11,
+     "hits": 11,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "engineering-processes",
+      "incident-management",
+      "mentoring",
+      "project-planning",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": false,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 8,
+     "right": 8,
+     "hits": 8,
+     "expected": 12,
+     "wrong": [],
+     "missed": [
+      "game-design-basics",
+      "multiplayer-networking",
+      "oop",
+      "profiling"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 9,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "powershell"
+     ],
+     "missed": [
+      "data-visualization",
+      "spreadsheets"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    }
+   ]
+  },
+  {
+   "model": "qwen3.5:4b",
+   "device": "cpu",
+   "shape": "compact",
+   "variant": "no similarity check",
+   "precision": 0.932,
+   "recall": 0.786,
+   "f1": 0.853,
+   "band_exact": 0.882,
+   "rows": [
+    {
+     "id": "li-en-data-senior",
+     "found": 22,
+     "right": 21,
+     "hits": 21,
+     "expected": 27,
+     "wrong": [
+      "git"
+     ],
+     "missed": [
+      "ci-cd",
+      "data-warehousing",
+      "etl-pipelines",
+      "mentoring",
+      "spreadsheets",
+      "stream-processing"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-backend-senior",
+     "found": 24,
+     "right": 23,
+     "hits": 22,
+     "expected": 27,
+     "wrong": [
+      "hiring"
+     ],
+     "missed": [
+      "ci-cd",
+      "incident-management",
+      "llm-fundamentals",
+      "mentoring",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-frontend-mid",
+     "found": 17,
+     "right": 16,
+     "hits": 16,
+     "expected": 19,
+     "wrong": [
+      "vulnerability-management"
+     ],
+     "missed": [
+      "e2e-testing",
+      "frontend-build-tools",
+      "frontend-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-ml-staff",
+     "found": 29,
+     "right": 29,
+     "hits": 28,
+     "expected": 33,
+     "wrong": [],
+     "missed": [
+      "llm-evaluation",
+      "mentoring",
+      "model-serving",
+      "public-speaking",
+      "technical-leadership"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-tr-devops-mid",
+     "found": 19,
+     "right": 18,
+     "hits": 17,
+     "expected": 18,
+     "wrong": [
+      "relational-databases"
+     ],
+     "missed": [
+      "infrastructure-as-code"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-student",
+     "found": 18,
+     "right": 18,
+     "hits": 17,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "rest-api-design",
+      "unit-testing"
+     ],
+     "band": "student",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-backend",
+     "found": 12,
+     "right": 12,
+     "hits": 12,
+     "expected": 19,
+     "wrong": [],
+     "missed": [
+      "code-review",
+      "database-design",
+      "integration-testing",
+      "message-brokers",
+      "microservices",
+      "orm",
+      "rest-api-design"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 1
+    },
+    {
+     "id": "classic-tr-mobile",
+     "found": 18,
+     "right": 12,
+     "hits": 10,
+     "expected": 15,
+     "wrong": [
+      "architecture-patterns",
+      "concurrency",
+      "hiring",
+      "nosql-databases",
+      "reinforcement-learning",
+      "relational-databases"
+     ],
+     "missed": [
+      "android-sdk",
+      "app-store-release",
+      "ci-cd",
+      "mobile-architecture",
+      "mobile-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 1
+    },
+    {
+     "id": "classic-en-security",
+     "found": 13,
+     "right": 13,
+     "hits": 12,
+     "expected": 17,
+     "wrong": [],
+     "missed": [
+      "identity-access-management",
+      "network-security",
+      "security-compliance",
+      "security-incident-response",
+      "security-testing-tools"
+     ],
+     "band": "5-10",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-career-changer",
+     "found": 9,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "calculus"
+     ],
+     "missed": [
+      "data-cleaning",
+      "public-speaking"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 3
+    },
+    {
+     "id": "classic-en-embedded",
+     "found": 12,
+     "right": 10,
+     "hits": 9,
+     "expected": 12,
+     "wrong": [
+      "cryptography-basics",
+      "unity"
+     ],
+     "missed": [
+      "communication-protocols",
+      "hardware-debugging",
+      "mentoring"
+     ],
+     "band": "10+",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-qa",
+     "found": 14,
+     "right": 13,
+     "hits": 12,
+     "expected": 16,
+     "wrong": [
+      "exploratory-data-analysis"
+     ],
+     "missed": [
+      "ci-cd",
+      "e2e-testing",
+      "performance-testing",
+      "testing-fundamentals"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 2
+    },
+    {
+     "id": "classic-en-thin",
+     "found": 3,
+     "right": 3,
+     "hits": 3,
+     "expected": 3,
+     "wrong": [],
+     "missed": [],
+     "band": "0-2",
+     "band_ok": false,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-injection",
+     "found": 10,
+     "right": 10,
+     "hits": 9,
+     "expected": 11,
+     "wrong": [],
+     "missed": [
+      "rest-api-design",
+      "unit-testing"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "li-en-eng-manager",
+     "found": 13,
+     "right": 12,
+     "hits": 12,
+     "expected": 17,
+     "wrong": [
+      "scikit-learn"
+     ],
+     "missed": [
+      "code-review",
+      "incident-management",
+      "mentoring",
+      "project-planning",
+      "stakeholder-communication"
+     ],
+     "band": "5-10",
+     "band_ok": false,
+     "dropped": 0
+    },
+    {
+     "id": "classic-en-gamedev",
+     "found": 9,
+     "right": 8,
+     "hits": 8,
+     "expected": 12,
+     "wrong": [
+      "c"
+     ],
+     "missed": [
+      "game-design-basics",
+      "multiplayer-networking",
+      "oop",
+      "profiling"
+     ],
+     "band": "2-5",
+     "band_ok": true,
+     "dropped": 0
+    },
+    {
+     "id": "classic-tr-data-analyst",
+     "found": 9,
+     "right": 8,
+     "hits": 8,
+     "expected": 10,
+     "wrong": [
+      "powershell"
+     ],
+     "missed": [
+      "data-visualization",
+      "spreadsheets"
+     ],
+     "band": "0-2",
+     "band_ok": true,
+     "dropped": 0
+    }
+   ]
+  }
+ ],
+ "latency_pdf": {
+  "pages": 3,
+  "chars": 3841,
+  "timings": [
+   {
+    "model": "qwen3.5:9b",
+    "device": "gpu",
+    "shape": "phrases",
+    "ms": 43418,
+    "prompt_tokens": 1329,
+    "output_tokens": 1338
+   },
+   {
+    "model": "qwen3.5:9b",
+    "device": "gpu",
+    "shape": "pick",
+    "ms": 42156,
+    "prompt_tokens": 3209,
+    "output_tokens": 1195
+   },
+   {
+    "model": "qwen3.5:9b",
+    "device": "gpu",
+    "shape": "compact",
+    "ms": 25372,
+    "prompt_tokens": 3210,
+    "output_tokens": 573
+   },
+   {
+    "model": "qwen3.5:4b",
+    "device": "cpu",
+    "shape": "phrases",
+    "ms": 74979,
+    "prompt_tokens": 1329,
+    "output_tokens": 1365
+   },
+   {
+    "model": "qwen3.5:4b",
+    "device": "cpu",
+    "shape": "pick",
+    "ms": 109014,
+    "prompt_tokens": 3209,
+    "output_tokens": 1287
+   },
+   {
+    "model": "qwen3.5:4b",
+    "device": "cpu",
+    "shape": "compact",
+    "ms": 59137,
+    "prompt_tokens": 3210,
+    "output_tokens": 556
+   }
+  ]
+ },
+ "when": "2026-10-05 21:37",
+ "host": "MacBook-Pro",
+ "prompt_version": "cv-extract-1 (phrases, pick), cv-extract-2 (compact)"
+}

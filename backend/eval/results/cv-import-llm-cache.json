@@ -406,5 +406,209 @@
   "ms": 23959,
   "prompt_tokens": 2453,
   "output_tokens": 522
+ },
+ "386d1e5aa15c6cd237975e4b": {
+  "content": "{\"jobs\":[{\"title\":\"Senior Data Engineer\",\"employer\":\"Paylane\",\"start\":\"2022-03\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Data Engineer\",\"employer\":\"Trendmarket\",\"start\":\"2019-06\",\"end\":\"2022-02\",\"kind\":\"tech\"},{\"title\":\"Junior Data Analyst\",\"employer\":\"Veriyol Analytics\",\"start\":\"2017-09\",\"end\":\"2019-05\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2013,\"end_year\":2017}],\"skills\":[{\"id\":\"airflow\",\"jobs\":[0],\"quote\":\"Apache Airflow\"},{\"id\":\"dbt\",\"jobs\":[0],\"quote\":\"dbt\"},{\"id\":\"data-modeling\",\"jobs\":[0],\"quote\":\"Data Modeling\"},{\"id\":\"spark\",\"jobs\":[0],\"quote\":\"Spark\"},{\"id\":\"kafka\",\"jobs\":[0],\"quote\":\"Kafka\"},{\"id\":\"snowflake\",\"jobs\":[0],\"quote\":\"Snowflake\"},{\"id\":\"github-actions\",\"jobs\":[0],\"quote\":\"GitHub Actions\"},{\"id\":\"kubernetes\",\"jobs\":[0],\"quote\":\"Kubernetes\"},{\"id\":\"terraform\",\"jobs\":[0],\"quote\":\"Terraform\"},{\"id\":\"aws\",\"jobs\":[0],\"quote\":\"AWS\"},{\"id\":\"python\",\"jobs\":[1],\"quote\":\"Python\"},{\"id\":\"sql\",\"jobs\":[1],\"quote\":\"SQL\"},{\"id\":\"postgresql\",\"jobs\":[1],\"quote\":\"PostgreSQL\"},{\"id\":\"mongodb\",\"jobs\":[1],\"quote\":\"MongoDB\"},{\"id\":\"elasticsearch\",\"jobs\":[1],\"quote\":\"BigQuery\"},{\"id\":\"prometheus-grafana\",\"jobs\":[1],\"quote\":\"Prometheus and Grafana\"},{\"id\":\"docker\",\"jobs\":[1],\"quote\":\"Docker\"},{\"id\":\"pandas\",\"jobs\":[2],\"quote\":\"pandas\"},{\"id\":\"statistics\",\"jobs\":[2],\"quote\":\"basic statistics\"},{\"id\":\"data-visualization\",\"jobs\":[2],\"quote\":\"Tableau\"}]}",
+  "ms": 22137,
+  "prompt_tokens": 2660,
+  "output_tokens": 405
+ },
+ "94c66b805cda8bcae6e31b5c": {
+  "content": "{\"jobs\":[{\"title\":\"Senior Software Engineer\",\"employer\":\"Telkonet Systems\",\"start\":\"2024-04\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Software Engineer\",\"employer\":\"Telkonet Systems\",\"start\":\"2020-03\",\"end\":\"2024-03\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2021,\"end_year\":2024},{\"start_year\":2015,\"end_year\":2020}],\"skills\":[{\"id\":\"java\",\"jobs\":[0,1],\"quote\":\"Java\"},{\"id\":\"spring-boot\",\"jobs\":[0,1],\"quote\":\"Spring Framework\"},{\"id\":\"distributed-systems\",\"jobs\":[0,1],\"quote\":\"Distributed Systems\"},{\"id\":\"python\",\"jobs\":[0],\"quote\":\"Python\"},{\"id\":\"fastapi\",\"jobs\":[0],\"quote\":\"FastAPI\"},{\"id\":\"vue\",\"jobs\":[0],\"quote\":\"Vue\"},{\"id\":\"typescript\",\"jobs\":[0],\"quote\":\"TypeScript\"},{\"id\":\"opentelemetry\",\"jobs\":[0],\"quote\":\"OpenTelemetry\"},{\"id\":\"kafka\",\"jobs\":[0],\"quote\":\"Kafka\"},{\"id\":\"hiring\",\"jobs\":[1],\"quote\":\"onboarded two new engineers\"},{\"id\":\"mentoring\",\"jobs\":[1],\"quote\":\"onboarded two new engineers\"},{\"id\":\"code-review\",\"jobs\":[1],\"quote\":\"Reviewed code\"},{\"id\":\"unit-testing\",\"jobs\":[1],\"quote\":\"unit and integration tests\"},{\"id\":\"integration-testing\",\"jobs\":[1],\"quote\":\"unit and integration tests\"},{\"id\":\"jenkins\",\"jobs\":[1],\"quote\":\"pipelines in Jenkins\"},{\"id\":\"redis\",\"jobs\":[1],\"quote\":\"Redis for sessions\"},{\"id\":\"postgresql\",\"jobs\":[1],\"quote\":\"PostgreSQL schemas\"}]}",
+  "ms": 12919,
+  "prompt_tokens": 2722,
+  "output_tokens": 365
+ },
+ "ae61b26b47584ee57ca54e02": {
+  "content": "{\"jobs\":[{\"title\":\"Frontend Engineer\",\"employer\":\"Kargolab\",\"start\":\"2023-02\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Junior Frontend Developer\",\"employer\":\"Pixelhane Agency\",\"start\":\"2022-03\",\"end\":\"2023-01\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2017,\"end_year\":2021}],\"skills\":[{\"id\":\"react\",\"jobs\":[0,1],\"quote\":\"React.js\"},{\"id\":\"typescript\",\"jobs\":[0,1],\"quote\":\"TypeScript\"},{\"id\":\"design-systems\",\"jobs\":[0],\"quote\":\"Design Systems\"},{\"id\":\"nextjs\",\"jobs\":[0],\"quote\":\"Next.js\"},{\"id\":\"tailwind-css\",\"jobs\":[0],\"quote\":\"Tailwind CSS\"},{\"id\":\"accessibility\",\"jobs\":[0],\"quote\":\"WCAG accessibility issues\"},{\"id\":\"graphql\",\"jobs\":[0],\"quote\":\"GraphQL with Apollo\"},{\"id\":\"state-management\",\"jobs\":[0],\"quote\":\"Redux Toolkit for state\"},{\"id\":\"testing-fundamentals\",\"jobs\":[0],\"quote\":\"Component tests\"},{\"id\":\"unit-testing\",\"jobs\":[0],\"quote\":\"Jest and React Testing Library\"},{\"id\":\"e2e-testing\",\"jobs\":[0],\"quote\":\"end-to-end tests with Playwright\"},{\"id\":\"code-review\",\"jobs\":[1],\"quote\":\"took part in code reviews\"}]}",
+  "ms": 10677,
+  "prompt_tokens": 2545,
+  "output_tokens": 289
+ },
+ "6cf3de272020132d9e830ab7": {
+  "content": "{\"jobs\":[{\"title\":\"Staff Machine Learning Engineer\",\"employer\":\"Shopwise\",\"start\":\"2021-05\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Senior Machine Learning Engineer\",\"employer\":\"Shopwise\",\"start\":\"2018-02\",\"end\":\"2021-04\",\"kind\":\"tech\"},{\"title\":\"Data Scientist\",\"employer\":\"Datalyze\",\"start\":\"2014-09\",\"end\":\"2018-01\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2012,\"end_year\":2014},{\"start_year\":2008,\"end_year\":2012}],\"skills\":[{\"id\":\"machine-learning-fundamentals\",\"jobs\":[0,1,2],\"quote\":\"Machine Learning\"},{\"id\":\"pytorch\",\"jobs\":[0,1],\"quote\":\"PyTorch\"},{\"id\":\"llm-fundamentals\",\"jobs\":[0],\"quote\":\"Large Language Models\"},{\"id\":\"rag\",\"jobs\":[0],\"quote\":\"retrieval-augmented\"},{\"id\":\"embeddings-vector-search\",\"jobs\":[0],\"quote\":\"embeddings\"},{\"id\":\"vector-databases\",\"jobs\":[0],\"quote\":\"vector database\"},{\"id\":\"fine-tuning\",\"jobs\":[0],\"quote\":\"fine-tuned\"},{\"id\":\"scikit-learn\",\"jobs\":[1],\"quote\":\"scikit-learn\"},{\"id\":\"spark\",\"jobs\":[1],\"quote\":\"Spark\"},{\"id\":\"airflow\",\"jobs\":[1],\"quote\":\"Airflow\"},{\"id\":\"ml-pipelines\",\"jobs\":[1],\"quote\":\"ML pipelines\"},{\"id\":\"experiment-tracking\",\"jobs\":[1],\"quote\":\"experiment tracking\"},{\"id\":\"model-monitoring\",\"jobs\":[1],\"quote\":\"model monitoring\"},{\"id\":\"docker\",\"jobs\":[0,1],\"quote\":\"Docker everywhere\"},{\"id\":\"kubernetes\",\"jobs\":[0],\"quote\":\"Kubernetes\"},{\"id\":\"aws\",\"jobs\":[2],\"quote\":\"AWS GPU instances\"},{\"id\":\"tensorflow\",\"jobs\":[2],\"quote\":\"TensorFlow\"},{\"id\":\"nlp\",\"jobs\":[2],\"quote\":\"NLP\"}]}",
+  "ms": 15147,
+  "prompt_tokens": 2757,
+  "output_tokens": 424
+ },
+ "d054e5b7c5d118792b72befe": {
+  "content": "{\"jobs\":[{\"title\":\"DevOps Mühendisi\",\"employer\":\"Bulutsoft\",\"start\":\"2023-06\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Sistem Yöneticisi\",\"employer\":\"Marmara Yazılım\",\"start\":\"2022-08\",\"end\":\"2023-05\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2016,\"end_year\":2021}],\"skills\":[{\"id\":\"kubernetes\",\"jobs\":[0],\"quote\":\"Kubernetes\"},{\"id\":\"terraform\",\"jobs\":[0],\"quote\":\"Terraform\"},{\"id\":\"aws\",\"jobs\":[0],\"quote\":\"Amazon Web Services\"},{\"id\":\"helm\",\"jobs\":[0],\"quote\":\"Helm\"},{\"id\":\"gitops\",\"jobs\":[0],\"quote\":\"GitOps\"},{\"id\":\"prometheus-grafana\",\"jobs\":[0],\"quote\":\"Prometheus, Grafana\"},{\"id\":\"linux\",\"jobs\":[1],\"quote\":\"Linux sunucuların\"},{\"id\":\"ansible\",\"jobs\":[1],\"quote\":\"Ansible ile\"},{\"id\":\"python\",\"jobs\":[1],\"quote\":\"Python ile\"},{\"id\":\"docker\",\"jobs\":[1],\"quote\":\"Docker konteynerlerine\"},{\"id\":\"postgresql\",\"jobs\":[1],\"quote\":\"PostgreSQL\"}]}",
+  "ms": 10327,
+  "prompt_tokens": 2664,
+  "output_tokens": 264
+ },
+ "9ba84623b97ec33a9095ed71": {
+  "content": "{\"jobs\":[{\"title\":\"Software Engineering Intern\",\"employer\":\"Egebyte\",\"start\":\"2025-07\",\"end\":\"2025-08\",\"kind\":\"internship\"}],\"education\":[{\"start_year\":2023,\"end_year\":2027}],\"skills\":[{\"id\":\"python\",\"jobs\":[0],\"quote\":\"Python\"},{\"id\":\"java\",\"jobs\":[0],\"quote\":\"Java\"},{\"id\":\"c\",\"jobs\":[0],\"quote\":\"C\"},{\"id\":\"sql\",\"jobs\":[0],\"quote\":\"SQL\"},{\"id\":\"git\",\"jobs\":[0],\"quote\":\"Git\"},{\"id\":\"linux\",\"jobs\":[0],\"quote\":\"Linux\"},{\"id\":\"react\",\"jobs\":[0],\"quote\":\"React\"},{\"id\":\"django\",\"jobs\":[0],\"quote\":\"Django\"},{\"id\":\"data-structures\",\"jobs\":[0],\"quote\":\"Data structures\"},{\"id\":\"algorithms\",\"jobs\":[0],\"quote\":\"algorithms\"}]}",
+  "ms": 7388,
+  "prompt_tokens": 2462,
+  "output_tokens": 190
+ },
+ "44b6c2cd1ac5e4ec04acfeae": {
+  "content": "{\"jobs\":[{\"title\":\"Kıdemli Yazılım Geliştirici\",\"employer\":\"Lojistik Teknoloji A.Ş.\",\"start\":\"2023-01\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Yazılım Geliştirici\",\"employer\":\"Ödemetek\",\"start\":\"2020-07\",\"end\":\"2022-12\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2016,\"end_year\":2020}],\"skills\":[{\"id\":\"java\",\"jobs\":[0,1],\"quote\":\"Java\"},{\"id\":\"spring-boot\",\"jobs\":[0,1],\"quote\":\"Spring Boot\"},{\"id\":\"microservices\",\"jobs\":[0],\"quote\":\"mikroservisler\"},{\"id\":\"postgresql\",\"jobs\":[0],\"quote\":\"PostgreSQL\"},{\"id\":\"rest-api-design\",\"jobs\":[0],\"quote\":\"REST API\"},{\"id\":\"unit-testing\",\"jobs\":[0],\"quote\":\"birim testleri\"},{\"id\":\"integration-testing\",\"jobs\":[0],\"quote\":\"entegrasyon testleri\"},{\"id\":\"docker\",\"jobs\":[0],\"quote\":\"Docker\"},{\"id\":\"kubernetes\",\"jobs\":[0],\"quote\":\"Kubernetes\"},{\"id\":\"jenkins\",\"jobs\":[0],\"quote\":\"Jenkins\"},{\"id\":\"ci-cd\",\"jobs\":[0],\"quote\":\"CI/CD\"},{\"id\":\"linux\",\"jobs\":[0],\"quote\":\"Linux\"},{\"id\":\"redis\",\"jobs\":[0],\"quote\":\"Redis\"}]}",
+  "ms": 11407,
+  "prompt_tokens": 2529,
+  "output_tokens": 298
+ },
+ "0663a71e44306c15d4aadb73": {
+  "content": "{\"jobs\":[{\"title\":\"Android Geliştirici\",\"employer\":\"Mobilio\",\"start\":\"2024-01\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Mobil Geliştirici (yarı zamanlı)\",\"employer\":\"Appevi\",\"start\":\"2022-12\",\"end\":\"2023-02\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2018,\"end_year\":2023}],\"skills\":[{\"id\":\"android-sdk\",\"jobs\":[0,1],\"quote\":\"Android Geliştirici\"},{\"id\":\"jetpack-compose\",\"jobs\":[0,1],\"quote\":\"Jetpack Compose ile\"},{\"id\":\"kotlin\",\"jobs\":[0],\"quote\":\"Kotlin ve Jetpack Compose\"},{\"id\":\"java\",\"jobs\":[1],\"quote\":\"Java ile eski Android ekranları\"},{\"id\":\"flutter\",\"jobs\":[1],\"quote\":\"Flutter ve Dart ile\"},{\"id\":\"dart\",\"jobs\":[1],\"quote\":\"Flutter ve Dart ile\"},{\"id\":\"hiring\",\"jobs\":[0,1],\"quote\":\"500 bin kullanıcılı bir bankacılık uygulaması\"},{\"id\":\"mobile-architecture\",\"jobs\":[0,1],\"quote\":\"MVVM mimarisi\"},{\"id\":\"kotlin-coroutines\",\"jobs\":[0],\"quote\":\"Coroutines ve Flow ile\"},{\"id\":\"mobile-data-persistence\",\"jobs\":[0],\"quote\":\"Room ile çevrimdışı veri saklama\"},{\"id\":\"rest-api-design\",\"jobs\":[0],\"quote\":\"Retrofit ile REST servisleri\"},{\"id\":\"unit-testing\",\"jobs\":[0],\"quote\":\"JUnit ve Espresso testleri\"},{\"id\":\"app-store-release\",\"jobs\":[0],\"quote\":\"Google Play'e sürüm çıkarma süreci\"},{\"id\":\"ci-cd\",\"jobs\":[0],\"quote\":\"GitHub Actions ile CI\"}]}",
+  "ms": 13593,
+  "prompt_tokens": 2509,
+  "output_tokens": 370
+ },
+ "e22cb34d8b6b2abe6ec0f178": {
+  "content": "{\"jobs\":[{\"title\":\"Security Engineer\",\"employer\":\"Finguard Bank\",\"start\":\"2022-01\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"SOC Analyst\",\"employer\":\"Securecore MSSP\",\"start\":\"2019-03\",\"end\":\"2021-12\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2015,\"end_year\":2019}],\"skills\":[{\"id\":\"cloud-security\",\"jobs\":[0],\"quote\":\"Azure security\"},{\"id\":\"active-directory\",\"jobs\":[0,1],\"quote\":\"Active Directory\"},{\"id\":\"incident-management\",\"jobs\":[0,1],\"quote\":\"incident response\"},{\"id\":\"penetration-testing\",\"jobs\":[0],\"quote\":\"internal penetration tests\"},{\"id\":\"vulnerability-management\",\"jobs\":[1],\"quote\":\"Vulnerability scanning\"},{\"id\":\"siem\",\"jobs\":[1],\"quote\":\"Splunk and QRadar SIEM\"},{\"id\":\"security-incident-response\",\"jobs\":[1],\"quote\":\"led incident response\"},{\"id\":\"powershell\",\"jobs\":[1],\"quote\":\"PowerShell\"},{\"id\":\"python\",\"jobs\":[1],\"quote\":\"Python scripts\"}]}",
+  "ms": 8702,
+  "prompt_tokens": 2505,
+  "output_tokens": 236
+ },
+ "26796173d46f7ef05552f73f": {
+  "content": "{\"jobs\":[{\"title\":\"Data Analyst\",\"employer\":\"Turquoise Hotels\",\"start\":\"2025-06\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Data Analytics Bootcamp (full time)\",\"employer\":\"Data Bootcamp Istanbul\",\"start\":\"2024-10\",\"end\":\"2025-03\",\"kind\":\"internship\"},{\"title\":\"Mathematics Teacher\",\"employer\":\"Antalya Science High School\",\"start\":\"2016-09\",\"end\":\"2024-06\",\"kind\":\"other\"}],\"education\":[{\"start_year\":2012,\"end_year\":2016}],\"skills\":[{\"id\":\"powershell\",\"jobs\":[],\"quote\":\"\"},{\"id\":\"sql\",\"jobs\":[0,1],\"quote\":\"SQL queries\"},{\"id\":\"pandas\",\"jobs\":[0,1],\"quote\":\"pandas\"},{\"id\":\"statistics\",\"jobs\":[1],\"quote\":\"statistics\"},{\"id\":\"exploratory-data-analysis\",\"jobs\":[1],\"quote\":\"exploratory data analysis\"},{\"id\":\"data-visualization\",\"jobs\":[0,1],\"quote\":\"data visualisation\"},{\"id\":\"python\",\"jobs\":[1],\"quote\":\"Python\"},{\"id\":\"clean-code\",\"jobs\":[0],\"quote\":\"Cleaned\"}]}",
+  "ms": 10488,
+  "prompt_tokens": 2485,
+  "output_tokens": 255
+ },
+ "60d4eeb06ea3fe9b1a1ef364": {
+  "content": "{\"jobs\":[{\"title\":\"Senior Embedded Software Engineer\",\"employer\":\"Aselkon Defence\",\"start\":\"2019-02\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Embedded Software Engineer\",\"employer\":\"Otomotiv Elektronik\",\"start\":\"2013-07\",\"end\":\"2019-01\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2009,\"end_year\":2013}],\"skills\":[{\"id\":\"c\",\"jobs\":[0,1],\"quote\":\"Firmware in C\"},{\"id\":\"cpp\",\"jobs\":[0],\"quote\":\"C and C++\"},{\"id\":\"microcontrollers\",\"jobs\":[0,1],\"quote\":\"STM32 microcontrollers\"},{\"id\":\"rtos\",\"jobs\":[0],\"quote\":\"FreeRTOS\"},{\"id\":\"embedded-linux\",\"jobs\":[0],\"quote\":\"Embedded Linux\"},{\"id\":\"caching\",\"jobs\":[0],\"quote\":\"Yocto\"},{\"id\":\"unit-testing\",\"jobs\":[0],\"quote\":\"Unit tests\"},{\"id\":\"git\",\"jobs\":[0],\"quote\":\"Git and Jenkins\"},{\"id\":\"ci-cd\",\"jobs\":[0],\"quote\":\"Jenkins\"},{\"id\":\"linux\",\"jobs\":[0],\"quote\":\"Embedded Linux\"},{\"id\":\"python\",\"jobs\":[1],\"quote\":\"Python tools\"}]}",
+  "ms": 9994,
+  "prompt_tokens": 2478,
+  "output_tokens": 260
+ },
+ "728d6c931dc06a81af3db012": {
+  "content": "{\"jobs\":[{\"title\":\"QA Automation Engineer\",\"employer\":\"Sigortam Online\",\"start\":\"2024-03\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Manual Tester\",\"employer\":\"Webtest Services\",\"start\":\"2022-09\",\"end\":\"2024-02\",\"kind\":\"internship\"}],\"education\":[{\"start_year\":2018,\"end_year\":2022}],\"skills\":[{\"id\":\"java\",\"jobs\":[0],\"quote\":\"Java\"},{\"id\":\"javascript\",\"jobs\":[0],\"quote\":\"JavaScript\"},{\"id\":\"sql\",\"jobs\":[0,1],\"quote\":\"SQL\"},{\"id\":\"git\",\"jobs\":[0],\"quote\":\"Git\"},{\"id\":\"selenium\",\"jobs\":[0],\"quote\":\"Selenium\"},{\"id\":\"csharp\",\"jobs\":[0],\"quote\":\"Cypress\"},{\"id\":\"test-automation\",\"jobs\":[0],\"quote\":\"Test automation\"},{\"id\":\"manual-testing\",\"jobs\":[1],\"quote\":\"Manual Tester\"},{\"id\":\"api-testing\",\"jobs\":[0],\"quote\":\"API tests\"},{\"id\":\"performance-testing\",\"jobs\":[0],\"quote\":\"load tests\"},{\"id\":\"ci-cd\",\"jobs\":[0],\"quote\":\"Jenkins\"}]}",
+  "ms": 9319,
+  "prompt_tokens": 2468,
+  "output_tokens": 244
+ },
+ "83a25f921cc7b42742df58c4": {
+  "content": "{\"jobs\":[{\"title\":\"Aspiring web developer\",\"employer\":\"Konya\",\"start\":null,\"end\":null,\"kind\":\"tech\"}],\"education\":[],\"skills\":[{\"id\":\"html\",\"quote\":\"HTML\"},{\"id\":\"css\",\"quote\":\"CSS\"},{\"id\":\"javascript\",\"quote\":\"JavaScript\"}]}",
+  "ms": 3412,
+  "prompt_tokens": 2291,
+  "output_tokens": 59
+ },
+ "65b1916b6e8a80aae32c0364": {
+  "content": "{\"jobs\":[{\"title\":\"Backend Developer\",\"employer\":\"Menuly\",\"start\":\"2023-05\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Python Developer\",\"employer\":\"Freelance\",\"start\":\"2022-06\",\"end\":\"2023-04\",\"kind\":\"internship\"}],\"education\":[{\"start_year\":2017,\"end_year\":2022}],\"skills\":[{\"id\":\"python\",\"jobs\":[0,1],\"quote\":\"Python\"},{\"id\":\"django\",\"jobs\":[0],\"quote\":\"Django\"},{\"id\":\"fastapi\",\"jobs\":[0],\"quote\":\"FastAPI\"},{\"id\":\"postgresql\",\"jobs\":[0],\"quote\":\"PostgreSQL\"},{\"id\":\"redis\",\"jobs\":[0],\"quote\":\"Redis\"},{\"id\":\"docker\",\"jobs\":[0],\"quote\":\"Docker\"},{\"id\":\"git\",\"jobs\":[0,1],\"quote\":\"Git\"}]}",
+  "ms": 7644,
+  "prompt_tokens": 2419,
+  "output_tokens": 184
+ },
+ "4a15aa8364ac5e99dd02da52": {
+  "content": "{\"jobs\":[{\"title\":\"Engineering Manager\",\"employer\":\"Gezgin\",\"start\":\"2020-09\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Tech Lead\",\"employer\":\"Gezgin\",\"start\":\"2017-03\",\"end\":\"2020-08\",\"kind\":\"tech\"},{\"title\":\"Software Engineer\",\"employer\":\"Hepsiyol\",\"start\":\"2011-07\",\"end\":\"2017-02\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2007,\"end_year\":2011}],\"skills\":[{\"id\":\"hiring\",\"jobs\":[0,1],\"quote\":\"hire\"},{\"id\":\"mentoring\",\"jobs\":[0,1],\"quote\":\"coached two engineers\"},{\"id\":\"people-management\",\"jobs\":[0],\"quote\":\"Manage three teams\"},{\"id\":\"incident-management\",\"jobs\":[0,1],\"quote\":\"incident review process\"},{\"id\":\"architecture-decision-records\",\"jobs\":[0,1],\"quote\":\"architecture decision records\"},{\"id\":\"agile-scrum\",\"jobs\":[0,1],\"quote\":\"Agile Methodologies\"},{\"id\":\"technical-leadership\",\"jobs\":[0],\"quote\":\"Technical Leadership\"},{\"id\":\"engineering-processes\",\"jobs\":[0],\"quote\":\"Engineering Manager\"}]}",
+  "ms": 10051,
+  "prompt_tokens": 2633,
+  "output_tokens": 263
+ },
+ "792505e81d5cda95030de99d": {
+  "content": "{\"jobs\":[{\"title\":\"Game Developer\",\"employer\":\"Tilt Games\",\"start\":\"2022-04\",\"end\":null,\"kind\":\"tech\"}],\"education\":[{\"start_year\":2018,\"end_year\":2022}],\"skills\":[{\"id\":\"unity\",\"jobs\":[0],\"quote\":\"Unity Game Developer\"},{\"id\":\"csharp\",\"jobs\":[0],\"quote\":\"C# for three\"},{\"id\":\"game-physics\",\"jobs\":[0],\"quote\":\"physics-heavy mobile games\"},{\"id\":\"shaders\",\"jobs\":[0],\"quote\":\"simple shaders in Shader Graph and HLSL\"},{\"id\":\"vector-databases\",\"jobs\":[0],\"quote\":\"vector maths for camera and aiming systems\"},{\"id\":\"git\",\"jobs\":[0],\"quote\":\"Git with Plastic SCM migration\"},{\"id\":\"game-optimization\",\"jobs\":[0],\"quote\":\"Optimised draw calls and memory\"}]}",
+  "ms": 7566,
+  "prompt_tokens": 2429,
+  "output_tokens": 180
+ },
+ "d58bca35e4ebfeb9c400947d": {
+  "content": "{\"jobs\":[{\"title\":\"Veri Analisti\",\"employer\":\"Sepetim.com\",\"start\":\"2025-03\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Stajyer Veri Analisti\",\"employer\":\"Sepetim.com\",\"start\":\"2024-07\",\"end\":\"2024-09\",\"kind\":\"internship\"}],\"education\":[{\"start_year\":2020,\"end_year\":2024}],\"skills\":[{\"id\":\"sql\",\"jobs\":[0],\"quote\":\"SQL ile\"},{\"id\":\"powershell\",\"jobs\":[0],\"quote\":\"Power BI raporları\"},{\"id\":\"python\",\"jobs\":[0],\"quote\":\"Python (pandas)\"},{\"id\":\"data-cleaning\",\"jobs\":[0],\"quote\":\"veri temizleme\"},{\"id\":\"ab-testing\",\"jobs\":[0],\"quote\":\"A/B testlerinin\"}]}",
+  "ms": 7370,
+  "prompt_tokens": 2454,
+  "output_tokens": 176
+ },
+ "fbdbd0946d2a0e024d6151cc": {
+  "content": "{\"jobs\":[{\"title\":\"Senior Data Engineer\",\"employer\":\"Paylane\",\"start\":\"2022-03\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Data Engineer\",\"employer\":\"Trendmarket\",\"start\":\"2019-06\",\"end\":\"2022-02\",\"kind\":\"tech\"},{\"title\":\"Junior Data Analyst\",\"employer\":\"Veriyol Analytics\",\"start\":\"2017-09\",\"end\":\"2019-05\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2013,\"end_year\":2017}],\"skills\":[{\"id\":\"airflow\",\"jobs\":[0,1],\"quote\":\"Orchestration with Airflow\"},{\"id\":\"dbt\",\"jobs\":[0],\"quote\":\"Built the dbt project\"},{\"id\":\"data-modeling\",\"jobs\":[0],\"quote\":\"well-modelled tables\"},{\"id\":\"kafka\",\"jobs\":[0],\"quote\":\"streaming with Kafka\"},{\"id\":\"spark\",\"jobs\":[0],\"quote\":\"Spark Structured Streaming\"},{\"id\":\"snowflake\",\"jobs\":[0],\"quote\":\"on Snowflake\"},{\"id\":\"github-actions\",\"jobs\":[0],\"quote\":\"CI on GitHub Actions\"},{\"id\":\"terraform\",\"jobs\":[0],\"quote\":\"Terraform on AWS\"},{\"id\":\"python\",\"jobs\":[1],\"quote\":\"pipelines in Python\"},{\"id\":\"sql\",\"jobs\":[1,2],\"quote\":\"PostgreSQL and MongoDB\"},{\"id\":\"mongodb\",\"jobs\":[1],\"quote\":\"MongoDB into BigQuery\"},{\"id\":\"postgresql\",\"jobs\":[1],\"quote\":\"PostgreSQL and MongoDB\"},{\"id\":\"pandas\",\"jobs\":[2],\"quote\":\"statistics in pandas\"},{\"id\":\"ab-testing\",\"jobs\":[2],\"quote\":\"A/B test readouts\"},{\"id\":\"prometheus-grafana\",\"jobs\":[1],\"quote\":\"Prometheus and Grafana\"},{\"id\":\"docker\",\"jobs\":[1],\"quote\":\"Docker for local development\"}]}",
+  "ms": 47060,
+  "prompt_tokens": 2660,
+  "output_tokens": 391
+ },
+ "53772d00d0a70ee41bfc39a2": {
+  "content": "{\"jobs\":[{\"title\":\"Senior Software Engineer\",\"employer\":\"Telkonet Systems\",\"start\":\"2024-04\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Software Engineer\",\"employer\":\"Telkonet Systems\",\"start\":\"2020-03\",\"end\":\"2024-03\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2021,\"end_year\":2024},{\"start_year\":2015,\"end_year\":2020}],\"skills\":[{\"id\":\"java\",\"jobs\":[1],\"quote\":\"Java\"},{\"id\":\"spring-boot\",\"jobs\":[1],\"quote\":\"Spring Boot\"},{\"id\":\"distributed-systems\",\"jobs\":[0],\"quote\":\"Distributed Systems\"},{\"id\":\"observability\",\"jobs\":[0],\"quote\":\"observability\"},{\"id\":\"performance-testing\",\"jobs\":[0],\"quote\":\"performance\"},{\"id\":\"kafka\",\"jobs\":[0],\"quote\":\"Kafka-based services\"},{\"id\":\"hiring\",\"jobs\":[1],\"quote\":\"onboarded two new engineers\"},{\"id\":\"code-review\",\"jobs\":[1],\"quote\":\"Reviewed code\"},{\"id\":\"docker\",\"jobs\":[1],\"quote\":\"Docker\"},{\"id\":\"kubernetes\",\"jobs\":[1],\"quote\":\"Kubernetes\"},{\"id\":\"rest-api-design\",\"jobs\":[1],\"quote\":\"REST APIs\"},{\"id\":\"postgresql\",\"jobs\":[1],\"quote\":\"PostgreSQL schemas\"},{\"id\":\"unit-testing\",\"jobs\":[1],\"quote\":\"unit and integration tests\"},{\"id\":\"integration-testing\",\"jobs\":[1],\"quote\":\"integration tests\"},{\"id\":\"jenkins\",\"jobs\":[1],\"quote\":\"Jenkins\"},{\"id\":\"redis\",\"jobs\":[1],\"quote\":\"Redis for sessions\"},{\"id\":\"opentelemetry\",\"jobs\":[0],\"quote\":\"OpenTelemetry-based tracing library\"},{\"id\":\"event-driven-architecture\",\"jobs\":[0],\"quote\":\"event-driven online charging system\"},{\"id\":\"python\",\"jobs\":[0],\"quote\":\"Python\"},{\"id\":\"fastapi\",\"jobs\":[0],\"quote\":\"FastAPI\"},{\"id\":\"vue\",\"jobs\":[0],\"quote\":\"Vue\"},{\"id\":\"typescript\",\"jobs\":[0],\"quote\":\"TypeScript\"}]}",
+  "ms": 31025,
+  "prompt_tokens": 2722,
+  "output_tokens": 431
+ },
+ "445b3fa37a437be414fac0f9": {
+  "content": "{\"jobs\":[{\"title\":\"Frontend Engineer\",\"employer\":\"Kargolab\",\"start\":\"2023-02\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Junior Frontend Developer\",\"employer\":\"Pixelhane Agency\",\"start\":\"2022-03\",\"end\":\"2023-01\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2017,\"end_year\":2021}],\"skills\":[{\"id\":\"nextjs\",\"jobs\":[0],\"quote\":\"Built the customer dashboard in Next.js\"},{\"id\":\"typescript\",\"jobs\":[0],\"quote\":\"Next.js and TypeScript\"},{\"id\":\"react\",\"jobs\":[0],\"quote\":\"Component tests with Jest and React Testing Library\"},{\"id\":\"state-management\",\"jobs\":[0],\"quote\":\"Redux Toolkit for state\"},{\"id\":\"design-systems\",\"jobs\":[0],\"quote\":\"Created our design system in Storybook\"},{\"id\":\"tailwind-css\",\"jobs\":[0],\"quote\":\"with Tailwind CSS\"},{\"id\":\"web-performance\",\"jobs\":[0],\"quote\":\"Cut the largest contentful paint by 40%\"},{\"id\":\"graphql\",\"jobs\":[0],\"quote\":\"GraphQL with Apollo\"},{\"id\":\"code-review\",\"jobs\":[1],\"quote\":\"took part in code reviews on GitHub\"},{\"id\":\"git\",\"jobs\":[1],\"quote\":\"on GitHub\"},{\"id\":\"responsive-design\",\"jobs\":[1],\"quote\":\"Responsive marketing sites\"},{\"id\":\"html\",\"jobs\":[1],\"quote\":\"in HTML, CSS\"},{\"id\":\"css\",\"jobs\":[1],\"quote\":\"CSS (Sass)\"},{\"id\":\"javascript\",\"jobs\":[1],\"quote\":\"JavaScript\"},{\"id\":\"vulnerability-management\",\"jobs\":[0],\"quote\":\"fixed WCAG accessibility issues\"}]}",
+  "ms": 23750,
+  "prompt_tokens": 2545,
+  "output_tokens": 348
+ },
+ "5552ab4854f4e6d539a651ea": {
+  "content": "{\"jobs\":[{\"title\":\"Staff Machine Learning Engineer\",\"employer\":\"Shopwise\",\"start\":\"2021-05\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Senior Machine Learning Engineer\",\"employer\":\"Shopwise\",\"start\":\"2018-02\",\"end\":\"2021-04\",\"kind\":\"tech\"},{\"title\":\"Data Scientist\",\"employer\":\"Datalyze\",\"start\":\"2014-09\",\"end\":\"2018-01\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2012,\"end_year\":2014},{\"start_year\":2008,\"end_year\":2012}],\"skills\":[{\"id\":\"machine-learning-fundamentals\",\"jobs\":[0,1],\"quote\":\"Machine Learning\"},{\"id\":\"pytorch\",\"jobs\":[0,1],\"quote\":\"PyTorch\"},{\"id\":\"llm-fundamentals\",\"jobs\":[0],\"quote\":\"Large Language Models\"},{\"id\":\"prompt-engineering\",\"jobs\":[0],\"quote\":\"retrieval-augmented LLM products\"},{\"id\":\"embeddings-vector-search\",\"jobs\":[0],\"quote\":\"embeddings\"},{\"id\":\"vector-databases\",\"jobs\":[0],\"quote\":\"vector database\"},{\"id\":\"fine-tuning\",\"jobs\":[0],\"quote\":\"fine-tuned open models\"},{\"id\":\"llm-serving\",\"jobs\":[0],\"quote\":\"Served models\"},{\"id\":\"kubernetes\",\"jobs\":[0,1],\"quote\":\"Kubernetes\"},{\"id\":\"gcp\",\"jobs\":[0],\"quote\":\"GKE\"},{\"id\":\"ab-testing\",\"jobs\":[0],\"quote\":\"A/B tests\"},{\"id\":\"scikit-learn\",\"jobs\":[1],\"quote\":\"scikit-learn\"},{\"id\":\"feature-engineering\",\"jobs\":[1],\"quote\":\"feature engineering\"},{\"id\":\"spark\",\"jobs\":[1],\"quote\":\"Spark\"},{\"id\":\"kubernetes\",\"jobs\":[1],\"quote\":\"Kubeflow\"},{\"id\":\"airflow\",\"jobs\":[1],\"quote\":\"Airflow\"},{\"id\":\"ml-pipelines\",\"jobs\":[1],\"quote\":\"ML pipelines\"},{\"id\":\"experiment-tracking\",\"jobs\":[1],\"quote\":\"experiment tracking\"},{\"id\":\"model-monitoring\",\"jobs\":[1],\"quote\":\"model monitoring\"},{\"id\":\"docker\",\"jobs\":[1],\"quote\":\"Docker\"},{\"id\":\"tensorflow\",\"jobs\":[2],\"quote\":\"TensorFlow\"},{\"id\":\"nlp\",\"jobs\":[2],\"quote\":\"NLP\"},{\"id\":\"statistics\",\"jobs\":[2],\"quote\":\"Statistics\"},{\"id\":\"sql\",\"jobs\":[2],\"quote\":\"SQL\"}]}",
+  "ms": 34589,
+  "prompt_tokens": 2757,
+  "output_tokens": 516
+ },
+ "c99af5c15ada3dde20f072e8": {
+  "content": "{\"jobs\":[{\"title\":\"DevOps Mühendisi\",\"employer\":\"Bulutsoft\",\"start\":\"2023-06\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Sistem Yöneticisi\",\"employer\":\"Marmara Yazılım\",\"start\":\"2022-08\",\"end\":\"2023-05\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2016,\"end_year\":2021}],\"skills\":[{\"id\":\"kubernetes\",\"jobs\":[0],\"quote\":\"Kubernetes\"},{\"id\":\"terraform\",\"jobs\":[0],\"quote\":\"Terraform\"},{\"id\":\"aws\",\"jobs\":[0],\"quote\":\"AWS\"},{\"id\":\"gitops\",\"jobs\":[0],\"quote\":\"GitOps\"},{\"id\":\"ci-cd\",\"jobs\":[0],\"quote\":\"CI hatları\"},{\"id\":\"prometheus-grafana\",\"jobs\":[0],\"quote\":\"Prometheus, Grafana\"},{\"id\":\"observability\",\"jobs\":[0],\"quote\":\"izleme ve alarm kurgusu\"},{\"id\":\"incident-management\",\"jobs\":[0],\"quote\":\"nöbet ve olay yönetimi\"},{\"id\":\"secrets-management\",\"jobs\":[0],\"quote\":\"Sırların HashiCorp Vault ile yönetimi\"},{\"id\":\"cloud-networking\",\"jobs\":[0],\"quote\":\"VPC ve ağ yapılandırması\"},{\"id\":\"ansible\",\"jobs\":[1],\"quote\":\"Ansible ile yapılandırılması\"},{\"id\":\"shell-scripting\",\"jobs\":[1],\"quote\":\"Bash\"},{\"id\":\"python\",\"jobs\":[1],\"quote\":\"Python\"},{\"id\":\"docker\",\"jobs\":[1],\"quote\":\"Docker konteynerlerine taşınması\"},{\"id\":\"relational-databases\",\"jobs\":[1],\"quote\":\"PostgreSQL yedekleme\"}]}",
+  "ms": 31016,
+  "prompt_tokens": 2664,
+  "output_tokens": 358
+ },
+ "9d7177601be2773b243585d4": {
+  "content": "{\"jobs\":[{\"title\":\"Software Engineering Intern\",\"employer\":\"Egebyte\",\"start\":\"2025-07\",\"end\":\"2025-08\",\"kind\":\"internship\"}],\"education\":[{\"start_year\":2023,\"end_year\":2027}],\"skills\":[{\"id\":\"python\",\"jobs\":[0],\"quote\":\"Python\"},{\"id\":\"java\",\"jobs\":[0],\"quote\":\"Java\"},{\"id\":\"c\",\"jobs\":[0],\"quote\":\"C\"},{\"id\":\"sql\",\"jobs\":[0],\"quote\":\"SQL\"},{\"id\":\"git\",\"jobs\":[0],\"quote\":\"Git\"},{\"id\":\"linux\",\"jobs\":[0],\"quote\":\"Linux\"},{\"id\":\"oop\",\"jobs\":[0],\"quote\":\"object-oriented programming\"},{\"id\":\"react\",\"jobs\":[1],\"quote\":\"React\"},{\"id\":\"django\",\"jobs\":[0],\"quote\":\"Django\"}]}",
+  "ms": 16665,
+  "prompt_tokens": 2462,
+  "output_tokens": 175
+ },
+ "4f162fb36d717aff8a0d38d2": {
+  "content": "{\"jobs\":[{\"title\":\"Kıdemli Yazılım Geliştirici\",\"employer\":\"Lojistik Teknoloji A.Ş.\",\"start\":\"2023-01\",\"end\":\"null\",\"kind\":\"tech\"},{\"title\":\"Yazılım Geliştirici\",\"employer\":\"Ödemetek\",\"start\":\"2020-10\",\"end\":\"2022-09\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2016,\"end_year\":2020}],\"skills\":[{\"id\":\"java\",\"jobs\":[1],\"quote\":\"Java ile\"},{\"id\":\"spring-boot\",\"jobs\":[0],\"quote\":\"Spring Boot ile\"},{\"id\":\"postgresql\",\"jobs\":[0],\"quote\":\"PostgreSQL veritabanı\"},{\"id\":\"docker\",\"jobs\":[0],\"quote\":\"Docker ve\"},{\"id\":\"kubernetes\",\"jobs\":[0],\"quote\":\"Kubernetes üzerinde\"},{\"id\":\"jenkins\",\"jobs\":[0],\"quote\":\"Jenkins ile\"},{\"id\":\"jupyter\",\"jobs\":[0],\"quote\":\"Jupyter notebooks\"}]}",
+  "ms": 27844,
+  "prompt_tokens": 2529,
+  "output_tokens": 214
+ },
+ "40d91cf9d90571811b716c01": {
+  "content": "{\"jobs\":[{\"title\":\"Android Geliştirici\",\"employer\":\"Mobilio\",\"start\":\"2024-09\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Mobil Geliştirici (yarı zamanlı)\",\"employer\":\"Appevi\",\"start\":\"2022-10\",\"end\":\"2023-10\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2018,\"end_year\":2023}],\"skills\":[{\"id\":\"kotlin\",\"jobs\":[0],\"quote\":\"Kotlin ile\"},{\"id\":\"java\",\"jobs\":[1],\"quote\":\"Java ile\"},{\"id\":\"jetpack-compose\",\"jobs\":[0],\"quote\":\"Jetpack Compose\"},{\"id\":\"android-sdk\",\"jobs\":[0,1],\"quote\":\"Android ekranları\"},{\"id\":\"flutter\",\"jobs\":[1],\"quote\":\"Flutter ve Dart\"},{\"id\":\"dart\",\"jobs\":[1],\"quote\":\"Flutter ve Dart\"},{\"id\":\"kotlin-coroutines\",\"jobs\":[0],\"quote\":\"Coroutines\"},{\"id\":\"kotlin-coroutines\",\"jobs\":[1],\"quote\":\"Kotlin coroutines\"},{\"id\":\"concurrency\",\"jobs\":[0],\"quote\":\"asenkron işlemler\"},{\"id\":\"state-management\",\"jobs\":[0],\"quote\":\"MVVM mimarisi\"},{\"id\":\"architecture-patterns\",\"jobs\":[0],\"quote\":\"MVVM mimarisi\"},{\"id\":\"hiring\",\"jobs\":[1],\"quote\":\"yarı zamanlı\"},{\"id\":\"mobile-data-persistence\",\"jobs\":[0],\"quote\":\"çevrimdışı veri saklama\"},{\"id\":\"nosql-databases\",\"jobs\":[0],\"quote\":\"Room ile\"},{\"id\":\"relational-databases\",\"jobs\":[0],\"quote\":\"Room ile\"},{\"id\":\"rest-api-design\",\"jobs\":[0],\"quote\":\"REST servisleri\"},{\"id\":\"reinforcement-learning\",\"jobs\":[0],\"quote\":\"Retrofit ile\"}]}",
+  "ms": 37470,
+  "prompt_tokens": 2509,
+  "output_tokens": 382
+ },
+ "a5648186eb1960c6bcf98e2a": {
+  "content": "{\"jobs\":[{\"title\":\"Security Engineer\",\"employer\":\"Finguard Bank\",\"start\":\"2022-01\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"SOC Analyst\",\"employer\":\"Securecore MSSP\",\"start\":\"2019-03\",\"end\":\"2021-12\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2015,\"end_year\":2019}],\"skills\":[{\"id\":\"azure\",\"jobs\":[0],\"quote\":\"Azure tenant\"},{\"id\":\"cloud-security\",\"jobs\":[0],\"quote\":\"cloud security\"},{\"id\":\"siem\",\"jobs\":[1],\"quote\":\"SIEM (Splunk, QRadar)\"},{\"id\":\"incident-management\",\"jobs\":[0,1],\"quote\":\"incident response\"},{\"id\":\"penetration-testing\",\"jobs\":[0],\"quote\":\"internal penetration tests\"},{\"id\":\"web-security\",\"jobs\":[0],\"quote\":\"web applications\"},{\"id\":\"vulnerability-management\",\"jobs\":[1],\"quote\":\"Vulnerability scanning\"},{\"id\":\"active-directory\",\"jobs\":[1],\"quote\":\"Active Directory\"},{\"id\":\"windows-server\",\"jobs\":[1],\"quote\":\"Windows Server administration\"},{\"id\":\"powershell\",\"jobs\":[1],\"quote\":\"PowerShell scripts\"},{\"id\":\"python\",\"jobs\":[0,1],\"quote\":\"Python scripts\"},{\"id\":\"linux\",\"jobs\":[1],\"quote\":\"on Linux\"}]}",
+  "ms": 28429,
+  "prompt_tokens": 2505,
+  "output_tokens": 277
+ },
+ "0c4b08f2a747d6c8ca45cbfc": {
+  "content": "{\"jobs\":[{\"title\":\"Data Analyst\",\"employer\":\"Turquoise Hotels\",\"start\":\"2025-06\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Data Analytics Bootcamp\",\"employer\":\"Data Bootcamp Istanbul\",\"start\":\"2024-10\",\"end\":\"2025-03\",\"kind\":\"internship\"},{\"title\":\"Mathematics Teacher\",\"employer\":\"Antalya Science High School\",\"start\":\"2016-09\",\"end\":\"2024-06\",\"kind\":\"other\"}],\"education\":[{\"start_year\":2012,\"end_year\":2016}],\"skills\":[{\"id\":\"powershell\",\"jobs\":[],\"quote\":\"\"},{\"id\":\"bi-tools\",\"jobs\":[0],\"quote\":\"Power BI\"},{\"id\":\"sql\",\"jobs\":[0],\"quote\":\"SQL queries\"},{\"id\":\"pandas\",\"jobs\":[0],\"quote\":\"pandas\"},{\"id\":\"spreadsheets\",\"jobs\":[0],\"quote\":\"spreadsheets\"},{\"id\":\"statistics\",\"jobs\":[0],\"quote\":\"statistics\"},{\"id\":\"exploratory-data-analysis\",\"jobs\":[0],\"quote\":\"exploratory data analysis\"},{\"id\":\"data-visualization\",\"jobs\":[0],\"quote\":\"data visualisation\"},{\"id\":\"python\",\"jobs\":[0],\"quote\":\"Python\"},{\"id\":\"secrets-management\",\"jobs\":[],\"quote\":\"\"},{\"id\":\"git\",\"jobs\":[],\"quote\":\"\"}]\n}",
+  "ms": 32481,
+  "prompt_tokens": 2485,
+  "output_tokens": 285
+ },
+ "2faef9dcfe9ac54ecd0efd15": {
+  "content": "{\"jobs\":[{\"title\":\"Senior Embedded Software Engineer\",\"employer\":\"Aselkon Defence\",\"start\":\"2019-02\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Embedded Software Engineer\",\"employer\":\"Otomotiv Elektronik\",\"start\":\"2013-07\",\"end\":\"2019-01\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2009,\"end_year\":2013}],\"skills\":[{\"id\":\"c\",\"jobs\":[0,1],\"quote\":\"Firmware in C\"},{\"id\":\"cpp\",\"jobs\":[0],\"quote\":\"C++ for STM32\"},{\"id\":\"microcontrollers\",\"jobs\":[0,1],\"quote\":\"8-bit microcontrollers\"},{\"id\":\"embedded-linux\",\"jobs\":[0],\"quote\":\"Embedded Linux with Yocto\"},{\"id\":\"rtos\",\"jobs\":[0],\"quote\":\"FreeRTOS\"},{\"id\":\"cryptography-basics\",\"jobs\":[0],\"quote\":\"CAN, SPI, I2C and UART drivers\"},{\"id\":\"linux\",\"jobs\":[0],\"quote\":\"board bring-up\"},{\"id\":\"unit-testing\",\"jobs\":[0],\"quote\":\"Unit tests with Unity\"},{\"id\":\"python\",\"jobs\":[1],\"quote\":\"Python tools for test benches\"}]}",
+  "ms": 23447,
+  "prompt_tokens": 2478,
+  "output_tokens": 251
+ },
+ "13279dfeddbe8691787ce8ad": {
+  "content": "{\"jobs\":[{\"title\":\"QA Automation Engineer\",\"employer\":\"Sigortam Online\",\"start\":\"2024-03\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Manual Tester\",\"employer\":\"Webtest Services\",\"start\":\"2022-09\",\"end\":\"2024-02\",\"kind\":\"internship\"}],\"education\":[{\"start_year\":2018,\"end_year\":2022}],\"skills\":[{\"id\":\"java\",\"jobs\":[0],\"quote\":\"UI test framework in Java\"},{\"id\":\"selenium\",\"jobs\":[0],\"quote\":\"Selenium WebDriver\"},{\"id\":\"test-automation\",\"jobs\":[0],\"quote\":\"Test automation engineer\"},{\"id\":\"cryptography-basics\",\"jobs\":[0],\"quote\":\"none\"},{\"id\":\"javascript\",\"jobs\":[0],\"quote\":\"JavaScript\"},{\"id\":\"sql\",\"jobs\":[0],\"quote\":\"SQL checks\"},{\"id\":\"git\",\"jobs\":[0],\"quote\":\"Git\"},{\"id\":\"test-planning\",\"jobs\":[1],\"quote\":\"test plans\"},{\"id\":\"exploratory-data-analysis\",\"jobs\":[1],\"quote\":\"exploratory testing\"},{\"id\":\"unit-testing\",\"jobs\":[0],\"quote\":\"TestNG\"},{\"id\":\"cryptography-basics\",\"jobs\":[0],\"quote\":\"none\"}]}",
+  "ms": 16193,
+  "prompt_tokens": 2468,
+  "output_tokens": 257
+ },
+ "a72e388c1c3d7cd89c98ef0d": {
+  "content": "{\"jobs\":[{\"title\":\"Aspiring web developer\",\"employer\":\"Self-employed\",\"start\":\"2024-01\",\"end\":null,\"kind\":\"other\"}],\"education\":[],\"skills\":[{\"id\":\"html\",\"quote\":\"HTML, CSS and some JavaScript\"},{\"id\":\"css\",\"quote\":\"HTML, CSS and some JavaScript\"},{\"id\":\"javascript\",\"quote\":\"HTML, CSS and some JavaScript\"}]}",
+  "ms": 8212,
+  "prompt_tokens": 2291,
+  "output_tokens": 80
+ },
+ "ef8b0ade2bc225bdc84722bf": {
+  "content": "{\"jobs\":[{\"title\":\"Backend Developer\",\"employer\":\"Menuly\",\"start\":\"2023-05\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Python Developer\",\"employer\":\"Freelance\",\"start\":\"2022-06\",\"end\":\"2023-04\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2017,\"end_year\":2022}],\"skills\":[{\"id\":\"python\",\"jobs\":[0,1],\"quote\":\"Python web services\"},{\"id\":\"django\",\"jobs\":[0],\"quote\":\"Django and Django REST Framework APIs\"},{\"id\":\"fastapi\",\"jobs\":[0],\"quote\":\"New services in FastAPI\"},{\"id\":\"postgresql\",\"jobs\":[0],\"quote\":\"PostgreSQL\"},{\"id\":\"redis\",\"jobs\":[0],\"quote\":\"Redis\"},{\"id\":\"docker\",\"jobs\":[0],\"quote\":\"Docker images deployed to AWS\"},{\"id\":\"git\",\"jobs\":[0,1],\"quote\":\"Git\"},{\"id\":\"testing-fundamentals\",\"jobs\":[0],\"quote\":\"pytest unit tests\"}]}",
+  "ms": 16486,
+  "prompt_tokens": 2419,
+  "output_tokens": 214
+ },
+ "cd7c8d05fe73ddd5d204fe73": {
+  "content": "{\"jobs\":[{\"title\":\"Engineering Manager\",\"employer\":\"Gezgin\",\"start\":\"2020-09\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Tech Lead\",\"employer\":\"Hepsiyol\",\"start\":\"2017-03\",\"end\":\"2020-08\",\"kind\":\"tech\"}],\"education\":[{\"start_year\":2007,\"end_year\":2011}],\"skills\":[{\"id\":\"people-management\",\"jobs\":[0],\"quote\":\"hire, grow and keep engineers\"},{\"id\":\"hiring\",\"jobs\":[0],\"quote\":\"I hire\"},{\"id\":\"technical-leadership\",\"jobs\":[0],\"quote\":\"Technical Leadership\"},{\"id\":\"engineering-processes\",\"jobs\":[0],\"quote\":\"Engineering Manager\"},{\"id\":\"agile-scrum\",\"jobs\":[0],\"quote\":\"Agile Methodologies\"},{\"id\":\"scikit-learn\",\"jobs\":[1],\"quote\":\"Java services\"},{\"id\":\"java\",\"jobs\":[1],\"quote\":\"Java services\"},{\"id\":\"go\",\"jobs\":[1],\"quote\":\"Go services\"},{\"id\":\"kotlin\",\"jobs\":[1],\"quote\":\"Kotlin and Java microservices\"},{\"id\":\"aws\",\"jobs\":[1],\"quote\":\"on AWS\"},{\"id\":\"microservices\",\"jobs\":[1],\"quote\":\"monolith into Kotlin and Java microservices\"}]}",
+  "ms": 20143,
+  "prompt_tokens": 2633,
+  "output_tokens": 266
+ },
+ "f4adfb16af2e0beb329a4d0f": {
+  "content": "{\"jobs\":[{\"title\":\"Game Developer\",\"employer\":\"Tilt Games\",\"start\":\"2022-04\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Game Developer\",\"employer\":\"Tilt Games\",\"start\":\"2022-04\",\"end\":null,\"kind\":\"tech\"}],\"education\":[{\"start_year\":2018,\"end_year\":2022}],\"skills\":[{\"id\":\"unity\",\"jobs\":[0],\"quote\":\"Unity Game Developer\"},{\"id\":\"c\",\"jobs\":[0],\"quote\":\"C# for three hybrid-casual\"},{\"id\":\"game-physics\",\"jobs\":[0],\"quote\":\"physics-heavy mobile games\"},{\"id\":\"game-optimization\",\"jobs\":[0],\"quote\":\"Optimised draw calls\"},{\"id\":\"shaders\",\"jobs\":[0],\"quote\":\"wrote simple shaders\"},{\"id\":\"game-math\",\"jobs\":[0],\"quote\":\"vector maths for camera\"},{\"id\":\"unity\",\"jobs\":[0],\"quote\":\"Unity with C#\"}]}",
+  "ms": 15430,
+  "prompt_tokens": 2429,
+  "output_tokens": 202
+ },
+ "878d2b6b7498f36c3ebad124": {
+  "content": "{\"jobs\":[{\"title\":\"Veri Analisti\",\"employer\":\"Sepetim.com\",\"start\":\"2025-03\",\"end\":null,\"kind\":\"tech\"},{\"title\":\"Stajyer Veri Analisti\",\"employer\":\"Sepitim.com\",\"start\":\"2024-07\",\"end\":\"2024-09\",\"kind\":\"internship\"}],\"education\":[{\"start_year\":2020,\"end_year\":2024}],\"skills\":[{\"id\":\"sql\",\"jobs\":[0],\"quote\":\"SQL ile satış\"},{\"id\":\"powershell\",\"jobs\":[0],\"quote\":\"Power BI raporları\"},{\"id\":\"pandas\",\"jobs\":[0],\"quote\":\"Python (pandas)\"},{\"id\":\"data-cleaning\",\"jobs\":[0],\"quote\":\"veri temizleme\"},{\"id\":\"ab-testing\",\"jobs\":[0],\"quote\":\"A/B testlerinin\"},{\"id\":\"statistics\",\"jobs\":[0],\"quote\":\"istatistiksel değerlendirmesi\"},{\"id\":\"product-analytics\",\"jobs\":[0],\"quote\":\"ürün analitiği\"}]}",
+  "ms": 15462,
+  "prompt_tokens": 2454,
+  "output_tokens": 214
  }
 }

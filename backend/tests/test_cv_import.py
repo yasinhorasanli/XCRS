@@ -251,3 +251,17 @@ def test_an_uploaded_pdf_is_read_and_a_scanned_one_refused(api):
     scanned = (PDFS / "scanned.pdf").read_bytes()
     r = api.post("/api/v2/cv-imports", files={"file": ("s.pdf", scanned, "application/pdf")}, headers=headers)
     assert r.status_code == 422 and r.json()["detail"]["code"] == "scanned"
+
+
+def test_the_compact_answer_reads_as_an_extraction_and_only_allows_catalog_ids():
+    from xcrs.cv.extract import answer_model, parse_answer
+
+    content = (
+        '{"jobs":[{"title":"Backend Developer","employer":"Menuly","start":"2023-05","end":null,"kind":"tech"}],'
+        '"education":[{"start_year":2017,"end_year":2022}],"skills":[{"id":"django","jobs":[0],"quote":"Django APIs"}]}'
+    )
+    extraction = parse_answer("compact", content)
+    assert extraction.jobs[0].employer == "Menuly" and extraction.education[0].end_year == 2022
+    assert extraction.skills[0].name == "django" and extraction.skills[0].evidence == "Django APIs"
+    schema = answer_model("compact", ["django", "python"]).model_json_schema()
+    assert schema["$defs"]["CompactPickedSkill"]["properties"]["id"]["enum"] == ["django", "python"]

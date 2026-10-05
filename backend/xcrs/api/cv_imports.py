@@ -88,7 +88,7 @@ def run_import(text: str, hidden: list[str]) -> ImportResult:
             settings.llm_base_url,
             settings.llm_model,
             names,
-            shape="pick" if settings.cv_shape == "pick" else "phrases",
+            shape=settings.cv_shape if settings.cv_shape in ("compact", "pick", "phrases") else "compact",  # type: ignore[arg-type]
             timeout_s=settings.cv_llm_timeout_s,
             max_tokens=settings.cv_llm_max_tokens,
             disable_thinking=settings.llm_disable_thinking,
