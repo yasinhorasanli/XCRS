@@ -99,6 +99,8 @@ class RoleV2(BaseModel):
     id: str
     name: str
     family: str
+    title_for_you: str | None = None  # built from the learner's strongest title skills (ADR-0044)
+    job_titles: list[str] = []  # the role's name and other market titles, to search job ads for
     score: float
     interest: float
     coverage: float

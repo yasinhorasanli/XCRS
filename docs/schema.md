@@ -222,6 +222,8 @@ erDiagram
 
 **Engine v2 activity (migration `0007`, ADR-0031), in `public`:** `recommendations_v2` (`id` uuid, `created_at`, `catalog_checksum`, `algorithm_version`, `status` CHECK ok/insufficient_input, `input` jsonb = chips, `result` jsonb = matched chips and roles with levels and gaps) and `feedback_v2` (→ `recommendations_v2` ON DELETE CASCADE, `role` slug, `resource_id`, `rating` −1/1, `comment`). JSONB first, normalized once the format settles (ADR-0013).
 
+**Title skills (migration `0013`, ADR-0044):** `catalog.roles.title_skills` text[]: the skill slugs job ads put in the role's title, in `roles.yaml` order; market titles are `catalog.role_titles` (from `also_called`).
+
 **Accounts (migration `0012`, ADR-0043), in `public`:**
 
 | Table | Key | Columns |

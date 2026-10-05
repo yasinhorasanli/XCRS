@@ -82,6 +82,8 @@ Offline: xcrs catalog import | embed   (catalog/*.yaml → catalog schema, skill
 
 The research prototype is on `main` and in the Zenodo release; the classic engine that replaced it on this branch was retired on 2026-10-02 (ADR-0039). Measurements are in [baseline.md](baseline.md).
 
+Each recommended role lists job titles to search for, the learner's own first ("Java Backend Engineer", ADR-0044); skills to learn and assumed basics can be added to the board from the results page, which then updates the results.
+
 Accounts are optional (ADR-0043): without `XCRS_INTERNAL_SECRET` and a session password the site is anonymous only, as before; signed in, results and the board are kept, with JSON export and account deletion.
 
 Still open: LLM tracing, a chat/agent feature, the domain name, and the cloud target. See [adr/README.md](adr/README.md#upcoming-decisions).

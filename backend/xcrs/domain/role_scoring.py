@@ -96,6 +96,8 @@ class RoleSnapshot:
     titles: dict[str, str | None]  # level -> title (e.g. "Principal Scientist")
     requirements: dict[str, list[Requirement]]  # level -> cumulative required items, roadmap order
     optional: dict[str, int] = field(default_factory=dict)  # "good to know" skill -> proficiency mentioned
+    market_titles: tuple[str, ...] = ()  # other titles job ads use for this role (ADR-0044)
+    title_skills: tuple[str, ...] = ()  # languages and frameworks that go into a title (ADR-0044)
 
     def reliance(self) -> dict[str, float]:
         """How much the role relies on each skill: the highest proficiency its roadmap asks for, out of 4;

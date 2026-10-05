@@ -67,7 +67,9 @@ class AccountService:
     def identities(self, user: User) -> list[UserIdentity]:
         return list(
             self.session.scalars(
-                select(UserIdentity).where(UserIdentity.user_id == user.id).order_by(UserIdentity.created_at)
+                select(UserIdentity)
+                .where(UserIdentity.user_id == user.id)
+                .order_by(UserIdentity.created_at, UserIdentity.provider)
             )
         )
 

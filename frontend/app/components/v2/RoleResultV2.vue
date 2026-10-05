@@ -1,10 +1,42 @@
 <script setup lang="ts">
-import { CATEGORY_META } from '~/composables/categories'
+import { CATEGORIES, CATEGORY_META } from '~/composables/categories'
 import { LEVEL_NAMES, PROFICIENCY_NAMES } from '~/composables/useXcrsApiV2'
-import type { RoleResult } from '~/types/apiV2'
+import type { Category, Gap, RoleResult, SkillRef, SkillToAdd } from '~/types/apiV2'
 
 const props = defineProps<{ role: RoleResult; rank: number; recommendationId: string }>()
+const emit = defineEmits<{ add: [items: SkillToAdd[]] }>()
 const api = useXcrsApiV2()
+const { onBoard } = useBoardV2()
+
+/** Job titles to search for (ADR-0044): the learner's own first; each opens a LinkedIn Jobs search. */
+const titles = computed(() => {
+  const own = props.role.title_for_you
+  return [...(own ? [own] : []), ...(props.role.job_titles ?? []).filter((t) => t !== own)]
+})
+const jobSearch = (title: string) => `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(title)}`
+
+const gapOnBoard = (g: Gap) => g.skills.some((s) => onBoard(s))
+
+/** A basic the learner can confirm: into any box, at the level the role assumes (curious has no level). */
+function basicMenu(g: Gap) {
+  const into = (skill: SkillRef) =>
+    CATEGORIES.map((category) => ({
+      label: CATEGORY_META[category].short,
+      icon: CATEGORY_META[category].icon,
+      onSelect: () => emit('add', [{ skill, category, proficiency: category === 'curious' ? undefined : g.need }]),
+    }))
+  return g.skills.length === 1 ? [into(g.skills[0]!)] : g.skills.map((s) => [{ type: 'label' as const, label: s.name }, ...into(s)])
+}
+
+/** A skill to learn goes to "Curious"; with a choice ("Kotlin or Java"), the learner picks one. */
+const gapMenu = (g: Gap) => [g.skills.map((skill) => ({ label: skill.name, onSelect: () => emit('add', [{ skill, category: 'curious' }]) }))]
+
+function addAllBasics() {
+  const items = (props.role.basics ?? [])
+    .filter((g) => !gapOnBoard(g))
+    .map((g) => ({ skill: g.skills[0]!, category: 'neutral' as Category, proficiency: g.need }))
+  if (items.length) emit('add', items)
+}
 
 const levelName = (id: string, title?: string | null) => title ?? LEVEL_NAMES[id] ?? id
 const pct = (x: number) => `${Math.round(Math.max(0, Math.min(1, x)) * 100)}%`
@@ -94,6 +126,27 @@ async function send(rating: 1 | -1) {
       </div>
     </div>
 
+    <div v-if="titles.length" class="mt-4">
+      <h3 class="text-xs font-medium uppercase tracking-wide text-slate-500">Job titles to search for</h3>
+      <ul class="mt-1.5 flex flex-wrap gap-1.5">
+        <li v-for="(t, i) in titles" :key="t">
+          <a
+            :href="jobSearch(t)"
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs ring-1 ring-inset transition hover:ring-indigo-300"
+            :class="i === 0 && role.title_for_you ? 'bg-indigo-50 font-medium text-indigo-800 ring-indigo-200' : 'text-slate-700 ring-slate-200'"
+            :title="`Search LinkedIn Jobs for “${t}”`"
+          >
+            <UIcon v-if="i === 0 && role.title_for_you" name="i-heroicons-sparkles" class="h-3.5 w-3.5" />
+            {{ t }}
+            <UIcon name="i-heroicons-arrow-top-right-on-square" class="h-3 w-3 opacity-50" />
+          </a>
+        </li>
+      </ul>
+      <p v-if="role.title_for_you" class="mt-1 text-[11px] text-slate-400">The first one comes from your strongest skills for this role; each opens a LinkedIn Jobs search.</p>
+    </div>
+
     <div v-if="role.resources?.length" class="mt-4">
       <h3 class="text-xs font-medium uppercase tracking-wide text-slate-500">Start learning</h3>
       <ul class="mt-1.5 grid gap-2 sm:grid-cols-3">
@@ -124,9 +177,21 @@ async function send(rating: 1 | -1) {
       <div v-for="s in stages" :key="s.stage" class="mt-2">
         <p class="text-xs text-slate-400">{{ s.stage }}</p>
         <ul class="mt-1 flex flex-wrap gap-1.5">
-          <li v-for="g in s.gaps" :key="g.skills.map((x) => x.id).join('|')" class="rounded-lg bg-slate-50 px-2.5 py-1 text-sm ring-1 ring-inset ring-slate-200">
-            {{ g.skills.map((x) => x.name).join(' or ') }}
-            <span class="text-[11px] text-slate-500">· {{ PROFICIENCY_NAMES[g.need]?.toLowerCase() }}<template v-if="g.have"> (you: {{ PROFICIENCY_NAMES[g.have]?.toLowerCase() }})</template></span>
+          <li v-for="g in s.gaps" :key="g.skills.map((x) => x.id).join('|')" class="flex items-center gap-1 rounded-lg bg-slate-50 py-1 pl-2.5 pr-1 text-sm ring-1 ring-inset ring-slate-200">
+            <span>
+              {{ g.skills.map((x) => x.name).join(' or ') }}
+              <span class="text-[11px] text-slate-500">· {{ PROFICIENCY_NAMES[g.need]?.toLowerCase() }}<template v-if="g.have"> (you: {{ PROFICIENCY_NAMES[g.have]?.toLowerCase() }})</template></span>
+            </span>
+            <UIcon v-if="gapOnBoard(g)" name="i-heroicons-check-20-solid" class="mx-1 h-4 w-4 text-emerald-600" aria-label="On your board" />
+            <UButton
+              v-else-if="g.skills.length === 1"
+              size="xs" color="neutral" variant="ghost" icon="i-heroicons-plus-20-solid"
+              :aria-label="`Add ${g.skills[0]!.name} to Curious`" :title="`Add to “Curious about”`"
+              @click="emit('add', [{ skill: g.skills[0]!, category: 'curious' }])"
+            />
+            <UDropdownMenu v-else :items="gapMenu(g)">
+              <UButton size="xs" color="neutral" variant="ghost" icon="i-heroicons-plus-20-solid" :aria-label="`Add one of ${g.skills.map((x) => x.name).join(', ')} to Curious`" title="Add to “Curious about”" />
+            </UDropdownMenu>
           </li>
         </ul>
       </div>
@@ -136,10 +201,23 @@ async function send(rating: 1 | -1) {
       <summary class="cursor-pointer text-slate-500 hover:text-slate-700">
         Assumed at your level: {{ role.basics.length }} {{ role.basics.length === 1 ? 'basic' : 'basics' }} you didn't list. Worth a quick check
       </summary>
+      <p class="mt-2 text-xs text-slate-500">
+        Click one to put it on your board, or
+        <button type="button" class="font-medium text-indigo-600 hover:underline" @click="addAllBasics">add all as Neutral</button>.
+      </p>
       <ul class="mt-2 flex flex-wrap gap-1.5">
-        <li v-for="g in role.basics" :key="g.skills.map((x) => x.id).join('|')" class="rounded-lg px-2.5 py-1 text-xs text-slate-600 ring-1 ring-inset ring-slate-200">
-          {{ g.skills.map((x) => x.name).join(' or ') }}
-          <span class="text-slate-400">· {{ PROFICIENCY_NAMES[g.need]?.toLowerCase() }}</span>
+        <li v-for="g in role.basics" :key="g.skills.map((x) => x.id).join('|')">
+          <span v-if="gapOnBoard(g)" class="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs text-slate-400 ring-1 ring-inset ring-slate-200">
+            <UIcon name="i-heroicons-check-20-solid" class="h-3.5 w-3.5 text-emerald-600" />
+            {{ g.skills.map((x) => x.name).join(' or ') }}
+          </span>
+          <UDropdownMenu v-else :items="basicMenu(g)">
+            <button type="button" class="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs text-slate-600 ring-1 ring-inset ring-slate-200 transition hover:bg-slate-50 hover:ring-indigo-300">
+              {{ g.skills.map((x) => x.name).join(' or ') }}
+              <span class="text-slate-400">· {{ PROFICIENCY_NAMES[g.need]?.toLowerCase() }}</span>
+              <UIcon name="i-heroicons-plus-20-solid" class="h-3.5 w-3.5 text-slate-400" />
+            </button>
+          </UDropdownMenu>
         </li>
       </ul>
     </details>

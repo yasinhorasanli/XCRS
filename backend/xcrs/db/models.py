@@ -133,6 +133,7 @@ class CareerRole(Base):
     summary: Mapped[str] = mapped_column(Text)
     onet_code: Mapped[str] = mapped_column(Text)
     esco_uri: Mapped[str | None] = mapped_column(Text)
+    title_skills: Mapped[list[str]] = mapped_column(ARRAY(Text), server_default=text("'{}'"))  # ADR-0044
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(server_default=func.now())
 

@@ -17,6 +17,8 @@ def test_a_recommendation_is_made_stored_and_read_back(client):
     assert [m["method"] for m in body["matched"]] == ["picked", "lookup", "lookup", "picked", "lookup"]
     first = body["roles"][0]
     assert first["id"] == "backend-engineer" and first["target_level"]["id"] == "entry"
+    assert first["title_for_you"] == "Java Backend Engineer (Spring Boot)"  # ADR-0044
+    assert first["job_titles"][:2] == ["Backend Engineer", "Backend Developer"]
     assert {b["id"] for b in first["because"]} >= {"java", "spring-boot", "kafka"}
     assert first["gaps"] and all(g["have"] < g["need"] for g in first["gaps"])
     again = client.get(f"/api/v2/recommendations/{body['id']}")

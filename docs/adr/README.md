@@ -46,6 +46,7 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0040](0040-public-access-through-tailscale-funnel.md) | Public access through Tailscale Funnel now, a Cloudflare Tunnel once there is a domain; VMs managed over Tailscale | Accepted | 2026-10-02 |
 | [0041](0041-level-from-evidence-and-experience-next-level-gaps.md) | Levels from per-level evidence and optional experience; gaps and resources for the next level only; even staff levels | Accepted | 2026-10-03 |
 | [0043](0043-accounts-with-social-sign-in-in-the-nuxt-server.md) | Accounts with GitHub, Google and LinkedIn sign-in in the Nuxt server (sealed-cookie sessions, signed identity header to the API); anonymous use stays; export and delete | Accepted | 2026-10-03 |
+| [0044](0044-job-titles-per-role-and-one-for-the-learner.md) | Job titles per role (market titles from O*NET) and one built from the learner's strongest skills; each links to a job search | Accepted | 2026-10-05 |
 
 ## Upcoming decisions
 

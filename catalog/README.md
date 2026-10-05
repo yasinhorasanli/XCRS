@@ -30,7 +30,9 @@ uv run xcrs catalog import                                              # load i
 
 **Moving between roles:** any move is possible. `moves` ranks every other role by coverage (the share of its requirements already met, skills weighted by how distinctive they are) and estimates the starting level (highest level ≥ 55% covered). `common_paths` in `roles.yaml` lists the moves people commonly make, as evidence.
 
-**Role or alias:** other market titles go in a role's `also_called`. A title can list `adds`, the skills it asks for on top of the role; `validate` rejects a title the role covers less than 80% of at mid level, because that is a different job and needs its own role and roadmap.
+**Role or alias:** other market titles go in a role's `also_called`. A title can list `adds`, the skills it asks for on top of the role; `validate` rejects a title the role covers less than 80% of at mid level, because that is a different job and needs its own role and roadmap. Results list these titles as "job titles to search for" (ADR-0044).
+
+**Title skills:** a role's `title_skills` are the languages and frameworks job ads put in its title ("Java Backend Engineer"). The learner's strongest one builds a title for them (ADR-0044). Each must be in the role's roadmap; list them from most to least common.
 
 ## Learning resources
 

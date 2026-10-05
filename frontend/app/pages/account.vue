@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { LEVEL_NAMES, PROVIDER_META } from '~/composables/useXcrsApiV2'
+import { CATEGORIES, CATEGORY_META } from '~/composables/categories'
+import { EXPERIENCE_OPTIONS, LEVEL_NAMES, PROFICIENCY_NAMES, PROVIDER_META } from '~/composables/useXcrsApiV2'
 import { apiError } from '~/composables/useAccount'
-import type { Me, ResultSummary } from '~/types/apiV2'
+import type { Me, ResultSummary, SavedBoard } from '~/types/apiV2'
 
 const api = useXcrsApiV2()
 const toast = useToast()
@@ -9,6 +10,14 @@ const { loggedIn, clear: forgetSession, signInPath, signOut } = useAccount()
 
 const me = ref<Me | null>(null)
 const results = ref<ResultSummary[]>([])
+const board = ref<SavedBoard | null>(null)
+/** The saved board's skills per box, in the board's order (ADR-0043). */
+const skillGroups = computed(() =>
+  CATEGORIES.map((category) => ({ category, chips: board.value?.chips.filter((c) => c.category === category) ?? [] })).filter(
+    (g) => g.chips.length,
+  ),
+)
+const experienceLabel = computed(() => EXPERIENCE_OPTIONS.find((o) => o.value === board.value?.experience)?.label)
 const loading = ref(true)
 const confirmDelete = ref(false)
 const busy = ref(false)
@@ -23,7 +32,9 @@ async function ended() {
 async function load() {
   if (!loggedIn.value) return navigateTo(signInPath('/account'))
   try {
-    ;[me.value, results.value] = await Promise.all([api.me(), api.results()])
+    let saved
+    ;[me.value, results.value, saved] = await Promise.all([api.me(), api.results(), api.board()])
+    board.value = saved.board
   } catch (e) {
     if (apiError(e).status === 401) return ended()
     toast.add({ title: 'Could not load your account', color: 'error', icon: 'i-heroicons-exclamation-triangle' })
@@ -101,8 +112,35 @@ async function deleteAccount() {
 
       <section class="mt-6">
         <div class="flex items-center gap-3">
+          <h2 class="text-lg font-semibold">Your skills</h2>
+          <UButton class="ml-auto" to="/" size="sm" color="neutral" variant="soft" icon="i-heroicons-pencil-square" label="Edit on the board" />
+        </div>
+        <p v-if="experienceLabel" class="mt-1 text-sm text-slate-500">Years in software: {{ experienceLabel }}</p>
+        <p v-if="!skillGroups.length" class="mt-3 text-sm text-slate-500">
+          No saved board yet. The board you use while signed in is kept here.
+        </p>
+        <div v-else class="mt-3 grid gap-3">
+          <div v-for="g in skillGroups" :key="g.category" class="rounded-2xl p-4 ring-1 ring-inset" :class="[CATEGORY_META[g.category].soft, CATEGORY_META[g.category].chip.split(' ').find((c) => c.startsWith('ring-'))]">
+            <h3 class="flex items-center gap-2 text-sm font-semibold">
+              <UIcon :name="CATEGORY_META[g.category].icon" class="h-4 w-4" />
+              {{ CATEGORY_META[g.category].title }}
+              <span class="font-normal text-slate-500">{{ g.chips.length }}</span>
+            </h3>
+            <ul class="mt-2 flex flex-wrap gap-1.5">
+              <li v-for="c in g.chips" :key="`${c.skill ?? ''}|${c.text ?? ''}`" class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-sm ring-1 ring-inset" :class="CATEGORY_META[g.category].chip">
+                {{ c.name ?? c.text ?? c.skill }}
+                <span v-if="c.proficiency" class="flex items-center gap-0.5" :title="PROFICIENCY_NAMES[c.proficiency]" :aria-label="PROFICIENCY_NAMES[c.proficiency]">
+                  <span v-for="n in 4" :key="n" class="h-2 w-2 rounded-full ring-1 ring-current" :class="c.proficiency >= n ? 'bg-current opacity-80' : 'opacity-40'" />
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-8">
+        <div class="flex items-center gap-3">
           <h2 class="text-lg font-semibold">Your results</h2>
-          <UButton class="ml-auto" to="/" size="sm" color="neutral" variant="soft" icon="i-heroicons-squares-2x2" label="Open your board" />
         </div>
         <p v-if="!results.length" class="mt-3 text-sm text-slate-500">
           No saved results yet. Results you make while signed in are kept here.
