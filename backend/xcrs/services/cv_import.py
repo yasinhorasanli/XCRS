@@ -33,7 +33,7 @@ MAX_EXAMPLES = 3
 class Extractor(Protocol):
     shape: Shape
 
-    def extract(self, cv_text: str) -> CvExtraction: ...
+    def extract(self, cv_text: str, found: list[str] | None = None) -> CvExtraction: ...
 
 
 class PhraseMatcher(Protocol):
@@ -102,7 +102,10 @@ class CvImporter:
         scanned = cv_profile.scan(self.index, clean)
 
         started = time.perf_counter()
-        extraction = self.extractor.extract(clean)
+        if self.extractor.shape == "found":  # the model only says where the scanned skills were used
+            extraction = self.extractor.extract(clean, found=sorted(scanned))
+        else:
+            extraction = self.extractor.extract(clean)
         llm_ms = int((time.perf_counter() - started) * 1000)
 
         text_words = cv_profile.words(clean)
@@ -116,6 +119,16 @@ class CvImporter:
                 kept.append(skill)
         dropped = len(extraction.skills) - len(kept)
 
+        # Only positions whose start year is in the text (an invented one would set the experience band); skills
+        # keep pointing at the same positions.
+        real = [i for i, j in enumerate(extraction.jobs) if cv_profile.dated_in_text(j.start, clean)]
+        renumber = {old: new for new, old in enumerate(real)}
+        extraction.jobs = [extraction.jobs[i] for i in real]
+        for skill in extraction.skills:
+            skill.jobs = [renumber[i] for i in skill.jobs if i in renumber]
+        extraction.found_jobs = {
+            sid: [renumber[i] for i in idx if i in renumber] for sid, idx in extraction.found_jobs.items()
+        }
         jobs = [
             cv_profile.Job(
                 cv_profile.parse_month(j.start),
@@ -142,7 +155,7 @@ class CvImporter:
                     add(skill.name, skill.jobs, skill.evidence, "llm")
         for skill_id, line in scanned.items():
             if skill_id not in found:
-                add(skill_id, [], line, "scan")
+                add(skill_id, extraction.found_jobs.get(skill_id, []), line, "scan")
 
         suggestions = []
         for skill_id, entry in found.items():

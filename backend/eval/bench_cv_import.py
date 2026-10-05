@@ -28,10 +28,11 @@ from common import EVAL_DIR, RESULTS_DIR
 from sqlalchemy import select
 
 from xcrs.cv.clean import normalize_text, remove_instructions
-from xcrs.cv.extract import CvExtraction, answer_model, parse_answer, prompt_version, system_prompt
+from xcrs.cv.extract import CvExtraction, answer_model, parse_answer, prompt_version, system_prompt, user_message
 from xcrs.cv.pdf_text import CvInputError, pdf_text
 from xcrs.db.models import EmbeddingModel
 from xcrs.db.session import new_session
+from xcrs.domain.cv_profile import scan
 from xcrs.domain.skill_matching import LexicalIndex
 from xcrs.embeddings import embedder_for
 from xcrs.matching.prompts import QUERY_INSTRUCTION
@@ -56,7 +57,7 @@ class Cache:
         self.path.write_text(json.dumps(self.data, indent=1, ensure_ascii=False))
 
 
-def chat(client: httpx.Client, model: str, system: str, cv: str, schema: dict, threads: int | None) -> dict:
+def chat(client: httpx.Client, model: str, system: str, user: str, schema: dict, threads: int | None) -> dict:
     options = {"temperature": 0.1, "num_ctx": 16384, "num_predict": 3000}
     if threads:
         options |= {"num_gpu": 0, "num_thread": threads}
@@ -69,7 +70,7 @@ def chat(client: httpx.Client, model: str, system: str, cv: str, schema: dict, t
             "think": False,
             "format": schema,
             "options": options,
-            "messages": [{"role": "system", "content": system}, {"role": "user", "content": f"<cv>\n{cv}\n</cv>"}],
+            "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
         },
     ).json()
     return {
@@ -84,7 +85,7 @@ class CachedExtractor:
     def __init__(self, shape: str, extraction: CvExtraction):
         self.shape, self._extraction = shape, extraction
 
-    def extract(self, cv_text: str) -> CvExtraction:
+    def extract(self, cv_text: str, found: list[str] | None = None) -> CvExtraction:
         return self._extraction
 
 
@@ -162,8 +163,6 @@ def run(args) -> dict:
     rows = []
     for case in scored_cases:
         clean, _ = remove_instructions(texts[case["id"]][0])
-        from xcrs.domain.cv_profile import scan
-
         rows.append({"id": case["id"], **score(set(scan(index, clean)), case)})
     results["runs"].append(
         {"model": "-", "device": "-", "shape": "scan only", "variant": "scan only", **totals(rows), "rows": rows}
@@ -175,16 +174,17 @@ def run(args) -> dict:
         plans.append((args.cpu_model, "cpu", args.threads))
     for model, device, threads in plans:
         for shape in args.shapes:
-            schema = answer_model(shape, list(names)).model_json_schema()
             system = system_prompt(shape, names.items())
             answers, latency = {}, []
             for case in scored_cases:
                 text, hidden = texts[case["id"]]
                 clean, _ = remove_instructions(text)
-                key = cache.key(model, device, shape, prompt_version(shape), clean)
+                found = sorted(scan(index, clean)) if shape == "found" else None
+                schema = answer_model(shape, list(names), found).model_json_schema()
+                key = cache.key(model, device, shape, prompt_version(shape), clean, *(found or []))
                 if key not in cache.data:
                     print(f"  {model} {device} {shape} {case['id']} ...", flush=True)
-                    cache.data[key] = chat(client, model, system, clean, schema, threads)
+                    cache.data[key] = chat(client, model, system, user_message(clean, found), schema, threads)
                     cache.save()
                 answer = cache.data[key]
                 latency.append(
@@ -200,10 +200,11 @@ def run(args) -> dict:
                     answers[case["id"]] = CvExtraction()
             variants = {
                 "full": {},
-                "no scan": {"index": LexicalIndex()},
+                # "found" relies on the scan (the model only places scanned skills): removing it measures nothing.
+                **({} if shape == "found" else {"no scan": {"index": LexicalIndex()}}),
                 "no evidence check": {"check_evidence": False},
             }
-            if shape in ("pick", "compact"):
+            if shape in ("pick", "compact", "found"):
                 variants["no similarity check"] = {"confirm": None}
             for variant, overrides in variants.items():
                 rows = []
@@ -244,8 +245,11 @@ def run(args) -> dict:
         timings = []
         for model, device, threads in plans:
             for shape in args.shapes:
-                schema = answer_model(shape, list(names)).model_json_schema()
-                a = chat(client, model, system_prompt(shape, names.items()), clean, schema, threads)
+                found = sorted(scan(index, clean)) if shape == "found" else None
+                schema = answer_model(shape, list(names), found).model_json_schema()
+                a = chat(
+                    client, model, system_prompt(shape, names.items()), user_message(clean, found), schema, threads
+                )
                 timings.append(
                     {
                         "model": model,
@@ -343,7 +347,7 @@ def summarize(results: dict) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--models", nargs="*", default=["qwen3.5:9b"])
-    parser.add_argument("--shapes", nargs="*", default=["phrases", "pick", "compact"])
+    parser.add_argument("--shapes", nargs="*", default=["phrases", "pick", "compact", "found"])
     parser.add_argument("--cpu-model", default=None)
     parser.add_argument("--threads", type=int, default=12)
     parser.add_argument("--only", nargs="*", default=None)
@@ -358,7 +362,7 @@ def main() -> None:
     results |= {
         "when": f"{datetime.now():%Y-%m-%d %H:%M}",
         "host": platform.node().split(".")[0],
-        "prompt_version": "cv-extract-1 (phrases, pick), cv-extract-2 (compact)",
+        "prompt_version": "cv-extract-1 (phrases, pick), cv-extract-3 (compact), cv-extract-4 (found)",
     }
     stem = RESULTS_DIR / f"cv-import-{datetime.now():%Y%m%d-%H%M}-{platform.node().split('.')[0]}"
     stem.with_suffix(".json").write_text(json.dumps(results, indent=1, ensure_ascii=False))

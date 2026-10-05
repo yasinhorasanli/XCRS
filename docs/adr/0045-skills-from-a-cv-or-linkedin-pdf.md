@@ -4,6 +4,7 @@
 - **Date:** 2026-10-05
 - **Decider:** Muhammed Yasin Horasanli
 - **Note (2026-10-05, evening):** the Phase-1 benchmark chose the "pick" shape (decision 2.4); results below. Built while the decider was away, under their instruction to proceed; to be reviewed.
+- **Note (2026-10-06):** VM-B missed the latency target, so the decider chose option 1 (a shorter answer), and options 1 and 2 together if 1 was not enough. The shorter answer, "compact", is now in use; option 2 was tried and rejected. See "Latency follow-up" below.
 
 ## Context
 
@@ -166,6 +167,29 @@ All extractors handled Turkish characters. Chrome's PDFs contain ligatures ("Air
 - **VM-B, measured 2026-10-05 with the decider's OK** (4B, CPU, 24 vCPU, "pick", synthetic CVs): **144 s** for a full one-page CV (2,756 prompt tokens, 1,270 output tokens) and **178–192 s** for a two-page proxy (two CVs joined, 3,476 characters, about 1,900–2,000 output tokens). Output runs at about 11 tokens/s, half the Mac's CPU speed, and it is nearly all of the time. **The target (under 90 s for two pages) is missed.** Imports are background jobs, so nothing breaks; the waiting screen says "one to three minutes"; and each import holds the shared LLM that long. Options: a more compact answer (shorter evidence; skills listed under their jobs), measured on the set; letting the scan's skills skip the LLM's list; or waiting for the GPU.
 - **Context length (found while measuring VM-B):** the app talks to Ollama's OpenAI-compatible API, which can't set a context per request, so it got Ollama's default of 4,096 tokens. A one-page import used 4,010 of them; a two-page one would be truncated. `OLLAMA_CONTEXT_LENGTH=16384` is now set on VM-B (`deploy/vm-b/compose.yaml`); the benchmark already ran with a 16k context.
 
+## Latency follow-up (2026-10-05 to 06, the decider's choice: option 1, then 1 and 2 together)
+
+Results are in `eval/results/cv-import-20261006-0013-*`. The rows on the Mac's CPU are medians per CV over the 16 readable CVs. The VM-B times are for the synthetic one-page CV and the two-page proxy.
+
+| 4B | Shape (prompt) | Precision | Recall | Band exact | Median output | Mac CPU, median | VM-B, one page / two pages |
+|---|---|---|---|---|---|---|---|
+| | pick (cv-extract-1) | 0.97 | 0.84 | 16/16 | 730 tokens | 33 s | 144 s / 178–192 s |
+| | compact (cv-extract-2) | 0.96 | 0.78 | 15/17 | 266 tokens | 24 s | 77 s / 81–82 s |
+| **in use** | **compact (cv-extract-3)** | **0.96** | **0.80** | **16/16** | **266 tokens** | **19 s** | **73 s / 77–89 s** |
+| | found (cv-extract-4, options 1 + 2) | 0.78 | 0.72 | 16/17 | 333 tokens, some at the 3,000 cap | 25 s | not measured |
+
+- **Option 1, "compact":** one-line JSON (the pretty-printed answer was 32% whitespace), quotes of 1–4 words, and education as years only. The answer became 65% shorter.
+  - **cv-extract-2** lost recall (0.78) and invented a job for the thin CV.
+  - **cv-extract-3** states that "compact" means the formatting only (every job and skill is still listed) and that no job may be invented. It also drops the "at most N, clearest first" line.
+  - **A deterministic guard was added:** a job is kept only if its start year is written in the CV. The thin CV's invented job was dated 2024-01 in a text without any year.
+  - Quality meets every target, recall just barely.
+- **VM-B, compact (cv-extract-3):**
+  - one page: 73 s;
+  - two-page proxy: 89 s when only the catalog part of the prompt is cached, 77 s when the whole prompt is.
+  - In production, explanations and matching run between imports and evict the cached prompt, so a typical two-page import is expected to be about 90–100 s. That is at the target, not clearly under it. A fully cold two-page run was cancelled at the decider's request (late night; VM-B is in a shared room and loud under load), so it is still to be measured.
+- **Option 2, "found" (rejected):** the scan's finds were given in the request, and the answer only named, per job, which of them it used. 4B then misplaced them and sometimes never closed its JSON. Precision fell to 0.78 and recall to 0.72, and the median answer was longer. The code is kept only so the benchmark can be reproduced (`XCRS_CV_SHAPE=found`).
+- **Default:** `XCRS_CV_SHAPE=compact`.
+
 ## Trade-offs accepted
 
 - **An import holds the CPU LLM for 1–3 minutes,** delaying other people's explanations and new-phrase matching. Mitigated by signed-in only, one at a time, a short queue and a quota.
@@ -180,6 +204,7 @@ All extractors handled Turkish characters. Chrome's PDFs contain ligatures ("Air
 
 ## Revisit when
 
+- **A fully cold two-page import on VM-B measures clearly over 90 s** → a further answer-size cut (fewer fields per job), measured on the set first.
 - **A GPU arrives, or imports measure well under a minute on VM-B** → open the import to anonymous visitors with per-IP limits.
 - **Users ask for Word files, or many pasted texts start with Word artefacts** → add DOCX.
 - **Real CVs show a generator whose text order pypdf mixes up** → add a layout-aware fallback (pdfminer.six with tuned settings) for that case.

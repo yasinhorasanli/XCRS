@@ -70,6 +70,13 @@ def parse_month(value: str | int | None, end: bool = False) -> Month | None:
     return (year, month) if 1 <= month <= 12 and 1950 <= year <= 2100 else None
 
 
+def dated_in_text(start: str | int | None, text: str) -> bool:
+    """Whether a job's start year is written in the CV. Real positions always show their year ("Nisan 2024",
+    "03/2025"); a position the LLM made up (from a headline, say) usually has an invented date."""
+    month = parse_month(start)
+    return month is not None and re.search(rf"(?<!\d){month[0]}(?!\d)", text) is not None
+
+
 def is_present(value: str | None) -> bool:
     return value is None or value.strip().casefold() in _PRESENT
 

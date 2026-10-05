@@ -20,6 +20,15 @@ def test_months_parse_in_the_forms_cvs_and_llms_use():
     assert not cv.is_present("2024-01")
 
 
+def test_a_job_counts_only_if_its_start_year_is_in_the_text():
+    text = "Aspiring web developer · Konya\nBackend Developer — Menuly · May 2023 - Present\nIntern 03/2021"
+    assert cv.dated_in_text("2023-05", text)
+    assert cv.dated_in_text("2021-03", text)
+    assert not cv.dated_in_text("2024-01", text)  # made up from the headline
+    assert not cv.dated_in_text(None, text)
+    assert not cv.dated_in_text("2023-05", "Call 120230 for details")  # digits inside a longer number
+
+
 def test_overlapping_jobs_count_once():
     jobs = [cv.Job((2022, 1), None), cv.Job((2021, 1), (2022, 12))]
     assert cv.months_used(jobs, [0], TODAY) == 58  # 2022-01 … 2026-10, both ends
