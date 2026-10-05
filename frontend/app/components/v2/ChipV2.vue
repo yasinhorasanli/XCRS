@@ -33,17 +33,17 @@ const showMatch = computed(() => !props.chip.skill && props.chip.match.status !=
       </span>
       <button
         type="button"
-        class="grid h-5 w-5 shrink-0 place-items-center rounded-full opacity-60 transition hover:bg-black/10 hover:opacity-100 focus-visible:opacity-100"
+        class="grid h-5 w-5 shrink-0 place-items-center rounded-full opacity-60 transition hover:bg-black/10 dark:hover:bg-white/10 hover:opacity-100 focus-visible:opacity-100"
         :aria-label="`Remove ${chip.label}`"
         @click="emit('remove')"
       >
         <UIcon name="i-heroicons-x-mark-20-solid" class="h-3.5 w-3.5" />
       </button>
     </span>
-    <span v-if="showMatch" class="max-w-full truncate pr-2 text-[11px] leading-4 opacity-75">
+    <span v-if="showMatch" class="max-w-full truncate pr-2 text-[11px] leading-4">
       <template v-if="chip.match.skills.length">→ {{ matchedNames }}</template>
       <template v-else-if="chip.match.status === 'error'">will be matched when you submit</template>
-      <template v-else><span class="text-amber-700">not a skill we know; try other words</span></template>
+      <template v-else><span class="text-amber-700 dark:text-amber-200">not a skill we know; try other words</span></template>
     </span>
   </span>
 </template>

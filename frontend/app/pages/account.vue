@@ -102,10 +102,10 @@ async function deleteAccount() {
     </div>
 
     <template v-else-if="me">
-      <section class="mt-6 rounded-2xl bg-white p-5 shadow-xs ring-1 ring-slate-200">
+      <section class="mt-6 rounded-2xl bg-default p-5 shadow-xs ring-1 ring-default">
         <p class="text-lg font-semibold">{{ me.display_name || 'No name given' }}</p>
-        <p class="text-sm text-slate-600">{{ me.email || 'No verified email' }}</p>
-        <div class="mt-3 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+        <p class="text-sm text-toned">{{ me.email || 'No verified email' }}</p>
+        <div class="mt-3 flex flex-wrap items-center gap-2 text-sm text-muted">
           Signed in with
           <UBadge v-for="p in me.providers" :key="p" color="neutral" variant="soft" :icon="PROVIDER_META[p].icon" :label="PROVIDER_META[p].label" />
           <span>· member since {{ new Date(me.created_at).toLocaleDateString() }}</span>
@@ -117,16 +117,16 @@ async function deleteAccount() {
           <h2 class="text-lg font-semibold">Your skills</h2>
           <UButton class="ml-auto" to="/" size="sm" color="neutral" variant="soft" icon="i-heroicons-pencil-square" label="Edit on the board" />
         </div>
-        <p v-if="experienceLabel" class="mt-1 text-sm text-slate-500">Years in software: {{ experienceLabel }}</p>
-        <p v-if="!skillGroups.length" class="mt-3 text-sm text-slate-500">
+        <p v-if="experienceLabel" class="mt-1 text-sm text-muted">Years in software: {{ experienceLabel }}</p>
+        <p v-if="!skillGroups.length" class="mt-3 text-sm text-muted">
           No saved board yet. The board you use while signed in is kept here.
         </p>
         <div v-else class="mt-3 grid gap-3">
-          <div v-for="g in skillGroups" :key="g.category" class="rounded-2xl p-4 ring-1 ring-inset" :class="[CATEGORY_META[g.category].soft, CATEGORY_META[g.category].chip.split(' ').find((c) => c.startsWith('ring-'))]">
+          <div v-for="g in skillGroups" :key="g.category" class="rounded-2xl p-4 ring-1 ring-inset" :class="[CATEGORY_META[g.category].soft, CATEGORY_META[g.category].border]">
             <h3 class="flex items-center gap-2 text-sm font-semibold">
               <UIcon :name="CATEGORY_META[g.category].icon" class="h-4 w-4" />
               {{ CATEGORY_META[g.category].title }}
-              <span class="font-normal text-slate-500">{{ g.chips.length }}</span>
+              <span class="font-normal text-muted">{{ g.chips.length }}</span>
             </h3>
             <ul class="mt-2 flex flex-wrap gap-1.5">
               <li v-for="c in g.chips" :key="`${c.skill ?? ''}|${c.text ?? ''}`" class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-sm ring-1 ring-inset" :class="CATEGORY_META[g.category].chip">
@@ -144,24 +144,24 @@ async function deleteAccount() {
         <div class="flex items-center gap-3">
           <h2 class="text-lg font-semibold">Your results</h2>
         </div>
-        <p v-if="!results.length" class="mt-3 text-sm text-slate-500">
+        <p v-if="!results.length" class="mt-3 text-sm text-muted">
           No saved results yet. Results you make while signed in are kept here.
         </p>
         <ul v-else class="mt-3 grid gap-2">
-          <li v-for="r in results" :key="r.id" class="flex items-center gap-3 rounded-xl bg-white px-4 py-3 shadow-xs ring-1 ring-slate-200">
+          <li v-for="r in results" :key="r.id" class="flex min-w-0 items-center gap-3 rounded-xl bg-default px-4 py-3 shadow-xs ring-1 ring-default">
             <NuxtLink :to="`/results/${r.id}`" class="min-w-0 flex-1">
-              <p class="truncate font-medium text-slate-800 hover:text-indigo-600">{{ roleLine(r) }}</p>
-              <p class="text-xs text-slate-500">{{ when(r.created_at) }}</p>
+              <p class="truncate font-medium text-default hover:text-indigo-600 dark:hover:text-indigo-300">{{ roleLine(r) }}</p>
+              <p class="text-xs text-muted">{{ when(r.created_at) }}</p>
             </NuxtLink>
             <UButton color="neutral" variant="ghost" size="sm" icon="i-heroicons-trash" aria-label="Delete this result" @click="removeResult(r.id)" />
           </li>
         </ul>
       </section>
 
-      <section class="mt-8 rounded-2xl bg-white p-5 shadow-xs ring-1 ring-slate-200">
+      <section class="mt-8 rounded-2xl bg-default p-5 shadow-xs ring-1 ring-default">
         <h2 class="text-lg font-semibold">Your data</h2>
-        <p class="mt-1 text-sm text-slate-600">
-          Download everything we keep about you, or delete it. Read the <NuxtLink to="/privacy" class="text-indigo-600 underline">privacy notice</NuxtLink>.
+        <p class="mt-1 text-sm text-toned">
+          Download everything we keep about you, or delete it. Read the <NuxtLink to="/privacy" class="text-indigo-600 dark:text-indigo-300 underline">privacy notice</NuxtLink>.
         </p>
         <div class="mt-4 flex flex-wrap gap-2">
           <UButton to="/api/v2/me/export" external download color="neutral" variant="outline" icon="i-heroicons-arrow-down-tray" label="Download my data (JSON)" />
@@ -174,7 +174,7 @@ async function deleteAccount() {
 
     <UModal v-model:open="confirmDelete" title="Delete your account?">
       <template #body>
-        <p class="text-sm text-slate-600">
+        <p class="text-sm text-toned">
           This deletes your account, your sign-in accounts' link to XCRS, your board, your {{ results.length }}
           {{ results.length === 1 ? 'result' : 'results' }} and the feedback on them. It can't be undone.
         </p>

@@ -22,7 +22,7 @@ useHead({ title: 'Sign in · XCRS' })
 <template>
   <div class="mx-auto max-w-md px-4 pb-16 pt-10">
     <h1 class="text-2xl font-bold tracking-tight">Sign in</h1>
-    <p class="mt-2 text-slate-600">
+    <p class="mt-2 text-toned">
       An account keeps your results and your board, so you can come back to them. You don't need one to use XCRS.
     </p>
 
@@ -69,8 +69,8 @@ useHead({ title: 'Sign in · XCRS' })
       />
     </div>
 
-    <div class="mt-8 rounded-2xl bg-white p-4 text-sm text-slate-600 shadow-xs ring-1 ring-slate-200">
-      <p class="font-medium text-slate-800">What we keep</p>
+    <div class="mt-8 rounded-2xl bg-default p-4 text-sm text-toned shadow-xs ring-1 ring-default">
+      <p class="font-medium text-default">What we keep</p>
       <ul class="mt-2 list-disc space-y-1 pl-5">
         <li>your name, and your email if the provider has verified it;</li>
         <li>which sign-in accounts you used (accounts with the same verified email become one);</li>
@@ -78,7 +78,7 @@ useHead({ title: 'Sign in · XCRS' })
       </ul>
       <p class="mt-2">
         No passwords, no profile pictures, no tracking. You can download or delete everything from your account page.
-        <NuxtLink to="/privacy" class="text-indigo-600 underline">Privacy notice</NuxtLink>
+        <NuxtLink to="/privacy" class="text-indigo-600 dark:text-indigo-300 underline">Privacy notice</NuxtLink>
       </p>
     </div>
   </div>
