@@ -98,6 +98,42 @@ playlists:
   - {id: PLUDwpEzHYYLtQzEEEldbjPAR-gnStv4sR, skill: selenium}  # Selenium: SDET- QA
   - {id: PLsaDw3p1XpJiGHPnA8gZH6gO2gQYz3JH1, skill: shaders}  # Shader programming: Daniel Ilett
   - {id: PLsyeobzWxl7qbKoSgR5ub6jolI8-ocxCF, skill: spring-boot}  # Spring Boot: Telusko
+  # Approved by the decider (2026-10-05), third batch from discovery on VM-A.
+  - {id: PLa7VYi0yPIH3ulxsOf5g43_QiB-HOg5_Y, skill: stream-processing}  # Stream processing: Confluent
+  - {id: PLwvDm4VfkdpiLvzZFJI6rVIBtdolrJBVB, skill: swift}  # Swift: Swiftful Thinking
+  - {id: PLwvDm4Vfkdphr2Dl4sY4rS9PLzPdyi8PM, skill: swift-concurrency}  # Swift concurrency: Swiftful Thinking
+  - {id: PL8seg1JPkqgHyWCBHwXGmfysQpEQTfC3z, skill: swiftui}  # SwiftUI: Sean Allen
+  - {id: PL0Zuz27SZ-6M8znNpim8dRiICRrP5HPft, skill: tailwind-css}  # Tailwind CSS: Dave Gray
+  - {id: PLeo1K3hjS3uu7CxAacxVndI4bE_o3BDtO, skill: tensorflow}  # TensorFlow: codebasics
+  - {id: PL0eyrZgxdwhwQZ9zPUC7TnJ-S0KxqGlrN, skill: unity}  # Unity: Dani Krossing
+  - {id: PLZlv_N0_O1gZTBUZfQy0Am9ucvXpOV6Ii, skill: unreal-engine}  # Unreal Engine: Unreal Engine
+  - {id: PLS5SEs8ZftgVn38FOhXvLc0PoX_0hnJO9, skill: web3-libraries}  # Web3 libraries: Dapp University
+  - {id: PLlxmoA0rQ-LyHW9voBdNo4gEEIh0SjG-q, skill: dart}  # Dart: Smartherd
+  - {id: PL4cUxeGkcC9jLYyp2Aoh6hcWuxFDX6PBJ, skill: flutter}  # Flutter: Net Ninja
+  - {id: PL4cUxeGkcC9iK6Qhn-QLcXCXPQUov1U7f, skill: graphql}  # GraphQL: Net Ninja
+  - {id: PL4cUxeGkcC9h77dJ-QJlwGlZlTd4ecZOA, skill: mongodb}  # MongoDB: Net Ninja
+  - {id: PL0eyrZgxdwhwBToawjm9faF1ixePexft-, skill: php}  # PHP: Dani Krossing
+  - {id: PLC3y8-rFHvwhiQJD1di4eRVN30WWCXkg1, skill: react-native}  # React Native: Codevolution
+  - {id: PL4cUxeGkcC9g6m_6Sld9Q4jzqdqHd2HiD, skill: regular-expressions}  # Regular expressions: Net Ninja
+  - {id: PLoROMvodv4rPwxE0ONYRa_itZFdaKCylL, skill: reinforcement-learning}  # Reinforcement learning: Stanford Online
+  - {id: PLai5B987bZ9CoVR-QEIN9foz4QCJ0H2Y8, skill: rust}  # Rust: Let's Get Rusty
+  - {id: PLdmhb1dVRHYt2ZriWmvSGc-8_D2x28g34, skill: stakeholder-communication}  # Stakeholder communication: Adriana Girdler
+  - {id: PLFGoYjJG_fqpRV_dz6XMyESob_6fgv1Ej, skill: agile-scrum}  # Agile and Scrum: Naveen AutomationLabs
+  - {id: PLy7NrYWoggjzSIlwxeBbcgfAdYoxCIrM2, skill: ci-cd}  # CI/CD: TechWorld with Nana
+  - {id: PL4cUxeGkcC9iyuClsf48SSgsJPBStHo7F, skill: unit-testing}  # Unit testing: Net Ninja
+  - {id: PLMCXHnjXnTnvo6alSjVkgxV-VH6EPyvoX, skill: system-design}  # System design: Gaurav Sen
+  - {id: PLCVhBqLDKoOOZqKt74QI4pbDUnXSQo0nf, skill: threat-modeling}  # Threat modeling: Adam Shostack
+  - {id: PLY1Fi4XflWSvgsaD9eXng6N5kxcMtcxGK, skill: ab-testing}  # A/B testing and experimentation: Emma Ding
+  - {id: PLBgogxgQVM9sGgpcBVYatuq67aGjW8wYJ, skill: cloud-security}  # Cloud security: Google Cloud
+  - {id: PLQ6Buerc008ed-F9OksF7ek37wR3y916p, skill: e2e-testing}  # End-to-end testing: Playwright
+  - {id: PLZoTAELRMXVPwYGE2PXD3x0bfKnR0cJjN, skill: feature-engineering}  # Feature engineering: Krish Naik
+  - {id: PLlrxD0HtieHgKcRjd5-8DT9TbwdlDO-OC, skill: ai-agents}  # AI agents and tool use: Microsoft Developer
+  - {id: PLWKjhJtqVAblvI1i46ScbKV2jH1gdL7VQ, skill: exploratory-data-analysis}  # Exploratory data analysis: freeCodeCamp.org
+  - {id: PLrLEqwuz-mRIEtuUEN8sse2XyksKNN4Om, skill: fine-tuning}  # Fine-tuning models: AI Anytime
+  - {id: PLnNg6KqJ3HGjH1qaJ50FoUmXPGnXbQZu7, skill: mobile-testing}  # Mobile testing: CodeStudio
+  - {id: PLiObSxAItudJIHyZ91bhNHBn649BYz_MV, skill: public-speaking}  # Public speaking: Alexander Lyon
+  - {id: PL4cUxeGkcC9g9Vh9MAA-XKnfJsWZnPZFw, skill: responsive-design}  # Responsive design: Net Ninja
+  - {id: PLIUOU7oqGTLhpLgjtp60Ls3GWjwmKaIEi, skill: rag}  # Retrieval-augmented generation: James Briggs
 
 # Channels whose playlists rank first in `xcrs resources youtube-discover` (exact channel titles).
 trusted_channels:
