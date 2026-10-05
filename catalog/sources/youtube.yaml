@@ -134,6 +134,20 @@ playlists:
   - {id: PLiObSxAItudJIHyZ91bhNHBn649BYz_MV, skill: public-speaking}  # Public speaking: Alexander Lyon
   - {id: PL4cUxeGkcC9g9Vh9MAA-XKnfJsWZnPZFw, skill: responsive-design}  # Responsive design: Net Ninja
   - {id: PLIUOU7oqGTLhpLgjtp60Ls3GWjwmKaIEi, skill: rag}  # Retrieval-augmented generation: James Briggs
+  # Approved by the decider (2026-10-05), fourth batch: the last skills searched.
+  - {id: PLUDwpEzHYYLuW9XEvFEJk2kqsk6HqscI4, skill: api-testing}  # API testing: SDET- QA
+  - {id: PLXDU_eVOJTx6vqOWJSWH87Zb5-riiG63A, skill: design-systems}  # Design systems: Figma
+  - {id: PLt9cUwGw6CYEmxx_3z1d-uT9zdEd58yOq, skill: exploit-development}  # Exploit development: Guided Hacking
+  - {id: PL78XDi0TS4lG4wvgfyGECmB8XiJLCgfFD, skill: game-optimization}  # Game performance optimization: Ben Cloward
+  - {id: PLQ7x7oTdExNIcM1lhKw1KdBeAq_VYD6fX, skill: manual-testing}  # Manual and exploratory testing: SoftwaretestingbyMKT
+  - {id: PL6PplMTH29SHgRPDufZhfMRoFwRAIrzOp, skill: microcontrollers}  # Microcontroller programming: BuildYourCNC
+  - {id: PLFGoYjJG_fqoum_IoPpbLN3AwWIWtr6hq, skill: performance-testing}  # Performance and load testing: Naveen AutomationLabs
+  - {id: PLI5YfMzCfRtaPvDYj3MaMhIAgpsyZ0Wmn, skill: product-analytics}  # Product analytics: Google Analytics
+  - {id: PLjWEV7pmvSa4yvhzNsCjOJovOn1LLyBXB, skill: security-incident-response}  # Security incident response: BlackPerl
+  - {id: PLKXasCp8iWpiySfAM-pJtJluJDn9-cIri, skill: smart-contract-security}  # Smart contract security: JohnnyTime
+  - {id: PL9ooVrP1hQOFP9H8Y15DVGCA6GavhgJ8a, skill: test-automation}  # Test automation: edureka!
+  - {id: PLwLLcwQlnXByqD3a13UPeT4SMhc3rdZ8q, skill: tdd}  # Test-driven development: Modern Software Engineering
+  - {id: PLJOFJ3Ok_idtiMTz8fAiF1ElcKJM7Rncj, skill: user-research}  # User research: NNgroup
 
 # Channels whose playlists rank first in `xcrs resources youtube-discover` (exact channel titles).
 trusted_channels:
