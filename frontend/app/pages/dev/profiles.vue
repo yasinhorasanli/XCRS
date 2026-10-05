@@ -62,9 +62,9 @@ const summary = computed(() => {
   <div class="mx-auto max-w-6xl px-4 py-8">
     <div class="flex flex-wrap items-end justify-between gap-3">
       <div>
-        <p class="text-xs font-medium uppercase tracking-wide text-amber-700">Dev tools · only on localhost and the tailnet</p>
+        <p class="text-xs font-medium uppercase tracking-wide text-amber-700 dark:text-amber-200">Dev tools · only on localhost and the tailnet</p>
         <h1 class="mt-1 text-2xl font-semibold tracking-tight">Test profiles</h1>
-        <p class="mt-1 max-w-3xl text-sm text-slate-500">
+        <p class="mt-1 max-w-3xl text-sm text-muted">
           What a career adviser would expect, next to what the engine says (scored live, nothing stored).
           <b>Open on board</b> loads the profile to edit; <b>Run</b> makes a real result, marked as a test, with explanations.
         </p>
@@ -76,18 +76,18 @@ const summary = computed(() => {
 
     <template v-else-if="profiles">
       <div class="mt-5 flex flex-wrap gap-2 text-sm">
-        <span class="rounded-full bg-slate-100 px-3 py-1">{{ summary.total }} profiles</span>
-        <span class="rounded-full bg-emerald-50 px-3 py-1 text-emerald-800">expected role first: {{ summary.first }}</span>
-        <span class="rounded-full bg-emerald-50 px-3 py-1 text-emerald-800">in top 3: {{ summary.top3 }}</span>
-        <span class="rounded-full bg-indigo-50 px-3 py-1 text-indigo-800">expected level: {{ summary.level }}</span>
+        <span class="rounded-full bg-elevated px-3 py-1">{{ summary.total }} profiles</span>
+        <span class="rounded-full bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 text-emerald-800 dark:text-emerald-200">expected role first: {{ summary.first }}</span>
+        <span class="rounded-full bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 text-emerald-800 dark:text-emerald-200">in top 3: {{ summary.top3 }}</span>
+        <span class="rounded-full bg-indigo-50 dark:bg-indigo-950/40 px-3 py-1 text-indigo-800 dark:text-indigo-200">expected level: {{ summary.level }}</span>
       </div>
 
       <div class="mt-5 grid gap-3">
-        <article v-for="p in profiles" :key="p.id" class="rounded-2xl bg-white p-4 shadow-xs ring-1 ring-slate-200">
+        <article v-for="p in profiles" :key="p.id" class="rounded-2xl bg-default p-4 shadow-xs ring-1 ring-default">
           <div class="flex flex-wrap items-start justify-between gap-3">
             <div class="min-w-0">
               <h2 class="font-semibold">{{ p.title }}</h2>
-              <p class="text-sm text-slate-500">{{ p.background }}</p>
+              <p class="text-sm text-muted">{{ p.background }}</p>
             </div>
             <div class="flex shrink-0 gap-2">
               <UButton size="sm" color="neutral" variant="outline" label="Open on board" @click="openOnBoard(p)" />
@@ -97,30 +97,30 @@ const summary = computed(() => {
 
           <div class="mt-3 flex flex-wrap gap-1.5">
             <span v-for="c in p.chips" :key="c.skill" class="rounded-full px-2 py-0.5 text-xs ring-1 ring-inset" :class="CATEGORY_META[c.category].chip">
-              {{ c.name }}<span v-if="c.proficiency" class="opacity-60"> · {{ c.proficiency }}</span>
+              {{ c.name }}<span v-if="c.proficiency" class="opacity-90"> · {{ c.proficiency }}</span>
             </span>
           </div>
 
           <div class="mt-3 grid gap-3 text-sm md:grid-cols-[14rem_1fr]">
             <div>
-              <div class="text-xs uppercase tracking-wide text-slate-400">Expected</div>
+              <div class="text-xs uppercase tracking-wide text-dimmed">Expected</div>
               <div class="font-medium">{{ p.expect.join(', ') }}</div>
-              <div class="text-slate-600">starts at {{ levelName(p.level) }}</div>
-              <div class="text-xs text-slate-500">experience: {{ p.experience ?? 'not given' }}</div>
+              <div class="text-toned">starts at {{ levelName(p.level) }}</div>
+              <div class="text-xs text-muted">experience: {{ p.experience ?? 'not given' }}</div>
             </div>
             <div>
-              <div class="text-xs uppercase tracking-wide text-slate-400">Engine (top 5)</div>
+              <div class="text-xs uppercase tracking-wide text-dimmed">Engine (top 5)</div>
               <ol class="mt-0.5 grid gap-0.5">
-                <li v-for="(r, i) in previewOf(p.id)" :key="r.role" class="flex flex-wrap items-baseline gap-x-2 tabular-nums" :class="p.expect.includes(r.role) ? 'font-medium text-slate-900' : 'text-slate-500'">
-                  <span class="w-4 text-slate-400">{{ i + 1 }}</span>
+                <li v-for="(r, i) in previewOf(p.id)" :key="r.role" class="flex flex-wrap items-baseline gap-x-2 tabular-nums" :class="p.expect.includes(r.role) ? 'font-medium text-highlighted' : 'text-muted'">
+                  <span class="w-4 text-dimmed">{{ i + 1 }}</span>
                   <span>{{ r.name }}</span>
-                  <span class="rounded px-1.5 text-xs" :class="r.role === p.expect[0] ? (r.level === p.level ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800') : 'bg-slate-100'">
+                  <span class="rounded px-1.5 text-xs" :class="r.role === p.expect[0] ? (r.level === p.level ? 'bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-200' : 'bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-200') : 'bg-elevated'">
                     level: {{ levelName(r.level) }}
                   </span>
-                  <span class="text-xs text-slate-400">score {{ r.score.toFixed(3) }} · interest {{ Math.round(r.interest * 100) }}% · has {{ Math.round(r.coverage * 100) }}%</span>
+                  <span class="text-xs text-dimmed">score {{ r.score.toFixed(3) }} · interest {{ Math.round(r.interest * 100) }}% · has {{ Math.round(r.coverage * 100) }}%</span>
                 </li>
               </ol>
-              <p class="mt-1 text-xs" :class="verdict(p).rank === 0 ? 'text-emerald-700' : 'text-amber-700'">
+              <p class="mt-1 text-xs" :class="verdict(p).rank === 0 ? 'text-emerald-700 dark:text-emerald-200' : 'text-amber-700 dark:text-amber-200'">
                 <template v-if="verdict(p).rank === 0">Expected role first</template>
                 <template v-else-if="verdict(p).rank > 0">Expected role at #{{ verdict(p).rank + 1 }}</template>
                 <template v-else>Expected role not in the top 5</template>

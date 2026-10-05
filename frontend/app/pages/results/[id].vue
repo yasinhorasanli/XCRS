@@ -150,37 +150,37 @@ async function update() {
         <V2RoleResultV2 v-for="(r, i) in data.roles" :key="r.id" :role="r" :rank="i + 1" :recommendation-id="data.id" @add="onAdd" />
       </div>
 
-      <details class="mt-8 rounded-2xl bg-white p-4 text-sm shadow-xs ring-1 ring-slate-200">
+      <details class="mt-8 rounded-2xl bg-default p-4 text-sm shadow-xs ring-1 ring-default">
         <summary class="cursor-pointer font-medium">
           Your answers: {{ data.matched.length }} {{ data.matched.length === 1 ? 'skill' : 'skills' }}
-          <span class="font-normal text-slate-500">· what these results are based on</span>
+          <span class="font-normal text-muted">· what these results are based on</span>
         </summary>
-        <p class="mt-2 text-xs text-slate-500">
+        <p class="mt-2 text-xs text-muted">
           Skills you typed in your own words show the catalog skills we read them as<span v-if="unrecognised">; {{ unrecognised }} matched no skill and didn't count</span>.
         </p>
         <div class="mt-3 grid gap-3">
           <div v-for="g in answerGroups" :key="g.category">
-            <p class="flex items-center gap-1.5 text-xs font-medium text-slate-600">
+            <p class="flex items-center gap-1.5 text-xs font-medium text-toned">
               <UIcon :name="CATEGORY_META[g.category].icon" class="h-3.5 w-3.5" />{{ CATEGORY_META[g.category].title }}
             </p>
             <ul class="mt-1 flex flex-wrap gap-1.5">
               <li v-for="(m, i) in g.items" :key="i" class="rounded-full px-2.5 py-0.5 text-xs ring-1 ring-inset" :class="CATEGORY_META[g.category].chip">
                 {{ m.text }}
                 <template v-if="m.method !== 'picked'">
-                  <span v-if="m.skills.length" class="opacity-70">→ {{ m.skills.map((s) => s.name).join(', ') }}</span>
-                  <span v-else class="text-amber-700">→ no skill recognised</span>
+                  <span v-if="m.skills.length" class="opacity-90">→ {{ m.skills.map((s) => s.name).join(', ') }}</span>
+                  <span v-else class="text-amber-700 dark:text-amber-200">→ no skill recognised</span>
                 </template>
-                <span v-if="m.proficiency" class="ml-0.5 opacity-60">· {{ PROFICIENCY_NAMES[m.proficiency]?.toLowerCase() }}</span>
+                <span v-if="m.proficiency" class="ml-0.5 opacity-90">· {{ PROFICIENCY_NAMES[m.proficiency]?.toLowerCase() }}</span>
               </li>
             </ul>
           </div>
         </div>
-        <p class="mt-3 text-xs text-slate-400">Engine {{ data.algorithm_version }} · catalog {{ data.catalog_version }}</p>
+        <p class="mt-3 text-xs text-dimmed">Engine {{ data.algorithm_version }} · catalog {{ data.catalog_version }}</p>
       </details>
     </template>
 
-    <div v-if="added.length" class="sticky bottom-4 z-20 mt-6 flex flex-wrap items-center gap-3 rounded-2xl bg-slate-900 px-4 py-3 text-sm text-white shadow-lg">
-      <UIcon name="i-heroicons-plus-circle" class="h-5 w-5 shrink-0 text-indigo-300" />
+    <div v-if="added.length" class="sticky bottom-4 z-20 mt-6 flex flex-wrap items-center gap-3 rounded-2xl bg-slate-900 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700 px-4 py-3 text-sm text-white shadow-lg">
+      <UIcon name="i-heroicons-plus-circle" class="h-5 w-5 shrink-0 text-indigo-300 dark:text-indigo-300" />
       <span class="min-w-0 flex-1">
         {{ added.length }} {{ added.length === 1 ? 'skill' : 'skills' }} added to your board:
         <span class="text-slate-300">{{ added.slice(0, 4).join(', ') }}<template v-if="added.length > 4"> and {{ added.length - 4 }} more</template></span>

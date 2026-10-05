@@ -13,11 +13,11 @@ const placed = (id: string) => chips.value.find((c) => c.skill === id)?.category
 </script>
 
 <template>
-  <aside class="rounded-2xl bg-white p-4 shadow-xs ring-1 ring-slate-200" aria-label="Suggested skills">
+  <aside class="rounded-2xl bg-default p-4 shadow-xs ring-1 ring-default" aria-label="Suggested skills">
     <h2 class="font-semibold">Quick start</h2>
-    <p class="mt-0.5 text-xs text-slate-500">
+    <p class="mt-0.5 text-xs text-muted">
       Skills each career family starts with. Click to add to
-      <span class="font-medium" :class="CATEGORY_META[active].chip.split(' ')[1]">“{{ CATEGORY_META[active].title }}”</span>.
+      <span class="font-medium" :class="CATEGORY_META[active].text">“{{ CATEGORY_META[active].title }}”</span>.
     </p>
     <div class="mt-3 flex flex-wrap gap-1">
       <button
@@ -25,7 +25,7 @@ const placed = (id: string) => chips.value.find((c) => c.skill === id)?.category
         :key="g.family"
         type="button"
         class="rounded-full px-2.5 py-1 text-xs transition"
-        :class="i === tab ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'"
+        :class="i === tab ? 'bg-slate-900 dark:bg-slate-700 text-white' : 'bg-elevated text-toned hover:bg-accented'"
         @click="tab = i"
       >
         {{ g.name }}
@@ -36,8 +36,8 @@ const placed = (id: string) => chips.value.find((c) => c.skill === id)?.category
         v-for="s in current.skills"
         :key="s.id"
         type="button"
-        class="inline-flex items-center gap-1.5 rounded-lg bg-white px-2.5 py-1 text-sm shadow-xs ring-1 ring-inset ring-slate-200 transition hover:-translate-y-px hover:ring-indigo-300"
-        :class="placed(s.id) ? 'opacity-60' : ''"
+        class="inline-flex items-center gap-1.5 rounded-lg bg-default px-2.5 py-1 text-sm shadow-xs ring-1 ring-inset ring-default transition hover:-translate-y-px hover:ring-indigo-300 dark:hover:ring-indigo-800"
+        :class="placed(s.id) ? 'opacity-90' : ''"
         :title="placed(s.id) ? `Already in “${CATEGORY_META[placed(s.id)!].title}”; click to move it` : 'Click to add'"
         @click="add(s.name, active, s)"
       >

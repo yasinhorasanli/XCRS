@@ -4,8 +4,9 @@ export default defineNuxtConfig({
   modules: ['@nuxt/ui', 'nuxt-auth-utils'],
   devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
-  // Light theme only (the design has no dark variant yet); fonts load through @nuxt/fonts (Inter, main.css).
-  ui: { colorMode: false },
+  // Follow the device by default; remember explicit choices in localStorage, never a cookie.
+  // Fonts load through @nuxt/fonts (Inter, main.css).
+  colorMode: { preference: 'system', fallback: 'light', storage: 'localStorage' },
   app: {
     head: {
       title: 'XCRS · Explainable course recommendations',

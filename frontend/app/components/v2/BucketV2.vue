@@ -80,8 +80,8 @@ function onKeydown(event: KeyboardEvent) {
 
 <template>
   <section
-    class="relative flex min-h-[11rem] flex-col rounded-2xl bg-white p-3 shadow-xs ring-1 transition"
-    :class="isActive ? `ring-2 ${meta.ring}` : 'ring-slate-200'"
+    class="relative flex min-h-[11rem] flex-col rounded-2xl bg-default p-3 shadow-xs ring-1 transition"
+    :class="isActive ? `ring-2 ${meta.ring}` : 'ring-default'"
     :aria-label="meta.title"
   >
     <button type="button" class="flex items-start gap-2.5 rounded-lg p-1 text-left" :aria-pressed="isActive" @click="active = category">
@@ -91,10 +91,10 @@ function onKeydown(event: KeyboardEvent) {
       <span class="min-w-0 flex-1">
         <span class="flex items-center gap-2">
           <span class="font-semibold">{{ meta.title }}</span>
-          <span v-if="chips.length" class="text-xs tabular-nums text-slate-400">{{ chips.length }}</span>
-          <span v-if="isActive" class="ml-auto rounded-full bg-slate-900 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white">Selected</span>
+          <span v-if="chips.length" class="text-xs tabular-nums text-dimmed">{{ chips.length }}</span>
+          <span v-if="isActive" class="ml-auto rounded-full bg-slate-900 dark:bg-slate-700 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white">Selected</span>
         </span>
-        <span class="block text-xs text-slate-500">
+        <span class="block text-xs text-muted">
           {{ meta.hint }}<template v-if="category !== 'curious'">. Dots: how well you know it (optional)</template>
         </span>
       </span>
@@ -102,7 +102,7 @@ function onKeydown(event: KeyboardEvent) {
 
     <div class="mt-2 flex flex-1 flex-wrap content-start gap-1.5 px-1">
       <V2ChipV2 v-for="c in chips" :key="c.key" :chip="c" @remove="remove(c.key)" @rate="(n) => rate(c.key, n)" />
-      <p v-if="!chips.length" class="w-full rounded-xl border border-dashed border-slate-200 px-3 py-4 text-center text-xs text-slate-400">
+      <p v-if="!chips.length" class="w-full rounded-xl border border-dashed border-default px-3 py-4 text-center text-xs text-dimmed">
         Search the catalog or type your own words
       </p>
     </div>
@@ -112,7 +112,7 @@ function onKeydown(event: KeyboardEvent) {
         v-model="text"
         type="text"
         maxlength="300"
-        class="w-full rounded-lg border-0 bg-slate-50 px-3 py-2 text-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-400"
+        class="w-full rounded-lg border-0 bg-muted px-3 py-2 text-sm ring-1 ring-inset ring-default placeholder:text-dimmed focus:bg-default focus:outline-hidden focus:ring-2 focus:ring-indigo-400 dark:focus:ring-indigo-400"
         placeholder="Search skills, or type and press Enter…"
         :aria-label="`Add to ${meta.title}`"
         role="combobox"
@@ -122,18 +122,18 @@ function onKeydown(event: KeyboardEvent) {
         @keydown="onKeydown"
         @blur="onBlur"
       >
-      <ul v-if="open && options.length" class="absolute inset-x-0 top-full z-20 mt-1 max-h-64 overflow-auto rounded-xl bg-white py-1 text-sm shadow-lg ring-1 ring-slate-200" role="listbox">
+      <ul v-if="open && options.length" class="absolute inset-x-0 top-full z-20 mt-1 max-h-64 overflow-auto rounded-xl bg-default py-1 text-sm shadow-lg ring-1 ring-default" role="listbox">
         <li
           v-for="(o, i) in options"
           :key="o.id"
           role="option"
           :aria-selected="i === highlighted"
           class="flex cursor-pointer items-center justify-between gap-3 px-3 py-1.5"
-          :class="i === highlighted ? 'bg-indigo-50' : 'hover:bg-slate-50'"
+          :class="i === highlighted ? 'bg-indigo-50 dark:bg-indigo-950/40' : 'hover:bg-muted'"
           @mousedown.prevent="commit(o)"
         >
           <span class="truncate">{{ o.name }}</span>
-          <span class="shrink-0 text-[11px] text-slate-400">{{ o.kind }}</span>
+          <span class="shrink-0 text-[11px] text-dimmed">{{ o.kind }}</span>
         </li>
       </ul>
     </div>
