@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { CATEGORY_META } from '~/composables/categories'
+import { CATEGORIES, CATEGORY_META } from '~/composables/categories'
+import { PROFICIENCY_NAMES } from '~/composables/useXcrsApiV2'
 import { apiError } from '~/composables/useAccount'
 import type { SkillToAdd } from '~/types/apiV2'
 
@@ -56,6 +57,14 @@ onMounted(() => {
 })
 
 useHead(() => ({ title: data.value?.roles[0] ? `${data.value.roles[0].name} and more · XCRS` : 'Your results · XCRS' }))
+
+/** The answers per box, in board order; typed entries show what they were matched to. */
+const answerGroups = computed(() =>
+  CATEGORIES.map((category) => ({ category, items: data.value?.matched.filter((m) => m.category === category) ?? [] })).filter(
+    (g) => g.items.length,
+  ),
+)
+const unrecognised = computed(() => data.value?.matched.filter((m) => m.method !== 'picked' && !m.skills.length).length ?? 0)
 
 /** Back to the board with these answers (also works when the link was shared). */
 function edit() {
@@ -121,15 +130,30 @@ async function update() {
       </div>
 
       <details class="mt-8 rounded-2xl bg-white p-4 text-sm shadow-xs ring-1 ring-slate-200">
-        <summary class="cursor-pointer font-medium">How we read your input</summary>
-        <ul class="mt-3 grid gap-1.5">
-          <li v-for="(m, i) in data.matched" :key="i" class="flex flex-wrap items-center gap-2">
-            <span class="rounded-full px-2 py-0.5 text-xs ring-1 ring-inset" :class="CATEGORY_META[m.category].chip">{{ m.text }}</span>
-            <span class="text-slate-400">→</span>
-            <span v-if="m.skills.length">{{ m.skills.map((s) => s.name).join(', ') }}</span>
-            <span v-else class="text-amber-700">no skill recognised</span>
-          </li>
-        </ul>
+        <summary class="cursor-pointer font-medium">
+          Your answers: {{ data.matched.length }} {{ data.matched.length === 1 ? 'skill' : 'skills' }}
+          <span class="font-normal text-slate-500">· what these results are based on</span>
+        </summary>
+        <p class="mt-2 text-xs text-slate-500">
+          Skills you typed in your own words show the catalog skills we read them as<span v-if="unrecognised">; {{ unrecognised }} matched no skill and didn't count</span>.
+        </p>
+        <div class="mt-3 grid gap-3">
+          <div v-for="g in answerGroups" :key="g.category">
+            <p class="flex items-center gap-1.5 text-xs font-medium text-slate-600">
+              <UIcon :name="CATEGORY_META[g.category].icon" class="h-3.5 w-3.5" />{{ CATEGORY_META[g.category].title }}
+            </p>
+            <ul class="mt-1 flex flex-wrap gap-1.5">
+              <li v-for="(m, i) in g.items" :key="i" class="rounded-full px-2.5 py-0.5 text-xs ring-1 ring-inset" :class="CATEGORY_META[g.category].chip">
+                {{ m.text }}
+                <template v-if="m.method !== 'picked'">
+                  <span v-if="m.skills.length" class="opacity-70">→ {{ m.skills.map((s) => s.name).join(', ') }}</span>
+                  <span v-else class="text-amber-700">→ no skill recognised</span>
+                </template>
+                <span v-if="m.proficiency" class="ml-0.5 opacity-60">· {{ PROFICIENCY_NAMES[m.proficiency]?.toLowerCase() }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
         <p class="mt-3 text-xs text-slate-400">Engine {{ data.algorithm_version }} · catalog {{ data.catalog_version }}</p>
       </details>
     </template>
