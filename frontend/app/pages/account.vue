@@ -2,6 +2,7 @@
 import { CATEGORIES, CATEGORY_META } from '~/composables/categories'
 import { EXPERIENCE_OPTIONS, LEVEL_NAMES, PROFICIENCY_NAMES, PROVIDER_META } from '~/composables/useXcrsApiV2'
 import { apiError } from '~/composables/useAccount'
+import { flushSavedBoard } from '~/composables/useSavedBoard'
 import type { Me, ResultSummary, SavedBoard } from '~/types/apiV2'
 
 const api = useXcrsApiV2()
@@ -32,6 +33,7 @@ async function ended() {
 async function load() {
   if (!loggedIn.value) return navigateTo(signInPath('/account'))
   try {
+    await flushSavedBoard() // a change made just before opening this page is saved first
     let saved
     ;[me.value, results.value, saved] = await Promise.all([api.me(), api.results(), api.board()])
     board.value = saved.board
