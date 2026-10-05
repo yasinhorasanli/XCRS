@@ -80,6 +80,8 @@ class Role:
     levels: tuple[str, ...]
     also_called: tuple[Alias, ...] = ()
     esco: str | None = None  # the closest ESCO occupation URI
+    # Languages and frameworks that job ads put in this role's title ("Java Backend Engineer", ADR-0044)
+    title_skills: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -222,6 +224,7 @@ def _role(role_id: str, body: dict) -> Role:
             tuple(body["levels"]),
             tuple(_alias(a) for a in body.get("also_called") or ()),
             body.get("esco"),
+            tuple(body.get("title_skills") or ()),
         )
     except KeyError as exc:
         raise CatalogError(f"roles.yaml: role {role_id!r} lacks {exc}") from exc

@@ -1,5 +1,7 @@
-# Publish the container images to GHCR (ADR-0034): every push to modernization or main, or by hand.
-# Tags: the commit SHA (immutable, what deploy/deploy.sh pins) and the branch name (moving).
+# Publish the container images to GHCR (ADR-0034): every push to modernization or main, or by hand (any
+# branch, e.g. `gh workflow run release.yml --ref app/accounts` to try a branch on VM-A before merging).
+# Tags: the commit SHA (immutable, what deploy/deploy.sh pins) and the branch name (moving; "/" becomes "-",
+# since Docker tags can't contain it).
 # Deploying stays a manual step on the VM until there are users (deploy/README.md).
 name: Release images
 
@@ -26,6 +28,8 @@ jobs:
           - {name: xcrs-web, context: frontend}
     steps:
       - uses: actions/checkout@v5
+      - id: branch
+        run: echo "tag=${GITHUB_REF_NAME//\//-}" >> "$GITHUB_OUTPUT"
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -38,7 +42,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/${{ matrix.name }}:${{ github.sha }}
-            ghcr.io/${{ github.repository_owner }}/${{ matrix.name }}:${{ github.ref_name }}
+            ghcr.io/${{ github.repository_owner }}/${{ matrix.name }}:${{ steps.branch.outputs.tag }}
           labels: |
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
             org.opencontainers.image.revision=${{ github.sha }}

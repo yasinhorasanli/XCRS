@@ -109,6 +109,7 @@ def import_catalog(
             "summary": r.summary,
             "onet_code": r.onet,
             "esco_uri": r.esco,
+            "title_skills": list(r.title_skills),
         }
         for r in cat.roles.values()
     ]
@@ -330,15 +331,20 @@ def load_snapshot(session: Session) -> CatalogSnapshot:
         stage_items = [(tuple(sorted(o)), lv) for _, (o, lv) in sorted(items.get(st.id, {}).items())]
         stages.setdefault((st.role_id, st.level_id), []).append((st.name, st.optional, stage_items))
     role_rows = session.execute(
-        select(CareerRole.id, CareerRole.slug, CareerRole.name, Family.slug).join(Family).order_by(CareerRole.id)
+        select(CareerRole.id, CareerRole.slug, CareerRole.name, Family.slug, CareerRole.title_skills)
+        .join(Family)
+        .order_by(CareerRole.id)
     ).all()
+    market_titles: dict[int, list[str]] = {}
+    for role_id, title in session.execute(select(RoleTitle.role_id, RoleTitle.title).order_by(RoleTitle.id)):
+        market_titles.setdefault(role_id, []).append(title)
     role_levels = session.execute(
         select(CareerRoleLevel.role_id, CareerRoleLevel.level_id, CareerRoleLevel.title).order_by(
             CareerRoleLevel.role_id, CareerRoleLevel.level_id
         )
     ).all()
     roles = {}
-    for role_id, slug, name, family in role_rows:
+    for role_id, slug, name, family, title_skills in role_rows:
         levels = [(level_slugs[lv], title, lv) for rid, lv, title in role_levels if rid == role_id]
         roles[slug] = RoleSnapshot(
             id=slug,
@@ -348,6 +354,8 @@ def load_snapshot(session: Session) -> CatalogSnapshot:
             titles={lv: title for lv, title, _ in levels},
             requirements=cumulative_requirements([(lv, stages.get((role_id, lid), [])) for lv, _, lid in levels]),
             optional=optional_skills([(lv, stages.get((role_id, lid), [])) for lv, _, lid in levels]),
+            market_titles=tuple(market_titles.get(role_id, ())),
+            title_skills=tuple(title_skills),
         )
     tagged: dict[int, list[tuple[str, int]]] = {}
     for resource_id, skill_id, level in session.execute(

@@ -6,6 +6,8 @@ const { total, pending, clear, fillExample, asInput, experience } = useBoardV2()
 const api = useXcrsApiV2()
 const toast = useToast()
 const submitting = ref(false)
+const { restore } = useSavedBoard() // signed in: the saved board comes back (ADR-0043)
+onMounted(restore)
 
 useHead({ title: 'XCRS · Which software career fits you?' })
 

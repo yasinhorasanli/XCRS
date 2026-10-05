@@ -134,6 +134,20 @@ def _check_roles(cat: Catalog, report: Report) -> None:
                 for option in req.options:
                     if option not in cat.skills:
                         report.errors.append(f"role {role.id}, also called {alias.title!r}: unknown skill {option!r}")
+        # Title skills (ADR-0044) name the role's job titles, so they must be skills its roadmap teaches.
+        roadmap = cat.roadmaps.get(role.id)
+        taught = (
+            {o for lv in roadmap.levels for st in lv.stages for it in st.items for o in it.options}
+            if roadmap
+            else set()
+        )
+        for skill in role.title_skills:
+            if skill not in cat.skills:
+                report.errors.append(f"role {role.id}: unknown title skill {skill!r}")
+            elif skill not in taught:
+                report.errors.append(f"role {role.id}: title skill {skill!r} is not in its roadmap")
+        if len(set(role.title_skills)) != len(role.title_skills):
+            report.errors.append(f"role {role.id}: a title skill is listed twice")
     entry_roles = {r.id for r in cat.roles.values()}
     reachable = {t.target.role for t in cat.common_paths} | {r.id for r in cat.roles.values() if r.levels[0] == "entry"}
     for rid in sorted(entry_roles - reachable):

@@ -40,6 +40,9 @@ class Settings(BaseSettings):
     # Dev tools (/api/v2/dev/*, the /dev/profiles page): off unless set; on the VMs Caddy also hides them from
     # public (Funnel) requests, so only the tailnet and localhost reach them.
     dev_tools: bool = False
+    # Accounts (ADR-0043): the secret the Nuxt server signs the signed-in user's id with (X-XCRS-User) and
+    # authenticates /internal/sign-in with. Unset: accounts are off and the site is anonymous only.
+    internal_secret: str | None = None
 
 
 @lru_cache

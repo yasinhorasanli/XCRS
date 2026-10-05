@@ -61,6 +61,8 @@ export interface RoleResult {
   id: string
   name: string
   family: string
+  title_for_you?: string | null // from the learner's strongest title skills (ADR-0044)
+  job_titles?: string[] // the role's name and other market titles
   score: number
   interest: number
   coverage: number
@@ -94,7 +96,40 @@ export interface RecommendationV2 {
   matched: MatchedChip[]
   roles: RoleResult[]
   experience?: Experience | null
+  saved?: boolean // in the signed-in viewer's account (ADR-0043)
+  can_save?: boolean // anonymous and recent: "Save to my account" can attach it
+}
+
+/** A skill added to the board from a result (gaps and assumed basics). */
+export interface SkillToAdd {
+  skill: SkillRef
+  category: Category
+  proficiency?: number
 }
 
 /** Years in software, optional on the board (ADR-0041). */
 export type Experience = 'student' | '0-2' | '2-5' | '5-10' | '10+'
+
+/** Accounts (ADR-0043). */
+export type Provider = 'github' | 'google' | 'linkedin'
+
+export interface Me {
+  id: string
+  display_name: string | null
+  email: string | null
+  providers: Provider[]
+  created_at: string
+}
+
+export interface SavedBoard {
+  chips: (ChipInput & { name: string | null })[]
+  experience?: Experience | null
+  updated_at: string
+}
+
+export interface ResultSummary {
+  id: string
+  created_at: string
+  status: 'ok' | 'insufficient_input'
+  roles: { id: string; name: string; level: string | null }[]
+}

@@ -13,12 +13,13 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from xcrs.db.models import CareerRole, ExplanationV2, FeedbackV2, RecommendationV2
+from xcrs.domain.job_titles import market_titles, title_for
 from xcrs.domain.role_scoring import Category, Mention, RoleScore, score_roles, suggest_resources
 from xcrs.explain.v2 import build_facts
 from xcrs.repository import catalog_store
 from xcrs.services.skill_matching import SkillMatcher
 
-ALGORITHM_VERSION = "v3.0"
+ALGORITHM_VERSION = "v3.1"
 LEVEL_NAMES = {
     "entry": "entry level",
     "mid": "mid level",
@@ -45,8 +46,11 @@ class RecommendationServiceV2:
     def __init__(self, session: Session, matcher: SkillMatcher, explanations: ExplanationQueueV2 | None = None):
         self.session, self.matcher, self.explanations = session, matcher, explanations
 
-    def recommend(self, chips: list[Chip], experience: str | None = None, test: bool = False) -> RecommendationV2:
-        """`test` marks results made from the dev test profiles, so activity numbers can leave them out."""
+    def recommend(
+        self, chips: list[Chip], experience: str | None = None, test: bool = False, user_id: uuid.UUID | None = None
+    ) -> RecommendationV2:
+        """`test` marks results made from the dev test profiles, so activity numbers can leave them out;
+        `user_id` is the signed-in owner (ADR-0043), None for anonymous results."""
         snapshot = catalog_store.load_snapshot(self.session)
         typed = [c for c in chips if c.skill is None and c.text]
         results = self.matcher.match([c.text for c in typed]) if typed else []
@@ -76,7 +80,7 @@ class RecommendationServiceV2:
         roles = score_roles(snapshot, mentions, experience=experience)[:ROLES_SHOWN] if mentions else []
         category = {m.skill: m.category for m in mentions}
         known = {m.skill for m in mentions}
-        result = {"matched": echo, "roles": [self._role(snapshot, r, category, known) for r in roles]}
+        result = {"matched": echo, "roles": [self._role(snapshot, r, category, known, mentions) for r in roles]}
         row = RecommendationV2(
             catalog_checksum=catalog_store.last_import_checksum(self.session) or "none",
             algorithm_version=ALGORITHM_VERSION,
@@ -90,6 +94,7 @@ class RecommendationServiceV2:
                 **({"test": True} if test else {}),
             },
             result=result,
+            user_id=user_id,
         )
         self.session.add(row)
         self.session.flush()
@@ -121,7 +126,7 @@ class RecommendationServiceV2:
         self.session.commit()
 
     @staticmethod
-    def _role(snapshot, r: RoleScore, category: dict[str, Category], known: set[str]) -> dict:
+    def _role(snapshot, r: RoleScore, category: dict[str, Category], known: set[str], mentions: list[Mention]) -> dict:
         role = snapshot.roles[r.role]
         relevant = known | {o for q in role.requirements[role.levels[-1]] for o in q.options} | set(role.optional)
         names = snapshot.skill_names
@@ -135,6 +140,9 @@ class RecommendationServiceV2:
             "id": role.id,
             "name": role.name,
             "family": role.family,
+            # Titles to search for (ADR-0044): the learner's own first, then the role's market titles.
+            "title_for_you": title_for(role, mentions, names, snapshot.languages),
+            "job_titles": market_titles(role),
             "score": round(r.score, 4),
             "interest": round(r.interest, 3),
             "coverage": round(r.coverage, 3),

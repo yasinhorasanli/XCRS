@@ -9,7 +9,10 @@
 # esco: the closest ESCO occupation (URI), found with the ESCO API and chosen by hand (2026-10-02);
 # null where ESCO has no close occupation. ESCO © European Union, reused under the ESCO terms.
 #
-# also_called: other market titles for the same job, so search and job-title matching find the role.
+# also_called: other market titles for the same job, so search and job-title matching find the role; results list
+# them as titles to search for (ADR-0044).
+# title_skills: languages and frameworks that job ads put in the title ("Java Backend Engineer"); the learner's
+# strongest one makes a title for them (ADR-0044). They must be in the role's roadmap.
 # A title can list `adds`, the skills it asks for on top of the role (Product Engineer = Full-Stack +
 # product analytics, experiments...). The validator measures it: when the role covers less than 80% of
 # the title, the title is a different job and must become a role of its own (ADR-0027).
@@ -50,6 +53,8 @@ roles:
     onet: 15-1254.00
     esco: http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c  # user interface developer
     levels: [entry, mid, senior, staff]
+    also_called: [Frontend Developer, UI Developer]
+    title_skills: [typescript, javascript, react, vue, angular, nextjs, nuxt]  # ADR-0044
   backend-engineer:
     name: Backend Engineer
     family: product-engineering
@@ -57,6 +62,8 @@ roles:
     onet: 15-1252.00
     esco: http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1  # software developer
     levels: [entry, mid, senior, staff]
+    also_called: [Backend Developer, Software Engineer (Backend), API Developer]
+    title_skills: [java, python, go, csharp, javascript, spring-boot, django, fastapi, aspnet-core, nodejs]  # ADR-0044
   full-stack-engineer:
     name: Full-Stack Engineer
     family: product-engineering
@@ -67,6 +74,10 @@ roles:
     also_called:
       - title: Product Engineer
         adds: [product-thinking:2, statistics:2, product-analytics:2, ab-testing:2, feature-flags:2, user-research:1]
+      - Full-Stack Developer
+      - Full Stack Web Developer
+      - Software Engineer (Full-Stack)
+    title_skills: [typescript, javascript, react, vue, nextjs, nuxt, nodejs]  # ADR-0044
   android-engineer:
     name: Android Engineer
     family: product-engineering
@@ -74,6 +85,8 @@ roles:
     onet: 15-1252.00
     esco: http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c  # mobile application developer
     levels: [entry, mid, senior, staff]
+    also_called: [Android Developer, Android Software Engineer, Mobile Developer (Android)]
+    title_skills: [kotlin]  # ADR-0044
   ios-engineer:
     name: iOS Engineer
     family: product-engineering
@@ -81,6 +94,8 @@ roles:
     onet: 15-1252.00
     esco: http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c  # mobile application developer
     levels: [entry, mid, senior, staff]
+    also_called: [iOS Developer, iOS Software Engineer, Mobile Developer (iOS)]
+    title_skills: [swift, swiftui]  # ADR-0044
   game-developer:
     name: Game Developer
     family: product-engineering
@@ -88,6 +103,8 @@ roles:
     onet: 15-1255.01
     esco: http://data.europa.eu/esco/occupation/9ebaf3f0-0be0-47b7-b2b1-b3b04130fa81  # digital games developer
     levels: [entry, mid, senior, staff]
+    also_called: [Game Programmer, Gameplay Programmer, Game Engineer]
+    title_skills: [csharp, cpp, unity, unreal-engine]  # ADR-0044
   embedded-software-engineer:
     name: Embedded Software Engineer
     family: product-engineering
@@ -95,6 +112,8 @@ roles:
     onet: 15-1252.00
     esco: http://data.europa.eu/esco/occupation/57af9090-55b4-4911-b2d0-86db01c00b02  # embedded systems software developer
     levels: [entry, mid, senior, staff]
+    also_called: [Embedded Systems Engineer, Firmware Engineer, Embedded Developer]
+    title_skills: [cpp, c, embedded-linux]  # ADR-0044
   qa-automation-engineer:
     name: QA Automation Engineer
     family: quality-engineering
@@ -102,6 +121,8 @@ roles:
     onet: 15-1253.00
     esco: http://data.europa.eu/esco/occupation/106f79e4-6264-45f1-9e7a-297435cd684b  # software tester
     levels: [entry, mid, senior, staff]
+    also_called: [Test Automation Engineer, Software Development Engineer in Test (SDET), QA Engineer]
+    title_skills: [python, java, typescript, javascript]  # ADR-0044
   devops-engineer:
     name: DevOps Engineer
     family: infrastructure
@@ -109,6 +130,8 @@ roles:
     onet: 15-1299.08
     esco: http://data.europa.eu/esco/occupation/9e2e6e1e-363b-4e1b-a673-7bc0f7343300  # ICT system administrator; ESCO has no DevOps occupation
     levels: [entry, mid, senior, staff]
+    also_called: [Build and Release Engineer, CI/CD Engineer]
+    title_skills: [aws, azure, gcp, kubernetes]  # ADR-0044
   cloud-engineer:
     name: Cloud Engineer
     family: infrastructure
@@ -116,6 +139,8 @@ roles:
     onet: 15-1299.08
     esco: http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae  # ICT system architect; no cloud occupation in ESCO
     levels: [entry, mid, senior, staff]
+    also_called: [Cloud Infrastructure Engineer, Cloud Systems Engineer, Cloud Operations Engineer]
+    title_skills: [aws, azure, gcp]  # ADR-0044
   site-reliability-engineer:
     name: Site Reliability Engineer
     family: infrastructure
@@ -123,6 +148,8 @@ roles:
     onet: 15-1299.08
     esco: http://data.europa.eu/esco/occupation/9e2e6e1e-363b-4e1b-a673-7bc0f7343300  # ICT system administrator; no SRE occupation in ESCO
     levels: [mid, senior, staff]
+    also_called: [SRE, Production Engineer, Reliability Engineer]
+    title_skills: [kubernetes, aws, azure, gcp]  # ADR-0044
   ai-reliability-engineer:
     name: AI Reliability Engineer
     family: infrastructure
@@ -137,6 +164,8 @@ roles:
     onet: 15-1299.08
     esco: http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135  # ICT system developer
     levels: [mid, senior, staff]
+    also_called: [Internal Developer Platform Engineer, Infrastructure Platform Engineer]
+    title_skills: [kubernetes, aws, azure, gcp]  # ADR-0044
   data-analyst:
     name: Data Analyst
     family: data-ai
@@ -144,6 +173,8 @@ roles:
     onet: 15-2051.01
     esco: http://data.europa.eu/esco/occupation/d3edb8f8-3a06-47a0-8fb9-9b212c006aa2  # data analyst
     levels: [entry, mid, senior, staff]
+    also_called: [Business Intelligence Analyst, Reporting Analyst]
+    title_skills: [sql, python, r]  # ADR-0044
   analytics-engineer:
     name: Analytics Engineer
     family: data-ai
@@ -151,6 +182,7 @@ roles:
     onet: 15-1243.01
     esco: http://data.europa.eu/esco/occupation/1562c7a3-c7d9-419d-b9b6-db26610bcf84  # data warehouse designer
     levels: [entry, mid, senior, staff]
+    also_called: [Business Intelligence Engineer, Analytics Developer]
   data-engineer:
     name: Data Engineer
     family: data-ai
@@ -158,6 +190,8 @@ roles:
     onet: 15-1243.00
     esco: http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67  # database integrator
     levels: [entry, mid, senior, staff]
+    also_called: [Big Data Engineer, ETL Developer, Data Pipeline Engineer, Data Integration Engineer]
+    title_skills: [python, spark, snowflake]  # ADR-0044
   data-scientist:
     name: Data Scientist
     family: data-ai
@@ -165,6 +199,8 @@ roles:
     onet: 15-2051.00
     esco: http://data.europa.eu/esco/occupation/258e46f9-0075-4a2e-adae-1ff0477e0f30  # data scientist
     levels: [entry, mid, senior, staff]
+    also_called: [Decision Scientist, Product Data Scientist]
+    title_skills: [python, r]  # ADR-0044
   machine-learning-engineer:
     name: Machine Learning Engineer
     family: data-ai
@@ -172,6 +208,8 @@ roles:
     onet: 15-2051.00
     esco: http://data.europa.eu/esco/occupation/35553663-deab-4d9a-bf22-15c1625d28e8  # ICT intelligent systems designer
     levels: [entry, mid, senior, staff]
+    also_called: [ML Engineer, Machine Learning Developer, Deep Learning Engineer]
+    title_skills: [pytorch, tensorflow]  # ADR-0044
   applied-scientist:
     name: Applied Scientist
     family: data-ai
@@ -187,7 +225,7 @@ roles:
     onet: 15-1299.08
     esco: null  # no close ESCO occupation (checked 2026-10-02)
     levels: [mid, senior, staff]
-    also_called: [ML Platform Engineer]
+    also_called: [ML Platform Engineer, Machine Learning Operations Engineer]
   ai-platform-engineer:
     name: AI Platform Engineer
     family: data-ai
@@ -195,6 +233,7 @@ roles:
     onet: 15-1299.08
     esco: null  # no close ESCO occupation (checked 2026-10-02)
     levels: [mid, senior, staff]
+    also_called: [AI Infrastructure Engineer, LLM Infrastructure Engineer]
   ai-engineer:
     name: AI Engineer
     family: data-ai
@@ -202,6 +241,8 @@ roles:
     onet: 15-1252.00
     esco: http://data.europa.eu/esco/occupation/35553663-deab-4d9a-bf22-15c1625d28e8  # ICT intelligent systems designer
     levels: [entry, mid, senior, staff]
+    also_called: [Generative AI Engineer, LLM Engineer, AI Application Developer]
+    title_skills: [python]  # ADR-0044
   security-engineer:
     name: Security Engineer
     family: security
@@ -209,6 +250,7 @@ roles:
     onet: 15-1299.05
     esco: http://data.europa.eu/esco/occupation/0464b062-cea6-4164-b10d-956c61956ae7  # ICT security administrator
     levels: [entry, mid, senior, staff]
+    also_called: [Cybersecurity Engineer, Information Security Engineer]
   penetration-tester:
     name: Penetration Tester
     family: security
@@ -216,6 +258,7 @@ roles:
     onet: 15-1299.04
     esco: http://data.europa.eu/esco/occupation/76ef0a87-6afe-4560-b5d0-9a086abe45c5  # ethical hacker
     levels: [entry, mid, senior, staff]
+    also_called: [Ethical Hacker, Offensive Security Engineer]
   blockchain-engineer:
     name: Blockchain Engineer
     family: web3
@@ -223,6 +266,8 @@ roles:
     onet: 15-1299.07
     esco: http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1  # software developer; no blockchain occupation in ESCO
     levels: [entry, mid, senior, staff]
+    also_called: [Blockchain Developer, Smart Contract Developer, Web3 Developer]
+    title_skills: [solidity, ethereum]  # ADR-0044
   forward-deployed-engineer:
     name: Forward-Deployed Engineer
     family: customer-engineering
@@ -254,6 +299,7 @@ roles:
     onet: 15-1299.08
     esco: http://data.europa.eu/esco/occupation/d0aa0792-4345-474b-9365-686cf4869d2e  # software architect
     levels: [senior, staff]
+    also_called: [Application Architect, Technical Architect]
   engineering-manager:
     name: Engineering Manager
     family: leadership
@@ -268,6 +314,7 @@ roles:
 # kept as evidence about the real world (not a whitelist). kind: broaden (adjacent stack) · specialize
 # (narrower, deeper) · pivot (different field) · lead (architecture or management track); typical_years is
 # total experience when the move is common. The validator warns when a common path is far apart.
+    also_called: [Software Engineering Manager, Software Development Manager]
 common_paths:
   - {from: frontend-engineer@mid, to: full-stack-engineer@mid, kind: broaden}
   - {from: backend-engineer@mid, to: full-stack-engineer@mid, kind: broaden}

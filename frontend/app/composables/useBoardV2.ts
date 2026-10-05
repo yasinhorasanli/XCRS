@@ -1,6 +1,6 @@
 import { CATEGORY_META } from '~/composables/categories'
 import type { Category } from '~/types/apiV2'
-import type { ChipInput, Experience, SkillRef } from '~/types/apiV2'
+import type { ChipInput, Experience, RecommendationV2, SkillRef } from '~/types/apiV2'
 
 export const MAX_CHIPS = 60 // the API's limit
 
@@ -89,8 +89,15 @@ export function useBoardV2() {
   }
 
   /** Add a picked skill or typed text. A skill has one feeling, so an existing chip moves to the new category;
-   * the move is announced, with Undo, so it never happens silently. */
-  function add(label: string, category: Category = active.value, skill?: SkillRef, proficiency?: number) {
+   * the move is announced, with Undo, so it never happens silently. `matched`: typed text already matched (a
+   * restored board matches all its phrases in one request), so no background request is made. */
+  function add(
+    label: string,
+    category: Category = active.value,
+    skill?: SkillRef,
+    proficiency?: number,
+    matched?: { skills: SkillRef[]; method?: string },
+  ) {
     const clean = label.replace(/\s+/g, ' ').trim().slice(0, 100)
     if (!clean) return 'empty' as const
     const existing = find(clean) ?? (skill ? chips.value.find((c) => sameSkills(skillsOf(c), [skill.id])) : undefined)
@@ -108,10 +115,14 @@ export function useBoardV2() {
       category,
       skill: skill?.id,
       proficiency,
-      match: skill ? { status: 'picked', skills: [skill] } : { status: 'pending', skills: [] },
+      match: skill
+        ? { status: 'picked', skills: [skill] }
+        : matched
+          ? { status: 'done', skills: matched.skills, method: matched.method }
+          : { status: 'pending', skills: [] },
     }
     chips.value = [...chips.value, chip]
-    if (!skill) matchInBackground(chip.key)
+    if (!skill && !matched) matchInBackground(chip.key)
     return 'added' as const
   }
 
@@ -141,9 +152,20 @@ export function useBoardV2() {
       ...(c.proficiency ? { proficiency: c.proficiency } : {}),
     }))
 
+  /** The board a result was made from (also for a shared link); typed chips keep their matches, so no request. */
+  function fromResult(result: RecommendationV2) {
+    clear()
+    for (const m of result.matched) {
+      const picked = m.method === 'picked' ? m.skills[0] : undefined
+      const matched = picked ? undefined : { skills: m.skills, method: m.method }
+      add(m.text ?? picked?.name ?? '', m.category, picked, m.proficiency ?? undefined, matched)
+    }
+    experience.value = result.experience ?? null
+  }
+
   /** Whether a catalog skill is already on the board (picked, matched from typed text, or a chip's label). */
   const onBoard = (skill: { id: string; name: string }) =>
     chips.value.some((c) => skillsOf(c).includes(skill.id) || c.key === skill.name.trim().toLowerCase())
 
-  return { chips, active, experience, total, pending, byCategory, add, remove, rate, clear, fillExample, asInput, onBoard }
+  return { chips, active, experience, total, pending, byCategory, add, remove, rate, clear, fillExample, fromResult, asInput, onBoard }
 }

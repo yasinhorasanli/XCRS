@@ -52,6 +52,8 @@ def snapshot_from_catalog(cat: Catalog) -> CatalogSnapshot:
             titles={lv.level: lv.title for lv in roadmap.levels},
             requirements=cumulative_requirements(levels),
             optional=optional_skills(levels),
+            market_titles=tuple(a.title for a in role.also_called),
+            title_skills=role.title_skills,
         )
     return CatalogSnapshot(
         roles=roles,
