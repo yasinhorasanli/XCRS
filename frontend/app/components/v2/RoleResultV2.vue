@@ -16,6 +16,9 @@ const titles = computed(() => {
 const jobSearch = (title: string) => `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(title)}`
 
 const gapOnBoard = (g: Gap) => g.skills.some((s) => onBoard(s))
+const CURIOUS_PILL =
+  'ml-1 inline-flex items-center gap-0.5 rounded-full bg-violet-50 px-2 py-0.5 text-xs font-medium text-violet-700 ring-1 ring-inset ring-violet-200 transition hover:bg-violet-100'
+
 
 /** A basic the learner can confirm: into any box, at the level the role assumes (curious has no level). */
 function basicMenu(g: Gap) {
@@ -25,11 +28,17 @@ function basicMenu(g: Gap) {
       icon: CATEGORY_META[category].icon,
       onSelect: () => emit('add', [{ skill, category, proficiency: category === 'curious' ? undefined : g.need }]),
     }))
-  return g.skills.length === 1 ? [into(g.skills[0]!)] : g.skills.map((s) => [{ type: 'label' as const, label: s.name }, ...into(s)])
+  const heading = (name: string) => ({ type: 'label' as const, label: `Add ${name} to your board as` })
+  return g.skills.map((s) => [heading(s.name), ...into(s)])
 }
 
 /** A skill to learn goes to "Curious"; with a choice ("Kotlin or Java"), the learner picks one. */
-const gapMenu = (g: Gap) => [g.skills.map((skill) => ({ label: skill.name, onSelect: () => emit('add', [{ skill, category: 'curious' }]) }))]
+const gapMenu = (g: Gap) => [
+  [
+    { type: 'label' as const, label: 'Add to “Curious about”' },
+    ...g.skills.map((skill) => ({ label: skill.name, onSelect: () => emit('add', [{ skill, category: 'curious' as Category }]) })),
+  ],
+]
 
 function addAllBasics() {
   const items = (props.role.basics ?? [])
@@ -174,6 +183,9 @@ async function send(rating: 1 | -1) {
         <template v-if="role.level?.id === role.target_level.id">Still to cover at {{ levelName(role.target_level.id, role.target_level.title) }}</template>
         <template v-else>To reach {{ levelName(role.target_level.id, role.target_level.title) }}</template>: {{ role.gaps_total }} {{ role.gaps_total === 1 ? 'skill' : 'skills' }} to learn<span v-if="role.gaps_total > role.gaps.length">, first {{ role.gaps.length }}</span>
       </h3>
+      <p class="mt-1 text-xs text-slate-500">
+        Want to learn one? <span class="font-medium text-violet-700">+ Curious</span> puts it on your board under “Curious about”, then you can update your results.
+      </p>
       <div v-for="s in stages" :key="s.stage" class="mt-2">
         <p class="text-xs text-slate-400">{{ s.stage }}</p>
         <ul class="mt-1 flex flex-wrap gap-1.5">
@@ -183,14 +195,19 @@ async function send(rating: 1 | -1) {
               <span class="text-[11px] text-slate-500">· {{ PROFICIENCY_NAMES[g.need]?.toLowerCase() }}<template v-if="g.have"> (you: {{ PROFICIENCY_NAMES[g.have]?.toLowerCase() }})</template></span>
             </span>
             <UIcon v-if="gapOnBoard(g)" name="i-heroicons-check-20-solid" class="mx-1 h-4 w-4 text-emerald-600" aria-label="On your board" />
-            <UButton
+            <button
               v-else-if="g.skills.length === 1"
-              size="xs" color="neutral" variant="ghost" icon="i-heroicons-plus-20-solid"
-              :aria-label="`Add ${g.skills[0]!.name} to Curious`" :title="`Add to “Curious about”`"
+              type="button"
+              :class="CURIOUS_PILL"
+              :aria-label="`Add ${g.skills[0]!.name} to Curious about`"
               @click="emit('add', [{ skill: g.skills[0]!, category: 'curious' }])"
-            />
+            >
+              <UIcon name="i-heroicons-plus-20-solid" class="h-3.5 w-3.5" />Curious
+            </button>
             <UDropdownMenu v-else :items="gapMenu(g)">
-              <UButton size="xs" color="neutral" variant="ghost" icon="i-heroicons-plus-20-solid" :aria-label="`Add one of ${g.skills.map((x) => x.name).join(', ')} to Curious`" title="Add to “Curious about”" />
+              <button type="button" :class="CURIOUS_PILL" :aria-label="`Add one of ${g.skills.map((x) => x.name).join(', ')} to Curious about`">
+                <UIcon name="i-heroicons-plus-20-solid" class="h-3.5 w-3.5" />Curious
+              </button>
             </UDropdownMenu>
           </li>
         </ul>
