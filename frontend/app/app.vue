@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const { loadProviders } = useAccount()
 await callOnce('account-providers', loadProviders)
+// Signed in, the board is saved after every change, wherever it happens (board page, results page).
+if (import.meta.client) useBoardAutosave()
 </script>
 
 <template>

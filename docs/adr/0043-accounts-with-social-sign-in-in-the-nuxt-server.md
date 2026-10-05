@@ -47,6 +47,7 @@ Constraints:
    - "Save to my account" on an anonymous result signs in and attaches it, if nobody owns it yet and it is at most a day old;
    - the board page reloads the saved board when it opens empty.
    - Results stay viewable by anyone with the link, as before.
+   - *Note 2026-10-05:* the saved board now follows every change to the board, on any page (skills added from a result included), about a second later and when the page is left; before, only a run or a change on the board page saved it.
 6. **Privacy:** a plain-language notice at `/privacy`; JSON export (`GET /api/v2/me/export`); "sign out everywhere"; delete my account (everything linked). No analytics; the only cookies are the session and the short-lived ones the sign-in itself needs.
 7. **Without the secrets** (`XCRS_INTERNAL_SECRET`, `NUXT_SESSION_PASSWORD`, a provider's id and secret) the site runs as before, anonymous only.
 
