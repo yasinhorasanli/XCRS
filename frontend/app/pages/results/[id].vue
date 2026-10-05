@@ -78,6 +78,9 @@ const added = ref<string[]>([])
 const updating = ref(false)
 function onAdd(items: SkillToAdd[]) {
   if (data.value && !chips.value.length) fromResult(data.value)
+  // Every add can be undone for a few seconds ("add all" is one click): the board and the bar go back as they were.
+  const board = JSON.parse(JSON.stringify(chips.value)) as typeof chips.value
+  const before = [...added.value]
   const names = []
   for (const it of items) {
     const r = add(it.skill.name, it.category, it.skill, it.proficiency)
@@ -88,7 +91,25 @@ function onAdd(items: SkillToAdd[]) {
     }
   }
   added.value = [...added.value, ...names.filter((n) => !added.value.includes(n))]
-  if (names.length === 1) toast.add({ title: `Added “${names[0]}” to your board`, icon: 'i-heroicons-plus-circle' })
+  if (!names.length) return
+  const box = CATEGORY_META[items[0]!.category].title
+  toast.add({
+    title: names.length === 1 ? `Added “${names[0]}” to your board` : `Added ${names.length} skills to your board`,
+    description: names.length === 1 ? `Under “${box}”.` : `Under “${box}”: ${names.slice(0, 3).join(', ')}${names.length > 3 ? '…' : ''}`,
+    icon: 'i-heroicons-plus-circle',
+    duration: 5000,
+    actions: [
+      {
+        label: 'Undo',
+        color: 'neutral',
+        variant: 'outline',
+        onClick: () => {
+          chips.value = board
+          added.value = before
+        },
+      },
+    ],
+  })
 }
 async function update() {
   updating.value = true
