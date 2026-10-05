@@ -67,6 +67,7 @@ async function submit() {
         </div>
         <div class="mt-4 flex flex-wrap items-center gap-2">
           <UButton color="neutral" variant="soft" icon="i-heroicons-sparkles" label="Try an example" @click="fillExample()" />
+          <CvImport />
           <UButton v-if="total" color="neutral" variant="ghost" icon="i-heroicons-trash" label="Clear all" @click="clear()" />
           <div class="ml-auto flex items-center gap-3">
             <span class="hidden text-sm text-muted sm:inline">

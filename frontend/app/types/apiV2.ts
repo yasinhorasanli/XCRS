@@ -133,3 +133,36 @@ export interface ResultSummary {
   status: 'ok' | 'insufficient_input'
   roles: { id: string; name: string; level: string | null }[]
 }
+
+// CV import (ADR-0045)
+export interface CvSuggestion {
+  skill: string
+  name: string
+  proficiency: number | null // suggested 1-3 from years of use
+  years: number | null
+  evidence: string // a short quote from the CV: render as text
+  job: number | null // index into `jobs` of the newest job it was used in; null = summary or skills list
+  source: 'llm' | 'scan'
+}
+
+export interface CvJob {
+  title: string
+  employer: string
+  start: string | null
+  end: string | null
+  kind: string
+}
+
+export interface CvImportResult {
+  suggestions: CvSuggestion[]
+  experience: Experience | null
+  jobs: CvJob[]
+  warnings: { hidden: number; instructions: number; examples: string[] }
+}
+
+export interface CvImportStatus {
+  id: string
+  status: 'queued' | 'running' | 'done' | 'failed'
+  position: number
+  result?: CvImportResult | null
+}

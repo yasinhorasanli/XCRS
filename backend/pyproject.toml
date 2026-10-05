@@ -16,6 +16,8 @@ dependencies = [
     "langchain-core>=1.6",
     "langchain-openai>=1.6",
     "pyyaml>=6",
+    "pypdf>=6.19.0",
+    "python-multipart>=0.0.32",
 ]
 
 [dependency-groups]
@@ -46,11 +48,11 @@ target-version = "py313"
 # UP modern syntax · SIM simplifications · RUF Ruff's own checks
 select = ["E", "W", "F", "I", "B", "UP", "SIM", "RUF"]
 # Intentional typography in CLI output and comments.
-allowed-confusables = ["σ", "›", "–"]
+allowed-confusables = ["σ", "›", "–", "×", "ı"]  # ı: Turkish CV text (ADR-0045)
 
 [tool.ruff.lint.flake8-bugbear]
 # FastAPI's dependency injection is declared in argument defaults by design.
-extend-immutable-calls = ["fastapi.Depends"]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.File", "fastapi.Form"]
 
 [tool.ruff.lint.per-file-ignores]
 "migrations/env.py" = ["E402"]  # Alembic template: imports follow config setup

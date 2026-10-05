@@ -43,6 +43,16 @@ class Settings(BaseSettings):
     # Accounts (ADR-0043): the secret the Nuxt server signs the signed-in user's id with (X-XCRS-User) and
     # authenticates /internal/sign-in with. Unset: accounts are off and the site is anonymous only.
     internal_secret: str | None = None
+    # CV import (ADR-0045): signed-in users only; one import at a time, kept in memory, nothing stored.
+    cv_import_enabled: bool = True
+    cv_shape: str = "pick"  # catalog ids picked in the extraction call (measured best, ADR-0045); or "phrases"
+    cv_max_pdf_bytes: int = 2 * 1024 * 1024
+    cv_max_pages: int = 5
+    cv_max_chars: int = 20_000
+    cv_per_day: int = 5  # imports per user per 24 hours
+    cv_max_waiting: int = 3  # queued imports beyond the one running
+    cv_llm_timeout_s: float = 600.0
+    cv_llm_max_tokens: int = 3000
 
 
 @lru_cache
