@@ -3,6 +3,7 @@
 - **Status:** Accepted. Delegated: the decider asked Claude to decide the structure ("make the things make sense", 2026-10-01); reviewed by the decider in PR #9 and merged.
 - **Date:** 2026-10-01
 - **Decider:** Muhammed Yasin Horasanli
+- **Note (2026-10-06):** the import's upsert (`INSERT … ON CONFLICT DO UPDATE`) drew an identity value for every row it tried, existing ones included, so every import used up ids even when nothing changed. The dev database ran out of smallint role ids (32,767): each DB test imports the catalog. The import now updates existing keys and inserts only new ones (`repository/catalog_store.py`, `_upsert`), so ids are drawn only for new entities. The ids, their types and the import's behaviour are otherwise unchanged.
 
 ## Context
 

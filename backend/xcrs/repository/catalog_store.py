@@ -10,7 +10,7 @@ The caller owns the transaction.
 
 from collections.abc import Iterable, Sequence
 
-from sqlalchemy import Table, delete, func, literal_column, or_, select, tuple_, update
+from sqlalchemy import Table, column, delete, func, literal_column, or_, select, tuple_, update, values
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
 
@@ -38,21 +38,48 @@ from xcrs.domain.role_scoring import CatalogSnapshot, ResourceRef, RoleSnapshot
 
 def _upsert(session: Session, table: Table, key: Sequence[str], rows: list[dict]) -> tuple[list, list]:
     """Insert or update rows by `key`; rows whose values didn't change aren't touched.
-    Returns the keys of (inserted, updated) rows."""
+    Returns the keys of (inserted, updated) rows.
+
+    Two statements (update the existing keys, insert only the new ones), not INSERT ... ON CONFLICT: that draws an
+    identity value for every row it tries, existing ones included, and drawn values are never given back. Every
+    import then used up ids even when nothing changed, and the dev database ran out of smallint role ids (each
+    DB test imports the catalog)."""
     if not rows:
         return [], []
-    stmt = insert(table).values(rows)
+    key_columns = [table.c[k] for k in key]
+
+    def key_of(row) -> object:
+        return row[key[0]] if len(key) == 1 else tuple(row[k] for k in key)
+
+    wanted = [key_of(r) for r in rows]
+    match = key_columns[0].in_(wanted) if len(key) == 1 else tuple_(*key_columns).in_(wanted)
+    existing = {key_of(r._mapping) for r in session.execute(select(*key_columns).where(match))}
+
+    inserted: list = []
+    new = [r for r in rows if key_of(r) not in existing]
+    if new:
+        result = session.execute(insert(table).values(new).returning(*key_columns))
+        inserted = [key_of(r._mapping) for r in result]
+
+    updated: list = []
     columns = [c for c in rows[0] if c not in key]
-    changed = or_(*(table.c[c].is_distinct_from(stmt.excluded[c]) for c in columns))
-    updates = {c: stmt.excluded[c] for c in columns}
-    if "updated_at" in table.c:
-        updates["updated_at"] = literal_column("now()")
-    stmt = stmt.on_conflict_do_update(index_elements=list(key), set_=updates, where=changed).returning(
-        *(table.c[k] for k in key), literal_column("xmax = 0").label("inserted")
-    )
-    inserted, updated = [], []
-    for row in session.execute(stmt):
-        (inserted if row.inserted else updated).append(row[0] if len(key) == 1 else tuple(row[: len(key)]))
+    old = [r for r in rows if key_of(r) in existing]
+    if old and columns:
+        names = [*key, *columns]
+        incoming = values(*(column(c, table.c[c].type) for c in names), name="incoming").data(
+            [tuple(r[c] for c in names) for r in old]
+        )
+        sets = {c: incoming.c[c] for c in columns}
+        if "updated_at" in table.c:
+            sets["updated_at"] = literal_column("now()")
+        changed = or_(*(table.c[c].is_distinct_from(incoming.c[c]) for c in columns))
+        stmt = (
+            update(table)
+            .where(*(table.c[k] == incoming.c[k] for k in key), changed)
+            .values(sets)
+            .returning(*key_columns)
+        )
+        updated = [key_of(r._mapping) for r in session.execute(stmt)]
     return inserted, updated
 
 
