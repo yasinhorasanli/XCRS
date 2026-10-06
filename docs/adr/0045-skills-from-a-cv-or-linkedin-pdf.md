@@ -186,7 +186,10 @@ Results are in `eval/results/cv-import-20261006-0013-*`. The rows on the Mac's C
 - **VM-B, compact (cv-extract-3):**
   - one page: 73 s;
   - two-page proxy: 89 s when only the catalog part of the prompt is cached, 77 s when the whole prompt is.
-  - In production, explanations and matching run between imports and evict the cached prompt, so a typical two-page import is expected to be about 90–100 s. That is at the target, not clearly under it. A fully cold two-page run was cancelled at the decider's request (late night; VM-B is in a shared room and loud under load), so it is still to be measured.
+  - **Cold, measured 2026-10-06:** a two-page proxy with the model just loaded and nothing cached took **99 s** (prompt 28 s, output 71 s). **That is 9 s over the target.**
+  - After a short unrelated request, the catalog part of the prompt was still cached, and two pages took 56 s.
+  - So imports take 56–99 s, depending on whether the long system prompt is still in Ollama's cache.
+  - **In production** (VM-A at 93fe63a, VM-B's 4B), a one-page import took 28 s from upload to result; with "pick" it had taken 76 s.
 - **Option 2, "found" (rejected):** the scan's finds were given in the request, and the answer only named, per job, which of them it used. 4B then misplaced them and sometimes never closed its JSON. Precision fell to 0.78 and recall to 0.72, and the median answer was longer. The code is kept only so the benchmark can be reproduced (`XCRS_CV_SHAPE=found`).
 - **Default:** `XCRS_CV_SHAPE=compact`.
 
@@ -204,7 +207,7 @@ Results are in `eval/results/cv-import-20261006-0013-*`. The rows on the Mac's C
 
 ## Revisit when
 
-- **A fully cold two-page import on VM-B measures clearly over 90 s** → a further answer-size cut (fewer fields per job), measured on the set first.
+- **Cold imports (99 s for two pages) turn out to be common in practice**, for example when explanations keep evicting the cached prompt → a further answer-size cut (fewer fields per job), measured on the set first; or keep the import prompt warm.
 - **A GPU arrives, or imports measure well under a minute on VM-B** → open the import to anonymous visitors with per-IP limits.
 - **Users ask for Word files, or many pasted texts start with Word artefacts** → add DOCX.
 - **Real CVs show a generator whose text order pypdf mixes up** → add a layout-aware fallback (pdfminer.six with tuned settings) for that case.
