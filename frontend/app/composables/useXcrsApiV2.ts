@@ -1,5 +1,6 @@
 import type {
   ChipInput,
+  CvImportStatus,
   Experience,
   Me,
   PhraseMatch,
@@ -43,6 +44,10 @@ export function useXcrsApiV2() {
     deleteResult: (id: string) => $fetch(`/api/v2/me/results/${id}`, { method: 'DELETE' }),
     signOutEverywhere: () => $fetch('/api/v2/me/sign-out-everywhere', { method: 'POST' }),
     deleteAccount: () => $fetch('/api/v2/me', { method: 'DELETE' }),
+
+    // CV import (ADR-0045), signed in only: a PDF (field "file") or pasted text (field "text").
+    cvImport: (body: FormData) => $fetch<CvImportStatus>('/api/v2/cv-imports', { method: 'POST', body }),
+    cvImportStatus: (id: string) => $fetch<CvImportStatus>(`/api/v2/cv-imports/${id}`),
   }
 }
 

@@ -11,7 +11,13 @@
 
 {$XCRS_DOMAIN} {
 	encode zstd gzip
-	request_body {
+	# Request bodies are small JSON (ADR-0035), except a CV upload (ADR-0045): a PDF up to 2 MB, sent as multipart.
+	@cv_upload path /api/v2/cv-imports
+	request_body @cv_upload {
+		max_size 3MB
+	}
+	@not_cv_upload not path /api/v2/cv-imports
+	request_body @not_cv_upload {
 		max_size 64KB
 	}
 	header {

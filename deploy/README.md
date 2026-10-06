@@ -79,6 +79,7 @@ How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036, ADR-0
 **Limits** (ADR-0035):
 - Expensive endpoints allow 10 requests a minute per client IP, in bursts of 5. `XCRS_RATE_*` changes that.
 - At most 12 new phrases per request go to the LLM (`XCRS_MATCH_LLM_MAX_NEW`).
-- Request bodies are capped at 64 KB in Caddy.
+- Request bodies are capped at 64 KB in Caddy, except `/api/v2/cv-imports` (CV uploads, ADR-0045): 3 MB. The API itself refuses PDFs over 2 MB or 5 pages.
+- CV imports (ADR-0045): signed-in users only, 5 a day each (`XCRS_CV_PER_DAY`), one running and at most 3 waiting (`XCRS_CV_MAX_WAITING`); `XCRS_CV_IMPORT_ENABLED=false` turns them off. VM-B's Ollama needs `OLLAMA_CONTEXT_LENGTH=16384` (in `deploy/vm-b/compose.yaml`; recreate the container after pulling). **After deploying, reload Caddy** (`docker compose -p xcrs-vm-a exec caddy caddy reload --config /etc/caddy/Caddyfile`) so the upload limit applies.
 - Behind Funnel, the visitor's address comes from `X-Forwarded-For`: Caddy trusts private ranges, and the API takes the rightmost entry that isn't a trusted proxy.
 

@@ -12,7 +12,7 @@ from fastapi import Depends, FastAPI, HTTPException, Query, Request
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from xcrs.api import accounts, dev
+from xcrs.api import accounts, cv_imports, dev
 from xcrs.api.deps import get_session
 from xcrs.api.identity import accounts_on, optional_user
 from xcrs.api.limits import heavy
@@ -68,6 +68,7 @@ app = FastAPI(
 app.include_router(dev.router)
 app.include_router(accounts.router)
 app.include_router(accounts.internal)
+app.include_router(cv_imports.router)
 
 
 def get_skill_matcher(session: Session = Depends(get_session)) -> SkillMatcher:

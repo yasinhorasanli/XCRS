@@ -5,7 +5,7 @@ useHead({ title: 'Privacy · XCRS' })
 <template>
   <div class="mx-auto max-w-3xl px-4 pb-16 pt-8 text-default">
     <h1 class="text-2xl font-bold tracking-tight text-highlighted">Privacy notice</h1>
-    <p class="mt-2 text-sm text-muted">Last updated 3 October 2026</p>
+    <p class="mt-2 text-sm text-muted">Last updated 5 October 2026</p>
 
     <div class="mt-6 grid gap-6 leading-relaxed">
       <section>
@@ -38,6 +38,19 @@ useHead({ title: 'Privacy · XCRS' })
         <p class="mt-2">
           We don't keep passwords, profile pictures or the provider's access tokens. Your board and the results you make
           while signed in (or save to your account) are linked to your account.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-semibold text-highlighted">Importing your CV or LinkedIn PDF</h2>
+        <p class="mt-2">
+          If you're signed in, you can let XCRS read a CV or LinkedIn's "Save to PDF" of your profile, or text you paste,
+          to suggest skills for your board. The file is read in memory on our own server, and our own language model
+          (running on that server, not a third-party service) picks out skills and the dates of your jobs. Nothing from
+          the file is stored: not the file, its text or what the model found. The suggestions are kept in memory for at
+          most 15 minutes, until you see them, and our logs record only the size of the text, not its content. Only the
+          skills you choose to add to your board are kept, like any board, and saved to your account. Hidden text and
+          lines written as instructions to an AI are ignored, and we tell you when that happens.
         </p>
       </section>
 

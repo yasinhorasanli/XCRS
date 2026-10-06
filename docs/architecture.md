@@ -59,7 +59,7 @@ Decided so far:
   ([ADR-0034](adr/0034-deployment-ghcr-images-compose-per-vm-caddy.md), [ADR-0035](adr/0035-abuse-protection-rate-limits-and-llm-caps.md), [ADR-0036](adr/0036-backups-nightly-verified-copied-to-the-other-vm.md))
 - **Evaluation tools** (`backend/eval/`): synthetic learner profiles, the explainer benchmark (speed and grounding per model and device), the prototype-vs-new comparison with threshold diagnostics, and the skill-matching benchmark (349 labeled phrases, 16 pipelines, cross-validated thresholds).
 
-## The system today (2026-10-03)
+## The system today (2026-10-05)
 
 ```
 Browser ──► Caddy (VM-A, the only public service) ──► Nuxt 4 (board, results, account; proxies /api/v2/**)
@@ -69,8 +69,11 @@ Browser ──► Caddy (VM-A, the only public service) ──► Nuxt 4 (board,
                                                           ▼  X-XCRS-User for a signed-in user
    FastAPI /api/v2   POST /skills/match · POST /recommendations · GET /recommendations/{id} · feedback
                      /me (board, results, export, sign out everywhere, delete) · /internal/sign-in (web only)
+                     POST /cv-imports (PDF or text, signed in) · GET /cv-imports/{id} (ADR-0045)
      api/       validation, rate limits (ADR-0035), identity header check (ADR-0043)
-     services/  skill matching (lookup → LLM pick → similarity), recommend, explanation worker
+     services/  skill matching (lookup → LLM pick → similarity), recommend, explanation worker,
+                CV import (in-memory job queue, one at a time; nothing stored)
+     cv/        PDF text in a child process (pypdf, hidden text set aside), cleaning, LLM extraction
      domain/    role scoring, levels, gaps, resource choice (pure Python)
      adapters:
        embeddings/ ──► Ollama  qwen3-embedding:0.6b   (VM-A)
@@ -84,6 +87,8 @@ Offline: xcrs catalog import | embed   (catalog/*.yaml → catalog schema, skill
 The research prototype is on `main` and in the Zenodo release; the classic engine that replaced it on this branch was retired on 2026-10-02 (ADR-0039). Measurements are in [baseline.md](baseline.md).
 
 Each recommended role lists job titles to search for, the learner's own first ("Java Backend Engineer", ADR-0044); skills to learn and assumed basics can be added to the board from the results page, which then updates the results.
+
+A signed-in learner can import a CV or LinkedIn's "Save to PDF" (ADR-0045): the PDF is read in a time- and memory-limited child process, hidden text and instruction-like sentences are set aside (and reported), a deterministic scan finds catalog names, and one LLM call returns the job timeline and the remaining skills with quotes as evidence. A skill is kept only if its quote is on the page and it resolves to a catalog id (through the matcher); levels and the experience band follow from the dates by rule. The learner reviews every suggestion before anything reaches the board. Caddy allows 3 MB on the upload path only.
 
 Accounts are optional (ADR-0043): without `XCRS_INTERNAL_SECRET` and a session password the site is anonymous only, as before; signed in, results and the board are kept, with JSON export and account deletion.
 
