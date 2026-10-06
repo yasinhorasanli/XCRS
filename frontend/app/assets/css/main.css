@@ -58,3 +58,26 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .shimmer { animation: none; }
 }
+
+/* Printing (results "Download PDF"): white paper, no shadows; the page decides what to hide with print:hidden. */
+@media print {
+  @page {
+    margin: 14mm;
+  }
+  html {
+    zoom: 0.85; /* one role per page in most results */
+  }
+  body {
+    background: white;
+  }
+  summary {
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  article,
+  details {
+    box-shadow: none !important;
+  }
+}

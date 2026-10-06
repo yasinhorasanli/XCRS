@@ -86,6 +86,8 @@ Offline: xcrs catalog import | embed   (catalog/*.yaml → catalog schema, skill
 
 The research prototype is on `main` and in the Zenodo release; the classic engine that replaced it on this branch was retired on 2026-10-02 (ADR-0039). Measurements are in [baseline.md](baseline.md).
 
+Results can be saved as a PDF: a "Download PDF" button, enabled once the explanations are in, prints the page through the browser ("Save as PDF"), with a print stylesheet that hides the interactive parts, opens collapsed sections, prints in light colours and starts each role on a new page. Nothing is rendered on the server.
+
 Each recommended role lists job titles to search for, the learner's own first ("Java Backend Engineer", ADR-0044); skills to learn and assumed basics can be added to the board from the results page, which then updates the results.
 
 A signed-in learner can import a CV or LinkedIn's "Save to PDF" (ADR-0045): the PDF is read in a time- and memory-limited child process, hidden text and instruction-like sentences are set aside (and reported), a deterministic scan finds catalog names, and one LLM call returns the job timeline and the remaining skills with quotes as evidence. A skill is kept only if its quote is on the page and it resolves to a catalog id (through the matcher); levels and the experience band follow from the dates by rule. The learner reviews every suggestion before anything reaches the board. Caddy allows 3 MB on the upload path only.
