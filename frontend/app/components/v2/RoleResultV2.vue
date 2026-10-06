@@ -83,7 +83,7 @@ async function send(rating: 1 | -1) {
           <span class="text-dimmed"> · an estimate from your input</span>
         </p>
       </div>
-      <div class="flex items-center gap-1" aria-label="Was this role a good suggestion?">
+      <div class="flex items-center gap-1 print:hidden" aria-label="Was this role a good suggestion?">
         <UButton size="xs" color="neutral" :variant="vote === 1 ? 'solid' : 'ghost'" icon="i-heroicons-hand-thumb-up" aria-label="Good suggestion" :disabled="!!vote" @click="send(1)" />
         <UButton size="xs" color="neutral" :variant="vote === -1 ? 'solid' : 'ghost'" icon="i-heroicons-hand-thumb-down" aria-label="Not for me" :disabled="!!vote" @click="send(-1)" />
       </div>
@@ -173,6 +173,7 @@ async function send(rating: 1 | -1) {
             </span>
             <span class="mt-1 text-sm font-medium leading-snug">{{ res.title }}</span>
             <span class="mt-auto pt-1 text-[11px] text-dimmed">For {{ res.skills.map((s) => s.name).join(', ') }}</span>
+            <span class="hidden break-all pt-0.5 text-[10px] text-dimmed print:block">{{ res.url }}</span>
           </a>
         </li>
       </ul>
@@ -183,7 +184,7 @@ async function send(rating: 1 | -1) {
         <template v-if="role.level?.id === role.target_level.id">Still to cover at {{ levelName(role.target_level.id, role.target_level.title) }}</template>
         <template v-else>To reach {{ levelName(role.target_level.id, role.target_level.title) }}</template>: {{ role.gaps_total }} {{ role.gaps_total === 1 ? 'skill' : 'skills' }} to learn<span v-if="role.gaps_total > role.gaps.length">, first {{ role.gaps.length }}</span>
       </h3>
-      <p class="mt-1 text-xs text-muted">
+      <p class="mt-1 text-xs text-muted print:hidden">
         Want to learn one? <span class="font-medium text-violet-700 dark:text-violet-200">+ Curious</span> puts it on your board under “Curious about”, then you can update your results.
       </p>
       <div v-for="s in stages" :key="s.stage" class="mt-2">
@@ -194,18 +195,18 @@ async function send(rating: 1 | -1) {
               {{ g.skills.map((x) => x.name).join(' or ') }}
               <span class="text-[11px] text-muted">· {{ PROFICIENCY_NAMES[g.need]?.toLowerCase() }}<template v-if="g.have"> (you: {{ PROFICIENCY_NAMES[g.have]?.toLowerCase() }})</template></span>
             </span>
-            <UIcon v-if="gapOnBoard(g)" name="i-heroicons-check-20-solid" class="mx-1 h-4 w-4 text-emerald-600 dark:text-emerald-300" aria-label="On your board" />
+            <UIcon v-if="gapOnBoard(g)" name="i-heroicons-check-20-solid" class="mx-1 h-4 w-4 print:hidden text-emerald-600 dark:text-emerald-300" aria-label="On your board" />
             <button
               v-else-if="g.skills.length === 1"
               type="button"
-              :class="CURIOUS_PILL"
+              :class="[CURIOUS_PILL, 'print:hidden']"
               :aria-label="`Add ${g.skills[0]!.name} to Curious about`"
               @click="emit('add', [{ skill: g.skills[0]!, category: 'curious' }])"
             >
               <UIcon name="i-heroicons-plus-20-solid" class="h-3.5 w-3.5" />Curious
             </button>
             <UDropdownMenu v-else :items="gapMenu(g)">
-              <button type="button" :class="CURIOUS_PILL" :aria-label="`Add one of ${g.skills.map((x) => x.name).join(', ')} to Curious about`">
+              <button type="button" :class="[CURIOUS_PILL, 'print:hidden']" :aria-label="`Add one of ${g.skills.map((x) => x.name).join(', ')} to Curious about`">
                 <UIcon name="i-heroicons-plus-20-solid" class="h-3.5 w-3.5" />Curious
               </button>
             </UDropdownMenu>
@@ -218,7 +219,7 @@ async function send(rating: 1 | -1) {
       <summary class="cursor-pointer text-muted hover:text-default">
         Assumed at your level: {{ role.basics.length }} {{ role.basics.length === 1 ? 'basic' : 'basics' }} you didn't list. Worth a quick check
       </summary>
-      <p class="mt-2 text-xs text-muted">
+      <p class="mt-2 text-xs text-muted print:hidden">
         Click one to put it on your board, or
         <button type="button" class="font-medium text-indigo-600 dark:text-indigo-300 hover:underline" @click="addAllBasics">add all as Neutral</button>.
       </p>
@@ -232,7 +233,7 @@ async function send(rating: 1 | -1) {
             <button type="button" class="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs text-toned ring-1 ring-inset ring-default transition hover:bg-muted hover:ring-indigo-300 dark:hover:ring-indigo-800">
               {{ g.skills.map((x) => x.name).join(' or ') }}
               <span class="text-dimmed">· {{ PROFICIENCY_NAMES[g.need]?.toLowerCase() }}</span>
-              <UIcon name="i-heroicons-plus-20-solid" class="h-3.5 w-3.5 text-dimmed" />
+              <UIcon name="i-heroicons-plus-20-solid" class="h-3.5 w-3.5 text-dimmed print:hidden" />
             </button>
           </UDropdownMenu>
         </li>

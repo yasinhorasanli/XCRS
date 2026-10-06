@@ -8,7 +8,7 @@ if (import.meta.client) useBoardAutosave()
 <template>
   <UApp :toaster="{ position: 'top-center' }">
     <div class="flex min-h-screen flex-col">
-      <AppHeader />
+      <AppHeader class="print:hidden" />
       <main class="flex-1">
         <NuxtPage />
       </main>

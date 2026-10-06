@@ -24,10 +24,14 @@ const pending = computed(() => data.value?.roles.filter((r) => r.explanation_sta
 const POLL_MS = 2500
 const POLL_LIMIT_MS = 6 * 60 * 1000
 let poller: ReturnType<typeof setInterval> | undefined
+const pollingStopped = ref(false)
 onMounted(() => {
   const started = Date.now()
   poller = setInterval(async () => {
-    if (!pending.value || Date.now() - started > POLL_LIMIT_MS) return clearInterval(poller)
+    if (!pending.value || Date.now() - started > POLL_LIMIT_MS) {
+      pollingStopped.value = true
+      return clearInterval(poller)
+    }
     try {
       data.value = await api.recommendation(id)
     } catch {
@@ -36,6 +40,41 @@ onMounted(() => {
   }, POLL_MS)
 })
 onBeforeUnmount(() => clearInterval(poller))
+
+/** "Download PDF" prints the page (the browser's "Save as PDF"), once the explanations are in: when none is pending,
+ * or the page has stopped waiting for them, so the button never stays blocked. Before printing (the button or
+ * Ctrl/Cmd+P) collapsed sections open, colours turn light and the title becomes the file name; afterwards all of it
+ * goes back. Interactive parts are hidden by `print:hidden`. */
+const pdfReady = computed(() => !!data.value && (!pending.value || pollingStopped.value))
+const createdOn = computed(() => (data.value?.created_at ?? new Date().toISOString()).slice(0, 10))
+const resultUrl = computed(() => (import.meta.client ? window.location.href.split('?')[0] : ''))
+let restorePrint: (() => void) | undefined
+function beforePrint() {
+  if (restorePrint) return // Chrome can announce one print twice (e.g. "Save as PDF" after a preview); keep the first state
+  const opened = [...document.querySelectorAll<HTMLDetailsElement>('main details:not([open])')]
+  opened.forEach((d) => (d.open = true))
+  const root = document.documentElement
+  const wasDark = root.classList.contains('dark')
+  if (wasDark) root.classList.replace('dark', 'light')
+  const title = document.title
+  document.title = `XCRS results ${createdOn.value}`
+  restorePrint = () => {
+    opened.forEach((d) => (d.open = false))
+    if (wasDark) root.classList.replace('light', 'dark')
+    document.title = title
+    restorePrint = undefined
+  }
+}
+const afterPrint = () => restorePrint?.()
+onMounted(() => {
+  window.addEventListener('beforeprint', beforePrint)
+  window.addEventListener('afterprint', afterPrint)
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('beforeprint', beforePrint)
+  window.removeEventListener('afterprint', afterPrint)
+})
+const downloadPdf = () => window.print()
 
 /** Keep an anonymous result in the account (ADR-0043); signed out, sign in first and come back to save it. */
 const saving = ref(false)
@@ -129,12 +168,22 @@ async function update() {
   <div class="mx-auto max-w-5xl px-4 pb-16 pt-8">
     <div class="flex flex-wrap items-center gap-3">
       <h1 class="text-2xl font-bold tracking-tight">Your roles</h1>
-      <div class="ml-auto flex flex-wrap items-center gap-2">
+      <div class="ml-auto flex flex-wrap items-center gap-2 print:hidden">
         <UBadge v-if="data?.saved" color="primary" variant="soft" size="lg" icon="i-heroicons-bookmark-solid" label="Saved to your account" />
         <UButton v-else-if="accounts && data?.can_save" color="primary" variant="soft" :loading="saving" icon="i-heroicons-bookmark" label="Save to my account" @click="save" />
+        <UTooltip v-if="data && !error" :text="pdfReady ? 'Save these results as a PDF' : 'Available when the explanations are ready'">
+          <span>
+            <!-- A disabled button gets no mouse events; without them the tooltip on its wrapper never opens. -->
+            <UButton color="neutral" variant="soft" icon="i-heroicons-arrow-down-tray" label="Download PDF" class="disabled:pointer-events-none" :disabled="!pdfReady" @click="downloadPdf" />
+          </span>
+        </UTooltip>
         <UButton color="neutral" variant="soft" icon="i-heroicons-pencil-square" label="Edit my answers" @click="edit" />
       </div>
     </div>
+
+    <p v-if="data" class="hidden text-xs text-muted print:block">
+      XCRS · {{ createdOn }} · <a :href="resultUrl" class="break-all">{{ resultUrl }}</a>
+    </p>
 
     <UAlert v-if="error" class="mt-6" color="error" title="We couldn't find these results" description="The link may be wrong or the results were removed." />
 
@@ -147,10 +196,18 @@ async function update() {
         description="Try naming tools, languages or topics (for example “SQL”, “React”, “testing”), or pick them from the suggestions."
       />
       <div class="mt-6 grid gap-5">
-        <V2RoleResultV2 v-for="(r, i) in data.roles" :key="r.id" :role="r" :rank="i + 1" :recommendation-id="data.id" @add="onAdd" />
+        <V2RoleResultV2
+          v-for="(r, i) in data.roles"
+          :key="r.id"
+          :role="r"
+          :rank="i + 1"
+          :recommendation-id="data.id"
+          :class="i > 0 ? 'print:break-before-page' : ''"
+          @add="onAdd"
+        />
       </div>
 
-      <details class="mt-8 rounded-2xl bg-default p-4 text-sm shadow-xs ring-1 ring-default">
+      <details class="mt-8 rounded-2xl bg-default p-4 text-sm shadow-xs ring-1 ring-default print:break-before-page">
         <summary class="cursor-pointer font-medium">
           Your answers: {{ data.matched.length }} {{ data.matched.length === 1 ? 'skill' : 'skills' }}
           <span class="font-normal text-muted">· what these results are based on</span>
@@ -179,7 +236,7 @@ async function update() {
       </details>
     </template>
 
-    <div v-if="added.length" class="sticky bottom-4 z-20 mt-6 flex flex-wrap items-center gap-3 rounded-2xl bg-slate-900 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700 px-4 py-3 text-sm text-white shadow-lg">
+    <div v-if="added.length" class="sticky bottom-4 z-20 mt-6 print:hidden flex flex-wrap items-center gap-3 rounded-2xl bg-slate-900 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700 px-4 py-3 text-sm text-white shadow-lg">
       <UIcon name="i-heroicons-plus-circle" class="h-5 w-5 shrink-0 text-indigo-300 dark:text-indigo-300" />
       <span class="min-w-0 flex-1">
         {{ added.length }} {{ added.length === 1 ? 'skill' : 'skills' }} added to your board:
