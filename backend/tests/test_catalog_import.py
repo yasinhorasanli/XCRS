@@ -60,3 +60,27 @@ def test_edits_and_removals_are_applied_and_reported(session):
     found = session.execute(text("SELECT description FROM catalog.skills WHERE slug = 'docker'")).scalar_one()
     assert found == "Containers."
     assert session.execute(text("SELECT count(*) FROM catalog.skills WHERE slug = 'feature-stores'")).scalar() == 0
+
+
+def sequence_values(session) -> dict[str, int]:
+    """Sequences advance outside the test's transaction, so they show what the import drew."""
+    rows = session.execute(
+        text(
+            "SELECT sequencename, coalesce(last_value, 0) FROM pg_sequences WHERE schemaname = 'catalog' "
+            "AND sequencename IN ('roles_id_seq', 'families_id_seq', 'skills_id_seq')"
+        )
+    )
+    return dict(rows.all())
+
+
+def test_reimporting_draws_no_ids_and_a_new_skill_draws_one(session):
+    cat = model.load_catalog()
+    run_import(session, cat)
+    before = sequence_values(session)
+    run_import(session, cat)
+    assert sequence_values(session) == before  # INSERT ... ON CONFLICT used to draw one per row (ran out in dev)
+    new = dataclasses.replace(cat.skills["docker"], id="test-new-skill", name="Test new skill", onet=())
+    run_import(session, dataclasses.replace(cat, skills={**cat.skills, new.id: new}))
+    after = sequence_values(session)
+    assert after["skills_id_seq"] == before["skills_id_seq"] + 1
+    assert after["roles_id_seq"] == before["roles_id_seq"]
