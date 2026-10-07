@@ -1,0 +1,68 @@
+# The AWS demo copy (ADR-0042): VM-A's stack without the embedding model, on one EC2 t4g.small (arm64, 2 GB).
+# Both models come from VM-B over Tailscale, so XCRS_EMBEDDING_BASE_URL and XCRS_LLM_BASE_URL point there.
+# Keep in step with deploy/vm-a/compose.yaml (same images, Caddyfile and settings).
+# cloud-init (infra/demo) writes .env and runs `XCRS_DEPLOY_DIR=deploy/aws deploy/deploy.sh <tag>`.
+name: xcrs-aws
+
+services:
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      # Localhost only: `tailscale serve` publishes it to the tailnet; CloudFront comes later (ADR-0042).
+      - "127.0.0.1:${XCRS_HTTP_PORT:-8080}:80"
+    environment:
+      XCRS_DOMAIN: ":80"
+    volumes:
+      - ../vm-a/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on: [web]
+
+  web:
+    image: ghcr.io/${XCRS_IMAGE_OWNER:-yasinhorasanli}/xcrs-web:${XCRS_IMAGE_TAG:?set XCRS_IMAGE_TAG}
+    restart: unless-stopped
+    environment:
+      XCRS_API_URL: http://api:8000
+    depends_on:
+      api:
+        condition: service_healthy
+
+  api:
+    image: ghcr.io/${XCRS_IMAGE_OWNER:-yasinhorasanli}/xcrs-api:${XCRS_IMAGE_TAG:?set XCRS_IMAGE_TAG}
+    restart: unless-stopped
+    environment:
+      XCRS_DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-xcrs}:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-xcrs}
+      XCRS_EMBEDDING_BASE_URL: ${XCRS_EMBEDDING_BASE_URL:?set XCRS_EMBEDDING_BASE_URL to VM-B's Ollama}
+      XCRS_LLM_BASE_URL: ${XCRS_LLM_BASE_URL:?set XCRS_LLM_BASE_URL to VM-B's Ollama}
+      XCRS_LLM_MODEL: ${XCRS_LLM_MODEL:-qwen3.5:4b}
+      XCRS_LLM_ENABLED: ${XCRS_LLM_ENABLED:-true}
+      XCRS_CATALOG_DIR: /catalog
+      XCRS_RATE_HEAVY_PER_MINUTE: ${XCRS_RATE_HEAVY_PER_MINUTE:-10}
+      XCRS_DEV_TOOLS: "false"
+      # No XCRS_INTERNAL_SECRET / NUXT_SESSION_PASSWORD: sign-in (and CV import) stay off on the demo.
+    volumes:
+      - ../../catalog:/catalog:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: pgvector/pgvector:pg18
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-xcrs}
+      POSTGRES_USER: ${POSTGRES_USER:-xcrs}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:

@@ -4,14 +4,16 @@
 #
 #   deploy/deploy.sh <image tag>        # a commit SHA (immutable) or a branch tag such as "modernization"
 #
-# Needs deploy/vm-a/.env (copy .env.example). Safe to re-run.
+# Needs <stack>/.env (copy .env.example). Safe to re-run. The stack is deploy/vm-a unless XCRS_DEPLOY_DIR
+# names another (deploy/aws for the AWS demo copy, ADR-0042).
 set -euo pipefail
 
 TAG="${1:?usage: deploy/deploy.sh <image tag>}"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-ENV_FILE="$ROOT/deploy/vm-a/.env"
-[ -f "$ENV_FILE" ] || { echo "missing $ENV_FILE (copy deploy/vm-a/.env.example)"; exit 1; }
-export COMPOSE_FILE="$ROOT/deploy/vm-a/compose.yaml"   # also used by scripts/db-*.sh
+STACK="$ROOT/${XCRS_DEPLOY_DIR:-deploy/vm-a}"
+ENV_FILE="$STACK/.env"
+[ -f "$ENV_FILE" ] || { echo "missing $ENV_FILE (copy $STACK/.env.example)"; exit 1; }
+export COMPOSE_FILE="$STACK/compose.yaml"   # also used by scripts/db-*.sh
 export XCRS_IMAGE_TAG="$TAG"
 cd "$ROOT"
 set -a; . "$ENV_FILE"; set +a
@@ -36,9 +38,11 @@ else
   docker compose pull api web
 fi
 
-step "Models for embeddings (VM-A); the LLM lives on VM-B"
-docker compose up -d ollama-embed
-docker compose exec -T ollama-embed ollama pull qwen3-embedding:0.6b >/dev/null
+if docker compose config --services | grep -qx ollama-embed; then
+  step "Models for embeddings (VM-A); the LLM lives on VM-B"
+  docker compose up -d ollama-embed
+  docker compose exec -T ollama-embed ollama pull qwen3-embedding:0.6b >/dev/null
+fi   # deploy/aws has no ollama-embed: both models come from VM-B
 
 step "Migrate, register the model, import and embed the catalog"
 run() { docker compose run --rm --no-deps api "$@"; }

@@ -5,6 +5,7 @@ AWS runs a disposable demo/staging copy of XCRS; the two VMs stay its real home 
 | Stack | What it holds | Cost |
 |---|---|---|
 | `bootstrap/` | The S3 bucket `xcrs-tfstate-d6b0fd` (eu-central-1) that holds the Terraform state of every stack, its own included | ~$0 (a few KB) |
+| `demo/` | VPC (one public subnet, no NAT), a security group with no inbound rules, the instance role, and one EC2 t4g.small (Amazon Linux 2023, arm64, 20 GB gp3) that cloud-init turns into the demo copy (`deploy/aws/compose.yaml`) | $0 in the t4g trial (until 31 Dec 2026); after it ~$12/month for the instance + ~$3.65 public IPv4 + ~$1.90 disk if always on |
 
 ## Account and credentials
 
@@ -39,6 +40,51 @@ terraform apply <stack>.tfplan
 - **State** lives in `s3://xcrs-tfstate-d6b0fd/<stack>/terraform.tfstate`: versioned, encrypted, HTTPS only, never public. Locking uses S3's native lock file (`use_lockfile`), so there is no DynamoDB table. Never edit the state by hand; old versions can be restored from the bucket's version history.
 - `.terraform.lock.hcl` is committed and pins provider checksums for macOS arm64 and Linux amd64/arm64. After changing a provider version, run `terraform providers lock -platform=darwin_arm64 -platform=linux_amd64 -platform=linux_arm64`.
 - `.terraform/`, local state files and saved plans are gitignored.
+
+## The demo stack (`demo/`)
+
+**What happens on `terraform apply`:** the instance boots and cloud-init (`demo/cloud-init.sh.tftpl`) does the rest in about 10 minutes:
+1. adds 1 GB of swap;
+2. installs Docker and the Compose plugin;
+3. joins the tailnet as `xcrs-aws` (`tag:xcrs-aws`) with the auth key from SSM Parameter Store;
+4. publishes Caddy to the tailnet with `tailscale serve`;
+5. clones the repo at `release` (default `modernization`; a branch or SHA whose images exist for arm64);
+6. writes `deploy/aws/.env` (a fresh Postgres password) and runs `XCRS_DEPLOY_DIR=deploy/aws deploy/deploy.sh`.
+
+The catalog is imported and embedded on every first boot. Both models are on VM-B.
+
+**Before the first apply (once):**
+1. **VM-B** serves the embedding model too, and publishes Ollama to the tailnet. Ollama itself still listens only on the private address:
+   ```bash
+   cd /opt/xcrs/deploy/vm-b && docker compose exec ollama ollama pull qwen3-embedding:0.6b
+   sudo tailscale serve --bg --tcp 11434 tcp://<VM-B private IP>:11434
+   ```
+   Tailscale documents only localhost targets for `serve`. If it refuses the private address, run a small relay on VM-B's `127.0.0.1` that forwards to Ollama, and point `serve` at the relay.
+2. **Tailnet policy** (Tailscale admin console → Access controls). Add a tag and rules so the AWS machine can reach only VM-B's Ollama, while your own devices keep reaching everything. Keep any existing `nodeAttrs` (Funnel) and `ssh` sections:
+   ```jsonc
+   "tagOwners": { "tag:xcrs-aws": ["autogroup:admin"] },
+   "hosts":     { "xcrs-b": "100.76.33.94" },
+   "grants": [
+     // your devices (the Mac, VM-A, VM-B): everything, as before
+     { "src": ["autogroup:member"], "dst": ["*"], "ip": ["*"] },
+     // the AWS demo copy: VM-B's Ollama only
+     { "src": ["tag:xcrs-aws"], "dst": ["xcrs-b"], "ip": ["tcp:11434"] }
+   ]
+   ```
+   This replaces the default allow-all rule (`"src": ["*"], "dst": ["*"]`).
+3. **Auth key** (Settings → Keys → Generate auth key): reusable, ephemeral (the machine leaves the tailnet when destroyed), pre-approved, tag `tag:xcrs-aws`, 90 days. Store it as an encrypted parameter, typed in rather than pasted on the command line:
+   ```bash
+   read -rs TS_KEY && aws ssm put-parameter --profile xcrs --name /xcrs/demo/tailscale-auth-key \
+     --type SecureString --value "$TS_KEY" --overwrite && unset TS_KEY
+   ```
+   The key expires after 90 days; repeat this step before the next apply after that.
+4. **Session Manager plugin** for shells on the instance: `brew install --cask session-manager-plugin`.
+
+**Everyday:**
+- `terraform apply` → `terraform output shell` gives a shell (no SSH) → `sudo tail -f /var/log/cloud-init-output.log` shows the first boot → the site opens at `https://xcrs-aws.<tailnet>.ts.net` from a tailnet device.
+- `terraform destroy` when idle. Everything goes except the state bucket, and the next apply rebuilds the same thing.
+- A newer Amazon Linux image: `terraform apply -replace=aws_instance.demo`.
+- Any change to the first-boot script replaces the instance (`user_data_replace_on_change`).
 
 ## Rebuilding the state bucket from nothing
 
