@@ -47,6 +47,9 @@ onBeforeUnmount(() => clearInterval(poller))
  * goes back. Interactive parts are hidden by `print:hidden`. */
 const pdfReady = computed(() => !!data.value && (!pending.value || pollingStopped.value))
 const createdOn = computed(() => (data.value?.created_at ?? new Date().toISOString()).slice(0, 10))
+// The page's own address, for the printed copy. Only the browser knows the public one (TLS ends at Tailscale Funnel,
+// before Caddy), so the link is rendered in the browser only: rendering it on the server too made Vue warn that the
+// server's empty link and the browser's didn't match (a hydration mismatch).
 const resultUrl = computed(() => (import.meta.client ? window.location.href.split('?')[0] : ''))
 let restorePrint: (() => void) | undefined
 function beforePrint() {
@@ -182,7 +185,7 @@ async function update() {
     </div>
 
     <p v-if="data" class="hidden text-xs text-muted print:block">
-      XCRS · {{ createdOn }} · <a :href="resultUrl" class="break-all">{{ resultUrl }}</a>
+      XCRS · {{ createdOn }} · <ClientOnly><a :href="resultUrl" class="break-all">{{ resultUrl }}</a></ClientOnly>
     </p>
 
     <UAlert v-if="error" class="mt-6" color="error" title="We couldn't find these results" description="The link may be wrong or the results were removed." />
