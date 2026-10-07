@@ -45,6 +45,13 @@ export interface Gap {
   stage: string
 }
 
+export interface ResourceSection {
+  title: string
+  url: string
+  start_seconds: number | null
+  kind: 'chapter' | 'video' | 'start' // a long video's chapter, a playlist's video, or episode 1
+}
+
 export interface Resource {
   id: string
   title: string
@@ -55,6 +62,8 @@ export interface Resource {
   free: boolean
   curated: boolean
   skills: SkillRef[] // the role's gaps it covers
+  duration_minutes?: number | null
+  section?: ResourceSection | null // the part to open for these gaps (ADR-0046)
 }
 
 export interface RoleResult {

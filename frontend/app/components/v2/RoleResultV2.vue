@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { CATEGORIES, CATEGORY_META } from '~/composables/categories'
 import { LEVEL_NAMES, PROFICIENCY_NAMES } from '~/composables/useXcrsApiV2'
-import type { Category, Gap, RoleResult, SkillRef, SkillToAdd } from '~/types/apiV2'
+import type { Category, Gap, ResourceSection, RoleResult, SkillRef, SkillToAdd } from '~/types/apiV2'
 
 const props = defineProps<{ role: RoleResult; rank: number; recommendationId: string }>()
 const emit = defineEmits<{ add: [items: SkillToAdd[]] }>()
@@ -14,6 +14,28 @@ const titles = computed(() => {
   return [...(own ? [own] : []), ...(props.role.job_titles ?? []).filter((t) => t !== own)]
 })
 const jobSearch = (title: string) => `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(title)}`
+
+/** "45 min", "4 h 30 min", "about 12 h" (long playlists: the minutes don't matter). */
+function duration(minutes: number): string {
+  if (minutes < 60) return `${minutes} min`
+  const h = Math.floor(minutes / 60)
+  if (h >= 10) return `about ${Math.round(minutes / 60)} h`
+  return minutes % 60 ? `${h} h ${minutes % 60} min` : `${h} h`
+}
+
+function clock(seconds: number): string {
+  const h = Math.floor(seconds / 3600)
+  const m = Math.floor((seconds % 3600) / 60)
+  const s = String(seconds % 60).padStart(2, '0')
+  return h ? `${h}:${String(m).padStart(2, '0')}:${s}` : `${m}:${s}`
+}
+
+/** Where to start (ADR-0046): a chapter at its time, a playlist's video, or episode 1 of a playlist listed newest first. */
+function sectionLabel(section: ResourceSection): string {
+  if (section.kind === 'start') return `Start with: ${section.title}`
+  if (section.kind === 'chapter' && section.start_seconds != null) return `Jump to ${clock(section.start_seconds)}: ${section.title}`
+  return `Watch: ${section.title}`
+}
 
 const gapOnBoard = (g: Gap) => g.skills.some((s) => onBoard(s))
 const CURIOUS_PILL =
@@ -160,21 +182,28 @@ async function send(rating: 1 | -1) {
       <h3 class="text-xs font-medium uppercase tracking-wide text-muted">Start learning</h3>
       <ul class="mt-1.5 grid gap-2 sm:grid-cols-3">
         <li v-for="res in role.resources" :key="res.id">
-          <a
-            :href="res.url"
-            target="_blank"
-            rel="noopener"
-            class="flex h-full flex-col rounded-xl p-3 ring-1 ring-inset ring-default transition hover:-translate-y-px hover:ring-indigo-300 dark:hover:ring-indigo-800"
-          >
+          <!-- The whole card opens the resource (a stretched link); a section link sits above it. -->
+          <div class="relative flex h-full flex-col rounded-xl p-3 ring-1 ring-inset ring-default transition hover:-translate-y-px hover:ring-indigo-300 dark:hover:ring-indigo-800">
             <span class="flex items-center gap-1.5 text-[11px] text-muted">
               <span class="rounded bg-elevated px-1.5 py-0.5 capitalize">{{ res.type }}</span>
               <span v-if="res.free" class="rounded bg-emerald-50 dark:bg-emerald-950/40 px-1.5 py-0.5 text-emerald-700 dark:text-emerald-200">Free</span>
+              <span v-if="res.duration_minutes" class="shrink-0 tabular-nums">{{ duration(res.duration_minutes) }}</span>
               <span class="truncate">{{ res.provider }}</span>
             </span>
-            <span class="mt-1 text-sm font-medium leading-snug">{{ res.title }}</span>
+            <a :href="res.url" target="_blank" rel="noopener" class="mt-1 text-sm font-medium leading-snug after:absolute after:inset-0 after:rounded-xl">{{ res.title }}</a>
+            <a
+              v-if="res.section"
+              :href="res.section.url"
+              target="_blank"
+              rel="noopener"
+              class="relative z-10 mt-1 flex items-start gap-1 text-[11px] text-indigo-700 hover:underline dark:text-indigo-300"
+            >
+              <UIcon name="i-heroicons-play-circle" class="mt-px h-3.5 w-3.5 shrink-0" />
+              <span>{{ sectionLabel(res.section) }}</span>
+            </a>
             <span class="mt-auto pt-1 text-[11px] text-dimmed">For {{ res.skills.map((s) => s.name).join(', ') }}</span>
             <span class="hidden break-all pt-0.5 text-[10px] text-dimmed print:block">{{ res.url }}</span>
-          </a>
+          </div>
         </li>
       </ul>
     </div>

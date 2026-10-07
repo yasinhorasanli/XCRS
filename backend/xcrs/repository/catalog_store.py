@@ -25,6 +25,8 @@ from xcrs.db.models import (
     LearningResource,
     LegacyRoleMap,
     Level,
+    ResourceSection,
+    ResourceSectionSkill,
     ResourceSkill,
     RoadmapItem,
     RoadmapStage,
@@ -33,7 +35,7 @@ from xcrs.db.models import (
     Skill,
     SkillPrerequisite,
 )
-from xcrs.domain.role_scoring import CatalogSnapshot, ResourceRef, RoleSnapshot
+from xcrs.domain.role_scoring import CatalogSnapshot, ResourceRef, RoleSnapshot, SectionRef
 
 
 def _upsert(session: Session, table: Table, key: Sequence[str], rows: list[dict]) -> tuple[list, list]:
@@ -331,6 +333,37 @@ def skill_display_names(session: Session, slugs: Iterable[str]) -> dict[str, str
 _snapshots: dict[str, CatalogSnapshot] = {}
 
 
+def _sections(
+    session: Session, skills: dict[int, str], starts: dict[int, int | None]
+) -> tuple[dict[int, list[SectionRef]], dict[int, SectionRef]]:
+    """Per resource, its sections that have skills (in order), and where to start a playlist listed newest
+    first (ADR-0046). Untagged sections stay out of memory: only their count matters."""
+    tagged: dict[int, tuple[ResourceSection, set[str]]] = {}
+    for row, skill_id in session.execute(
+        select(ResourceSection, ResourceSectionSkill.skill_id)
+        .join(ResourceSectionSkill, ResourceSectionSkill.section_id == ResourceSection.id)
+        .order_by(ResourceSection.resource_id, ResourceSection.position)
+    ):
+        tagged.setdefault(row.id, (row, set()))[1].add(skills[skill_id])
+    by_resource: dict[int, list[SectionRef]] = {}
+    for row, names in tagged.values():
+        by_resource.setdefault(row.resource_id, []).append(
+            SectionRef(row.title, row.url, row.start_seconds, frozenset(names), row.position)
+        )
+    wanted = [(rid, pos) for rid, pos in starts.items() if pos is not None]
+    start = {
+        row.resource_id: SectionRef(row.title, row.url, row.start_seconds, position=row.position)
+        for row in (
+            session.scalars(
+                select(ResourceSection).where(tuple_(ResourceSection.resource_id, ResourceSection.position).in_(wanted))
+            )
+            if wanted
+            else ()
+        )
+    }
+    return by_resource, start
+
+
 def load_snapshot(session: Session) -> CatalogSnapshot:
     """The imported catalog as the scoring engine sees it (xcrs.domain.role_scoring), cached per import
     checksum and resource state: a new `xcrs catalog import` or ingestion is picked up on the next request."""
@@ -339,7 +372,8 @@ def load_snapshot(session: Session) -> CatalogSnapshot:
         select(func.count(LearningResource.id), func.max(LearningResource.updated_at)).where(LearningResource.is_active)
     ).one()
     tags = session.scalar(select(func.count()).select_from(ResourceSkill))
-    checksum = f"{last_import_checksum(session) or ''}|{resources_state[0]}|{resources_state[1]}|{tags}"
+    section_tags = session.scalar(select(func.count()).select_from(ResourceSectionSkill))
+    checksum = f"{last_import_checksum(session) or ''}|{resources_state[0]}|{resources_state[1]}|{tags}|{section_tags}"
     if checksum in _snapshots:
         return _snapshots[checksum]
     skills = dict(session.execute(select(Skill.id, Skill.slug)).all())
@@ -385,13 +419,20 @@ def load_snapshot(session: Session) -> CatalogSnapshot:
             title_skills=tuple(title_skills),
         )
     tagged: dict[int, list[tuple[str, int]]] = {}
-    for resource_id, skill_id, level in session.execute(
-        select(ResourceSkill.resource_id, ResourceSkill.skill_id, ResourceSkill.level).where(
+    main: dict[int, set[str]] = {}
+    for resource_id, skill_id, level, tagged_by in session.execute(
+        select(ResourceSkill.resource_id, ResourceSkill.skill_id, ResourceSkill.level, ResourceSkill.tagged_by).where(
             ResourceSkill.relation == "teaches"
         )
     ):
         tagged.setdefault(resource_id, []).append((skills[skill_id], level or 1))
+        if tagged_by == "reviewed":
+            main.setdefault(resource_id, set()).add(skills[skill_id])
     resource_rows = session.execute(select(LearningResource).where(LearningResource.is_active)).scalars().all()
+    sections, starts = _sections(session, skills, {r.id: r.quality.get("start") for r in resource_rows if r.quality})
+    counts = dict(
+        session.execute(select(ResourceSection.resource_id, func.count()).group_by(ResourceSection.resource_id)).all()
+    )
     resources = [
         ResourceRef(
             str(r.id),
@@ -403,6 +444,11 @@ def load_snapshot(session: Session) -> CatalogSnapshot:
             r.is_free,
             r.source == CURATED,
             tuple(tagged.get(r.id, ())),
+            duration_minutes=r.duration_minutes,
+            sections=tuple(sections.get(r.id, ())),
+            section_count=counts.get(r.id, 0),
+            start=starts.get(r.id),
+            main=frozenset(main.get(r.id, ())),
         )
         for r in resource_rows
         if r.id in tagged

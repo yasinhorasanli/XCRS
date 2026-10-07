@@ -166,3 +166,17 @@ On 18 synthetic CVs (`backend/eval/cv_import/cases.yaml`: LinkedIn-style two-col
 - PDF text: 60–70 ms per CV, including the child process.
 - Injection checks: both hidden pieces and the instruction line were found in the planted CV; no false alarms on the other CVs, nor on a real LinkedIn export (white text on its dark sidebar).
 - Results: `backend/eval/results/cv-import-20261005-1755-*`.
+
+## YouTube videos and sections (2026-10-07, ADR-0046)
+
+On the 53 calibration profiles (159 role results, 477 resource picks), dev DB; "after" = the 99 screened videos ingested and tagged in a rolled-back transaction (pending the decider's approval):
+
+| | Before (140 playlists, v3.1) | After (+99 long videos, v3.2) |
+|---|---|---|
+| Roles offering a video or playlist | 135 (85%) | 151 (95%) |
+| Picks: videos / playlists / curated courses | 0 / 135 / 145 | 83 / 72 / 116 |
+| Picks that open at a section | – | 5 (4 chapters, 1 "Start with: Session 1") |
+
+- Ingestion of 140 playlists with their videos: 4,560 sections, ~85 s, ~300 quota units (was 3). Average playlist 12 h.
+- Section tagging (embeddings only, Mac): 4,560 playlist sections in about 3 min; 4,087 tagged.
+- First discovery: 60 long-video searches + first full scan of 33 trusted channels, ~7,000 units: 347 video candidates, 236 after the filters, 99 screened.
