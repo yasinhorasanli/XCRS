@@ -13,7 +13,7 @@ How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036, ADR-0
  Admin: the Mac, VM-A and VM-B in one tailnet (ssh xcrs-a-ts / xcrs-b-ts), or the owner's VPN
 ```
 
-- **Images:** `.github/workflows/release.yml` publishes `ghcr.io/<owner>/xcrs-api` and `xcrs-web` on every push to `modernization` and `main`, tagged with the commit SHA and the branch name.
+- **Images:** `.github/workflows/release.yml` publishes `ghcr.io/<owner>/xcrs-api` and `xcrs-web` on every push to `modernization` and `main`, tagged with the commit SHA and the branch name. Each tag holds linux/amd64 (the VMs) and linux/arm64 (the AWS copy's Graviton instance, ADR-0042); Docker pulls the matching one.
 - **VM-A:** `deploy/vm-a/compose.yaml`. Caddy listens on `127.0.0.1:8080` only; Funnel publishes it. PostgreSQL, the API and the embedding model stay on the internal Docker network. The API reads the reviewed catalog from this checkout's `catalog/` (mounted read-only).
 - **VM-B:** `deploy/vm-b/compose.yaml`. Ollama has no authentication: it uses host networking on the private address, and firewalld allows port 11434 from VM-A only (a published Docker port would bypass firewalld).
 - **Deploy:** `deploy/deploy.sh <tag>` on VM-A: verified backup, pull, migrate, import and embed the catalog, restart, smoke test through Caddy. **Rollback** is `deploy/deploy.sh <previous tag>`.
