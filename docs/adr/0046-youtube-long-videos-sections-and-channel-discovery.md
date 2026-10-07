@@ -3,6 +3,7 @@
 - **Status:** Accepted. The decider chose the scope (single videos, chapter and video sections, richer playlist data, channel discovery; not automatic approval) and kept the human approval of every video (2026-10-07). The details below were chosen by Claude while the decider was away, under the instruction to work alone, and are to be reviewed.
 - **Date:** 2026-10-07
 - **Decider:** Muhammed Yasin Horasanli
+- **Approved (2026-10-07):** the decider approved 98 videos for 98 skills: 94 from the screened 99, with 5 doubtful ones (a Power BI-only and a Databricks-only course, a Helm course without chapters, a small observability channel, an attacker's-view web course) replaced or dropped after a second, targeted search, plus an OpenTelemetry course; Helm and observability keep their curated resources and approved playlist.
 - **Adds to:** [ADR-0033](0033-first-learning-resource-sources.md) (sources) and [ADR-0038](0038-one-video-slot-in-each-roles-resources.md) (the video slot).
 
 ## Context
