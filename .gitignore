@@ -175,3 +175,10 @@ CLAUDE.md
 
 # Filled-in VM inventory (hosts, users, addresses); the template is deploy/inventory.example.yaml
 deploy/*.local.yaml
+
+# Terraform (infra/): providers, local state and saved plans stay local; .terraform.lock.hcl is committed
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log

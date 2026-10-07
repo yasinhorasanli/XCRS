@@ -45,6 +45,7 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0039](0039-retire-the-classic-engine.md) | Retire the classic engine: code, API, tables and research data removed after an archive | Accepted | 2026-10-02 |
 | [0040](0040-public-access-through-tailscale-funnel.md) | Public access through Tailscale Funnel now, a Cloudflare Tunnel once there is a domain; VMs managed over Tailscale | Accepted | 2026-10-02 |
 | [0041](0041-level-from-evidence-and-experience-next-level-gaps.md) | Levels from per-level evidence and optional experience; gaps and resources for the next level only; even staff levels | Accepted | 2026-10-03 |
+| [0042](0042-aws-demo-copy-on-one-ec2-instance.md) | AWS runs a disposable demo copy on one EC2 t4g.small with Docker Compose; both models come from VM-B over Tailscale | Accepted | 2026-10-03 |
 | [0043](0043-accounts-with-social-sign-in-in-the-nuxt-server.md) | Accounts with GitHub, Google and LinkedIn sign-in in the Nuxt server (sealed-cookie sessions, signed identity header to the API); anonymous use stays; export and delete | Accepted | 2026-10-03 |
 | [0044](0044-job-titles-per-role-and-one-for-the-learner.md) | Job titles per role (market titles from O*NET) and one built from the learner's strongest skills; each links to a job search | Accepted | 2026-10-05 |
 | [0045](0045-skills-from-a-cv-or-linkedin-pdf.md) | Skills from a CV or LinkedIn "Save to PDF": a lookup scan plus one local-LLM extraction, reviewed by the learner; signed-in only; nothing from the file kept | Accepted | 2026-10-05 |
@@ -58,4 +59,4 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 - Chat/agent feature (LangGraph)
 - The domain name (bought later; then a Cloudflare Tunnel, ADR-0040)
 - First real deployment to the VMs (checklist in `deploy/README.md`); push-based CD once there are users (ADR-0034)
-- The cloud deployment target (AWS phase)
+- AWS phase steps (ADR-0042): account safety, Terraform bootstrap, network + EC2, arm64 images, CloudFront, S3 backups, OIDC, cost write-up
