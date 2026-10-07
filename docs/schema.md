@@ -242,6 +242,8 @@ erDiagram
 | `ingest.raw_records` | `id`; UNIQUE (`source`, `external_id`, `content_hash`) | what a source returned, as received (JSONB); a new version only when the content changes |
 | `catalog.learning_resources` | `id`; UNIQUE (`source`, `external_id`), UNIQUE `url` | normalized resource: `type` (course, video, playlist, docs, tutorial, book), provider, title, description, language, `level`, duration, `is_free`, price + currency, `quality` (JSONB), fetch and link-check times, `last_status`, `is_active` |
 | `catalog.resource_skills` | (`resource_id`, `skill_id`, `relation`) | `relation` teaches/requires, `level` 1–4, `confidence`, `tagged_by` curated/llm/reviewed |
+| `catalog.resource_sections` | `id`; UNIQUE (`resource_id`, `position`) | a long video's chapter or a playlist's video (ADR-0046, migration 0014): `title`, `url` (the part's link), `start_seconds` (chapters), `duration_seconds`, `tagged_at`; replaced when the resource's sections change, deleted with it |
+| `catalog.resource_section_skills` | (`section_id`, `skill_id`) | skills a section covers, a subset of its resource's, with the embedding `confidence` |
 
 Curated resources (`catalog/resources.yaml`) are loaded by `xcrs catalog import` (source `curated`; they win over an adapter's row for the same URL; removed ones are deactivated). Adapters (`xcrs resources ingest freecodecamp|youtube`) write raw records and resources; `xcrs resources tag` adds LLM tags; `xcrs resources check-links` records link status. Series links (resource → resource) come when a source has real series.
 

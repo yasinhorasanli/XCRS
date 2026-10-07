@@ -1,9 +1,11 @@
-# Daily YouTube job on VM-A (ADR-0033), after the quota resets:
-#   1. refresh the approved playlists in catalog/sources/youtube.yaml (also ingests newly approved ones;
-#      the API terms require stored data to be refreshed within 30 days: 1 quota unit per 50 playlists)
+# Daily YouTube job on VM-A (ADR-0033, ADR-0046), after the quota resets:
+#   1. refresh the approved playlists and videos in catalog/sources/youtube.yaml with their videos, chapters and
+#      numbers (also ingests newly approved ones; the API terms require stored data to be refreshed within
+#      30 days: ~300 quota units a day for 140 playlists)
 #   2. delete YouTube data not refreshed for 30 days
-#   3. tag untagged resources with skills (LLM on VM-B)
-#   4. discover candidates for skills not yet searched; results go to /srv/xcrs-discovery for review
+#   3. tag untagged resources with skills (LLM on VM-B), then their sections (embeddings on VM-A)
+#   4. discover candidates: the watched channels' new uploads (cheap), then searches for skills not yet searched
+#      (playlists, then long videos); results go to /srv/xcrs-discovery for review
 #      (`scripts/youtube-candidates-pull.sh` on the Mac). Nothing is ingested before the decider approves it.
 # Steps 1-3 may fail without stopping discovery ("-" prefix); the journal shows each step's result.
 [Unit]

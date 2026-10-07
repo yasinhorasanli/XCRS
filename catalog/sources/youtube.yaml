@@ -2,6 +2,7 @@
 # rest of the catalog. `skill` is the catalog skill the decider approved the playlist for: ingestion always tags
 # it (tagged_by "reviewed"); the LLM may add more skills. Ingested with `uv run xcrs resources ingest youtube` once XCRS_YOUTUBE_API_KEY is set;
 # the data must be refreshed within 30 days (`xcrs resources expire` deletes what wasn't).
+# Single long videos (ADR-0046) are listed under `videos:` the same way ({id: the `v=` part of the URL, skill}).
 # Approved by the decider (2026-10-02) from the discovery shortlist.
 playlists:
   - {id: PL-osiE80TeTuRUfjRe54Eea17-YfnOOAx, skill: git}  # Git: Corey Schafer
@@ -149,6 +150,9 @@ playlists:
   - {id: PLwLLcwQlnXByqD3a13UPeT4SMhc3rdZ8q, skill: tdd}  # Test-driven development: Modern Software Engineering
   - {id: PLJOFJ3Ok_idtiMTz8fAiF1ElcKJM7Rncj, skill: user-research}  # User research: NNgroup
 
+# Single long videos (ADR-0046): approved by the decider from the discovery shortlist, like playlists.
+videos: []
+
 # Channels whose playlists rank first in `xcrs resources youtube-discover` (exact channel titles).
 trusted_channels:
   - freeCodeCamp.org
@@ -168,6 +172,7 @@ trusted_channels:
   - TechWorld with Nana
   - NetworkChuck
   - The Net Ninja
+  - Net Ninja  # its title since 2025
   - Hussein Nasser
   - Kunal Kushwaha
   - Docker
@@ -184,6 +189,44 @@ trusted_channels:
   - Patrick Collins
   - Brackeys
   - GDC
+  - GDC Festival of Gaming  # GDC's title in 2026
+
+# Trusted channels whose new uploads and playlists discovery reads every day (ADR-0046): 1 quota unit per 50
+# uploads instead of 100 per search. Ids from the channel's page (youtube.com/channel/UC…); names for reading.
+watch_channels:
+  - {id: UC8butISFwT-Wl7EV0hUK0BQ, name: freeCodeCamp.org}
+  - {id: UC_x5XG1OV2P6uZZ5FSM9Ttw, name: Google for Developers}
+  - {id: UCJS9pqu9BzkAMNTmzNMNhvg, name: Google Cloud Tech}
+  - {id: UCsMica-v34Irf9KVTh6xx-g, name: Microsoft Developer}
+  - {id: UCFs5990vNpA2C2ijzgiJ59Q, name: Microsoft Learn}
+  - {id: UCd6MoB9NC6uYN2grvUNT-Zg, name: Amazon Web Services}
+  - {id: UCKWaEZ-_VweaEx1j62do_vQ, name: IBM Technology}
+  - {id: UCEBb1b_L6zDS3xTUrIALZOw, name: MIT OpenCourseWare}
+  - {id: UCBa5G_ESCn8Yd4vw5U-gIcg, name: Stanford Online}
+  - {id: UCcabW7890RKJzL968QWEykA, name: CS50}
+  - {id: UCsBjURrPoezykLs9EqgamOA, name: Fireship}
+  - {id: UC29ju8bIPH5as8OGnQzwJyA, name: Traversy Media}
+  - {id: UCWv7vMbMWH4-V0ZXdmDpPBA, name: Programming with Mosh}
+  - {id: UCCezIgC97PvUuR4_gbFUs5g, name: Corey Schafer}
+  - {id: UCdngmbVKX1Tgre699-XLlUA, name: TechWorld with Nana}
+  - {id: UC9x0AN7BWHpCDHSm9NiJFJQ, name: NetworkChuck}
+  - {id: UCW5YeuERMmlnqo4oq8vwUpg, name: Net Ninja}
+  - {id: UC_ML5xP23TOWKUcc-oAE_Eg, name: Hussein Nasser}
+  - {id: UCBGOUQHNNtNGcGzVq5rIXjw, name: Kunal Kushwaha}
+  - {id: UC76AVf2JkrwjxNKMuPpscHQ, name: Docker}
+  - {id: UCZ2bu0qutTOM0tHYa_jkIwg, name: Kubernetes}
+  - {id: UCHlNU7kIZhRgSbhHvFoy72w, name: Hugging Face}
+  - {id: UCcIXc5mJsHVYTZR1maL5l9w, name: DeepLearningAI}
+  - {id: UCYO_jab_esuFRV4b17AJtAw, name: 3Blue1Brown}
+  - {id: UCtYLUTtgS3k1Fg4y5tAhLbw, name: StatQuest with Josh Starmer}
+  - {id: UCfzlCWGWYyIQ0aLC5w48gBQ, name: Sentdex}
+  - {id: UCXUPKJO5MZQN11PqgIvyuvQ, name: Andrej Karpathy}
+  - {id: UC9-y-6csu5WGm29I7JiwpnA, name: Computerphile}
+  - {id: UCe8j61ABYDuPTdtjItD2veA, name: OWASP Foundation}
+  - {id: UCVeW9qkBjo3zosnqUbG7CFw, name: John Hammond}
+  - {id: UCn-3f8tw_E1jZvhuHatROwA, name: Patrick Collins}
+  - {id: UCYbK_tjZ2OrIZFBvU6CCMiA, name: Brackeys}
+  - {id: UC0JB7TSe49lg56u6qH8y_MQ, name: GDC Festival of Gaming}
 
 # Channels never proposed (e.g. English titles over another spoken language; English only for now, ADR-0026).
 blocked_channels:

@@ -83,6 +83,15 @@ class BecauseV2(SkillRefV2):
     category: Category
 
 
+class SectionV2(BaseModel):
+    """The part of a resource to open (ADR-0046)."""
+
+    title: str
+    url: str
+    start_seconds: int | None = None
+    kind: Literal["chapter", "video", "start"]  # a long video's chapter, a playlist's video, or episode 1
+
+
 class ResourceV2(BaseModel):
     id: str
     title: str
@@ -93,6 +102,8 @@ class ResourceV2(BaseModel):
     free: bool
     curated: bool
     skills: list[SkillRefV2]  # the role's gaps this resource covers
+    duration_minutes: int | None = None
+    section: SectionV2 | None = None
 
 
 class RoleV2(BaseModel):

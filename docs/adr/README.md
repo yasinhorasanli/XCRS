@@ -48,6 +48,7 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0043](0043-accounts-with-social-sign-in-in-the-nuxt-server.md) | Accounts with GitHub, Google and LinkedIn sign-in in the Nuxt server (sealed-cookie sessions, signed identity header to the API); anonymous use stays; export and delete | Accepted | 2026-10-03 |
 | [0044](0044-job-titles-per-role-and-one-for-the-learner.md) | Job titles per role (market titles from O*NET) and one built from the learner's strongest skills; each links to a job search | Accepted | 2026-10-05 |
 | [0045](0045-skills-from-a-cv-or-linkedin-pdf.md) | Skills from a CV or LinkedIn "Save to PDF": a lookup scan plus one local-LLM extraction, reviewed by the learner; signed-in only; nothing from the file kept | Accepted | 2026-10-05 |
+| [0046](0046-youtube-long-videos-sections-and-channel-discovery.md) | YouTube long videos approved like playlists; sections (chapters, a playlist's videos) tagged with skills so a gap opens at its part; duration and quality per resource; discovery from trusted channels' uploads | Accepted | 2026-10-07 |
 
 ## Upcoming decisions
 

@@ -14,12 +14,32 @@ from sqlalchemy.orm import Session
 
 from xcrs.db.models import CareerRole, ExplanationV2, FeedbackV2, RecommendationV2
 from xcrs.domain.job_titles import market_titles, title_for
-from xcrs.domain.role_scoring import Category, Mention, RoleScore, score_roles, suggest_resources
+from xcrs.domain.role_scoring import (
+    Category,
+    Mention,
+    ResourceRef,
+    RoleScore,
+    score_roles,
+    section_for,
+    suggest_resources,
+)
 from xcrs.explain.v2 import build_facts
 from xcrs.repository import catalog_store
 from xcrs.services.skill_matching import SkillMatcher
 
-ALGORITHM_VERSION = "v3.1"
+ALGORITHM_VERSION = "v3.2"
+
+
+def section_out(ref: ResourceRef, hits: list[str], prerequisites: dict) -> dict | None:
+    """The part of the resource to open for these gaps (ADR-0046): a chapter, a playlist's video, or where a
+    playlist listed newest first begins."""
+    section = section_for(ref, hits, prerequisites)
+    if section is None:
+        return None
+    kind = "start" if section == ref.start else "chapter" if section.start_seconds is not None else "video"
+    return {"title": section.title, "url": section.url, "start_seconds": section.start_seconds, "kind": kind}
+
+
 LEVEL_NAMES = {
     "entry": "entry level",
     "mid": "mid level",
@@ -180,6 +200,8 @@ class RecommendationServiceV2:
                     "free": ref.free,
                     "curated": ref.curated,
                     "skills": [{"id": sk, "name": names[sk]} for sk in hits],
+                    "duration_minutes": ref.duration_minutes,
+                    "section": section_out(ref, hits, snapshot.prerequisites),
                 }
                 for ref, hits in suggest_resources(snapshot, r.gaps, relevant, known=known)
             ],

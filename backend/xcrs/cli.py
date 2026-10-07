@@ -176,7 +176,13 @@ def cmd_resources_ingest(args) -> None:
             stats = freecodecamp.ingest(session, client)
         else:
             try:
-                stats = youtube.ingest(session, client, get_settings().youtube_api_key, youtube.configured_playlists())
+                stats = youtube.ingest(
+                    session,
+                    client,
+                    get_settings().youtube_api_key,
+                    youtube.configured_playlists(),
+                    youtube.configured_videos(),
+                )
             except youtube.NoApiKey as exc:
                 raise SystemExit(str(exc)) from exc
         session.commit()
@@ -186,7 +192,7 @@ def cmd_resources_ingest(args) -> None:
 def cmd_resources_tag(args) -> None:
     """Tag untagged (non-curated) resources with skills: the LLM picks, embeddings confirm (ADR-0030)."""
     from xcrs.config import get_settings
-    from xcrs.ingest.resources.tagging import tag_untagged
+    from xcrs.ingest.resources.tagging import tag_sections, tag_untagged
     from xcrs.matching.picker import LLMSkillPicker
     from xcrs.matching.prompts import QUERY_INSTRUCTION, RESOURCE_PROMPT_VERSION, RESOURCE_SYSTEM
 
@@ -211,15 +217,24 @@ def cmd_resources_tag(args) -> None:
             args.limit,
         )
         session.commit()
+        # Sections after their resources: a section takes only skills its resource teaches (ADR-0046).
+        stats |= tag_sections(
+            session,
+            lambda texts: [vectors.skill_similarities(session, model, v) for v in embedder.embed_query(texts)],
+            args.limit,
+        )
+        session.commit()
     print(json.dumps(stats, indent=2))
 
 
 def cmd_resources_youtube_discover(args) -> None:
-    """Find candidate playlists for the skills most roles rely on (ADR-0033); within the daily search quota."""
+    """Find candidate playlists and long videos per skill (ADR-0033, ADR-0046): first the watched channels'
+    new uploads and playlists (cheap), then searches for skills not searched yet, within the daily quota."""
     from collections import Counter
 
     from xcrs.config import get_settings
-    from xcrs.ingest.resources import youtube_discovery
+    from xcrs.ingest.resources import youtube_channels, youtube_discovery
+    from xcrs.ingest.resources.youtube import QuotaExceeded
 
     key = get_settings().youtube_api_key
     if not key:
@@ -240,14 +255,55 @@ def cmd_resources_youtube_discover(args) -> None:
     path = Path(args.candidates) if args.candidates else model.CATALOG_DIR / "sources" / "youtube-candidates.yaml"
     review = Path(args.review) if args.review else REPO_ROOT / "untracked" / "youtube-candidates.md"
     data = youtube_discovery.load_candidates(path)
+    approved = [*(config.get("playlists") or []), *(config.get("videos") or [])]
+    skip = youtube_discovery.proposed(data) | {str(p["id"]) for p in approved}
+    have_playlist = {p["skill"] for p in config.get("playlists") or []} | {c["skill"] for c in data["candidates"]}
+    video_count = Counter(p["skill"] for p in config.get("videos") or []) + Counter(
+        c["skill"] for c in data["video_candidates"]
+    )
+    channels: dict = {"playlists": {}, "videos": {}}
     with httpx.Client(timeout=30) as client:
+        if not args.no_channels:
+            try:
+                channels = youtube_channels.scan(
+                    client,
+                    key,
+                    config.get("watch_channels") or [],
+                    data["channels"],
+                    skills,
+                    skip,
+                    have_playlist,
+                    video_count,
+                    trusted,
+                    blocked,
+                )
+            except QuotaExceeded as exc:
+                print(f"channel scan stopped: {exc}")
+        for found_videos in channels["videos"].values():
+            skip |= {c["id"] for c in found_videos}
         found, used = youtube_discovery.discover(
             client, key, skills, set(data["searched"]), args.max_searches, trusted=trusted, blocked=blocked
         )
+        videos, used_v = youtube_discovery.discover_videos(
+            client,
+            key,
+            skills,
+            set(data["searched_videos"]),
+            args.max_searches - used,
+            trusted=trusted,
+            blocked=blocked,
+            skip=skip,
+        )
     review.parent.mkdir(exist_ok=True)
-    youtube_discovery.save(path, review, data, found, {s.id: s.name for s in cat.skills.values()})
+    youtube_discovery.save(path, review, data, found, {s.id: s.name for s in cat.skills.values()}, videos, channels)
     left = len([s for s in skills if s[0] not in data["searched"]])
-    print(f"{used} searches, {sum(map(len, found.values()))} candidates for {len(found)} skills; {left} skills left")
+    left_v = len([s for s in skills if s[0] not in data["searched_videos"]])
+    count = sum(map(len, found.values())) + sum(map(len, videos.values()))
+    from_channels = sum(len(c) for kind in channels.values() for c in kind.values())
+    print(
+        f"{used + used_v} searches, {count} candidates for {len(found) + len(videos)} skills, "
+        f"{from_channels} from channels; {left} skills left (playlists), {left_v} (videos)"
+    )
     print(f"review: {review}  (approve by moving ids to catalog/sources/youtube.yaml)")
 
 
@@ -320,10 +376,13 @@ def main() -> None:
     p = resources_sub.add_parser("tag", help="tag untagged resources with skills (LLM + embeddings)")
     p.add_argument("--limit", type=int, default=None)
     p.set_defaults(func=cmd_resources_tag)
-    p = resources_sub.add_parser("youtube-discover", help="find candidate playlists per skill (needs the API key)")
+    p = resources_sub.add_parser(
+        "youtube-discover", help="find candidate playlists and long videos per skill (needs the API key)"
+    )
     p.add_argument("--max-searches", type=int, default=90, help="search calls this run (100 quota units each)")
     p.add_argument("--candidates", help="candidates file (default catalog/sources/youtube-candidates.yaml)")
     p.add_argument("--review", help="review table (default untracked/youtube-candidates.md)")
+    p.add_argument("--no-channels", action="store_true", help="skip the watched channels' scan")
     p.set_defaults(func=cmd_resources_youtube_discover)
     p = resources_sub.add_parser("check-links", help="record each resource's HTTP status")
     p.set_defaults(func=cmd_resources_check_links)

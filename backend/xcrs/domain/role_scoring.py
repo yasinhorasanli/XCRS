@@ -111,6 +111,17 @@ class RoleSnapshot:
 
 
 @dataclass(frozen=True)
+class SectionRef:
+    """A part of a resource (ADR-0046): a long video's chapter (start_seconds set) or a playlist's video."""
+
+    title: str
+    url: str
+    start_seconds: int | None
+    skills: frozenset[str] = frozenset()
+    position: int = 0
+
+
+@dataclass(frozen=True)
 class ResourceRef:
     """A learning resource as the engine sees it (ADR-0026, ADR-0033)."""
 
@@ -123,6 +134,42 @@ class ResourceRef:
     free: bool
     curated: bool
     teaches: tuple[tuple[str, int], ...]  # (skill, proficiency it gets you to)
+    duration_minutes: int | None = None
+    sections: tuple[SectionRef, ...] = ()  # only the sections with skills, in order (ADR-0046)
+    section_count: int = 0  # all its sections, tagged or not
+    start: SectionRef | None = None  # where to begin when that isn't the top: a playlist listed newest first
+    main: frozenset[str] = frozenset()  # what it is about: the skill a reviewer approved it for
+
+
+DISTINCT_SHARE = 0.5  # a section is worth linking when fewer than half of the resource's sections teach the gap
+
+
+def section_for(
+    resource: ResourceRef, skills: list[str], prerequisites: dict[str, list[tuple[tuple[str, ...], int]]] | None = None
+) -> SectionRef | None:
+    """The part of a resource to open for these gaps (ADR-0046), in gap order: the first section, after the
+    first, that teaches a gap little of the resource does (the Docker chapter of a DevOps course).
+
+    A resource opens at its start (or, listed newest first, at episode 1) when a gap is its main subject or
+    any of the subject's prerequisites (a Go series for programming fundamentals: those come from episode 1),
+    or when most of it teaches the gap."""
+    main = set(resource.main) | {
+        s for s in skills if resource.sections and teaching_share(resource, s) >= DISTINCT_SHARE
+    }
+    if main & set(skills):
+        return resource.start
+    basics = set(with_prerequisites(dict.fromkeys(main, 1), prerequisites or {})) - main
+    for skill in skills:
+        if skill in basics:
+            continue
+        teaching = [s for s in resource.sections if skill in s.skills and s.position > 0]
+        if teaching and teaching_share(resource, skill) < DISTINCT_SHARE:
+            return teaching[0]
+    return resource.start
+
+
+def teaching_share(resource: ResourceRef, skill: str) -> float:
+    return sum(skill in s.skills for s in resource.sections) / max(resource.section_count, 1)
 
 
 @dataclass

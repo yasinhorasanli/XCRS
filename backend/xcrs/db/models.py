@@ -420,6 +420,35 @@ class ResourceSkill(Base):
     tagged_by: Mapped[str] = mapped_column(Text)
 
 
+class ResourceSection(Base):
+    """A long video's chapter or a playlist's video (ADR-0046), so a gap can link to the part that teaches it."""
+
+    __tablename__ = "resource_sections"
+    __table_args__ = (UniqueConstraint("resource_id", "position"), {"schema": CATALOG})
+
+    id: Mapped[int] = mapped_column(BigInteger, Identity(always=True), primary_key=True)
+    resource_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey("catalog.learning_resources.id", ondelete="CASCADE")
+    )
+    position: Mapped[int] = mapped_column(SmallInteger)
+    title: Mapped[str] = mapped_column(Text)
+    url: Mapped[str] = mapped_column(Text)
+    start_seconds: Mapped[int | None]
+    duration_seconds: Mapped[int | None]
+    tagged_at: Mapped[datetime | None]
+
+
+class ResourceSectionSkill(Base):
+    __tablename__ = "resource_section_skills"
+    __table_args__ = ({"schema": CATALOG},)
+
+    section_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey("catalog.resource_sections.id", ondelete="CASCADE"), primary_key=True
+    )
+    skill_id: Mapped[int] = mapped_column(ForeignKey("catalog.skills.id", ondelete="CASCADE"), primary_key=True)
+    confidence: Mapped[float | None]
+
+
 class ExplanationV2(Base):
     """An engine v2 role's explanation job and result (ADR-0037); the rows are the queue (ADR-0018)."""
 
