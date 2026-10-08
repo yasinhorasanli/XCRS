@@ -150,17 +150,23 @@ playlists:
   - {id: PLwLLcwQlnXByqD3a13UPeT4SMhc3rdZ8q, skill: tdd}  # Test-driven development: Modern Software Engineering
   - {id: PLJOFJ3Ok_idtiMTz8fAiF1ElcKJM7Rncj, skill: user-research}  # User research: NNgroup
 
-# Single long videos (ADR-0046): approved by the decider (2026-10-07) from the screened shortlist, like playlists.
+# Single long videos (ADR-0046): approved by the decider from the screened shortlists, like playlists
+# (98 on 2026-10-07, 31 more on 2026-10-08).
 videos:
   - {id: KZe0C0Qq4p0, skill: ab-testing}  # Data Science Essentials – Crash Course in A/B Testing with C: freeCodeCamp.org
+  - {id: 85-bp7XxWDQ, skill: active-directory}  # Learn Microsoft Active Directory (ADDS) in 30mins: Andy Malone MVP
   - {id: jGg_1h0qzaM, skill: ai-agents}  # LangGraph Complete Course for Beginners – Complex AI Agents : freeCodeCamp.org
   - {id: agEPmYdbQLs, skill: ai-guardrails}  # AI Safety – Full Course by Safe.AI Founder on Machine Learni: freeCodeCamp.org
   - {id: K9AnJ9_ZAXE, skill: airflow}  # Airflow Tutorial for Beginners - Full Course in 2 Hours 2022: coder2j
   - {id: fW_OS3LGB9Q, skill: algorithms}  # Algorithms in Python – Full Course for Beginners: freeCodeCamp.org
+  - {id: fis26HvvDII, skill: android-sdk}  # Android Development for Beginners - Full Course: freeCodeCamp.org
+  - {id: 3dHNOWTI7H8, skill: angular}  # Angular Crash Course: Traversy Media
+  - {id: goclfp6a2IQ, skill: ansible}  # Ansible 101 - Episode 1 - Introduction to Ansible: Jeff Geerling
   - {id: YYe0FdfdgDU, skill: api-security}  # OWASP API Security Top 10 Course – Secure Your Web Apps: freeCodeCamp.org
   - {id: RWXKysImabs, skill: aspnet-core}  # ASP.NET Core MVC Course for Beginners (.NET 9): freeCodeCamp.org
   - {id: NhDYbskXRgc, skill: aws}  # AWS Certified Cloud Practitioner Certification Course (CLF-C: freeCodeCamp.org
   - {id: 5abffC-K40c, skill: azure}  # Microsoft Azure Fundamentals Certification Course (AZ-900) U: freeCodeCamp.org
+  - {id: I0vQ_VLZTWg, skill: bi-tools}  # Learn Power BI in Under 3 Hours / Formatting, Visualizations: Alex The Analyst
   - {id: PaPN51Mm5qQ, skill: c}  # Learn C Programming and OOP with Dr. Chuck [feat. classic bo: freeCodeCamp.org
   - {id: HfACrKJ_Y2w, skill: calculus}  # Calculus 1 - Full College Course: freeCodeCamp.org
   - {id: LK0oDLQE4S8, skill: chaos-engineering}  # Introduction to Cloud Native Chaos Engineering: Kunal Kushwaha
@@ -172,25 +178,31 @@ videos:
   - {id: ZzaPdXTrSb8, skill: cpp}  # C++ Tutorial for Beginners - Learn C++ in 1 Hour: Programming with Mosh
   - {id: kb_scuDUHls, skill: cryptography-basics}  # Cryptography for Beginners - Full Python Course (SHA-256, AE: freeCodeCamp.org
   - {id: YrtFtdTTfv0, skill: csharp}  # Learn C Programming – Full Course with Mini-Projects: freeCodeCamp.org
+  - {id: OXGznpKZ_sA, skill: css}  # CSS Tutorial – Full Course for Beginners: freeCodeCamp.org
   - {id: K7C1sWKQU-o, skill: data-modeling}  # Data Modeling Masterclass For Data Engineers: Ansh Lamba
   - {id: RBSGKlAvoiM, skill: data-structures}  # Data Structures Easy to Advanced Course - Full Tutorial from: freeCodeCamp.org
   - {id: 9GVqKuTVANE, skill: data-warehousing}  # SQL Data Warehouse from Scratch | Full Hands-On Data Enginee: Data with Baraa
   - {id: 26ls5lNiijk, skill: database-design}  # Relational Database Design – Full Course: freeCodeCamp.org
+  - {id: B8uwFmVt4sU, skill: dbt}  # [Data Build Tool] DBT - The Ultimate Guide / With CI/CD: Ansh Lamba
   - {id: VyWAvY2CF9c, skill: deep-learning}  # Deep Learning Crash Course for Beginners: freeCodeCamp.org
   - {id: rylaiB2uH2A, skill: design-patterns}  # Master Design Patterns & SOLID Principles in C - Full OOP C: freeCodeCamp.org
   - {id: gLJdrXPn0ns, skill: devsecops}  # DevSecOps Tutorial for Beginners | CI Pipeline with GitHub A: TechWorld with Nana
+  - {id: toUSzwR0EV8, skill: distributed-training}  # Distributed Data Parallel (DDP) with PyTorch: complete tutor: Umar Jamil
   - {id: t10QcFx7d5k, skill: django}  # Django Project – Code a CRM App Tutorial: freeCodeCamp.org
   - {id: pg19Z8LL06w, skill: docker}  # Docker Crash Course for Absolute Beginners [NEW]: TechWorld with Nana
+  - {id: iSiyDHobXHA, skill: embedded-linux}  # Linux Device Drivers Development Course for Beginners: freeCodeCamp.org
   - {id: JEBDfGqrAUA, skill: embeddings-vector-search}  # Vector Search RAG Tutorial – Combine Your Data with LLMs wit: freeCodeCamp.org
   - {id: PHsC_t0j1dU, skill: etl-pipelines}  # Data Engineering Course for Beginners: freeCodeCamp.org
   - {id: Zr6fnhvJKlw, skill: event-driven-architecture}  # Event Driven Architecture on AWS – Course for Beginners: freeCodeCamp.org
   - {id: rkPIftzu1pQ, skill: fastapi}  # API integration Course – Modern Python with FastAPI: freeCodeCamp.org
   - {id: IiIgm_yaoOA, skill: functional-programming}  # Functional Programming with Elixir – Full Course: freeCodeCamp.org
+  - {id: 3lBYVSplAuo, skill: game-physics}  # The Ultimate Guide for Physics in Game Development!: Will Hess
   - {id: jpno8FSqpc8, skill: gcp}  # Google Cloud Associate Cloud Engineer Course - Pass the Exam: freeCodeCamp.org
   - {id: mAFoROnOfHs, skill: git}  # Git & GitHub Crash Course for Beginners [2026]: freeCodeCamp.org
   - {id: R8_veQiYBjI, skill: github-actions}  # GitHub Actions Tutorial - Basic Concepts and CI/CD Pipeline : TechWorld with Nana
   - {id: MeU5_k9ssrs, skill: gitops}  # ArgoCD Tutorial for Beginners | GitOps CD for Kubernetes: TechWorld with Nana
   - {id: un6ZyFkqFKo, skill: go}  # Go Programming – Golang Course with Bonus Projects: freeCodeCamp.org
+  - {id: hBzUokVYQkI, skill: gpu-infrastructure}  # AI Infrastructure Explained (GPUs, vLLM, and LLM-D): KodeKloud
   - {id: 5199E50O7SI, skill: graphql}  # GraphQL Course for Beginners: freeCodeCamp.org
   - {id: Yw4rkaTc0f8, skill: grpc}  # gRPC Crash Course - Modes, Examples, Pros & Cons and more: Hussein Nasser
   - {id: kUMe1FH4CHE, skill: html}  # Learn HTML – Full Tutorial for Beginners: freeCodeCamp.org
@@ -199,14 +211,24 @@ videos:
   - {id: A74TOX803D0, skill: java}  # Java Programming for Beginners – Full Course: freeCodeCamp.org
   - {id: PkZNo7MFNFg, skill: javascript}  # Learn JavaScript - Full Course for Beginners: freeCodeCamp.org
   - {id: f4idgaq2VqA, skill: jenkins}  # Jenkins Tutorial – How to Deploy a Test Server with Docker +: freeCodeCamp.org
+  - {id: bo_LP6QOUio, skill: jetpack-compose}  # Android Programming Course - Kotlin, Jetpack Compose UI, Gra: freeCodeCamp.org
+  - {id: HW29067qVWk, skill: jupyter}  # Jupyter Notebook Tutorial: Introduction, Setup, and Walkthro: Corey Schafer
   - {id: R873BlNVUB4, skill: kafka}  # Apache Kafka Crash Course: Hussein Nasser
   - {id: EExSSotojVI, skill: kotlin}  # Learn Kotlin Programming – Full Course for Beginners: freeCodeCamp.org
   - {id: X48VuDVv0do, skill: kubernetes}  # Kubernetes Tutorial for Beginners [FULL COURSE in 4 Hours]: TechWorld with Nana
   - {id: JnTa9XtvmfI, skill: linear-algebra}  # Linear Algebra - Full College Course: freeCodeCamp.org
   - {id: sWbUDq4S6Y8, skill: linux}  # Introduction to Linux – Full Course for Beginners: freeCodeCamp.org
+  - {id: bcCFTk_uwUw, skill: llm-frameworks}  # Build LLM based Apps using LangChain Crash Course / Large La: Keerti Purswani
   - {id: i_LwzRVP7bg, skill: machine-learning-fundamentals}  # Machine Learning for Everybody – Full Course: freeCodeCamp.org
   - {id: GuTcle5edjk, skill: mcp}  # you need to learn MCP RIGHT NOW!! (Model Context Protocol): NetworkChuck
+  - {id: nFxjaVmFj5E, skill: message-brokers}  # RabbitMQ Tutorial - Message Queues and Distributed Systems: Amigoscode
+  - {id: 7glCsF9fv3s, skill: multiplayer-networking}  # Learn Unity Multiplayer (FREE Complete Course, Netcode for G: Code Monkey
+  - {id: ER8oKX5myE0, skill: mysql}  # MySQL Database - Full Course: freeCodeCamp.org
   - {id: KjY94sAKLlw, skill: nextjs}  # Next.js React Framework Course – Build and Deploy a Full Sta: freeCodeCamp.org
+  - {id: M7SWr5xObkA, skill: nlp}  # Complete Natural Language Processing (NLP) Tutorial in Pytho: Keith Galli
+  - {id: Oe421EPjeBE, skill: nodejs}  # Node.js and Express.js - Full Course: freeCodeCamp.org
+  - {id: xh4gy1lbL2k, skill: nosql-databases}  # NoSQL Database Tutorial – Full Course for Beginners: freeCodeCamp.org
+  - {id: VXU4LSAQDSc, skill: numpy}  # Learn NumPy in 1 hour! 🔢: Bro Code
   - {id: fTPCKnZZ2dk, skill: nuxt}  # Nuxt 3 — Course for Beginners: freeCodeCamp.org
   - {id: iLRZi0Gu8Go, skill: oop}  # Python Object Oriented Programming (OOP) - Full Course for B: freeCodeCamp.org
   - {id: r8UvWSX3KA8, skill: opentelemetry}  # OpenTelemetry Course - Understand Software Performance: freeCodeCamp.org
@@ -214,11 +236,13 @@ videos:
   - {id: gtjxAH8uaP0, skill: pandas}  # Pandas & Python for Data Analysis by Example – Full Course f: freeCodeCamp.org
   - {id: BUCiSSyIGGU, skill: php}  # PHP For Beginners | 3+ Hour Crash Course: Traversy Media
   - {id: SpfIwlAYaKk, skill: postgresql}  # PostgreSQL Tutorial for Beginners: freeCodeCamp.org
+  - {id: UVUd9_k9C6A, skill: powershell}  # PowerShell For Beginners Full Course / PowerShell Beginner t: Nerd's lesson
   - {id: zOjov-2OZ0E, skill: programming-fundamentals}  # Introduction to Programming and Computer Science - Full Cour: freeCodeCamp.org
   - {id: 7gW5pSM6dlU, skill: prometheus-grafana}  # Prometheus Tutorial | Monitoring with Prometheus And Grafana: edureka!
   - {id: _ZvnD73m40o, skill: prompt-engineering}  # Prompt Engineering Tutorial – Master ChatGPT and LLM Respons: freeCodeCamp.org
   - {id: nLRL_NcnK-4, skill: python}  # Harvard CS50’s Introduction to Programming with Python – Ful: freeCodeCamp.org
   - {id: K5KVEU3aaeQ, skill: python}  # Python Full Course for Beginners: Programming with Mosh
+  - {id: Z_ikDlimN6A, skill: pytorch}  # Learn PyTorch for deep learning in a day. Literally.: Daniel Bourke
   - {id: ZYdXI1GteDE, skill: r}  # R Programming Crash Course: Traversy Media
   - {id: SqcY0GlETPk, skill: react}  # React Tutorial for Beginners: Programming with Mosh
   - {id: obH0Po_RdWk, skill: react-native}  # React Native Course – Android and iOS App Development: freeCodeCamp.org
@@ -230,11 +254,17 @@ videos:
   - {id: BpPEoZW5IiY, skill: rust}  # Learn Rust Programming - Complete Course 🦀: freeCodeCamp.org
   - {id: hDKCxebp88A, skill: scikit-learn}  # Machine Learning with Python and Scikit-Learn – Full Course: freeCodeCamp.org
   - {id: QQliGCtqD2w, skill: selenium}  # Java Testing with Selenium Course: freeCodeCamp.org
+  - {id: 5rG-YgTHMC8, skill: serverless}  # AWS Serverless with AWS Lambda, API Gateway & EventBridge / : Digital Cloud Training
   - {id: s3I1kKKfjtQ, skill: service-mesh}  # Consul Service Mesh Tutorial for Beginners [Crash Course]: TechWorld with Nana
+  - {id: kfM-yu0iQBk, skill: shaders}  # Shader Basics, Blending & Textures • Shaders for Game Devs [: Freya Holmér
   - {id: PNhq_4d-5ek, skill: shell-scripting}  # Bash Scripting Tutorial for Beginners: TechWorld with Nana
+  - {id: LbR5cqqaFVk, skill: siem}  # Splunk SIEM Crash Course / Free Spunk Training for Security : Rajneesh Gupta
+  - {id: mP3QbYURT9k, skill: snowflake}  # Learn Snowflake in 2 Hours/ High Paying Skills / Step by Ste: Data Engineer Academy
   - {id: umepbfKp5rI, skill: solidity}  # Learn Solidity, Blockchain Development, & Smart Contracts | : Patrick Collins
+  - {id: FNJze2Ea780, skill: spark}  # Apache Spark - The Ultimate Guide [From ZERO To PRO]: Ansh Lamba
   - {id: 31KTdfRH6nY, skill: spring-boot}  # Building web applications in Java with Spring Boot 3 – Tutor: freeCodeCamp.org
   - {id: 7S_tz1z_5bA, skill: sql}  # SQL Course for Beginners [Full Course]: Programming with Mosh
+  - {id: -bEzt5ISACA, skill: state-management}  # React State Management – Intermediate JavaScript Course: freeCodeCamp.org
   - {id: xxpc-HPKN28, skill: statistics}  # Statistics - A Full University Course on Data Science Basics: freeCodeCamp.org
   - {id: 8Xg7E9shq0U, skill: swift}  # Swift Programming Tutorial – Full Course for Beginners: freeCodeCamp.org
   - {id: -VC3hIEL7eQ, skill: swiftui}  # SwiftUI Course for Beginners – Create an iOS App from Scratc: freeCodeCamp.org
@@ -244,7 +274,9 @@ videos:
   - {id: SPcwo0Gq9T8, skill: terraform}  # HashiCorp Terraform Associate Certification Course (003) - P: freeCodeCamp.org
   - {id: zp5Jh2FIpF0, skill: test-automation}  # Postman API Test Automation for Beginners: freeCodeCamp.org
   - {id: sO8eGL6SFsA, skill: testing-fundamentals}  # Software Testing Full Course In 10 Hours | Software Testing : edureka!
+  - {id: zxQyTK8quyY, skill: transformers}  # Transformer Neural Networks, ChatGPT's foundation, Clearly E: StatQuest with Josh Starmer
   - {id: 30LWjhZzg50, skill: typescript}  # Learn TypeScript – Full Tutorial: freeCodeCamp.org
+  - {id: c9Wg6Cb_YlU, skill: ui-ux-basics}  # UI / UX Design Tutorial – Wireframe, Mockup & Design in Figm: freeCodeCamp.org
   - {id: zuKbR4Q428o, skill: unit-testing}  # JavaScript Unit Testing Tutorial for Beginners: Programming with Mosh
   - {id: 6UlU_FsicK8, skill: unreal-engine}  # Unreal Engine 5 – Full Course for Beginners: freeCodeCamp.org
   - {id: mHxLXzYjQRE, skill: vector-databases}  # Production RAG with LangChain & Vector Databases – Full Cour: freeCodeCamp.org
