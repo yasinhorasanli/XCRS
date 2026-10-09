@@ -284,11 +284,13 @@ def cmd_resources_youtube_discover(args) -> None:
         found, used = youtube_discovery.discover(
             client, key, skills, set(data["searched"]), args.max_searches, trusted=trusted, blocked=blocked
         )
+        # One approved video per skill is enough: skills that have one aren't searched again (100 units each).
+        have_video = {str(p["skill"]) for p in config.get("videos") or []}
         videos, used_v = youtube_discovery.discover_videos(
             client,
             key,
             skills,
-            set(data["searched_videos"]),
+            set(data["searched_videos"]) | have_video,
             args.max_searches - used,
             trusted=trusted,
             blocked=blocked,
