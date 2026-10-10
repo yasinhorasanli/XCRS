@@ -180,3 +180,17 @@ On the 53 calibration profiles (159 role results, 477 resource picks), dev DB; "
 - Ingestion of 140 playlists with their videos: 4,560 sections, ~85 s, ~300 quota units (was 3). Average playlist 12 h.
 - Section tagging (embeddings only, Mac): 4,560 playlist sections in about 3 min; 4,087 tagged.
 - First discovery: 60 long-video searches + first full scan of 33 trusted channels, ~7,000 units: 347 video candidates, 236 after the filters, 99 screened.
+
+## AWS demo copy (2026-10-10, ADR-0042)
+
+One EC2 t4g.small (Graviton arm64, 2 vCPU, 2 GB, Amazon Linux 2023) in eu-central-1, built by `infra/demo` (13 resources) and set up by cloud-init. Both models stay on VM-B and are reached over Tailscale (`tailscale serve` on VM-B). Reached from the tailnet only, until CloudFront.
+
+| Measure | Value |
+|---|---|
+| Launch → app deployed (cloud-init done, smoke test passed) | 6 min 41 s (instance up 395 s) |
+| Memory in use, whole instance / the four containers | 635 MB of 1.8 GB / ~290 MB (swap: 5 MB of 1 GB) |
+| Recommendation, Mac → AWS over the tailnet | ~210 ms (VM-A through Funnel: ~165 ms) |
+| Free-text matching and explanations | work over Tailscale; the LLM and embeddings run on VM-B as for VM-A |
+| Tailnet reach of the AWS machine | VM-B:11434 only; SSH on both VMs, VM-A's site and the Mac are blocked (tested from the instance) |
+| Cost | $0 in the t4g trial (until 31 Dec 2026); after that ~$17/month if always on |
+

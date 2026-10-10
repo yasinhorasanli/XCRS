@@ -59,7 +59,7 @@ The catalog is imported and embedded on every first boot. Both models are on VM-
    cd /opt/xcrs/deploy/vm-b && docker compose exec ollama ollama pull qwen3-embedding:0.6b
    sudo tailscale serve --bg --tcp 11434 tcp://<VM-B private IP>:11434
    ```
-   Tailscale documents only localhost targets for `serve`. If it refuses the private address, run a small relay on VM-B's `127.0.0.1` that forwards to Ollama, and point `serve` at the relay.
+   `serve` forwards to the private address (checked 2026-10-10, Tailscale 1.102), so Ollama, firewalld and VM-A's path stay as they were; `tailscale serve --tcp=11434 off` undoes it. The tailnet policy decides who may connect.
 2. **Tailnet policy** (Tailscale admin console → Access controls). Add a tag and rules so the AWS machine can reach only VM-B's Ollama, while your own devices keep reaching everything. Keep any existing `nodeAttrs` (Funnel) and `ssh` sections:
    ```jsonc
    "tagOwners": { "tag:xcrs-aws": ["autogroup:admin"] },
@@ -72,6 +72,7 @@ The catalog is imported and embedded on every first boot. Both models are on VM-
    ]
    ```
    This replaces the default allow-all rule (`"src": ["*"], "dst": ["*"]`).
+   The policy also carries a `tests` block that Tailscale runs on every save: `tag:xcrs-aws` reaches `xcrs-b:11434` but not SSH on either VM or VM-A's site.
 3. **Auth key** (Settings → Keys → Generate auth key): reusable, ephemeral (the machine leaves the tailnet when destroyed), pre-approved, tag `tag:xcrs-aws`, 90 days. Store it as an encrypted parameter, typed in rather than pasted on the command line:
    ```bash
    read -rs TS_KEY && aws ssm put-parameter --profile xcrs --name /xcrs/demo/tailscale-auth-key \
