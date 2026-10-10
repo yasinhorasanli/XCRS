@@ -1,0 +1,55 @@
+#!/bin/bash
+# First boot of the AWS demo copy (ADR-0042), run once by cloud-init as root. Rendered by Terraform
+# (infra/demo/instance.tf). Progress: `sudo tail -f /var/log/cloud-init-output.log` in an SSM session.
+set -euo pipefail
+step() { printf '\n== %s\n' "$*"; }
+
+REGION="${region}"
+RELEASE="${release}"
+
+step "1 GB swap: headroom for 2 GB of RAM"
+fallocate -l 1G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo '/swapfile none swap defaults 0 0' >> /etc/fstab
+
+step "Docker, and the Compose plugin ${compose_version} (checksum verified)"
+dnf install -y docker git
+mkdir -p /usr/local/lib/docker/cli-plugins
+curl -fsSL -o /usr/local/lib/docker/cli-plugins/docker-compose \
+  "https://github.com/docker/compose/releases/download/${compose_version}/docker-compose-linux-aarch64"
+echo "${compose_sha256}  /usr/local/lib/docker/cli-plugins/docker-compose" | sha256sum -c -
+chmod 755 /usr/local/lib/docker/cli-plugins/docker-compose
+mkdir -p /etc/docker
+echo '{"log-driver":"json-file","log-opts":{"max-size":"10m","max-file":"3"}}' > /etc/docker/daemon.json
+systemctl enable --now docker
+docker version --format 'engine {{.Server.Version}}'
+docker compose version
+
+step "Tailscale: join the tailnet as tag:xcrs-aws"
+curl -fsSL -o /etc/yum.repos.d/tailscale.repo https://pkgs.tailscale.com/stable/amazon-linux/2023/tailscale.repo
+dnf install -y tailscale
+systemctl enable --now tailscaled
+# The key is read with the instance role and handed straight to tailscale; it is never written to disk or logged.
+tailscale up --hostname="${tailnet_hostname}" --advertise-tags=tag:xcrs-aws --auth-key="$(
+  aws ssm get-parameter --region "$REGION" --name "${tailscale_key_param}" --with-decryption \
+    --query Parameter.Value --output text)"
+# HTTPS on the tailnet name, proxied to Caddy on localhost:8080 (tailnet only; CloudFront comes later).
+tailscale serve --bg 8080
+
+step "XCRS $RELEASE"
+git clone https://github.com/yasinhorasanli/XCRS.git /opt/xcrs
+git -C /opt/xcrs checkout "$RELEASE"
+umask 077
+cat > /opt/xcrs/deploy/aws/.env <<ENV
+XCRS_IMAGE_TAG=$RELEASE
+POSTGRES_PASSWORD=$(openssl rand -hex 24)
+XCRS_EMBEDDING_BASE_URL=${ollama_url}
+XCRS_LLM_BASE_URL=${ollama_url}
+ENV
+umask 022
+cd /opt/xcrs
+XCRS_DEPLOY_DIR=deploy/aws deploy/deploy.sh "$(echo "$RELEASE" | tr / -)"
+
+step "Done: https://${tailnet_hostname}.<tailnet>.ts.net from a tailnet device"

@@ -3,6 +3,7 @@
 - **Status:** Accepted
 - **Date:** 2026-10-03
 - **Decider:** Muhammed Yasin Horasanli
+- **Note (2026-10-07):** building the instance (`infra/demo`), the decider chose Amazon Linux 2023 (SSM agent built in; Compose installed as a pinned, checksummed plugin), access over the tailnet only until CloudFront (no inbound rules at all), and sign-in off on the demo. The instance calls VM-B by its tailnet IP, because containers resolve names through the VPC's DNS, which doesn't know MagicDNS. CPU credits are "standard" (throttle, never bill).
 
 ## Context
 
