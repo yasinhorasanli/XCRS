@@ -12,7 +12,7 @@ variable "availability_zone" {
 variable "release" {
   description = "What the instance runs: a branch or commit SHA of the repo, also used as the image tag (both platforms)."
   type        = string
-  default     = "modernization"
+  default     = "main"
 }
 
 variable "instance_type" {

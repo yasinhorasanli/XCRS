@@ -2,7 +2,7 @@
 
 XCRS recommends **career roles** and **free learning resources** based on what you have already learned and what you are curious about, and explains **why** it recommends each one, in plain language built from your own input.
 
-> **Status:** the `modernization` branch is a work in progress toward a production-ready, self-hosted XCRS. The original research prototype lives on the `main` branch and in the [Zenodo release](#research-origin--citation).
+> **Status:** XCRS runs self-hosted on two VMs, with a demo copy on AWS. The original 2024 research prototype is preserved at the tag [`research-prototype`](https://github.com/yasinhorasanli/XCRS/tree/research-prototype) and in the [Zenodo release](#research-origin--citation).
 
 | Tell it what you know | See roles, your level, what to learn and why |
 |---|---|
@@ -93,7 +93,7 @@ Backups stay on the machine that made them; `scripts/db-offsite-copy.sh` copies 
 
 ## Research origin & citation
 
-XCRS started as an academic research project: five embedding providers compared side by side, `gpt-4o` explanations, and a user study. That prototype is on the `main` branch, and the replication package (code, data, the user-study protocol, questions and responses) is archived on Zenodo:
+XCRS started as an academic research project: five embedding providers compared side by side, `gpt-4o` explanations, and a user study. That prototype is preserved at the tag [`research-prototype`](https://github.com/yasinhorasanli/XCRS/tree/research-prototype) (`Zenodo-v1.0` is the archived release), and the replication package (code, data, the user-study protocol, questions and responses) is archived on Zenodo:
 
 [![DOI](https://zenodo.org/badge/783277216.svg)](https://doi.org/10.5281/zenodo.14291086)
 

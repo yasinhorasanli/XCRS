@@ -1,4 +1,4 @@
-# Publish the container images to GHCR (ADR-0034): every push to modernization or main, or by hand.
+# Publish the container images to GHCR (ADR-0034): every push to main, or by hand.
 # Tags: the commit SHA (immutable, what deploy/deploy.sh pins) and the branch name (moving; "/" becomes "-").
 # Each tag is a multi-platform image: linux/amd64 for the VMs, linux/arm64 for the AWS copy's Graviton
 # instance (ADR-0042). Docker pulls the matching one. Each platform builds natively on its own runner
@@ -9,7 +9,7 @@ name: Release images
 
 on:
   push:
-    branches: [main, modernization]
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
