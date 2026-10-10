@@ -54,3 +54,14 @@ variable "compose_sha256" {
   type        = string
   default     = "732e3a84c1a0f67256ce80bc2598a24546b10ca05f9faa97efceb1171ece2ef7"
 }
+
+variable "stop_at_usd" {
+  description = "Monthly actual spend (credits excluded) at which AWS Budgets stops the instance (ADR-0048)."
+  type        = number
+  default     = 20
+}
+
+variable "alert_email" {
+  description = "Where budget alerts and the stop notice go. Set it in terraform.tfvars (gitignored), not in code."
+  type        = string
+}

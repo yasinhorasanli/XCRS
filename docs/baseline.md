@@ -192,5 +192,26 @@ One EC2 t4g.small (Graviton arm64, 2 vCPU, 2 GB, Amazon Linux 2023) in eu-centra
 | Recommendation, Mac → AWS over the tailnet | ~210 ms (VM-A through Funnel: ~165 ms) |
 | Free-text matching and explanations | work over Tailscale; the LLM and embeddings run on VM-B as for VM-A |
 | Tailnet reach of the AWS machine | VM-B:11434 only; SSH on both VMs, VM-A's site and the Mac are blocked (tested from the instance) |
-| Cost | $0 in the t4g trial (until 31 Dec 2026); after that ~$17/month if always on |
+| Cost | $0 for the instance in the t4g trial (until 31 Dec 2026); ~$19.57/month always-on after it at Frankfurt prices: $14.02 instance, $3.65 public IPv4, $1.90 disk (corrected 2026-10-10; first written as ~$17 from US prices) |
+
+**Public through CloudFront (2026-10-10, ADR-0047):** `terraform apply` added the VPC origin, the inbound rule and the distribution, and replaced the instance.
+
+| Measure | Value |
+|---|---|
+| Apply with a new instance, VPC origin and distribution | ~25 min (the distribution alone 5 min 55 s; the instance booted in parallel) |
+| Home page through CloudFront (from Turkey, HTTP/2) | 0.34 s |
+| `/_nuxt/*` build files | Miss on the first request, Hit afterwards; `/api` always Miss (not cached) |
+| Free-text matching, two new phrases (LLM on VM-B) | 21 s, under CloudFront's 60 s per-request limit |
+| `/dev` and `/api/v2/dev` through CloudFront | 404, also with a forged `Tailscale-User-Login` header |
+| The instance's public IP, ports 80, 8080, 22, 443 | no connection |
+| Rate limits behind the single VPC-origin interface | per visitor: the Mac got 5 × 200 then 429 while another IP got 200 |
+| Cost | $0: CloudFront's always-free tier (1 TB, 10 M requests a month); VPC origins are free |
+
+**Cost guard (2026-10-10, ADR-0048):** stop and start through the budget action's own SSM document.
+
+| Measure | Value |
+|---|---|
+| `AWS-StopEC2Instance` → instance stopped | 31 s (automation: Success) |
+| While stopped | public IPv4 released; CloudFront answers 504 |
+| `start-instances` → site healthy through CloudFront | 25 s (running after 17 s); private address unchanged |
 

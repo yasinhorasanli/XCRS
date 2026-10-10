@@ -4,6 +4,7 @@
 - **Date:** 2026-10-03
 - **Decider:** Muhammed Yasin Horasanli
 - **Note (2026-10-07):** building the instance (`infra/demo`), the decider chose Amazon Linux 2023 (SSM agent built in; Compose installed as a pinned, checksummed plugin), access over the tailnet only until CloudFront (no inbound rules at all), and sign-in off on the demo. The instance calls VM-B by its tailnet IP, because containers resolve names through the VPC's DNS, which doesn't know MagicDNS. CPU credits are "standard" (throttle, never bill).
+- **Note (2026-10-10, costs):** the instance figure below used US prices. At Frankfurt prices (AWS Pricing API) a t4g.small is $0.0192/h, about $14.02 a month, so an always-on demo after the trial is about $19.57 a month ($14.02 + $3.65 IPv4 + $1.90 disk). A budget action now stops the instance at $20 ([ADR-0048](0048-budget-action-stops-the-demo-instance-at-20-dollars.md)).
 - **Note (2026-10-10):** CloudFront reaches the instance through a VPC origin, not CloudFront's managed prefix list: the security group admits only CloudFront's service security group ([ADR-0047](0047-cloudfront-in-front-of-the-aws-demo-copy.md)).
 
 ## Context

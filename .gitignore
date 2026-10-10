@@ -182,3 +182,6 @@ deploy/*.local.yaml
 *.tfstate.*
 *.tfplan
 crash.log
+
+# Terraform variable values can hold personal data (e.g. the alert email); the .example files are committed
+terraform.tfvars
