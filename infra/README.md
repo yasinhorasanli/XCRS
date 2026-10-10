@@ -86,7 +86,7 @@ The catalog is imported and embedded on every first boot. Both models are on VM-
 - CloudFront reaches the instance through a **VPC origin**: a CloudFront-managed network interface in our VPC that connects to Caddy on the instance's private address, port 80. The instance's one inbound rule admits only CloudFront's service security group.
 - Pages and `/api` are never cached; `/_nuxt/*` (content-hashed build files) is.
 - `/dev` answers 404 through CloudFront: Caddy refuses requests marked with `X-Amz-Cf-Id`.
-- A first apply, or a replaced instance, takes ~15 minutes extra while the VPC origin deploys.
+- A first apply, or a replaced instance, takes ~15–35 minutes extra: CloudFront refuses to change a VPC origin that a distribution uses (`CannotUpdateEntityWhileInUse`), so a new instance gets a **new** VPC origin (named after the instance), the distribution switches to it, and the old one is deleted (`create_before_destroy` + `replace_triggered_by`). If an apply ever stopped halfway, force it with `terraform apply -replace=aws_cloudfront_vpc_origin.demo`.
 - A request may run at most 60 seconds at the edge, which matters for typed phrases that need the LLM on VM-B.
 
 **Cost guard (ADR-0048):** a budget `xcrs-demo-stop-at-20` emails at 80% and, when the month's **actual** spend (credits excluded) reaches **$20**, AWS Budgets stops the instance on its own through SSM. A normal month is ~$5.55 in the trial and ~$19.57 always-on after it, so it fires only on unusual spending, hours after the fact (budget data refreshes a few times a day). It doesn't stop CloudFront from counting requests. After a stop:
@@ -100,7 +100,8 @@ Docker restarts the containers, Tailscale reconnects, and the private address (C
 - `terraform destroy` when idle. Everything goes except the state bucket, and the next apply rebuilds the same thing.
 - A newer Amazon Linux image: `terraform apply -replace=aws_instance.demo`.
 - Any change to the first-boot script replaces the instance (`user_data_replace_on_change`).
-- After a replacement the new machine can join the tailnet as `xcrs-aws-1`, while the old ephemeral entry is still being removed. Rename it in the Tailscale admin console (Machines → the machine → Edit machine name → `xcrs-aws`); `tailscale set --hostname` on the instance doesn't change the machine name. Then re-register `serve` under the new name, or HTTPS on the tailnet fails with a TLS error: in an SSM shell, `sudo tailscale serve reset && sudo tailscale serve --bg 8080`.
+- **Before replacing the instance**, log the old one out of the tailnet so the name stays free: `aws ssm send-command --profile xcrs --instance-ids <old id> --document-name AWS-RunShellScript --parameters 'commands=["tailscale logout"]'` (the key is ephemeral, so the machine disappears at once). Because of `create_before_destroy`, the new instance now starts before the old one ends.
+- If that was skipped, the new machine can join the tailnet as `xcrs-aws-1`, while the old ephemeral entry is still being removed. Rename it in the Tailscale admin console (Machines → the machine → Edit machine name → `xcrs-aws`); `tailscale set --hostname` on the instance doesn't change the machine name. Then re-register `serve` under the new name, or HTTPS on the tailnet fails with a TLS error: in an SSM shell, `sudo tailscale serve reset && sudo tailscale serve --bg 8080`.
 
 ## Backlog
 

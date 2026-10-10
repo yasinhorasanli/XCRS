@@ -2,9 +2,13 @@
 # a CloudFront-managed network interface inside our VPC that reaches the instance's private address. The instance
 # keeps no public inbound path; its security group admits port 80 from CloudFront's service security group only.
 
+# CloudFront refuses to change a VPC origin that a distribution uses (CannotUpdateEntityWhileInUse), so a new
+# instance gets a new VPC origin: created first, the distribution switched to it, then the old one deleted.
+# create_before_destroy carries over to the instance, so a replaced instance also starts before the old one ends
+# (log the old one out of the tailnet first, infra/README.md).
 resource "aws_cloudfront_vpc_origin" "demo" {
   vpc_origin_endpoint_config {
-    name                   = "xcrs-demo"
+    name                   = "xcrs-demo-${aws_instance.demo.id}" # unique while old and new briefly coexist
     arn                    = aws_instance.demo.arn
     http_port              = 80
     https_port             = 443
@@ -20,6 +24,11 @@ resource "aws_cloudfront_vpc_origin" "demo" {
     create = "30m" # a VPC origin takes ~15 minutes to deploy
     update = "30m"
     delete = "30m"
+  }
+
+  lifecycle {
+    create_before_destroy = true
+    replace_triggered_by  = [aws_instance.demo.id]
   }
 }
 
