@@ -67,6 +67,14 @@ body {
   html {
     zoom: 0.85; /* one role per page in most results */
   }
+  /* Browsers drop backgrounds when printing unless "Background graphics" is ticked, and it is off by default:
+     the rank badge, the bars, the chips and the icons (drawn as background masks) would vanish. */
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
   body {
     background: white;
   }
