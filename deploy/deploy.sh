@@ -2,7 +2,7 @@
 # Deploy a tagged release on VM-A (ADR-0034): verified backup, pull, migrate, import the catalog, restart,
 # smoke test through Caddy. Rollback = deploy.sh <previous tag>.
 #
-#   deploy/deploy.sh <image tag>        # a commit SHA (immutable) or a branch tag such as "modernization"
+#   deploy/deploy.sh <image tag>        # a commit SHA (immutable) or a branch tag such as "main"
 #
 # Needs <stack>/.env (copy .env.example). Safe to re-run. The stack is deploy/vm-a unless XCRS_DEPLOY_DIR
 # names another (deploy/aws for the AWS demo copy, ADR-0042).

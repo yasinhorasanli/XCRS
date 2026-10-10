@@ -48,7 +48,7 @@ terraform apply <stack>.tfplan
 2. installs Docker and the Compose plugin;
 3. joins the tailnet as `xcrs-aws` (`tag:xcrs-aws`) with the auth key from SSM Parameter Store;
 4. publishes Caddy to the tailnet with `tailscale serve`;
-5. clones the repo at `release` (default `modernization`; a branch or SHA whose images exist for arm64);
+5. clones the repo at `release` (default `main`; a branch or SHA whose images exist for arm64);
 6. writes `deploy/aws/.env` (a fresh Postgres password) and runs `XCRS_DEPLOY_DIR=deploy/aws deploy/deploy.sh`.
 
 The catalog is imported and embedded on every first boot. Both models are on VM-B.

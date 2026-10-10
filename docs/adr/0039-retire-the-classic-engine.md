@@ -3,6 +3,7 @@
 - **Status:** Accepted
 - **Date:** 2026-10-02
 - **Decider:** Muhammed Yasin Horasanli
+- **Note (2026-10-10):** `main` now holds the modernized system ([ADR-0049](0049-one-trunk-main-with-protection.md)); the research version is at the tag `research-prototype` (and `Zenodo-v1.0`), not on `main`.
 
 ## Context
 
