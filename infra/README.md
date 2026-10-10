@@ -100,7 +100,7 @@ Docker restarts the containers, Tailscale reconnects, and the private address (C
 - `terraform destroy` when idle. Everything goes except the state bucket, and the next apply rebuilds the same thing.
 - A newer Amazon Linux image: `terraform apply -replace=aws_instance.demo`.
 - Any change to the first-boot script replaces the instance (`user_data_replace_on_change`).
-- After a replacement the new machine can join the tailnet as `xcrs-aws-1`, while the old ephemeral entry is still being removed. Rename it in the Tailscale admin console (Machines → the machine → Edit machine name → `xcrs-aws`); `tailscale set --hostname` on the instance doesn't change the machine name.
+- After a replacement the new machine can join the tailnet as `xcrs-aws-1`, while the old ephemeral entry is still being removed. Rename it in the Tailscale admin console (Machines → the machine → Edit machine name → `xcrs-aws`); `tailscale set --hostname` on the instance doesn't change the machine name. Then re-register `serve` under the new name, or HTTPS on the tailnet fails with a TLS error: in an SSM shell, `sudo tailscale serve reset && sudo tailscale serve --bg 8080`.
 
 ## Backlog
 
