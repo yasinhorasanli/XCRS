@@ -42,8 +42,9 @@ resource "aws_default_security_group" "demo" {
   tags   = { Name = "xcrs-demo-default-unused" }
 }
 
-# No inbound rules at all: shells go through SSM Session Manager, the site through Tailscale (and CloudFront
-# later). Security groups are stateful, so replies to the instance's own outbound connections still arrive.
+# Shells go through SSM Session Manager and the tailnet through Tailscale, neither needing an inbound rule; the
+# one inbound rule, CloudFront to port 80, is in cloudfront.tf. Security groups are stateful, so replies to the
+# instance's own outbound connections still arrive.
 resource "aws_security_group" "instance" {
   name        = "xcrs-demo-instance"
   description = "XCRS demo: no inbound, all outbound"

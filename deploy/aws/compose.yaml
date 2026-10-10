@@ -1,5 +1,6 @@
 # The AWS demo copy (ADR-0042): VM-A's stack without the embedding model, on one EC2 t4g.small (arm64, 2 GB).
 # Both models come from VM-B over Tailscale, so XCRS_EMBEDDING_BASE_URL and XCRS_LLM_BASE_URL point there.
+# Public traffic arrives from CloudFront (ADR-0047) on the private address, port 80.
 # Keep in step with deploy/vm-a/compose.yaml (same images, Caddyfile and settings).
 # cloud-init (infra/demo) writes .env and runs `XCRS_DEPLOY_DIR=deploy/aws deploy/deploy.sh <tag>`.
 name: xcrs-aws
@@ -9,8 +10,11 @@ services:
     image: caddy:2
     restart: unless-stopped
     ports:
-      # Localhost only: `tailscale serve` publishes it to the tailnet; CloudFront comes later (ADR-0042).
+      # Localhost: `tailscale serve` publishes it to the tailnet (ADR-0042).
       - "127.0.0.1:${XCRS_HTTP_PORT:-8080}:80"
+      # The instance's private address: CloudFront's VPC origin (ADR-0047). The security group admits only
+      # CloudFront's service security group here; cloud-init writes the address into .env.
+      - "${XCRS_ORIGIN_ADDR:-127.0.0.1}:80:80"
     environment:
       XCRS_DOMAIN: ":80"
     volumes:

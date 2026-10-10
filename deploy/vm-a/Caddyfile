@@ -34,5 +34,12 @@
 		not header Tailscale-User-Login *
 	}
 	respond @not_tailnet_dev 404
+	# Behind CloudFront (the AWS demo copy, ADR-0047) a visitor could send Tailscale-User-Login themselves;
+	# CloudFront marks every request it forwards with X-Amz-Cf-Id, which viewers can't remove.
+	@via_cloudfront_dev {
+		path /dev /dev/* /api/v2/dev /api/v2/dev/*
+		header X-Amz-Cf-Id *
+	}
+	respond @via_cloudfront_dev 404
 	reverse_proxy web:3000
 }
