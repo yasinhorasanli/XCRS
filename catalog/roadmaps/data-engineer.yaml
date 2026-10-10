@@ -1,0 +1,37 @@
+# Roadmap for data-engineer (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: data-engineer
+levels:
+  entry:
+    summary: "Builds and maintains data pipelines and tables, under guidance."
+    stages:
+      - name: Foundations
+        skills: [programming-fundamentals:2, python:2, sql:2, relational-databases:2, git:2, linux:1, shell-scripting:1, computer-networking:2, data-structures:2, operating-systems:1]
+      - name: Pipelines
+        skills: [data-modeling:1, etl-pipelines:2, postgresql:1, cloud-fundamentals:1, testing-fundamentals:1, unit-testing:1]
+  mid:
+    summary: "Owns orchestrated pipelines, warehouse models and data quality."
+    stages:
+      - name: Warehouse
+        skills: [sql:3, data-modeling:2, data-warehousing:2, snowflake:1, dbt:2, database-design:2]
+      - name: Orchestration and quality
+        skills: [airflow:2, data-quality:2, linux:2, docker:1, ci-cd:1, "aws|azure|gcp:1"]
+  senior:
+    summary: "Designs batch and streaming data systems at scale and mentors others."
+    stages:
+      - name: Big data and streaming
+        skills: [concurrency:2, distributed-systems:1, spark:2, message-brokers:2, kafka:2, stream-processing:2, data-lakehouse:1]
+      - name: Platform
+        skills: [infrastructure-as-code:1, data-governance:1]
+      - name: Good to know
+        optional: true
+        skills: [scala-or-java-for-data:1, nosql-databases:1, mongodb:1]
+      - name: Leadership
+        skills: [mentoring:2, technical-writing:2]
+  staff:
+    summary: "Sets data platform and architecture direction across the organization."
+    stages:
+      - name: Architecture
+        skills: [caching:2, distributed-systems:2, system-design:2, data-modeling:3, data-architecture:3, data-governance:2, cloud-fundamentals:2, finops:1]
+      - name: Direction
+        skills: [architecture-decision-records:2, technical-leadership:3, stakeholder-communication:3]

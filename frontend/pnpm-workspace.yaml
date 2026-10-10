@@ -1,0 +1,41 @@
+# pnpm >= 10 reads settings from here; the "pnpm" field in package.json is ignored.
+
+# Security overrides for transitive dependencies of nuxt / @nuxt/ui that still resolve to
+# vulnerable versions (Dependabot / `pnpm audit`, 2026-10-01). Each selector matches only the
+# vulnerable range and lifts it to the patched release in the same major. Remove an entry once
+# `pnpm why <package>` shows upstream ranges have moved past it.
+overrides:
+  "@babel/core@<7.29.1": "^7.29.1"
+  "baseline-browser-mapping@<2.11.0": "^2.11.0"
+  "brace-expansion@>=2.0.0 <2.1.7": "^2.1.7"
+  "brace-expansion@>=5.0.0 <5.0.12": "^5.0.12"
+  "browserslist@<4.28.7": "^4.28.7"
+  "esbuild@>=0.27.3 <0.28.1": "^0.28.1"
+  "nanoid@<3.3.18": "^3.3.18"
+  "postcss@<8.5.23": "^8.5.23"
+  "postcss-selector-parser@>=7.1.0 <7.1.3": "^7.1.3"
+  "tar@<7.5.21": "^7.5.21"
+  "vite@>=8.0.0 <8.0.16": "^8.0.16"
+
+# Dependencies allowed to run install scripts (pnpm blocks them by default).
+allowBuilds:
+  esbuild: true
+  "@parcel/watcher": true
+  vue-demi: false # Vue 2/3 shim; its postinstall is not needed on Vue 3
+
+# Local fixes for advisories with no patched release yet (2026-10-03). Both packages are dev/build tooling
+# (node-forge: listhen's dev HTTPS certificates; braces: nitropack's build globs via globby → micromatch), but
+# the fixes close the holes anyway:
+# - node-forge: RSA PKCS#1 v1.5 verify accepts DigestInfo values with extra elements inside DigestAlgorithm;
+#   the patch requires the decrypted bytes to equal a canonical DigestInfo (RFC 8017 §8.2.2).
+# - braces: deeply nested patterns exhaust the stack; the patch refuses nesting deeper than 100 levels.
+# pnpm audit can't see patches, so their advisories are ignored below. When an upstream release fixes one:
+# remove its patch, its ignore line, and (if it applies) add an override like the ones above.
+patchedDependencies:
+  braces@3.0.3: patches/braces@3.0.3.patch
+  node-forge@1.4.0: patches/node-forge@1.4.0.patch
+
+auditConfig:
+  ignoreGhsas:
+    - GHSA-86w9-cpqp-85rv  # node-forge <=1.4.0, fixed by patches/node-forge@1.4.0.patch
+    - GHSA-vfj7-8cjw-p6xm  # braces <=3.0.3, fixed by patches/braces@3.0.3.patch

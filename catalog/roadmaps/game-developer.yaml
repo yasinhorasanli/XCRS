@@ -1,0 +1,32 @@
+# Roadmap for game-developer (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: game-developer
+levels:
+  entry:
+    summary: "Implements gameplay features in an engine, under guidance."
+    stages:
+      - name: Programming
+        skills: [programming-fundamentals:2, "csharp|cpp:2", oop:2, data-structures:2, git:2, debugging:2, computer-networking:2, operating-systems:1]
+      - name: Engine and math
+        skills: ["unity|unreal-engine:2", game-design-basics:1, linear-algebra:1, game-math:2]
+  mid:
+    summary: "Owns game systems: physics, rendering basics, performance and code quality."
+    stages:
+      - name: Game systems
+        skills: [game-physics:2, computer-graphics:1, algorithms:2, design-patterns:2]
+      - name: Performance and quality
+        skills: [profiling:2, game-optimization:2, testing-fundamentals:1, unit-testing:1, code-review:1]
+  senior:
+    summary: "Builds the hard parts: rendering, networking and performance, and mentors others."
+    stages:
+      - name: Advanced systems
+        skills: [computer-graphics:2, shaders:2, multiplayer-networking:2, concurrency:2, game-optimization:3]
+      - name: Leadership
+        skills: [mentoring:2, technical-writing:1, project-planning:2]
+  staff:
+    summary: "Sets technical direction for a game or engine across teams."
+    stages:
+      - name: Direction
+        skills: [computer-graphics:3, game-optimization:4, technical-leadership:3, stakeholder-communication:2]
+      - name: Depth and influence
+        skills: [agile-scrum:2, stakeholder-communication:3, mentoring:3, engineering-processes:2, product-thinking:3, computer-graphics:4]

@@ -1,0 +1,1378 @@
+# Shared skills catalog (ADR-0025, ADR-0028). One entry per skill or concept, used by every role.
+#
+# kind:        language | framework | library | tool | platform | concept | practice
+# proficiency: 1 basic (knows what it is, follows guides) · 2 working (uses it on routine work)
+#              3 advanced (designs with it, solves hard problems, guides others) · 4 expert (sets direction)
+# requires:    prerequisites. Every entry must hold (AND); "a|b|c:2" inside one entry means any one of them
+#              (OR), and ":n" is the proficiency needed in it. Only real prerequisites, not "nice to know".
+# onet:        matching O*NET 31.0 "Workplace Example" names (evidence of employer demand), when they exist.
+
+skills:
+  # --- Computing foundations --------------------------------------------------------------------
+  programming-fundamentals:
+    name: Programming fundamentals
+    kind: concept
+    description: Variables, control flow, functions, data types and reading/writing code in one language.
+  data-structures:
+    name: Data structures
+    kind: concept
+    description: Arrays, lists, hash maps, trees, graphs, queues and when to use each.
+    requires: [programming-fundamentals:2]
+  algorithms:
+    name: Algorithms and complexity
+    kind: concept
+    description: Searching, sorting, recursion, graph traversal and Big-O reasoning about time and memory.
+    requires: [data-structures:2]
+  oop:
+    name: Object-oriented programming
+    kind: concept
+    description: Classes, encapsulation, inheritance, composition and interfaces.
+    requires: [programming-fundamentals:2]
+  functional-programming:
+    name: Functional programming
+    kind: concept
+    description: Pure functions, immutability, higher-order functions and composition.
+    requires: [programming-fundamentals:2]
+  design-patterns:
+    name: Design patterns
+    kind: concept
+    description: Common solutions such as factory, strategy, observer and dependency injection, and their trade-offs.
+    requires: [oop:2]
+  clean-code:
+    name: Clean code and refactoring
+    kind: practice
+    description: Naming, small functions, removing duplication and changing code safely in small steps.
+    requires: [programming-fundamentals:2]
+  debugging:
+    name: Debugging
+    kind: practice
+    description: Reproducing bugs, reading stack traces, using a debugger and narrowing causes systematically.
+    requires: [programming-fundamentals:2]
+  profiling:
+    name: Profiling and performance tuning
+    kind: practice
+    description: Measuring CPU, memory and I/O hot spots before optimizing.
+    requires: [debugging:2]
+  operating-systems:
+    name: Operating systems
+    kind: concept
+    description: Processes, threads, memory, file systems and system calls.
+    requires: [programming-fundamentals:1]
+  concurrency:
+    name: Concurrency
+    kind: concept
+    description: Threads, async I/O, locks, race conditions and deadlocks.
+    requires: [programming-fundamentals:2, operating-systems:1]
+  computer-networking:
+    name: Computer networking
+    kind: concept
+    description: TCP/IP, DNS, ports, routing, latency and how data moves between machines.
+  http:
+    name: HTTP and the web
+    kind: concept
+    description: Requests and responses, methods, status codes, headers, cookies and TLS.
+    requires: [computer-networking:1]
+  linux:
+    name: Linux and the command line
+    kind: platform
+    description: Navigating the shell, files and permissions, processes, packages and services.
+    onet: [Linux, UNIX, Red Hat Enterprise Linux]
+  shell-scripting:
+    name: Shell scripting
+    kind: language
+    description: Automating tasks with Bash scripts, pipes and common Unix tools.
+    requires: [linux:1]
+    onet: [Bash, Shell script, UNIX Shell]
+  powershell:
+    name: PowerShell
+    kind: language
+    description: Scripting and automating Windows and cloud administration.
+    onet: [Microsoft PowerShell]
+  git:
+    name: Git
+    kind: tool
+    description: Commits, branches, merging, rebasing and resolving conflicts.
+    onet: [Git, GitHub, GitLab, Atlassian Bitbucket]
+  code-review:
+    name: Code review and pull requests
+    kind: practice
+    description: Proposing changes as pull requests and giving and receiving useful review.
+    requires: [git:2]
+  testing-fundamentals:
+    name: Testing fundamentals
+    kind: concept
+    description: Why and what to test, the test pyramid, test doubles and test design techniques.
+    requires: [programming-fundamentals:1]
+  unit-testing:
+    name: Unit testing
+    kind: practice
+    description: Writing fast, isolated tests with a test framework such as pytest, JUnit or Jest.
+    requires: [testing-fundamentals:1, programming-fundamentals:2]
+    onet: [JUnit]
+  integration-testing:
+    name: Integration testing
+    kind: practice
+    description: Testing components together with real databases, queues or services.
+    requires: [unit-testing:2]
+  tdd:
+    name: Test-driven development
+    kind: practice
+    description: Writing the test first and growing the design in small red-green-refactor steps.
+    requires: [unit-testing:2]
+  regular-expressions:
+    name: Regular expressions
+    kind: concept
+    description: Matching and extracting text patterns.
+    requires: [programming-fundamentals:1]
+
+  # --- Programming languages --------------------------------------------------------------------
+  python:
+    name: Python
+    kind: language
+    description: General-purpose language for back ends, automation, data and AI.
+    requires: [programming-fundamentals:1]
+    onet: [Python]
+  javascript:
+    name: JavaScript
+    kind: language
+    description: The language of the web, in browsers and on servers.
+    requires: [programming-fundamentals:1]
+    onet: [JavaScript]
+  typescript:
+    name: TypeScript
+    kind: language
+    description: JavaScript with static types, used for large front-end and Node.js code bases.
+    requires: [javascript:2]
+    onet: [TypeScript]
+  java:
+    name: Java
+    kind: language
+    description: Statically typed JVM language widely used for enterprise back ends.
+    requires: [programming-fundamentals:1]
+    onet: [Oracle Java]
+  kotlin:
+    name: Kotlin
+    kind: language
+    description: Modern JVM language and the main language for Android.
+    requires: [programming-fundamentals:1]
+  swift:
+    name: Swift
+    kind: language
+    description: Apple's language for iOS, iPadOS and macOS apps.
+    requires: [programming-fundamentals:1]
+    onet: [Swift]
+  csharp:
+    name: C#
+    kind: language
+    description: .NET language for back ends, desktop apps and Unity games.
+    requires: [programming-fundamentals:1]
+    onet: [C#]
+  go:
+    name: Go
+    kind: language
+    description: Simple compiled language popular for cloud services and infrastructure tools.
+    requires: [programming-fundamentals:1]
+    onet: [Go]
+  rust:
+    name: Rust
+    kind: language
+    description: Memory-safe systems language without a garbage collector.
+    requires: [programming-fundamentals:2]
+  c:
+    name: C
+    kind: language
+    description: Low-level language for operating systems, embedded devices and performance-critical code.
+    requires: [programming-fundamentals:1]
+    onet: [C]
+  cpp:
+    name: C++
+    kind: language
+    description: High-performance language for games, embedded systems and engines.
+    requires: [programming-fundamentals:1]
+    onet: [C++]
+  php:
+    name: PHP
+    kind: language
+    description: Server-side language behind many web sites and CMSs.
+    requires: [programming-fundamentals:1]
+    onet: [PHP]
+  dart:
+    name: Dart
+    kind: language
+    description: Language used by Flutter for cross-platform apps.
+    requires: [programming-fundamentals:1]
+  r:
+    name: R
+    kind: language
+    description: Language for statistics and data analysis.
+    requires: [programming-fundamentals:1]
+    onet: [R]
+  sql:
+    name: SQL
+    kind: language
+    description: Querying and changing relational data with SELECT, JOIN, GROUP BY and window functions.
+    onet: [Structured query language SQL, Transact-SQL]
+  solidity:
+    name: Solidity
+    kind: language
+    description: Language for Ethereum smart contracts.
+    requires: [programming-fundamentals:2, ethereum:1]
+
+  # --- Web front end ----------------------------------------------------------------------------
+  html:
+    name: HTML
+    kind: language
+    description: Semantic page structure, forms and media.
+    onet: [Hypertext markup language HTML]
+  css:
+    name: CSS
+    kind: language
+    description: Styling, the box model, Flexbox, Grid and cascade rules.
+    requires: [html:1]
+    onet: [Cascading style sheets CSS]
+  responsive-design:
+    name: Responsive design
+    kind: practice
+    description: Layouts that work on every screen size.
+    requires: [css:2]
+  accessibility:
+    name: Web accessibility
+    kind: practice
+    description: WCAG, semantic markup, keyboard use and screen readers.
+    requires: [html:2]
+  dom:
+    name: DOM and browser APIs
+    kind: concept
+    description: Manipulating the page, events, fetch and storage from JavaScript.
+    requires: [html:1, javascript:2]
+  browser-devtools:
+    name: Browser developer tools
+    kind: tool
+    description: Inspecting elements, network, performance and storage in the browser.
+    requires: [html:1]
+  react:
+    name: React
+    kind: framework
+    description: Component-based UI library with hooks and a large ecosystem.
+    requires: [javascript:2, dom:1]
+    onet: [React]
+  vue:
+    name: Vue.js
+    kind: framework
+    description: Progressive component framework for building user interfaces.
+    requires: [javascript:2, dom:1]
+    onet: [Vue.js]
+  angular:
+    name: Angular
+    kind: framework
+    description: Full front-end framework with TypeScript, dependency injection and RxJS.
+    requires: [typescript:2, dom:1]
+    onet: [Google Angular]
+  nextjs:
+    name: Next.js
+    kind: framework
+    description: React framework for server rendering, routing and full-stack apps.
+    requires: [react:2]
+  nuxt:
+    name: Nuxt
+    kind: framework
+    description: Vue framework for server rendering, routing and full-stack apps.
+    requires: [vue:2]
+  state-management:
+    name: Front-end state management
+    kind: concept
+    description: Managing shared client state and server data (stores, caching, query libraries).
+    requires: [react|vue|angular:2]
+  tailwind-css:
+    name: Tailwind CSS
+    kind: framework
+    description: Utility-first CSS framework.
+    requires: [css:2]
+  frontend-build-tools:
+    name: Front-end build tools
+    kind: tool
+    description: Package managers, bundlers and dev servers such as npm/pnpm and Vite.
+    requires: [javascript:2]
+  frontend-testing:
+    name: Front-end testing
+    kind: practice
+    description: Component and unit tests for UIs (Testing Library, Vitest/Jest).
+    requires: [unit-testing:1, react|vue|angular:1]
+  e2e-testing:
+    name: End-to-end testing
+    kind: practice
+    description: Driving the real app in a browser with Playwright or Cypress.
+    requires: [testing-fundamentals:2, javascript|typescript|python|java:2]
+    onet: [Microsoft Playwright]
+  web-performance:
+    name: Web performance
+    kind: practice
+    description: Core Web Vitals, loading strategies, rendering cost and caching in the browser.
+    requires: [browser-devtools:2, dom:2]
+  design-systems:
+    name: Design systems
+    kind: practice
+    description: Shared, documented UI components and tokens used across products.
+    requires: [css:3, react|vue|angular:2]
+  frontend-architecture:
+    name: Front-end architecture
+    kind: concept
+    description: "Structuring large UIs: modules, rendering strategies, micro-frontends and data flow."
+    requires: [state-management:2, web-performance:2]
+  ui-ux-basics:
+    name: UI/UX basics for engineers
+    kind: concept
+    description: Usability, visual hierarchy, and working with designers' files (e.g. Figma).
+    onet: [Figma]
+
+  # --- Back end -----------------------------------------------------------------------------------
+  rest-api-design:
+    name: REST API design
+    kind: concept
+    description: Resources, methods, status codes, pagination, versioning and error formats.
+    requires: [http:2]
+    onet: [RESTful API]
+  graphql:
+    name: GraphQL
+    kind: framework
+    description: Query language and runtime for APIs with typed schemas.
+    requires: [http:2]
+    onet: [GraphQL]
+  grpc:
+    name: gRPC and Protocol Buffers
+    kind: framework
+    description: High-performance RPC with typed contracts between services.
+    requires: [http:2]
+  nodejs:
+    name: Node.js
+    kind: platform
+    description: JavaScript runtime for servers, with Express/Fastify-style frameworks.
+    requires: [javascript:2]
+    onet: [Node.js]
+  django:
+    name: Django
+    kind: framework
+    description: Batteries-included Python web framework.
+    requires: [python:2]
+    onet: [Django]
+  fastapi:
+    name: FastAPI
+    kind: framework
+    description: Python framework for typed, async HTTP APIs.
+    requires: [python:2]
+  spring-boot:
+    name: Spring Boot
+    kind: framework
+    description: Java framework for production-ready services.
+    requires: [java:2]
+    onet: [Spring Boot, Spring Framework]
+  aspnet-core:
+    name: ASP.NET Core
+    kind: framework
+    description: .NET framework for web APIs and apps.
+    requires: [csharp:2]
+    onet: [Microsoft ASP.NET, Microsoft .NET Framework]
+  go-web-services:
+    name: Go web services
+    kind: framework
+    description: Building HTTP services in Go with the standard library or a light router.
+    requires: [go:2]
+  relational-databases:
+    name: Relational databases
+    kind: concept
+    description: Tables, keys, transactions and isolation levels.
+    requires: [sql:1]
+  postgresql:
+    name: PostgreSQL
+    kind: platform
+    description: Open-source relational database with rich types and extensions.
+    requires: [relational-databases:1]
+    onet: [PostgreSQL]
+  mysql:
+    name: MySQL
+    kind: platform
+    description: Widely used open-source relational database.
+    requires: [relational-databases:1]
+    onet: [MySQL]
+  database-design:
+    name: Database design and indexing
+    kind: concept
+    description: Normalization, schema evolution, indexes and query plans.
+    requires: [sql:2, relational-databases:2]
+  orm:
+    name: ORMs and data access
+    kind: concept
+    description: Mapping objects to tables, migrations and avoiding N+1 queries.
+    requires: [sql:2, oop:1]
+    onet: [Hibernate ORM]
+  nosql-databases:
+    name: NoSQL databases
+    kind: concept
+    description: Document, key-value, wide-column and graph stores and when they fit.
+    onet: [NoSQL]
+  mongodb:
+    name: MongoDB
+    kind: platform
+    description: Document database.
+    requires: [nosql-databases:1]
+    onet: [MongoDB]
+  redis:
+    name: Redis
+    kind: platform
+    description: In-memory data store for caching, queues and rate limiting.
+    onet: [Redis]
+  caching:
+    name: Caching
+    kind: concept
+    description: Cache layers, invalidation, TTLs and consistency trade-offs.
+    requires: [data-structures:1]
+  elasticsearch:
+    name: Search engines (Elasticsearch/OpenSearch)
+    kind: platform
+    description: Full-text search, indexing and relevance.
+    onet: [Elasticsearch]
+  authentication-authorization:
+    name: Authentication and authorization
+    kind: concept
+    description: Sessions, tokens (JWT), OAuth 2.0/OIDC and access control.
+    requires: [http:2]
+    onet: [Single sign-on SSO]
+  message-brokers:
+    name: Message brokers and queues
+    kind: concept
+    description: Asynchronous messaging, delivery guarantees and back-pressure (RabbitMQ, SQS).
+    requires: [computer-networking:1]
+  kafka:
+    name: Apache Kafka
+    kind: platform
+    description: Distributed event log for streaming and event-driven systems.
+    requires: [message-brokers:1]
+    onet: [Apache Kafka]
+  distributed-systems:
+    name: Distributed systems
+    kind: concept
+    description: Consistency, replication, partitioning, consensus and failure modes.
+    requires: [computer-networking:2, concurrency:2]
+  microservices:
+    name: Microservices
+    kind: concept
+    description: Splitting systems into services, their contracts and operational costs.
+    requires: [rest-api-design:2, distributed-systems:1]
+  event-driven-architecture:
+    name: Event-driven architecture
+    kind: concept
+    description: Events, sagas, outbox pattern and eventual consistency.
+    requires: [message-brokers:2]
+  domain-driven-design:
+    name: Domain-driven design
+    kind: concept
+    description: Modelling a domain with bounded contexts, aggregates and a shared language.
+    requires: [design-patterns:2]
+  system-design:
+    name: System design
+    kind: practice
+    description: Designing scalable, reliable systems end to end and explaining the trade-offs.
+    requires: [distributed-systems:2, database-design:2, caching:2]
+  architecture-patterns:
+    name: Architecture patterns
+    kind: concept
+    description: Layered, hexagonal, modular monolith, microservices and event-driven styles.
+    requires: [design-patterns:2, system-design:1]
+  api-security:
+    name: API security
+    kind: practice
+    description: Input validation, rate limiting, secrets handling and the OWASP API Top 10.
+    requires: [web-security:2, authentication-authorization:2]
+
+  # --- Mobile -----------------------------------------------------------------------------------
+  android-sdk:
+    name: Android SDK
+    kind: platform
+    description: Activities, lifecycle, permissions and the Android platform APIs.
+    requires: [kotlin|java:2]
+    onet: [Google Android]
+  jetpack-compose:
+    name: Jetpack Compose
+    kind: framework
+    description: Android's declarative UI toolkit.
+    requires: [android-sdk:1, kotlin:2]
+  kotlin-coroutines:
+    name: Kotlin coroutines and Flow
+    kind: library
+    description: Asynchronous programming on Android.
+    requires: [kotlin:2, concurrency:1]
+  ios-sdk:
+    name: iOS SDK
+    kind: platform
+    description: App lifecycle, UIKit and the iOS platform frameworks.
+    requires: [swift:2]
+    onet: [Apple iOS]
+  swiftui:
+    name: SwiftUI
+    kind: framework
+    description: Apple's declarative UI framework.
+    requires: [swift:2]
+  swift-concurrency:
+    name: Swift concurrency
+    kind: concept
+    description: async/await, actors and structured concurrency in Swift.
+    requires: [swift:2, concurrency:1]
+  mobile-architecture:
+    name: Mobile app architecture
+    kind: concept
+    description: MVVM, unidirectional data flow, modularization and dependency injection in apps.
+    requires: [android-sdk|ios-sdk:2, design-patterns:1]
+  mobile-data-persistence:
+    name: Mobile data and offline storage
+    kind: concept
+    description: Local databases, caching and syncing for offline-first apps.
+    requires: [android-sdk|ios-sdk|flutter|react-native:1]
+  mobile-testing:
+    name: Mobile testing
+    kind: practice
+    description: Unit, UI and device testing for apps.
+    requires: [unit-testing:1, android-sdk|ios-sdk|flutter|react-native:1]
+    onet: [Appium]
+  app-store-release:
+    name: App store release and distribution
+    kind: practice
+    description: Signing, store review, staged rollouts and crash reporting.
+    requires: [android-sdk|ios-sdk|flutter|react-native:1]
+  flutter:
+    name: Flutter
+    kind: framework
+    description: Cross-platform UI toolkit using Dart.
+    requires: [dart:2]
+  react-native:
+    name: React Native
+    kind: framework
+    description: Cross-platform mobile apps with React.
+    requires: [react:2]
+
+  # --- Games ------------------------------------------------------------------------------------
+  unity:
+    name: Unity
+    kind: platform
+    description: Game engine using C#.
+    requires: [csharp:2]
+    onet: [Unity Technologies Unity]
+  unreal-engine:
+    name: Unreal Engine
+    kind: platform
+    description: Game engine using C++ and Blueprints.
+    requires: [cpp:2]
+    onet: [Unreal Technology Unreal Engine]
+  game-math:
+    name: Game math
+    kind: concept
+    description: Vectors, matrices, quaternions and transformations.
+    requires: [linear-algebra:1]
+  game-physics:
+    name: Game physics
+    kind: concept
+    description: Collisions, rigid bodies and simulation.
+    requires: [game-math:2]
+  computer-graphics:
+    name: Computer graphics and rendering
+    kind: concept
+    description: The rendering pipeline, lighting, materials and GPU basics.
+    requires: [game-math:2]
+  shaders:
+    name: Shader programming
+    kind: language
+    description: Writing GPU shaders (HLSL/GLSL/shader graphs).
+    requires: [computer-graphics:2]
+  game-design-basics:
+    name: Game design basics
+    kind: concept
+    description: Game loops, mechanics, level design and player feedback.
+  multiplayer-networking:
+    name: Multiplayer networking
+    kind: concept
+    description: Client-server sync, prediction and latency hiding.
+    requires: [computer-networking:2, unity|unreal-engine:2]
+  game-optimization:
+    name: Game performance optimization
+    kind: practice
+    description: Frame budgets, memory and draw-call optimization.
+    requires: [profiling:2, unity|unreal-engine:2]
+
+  # --- Embedded ---------------------------------------------------------------------------------
+  digital-electronics:
+    name: Digital electronics
+    kind: concept
+    description: Logic, voltages, signals, reading schematics and datasheets.
+  computer-architecture:
+    name: Computer architecture
+    kind: concept
+    description: CPUs, memory hierarchy, interrupts and instruction sets.
+    requires: [digital-electronics:1]
+  microcontrollers:
+    name: Microcontroller programming
+    kind: practice
+    description: Registers, GPIO, timers and interrupts on microcontrollers (e.g. ARM Cortex-M).
+    requires: [c:2, computer-architecture:1]
+  communication-protocols:
+    name: Embedded communication protocols
+    kind: concept
+    description: UART, SPI, I2C, CAN and their timing.
+    requires: [microcontrollers:1]
+  rtos:
+    name: Real-time operating systems
+    kind: platform
+    description: Tasks, scheduling and synchronization with an RTOS such as FreeRTOS or Zephyr.
+    requires: [microcontrollers:2, concurrency:2]
+  embedded-linux:
+    name: Embedded Linux
+    kind: platform
+    description: "Building and running Linux on devices: boot, drivers and cross-compilation."
+    requires: [linux:2, c:2]
+  hardware-debugging:
+    name: Hardware debugging
+    kind: practice
+    description: Debug probes, oscilloscopes and logic analyzers.
+    requires: [microcontrollers:2]
+
+  # --- DevOps, cloud and reliability --------------------------------------------------------------
+  docker:
+    name: Docker and containers
+    kind: tool
+    description: Building images and running containers.
+    requires: [linux:2]
+    onet: [Docker]
+  kubernetes:
+    name: Kubernetes
+    kind: platform
+    description: "Orchestrating containers: deployments, services, configuration and scaling."
+    requires: [docker:2, computer-networking:2]
+    onet: [Kubernetes, Red Hat OpenShift]
+  helm:
+    name: Helm
+    kind: tool
+    description: Packaging and templating Kubernetes applications.
+    requires: [kubernetes:2]
+  ci-cd:
+    name: CI/CD
+    kind: practice
+    description: Automated build, test and deploy pipelines.
+    requires: [git:2]
+    onet: [Microsoft Azure DevOps Services]
+  github-actions:
+    name: GitHub Actions
+    kind: tool
+    description: CI/CD workflows hosted by GitHub.
+    requires: [ci-cd:1]
+  jenkins:
+    name: Jenkins
+    kind: tool
+    description: Self-hosted automation server for CI/CD.
+    requires: [ci-cd:1]
+    onet: [Jenkins CI]
+  cloud-fundamentals:
+    name: Cloud fundamentals
+    kind: concept
+    description: Regions, compute, storage, managed services, shared responsibility and pricing.
+    requires: [computer-networking:1, linux:1]
+  aws:
+    name: AWS
+    kind: platform
+    description: "Amazon Web Services: EC2, S3, IAM, VPC, RDS, Lambda and more."
+    requires: [cloud-fundamentals:1]
+    onet: [Amazon Web Services AWS software, Amazon Elastic Compute Cloud EC2]
+  azure:
+    name: Microsoft Azure
+    kind: platform
+    description: Microsoft's cloud platform.
+    requires: [cloud-fundamentals:1]
+    onet: [Microsoft Azure software]
+  gcp:
+    name: Google Cloud
+    kind: platform
+    description: Google Cloud Platform.
+    requires: [cloud-fundamentals:1]
+  identity-access-management:
+    name: Identity and access management
+    kind: concept
+    description: Users, roles, policies and least privilege in cloud and enterprise systems.
+    requires: [cloud-fundamentals:1]
+  cloud-networking:
+    name: Cloud networking
+    kind: concept
+    description: VPCs, subnets, load balancers, DNS and private connectivity.
+    requires: [computer-networking:2, cloud-fundamentals:2]
+  serverless:
+    name: Serverless
+    kind: concept
+    description: Functions, event triggers and managed services without servers to run.
+    requires: [cloud-fundamentals:2]
+  infrastructure-as-code:
+    name: Infrastructure as code
+    kind: concept
+    description: Declaring infrastructure in versioned code, with plans and reviews.
+    requires: [cloud-fundamentals:1, git:1]
+    onet: [Amazon Web Services AWS CloudFormation]
+  terraform:
+    name: Terraform
+    kind: tool
+    description: Declarative infrastructure provisioning across providers.
+    requires: [infrastructure-as-code:1]
+    onet: [IBM Terraform]
+  ansible:
+    name: Ansible
+    kind: tool
+    description: Agentless configuration management and automation.
+    requires: [linux:2]
+    onet: [Ansible software, Chef, Puppet]
+  observability:
+    name: Observability
+    kind: concept
+    description: Logs, metrics, traces and alerting that explain what a system is doing.
+    requires: [linux:1]
+  prometheus-grafana:
+    name: Prometheus and Grafana
+    kind: tool
+    description: Metrics collection, queries, dashboards and alerts.
+    requires: [observability:1]
+    onet: [Prometheus, Grafana Labs Grafana Cloud]
+  opentelemetry:
+    name: OpenTelemetry
+    kind: tool
+    description: Vendor-neutral instrumentation for traces, metrics and logs.
+    requires: [observability:2]
+  sre-practices:
+    name: SRE practices
+    kind: practice
+    description: SLIs, SLOs, error budgets and reducing toil.
+    requires: [observability:2]
+  incident-management:
+    name: Incident management
+    kind: practice
+    description: On-call, incident response, communication and blameless postmortems.
+    requires: [observability:1]
+  capacity-planning:
+    name: Capacity planning
+    kind: practice
+    description: Forecasting load and sizing systems before they run out of headroom.
+    requires: [observability:2]
+  chaos-engineering:
+    name: Chaos engineering
+    kind: practice
+    description: Injecting failures on purpose to prove resilience.
+    requires: [sre-practices:2, kubernetes:2]
+  gitops:
+    name: GitOps
+    kind: practice
+    description: Deploying by reconciling clusters to Git (Argo CD, Flux).
+    requires: [kubernetes:2, ci-cd:2]
+  service-mesh:
+    name: Service mesh
+    kind: platform
+    description: Traffic management, mTLS and observability between services (Istio, Linkerd).
+    requires: [kubernetes:3, computer-networking:2]
+  internal-developer-platforms:
+    name: Internal developer platforms
+    kind: concept
+    description: Self-service golden paths, templates and portals (e.g. Backstage) for product teams.
+    requires: [kubernetes:2, ci-cd:2, infrastructure-as-code:2]
+  secrets-management:
+    name: Secrets management
+    kind: practice
+    description: Storing, rotating and injecting secrets (Vault, cloud secret managers).
+    requires: [identity-access-management:1]
+  finops:
+    name: Cloud cost management (FinOps)
+    kind: practice
+    description: Measuring, allocating and reducing cloud spend.
+    requires: [cloud-fundamentals:2]
+  cloud-architecture:
+    name: Cloud architecture
+    kind: concept
+    description: Designing for availability, scale, security and cost on cloud platforms.
+    requires: [cloud-networking:2, system-design:2]
+  windows-server:
+    name: Windows Server administration
+    kind: platform
+    description: Running Windows servers and services.
+    onet: [Microsoft Windows Server]
+
+  feature-flags:
+    name: Feature flags and progressive delivery
+    kind: practice
+    description: Releasing behind flags, gradual rollouts and kill switches (LaunchDarkly, Unleash, OpenFeature).
+    requires: [ci-cd:1]
+  gpu-infrastructure:
+    name: GPU infrastructure
+    kind: platform
+    description: Running GPU workloads on Kubernetes or the cloud; drivers, scheduling, utilization and cost.
+    requires: [kubernetes:2, cloud-fundamentals:2]
+
+  # --- Data -------------------------------------------------------------------------------------
+  statistics:
+    name: Statistics and probability
+    kind: concept
+    description: Distributions, sampling, hypothesis tests, confidence intervals and regression.
+  linear-algebra:
+    name: Linear algebra
+    kind: concept
+    description: Vectors, matrices and the operations ML and graphics are built on.
+  calculus:
+    name: Calculus
+    kind: concept
+    description: Derivatives and gradients, as used in optimization.
+  spreadsheets:
+    name: Spreadsheets
+    kind: tool
+    description: Formulas, pivot tables and charts in Excel or Google Sheets.
+    onet: [Microsoft Excel, Google Sheets]
+  data-visualization:
+    name: Data visualization
+    kind: practice
+    description: Choosing and building charts that communicate clearly.
+    requires: [statistics:1]
+  bi-tools:
+    name: BI tools (Power BI, Tableau, Looker)
+    kind: tool
+    description: Building dashboards and self-service reports.
+    requires: [data-visualization:1, sql:1]
+    onet: [Microsoft Power BI, Tableau, Google Looker Analytics]
+  pandas:
+    name: pandas
+    kind: library
+    description: Data frames for cleaning, transforming and analysing data in Python.
+    requires: [python:2]
+  numpy:
+    name: NumPy
+    kind: library
+    description: Fast numerical arrays in Python.
+    requires: [python:2]
+  jupyter:
+    name: Jupyter notebooks
+    kind: tool
+    description: Interactive notebooks for analysis and experiments.
+    requires: [python:1]
+  data-cleaning:
+    name: Data cleaning
+    kind: practice
+    description: Handling missing values, duplicates, types and outliers.
+    requires: [pandas|sql:2]
+  exploratory-data-analysis:
+    name: Exploratory data analysis
+    kind: practice
+    description: Summarizing and visualizing data to find patterns and problems.
+    requires: [statistics:2, pandas|sql:2]
+  ab-testing:
+    name: A/B testing and experimentation
+    kind: practice
+    description: Designing experiments, choosing metrics and reading results correctly.
+    requires: [statistics:2]
+  data-modeling:
+    name: Data modeling for analytics
+    kind: concept
+    description: Facts, dimensions, star schemas and slowly changing dimensions.
+    requires: [sql:2]
+  data-warehousing:
+    name: Data warehousing
+    kind: concept
+    description: Columnar warehouses, partitioning and cost-aware querying.
+    requires: [data-modeling:2]
+    onet: [Amazon Redshift, Teradata Database]
+  snowflake:
+    name: Snowflake
+    kind: platform
+    description: Cloud data warehouse.
+    requires: [data-warehousing:1]
+    onet: [Snowflake]
+  dbt:
+    name: dbt
+    kind: tool
+    description: SQL-based transformations with tests and documentation in the warehouse.
+    requires: [sql:2, data-modeling:1]
+  etl-pipelines:
+    name: ETL/ELT pipelines
+    kind: concept
+    description: Extracting, transforming and loading data reliably and incrementally.
+    requires: [sql:2, python:2]
+    onet: [Informatica software, Microsoft SQL Server Integration Services SSIS]
+  airflow:
+    name: Apache Airflow
+    kind: tool
+    description: Scheduling and orchestrating data pipelines as code.
+    requires: [python:2, etl-pipelines:1]
+    onet: [Apache Airflow]
+  spark:
+    name: Apache Spark
+    kind: framework
+    description: Distributed processing of large data sets.
+    requires: [python|scala-or-java-for-data:2, distributed-systems:1]
+    onet: [Apache Spark, Apache Hadoop]
+  scala-or-java-for-data:
+    name: Scala or Java for data
+    kind: language
+    description: JVM languages used with Spark and Kafka streams.
+    requires: [programming-fundamentals:2]
+    onet: [Scala]
+  stream-processing:
+    name: Stream processing
+    kind: concept
+    description: Processing events continuously with windows and state (Kafka Streams, Flink).
+    requires: [message-brokers:2, distributed-systems:1]
+  data-lakehouse:
+    name: Data lakes and lakehouses
+    kind: concept
+    description: Object storage with table formats (Iceberg, Delta) for analytics at scale.
+    requires: [data-warehousing:2]
+  data-quality:
+    name: Data quality and testing
+    kind: practice
+    description: Validating, monitoring and documenting data contracts.
+    requires: ["etl-pipelines|dbt:2"]
+  data-governance:
+    name: Data governance and privacy
+    kind: practice
+    description: Ownership, lineage, access control and regulations such as GDPR.
+    requires: [data-quality:1]
+  data-architecture:
+    name: Data architecture
+    kind: concept
+    description: "Designing an organization's data platform: storage, flows, ownership and cost."
+    requires: [data-modeling:3, data-warehousing:2, system-design:1]
+
+  semantic-layer:
+    name: Semantic layer and metrics
+    kind: concept
+    description: Defining business metrics once (dbt Semantic Layer, LookML, Cube) so every report agrees.
+    requires: [data-modeling:2, sql:2]
+  product-analytics:
+    name: Product analytics
+    kind: practice
+    description: Event tracking, funnels, retention and cohorts (Amplitude, Mixpanel, PostHog).
+    requires: [sql:1, statistics:1]
+
+  # --- Machine learning and AI ---------------------------------------------------------------------
+  machine-learning-fundamentals:
+    name: Machine learning fundamentals
+    kind: concept
+    description: Supervised and unsupervised learning, overfitting, bias/variance and validation.
+    requires: [statistics:2, linear-algebra:1, python:2]
+  scikit-learn:
+    name: scikit-learn
+    kind: library
+    description: Classical ML models and pipelines in Python.
+    requires: [machine-learning-fundamentals:1, pandas:2]
+  feature-engineering:
+    name: Feature engineering
+    kind: practice
+    description: Turning raw data into informative model inputs.
+    requires: [machine-learning-fundamentals:2]
+  model-evaluation:
+    name: Model evaluation
+    kind: practice
+    description: Metrics, validation strategies and error analysis.
+    requires: [machine-learning-fundamentals:2]
+  deep-learning:
+    name: Deep learning
+    kind: concept
+    description: Neural networks, backpropagation and training at scale.
+    requires: [machine-learning-fundamentals:2, calculus:1]
+  pytorch:
+    name: PyTorch
+    kind: framework
+    description: Deep learning framework.
+    requires: [deep-learning:1, python:2]
+    onet: [PyTorch]
+  tensorflow:
+    name: TensorFlow
+    kind: framework
+    description: Deep learning framework.
+    requires: [deep-learning:1, python:2]
+    onet: [TensorFlow]
+  nlp:
+    name: Natural language processing
+    kind: concept
+    description: Text representations, sequence models and language tasks.
+    requires: [deep-learning:2]
+  computer-vision:
+    name: Computer vision
+    kind: concept
+    description: Image models for classification, detection and segmentation.
+    requires: [deep-learning:2]
+  transformers:
+    name: Transformer models
+    kind: concept
+    description: Attention, transformer architectures and pretrained models.
+    requires: [deep-learning:2]
+    onet: [Hugging Face]
+  fine-tuning:
+    name: Fine-tuning models
+    kind: practice
+    description: Adapting pretrained models to a task (full fine-tuning, LoRA).
+    requires: [transformers:2, pytorch:2]
+  llm-fundamentals:
+    name: LLM fundamentals
+    kind: concept
+    description: Tokens, context windows, sampling, model families and what LLMs can and cannot do.
+    requires: [python|typescript:2]
+  prompt-engineering:
+    name: Prompt engineering
+    kind: practice
+    description: Instructions, examples and structured output that make LLM results reliable.
+    requires: [llm-fundamentals:1]
+  embeddings-vector-search:
+    name: Embeddings and vector search
+    kind: concept
+    description: Turning text into vectors and finding nearest neighbours.
+    requires: [llm-fundamentals:1]
+  vector-databases:
+    name: Vector databases
+    kind: platform
+    description: Storing and indexing embeddings (pgvector, Qdrant, Pinecone).
+    requires: [embeddings-vector-search:1]
+    onet: [Vector database software]
+  rag:
+    name: Retrieval-augmented generation
+    kind: practice
+    description: Grounding LLM answers in retrieved documents, with chunking and reranking.
+    requires: [embeddings-vector-search:2, prompt-engineering:2]
+  llm-frameworks:
+    name: LLM frameworks
+    kind: library
+    description: LangChain, LlamaIndex and similar libraries for chains and tools.
+    requires: [llm-fundamentals:1]
+    onet: [LangChain]
+  ai-agents:
+    name: AI agents and tool use
+    kind: practice
+    description: Function calling, multi-step agents and orchestration (e.g. LangGraph).
+    requires: [prompt-engineering:2, rest-api-design:1]
+  llm-evaluation:
+    name: LLM evaluation
+    kind: practice
+    description: Test sets, LLM-as-judge and regression checks for prompts and models.
+    requires: [prompt-engineering:2]
+  ai-guardrails:
+    name: AI safety and guardrails
+    kind: practice
+    description: Preventing prompt injection, unsafe output and data leaks.
+    requires: [llm-evaluation:1]
+  llm-serving:
+    name: LLM serving
+    kind: practice
+    description: Running models efficiently (vLLM, Ollama), batching, quantization and cost.
+    requires: [llm-fundamentals:2, docker:2]
+  experiment-tracking:
+    name: Experiment tracking
+    kind: tool
+    description: Logging runs, parameters and artifacts (MLflow, Weights & Biases).
+    requires: [machine-learning-fundamentals:1]
+  ml-pipelines:
+    name: ML pipelines
+    kind: practice
+    description: Reproducible training pipelines from data to model.
+    requires: [machine-learning-fundamentals:1, python:2]
+    onet: [Amazon Web Services AWS SageMaker]
+  model-serving:
+    name: Model serving
+    kind: practice
+    description: Exposing models behind APIs or batch jobs with versioning.
+    requires: [docker:2, rest-api-design:1]
+  model-monitoring:
+    name: Model monitoring
+    kind: practice
+    description: Detecting drift and quality drops in production models.
+    requires: [observability:1, model-evaluation:1]
+  feature-stores:
+    name: Feature stores
+    kind: platform
+    description: Sharing consistent features between training and serving.
+    requires: [feature-engineering:2, data-warehousing:1]
+
+  mcp:
+    name: Model Context Protocol (MCP)
+    kind: framework
+    description: Exposing tools and data to AI agents through MCP servers.
+    requires: [ai-agents:1, rest-api-design:1]
+  research-methods:
+    name: Research methods
+    kind: practice
+    description: Framing hypotheses, designing experiments and ablations, reading and reproducing papers.
+    requires: [statistics:2]
+  ml-optimization:
+    name: Optimization for machine learning
+    kind: concept
+    description: Gradient-based optimization, convergence, regularization and loss design.
+    requires: [calculus:2, linear-algebra:2]
+  distributed-training:
+    name: Distributed training
+    kind: concept
+    description: Data and model parallelism, mixed precision and training on GPU clusters.
+    requires: [deep-learning:2, "pytorch|tensorflow:2"]
+  reinforcement-learning:
+    name: Reinforcement learning
+    kind: concept
+    description: Agents learning from rewards; policy and value methods, and RL from human feedback.
+    requires: [machine-learning-fundamentals:2, deep-learning:1]
+
+  # --- Security ---------------------------------------------------------------------------------
+  security-fundamentals:
+    name: Security fundamentals
+    kind: concept
+    description: Confidentiality, integrity, availability, threats and common attack types.
+    requires: [computer-networking:1, operating-systems:1]
+  web-security:
+    name: Web security
+    kind: concept
+    description: "OWASP Top 10: injection, XSS, CSRF, broken access control and more."
+    requires: [http:2]
+  cryptography-basics:
+    name: Applied cryptography
+    kind: concept
+    description: Hashing, symmetric and public-key encryption, signatures and certificates.
+    requires: [security-fundamentals:1]
+  network-security:
+    name: Network security
+    kind: concept
+    description: Firewalls, segmentation, VPNs, IDS/IPS and secure protocols.
+    requires: [computer-networking:2, security-fundamentals:1]
+    onet: [Firewall software]
+  secure-coding:
+    name: Secure coding
+    kind: practice
+    description: Writing code that resists common vulnerabilities.
+    requires: [programming-fundamentals:2, web-security:1]
+  threat-modeling:
+    name: Threat modeling
+    kind: practice
+    description: Finding what can go wrong in a design and prioritizing defences (e.g. STRIDE).
+    requires: [security-fundamentals:2]
+    onet: [MITRE ATT&CK software]
+  vulnerability-management:
+    name: Vulnerability management
+    kind: practice
+    description: Scanning (SAST, DAST, dependencies), triage and patching.
+    requires: [security-fundamentals:2]
+  siem:
+    name: SIEM and security monitoring
+    kind: tool
+    description: Collecting and correlating security events (Splunk, Elastic Security).
+    requires: [security-fundamentals:2, observability:1]
+    onet: [Splunk Enterprise]
+  security-incident-response:
+    name: Security incident response
+    kind: practice
+    description: Detecting, containing and recovering from security incidents; forensics basics.
+    requires: [siem:1]
+  active-directory:
+    name: Active Directory and identity
+    kind: platform
+    description: Windows domains, Kerberos and enterprise identity.
+    requires: [network-security:1]
+    onet: [Microsoft Active Directory]
+  cloud-security:
+    name: Cloud security
+    kind: practice
+    description: Securing cloud accounts, networks, workloads and data.
+    requires: [cloud-networking:1, identity-access-management:2]
+  devsecops:
+    name: DevSecOps
+    kind: practice
+    description: Security checks built into CI/CD and infrastructure code.
+    requires: [ci-cd:2, vulnerability-management:1]
+  penetration-testing:
+    name: Penetration testing
+    kind: practice
+    description: Authorized attacks on systems to find and prove vulnerabilities.
+    requires: [network-security:2, web-security:2, linux:2]
+  security-testing-tools:
+    name: Security testing tools
+    kind: tool
+    description: Nmap, Burp Suite, Metasploit and similar tools.
+    requires: [linux:2, computer-networking:2]
+    onet: [Kali Linux, Metasploit]
+  exploit-development:
+    name: Exploit development
+    kind: practice
+    description: Turning vulnerabilities into working exploits; memory corruption basics.
+    requires: [c:2, operating-systems:3, penetration-testing:2]
+  security-compliance:
+    name: Security compliance
+    kind: practice
+    description: ISO 27001, SOC 2, GDPR and turning requirements into controls.
+    requires: [security-fundamentals:2]
+
+  # --- Blockchain -------------------------------------------------------------------------------
+  blockchain-fundamentals:
+    name: Blockchain fundamentals
+    kind: concept
+    description: Blocks, hashing, consensus, wallets and transactions.
+    requires: [cryptography-basics:1, distributed-systems:1]
+  ethereum:
+    name: Ethereum and the EVM
+    kind: platform
+    description: Accounts, gas, the EVM and the Ethereum ecosystem.
+    requires: [blockchain-fundamentals:2]
+  smart-contract-testing:
+    name: Smart contract development tools
+    kind: tool
+    description: Building and testing contracts with Hardhat or Foundry.
+    requires: [solidity:2, unit-testing:1]
+  smart-contract-security:
+    name: Smart contract security
+    kind: practice
+    description: Reentrancy, access control, audits and formal checks.
+    requires: [solidity:2, security-fundamentals:1]
+  web3-libraries:
+    name: Web3 libraries
+    kind: library
+    description: Talking to chains from apps with ethers.js, web3.js or viem.
+    requires: [javascript:2, ethereum:1]
+  defi-protocols:
+    name: DeFi protocols
+    kind: concept
+    description: Tokens, AMMs, lending and oracles.
+    requires: [ethereum:2]
+  layer2-scaling:
+    name: Layer-2 scaling
+    kind: concept
+    description: Rollups, bridges and their security trade-offs.
+    requires: [ethereum:3]
+
+  # --- Quality engineering ------------------------------------------------------------------------
+  manual-testing:
+    name: Manual and exploratory testing
+    kind: practice
+    description: Test cases, exploratory sessions and clear bug reports.
+    requires: [testing-fundamentals:1]
+  test-planning:
+    name: Test planning
+    kind: practice
+    description: Deciding what to test, at which level, and how much is enough.
+    requires: [testing-fundamentals:2]
+  test-automation:
+    name: Test automation
+    kind: practice
+    description: Maintainable automated test suites and frameworks.
+    requires: [testing-fundamentals:2, python|java|javascript|typescript|csharp:2]
+    onet: [TestNG]
+  selenium:
+    name: Selenium
+    kind: tool
+    description: Browser automation with WebDriver.
+    requires: [test-automation:1]
+    onet: [Selenium]
+  api-testing:
+    name: API testing
+    kind: practice
+    description: Testing HTTP APIs with Postman/REST clients and code.
+    requires: [http:2, test-automation:1]
+    onet: [Postman, REST Assured]
+  performance-testing:
+    name: Performance and load testing
+    kind: practice
+    description: Load, stress and soak tests with k6 or JMeter.
+    requires: [http:2, test-automation:2]
+    onet: [Apache JMeter]
+  test-strategy:
+    name: Test strategy
+    kind: practice
+    description: "Quality strategy across teams: risk, environments, tooling and metrics."
+    requires: [test-planning:3]
+
+  # --- Customer-facing engineering and developer relations ------------------------------------------
+  customer-discovery:
+    name: Technical discovery
+    kind: practice
+    description: Learning a customer's systems, constraints and goals before proposing a solution.
+    requires: [stakeholder-communication:1]
+  presales:
+    name: Pre-sales process
+    kind: practice
+    description: Qualifying opportunities, answering RFPs and security questionnaires, working with account executives.
+    requires: [customer-discovery:1]
+  technical-demos:
+    name: Technical demos and proofs of concept
+    kind: practice
+    description: Building and presenting demos and proofs of concept that show a product fits a customer's problem.
+    requires: [customer-discovery:1]
+  solution-design:
+    name: Solution design
+    kind: practice
+    description: Fitting a product into a customer's architecture; integrations, data flows, security and rollout plan.
+    requires: [customer-discovery:2, rest-api-design:1, authentication-authorization:1]
+  enterprise-integration:
+    name: Enterprise integration
+    kind: concept
+    description: Connecting to customers' systems; SSO, webhooks, data connectors, legacy APIs and on-premise constraints.
+    requires: [rest-api-design:2, authentication-authorization:1]
+  public-speaking:
+    name: Public speaking
+    kind: practice
+    description: Talks, workshops, webinars and livestreams for technical audiences.
+  developer-content:
+    name: Developer content
+    kind: practice
+    description: Tutorials, blog posts, videos and sample apps that teach developers a product.
+    requires: [technical-writing:1]
+  community-building:
+    name: Developer community building
+    kind: practice
+    description: Running forums, Discord servers, meetups and champion programs, and feeding what they learn back to product.
+  developer-experience:
+    name: Developer experience (DX)
+    kind: concept
+    description: How easy a platform is to adopt; API and SDK usability, docs structure, onboarding friction.
+    requires: [rest-api-design:1]
+
+  # --- Working practices, architecture and leadership ----------------------------------------------
+  agile-scrum:
+    name: Agile and Scrum
+    kind: practice
+    description: Iterative delivery, planning, stand-ups and retrospectives.
+    onet: [Atlassian JIRA, Atlassian Confluence]
+  technical-writing:
+    name: Technical writing
+    kind: practice
+    description: Clear READMEs, design docs and runbooks.
+  architecture-decision-records:
+    name: Architecture decision records
+    kind: practice
+    description: Recording decisions with options, trade-offs and revisit triggers.
+    requires: [technical-writing:1, "system-design|frontend-architecture|mobile-architecture|data-architecture|cloud-architecture|threat-modeling:1"]
+  mentoring:
+    name: Mentoring
+    kind: practice
+    description: Helping others grow through pairing, review and feedback.
+  technical-leadership:
+    name: Technical leadership
+    kind: practice
+    description: Setting technical direction for a team and getting alignment.
+    requires: [mentoring:1]
+  stakeholder-communication:
+    name: Stakeholder communication
+    kind: practice
+    description: Explaining technical trade-offs to non-engineers and managing expectations.
+  project-planning:
+    name: Project planning and estimation
+    kind: practice
+    description: Breaking down work, estimating and tracking delivery risk.
+  product-thinking:
+    name: Product thinking
+    kind: practice
+    description: Understanding users, business goals and measuring impact.
+  people-management:
+    name: People management
+    kind: practice
+    description: One-on-ones, feedback, performance and career growth for a team.
+    requires: [mentoring:2]
+  hiring:
+    name: Hiring and interviewing
+    kind: practice
+    description: Designing interviews, assessing candidates fairly and building teams.
+  engineering-processes:
+    name: Engineering processes and metrics
+    kind: practice
+    description: Delivery metrics (e.g. DORA), team processes and continuous improvement.
+    requires: [agile-scrum:2]
+  user-research:
+    name: User research
+    kind: practice
+    description: Interviews, usability tests and feedback analysis that turn users' problems into product changes.

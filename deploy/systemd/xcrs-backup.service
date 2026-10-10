@@ -1,0 +1,13 @@
+# VM-A: nightly verified backup, copied to VM-B (ADR-0036). Install: see deploy/README.md.
+[Unit]
+Description=XCRS database backup and off-machine copy
+Wants=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/xcrs
+EnvironmentFile=/opt/xcrs/deploy/vm-a/.env
+Environment=COMPOSE_FILE=/opt/xcrs/deploy/vm-a/compose.yaml
+ExecStart=/opt/xcrs/scripts/db-backup.sh
+ExecStart=/opt/xcrs/scripts/db-offsite-copy.sh

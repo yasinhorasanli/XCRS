@@ -1,0 +1,48 @@
+# Roadmap for backend-engineer (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: backend-engineer
+levels:
+  entry:
+    summary: "Builds API endpoints and data access for well-defined features, with tests, under guidance."
+    stages:
+      - name: Programming foundations
+        skills: [programming-fundamentals:2, "python|java|go|csharp|javascript:2", data-structures:2, oop:2, git:2, linux:1, debugging:2, computer-networking:2]
+      - name: Web and APIs
+        skills: [http:2, rest-api-design:2, "fastapi|django|spring-boot|go-web-services|aspnet-core|nodejs:2"]
+      - name: Data
+        skills: [sql:2, relational-databases:2, "postgresql|mysql:2", orm:1]
+      - name: Quality
+        skills: [testing-fundamentals:2, unit-testing:2, clean-code:2, code-review:1]
+  mid:
+    summary: "Owns services end to end: data design, security, deployment and production behaviour."
+    stages:
+      - name: Production
+        skills: [linux:2, docker:2, ci-cd:2, cloud-fundamentals:1, observability:1]
+      - name: Data and performance
+        skills: [database-design:2, caching:2, redis:1, nosql-databases:1, message-brokers:1]
+      - name: Security
+        skills: [authentication-authorization:2, web-security:2]
+      - name: Code at scale
+        skills: [integration-testing:2, design-patterns:2, operating-systems:1, concurrency:2, code-review:2]
+      - name: Good to know
+        optional: true
+        skills: [graphql:1, mongodb:1, tdd:1, functional-programming:1]
+  senior:
+    summary: "Designs systems and their trade-offs, handles the hard incidents and grows other engineers."
+    stages:
+      - name: Distributed systems
+        skills: [distributed-systems:2, system-design:2, microservices:2, message-brokers:2, event-driven-architecture:2, kafka:1, domain-driven-design:2]
+      - name: Operating at scale
+        skills: [kubernetes:1, incident-management:2, profiling:2, api-security:2]
+      - name: Good to know
+        optional: true
+        skills: [grpc:1, elasticsearch:1]
+      - name: Leadership
+        skills: [mentoring:2, technical-writing:2, code-review:3, project-planning:2]
+  staff:
+    summary: "Sets the technical direction across teams and owns architecture no single team owns."
+    stages:
+      - name: Architecture
+        skills: [cloud-fundamentals:2, cloud-networking:2, architecture-patterns:3, system-design:3, cloud-architecture:2, architecture-decision-records:3]
+      - name: Direction
+        skills: [technical-leadership:3, stakeholder-communication:3, product-thinking:2, finops:1]

@@ -1,0 +1,269 @@
+"""Catalog-as-code (ADR-0028): skills, roles, transitions and roadmaps, loaded from `catalog/*.yaml`.
+
+The YAML is the reviewed source of truth (changes arrive as pull requests); `validate.py` checks it and an
+import loads it into the database. Plain data and parsing only; no database access here.
+"""
+
+import os
+import re
+from dataclasses import dataclass, field
+from pathlib import Path
+
+import yaml
+
+from xcrs.config import REPO_ROOT
+
+# Overridable for containers, where the package is installed and the catalog is mounted (deploy/vm-a).
+CATALOG_DIR = Path(os.environ.get("XCRS_CATALOG_DIR", REPO_ROOT / "catalog"))
+
+LADDER = ("entry", "mid", "senior", "staff")
+SKILL_KINDS = {"language", "framework", "library", "tool", "platform", "concept", "practice"}
+PATH_KINDS = {"broaden", "specialize", "pivot", "lead"}
+PROFICIENCY = {1: "basic", 2: "working", 3: "advanced", 4: "expert"}
+
+_REQUIREMENT = re.compile(r"^(?P<options>[a-z0-9-]+(\|[a-z0-9-]+)*):(?P<level>[1-4])$")
+_ROLE_LEVEL = re.compile(r"^(?P<role>[a-z0-9-]+)@(?P<level>[a-z]+)$")
+
+
+class CatalogError(ValueError):
+    """The YAML doesn't have the expected shape (as opposed to a content problem, see validate.py)."""
+
+
+@dataclass(frozen=True)
+class Requirement:
+    """One skill at a proficiency, or a choice: any one of `options` at that proficiency ("python|go:2")."""
+
+    options: tuple[str, ...]
+    level: int
+
+    @classmethod
+    def parse(cls, text: str) -> "Requirement":
+        match = _REQUIREMENT.match(str(text).strip())
+        if not match:
+            raise CatalogError(f"bad skill reference {text!r}: expected 'skill:1-4' or 'a|b:1-4'")
+        return cls(tuple(match["options"].split("|")), int(match["level"]))
+
+    @property
+    def is_choice(self) -> bool:
+        return len(self.options) > 1
+
+    def __str__(self) -> str:
+        return f"{'|'.join(self.options)}:{self.level}"
+
+
+@dataclass(frozen=True)
+class Skill:
+    id: str
+    name: str
+    kind: str
+    description: str
+    requires: tuple[Requirement, ...] = ()
+    onet: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class Alias:
+    """Another market title for a role (ADR-0027). `adds` = the skills the title asks for on top of the role;
+    a title that adds too much (see validate.ALIAS_MIN_COVERAGE) has to become a role of its own."""
+
+    title: str
+    adds: tuple[Requirement, ...] = ()
+
+
+@dataclass(frozen=True)
+class Role:
+    id: str
+    name: str
+    family: str
+    summary: str
+    onet: str
+    levels: tuple[str, ...]
+    also_called: tuple[Alias, ...] = ()
+    esco: str | None = None  # the closest ESCO occupation URI
+    # Languages and frameworks that job ads put in this role's title ("Java Backend Engineer", ADR-0044)
+    title_skills: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class RoleLevel:
+    role: str
+    level: str
+
+    @classmethod
+    def parse(cls, text: str) -> "RoleLevel":
+        match = _ROLE_LEVEL.match(str(text).strip())
+        if not match:
+            raise CatalogError(f"bad role level {text!r}: expected 'role@level'")
+        return cls(match["role"], match["level"])
+
+    def __str__(self) -> str:
+        return f"{self.role}@{self.level}"
+
+
+@dataclass(frozen=True)
+class CommonPath:
+    """A move between roles that people commonly make (ADR-0027). Any move is possible; these are evidence."""
+
+    source: RoleLevel
+    target: RoleLevel
+    kind: str
+    typical_years: str | None = None
+
+
+@dataclass(frozen=True)
+class Stage:
+    name: str
+    items: tuple[Requirement, ...]
+    optional: bool = False  # "good to know": never a prerequisite for required skills
+
+
+@dataclass(frozen=True)
+class RoadmapLevel:
+    level: str
+    summary: str
+    stages: tuple[Stage, ...]
+    title: str | None = None  # a per-role title for the level, e.g. "Senior Engineering Manager"
+
+
+@dataclass(frozen=True)
+class Roadmap:
+    role: str
+    levels: tuple[RoadmapLevel, ...]  # in ladder order
+
+
+RESOURCE_TYPES = {"docs", "course", "tutorial", "video", "playlist", "book"}
+RESOURCE_LEVELS = {"beginner", "intermediate", "advanced"}
+
+
+@dataclass(frozen=True)
+class CuratedResource:
+    """A learning resource from catalog/resources.yaml (ADR-0033)."""
+
+    url: str
+    title: str
+    provider: str
+    type: str
+    level: str | None
+    free: bool
+    teaches: tuple[Requirement, ...]
+    description: str | None = None
+
+
+@dataclass
+class Catalog:
+    levels: dict[str, dict]
+    families: dict[str, str]
+    skills: dict[str, Skill]
+    roles: dict[str, Role]
+    common_paths: list[CommonPath]
+    legacy_roles: dict[str, str | None]
+    roadmaps: dict[str, Roadmap] = field(default_factory=dict)
+    roadmap_files: dict[str, str] = field(default_factory=dict)  # role id -> file name, to check naming
+    resources: list[CuratedResource] = field(default_factory=list)
+
+
+def _read(path: Path) -> dict:
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except yaml.YAMLError as exc:
+        raise CatalogError(f"{path.name}: invalid YAML: {exc}") from exc
+    if not isinstance(data, dict):
+        raise CatalogError(f"{path.name}: expected a mapping at the top level")
+    return data
+
+
+def _skill(skill_id: str, raw: dict) -> Skill:
+    try:
+        return Skill(
+            id=skill_id,
+            name=raw["name"],
+            kind=raw["kind"],
+            description=raw["description"],
+            requires=tuple(Requirement.parse(r) for r in raw.get("requires") or ()),
+            onet=tuple(raw.get("onet") or ()),
+        )
+    except KeyError as exc:
+        raise CatalogError(f"skills.yaml: skill {skill_id!r} lacks {exc}") from exc
+
+
+def _roadmap(path: Path) -> Roadmap:
+    raw = _read(path)
+    levels = []
+    for level, body in (raw.get("levels") or {}).items():
+        body = body or {}
+        stages = tuple(
+            Stage(
+                stage["name"],
+                tuple(Requirement.parse(item) for item in stage.get("skills") or ()),
+                bool(stage.get("optional", False)),
+            )
+            for stage in body.get("stages") or ()
+        )
+        levels.append(RoadmapLevel(level, body.get("summary", ""), stages, body.get("title")))
+    levels.sort(key=lambda lv: LADDER.index(lv.level) if lv.level in LADDER else len(LADDER))
+    return Roadmap(raw.get("role", ""), tuple(levels))
+
+
+def _alias(raw) -> Alias:
+    if isinstance(raw, str):
+        return Alias(raw)
+    try:
+        return Alias(raw["title"], tuple(Requirement.parse(r) for r in raw.get("adds") or ()))
+    except (KeyError, TypeError) as exc:
+        raise CatalogError(f"roles.yaml: bad also_called entry {raw!r}: a title, or {{title, adds}}") from exc
+
+
+def _role(role_id: str, body: dict) -> Role:
+    try:
+        return Role(
+            role_id,
+            body["name"],
+            body["family"],
+            body["summary"],
+            str(body["onet"]),
+            tuple(body["levels"]),
+            tuple(_alias(a) for a in body.get("also_called") or ()),
+            body.get("esco"),
+            tuple(body.get("title_skills") or ()),
+        )
+    except KeyError as exc:
+        raise CatalogError(f"roles.yaml: role {role_id!r} lacks {exc}") from exc
+
+
+def load_catalog(directory: Path = CATALOG_DIR) -> Catalog:
+    skills_raw = _read(directory / "skills.yaml").get("skills") or {}
+    roles_raw = _read(directory / "roles.yaml")
+    catalog = Catalog(
+        levels=roles_raw.get("levels") or {},
+        families=roles_raw.get("families") or {},
+        skills={sid: _skill(sid, body) for sid, body in skills_raw.items()},
+        roles={rid: _role(rid, body) for rid, body in (roles_raw.get("roles") or {}).items()},
+        common_paths=[
+            CommonPath(RoleLevel.parse(t["from"]), RoleLevel.parse(t["to"]), t["kind"], t.get("typical_years"))
+            for t in roles_raw.get("common_paths") or ()
+        ],
+        legacy_roles=roles_raw.get("legacy_roles") or {},
+    )
+    for path in sorted((directory / "roadmaps").glob("*.yaml")):
+        roadmap = _roadmap(path)
+        catalog.roadmaps[roadmap.role] = roadmap
+        catalog.roadmap_files[roadmap.role] = path.stem
+    if (directory / "resources.yaml").exists():
+        catalog.resources = [_resource(r) for r in _read(directory / "resources.yaml").get("resources") or ()]
+    return catalog
+
+
+def _resource(raw: dict) -> CuratedResource:
+    try:
+        return CuratedResource(
+            url=str(raw["url"]),
+            title=str(raw["title"]),
+            provider=str(raw["provider"]),
+            type=str(raw["type"]),
+            level=raw.get("level"),
+            free=bool(raw["free"]),
+            teaches=tuple(Requirement.parse(t) for t in raw.get("teaches") or ()),
+            description=raw.get("description"),
+        )
+    except KeyError as exc:
+        raise CatalogError(f"resources.yaml: {raw.get('url', raw)!r} lacks {exc}") from exc

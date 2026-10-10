@@ -1,0 +1,35 @@
+# Roadmap for data-scientist (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: data-scientist
+levels:
+  entry:
+    summary: "Analyses data and builds first models under guidance."
+    stages:
+      - name: Analysis
+        skills: [statistics:2, programming-fundamentals:2, python:2, pandas:2, numpy:1, jupyter:2, sql:2, data-visualization:2, data-cleaning:2, exploratory-data-analysis:2, git:1]
+      - name: Machine learning
+        skills: [linear-algebra:1, machine-learning-fundamentals:2, scikit-learn:2, model-evaluation:1]
+      - name: Good to know
+        optional: true
+        skills: [r:1]
+  mid:
+    summary: "Owns modelling and experimentation projects end to end."
+    stages:
+      - name: Modelling
+        skills: [feature-engineering:2, model-evaluation:2, statistics:3, calculus:1, deep-learning:1, "pytorch|tensorflow:1", experiment-tracking:1]
+      - name: Experimentation and impact
+        skills: [ab-testing:2, git:2, stakeholder-communication:2, product-thinking:1]
+  senior:
+    summary: "Leads complex modelling and experimentation, and mentors others."
+    stages:
+      - name: Advanced modelling
+        skills: [deep-learning:2, "nlp|computer-vision:2", transformers:1, machine-learning-fundamentals:3, feature-engineering:3, ab-testing:3, data-modeling:1]
+      - name: Leadership
+        skills: [mentoring:2, technical-writing:2, product-thinking:2]
+  staff:
+    summary: "Sets data science direction and decision-making practices across the organization."
+    stages:
+      - name: Direction
+        skills: [machine-learning-fundamentals:4, ab-testing:4, product-thinking:3, technical-leadership:3, stakeholder-communication:4]
+      - name: Depth and influence
+        skills: [agile-scrum:2, mentoring:3, engineering-processes:2, feature-engineering:4, statistics:4]

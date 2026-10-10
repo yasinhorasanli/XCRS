@@ -1,0 +1,45 @@
+# The only public entry point (ADR-0034). XCRS_DOMAIN = a real domain gives automatic HTTPS (Let's Encrypt);
+# ":80" serves plain HTTP (local checks, or before DNS points here). The API is not exposed: the web
+# server proxies /api/** to it (frontend/server/api), so the browser only ever talks to Caddy.
+{
+	servers {
+		# Behind Tailscale Funnel (ADR-0040) requests arrive from tailscaled through Docker's gateway: keep
+		# their X-Forwarded-For so the API's rate limits see the visitor (xcrs/api/limits.py).
+		trusted_proxies static private_ranges
+	}
+}
+
+{$XCRS_DOMAIN} {
+	encode zstd gzip
+	# Request bodies are small JSON (ADR-0035), except a CV upload (ADR-0045): a PDF up to 2 MB, sent as multipart.
+	@cv_upload path /api/v2/cv-imports
+	request_body @cv_upload {
+		max_size 3MB
+	}
+	@not_cv_upload not path /api/v2/cv-imports
+	request_body @not_cv_upload {
+		max_size 64KB
+	}
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		X-Frame-Options DENY
+		-Server
+	}
+	# Dev tools (test profiles) are for the tailnet only (ADR-0040). Allowed only when Tailscale says who the
+	# tailnet user is; public Funnel requests (Tailscale-Funnel-Request: ?1) and anything else get 404, so a
+	# renamed header fails closed.
+	@not_tailnet_dev {
+		path /dev /dev/* /api/v2/dev /api/v2/dev/*
+		not header Tailscale-User-Login *
+	}
+	respond @not_tailnet_dev 404
+	# Behind CloudFront (the AWS demo copy, ADR-0047) a visitor could send Tailscale-User-Login themselves;
+	# CloudFront marks every request it forwards with X-Amz-Cf-Id, which viewers can't remove.
+	@via_cloudfront_dev {
+		path /dev /dev/* /api/v2/dev /api/v2/dev/*
+		header X-Amz-Cf-Id *
+	}
+	respond @via_cloudfront_dev 404
+	reverse_proxy web:3000
+}

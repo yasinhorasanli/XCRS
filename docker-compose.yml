@@ -1,0 +1,58 @@
+# Local development stack (ADR-0014).
+# Ollama runs natively on the Mac for Metal GPU acceleration; containers reach it
+# through host.docker.internal. On the VMs, Ollama will run on the 16 GB VM instead.
+#
+#   docker compose up -d postgres              # development: API and UI run natively
+#   docker compose --profile app up -d --build # everything in containers (as on the VMs)
+services:
+  postgres:
+    image: pgvector/pgvector:pg18
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-xcrs}
+      POSTGRES_USER: ${POSTGRES_USER:-xcrs}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-xcrs}
+    ports:
+      - "127.0.0.1:5432:5432"   # localhost only
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    profiles: ["app"]
+    build: ./backend
+    environment:
+      XCRS_DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-xcrs}:${POSTGRES_PASSWORD:-xcrs}@postgres:5432/${POSTGRES_DB:-xcrs}
+      XCRS_EMBEDDING_BASE_URL: ${XCRS_CONTAINER_OLLAMA_URL:-http://host.docker.internal:11434/v1}
+      XCRS_LLM_BASE_URL: ${XCRS_CONTAINER_OLLAMA_URL:-http://host.docker.internal:11434/v1}
+      XCRS_LLM_ENABLED: ${XCRS_LLM_ENABLED:-true}
+      XCRS_LLM_MODEL: ${XCRS_LLM_MODEL:-qwen3.5:9b}
+      XCRS_INTERNAL_SECRET: ${XCRS_INTERNAL_SECRET:-}
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  web:
+    profiles: ["app"]
+    build: ./frontend
+    environment:
+      XCRS_API_URL: http://api:8000
+      # Accounts (ADR-0043), optional; see deploy/vm-a/.env.example
+      XCRS_PUBLIC_URL: ${XCRS_PUBLIC_URL:-}
+      XCRS_INTERNAL_SECRET: ${XCRS_INTERNAL_SECRET:-}
+      NUXT_SESSION_PASSWORD: ${NUXT_SESSION_PASSWORD:-}
+      NUXT_OAUTH_GITHUB_CLIENT_ID: ${NUXT_OAUTH_GITHUB_CLIENT_ID:-}
+      NUXT_OAUTH_GITHUB_CLIENT_SECRET: ${NUXT_OAUTH_GITHUB_CLIENT_SECRET:-}
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  pgdata:

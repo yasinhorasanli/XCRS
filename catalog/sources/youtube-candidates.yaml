@@ -1,0 +1,700 @@
+# YouTube playlist candidates per skill (ADR-0033), found by `xcrs resources youtube-discover`.
+# Only ids are kept here (API terms); titles are in the local review file. Approve a candidate by
+# moving its playlist id to youtube.yaml, then run `xcrs resources ingest youtube` and `xcrs resources tag`.
+candidates:
+- skill: programming-fundamentals
+  playlist: PLS1QulWo1RIYSyC6w2-rDssprPrEsgtVK
+- skill: programming-fundamentals
+  playlist: PLgWOIdHQBEz5VmgyZ4IoByOHidsX4lpVF
+- skill: git
+  playlist: PL-osiE80TeTuRUfjRe54Eea17-YfnOOAx
+- skill: git
+  playlist: PLhW3qG5bs-L8OlICbNX9u4MZ3rAt5c5GG
+- skill: computer-networking
+  playlist: PLxCzCOWd7aiGFBD2-2joCpWOLUrDLvVV_
+- skill: computer-networking
+  playlist: PLBlnK6fEyqRgMCUAG0XRw78UA8qnv6jEx
+- skill: operating-systems
+  playlist: PLxCzCOWd7aiGz9donHRrE9I3Mwn6XdP8p
+- skill: operating-systems
+  playlist: PLBlnK6fEyqRiVhbXDGLXDk_OQAeuVcp2O
+- skill: python
+  playlist: PLWKjhJtqVAbnqBxcdjVGgT3uVR10bzTEB
+- skill: python
+  playlist: PLTjRvDozrdlxj5wgH4qkvwSOdHLOCx10f
+- skill: http
+  playlist: PLtGnc4I6s8dsNLpl0G30Azcc-Q4eoM4TX
+- skill: http
+  playlist: PL_euSNU_eLbfOjtJGiczeETmx5QZz8lm3
+- skill: sql
+  playlist: PLxCzCOWd7aiFbom4rYyl5qROgqYuCuAPD
+- skill: sql
+  playlist: PLNcg_FV9n7qZY_2eAtUzEUulNjTJREhQe
+- skill: linux
+  playlist: PLS1QulWo1RIb9WVQGJ_vh-RQusbZgO_As
+- skill: concurrency
+  playlist: PLwvDm4Vfkdphr2Dl4sY4rS9PLzPdyi8PM
+- skill: concurrency
+  playlist: PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4
+- skill: cloud-fundamentals
+  playlist: PLOspHqNVtKAC-_ZAGresP-i0okHe5FjcJ
+- skill: cloud-fundamentals
+  playlist: PLahhVEj9XNTd6H2vpsvm_kBSMsMw9EMUL
+- skill: data-structures
+  playlist: PLdo5W4Nhv31bbKJzrsKfMpo_grxuLl8LU
+- skill: data-structures
+  playlist: PLKYEe2WisBTFEr6laH5bR2J19j7sl5O8R
+- skill: observability
+  playlist: PLdpzxOOAlwvJUIfwmmVDoPYqXXUNbdBmb
+- skill: observability
+  playlist: PLD2xg51w57tPl6q9NKwz90iuznQJamaB3
+- skill: rest-api-design
+  playlist: PLwGdqUZWnOp1ve9jXCz9apbouv-eAMi6E
+- skill: rest-api-design
+  playlist: PLsyeobzWxl7ps4Z1C4VMtvZEx5-PgyoYI
+- skill: testing-fundamentals
+  playlist: PLUDwpEzHYYLseflPNg0bUKfLmAbO2JnE9
+- skill: testing-fundamentals
+  playlist: PLIFyRwBY_4bRLmKfP1KnZA6rZbRHtxmXi
+- skill: docker
+  playlist: PLy7NrYWoggjwPggqtFsI_zMAwvG0SqYCb
+- skill: docker
+  playlist: PLy7NrYWoggjzfAHlUusx2wuDwfCrmJYcs
+- skill: caching
+  playlist: PLOeFnOV9YBa77eJeW39a5Q2lsyfdxpE_d
+- skill: caching
+  playlist: PLq3uEqRnr_2HY6LMQsbvsK4btj51sWhBS
+- skill: distributed-systems
+  playlist: PLrjkTql3jnm9FEOXHA_qjR-TMODlaIk-W
+- skill: distributed-systems
+  playlist: PLeKd45zvjcDFUEv_ohr_HdUFe97RItdiB
+- skill: database-design
+  playlist: PLL8qj6F8dGlTPwehYtDHELNFZ5sguolL9
+- skill: database-design
+  playlist: PL3fg3zQpW0k4UO9eBDLdroADnB18ZAOgj
+- skill: relational-databases
+  playlist: PLBlnK6fEyqRjEKl1Yg00jHTbfOPqIfJrs
+- skill: relational-databases
+  playlist: PLL8qj6F8dGlTPwehYtDHELNFZ5sguolL9
+- skill: authentication-authorization
+  playlist: PLYpjLpq5ZDGtJOHUbv7KHuxtYLk1nJPw5
+- skill: authentication-authorization
+  playlist: PLX4n-znUpc2b19AoYa4BMuhGuRnZItJK_
+- skill: security-fundamentals
+  playlist: PLahhVEj9XNTc3cKjd28NUDFPrV4QcfxH5
+- skill: security-fundamentals
+  playlist: PLsep1uQfemNFvT57-DOjzSnGspJv8efpS
+- skill: web-security
+  playlist: PLtZSO0mhEgPxLb01jsVKhppOHtz9ZWMdS
+- skill: web-security
+  playlist: PL1y1iaEtjSYiiSGVlL1cHsXN_kvJOOhu-
+- skill: aws
+  playlist: PLdpzxOOAlwvLNOxX0RfndiYSt1Le9azze
+- skill: aws
+  playlist: PLEiEAq2VkUULlNtIFhEQHo8gacvme35rz
+- skill: gcp
+  playlist: PLIivdWyY5sqKh1gDR0WpP9iIOY00IE0xL
+- skill: gcp
+  playlist: PL9ooVrP1hQOFUm7TmkH1zk5xy75GAxV44
+- skill: azure
+  playlist: PLahhVEj9XNTd6H2vpsvm_kBSMsMw9EMUL
+- skill: azure
+  playlist: PLahhVEj9XNTcj4dwEwRHozO3xcxI_UHYG
+- skill: javascript
+  playlist: PLTjRvDozrdlxEIuOBZkMAK5uiqp8rHUax
+- skill: javascript
+  playlist: PLZPZq0r_RZOO1zkgO4bIdfuLpizCeHYKv
+- skill: kubernetes
+  playlist: PLy7NrYWoggjziYQIDorlXjTvvwweTYoNC
+- skill: kubernetes
+  playlist: PLdpzxOOAlwvJdsW6A0jCz_3VaANuFMLpc
+- skill: shell-scripting
+  playlist: PLS1QulWo1RIYmaxcEqw5JhK3b-6rgdWO_
+- skill: shell-scripting
+  playlist: PL7B7FA4E693D8E790
+- skill: statistics
+  playlist: PLU6SqdYcYsfJPF-4HphQQ8OceDtqhlSW8
+- skill: statistics
+  playlist: PLU6SqdYcYsfLRq3tu-g_hvkHDcorrtcBK
+- skill: cloud-networking
+  playlist: PLOspHqNVtKAA_5N3pI49wkH4WsTkeZ_iQ
+- skill: cloud-networking
+  playlist: PL9ooVrP1hQOFtZ5oAAeOgi_nH-txMcDMu
+- skill: design-patterns
+  playlist: PLF206E906175C7E07
+- skill: design-patterns
+  playlist: PLrhzvIcii6GNjpARdnO4ueTUAVR9eMBpc
+- skill: infrastructure-as-code
+  playlist: PLy7NrYWoggjzmPAyfDQgthSgx6VEVlS0-
+- skill: infrastructure-as-code
+  playlist: PLlrxD0HtieHjzqIRjPoERUGj49rve3rCM
+- skill: llm-fundamentals
+  playlist: PLg9z7TXgYiH0Mrureky1y4JCnfTD-dol9
+- skill: linear-algebra
+  playlist: PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab
+- skill: linear-algebra
+  playlist: PLE7DDD91010BC51F8
+- skill: oop
+  playlist: PLBlnK6fEyqRhoD7JxXd_untFzygrlOCbT
+- skill: oop
+  playlist: PL43pGnjiVwgTJg7uz8KUGdXRdGKE0W_jN
+- skill: machine-learning-fundamentals
+  playlist: PLWKjhJtqVAblStefaz_YOVpDWqcRScc2s
+- skill: machine-learning-fundamentals
+  playlist: PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF
+- skill: prometheus-grafana
+  playlist: PLn6POgpklwWo3_2pj5Jflqwla62P5OI8n
+- skill: prometheus-grafana
+  playlist: PLdsu0umqbb8NxUs8r8BIUe9-PhcoZyojA
+- skill: terraform
+  playlist: PLl4APkPHzsUUHlbhuq9V02n9AMLPySoEQ
+- skill: terraform
+  playlist: PLl4APkPHzsUXcfBSJDExYR-a4fQiZGmMp
+- skill: cloud-architecture
+  playlist: PLxCzCOWd7aiHRHVUtR-O52MsrdUSrzuy4
+- skill: cloud-architecture
+  playlist: PL9ooVrP1hQOFtZ5oAAeOgi_nH-txMcDMu
+- skill: data-modeling
+  playlist: PLy4OcwImJzBLWhUqduwLs30YHiDpX4Xp7
+- skill: data-modeling
+  playlist: PLI4mD0JqFUMqW0FtOvn1NvK6oUciopW7I
+- skill: go
+  playlist: PLRAV69dS1uWQGDQoBYMZWKjzuhCaOnBpa
+- skill: go
+  playlist: PL4cUxeGkcC9gC88BEo9czgyS72A3doDeM
+- skill: identity-access-management
+  playlist: PLahhVEj9XNTf6lWUbZLBNULQ7uVqM5Sad
+- skill: identity-access-management
+  playlist: PLKHIhZJiQ5AkON6FtKeeb4rCVJ1elBBIO
+- skill: typescript
+  playlist: PL4cUxeGkcC9gNhFQgS4edYLqP7LkZcFMN
+- skill: typescript
+  playlist: PL4cUxeGkcC9gUgr39Q_yD6v-bSyMwKPUI
+- skill: data-warehousing
+  playlist: PL9ooVrP1hQOEDSc5QEbI8WYVV_EbWKJwX
+- skill: data-warehousing
+  playlist: PLlOuZAcnp6h4aJROJUb45z_y3hxo-MAnK
+- skill: etl-pipelines
+  playlist: PLjNd3r1KLjQsveotpg3kBEq9v4SM56mcI
+- skill: etl-pipelines
+  playlist: PLYqhYQOVe-qNwwWJdhiLM_In2l9kDwkAa
+- skill: experiment-tracking
+  playlist: PLcP8bHQl_w-ET4fc6gp580Sn8UPC9x15U
+- skill: experiment-tracking
+  playlist: PLko5E0HgG2kUwE_cjRC3PBrduf3uTfGAG
+- skill: helm
+  playlist: PL7iMyoQPMtANm_35XWjkNzDCcsw9vy01b
+- skill: helm
+  playlist: PLn6POgpklwWqIeLqU1194K-LS1O5m2lDd
+- skill: internal-developer-platforms
+  playlist: PLyicRj904Z9_50dH2eD5prLZ8b9A-fdgt
+- skill: internal-developer-platforms
+  playlist: PL-7fHWfrqQvEUgrFz5pE-NWd6-8ixbX8w
+- skill: pandas
+  playlist: PL-osiE80TeTsWmV9i9c58mdDCSskIFdDS
+- skill: pandas
+  playlist: PLeo1K3hjS3uuASpe-1LjfG5f14Bnozjwy
+- skill: airflow
+  playlist: PL79i7SgJCJ9hf7JgG3S-3lOpsk2QCpWkD
+- skill: airflow
+  playlist: PLwFJcsJ61oujAqYpMp1kdUBcPG0sE0QMT
+- skill: cryptography-basics
+  playlist: PLA1qgQLL41SRsHMtsb4up5fTytDeHV_yJ
+- skill: cryptography-basics
+  playlist: PLA1qgQLL41SRn_23p8zD0vUpKM4qOgt_T
+- skill: architecture-patterns
+  playlist: PLTyWtrsGknYd0JgqeARypdRy-SX1ORYhs
+- skill: architecture-patterns
+  playlist: PLZyQU-WOzZF1bdXXAwJHKWHU6m-1t6vEh
+- skill: csharp
+  playlist: PLPV2KyIb3jR4CtEelGPsmPzlvP7ISPYzR
+- skill: csharp
+  playlist: PLTjRvDozrdlz3_FPXwb6lX_HoGXa09Yef
+- skill: calculus
+  playlist: PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr
+- skill: calculus
+  playlist: PL590CCC2BC5AF3BC1
+- skill: computer-vision
+  playlist: PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16
+- skill: computer-vision
+  playlist: PLPTV0NXA_ZSgmWYoSpY_2EJzPJjkke4Az
+- skill: deep-learning
+  playlist: PLUl4u3cNGP60YyhMjYmXuVmX562QcClSp
+- skill: deep-learning
+  playlist: PLZoTAELRMXVPGU70ZGsckrMdr0FteeRUi
+- skill: embeddings-vector-search
+  playlist: PLg9z7TXgYiH1TyFZnSf0_HnJ_z3QwcWE2
+- skill: embeddings-vector-search
+  playlist: PLIUOU7oqGTLhlWpTz4NnuT3FekouIVlqc
+- skill: html
+  playlist: PLWKjhJtqVAbnSe1qUNMG7AbPmjIG54u88
+- skill: html
+  playlist: PLZPZq0r_RZOOxqHgOzPyCzIl4AJjXbCYt
+- skill: java
+  playlist: PLsyeobzWxl7pe_IiTfNyr55kwJPWbgxB5
+- skill: java
+  playlist: PLS1QulWo1RIbfTjQvTdj8Y6yyq4R7g-Al
+- skill: jupyter
+  playlist: PLS1QulWo1RIb_iOwGc7uddfLLPpMIREBn
+- skill: jupyter
+  playlist: PLTfxx5t6obt_xLcmrQHeNkMxH9Lb-wisy
+- skill: message-brokers
+  playlist: PL_jb7LxOF7HVL971HBbal4dDxjXrS3Hyl
+- skill: message-brokers
+  playlist: PLC9NB5vPCjb-HBiRXhV1-TGX2qYdg5rdA
+- skill: nlp
+  playlist: PLoROMvodv4rOaMFbaqxPDoLWjDaRAdP9D
+- skill: nlp
+  playlist: PLQVvvaa0QuDf2JswnfiGkliBInZnIC4HL
+- skill: nodejs
+  playlist: PLC3y8-rFHvwh8shCMHFA5kWxD9PaPwxaY
+- skill: nodejs
+  playlist: PL4cUxeGkcC9gcy9lrvMJ75z9maRw4byYp
+- skill: numpy
+  playlist: PLjVLYmrlmjGfgBKkIFBkMNGG7qyRfo00W
+- skill: numpy
+  playlist: PLS1QulWo1RIbLAffCtmmdIjhqp6AECKxt
+- skill: postgresql
+  playlist: PLS1QulWo1RIa-sDLWbP01sEnlm_Bxmvqs
+- skill: postgresql
+  playlist: PL-Hkw4CrSVq8gJoOf6qtfk2zearol2lPb
+- skill: pytorch
+  playlist: PLQVvvaa0QuDdeMyHEYc0gxFpYwHY2Qfdh
+- skill: pytorch
+  playlist: PLCC34OHNcOtpcgR9LEYSdi9r7XIbpkpK1
+- skill: react
+  playlist: PLFIM0718LjIUu3X2zYNqomEWs3sYd-fV1
+- skill: react
+  playlist: PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d
+- skill: transformers
+  playlist: PLkBMe2eZMRQ2VKEtoL0GVUrNzEiXfgj07
+- skill: transformers
+  playlist: PLPpCFgQP7QKFAcYY2qzLbzQffG4WjnALn
+- skill: ui-ux-basics
+  playlist: PLjiHFwhbHYlHSpAflJwjsKAyMaMhASm0F
+- skill: ui-ux-basics
+  playlist: PLxgZQoSe9cg1o9bW4Xf-doyfouxpaM1rc
+- skill: dbt
+  playlist: PLy4OcwImJzBLJzLYxpxaPUmCWp8j1esvT
+- skill: dbt
+  playlist: PLc2EZr8W2QIBegSYp4dEIMrfLj_cCJgYA
+- skill: active-directory
+  playlist: PL1H1sBF1VAKVoU6Q2u7BBGPsnkn-rajlp
+- skill: active-directory
+  playlist: PL5oyXP-xEiGCqYGIHZ-njGaf6pxDikdVv
+- skill: algorithms
+  playlist: PLUl4u3cNGP63EdVPNLG3ToM6LaEUuStEY
+- skill: algorithms
+  playlist: PLBlnK6fEyqRhoF3cPp0mgOZPuXeu84nAd
+- skill: kafka
+  playlist: PLt1SIbA8guusxiHz9bveV-UHs_biWFegU
+- skill: kafka
+  playlist: PLa7VYi0yPIH0KbnJQcMv5N9iW8HkZHztH
+- skill: bi-tools
+  playlist: PLUaB-1hjhk8HqnmK0gQhfmIdCbxwoAoys
+- skill: bi-tools
+  playlist: PLoyECfvEFOjaMKFbBSKSmnOpEcXqqRegW
+- skill: browser-devtools
+  playlist: PLyuRouwmQCjm3dOz4ea90ZqMRaicX07fo
+- skill: browser-devtools
+  playlist: PLvHjitEa8f36XP17WwuY7GS7x654aaapZ
+- skill: cpp
+  playlist: PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb
+- skill: cpp
+  playlist: PLBlnK6fEyqRhgMzWqbZXXd8TrBXtQiV3l
+- skill: css
+  playlist: PL0Zuz27SZ-6Mx9fd9elt80G1bPcySmWit
+- skill: css
+  playlist: PL2Fdisxwzt_f5C7Mv0kg1EAHhy2VJLf1c
+- skill: data-architecture
+  playlist: PLlOuZAcnp6h5Yknv2X7dzyx9fXSkFcSEx
+- skill: data-architecture
+  playlist: PLBPpeiGt8ac1u0IzW1kucYao8qjmVrKXP
+- skill: domain-driven-design
+  playlist: PLYpjLpq5ZDGv370qMB4PLF-PlGdBhP0PA
+- skill: domain-driven-design
+  playlist: PLYpjLpq5ZDGtR5nMKGDCa031hx1jVuHXn
+- skill: enterprise-integration
+  playlist: PLbzqMzjlWI2ai0KXdFI187v2FMoASVWEi
+- skill: enterprise-integration
+  playlist: PL9qegNgeU4WqWb0jVT1pZELXM_KoD5LMP
+- skill: event-driven-architecture
+  playlist: PL6tu16kXT9PpywOvObZKKN24cHkWAXVAj
+- skill: event-driven-architecture
+  playlist: PL6RpkC85SLQDTp97PAUVi6KYKRHIKtaii
+- skill: fastapi
+  playlist: PL-osiE80TeTsak-c-QsVeg0YYG_0TeyXI
+- skill: fastapi
+  playlist: PLUhY5ME1VdIumaSa-m5SQ-ztTL8NWY8Gh
+- skill: frontend-architecture
+  playlist: PLI9W87-Dqn7j_x6QtR6sUjycJR7nQLBqT
+- skill: github-actions
+  playlist: PLahhVEj9XNTd5N_seZDoRXVIn6N1qAp-_
+- skill: github-actions
+  playlist: PL9ok7C7Yn9A-6uidd3RXZPf5EfhxkPXa_
+- skill: microservices
+  playlist: PL9ooVrP1hQOEW2uMfPJ3TMmVq7W2okO6U
+- skill: microservices
+  playlist: PLqq-6Pq4lTTZSKAFG6aCDVDP86Qx4lNas
+- skill: mobile-architecture
+  playlist: PLfbOp004UaYVt1En4WW3pVuM-vm66OqZe
+- skill: mobile-architecture
+  playlist: PLzZEuVaFb9Exi-pc8qtHBrrLg8bUn-TP6
+- skill: network-security
+  playlist: PL9FuOtXibFjV77w2eyil4Xzp8eooqsPp8
+- skill: network-security
+  playlist: PLBlnK6fEyqRgJU3EsOYDTW7m6SUmW6kII
+- skill: nextjs
+  playlist: PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI
+- skill: nextjs
+  playlist: PLC3y8-rFHvwhIEc4I4YsRz5C7GOBnxSJY
+- skill: nuxt
+  playlist: PL4cUxeGkcC9haQlqdCQyYmL_27TesCGPC
+- skill: nuxt
+  playlist: PL8HkCX2C5h0XT3xWYn71TlsAAo0kizmVc
+- skill: snowflake
+  playlist: PL__gObEGy1Y7klsW7vc2TM2Cmt6BwRkzh
+- skill: snowflake
+  playlist: PLsphD3EpR7F-wN3yiKT2-G5jAlwIEZKR4
+- skill: spreadsheets
+  playlist: PLxAS51iVMjv_EULO7qpCQWeg0nksZDfIG
+- skill: spreadsheets
+  playlist: PLWeerq9oa1ndM1kKGiwe4uM_npzPtC6M8
+- skill: vector-databases
+  playlist: PLfV3hYgSt3cUqkINoq6iQoGtzKYBGkmnr
+- skill: vector-databases
+  playlist: PL8eNk_zTBST-V2MnYQED-Jd93ZPCb0Wrl
+- skill: vue
+  playlist: PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1
+- skill: vue
+  playlist: PLC3y8-rFHvwgeQIfSDtEGVvvSEPDkL_1f
+- skill: scikit-learn
+  playlist: PLVHgQku8Z9348d6xguTn8zbcUYntz3dQG
+- skill: scikit-learn
+  playlist: PLcQVY5V2UY4LNmObS0gqNVyNdVfXnHwu8
+- skill: aspnet-core
+  playlist: PLp_RsiLZjwQQ7CxVhnM4G8i5veEClNPfX
+- skill: aspnet-core
+  playlist: PL1BztTYDF-QPgfvPouABKLwfTKxB6z7gk
+- skill: android-sdk
+  playlist: PLjVLYmrlmjGdDps6HAwOOVoAtBPAgIOXL
+- skill: android-sdk
+  playlist: PLTV_nsuD2lf7JQvOmG9C-Nc4E0EL8DBoT
+- skill: angular
+  playlist: PLTjRvDozrdlxAhsPP4ZYtt3G8KbJ449oT
+- skill: angular
+  playlist: PL8p2I9GklV45tiZ9F_rbWnx_WHC0GCShX
+- skill: ansible
+  playlist: PLT98CRl2KxKEUHie1m24-wkyHpEsa4Y70
+- skill: ansible
+  playlist: PL7iMyoQPMtAPZl58ovoOlxFxNPioSx838
+- skill: spark
+  playlist: PLEiEAq2VkUUK3tuBXyd01meHuDj7RLjHv
+- skill: spark
+  playlist: PL7_h0bRfL52qWoCcS18nXcT1s-5rSa1yp
+- skill: blockchain-fundamentals
+  playlist: PLUl4u3cNGP63UUkfL0onkxF6MYgVa04Fn
+- skill: blockchain-fundamentals
+  playlist: PLoROMvodv4rN_bvJCjfM33sOLTGj8gxrF
+- skill: computer-architecture
+  playlist: PLxCzCOWd7aiHMonh3G6QNKq53C6oNXGrX
+- skill: computer-architecture
+  playlist: PLBlnK6fEyqRgLLlzdgiTUKULKJPYc0A4q
+- skill: computer-graphics
+  playlist: PLYwpaL_SFmcAtxMe7ahYC4ZYjQHun_b-T
+- skill: computer-graphics
+  playlist: PLrjkTql3jnm9cY0ijEyr2fPdwnH-0t8EY
+- skill: defi-protocols
+  playlist: PLjrTIwaNiTwn39tg3sR_bPBWGHoznv47D
+- skill: defi-protocols
+  playlist: PLapdn6gyLBti5wFvTbu_slqdqPGA6n2kR
+- skill: developer-experience
+  playlist: PLEaEQSM_Y4tmJjQICTFDm2lU5mNmd_Oar
+- skill: developer-experience
+  playlist: PLWMzEPW90q1Z9-po9BsvC_rHDf5mtubdg
+- skill: digital-electronics
+  playlist: PLmXKhU9FNesSfX1PVt4VGm-wbIKfemUWK
+- skill: digital-electronics
+  playlist: PLowKtXNTBypETld5oX1ZMI-LYoA2LWi8D
+- skill: distributed-training
+  playlist: PLrw6a1wE39_tb2fErI4-WkMbsvGQk9_UB
+- skill: distributed-training
+  playlist: PL4qY27h_vhahKkqc8eoBAZ3PV5L31rkEw
+- skill: django
+  playlist: PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p
+- skill: django
+  playlist: PLsyeobzWxl7r2ukVgTqIQcl-1T0C2mzau
+- skill: embedded-linux
+  playlist: PLEBQazB0HUyTpoJoZecRK6PpDG31Y7RPB
+- skill: embedded-linux
+  playlist: PLERTijJOmYrC64uu5wAGQQuYFR45ZoITj
+- skill: communication-protocols
+  playlist: PLgwJf8NK-2e6ZEGXc-LrrgDom6jzu7e1L
+- skill: communication-protocols
+  playlist: PLgwJf8NK-2e7u5ljlFmazKOk5NRX-yWmz
+- skill: ethereum
+  playlist: PL0lNJEnwfVVMuX2Ds19Wj_7Mcze3FDJr3
+- skill: ethereum
+  playlist: PLgPmWS2dQHW9FmqNqug3M5ooNuRqP-alu
+- skill: frontend-build-tools
+  playlist: PLxRKoQzM5m3IaKSQkOgPA1egbRVhMLkyf
+- skill: gpu-infrastructure
+  playlist: PLZHnYvH1qtOZT788gxa0i-wC2IZ47jTe-
+- skill: gpu-infrastructure
+  playlist: PLIsFyaUd-B31Bfx7NlSjYH0WejD9TjyUE
+- skill: game-design-basics
+  playlist: PL-eCFrNZ9nlImCM7CdPpby8Ee2fVErVQO
+- skill: game-math
+  playlist: PL1Zg53I8qpKvmPcSU5Y-8_OQqVjY1FgZO
+- skill: game-math
+  playlist: PLZMkqlPED79zp6E6Je9ZksqaIqJ55ZlyV
+- skill: game-physics
+  playlist: PL1xF9MZIesxEyKJFJlkPYDwwXGZSr3nw3
+- skill: game-physics
+  playlist: PLtrSb4XxIVbpZpV65kk73OoUcIrBzoSiO
+- skill: jenkins
+  playlist: PLy7NrYWoggjw_LIiDK1LXdNN82uYuuuiC
+- skill: jenkins
+  playlist: PLS1QulWo1RIbY8xXPqz6ad_sNHkIP3IXI
+- skill: jetpack-compose
+  playlist: PLQkwcJG4YTCSpJ2NLhDTHhi6XBNfk9WiC
+- skill: jetpack-compose
+  playlist: PLRKyZvuMYSIO9sadcCwR0DR8UPi9bQlev
+- skill: kotlin
+  playlist: PLsyeobzWxl7rooJFZhc3qPLwVROovGCfh
+- skill: kotlin
+  playlist: PLlxmoA0rQ-LwgK1JsnMsakYNACYGa1cjR
+- skill: kotlin-coroutines
+  playlist: PLQkwcJG4YTCQcFEPuYGuv54nYai_lwil_
+- skill: kotlin-coroutines
+  playlist: PLRKyZvuMYSIN-P6oJDEu3zGLl5UQNvx9y
+- skill: llm-frameworks
+  playlist: PLeo1K3hjS3uu0N_0W6giDXzZIcB07Ng_F
+- skill: llm-frameworks
+  playlist: PLEneLIDJFpcA
+- skill: layer2-scaling
+  playlist: PLgPmWS2dQHW8u4IOpsW65dAl5axUzQ1q4
+- skill: layer2-scaling
+  playlist: PLyRKkZ23H20xF1UkYGJKBgHl2rX3QmjHR
+- skill: mcp
+  playlist: PL6tW9BrhiPTCDteflzehKS6Cn3a79-iCs
+- skill: mcp
+  playlist: PLrDJzKfz9AUtufNkGonZM4kDQ9XWUJpST
+- skill: multiplayer-networking
+  playlist: PLS6sInD7ThM1aUDj8lZrF4b4lpvejB2uB
+- skill: multiplayer-networking
+  playlist: PL0iUgXtqnG2gPaXE1hHYoBjqTSWTNwR-6
+- skill: mysql
+  playlist: PLZPZq0r_RZOMskz6MdsMOgxzheIyjo-BZ
+- skill: mysql
+  playlist: PL32BC9C878BA72085
+- skill: nosql-databases
+  playlist: PLATp91001ydaUMm0nMJ2bW7UtSwblqYy1
+- skill: nosql-databases
+  playlist: PLTMKMzmRjN1cuVcLLFe65MJD_azWiqjRK
+- skill: opentelemetry
+  playlist: PLYiz2chG5MSF5UBoGcCwDZIWUNw6lsmFu
+- skill: opentelemetry
+  playlist: PL6VBQyIvTlRjAMeeZN5yfD07X8DdYonnI
+- skill: ml-optimization
+  playlist: PLkDaE6sCZn6Hn0vK8co82zjQtt3T2Nkqc
+- skill: ml-optimization
+  playlist: PLPTV0NXA_ZSjyVzO7GZqCqV_47-uC2N38
+- skill: powershell
+  playlist: PLlVtbbG169nFq_hR7FcMYg32xsSAObuq8
+- skill: powershell
+  playlist: PLKHIhZJiQ5Akf3P2e4Tik18n9g1UKApSL
+- skill: rtos
+  playlist: PLYwpaL_SFmcBpuYagx0JiSaM-Bi4dm0hG
+- skill: rtos
+  playlist: PLJ5C_6qdAvBH-JNRIlupFb44miyx9M8JD
+- skill: redis
+  playlist: PLS1QulWo1RIYZZxQdap7Sd0ARKFI-XVsd
+- skill: redis
+  playlist: PLdUn31k8Q721tgtkv1sfPJrvmi6-t3ijp
+- skill: siem
+  playlist: PLKHIhZJiQ5Aktlu-hLnqOOjX8ZPcfAmfy
+- skill: siem
+  playlist: PLxkFdMSHYh3THHKq1pFp_FkQsNqjqTIAW
+- skill: security-testing-tools
+  playlist: PLsjUcU8CQXGG24TgYSLLS1wtp-gJxpNxz
+- skill: security-testing-tools
+  playlist: PL6FTq_v8hDb3RjWNaEgRpgZBCxOUpho83
+- skill: selenium
+  playlist: PLUDwpEzHYYLtQzEEEldbjPAR-gnStv4sR
+- skill: selenium
+  playlist: PL9ooVrP1hQOFP9H8Y15DVGCA6GavhgJ8a
+- skill: semantic-layer
+  playlist: PL8NIvoU5KY5GUpqeL9123mlckTo8mWaOZ
+- skill: serverless
+  playlist: PL6XT0grm_TfhgfHy-MvShXdRJlu1GkUFR
+- skill: serverless
+  playlist: PLzvRQMJ9HDiT5b4OsmIBiMbsPjfp4kfg3
+- skill: service-mesh
+  playlist: PLbCrS4hGpUCoeot8FqKeMJd-fwaPZUX8a
+- skill: service-mesh
+  playlist: PL34sAs7_26wPkw9g-5NQPP_rHVzApGpKP
+- skill: shaders
+  playlist: PLsaDw3p1XpJiGHPnA8gZH6gO2gQYz3JH1
+- skill: shaders
+  playlist: PLq4ehwQIHfrUHo2UcxDAl_gcPLb2f3T2y
+- skill: smart-contract-testing
+  playlist: PLKXasCp8iWphaakF4BvVQ2letE7pGWk83
+- skill: smart-contract-testing
+  playlist: PLsFVaL1leheqhZArTVXOfApQW1VY8Tlh3
+- skill: solidity
+  playlist: PLWUCKsxdKl0oksYr6IG_wRsaSUySQC0ck
+- skill: solidity
+  playlist: PLgPmWS2dQHW9u6IXZq5t5GMQTpW7JL33i
+- skill: spring-boot
+  playlist: PLsyeobzWxl7qbKoSgR5ub6jolI8-ocxCF
+- skill: spring-boot
+  playlist: PLA3GkZPtsafacdBLdd3p1DyRd5FGfr3Ue
+searched:
+- active-directory
+- airflow
+- algorithms
+- android-sdk
+- angular
+- ansible
+- architecture-patterns
+- aspnet-core
+- authentication-authorization
+- aws
+- azure
+- bi-tools
+- blockchain-fundamentals
+- browser-devtools
+- c
+- caching
+- calculus
+- cloud-architecture
+- cloud-fundamentals
+- cloud-networking
+- communication-protocols
+- computer-architecture
+- computer-graphics
+- computer-networking
+- computer-vision
+- concurrency
+- cpp
+- cryptography-basics
+- csharp
+- css
+- data-architecture
+- data-lakehouse
+- data-modeling
+- data-structures
+- data-warehousing
+- database-design
+- dbt
+- deep-learning
+- defi-protocols
+- design-patterns
+- developer-experience
+- digital-electronics
+- distributed-systems
+- distributed-training
+- django
+- docker
+- dom
+- domain-driven-design
+- embedded-linux
+- embeddings-vector-search
+- enterprise-integration
+- ethereum
+- etl-pipelines
+- event-driven-architecture
+- experiment-tracking
+- fastapi
+- frontend-architecture
+- frontend-build-tools
+- game-design-basics
+- game-math
+- game-physics
+- gcp
+- git
+- github-actions
+- go
+- go-web-services
+- gpu-infrastructure
+- helm
+- html
+- http
+- identity-access-management
+- infrastructure-as-code
+- internal-developer-platforms
+- java
+- javascript
+- jenkins
+- jetpack-compose
+- jupyter
+- kafka
+- kotlin
+- kotlin-coroutines
+- kubernetes
+- layer2-scaling
+- linear-algebra
+- linux
+- llm-frameworks
+- llm-fundamentals
+- machine-learning-fundamentals
+- mcp
+- message-brokers
+- microservices
+- ml-optimization
+- mobile-architecture
+- mobile-data-persistence
+- multiplayer-networking
+- mysql
+- network-security
+- nextjs
+- nlp
+- nodejs
+- nosql-databases
+- numpy
+- nuxt
+- observability
+- oop
+- opentelemetry
+- operating-systems
+- orm
+- pandas
+- postgresql
+- powershell
+- programming-fundamentals
+- prometheus-grafana
+- python
+- pytorch
+- react
+- redis
+- relational-databases
+- rest-api-design
+- rtos
+- scikit-learn
+- security-fundamentals
+- security-testing-tools
+- selenium
+- semantic-layer
+- serverless
+- service-mesh
+- shaders
+- shell-scripting
+- siem
+- smart-contract-testing
+- snowflake
+- solidity
+- spark
+- spreadsheets
+- spring-boot
+- sql
+- state-management
+- statistics
+- terraform
+- testing-fundamentals
+- transformers
+- typescript
+- ui-ux-basics
+- vector-databases
+- vue
+- web-security

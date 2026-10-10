@@ -1,0 +1,89 @@
+# Continuous integration (ADR-0021): lint, schema and tests for the backend, a production build of the
+# frontend, and both container images. Runs on every push and pull request; deploys nothing.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      postgres:
+        image: pgvector/pgvector:pg18
+        env:
+          POSTGRES_DB: xcrs
+          POSTGRES_USER: xcrs
+          POSTGRES_PASSWORD: xcrs
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U xcrs -d xcrs"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      XCRS_DATABASE_URL: postgresql+psycopg://xcrs:xcrs@localhost:5432/xcrs
+      XCRS_LLM_ENABLED: "false"
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.19"
+          enable-cache: true
+      - run: uv sync --locked
+      - name: Format and lint (Ruff)
+        run: |
+          uv run ruff format --check .
+          uv run ruff check .
+      - name: Migrations apply, roll back and re-apply
+        run: |
+          uv run alembic upgrade head
+          uv run alembic downgrade base
+          uv run alembic upgrade head
+      - name: ORM matches the migrations
+        run: uv run alembic check
+      # Catalog-as-code (ADR-0028): roles, skills and roadmaps must pass validation to be merged.
+      - name: Catalog
+        run: uv run xcrs catalog validate
+      # Registering the model needs no Ollama and lets the index-shape tests run (ADR-0009).
+      # Tests that need catalog vectors (embedded by Ollama) skip themselves; the rest run.
+      - name: Tests
+        run: |
+          uv run xcrs register-model qwen3-embedding:0.6b --id 1 --status active
+          uv run pytest -ra
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.8.0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run typecheck
+      - run: pnpm run build
+
+  images:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: docker build -t xcrs-api backend
+      - run: docker build -t xcrs-web frontend

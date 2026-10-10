@@ -1,0 +1,3145 @@
+{
+  "date": "2026-09-29T23:00:14.472410+00:00",
+  "host": "MacBook-Pro.local",
+  "threads": 10,
+  "runs": {
+    "qwen3.5:9b / gpu": {
+      "summary": {
+        "cases": 40,
+        "errors": 0,
+        "median_s": 8.3,
+        "p90_s": 9.6,
+        "prompt_tokens": 920,
+        "output_tokens": 240,
+        "prefill_tok_s": 412.2,
+        "decode_tok_s": 38.5,
+        "clean_pct": 80,
+        "flags": [
+          "invented_curiosity",
+          "misattributed"
+        ],
+        "load_s": 3.1,
+        "contention": {
+          "idle_ms": 99.54374999506399,
+          "during_llm_ms": 150.82741700462066
+        }
+      },
+      "runs": [
+        {
+          "profile": "backend-java",
+          "role": "DevOps Engineer",
+          "total_s": 5.84468425,
+          "prompt_tokens": 1043,
+          "output_tokens": 222,
+          "prefill_tok_s": 12704.947986454552,
+          "decode_tok_s": 38.58546384767988,
+          "flags": [],
+          "output": {
+            "role_explanation": "This DevOps Engineer role fits you because it builds on your curiosity about Kubernetes, Docker, and container orchestration. It also addresses the infrastructure and automation concepts you are eager to explore.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you master code explanation and optimize Infrastructure as Code with ChatGPT. You will learn to secure architectures and streamline documentation tasks efficiently."
+              },
+              {
+                "course_id": 168,
+                "explanation": "You will create a CI/CD pipeline to build, test, and deliver code on AWS using tools like Elastic Beanstalk. This builds your continuous integration and delivery skills."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course teaches you how Docker Compose works and how best practices support continuous improvement. You will also practice collaborating with AI tools for development tasks."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "backend-java",
+          "role": "AI Data Scientist",
+          "total_s": 7.752441375,
+          "prompt_tokens": 916,
+          "output_tokens": 215,
+          "prefill_tok_s": 409.83331506383513,
+          "decode_tok_s": 39.19991335907522,
+          "flags": [],
+          "output": {
+            "role_explanation": "Since you know SQL, this AI Data Scientist role fits well. It builds on your data querying skills to add machine learning and statistical analysis capabilities.",
+            "courses": [
+              {
+                "course_id": 417,
+                "explanation": "This course helps you master Python fundamentals using ChatGPT prompts. It covers statistics concepts like the Central Limit Theorem and probability sampling to strengthen your analytical foundation."
+              },
+              {
+                "course_id": 435,
+                "explanation": "You will learn to use ChatGPT for data exploration and building regression models. This course covers calculus, hypothesis testing, and sampling methods essential for advanced modeling."
+              },
+              {
+                "course_id": 182,
+                "explanation": "This project-based course teaches you to apply machine learning algorithms and analyze model performance. It covers linear algebra, differential calculus, and data visualization techniques."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "backend-java",
+          "role": "Backend Developer",
+          "total_s": 8.866705167,
+          "prompt_tokens": 997,
+          "output_tokens": 246,
+          "prefill_tok_s": 406.3302751919676,
+          "decode_tok_s": 38.53563339892745,
+          "flags": [],
+          "output": {
+            "role_explanation": "This Backend Developer role fits you because you already know Java, SQL, and Spring Boot, which are core backend skills. Your curiosity about Kubernetes and Docker shows a strong interest in containerization, a key part of modern backend infrastructure.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course covers HTTP, browsers, domains, hosting, and CSS. It helps you understand the web fundamentals that your Java and Spring Boot applications rely on to communicate with clients."
+              },
+              {
+                "course_id": 371,
+                "explanation": "You will learn about Docker Compose, column databases, sharding strategies, and data replication. These concepts directly support your curiosity about Docker and help you manage the infrastructure for your backend systems."
+              },
+              {
+                "course_id": 66,
+                "explanation": "This course teaches database schema design, SQL commands, transactions, and normalization. Since you already know SQL, this will deepen your ability to design robust databases for your Java applications."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "frontend",
+          "role": "Full Stack Developer",
+          "total_s": 9.269763083,
+          "prompt_tokens": 927,
+          "output_tokens": 271,
+          "prefill_tok_s": 414.59240021270784,
+          "decode_tok_s": 38.678773075063795,
+          "flags": [],
+          "output": {
+            "role_explanation": "This Full Stack Developer role fits you because you already know HTML, CSS, and JavaScript. Your curiosity about React shows a desire to build dynamic frontends, while the recommended courses will help you master backend hosting, deployment, and automation on AWS.",
+            "courses": [
+              {
+                "course_id": 326,
+                "explanation": "This course teaches you infrastructure as code (IaC) and automates pipelines using AWS CloudFormation. You will learn to differentiate between continuous integration, delivery, and deployment strategies for serverless applications."
+              },
+              {
+                "course_id": 305,
+                "explanation": "You will create a Node.js backend app and host it on auto-scaling containers in AWS. This covers CLI apps, EC2, S3, deployment, and monitoring to help you run scalable web applications."
+              },
+              {
+                "course_id": 168,
+                "explanation": "This course guides you to create a CI/CD pipeline using AWS CodePipeline and Elastic Beanstalk. You will learn to build, test, and deliver NodeJS code on AWS, covering S3, GitHub Actions, and deployment."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "frontend",
+          "role": "Frontend Developer",
+          "total_s": 8.945689292,
+          "prompt_tokens": 1096,
+          "output_tokens": 241,
+          "prefill_tok_s": 406.59741402560746,
+          "decode_tok_s": 38.729554892956976,
+          "flags": [
+            "misattributed:redux"
+          ],
+          "output": {
+            "role_explanation": "This Frontend Developer role fits you because you already know HTML, CSS, and JavaScript basics. Your curiosity about TypeScript, React, and Redux shows a strong desire to build modern web applications using popular frameworks.",
+            "courses": [
+              {
+                "course_id": 418,
+                "explanation": "This course helps you build full-stack React apps with Next.js. It covers server and client components, forms, validations, and styling tools like styled JSX to expand your framework skills."
+              },
+              {
+                "course_id": 214,
+                "explanation": "This course teaches the fundamental building blocks of web development. You will learn about HTTP, domains, hosting, browsers, and accessibility to understand how websites function on the internet."
+              },
+              {
+                "course_id": 360,
+                "explanation": "This course guides you in building your first React application. It covers responsive design, media queries, and various bundlers like Webpack and Parcel to help you create modern web apps."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "frontend",
+          "role": "Backend Developer",
+          "total_s": 8.104264167,
+          "prompt_tokens": 916,
+          "output_tokens": 224,
+          "prefill_tok_s": 402.2165822128938,
+          "decode_tok_s": 38.62061640917578,
+          "flags": [],
+          "output": {
+            "role_explanation": "This Backend Developer role fits you because you already know JavaScript, HTML, and CSS. These skills provide a strong foundation for understanding web applications, which is essential for building robust backend systems.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course helps you understand how the internet works, HTTP, domains, hosting, and browsers. It teaches you to create websites from scratch using HTML and CSS."
+              },
+              {
+                "course_id": 371,
+                "explanation": "You will learn about column and realtime databases, data replication, and sharding strategies. You will also practice collaborating with AI tools like Bard for development tasks."
+              },
+              {
+                "course_id": 66,
+                "explanation": "This course teaches you to design database schemas and write SQL commands. You will learn about transactions, normalization, and different database types like document and key-value stores."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "data-science",
+          "role": "AI Data Scientist",
+          "total_s": 8.410637583,
+          "prompt_tokens": 973,
+          "output_tokens": 233,
+          "prefill_tok_s": 391.40659381328175,
+          "decode_tok_s": 39.52121322322124,
+          "flags": [],
+          "output": {
+            "role_explanation": "This AI Data Scientist role fits you because you already know Python, Statistics, and Pandas. You have strong foundations in exploratory data analysis (EDA), which are essential for understanding data and building models.",
+            "courses": [
+              {
+                "course_id": 435,
+                "explanation": "This course helps you build ML models using ChatGPT. It covers hypothesis testing, probability sampling, and A/B testing to assist in data exploration and generating descriptive statistics."
+              },
+              {
+                "course_id": 182,
+                "explanation": "You will learn to apply Machine Learning Algorithms and analyze model performance. This course covers regression, time series fitting, and deployment models including CI/CD practices."
+              },
+              {
+                "course_id": 225,
+                "explanation": "This course teaches you to build customized dashboards in Power BI. You will learn ratio metrics and A/B testing principles to create clear visualizations and improve user experience."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "data-science",
+          "role": "Game Developer",
+          "total_s": 7.505436334,
+          "prompt_tokens": 763,
+          "output_tokens": 214,
+          "prefill_tok_s": 377.96470711202767,
+          "decode_tok_s": 39.17373441379619,
+          "flags": [],
+          "output": {
+            "role_explanation": "This Game Developer role fits you because it builds on your curiosity about deep learning by teaching the mathematical foundations needed to implement graphics and algorithms in games.",
+            "courses": [
+              {
+                "course_id": 81,
+                "explanation": "This course teaches lighting techniques using linear algebra, affine space, and Euler angles. You will master these fundamentals to improve your programming skills for rendering."
+              },
+              {
+                "course_id": 151,
+                "explanation": "You will learn C++ game development covering vectors, geometry, and affine transformations. This builds the core math skills required for creating game logic and visuals."
+              },
+              {
+                "course_id": 415,
+                "explanation": "This course covers matrix operations, splines, and perspective to help you write algorithms for 3D space division. You will learn recursion to create dungeon maps efficiently."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "data-science",
+          "role": "Blockchain Developer",
+          "total_s": 8.592987833,
+          "prompt_tokens": 903,
+          "output_tokens": 240,
+          "prefill_tok_s": 369.6683628563124,
+          "decode_tok_s": 39.10003450578045,
+          "flags": [],
+          "output": {
+            "role_explanation": "Since you know Python, this Blockchain Developer role fits well. It builds on your coding skills while introducing essential blockchain fundamentals like decentralization and structure that are currently missing from your background.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you master code explanation and automated documentation using ChatGPT. It covers unit tests, integration tests, and code coverage, which are vital for ensuring the reliability of your blockchain applications."
+              },
+              {
+                "course_id": 130,
+                "explanation": "You will learn about Bitcoin cryptocurrency and basic blockchain operations. This course explains what blockchain is, its structure, and why it matters, directly addressing concepts you have not covered yet."
+              },
+              {
+                "course_id": 250,
+                "explanation": "This guide clarifies common misconceptions about the deep web and teaches basic blockchain operations. It covers decentralization and why blockchain matters, helping you understand the core principles needed for this role."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "devops",
+          "role": "DevOps Engineer",
+          "total_s": 9.925672459,
+          "prompt_tokens": 1286,
+          "output_tokens": 248,
+          "prefill_tok_s": 375.27416024381733,
+          "decode_tok_s": 38.301116894545444,
+          "flags": [],
+          "output": {
+            "role_explanation": "This DevOps role fits you because you already know Git for version control and are curious about Terraform, Monitoring, and various cloud tools. This path builds on your existing skills while exploring the infrastructure automation and observability areas you want to learn.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you enhance DevOps practices using ChatGPT for code understanding, architecture visualization, and automated documentation. It also covers best practices for AI integration responsibly."
+              },
+              {
+                "course_id": 168,
+                "explanation": "You will learn to create CI/CD pipelines on AWS using CodePipeline and Elastic Beanstalk. This course specifically addresses your curiosity about Pulumi by including it in the curriculum alongside other tools like Jenkins."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course covers Terraform for infrastructure management and introduces Docker Compose. It also teaches collaboration with AI tools like Bard to support continuous improvement in your data center workflows."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "devops",
+          "role": "Full Stack Developer",
+          "total_s": 7.811535375,
+          "prompt_tokens": 980,
+          "output_tokens": 241,
+          "prefill_tok_s": 632.1381621808508,
+          "decode_tok_s": 38.629403130841,
+          "flags": [
+            "misattributed:infrastructure"
+          ],
+          "output": {
+            "role_explanation": "This Full Stack Developer role fits you because you already know Git, Linux, and Bash scripting. Your curiosity about Terraform shows a strong interest in infrastructure, which is essential for building scalable applications.",
+            "courses": [
+              {
+                "course_id": 326,
+                "explanation": "This course helps you automate deployment pipelines using AWS CloudFormation and CodeDeploy. It covers CI/CD concepts and Terraform, directly addressing your interest in infrastructure as code."
+              },
+              {
+                "course_id": 305,
+                "explanation": "You will learn to create a Node.js backend app and host it on auto-scaling containers. This builds practical skills in CLI apps, EC2, S3, deployment, and monitoring for your role."
+              },
+              {
+                "course_id": 168,
+                "explanation": "This course teaches you to build CI/CD pipelines using AWS CodePipeline and Elastic Beanstalk. It covers essential deployment strategies and integrates with GitHub Actions for automated delivery."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "devops",
+          "role": "QA Engineer",
+          "total_s": 9.487963583,
+          "prompt_tokens": 1136,
+          "output_tokens": 252,
+          "prefill_tok_s": 382.06205212389165,
+          "decode_tok_s": 38.77980274007006,
+          "flags": [
+            "misattributed:data dog",
+            "misattributed:grafana"
+          ],
+          "output": {
+            "role_explanation": "This QA Engineer role fits you because you already know Git for version control and are curious about monitoring tools like Data Dog and Grafana. This path builds on your existing skills while addressing the testing concepts you haven't covered yet.",
+            "courses": [
+              {
+                "course_id": 404,
+                "explanation": "This course teaches TestProject for automating web, mobile, and API applications. It also covers tools like Assembla and YouTrack to help manage your test cases and bug reports effectively."
+              },
+              {
+                "course_id": 235,
+                "explanation": "You will learn manual testing concepts from basic to advanced levels, including JIRA for task management. The course also covers black box, white box, and gray box testing techniques using MySQL and Unix/Linux."
+              },
+              {
+                "course_id": 170,
+                "explanation": "This course helps you use ChatGPT to understand code, visualize architectures, and streamline documentation. It also teaches how to identify bugs efficiently and optimize Infrastructure as Code with AI assistance."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "android",
+          "role": "Android Developer",
+          "total_s": 8.770152084,
+          "prompt_tokens": 975,
+          "output_tokens": 238,
+          "prefill_tok_s": 377.39354598975814,
+          "decode_tok_s": 38.55897652163361,
+          "flags": [],
+          "output": {
+            "role_explanation": "This Android Developer role fits you because you already know Kotlin and Java, while your curiosity about Jetpack Compose shows a desire to build modern interfaces. This path bridges your current skills with the new concepts you want to explore.",
+            "courses": [
+              {
+                "course_id": 197,
+                "explanation": "This course helps you master Android activities and their lifecycles using Java. It also teaches you to create intuitive user interfaces with XML and set up your development environment."
+              },
+              {
+                "course_id": 2,
+                "explanation": "You will get an overview of the Java programming language and learn to debug applications. This course covers creating signed APKs for the Play Store and using components like Fragments and Intents."
+              },
+              {
+                "course_id": 118,
+                "explanation": "This course teaches you how to write real Android applications from the ground up. You will learn to configure your environment and understand the basics of the Android platform architecture."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "android",
+          "role": "Backend Developer",
+          "total_s": 7.867789583,
+          "prompt_tokens": 881,
+          "output_tokens": 216,
+          "prefill_tok_s": 381.7278449448358,
+          "decode_tok_s": 39.590574803825035,
+          "flags": [],
+          "output": {
+            "role_explanation": "Your Java experience aligns perfectly with Backend Development. Since you are curious about mobile app architecture, this role offers a path to understand how backend systems support complex applications.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course covers HTML and CSS, helping you understand web fundamentals like domains, hosting, and browsers. It also explains HTTP, which is essential for any backend developer."
+              },
+              {
+                "course_id": 371,
+                "explanation": "You will learn about column and realtime databases, sharding strategies, and data replication. You will also practice using AI tools to improve your development workflow."
+              },
+              {
+                "course_id": 66,
+                "explanation": "This course teaches you SQL commands, database normalization, and transactions. You will learn how to design schemas and combine information from multiple tables effectively."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "game",
+          "role": "Game Developer",
+          "total_s": 7.974266959,
+          "prompt_tokens": 892,
+          "output_tokens": 250,
+          "prefill_tok_s": 616.2740567967014,
+          "decode_tok_s": 38.34996955012418,
+          "flags": [],
+          "output": {
+            "role_explanation": "This Game Developer role fits you because you already know Unity and Linear Algebra. Your curiosity about Shaders and Game Physics shows a strong desire to build interactive, visually rich experiences that this career perfectly supports.",
+            "courses": [
+              {
+                "course_id": 81,
+                "explanation": "This course teaches lighting algorithms using concepts like linear transformation and affine space. It helps you understand how light interacts with 3D geometry, which is essential for creating realistic graphics in your Unity projects."
+              },
+              {
+                "course_id": 151,
+                "explanation": "You will learn about vectors, geometry, and affine transformations. These concepts are fundamental for handling game physics and spatial calculations, directly addressing the 'Game physics' topic you are curious about."
+              },
+              {
+                "course_id": 415,
+                "explanation": "This course covers matrix operations and affine space to teach Binary Space Partitioning. You will learn to use recursion to divide 3D space, a key skill for generating maps and optimizing rendering in your games."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "game",
+          "role": "Backend Developer",
+          "total_s": 8.252931334,
+          "prompt_tokens": 823,
+          "output_tokens": 240,
+          "prefill_tok_s": 388.6056846920525,
+          "decode_tok_s": 39.2947573425938,
+          "flags": [],
+          "output": {
+            "role_explanation": "Your experience with C++ shows a strong foundation in programming logic. This role fits well because it builds on that technical base while expanding your skills into web technologies and database management, which are essential for backend development.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course teaches you how the internet works, including HTTP, domains, hosting, browsers, and CSS. These concepts fill gaps in your knowledge about web infrastructure and styling."
+              },
+              {
+                "course_id": 371,
+                "explanation": "You will learn about column and realtime databases, data replication, sharding strategies, and ACID properties. This helps you understand how to design scalable backend systems and manage complex data structures."
+              },
+              {
+                "course_id": 66,
+                "explanation": "This course covers document and key-value databases, transactions, normalization, and SQL commands. It teaches you how to design schemas and write queries to combine information from multiple tables effectively."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "blockchain",
+          "role": "Blockchain Developer",
+          "total_s": 9.304553833,
+          "prompt_tokens": 1233,
+          "output_tokens": 232,
+          "prefill_tok_s": 385.83361652832355,
+          "decode_tok_s": 38.07329437385021,
+          "flags": [],
+          "output": {
+            "role_explanation": "This role fits you because you already know JavaScript and are curious about Solidity, Ethereum, and smart contracts. These interests align perfectly with building decentralized applications on the blockchain.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you understand code, secure architectures, and run unit/integration tests. It also teaches you about hybrid smart contracts and code coverage to improve your development workflow."
+              },
+              {
+                "course_id": 130,
+                "explanation": "You will learn the basics of blockchain structure, operations, decentralization, and why it matters. This foundational knowledge is essential for understanding the ecosystem you are interested in."
+              },
+              {
+                "course_id": 250,
+                "explanation": "This course covers what blockchain is, its structure, and basic operations. It also explains decentralization versus trust, helping you grasp the core principles behind the technology you want to build with."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "blockchain",
+          "role": "Full Stack Developer",
+          "total_s": 7.853141833,
+          "prompt_tokens": 824,
+          "output_tokens": 248,
+          "prefill_tok_s": 604.3279858129605,
+          "decode_tok_s": 38.33291986333077,
+          "flags": [],
+          "output": {
+            "role_explanation": "Since you know JavaScript, this Full Stack Developer role fits well. It builds on your coding foundation by adding the DevOps and cloud deployment skills needed to ship complete web applications.",
+            "courses": [
+              {
+                "course_id": 326,
+                "explanation": "This course teaches you infrastructure as code (IaC) and automation. You will learn to build pipelines using AWS CloudFormation and differentiate between continuous integration, delivery, and deployment strategies."
+              },
+              {
+                "course_id": 305,
+                "explanation": "You will create a Node.js backend app and host it on AWS with auto-scaling containers. This covers CLI apps, EC2, S3, deployment, and monitoring to help you run scalable web applications."
+              },
+              {
+                "course_id": 168,
+                "explanation": "This course guides you in creating a CI/CD pipeline to build, test, and deliver code on AWS using CodePipeline and Elastic Beanstalk. You will also explore S3 storage and GitHub Actions integration."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "blockchain",
+          "role": "Backend Developer",
+          "total_s": 7.559048209,
+          "prompt_tokens": 844,
+          "output_tokens": 234,
+          "prefill_tok_s": 591.1229304569086,
+          "decode_tok_s": 38.29483257057337,
+          "flags": [],
+          "output": {
+            "role_explanation": "Since you already know JavaScript, a Backend Developer role fits well. This path lets you build the server-side logic and data handling systems that power web applications.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course teaches HTML and CSS, which are essential for understanding how browsers render content. It also covers HTTP, domains, and hosting, helping you grasp the full web stack beyond just backend code."
+              },
+              {
+                "course_id": 371,
+                "explanation": "You will learn about column and realtime databases, sharding strategies, and ACID properties. This knowledge is crucial for designing scalable backend systems that handle complex data storage and replication needs."
+              },
+              {
+                "course_id": 66,
+                "explanation": "This course helps you design database schemas and write SQL queries. You will understand transactions, normalization, and how to combine information from multiple tables, which are core skills for backend development."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "qa",
+          "role": "QA Engineer",
+          "total_s": 9.874986083,
+          "prompt_tokens": 1414,
+          "output_tokens": 242,
+          "prefill_tok_s": 392.0936832154788,
+          "decode_tok_s": 39.05017705705279,
+          "flags": [],
+          "output": {
+            "role_explanation": "This QA Engineer role fits you because you already know Selenium and manual testing, while your curiosity about Cypress and test automation shows a strong drive to expand into modern automated testing strategies.",
+            "courses": [
+              {
+                "course_id": 404,
+                "explanation": "This course helps you master TestProject for automating web, mobile, and API applications. It also covers tools like QTest, TestRail, and YouTrack to manage your test cases effectively."
+              },
+              {
+                "course_id": 235,
+                "explanation": "You will gain a solid foundation in QA concepts, tester mindset, and testing types like white box and gray box. It also teaches you how to prioritize tests and use JIRA for bug tracking."
+              },
+              {
+                "course_id": 170,
+                "explanation": "This course enhances your DevOps practices using ChatGPT. You will learn to understand code, visualize architectures, and resolve bugs efficiently, covering tools like YouTrack and Ghost Inspector."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "qa",
+          "role": "Frontend Developer",
+          "total_s": 7.479179292,
+          "prompt_tokens": 887,
+          "output_tokens": 229,
+          "prefill_tok_s": 604.5636032263385,
+          "decode_tok_s": 38.33749856025114,
+          "flags": [],
+          "output": {
+            "role_explanation": "This Frontend Developer role fits you because you already know Selenium for testing and are curious about Cypress. These skills align with building interactive web applications, which is central to this career path.",
+            "courses": [
+              {
+                "course_id": 418,
+                "explanation": "This course teaches you to build full-stack React apps using Next.js. It covers key features like server-side rendering and file-based routing, helping you create dynamic web applications."
+              },
+              {
+                "course_id": 214,
+                "explanation": "You will learn the fundamental building blocks of web development by creating a website from scratch. This course explains how browsers work, what domains are, and the basics of hosting."
+              },
+              {
+                "course_id": 360,
+                "explanation": "This course guides you through building your first React application. You will learn JavaScript, React Router, and Tailwind CSS to develop responsive web applications effectively."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "qa",
+          "role": "Backend Developer",
+          "total_s": 7.705281334,
+          "prompt_tokens": 846,
+          "output_tokens": 242,
+          "prefill_tok_s": 610.8373815148767,
+          "decode_tok_s": 38.41656446061397,
+          "flags": [],
+          "output": {
+            "role_explanation": "Your experience with Java and manual testing makes you a strong fit for Backend Developer. You already understand core programming logic and testing basics, which are essential for building robust server-side applications.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course teaches HTML and CSS, helping you understand how browsers work, what domains and hosting are, and the basics of HTTP. This knowledge complements your backend skills by showing how your code reaches users."
+              },
+              {
+                "course_id": 371,
+                "explanation": "You will learn about column and realtime databases, data replication, and sharding strategies. You will also practice using AI tools like Bard to improve your development workflow and understand Docker Compose basics."
+              },
+              {
+                "course_id": 66,
+                "explanation": "This course helps you design database schemas and write SQL commands. You will learn about transactions, normalization, and different database types like document and key-value stores to manage data effectively."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "ux",
+          "role": "UX Designer",
+          "total_s": 10.235204166,
+          "prompt_tokens": 1219,
+          "output_tokens": 269,
+          "prefill_tok_s": 386.06064540852276,
+          "decode_tok_s": 38.27171208290592,
+          "flags": [
+            "misattributed:balsamiq",
+            "misattributed:adobe xd"
+          ],
+          "output": {
+            "role_explanation": "This UX Designer role fits you because you already know Figma, Balsamiq, and how to conduct user research. You are also curious about prototyping with Adobe XD and Figma, which aligns perfectly with the design and modeling skills needed for this career.",
+            "courses": [
+              {
+                "course_id": 424,
+                "explanation": "This course teaches you software design and modeling skills like UML. It covers concepts such as dual process theory, nudge theory, and behavioral science to help you understand how user behavior works in your designs."
+              },
+              {
+                "course_id": 390,
+                "explanation": "You will learn to build attractive mobile interfaces using .NET MAUI. This course covers concepts like helping users think about their actions and educating them, applying behavioral science principles directly to your app development."
+              },
+              {
+                "course_id": 197,
+                "explanation": "This course helps you create intuitive Android user interfaces using XML. It addresses concepts like nudge theory and behavior design, teaching you how to manage activity lifecycles to ensure a smooth user experience based on behavioral economics."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "ux",
+          "role": "QA Engineer",
+          "total_s": 8.665911791,
+          "prompt_tokens": 968,
+          "output_tokens": 275,
+          "prefill_tok_s": 602.4996265498182,
+          "decode_tok_s": 39.24728558637015,
+          "flags": [],
+          "output": {
+            "role_explanation": "This QA Engineer role fits you because your experience in User Research aligns with understanding user needs, and your curiosity about Accessibility shows a strong desire to ensure inclusive testing. This path combines your background with new skills to build robust quality assurance strategies.",
+            "courses": [
+              {
+                "course_id": 404,
+                "explanation": "This course teaches you automation for Web, Mobile, and API applications using TestProject. It covers concepts like QTest, TestRail, and YouTrack, helping you manage test cases and defects efficiently across different platforms."
+              },
+              {
+                "course_id": 235,
+                "explanation": "This crash course builds your foundation in manual testing, covering black box, white box, and gray box testing. It also provides practical knowledge of JIRA for bug tracking and database testing with MySQL, addressing key concepts you haven't covered yet."
+              },
+              {
+                "course_id": 170,
+                "explanation": "Learn to enhance DevOps practices using ChatGPT. This course covers YouTrack and other tools to help you streamline documentation, understand code, and resolve bugs efficiently, supporting your goal of becoming a super-efficient QA professional."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "ux",
+          "role": "Frontend Developer",
+          "total_s": 8.140825917,
+          "prompt_tokens": 832,
+          "output_tokens": 246,
+          "prefill_tok_s": 507.4111298679755,
+          "decode_tok_s": 38.20785289417496,
+          "flags": [],
+          "output": {
+            "role_explanation": "This Frontend Developer role fits you because you are curious about Accessibility. This career focuses on building user-friendly web applications, ensuring your interest in accessible design is central to your daily work.",
+            "courses": [
+              {
+                "course_id": 418,
+                "explanation": "This course helps you build full stack React apps using Next.js. You will learn key features like pre-rendering and server components, while also covering forms, validations, and styling tools like styled components."
+              },
+              {
+                "course_id": 214,
+                "explanation": "You will create websites from scratch by learning fundamental building blocks. This course covers what HTTP is, how browsers work, domain names, hosting, and the basics of writing semantic HTML."
+              },
+              {
+                "course_id": 360,
+                "explanation": "This course teaches you to build your first React web app using JavaScript. You will learn responsive design with media queries, routing, Tailwind CSS, and how to use bundlers like webpack and parcel."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "fullstack",
+          "role": "Full Stack Developer",
+          "total_s": 8.040445667,
+          "prompt_tokens": 871,
+          "output_tokens": 248,
+          "prefill_tok_s": 570.1127396306246,
+          "decode_tok_s": 38.27558607176117,
+          "flags": [
+            "invented_curiosity"
+          ],
+          "output": {
+            "role_explanation": "Your interest in React and Node.js makes you a strong fit for Full Stack Developer. This role combines your frontend skills with backend development, allowing you to build complete web applications from start to finish.",
+            "courses": [
+              {
+                "course_id": 326,
+                "explanation": "This course teaches you infrastructure as code and automation. You will learn to automate pipelines and differentiate between continuous integration, delivery, and deployment strategies for serverless apps."
+              },
+              {
+                "course_id": 305,
+                "explanation": "You will create a Node.js backend app from scratch and host it on AWS with auto-scaling containers. This covers CLI apps, EC2, S3, deployment, and monitoring to help you run scalable applications."
+              },
+              {
+                "course_id": 168,
+                "explanation": "This course helps you build a CI/CD pipeline using AWS CodePipeline and Elastic Beanstalk. You will learn to test and deliver code effectively, covering S3, deployment, GitHub Actions, and SES."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "fullstack",
+          "role": "Frontend Developer",
+          "total_s": 9.991455125,
+          "prompt_tokens": 1073,
+          "output_tokens": 277,
+          "prefill_tok_s": 381.3034109064858,
+          "decode_tok_s": 38.88474617385328,
+          "flags": [],
+          "output": {
+            "role_explanation": "This Frontend Developer role fits you because you already know React, Node.js, and Express. Your curiosity about GraphQL shows a desire to deepen your data handling skills, making this path a perfect match for your current knowledge and interests.",
+            "courses": [
+              {
+                "course_id": 418,
+                "explanation": "This course helps you build full stack React apps using Next.js. It covers key features like pre-rendering, SSR, data fetching, file-based routing, server components, client components, forms, validations, pnpm, parcel, styled components, and styled jsx."
+              },
+              {
+                "course_id": 214,
+                "explanation": "This course teaches you the fundamental building blocks of web development. You will learn to create websites from scratch, understand resources like HTTP, domains, hosting, browsers, and how they work, plus the basics."
+              },
+              {
+                "course_id": 360,
+                "explanation": "This course guides you in building your first React web app. You will learn JavaScript, React Router, Tailwind CSS, responsive design with media queries, and tools like webpack, esbuild, rollup, and parcel."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "fullstack",
+          "role": "Backend Developer",
+          "total_s": 7.880986542,
+          "prompt_tokens": 966,
+          "output_tokens": 206,
+          "prefill_tok_s": 378.7024931247464,
+          "decode_tok_s": 38.85814400677263,
+          "flags": [],
+          "output": {
+            "role_explanation": "This role fits you because you already know MongoDB, Node.js, and Express. Your curiosity about GraphQL shows a desire to build flexible APIs, which are central to backend development.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course teaches HTML and CSS, helping you understand how browsers work, what domains and hosting are, and the basics of HTTP."
+              },
+              {
+                "course_id": 10,
+                "explanation": "You will learn advanced SQL querying, key-value databases, and how to solve performance issues like the N+1 problem in your backend code."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course covers column and realtime databases, data replication, sharding strategies, and introduces you to AI tools for developers."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-single-fact",
+          "role": "AI Data Scientist",
+          "total_s": 7.30225575,
+          "prompt_tokens": 916,
+          "output_tokens": 220,
+          "prefill_tok_s": 564.9738422045328,
+          "decode_tok_s": 38.94894501471208,
+          "flags": [],
+          "output": {
+            "role_explanation": "Since you know SQL, this AI Data Scientist role fits well. It builds on your data querying skills to add machine learning and statistical analysis capabilities.",
+            "courses": [
+              {
+                "course_id": 417,
+                "explanation": "This course helps you master Python fundamentals using ChatGPT prompts. It covers statistics concepts like the Central Limit Theorem and probability sampling to strengthen your analytical foundation."
+              },
+              {
+                "course_id": 435,
+                "explanation": "You will learn to use ChatGPT for data exploration and building regression models. This course covers calculus, hypothesis testing, and sampling methods essential for advanced modeling."
+              },
+              {
+                "course_id": 182,
+                "explanation": "This project-based course teaches you to apply machine learning algorithms and analyze model performance. It covers data visualization, time-series fitting, and mathematical analysis required for real-world projects."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-single-fact",
+          "role": "Backend Developer",
+          "total_s": 7.630827542,
+          "prompt_tokens": 823,
+          "output_tokens": 239,
+          "prefill_tok_s": 606.991688712831,
+          "decode_tok_s": 38.42831102106273,
+          "flags": [],
+          "output": {
+            "role_explanation": "Since you already know SQL, a Backend Developer role fits well. This path lets you build the server-side logic and database systems that power applications, leveraging your existing database skills.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course teaches HTML and CSS, which are essential for understanding how browsers render content. It also covers HTTP, domains, and hosting, helping you grasp the full web stack beyond just the backend."
+              },
+              {
+                "course_id": 371,
+                "explanation": "You will learn about column and realtime databases, sharding strategies, and ACID properties. This deepens your database knowledge and introduces AI tools that can assist in managing complex infrastructure."
+              },
+              {
+                "course_id": 66,
+                "explanation": "This course reinforces your SQL skills by teaching you to design schemas and write complex queries. You will also learn about transactions, normalization, and different database types like document and key-value stores."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-curious-only",
+          "role": "AI Data Scientist",
+          "total_s": 8.013260625,
+          "prompt_tokens": 923,
+          "output_tokens": 216,
+          "prefill_tok_s": 473.57813680097195,
+          "decode_tok_s": 36.23734251435485,
+          "flags": [],
+          "output": {
+            "role_explanation": "This AI Data Scientist role fits you because it aligns with your curiosity about Machine learning. The recommended path helps you build the mathematical and statistical foundations needed to deploy these models effectively.",
+            "courses": [
+              {
+                "course_id": 417,
+                "explanation": "This course enhances your problem-solving skills using AI prompts to master Python fundamentals, data types, and essential programming constructs required for the role."
+              },
+              {
+                "course_id": 435,
+                "explanation": "You will learn to harness ChatGPT for data exploration, generating statistics and visualizations, while gaining proficiency in building regression models using mathematical analysis concepts."
+              },
+              {
+                "course_id": 182,
+                "explanation": "This project-based course teaches you to apply Machine Learning algorithms, perform feature engineering, and analyze model performance, covering advanced calculus and hypothesis testing concepts."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-curious-only",
+          "role": "DevOps Engineer",
+          "total_s": 8.8920985,
+          "prompt_tokens": 889,
+          "output_tokens": 275,
+          "prefill_tok_s": 562.4318312375525,
+          "decode_tok_s": 37.99923918614197,
+          "flags": [
+            "misattributed:aws",
+            "misattributed:google cloud"
+          ],
+          "output": {
+            "role_explanation": "This DevOps Engineer role fits you because it aligns with your curiosity about Cloud computing, specifically AWS and Google Cloud. The recommended path helps you build the necessary skills to manage these environments effectively.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you progress by teaching you how to use ChatGPT for tasks like understanding code, optimizing Infrastructure as Code, and resolving bugs. It covers concepts including Bitbucket, domain keys, Cloudflare, GCP Functions, and Ansible."
+              },
+              {
+                "course_id": 168,
+                "explanation": "You will learn to create CI/CD (continuous integration and delivery) pipelines on AWS using CodePipeline and Elastic Beanstalk. This course covers AWS Lambda, GCP Functions, Pulumi, Chef, and GitLab CI."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course teaches you advanced data center management and how to use AI tools like Bard for collaboration. It also covers Docker Compose best practices and concepts including DigitalOcean, Vultr, Terraform, Chef, and Azure DevOps Services."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-misattribution",
+          "role": "DevOps Engineer",
+          "total_s": 9.618869709,
+          "prompt_tokens": 1091,
+          "output_tokens": 250,
+          "prefill_tok_s": 373.53432287402995,
+          "decode_tok_s": 37.58041080499945,
+          "flags": [],
+          "output": {
+            "role_explanation": "This DevOps role fits you because you already know Docker and are curious about Kubernetes. This path leverages your container skills while guiding you toward the orchestration and CI/CD concepts you want to explore next.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you apply AI tools to understand code, secure architectures, and optimize Infrastructure as Code. It also teaches you how to use ChatGPT for automated documentation and efficient bug resolution."
+              },
+              {
+                "course_id": 168,
+                "explanation": "You will learn to create CI/CD pipelines on AWS using CodePipeline and Elastic Beanstalk. This course covers building, testing, and delivering NodeJS applications, introducing you to tools like Mocha and GitLab CI."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course teaches advanced data center management and introduces Docker Compose best practices. You will also learn to collaborate with AI tools like Bard for drafting and editing technical outputs."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-misattribution",
+          "role": "Backend Developer",
+          "total_s": 7.27033725,
+          "prompt_tokens": 880,
+          "output_tokens": 224,
+          "prefill_tok_s": 622.1706260521223,
+          "decode_tok_s": 38.43398003080209,
+          "flags": [],
+          "output": {
+            "role_explanation": "This Backend Developer role fits you because you already know Docker and are curious about Kubernetes. These skills form the foundation for building scalable server-side applications and managing containerized infrastructure.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course covers HTTP, browsers, domains, hosting, and CSS. It helps you understand the web fundamentals required to build backend services that communicate effectively with frontends."
+              },
+              {
+                "course_id": 371,
+                "explanation": "You will learn about column and realtime databases, data replication, and sharding strategies. This knowledge is essential for designing robust backend systems that handle large-scale data efficiently."
+              },
+              {
+                "course_id": 66,
+                "explanation": "This course teaches SQL commands, database schema design, and normalization. Mastering these concepts allows you to structure data correctly and write efficient queries for your backend applications."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-disliked-heavy",
+          "role": "AI Data Scientist",
+          "total_s": 7.468956541,
+          "prompt_tokens": 892,
+          "output_tokens": 223,
+          "prefill_tok_s": 563.3375857321494,
+          "decode_tok_s": 38.20550621867427,
+          "flags": [],
+          "output": {
+            "role_explanation": "Since you know Python, this AI Data Scientist role fits well. It allows you to apply your coding skills to build models and analyze data, expanding into advanced statistics and machine learning projects.",
+            "courses": [
+              {
+                "course_id": 435,
+                "explanation": "This course helps you use ChatGPT for data exploration and generating statistics. It covers concepts like hypothesis testing and probability sampling to assist in building regression models."
+              },
+              {
+                "course_id": 182,
+                "explanation": "You will learn to apply machine learning algorithms and perform feature engineering. This course addresses gaps in your knowledge regarding data analysis, visualization, and model performance evaluation."
+              },
+              {
+                "course_id": 225,
+                "explanation": "This guideline teaches you to build customized dashboards and visualize data effectively. It covers ratio metrics and ab testing principles to improve user experience through clear visual reports."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-disliked-heavy",
+          "role": "Blockchain Developer",
+          "total_s": 8.915784958,
+          "prompt_tokens": 949,
+          "output_tokens": 243,
+          "prefill_tok_s": 382.77427047015493,
+          "decode_tok_s": 38.18750473415054,
+          "flags": [],
+          "output": {
+            "role_explanation": "This role fits you because you already know Python, which is a key language for smart contracts. You also have experience with supporting languages, giving you a solid foundation to build upon as you learn blockchain specifics.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you understand unit tests, integration tests, and code coverage. It also covers hybrid smart contracts and the Huobi eco chain, helping you apply your testing skills to blockchain projects."
+              },
+              {
+                "course_id": 130,
+                "explanation": "You will learn what is blockchain, decentralization, why it matters, its structure, and basic operations. This builds the essential knowledge needed for a Blockchain Developer role."
+              },
+              {
+                "course_id": 250,
+                "explanation": "This course covers what is blockchain, decentralization, why it matters, basic operations, and the difference between decentralization and trust. It ensures you grasp these core concepts before advancing further."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-disliked-heavy",
+          "role": "DevOps Engineer",
+          "total_s": 8.377242916,
+          "prompt_tokens": 907,
+          "output_tokens": 231,
+          "prefill_tok_s": 375.85027318554864,
+          "decode_tok_s": 38.86262717416211,
+          "flags": [
+            "invented_curiosity"
+          ],
+          "output": {
+            "role_explanation": "This DevOps Engineer role fits you because you already know Python, which is a key skill for scripting and automation. Your interest in Python provides a strong foundation for managing infrastructure and building tools.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you use ChatGPT to understand code, secure architectures, and optimize Infrastructure as Code. It also teaches you how to automate documentation and fix bugs efficiently."
+              },
+              {
+                "course_id": 168,
+                "explanation": "You will learn to create CI/CD pipelines on AWS using CodePipeline and Elastic Beanstalk. This course covers building, testing, and delivering NodeJS applications effectively."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course teaches you about AI tools for developers and how to collaborate with Bard. You will also learn Docker Compose best practices and how benchmarking supports continuous improvement."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-abbreviations",
+          "role": "DevOps Engineer",
+          "total_s": 9.168238125,
+          "prompt_tokens": 997,
+          "output_tokens": 284,
+          "prefill_tok_s": 566.9250146422459,
+          "decode_tok_s": 38.472120378722806,
+          "flags": [
+            "misattributed:gitlab ci",
+            "misattributed:argo cd",
+            "misattributed:jenkins"
+          ],
+          "output": {
+            "role_explanation": "This DevOps Engineer role fits you because it aligns with your strong interest in CI/CD tools like Jenkins, GitLab CI, and Argo CD. The recommended path will help you expand your skills beyond these interests to cover essential concepts like Python, JavaScript, and process monitoring required for the role.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you progress by teaching code understanding with ChatGPT and optimizing Infrastructure as Code. It covers Bitbucket, domain keys, Cloudflare, GCP Functions, and Ansible to enhance your workflow."
+              },
+              {
+                "course_id": 168,
+                "explanation": "You will learn to create CI/CD pipelines for building, testing, and delivering code on AWS. This course covers AWS Lambda, GCP Functions, Pulumi, Chef, and GitLab CI to solidify your delivery practices."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course teaches you about AI tools for developers and Docker Compose best practices. It covers DigitalOcean, Vultr, Terraform, Chef, and Azure DevOps services to support continuous improvement in infrastructure management."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-abbreviations",
+          "role": "Full Stack Developer",
+          "total_s": 8.545283166,
+          "prompt_tokens": 885,
+          "output_tokens": 267,
+          "prefill_tok_s": 598.8048261639142,
+          "decode_tok_s": 38.15875298910232,
+          "flags": [],
+          "output": {
+            "role_explanation": "This Full Stack Developer role fits you because you already know REST APIs and are curious about CI/CD. This path helps you automate deployments and build scalable backends, bridging your current skills with your interests in modern delivery pipelines.",
+            "courses": [
+              {
+                "course_id": 326,
+                "explanation": "This course teaches you to automate pipelines using AWS CloudFormation. You will learn deployment strategies for serverless apps and differentiate between continuous integration, delivery, and deployment to eliminate manual processes."
+              },
+              {
+                "course_id": 305,
+                "explanation": "You will create a Node.js backend app and host it on auto-scaling containers. This covers CLI apps, EC2, S3, deployment, and monitoring, giving you practical experience building and running scalable web applications."
+              },
+              {
+                "course_id": 168,
+                "explanation": "This course guides you to create a CI/CD pipeline using AWS CodePipeline and Elastic Beanstalk. You will learn to build, test, and deliver NodeJS code on AWS, covering S3, deployment, and GitHub Actions workflows."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-abbreviations",
+          "role": "QA Engineer",
+          "total_s": 8.281062792,
+          "prompt_tokens": 1075,
+          "output_tokens": 238,
+          "prefill_tok_s": 539.1546656689379,
+          "decode_tok_s": 38.05112984676266,
+          "flags": [],
+          "output": {
+            "role_explanation": "This QA Engineer role fits you because you already know REST APIs and are eager to learn CI/CD pipelines. This path combines your API knowledge with the automation and testing workflows you want to master.",
+            "courses": [
+              {
+                "course_id": 404,
+                "explanation": "This course teaches TestProject for automating web, mobile, and API applications. It covers concepts like QTest, TestRail, and YouTrack, helping you build comprehensive automation skills."
+              },
+              {
+                "course_id": 235,
+                "explanation": "This crash course builds your manual testing foundation using JIRA and Agile. It covers essential concepts like tester mindset, white/gray/black box testing, and database testing with MySQL."
+              },
+              {
+                "course_id": 170,
+                "explanation": "Learn to use ChatGPT for DevOps tasks like code understanding and bug resolution. This course covers YouTrack and other tools, enhancing your efficiency in documentation and architecture visualization."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "qwen3.5:9b / cpu": {
+      "summary": {
+        "cases": 15,
+        "errors": 0,
+        "median_s": 57.9,
+        "p90_s": 68.5,
+        "prompt_tokens": 975,
+        "output_tokens": 244,
+        "prefill_tok_s": 40.0,
+        "decode_tok_s": 7.1,
+        "clean_pct": 67,
+        "flags": [
+          "misattributed"
+        ],
+        "load_s": 5.8,
+        "contention": {
+          "idle_ms": 106.733125023311,
+          "during_llm_ms": 20333.82016600808
+        }
+      },
+      "runs": [
+        {
+          "profile": "backend-java",
+          "role": "DevOps Engineer",
+          "total_s": 13.712374917,
+          "prompt_tokens": 1043,
+          "output_tokens": 271,
+          "prefill_tok_s": 11687.845984894328,
+          "decode_tok_s": 0.4741441637919432,
+          "flags": [
+            "misattributed:ecs fargate"
+          ],
+          "output": {
+            "role_explanation": "This DevOps Engineer role fits you because you are curious about Kubernetes, Docker, and container orchestration like ECS Fargate. You also want to learn about GitOps tools like Argo CD and Flux CD, which are essential for managing these environments effectively.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you use AI to understand code and optimize Infrastructure as Code. It covers concepts like Bitbucket and Ansible, allowing you to streamline documentation and resolve bugs more efficiently in your DevOps workflow."
+              },
+              {
+                "course_id": 168,
+                "explanation": "You will learn to create CI/CD pipelines on AWS using CodePipeline and Elastic Beanstalk. This course covers GitLab CI and AWS Lambda, teaching you how to build, test, and deliver NodeJS applications automatically."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course teaches advanced data center management and introduces Docker Compose best practices. You will also learn about cloud providers like Digital Ocean and Vultr, alongside tools like Terraform and Chef for infrastructure automation."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "frontend",
+          "role": "Full Stack Developer",
+          "total_s": 57.313900416,
+          "prompt_tokens": 927,
+          "output_tokens": 244,
+          "prefill_tok_s": 38.50714727131168,
+          "decode_tok_s": 0.24144926931518776,
+          "flags": [],
+          "output": {
+            "role_explanation": "This Full Stack Developer role fits you because you already know HTML, CSS, and JavaScript. Your curiosity about React shows a desire to build dynamic frontends, while the recommended courses will help you master backend hosting and deployment pipelines.",
+            "courses": [
+              {
+                "course_id": 326,
+                "explanation": "This course teaches you how to automate your pipeline using infrastructure as code. You will learn to differentiate between continuous integration, delivery, and deployment strategies for serverless applications."
+              },
+              {
+                "course_id": 305,
+                "explanation": "You will create a Node.js backend app from start to finish. The course guides you on hosting this web-app on AWS with auto-scaling features using containers."
+              },
+              {
+                "course_id": 168,
+                "explanation": "This course helps you build a CI/CD pipeline to build, test, and deliver code on AWS. You will learn how to use tools like CodePipeline and Elastic Beanstalk for NodeJS projects."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "data-science",
+          "role": "AI Data Scientist",
+          "total_s": 54.968404542,
+          "prompt_tokens": 973,
+          "output_tokens": 241,
+          "prefill_tok_s": 40.77674630816433,
+          "decode_tok_s": 7.756737386225399,
+          "flags": [],
+          "output": {
+            "role_explanation": "This AI Data Scientist role fits you because you already know Python, Statistics, and Pandas. You have strong foundations in exploratory data analysis (EDA), which are essential for understanding data and building models.",
+            "courses": [
+              {
+                "course_id": 435,
+                "explanation": "This course helps you progress by teaching how to use ChatGPT for data exploration, generating statistics, and visualizations. It also covers hypothesis testing and probability sampling concepts needed for the role."
+              },
+              {
+                "course_id": 182,
+                "explanation": "You will learn to apply machine learning algorithms and perform feature engineering. This course addresses linear algebra, differential calculus, regression fitting, and deployment models with CI/CD practices."
+              },
+              {
+                "course_id": 225,
+                "explanation": "This guideline teaches you to build customized dashboards in Power BI using effective charts. It covers ratio metrics and ab testing principles to improve your data visualization and user experience skills."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "devops",
+          "role": "DevOps Engineer",
+          "total_s": 68.505106375,
+          "prompt_tokens": 1286,
+          "output_tokens": 266,
+          "prefill_tok_s": 1.3119110915527314,
+          "decode_tok_s": 7.7584739233462185,
+          "flags": [
+            "misattributed:datadog",
+            "misattributed:datadog",
+            "misattributed:prometheus"
+          ],
+          "output": {
+            "role_explanation": "This DevOps role fits you because you already know Git for version control and are curious about Terraform, Monitoring tools like Datadog and Prometheus, and Infrastructure as Code concepts. This path builds on your current skills while exploring the automation and observability areas you want to learn.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you apply AI tools to understand code, secure architectures, and optimize Infrastructure as Code. It also teaches efficient bug resolution and responsible AI integration for your daily DevOps tasks."
+              },
+              {
+                "course_id": 168,
+                "explanation": "You will learn to create CI/CD pipelines on AWS using CodePipeline and Elastic Beanstalk. This course covers NodeJS delivery and introduces concepts like Pulumi and Jenkins to streamline your continuous integration and deployment workflows."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course teaches you advanced data center management and how to use Docker Compose. You will practice collaborating with AI tools for development and learn best practices that support continuous improvement in your infrastructure."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "android",
+          "role": "Android Developer",
+          "total_s": 57.906782958,
+          "prompt_tokens": 975,
+          "output_tokens": 256,
+          "prefill_tok_s": 40.0102705338556,
+          "decode_tok_s": 7.653821939203833,
+          "flags": [],
+          "output": {
+            "role_explanation": "This Android Developer role fits you because you already know Kotlin and Java, which are core languages for this job. Your curiosity about Jetpack Compose shows you want to build modern, intuitive user interfaces, a key part of being an Android developer.",
+            "courses": [
+              {
+                "course_id": 197,
+                "explanation": "This course helps you master the basics of Kotlin and OOP. You will learn to create visually appealing interfaces using XML and understand how to manage activity lifecycles for a smooth user experience."
+              },
+              {
+                "course_id": 2,
+                "explanation": "You will get an overview of Java programming and learn to set up your development environment. This course also teaches you how to debug apps, create signed APKs, and use components like Fragments and Shared Preferences."
+              },
+              {
+                "course_id": 118,
+                "explanation": "This course guides you in writing real Android applications from the ground up. You will learn to use Gradle, understand activity lifecycles, and build working apps quickly using Java."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "game",
+          "role": "Game Developer",
+          "total_s": 63.088054625,
+          "prompt_tokens": 892,
+          "output_tokens": 249,
+          "prefill_tok_s": 35.84801678683857,
+          "decode_tok_s": 6.530837486797348,
+          "flags": [],
+          "output": {
+            "role_explanation": "Your experience with Unity and Linear Algebra makes you a strong fit for Game Development. Your curiosity about Shaders and Game Physics shows you want to dive deeper into the visual and physical systems that bring games to life.",
+            "courses": [
+              {
+                "course_id": 81,
+                "explanation": "This course teaches lighting algorithms using concepts like linear transformation and affine space. It helps you understand how light interacts with 3D geometry, which is essential for creating realistic graphics in your Unity projects."
+              },
+              {
+                "course_id": 151,
+                "explanation": "You will learn C++ game development using vector and geometry concepts. This builds on your Linear Algebra knowledge to help you write efficient code for handling shapes and movements in your games."
+              },
+              {
+                "course_id": 415,
+                "explanation": "This course covers matrix and affine space concepts through Binary Space Partitioning. You will learn recursion to divide 3D space, helping you create fast rendering systems and generate complex dungeon maps for your games."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "blockchain",
+          "role": "Blockchain Developer",
+          "total_s": 63.928998334,
+          "prompt_tokens": 1233,
+          "output_tokens": 237,
+          "prefill_tok_s": 49.55609315677378,
+          "decode_tok_s": 6.076863087377214,
+          "flags": [],
+          "output": {
+            "role_explanation": "This Blockchain Developer role fits you because you already know JavaScript and are curious about Solidity, Ethereum, and smart contracts. This path bridges your current skills with your interest in building decentralized applications.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you master unit tests, integration tests, and code coverage. It also teaches hybrid smart contracts concepts, enhancing your ability to build secure blockchain applications."
+              },
+              {
+                "course_id": 130,
+                "explanation": "You will learn basic blockchain operations, the blockchain structure, decentralization, why blockchain matters, and what is blockchain. This foundational knowledge supports your curiosity about Ethereum and smart contracts."
+              },
+              {
+                "course_id": 250,
+                "explanation": "This course covers what is blockchain, decentralization, why blockchain matters, basic blockchain operations, and the difference between decentralization and trust. It provides essential context for your interest in smart contracts."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "qa",
+          "role": "QA Engineer",
+          "total_s": 72.747076584,
+          "prompt_tokens": 1414,
+          "output_tokens": 250,
+          "prefill_tok_s": 38.15371218620393,
+          "decode_tok_s": 7.026144452133857,
+          "flags": [],
+          "output": {
+            "role_explanation": "This QA Engineer role fits you because you already know Selenium and manual testing, while your curiosity about Cypress and test automation shows a strong drive to expand into modern automated testing strategies.",
+            "courses": [
+              {
+                "course_id": 404,
+                "explanation": "This course helps you master TestProject for automating web, mobile, and API applications. It also covers tools like QTest and TestRail, which are essential for managing test cases in this role."
+              },
+              {
+                "course_id": 235,
+                "explanation": "You will gain practical knowledge of JIRA, database testing with MySQL, and backend testing on Unix/Linux. This course builds your tester mindset and teaches white box and gray box testing concepts you haven't covered yet."
+              },
+              {
+                "course_id": 170,
+                "explanation": "This course enhances your DevOps practices using ChatGPT for code understanding and documentation. It covers tools like YouTrack and QA Wolf, helping you resolve bugs efficiently and integrate AI responsibly into your workflow."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "ux",
+          "role": "UX Designer",
+          "total_s": 68.383903834,
+          "prompt_tokens": 1219,
+          "output_tokens": 257,
+          "prefill_tok_s": 37.7207997378915,
+          "decode_tok_s": 7.132462738085839,
+          "flags": [
+            "misattributed:balsamiq"
+          ],
+          "output": {
+            "role_explanation": "This UX Designer role fits you because you already know Figma, Balsamiq, and User Research. You are curious about Prototyping. This path builds on your skills to help users think about actions and apply behavioral science.",
+            "courses": [
+              {
+                "course_id": 424,
+                "explanation": "This course teaches software design modeling with Visual Paradigm. It covers dual process theory, nudge theory, behavior design, behavioral science, and behavioral economics to help you understand user actions."
+              },
+              {
+                "course_id": 390,
+                "explanation": "You will turn Dribbble designs into a working .NET MAUI app. This covers dual process theory, nudge theory, helping users think about actions, educating them, and using mindfulness to avoid acting on cues."
+              },
+              {
+                "course_id": 197,
+                "explanation": "Learn Android fundamentals by creating intuitive interfaces with XML. It covers nudge theory, behavior design, behavioral science, behavioral economics, and helping users think about their actions within the Android lifecycle."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "fullstack",
+          "role": "Full Stack Developer",
+          "total_s": 54.409266292,
+          "prompt_tokens": 871,
+          "output_tokens": 236,
+          "prefill_tok_s": 40.343696799934264,
+          "decode_tok_s": 7.199155892870581,
+          "flags": [
+            "misattributed:npm"
+          ],
+          "output": {
+            "role_explanation": "Since you already know React, Node.js, and npm, this Full Stack Developer role fits perfectly. You have the core frontend and backend skills needed to build complete web applications.",
+            "courses": [
+              {
+                "course_id": 326,
+                "explanation": "This course helps you automate your deployment pipeline using AWS CloudFormation and IaC. It also teaches you the differences between continuous integration, delivery, and deployment strategies."
+              },
+              {
+                "course_id": 305,
+                "explanation": "You will learn to create a Node.js backend app from scratch and host it on AWS with auto-scaling containers. This covers essential concepts like EC2, S3, and monitoring your application."
+              },
+              {
+                "course_id": 168,
+                "explanation": "This course guides you in building a CI/CD pipeline to build, test, and deliver code on AWS using CodePipeline and Elastic Beanstalk. It also covers GitHub Actions for automation."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-single-fact",
+          "role": "AI Data Scientist",
+          "total_s": 49.258626792,
+          "prompt_tokens": 916,
+          "output_tokens": 218,
+          "prefill_tok_s": 60.2819404782964,
+          "decode_tok_s": 6.406347950268403,
+          "flags": [],
+          "output": {
+            "role_explanation": "Since you know SQL, this AI Data Scientist role fits well. It builds on your data querying skills to add machine learning and advanced statistical analysis capabilities.",
+            "courses": [
+              {
+                "course_id": 417,
+                "explanation": "This course helps you master Python fundamentals using ChatGPT. It covers statistics concepts like the Central Limit Theorem and probability sampling while teaching programming basics."
+              },
+              {
+                "course_id": 435,
+                "explanation": "You will learn to use ChatGPT for data exploration and building regression models. This course covers calculus, hypothesis testing, and statistical concepts like the Central Limit Theorem."
+              },
+              {
+                "course_id": 182,
+                "explanation": "This project-based course teaches you data analysis, feature engineering, and model performance evaluation. It covers advanced math topics like linear algebra and time-series fitting distributions."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-curious-only",
+          "role": "AI Data Scientist",
+          "total_s": 57.126940083,
+          "prompt_tokens": 923,
+          "output_tokens": 242,
+          "prefill_tok_s": 40.282773724284276,
+          "decode_tok_s": 7.097808059021383,
+          "flags": [],
+          "output": {
+            "role_explanation": "This AI Data Scientist role fits you because you are curious about Machine Learning. This career allows you to apply that interest directly, helping organizations derive value from data while building models.",
+            "courses": [
+              {
+                "course_id": 417,
+                "explanation": "This course helps you build a strong foundation in Python programming and enhances problem-solving skills. It provides prompts to master fundamentals like data types, which supports your goal of learning Machine Learning."
+              },
+              {
+                "course_id": 435,
+                "explanation": "You will learn to harness ChatGPT for data exploration, generating statistics and visualizations. This course guides you in building regression models, addressing key concepts like hypothesis testing and probability sampling needed for your role."
+              },
+              {
+                "course_id": 182,
+                "explanation": "This project-based course teaches you to apply Machine Learning algorithms and perform data analysis. You will learn feature engineering and model performance analysis, covering essential topics like regression fitting and data visualization."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-misattribution",
+          "role": "DevOps Engineer",
+          "total_s": 60.591405542,
+          "prompt_tokens": 1091,
+          "output_tokens": 233,
+          "prefill_tok_s": 39.511704862702985,
+          "decode_tok_s": 7.078137104791606,
+          "flags": [],
+          "output": {
+            "role_explanation": "This DevOps role fits you because you already know Docker and are curious about Kubernetes. You have strong container foundations, and this path helps you expand into orchestration, CI/CD pipelines, and advanced infrastructure management.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you master code understanding and automate documentation. It also teaches you to optimize Infrastructure as Code and secure architectures using AI tools."
+              },
+              {
+                "course_id": 168,
+                "explanation": "You will learn to build, test, and deliver code on AWS using CodePipeline and Elastic Beanstalk. This directly supports your goal of mastering CI/CD workflows for NodeJS applications."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course covers best practices and benchmarking to support continuous improvement. You will also learn Docker Compose details and how to collaborate with AI tools like Bard effectively."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-disliked-heavy",
+          "role": "AI Data Scientist",
+          "total_s": 45.415046042,
+          "prompt_tokens": 892,
+          "output_tokens": 226,
+          "prefill_tok_s": 63.393856936268705,
+          "decode_tok_s": 7.218781429448406,
+          "flags": [],
+          "output": {
+            "role_explanation": "Since you know Python, this AI Data Scientist role fits well. It leverages your coding skills to build models and analyze data, bridging the gap between your current knowledge and advanced machine learning applications.",
+            "courses": [
+              {
+                "course_id": 435,
+                "explanation": "This course helps you use ChatGPT for data exploration and generating statistics. It covers concepts like hypothesis testing and probability sampling to assist in building regression models."
+              },
+              {
+                "course_id": 182,
+                "explanation": "You will learn to apply machine learning algorithms and perform feature engineering. This course addresses gaps in linear algebra, differential calculus, and data visualization for your projects."
+              },
+              {
+                "course_id": 225,
+                "explanation": "This guideline teaches you to build customized dashboards and visualize data effectively. It covers ratio metrics and ab testing principles to improve your dashboard design and user experience."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-abbreviations",
+          "role": "DevOps Engineer",
+          "total_s": 91.024162167,
+          "prompt_tokens": 997,
+          "output_tokens": 267,
+          "prefill_tok_s": 34.42666838212994,
+          "decode_tok_s": 4.303863533159568,
+          "flags": [
+            "misattributed:gitlab ci",
+            "misattributed:argo cd",
+            "misattributed:teamcity",
+            "misattributed:jenkins"
+          ],
+          "output": {
+            "role_explanation": "This DevOps Engineer role fits you because you are curious about CI/CD tools like GitLab CI, Argo CD, Jenkins, and TeamCity. This career focuses on automating the build, test, and delivery processes you want to explore.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you progress by teaching code explanation with ChatGPT, optimizing Infrastructure as Code, and streamlining documentation. It covers concepts like Bitbucket, domain keys, Cloudflare, GCP Functions, and Ansible."
+              },
+              {
+                "course_id": 168,
+                "explanation": "You will learn to create CI/CD pipelines for building, testing, and delivering code on AWS. This course covers AWS Lambda, GCP Functions, Pulumi, Chef, and GitLab CI."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course teaches you to collaborate with AI tools like Bard and understand Docker Compose for continuous improvement. It covers DigitalOcean, Vultr, Terraform, Chef, and Azure DevOps Services."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "qwen3.5:4b / gpu": {
+      "summary": {
+        "cases": 40,
+        "errors": 0,
+        "median_s": 11.0,
+        "p90_s": 16.4,
+        "prompt_tokens": 920,
+        "output_tokens": 214,
+        "prefill_tok_s": 391.9,
+        "decode_tok_s": 24.5,
+        "clean_pct": 68,
+        "flags": [
+          "invented_curiosity",
+          "misattributed"
+        ],
+        "load_s": 12.9,
+        "contention": {
+          "idle_ms": 104.19854198698886,
+          "during_llm_ms": 302.3319999920204
+        }
+      },
+      "runs": [
+        {
+          "profile": "backend-java",
+          "role": "DevOps Engineer",
+          "total_s": 11.851468625,
+          "prompt_tokens": 1043,
+          "output_tokens": 220,
+          "prefill_tok_s": 4649.483341208776,
+          "decode_tok_s": 18.986105708940755,
+          "flags": [
+            "misattributed:argo cd"
+          ],
+          "output": {
+            "role_explanation": "You are curious about Kubernetes, Docker, and CI/CD tools like Argo CD. A DevOps Engineer role fits because it directly utilizes these container orchestration and deployment skills you want to explore.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps by teaching AI-assisted architecture and Infrastructure as Code, which complements your interest in managing cloud environments like those found in Kubernetes."
+              },
+              {
+                "course_id": 168,
+                "explanation": "It builds your CI/CD pipeline skills on AWS, a critical foundation for automating the deployment processes you are curious about with Docker and Kubernetes."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course covers data center management and tools like Terraform, providing hands-on experience in infrastructure provisioning that supports your interest in container orchestration."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "backend-java",
+          "role": "AI Data Scientist",
+          "total_s": 14.507721708,
+          "prompt_tokens": 916,
+          "output_tokens": 183,
+          "prefill_tok_s": 208.56695602675396,
+          "decode_tok_s": 18.307799122426154,
+          "flags": [],
+          "output": {
+            "role_explanation": "You have SQL experience, which is a key foundation for data analysis. This role leverages your ability to query and manage data while introducing machine learning concepts.",
+            "courses": [
+              {
+                "course_id": 417,
+                "explanation": "This course builds Python fundamentals using AI prompts, covering prerequisites needed for data science tasks."
+              },
+              {
+                "course_id": 435,
+                "explanation": "You will learn to use ChatGPT for exploratory analysis and building regression models, addressing statistical concepts."
+              },
+              {
+                "course_id": 182,
+                "explanation": "This project-based course applies machine learning algorithms to real data, focusing on feature engineering and model performance."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "backend-java",
+          "role": "Backend Developer",
+          "total_s": 17.056532541,
+          "prompt_tokens": 997,
+          "output_tokens": 231,
+          "prefill_tok_s": 176.2044777852458,
+          "decode_tok_s": 20.436929159410525,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know Java, SQL, and Spring Boot while curious about Kubernetes and Docker. This role fits because your Java and Spring Boot skills align with backend needs, and your interest in containerization addresses modern deployment requirements.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course covers HTTP, browsers, domains, hosting, and CSS. It fills gaps in how the internet works, which is essential for backend communication and understanding web infrastructure."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course covers column databases, ACID properties, and data replication. Since you already know SQL and MSSQL, this deepens your database management skills critical for backend systems."
+              },
+              {
+                "course_id": 66,
+                "explanation": "This course covers document databases, normalization, and transactions. It reinforces your existing SQL knowledge with advanced design patterns needed for robust backend applications."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "frontend",
+          "role": "Full Stack Developer",
+          "total_s": 15.234506416,
+          "prompt_tokens": 927,
+          "output_tokens": 203,
+          "prefill_tok_s": 178.8143049129182,
+          "decode_tok_s": 20.372622286665276,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know HTML, CSS, and JavaScript while curious about React. This Full Stack Developer role builds on your frontend foundation to add backend logic and deployment skills.",
+            "courses": [
+              {
+                "course_id": 326,
+                "explanation": "This course teaches infrastructure as code and CI/CD pipelines, helping you automate deployments and manage serverless applications effectively."
+              },
+              {
+                "course_id": 305,
+                "explanation": "You will create a Node.js backend app hosted on AWS, covering auto-scaling containers, CLI apps, S3, EC2, and monitoring."
+              },
+              {
+                "course_id": 168,
+                "explanation": "This course guides you in building CI/CD pipelines using AWS tools like CodePipeline and Elastic Beanstalk for Node.js applications."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "frontend",
+          "role": "Frontend Developer",
+          "total_s": 18.710368167,
+          "prompt_tokens": 1096,
+          "output_tokens": 221,
+          "prefill_tok_s": 178.3515693473537,
+          "decode_tok_s": 18.106607609084733,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know HTML, CSS, and JavaScript basics while curious about TypeScript and React. This Frontend Developer role leverages your web fundamentals to build modern interactive applications using the frameworks you are eager to explore.",
+            "courses": [
+              {
+                "course_id": 418,
+                "explanation": "This course builds on your CSS knowledge by teaching Next.js features like server and client components, helping you progress toward building full-stack React apps."
+              },
+              {
+                "course_id": 214,
+                "explanation": "Since you already know HTML, this course deepens that foundation by explaining how the internet works, domains, hosting, and accessibility concepts you haven't covered yet."
+              },
+              {
+                "course_id": 360,
+                "explanation": "This course directly addresses your curiosity about React by teaching you to build a React SPA, covering responsive design and tools like Tailwind CSS."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "frontend",
+          "role": "Backend Developer",
+          "total_s": 19.657963625,
+          "prompt_tokens": 916,
+          "output_tokens": 243,
+          "prefill_tok_s": 179.70068849297627,
+          "decode_tok_s": 16.923412712728343,
+          "flags": [],
+          "output": {
+            "role_explanation": "You have a strong foundation in HTML, CSS, and JavaScript, which aligns well with the frontend aspects of being a Backend Developer. While you know basic frontend concepts, this role requires deeper understanding of databases, HTTP protocols, and infrastructure management to build robust server-side applications.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course covers HTTP, browsers, domains, and hosting. It helps you understand how the internet works, filling a gap in your current knowledge required for backend development."
+              },
+              {
+                "course_id": 371,
+                "explanation": "You will learn about column and realtime databases, ACID properties, and data replication. These concepts are essential for designing scalable backend systems and managing data effectively."
+              },
+              {
+                "course_id": 66,
+                "explanation": "This course teaches database design, SQL commands, and normalization. Mastering these skills is crucial for writing efficient queries and structuring data in your backend applications."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "data-science",
+          "role": "AI Data Scientist",
+          "total_s": 16.4311175,
+          "prompt_tokens": 973,
+          "output_tokens": 201,
+          "prefill_tok_s": 175.45536347030153,
+          "decode_tok_s": 18.7168230343937,
+          "flags": [],
+          "output": {
+            "role_explanation": "You have a strong foundation in Python, Statistics, and Pandas, which aligns well with the data analysis and visualization aspects of an AI Data Scientist role.",
+            "courses": [
+              {
+                "course_id": 435,
+                "explanation": "This course helps you progress by covering hypothesis testing and probability sampling, filling gaps in your statistical knowledge needed for ML models."
+              },
+              {
+                "course_id": 182,
+                "explanation": "It advances your role by teaching regression, time-series fitting, and CI/CD deployment, directly addressing concepts you haven't mastered yet."
+              },
+              {
+                "course_id": 225,
+                "explanation": "This course supports your visualization skills by covering ratio metrics and ab testing, helping you build effective dashboards for data insights."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "data-science",
+          "role": "Game Developer",
+          "total_s": 15.879079792,
+          "prompt_tokens": 763,
+          "output_tokens": 222,
+          "prefill_tok_s": 183.9028375990918,
+          "decode_tok_s": 19.21305906431883,
+          "flags": [],
+          "output": {
+            "role_explanation": "You are curious about deep learning, which is a core part of modern game development for AI and procedural generation. This role fits because it combines your interest in advanced algorithms with the practical skills needed to build interactive games.",
+            "courses": [
+              {
+                "course_id": 81,
+                "explanation": "This course teaches lighting techniques using linear algebra and affine space. These mathematical foundations are essential for rendering realistic environments in games."
+              },
+              {
+                "course_id": 151,
+                "explanation": "You will learn C++ game development basics, covering vectors, geometry, and splines. This provides the programming language and geometric tools needed to build game engines."
+              },
+              {
+                "course_id": 415,
+                "explanation": "This course covers Binary Space Partitioning for efficient map generation. It uses matrices and splines to help you create complex 3D dungeon structures quickly."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "data-science",
+          "role": "Blockchain Developer",
+          "total_s": 16.093902084,
+          "prompt_tokens": 903,
+          "output_tokens": 212,
+          "prefill_tok_s": 176.1294471466347,
+          "decode_tok_s": 19.76861212500365,
+          "flags": [],
+          "output": {
+            "role_explanation": "You have Python experience, which aligns with the role's requirements. However, you need to learn foundational blockchain concepts like structure and operations before applying them.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps by teaching unit and integration tests, code coverage, and smart contracts using Python skills. It connects your coding knowledge to testing blockchain logic."
+              },
+              {
+                "course_id": 130,
+                "explanation": "This course covers what blockchain is, its structure, and basic operations. It builds the essential foundation you currently lack before moving to advanced topics."
+              },
+              {
+                "course_id": 250,
+                "explanation": "This course reinforces your understanding of decentralization, trust models, and basic blockchain operations. It clarifies concepts needed for future applications and storage roles."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "devops",
+          "role": "DevOps Engineer",
+          "total_s": 18.399138916,
+          "prompt_tokens": 1286,
+          "output_tokens": 204,
+          "prefill_tok_s": 166.02211528183224,
+          "decode_tok_s": 19.32253670808383,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know Git and want to learn Terraform, monitoring, and infrastructure tools. This DevOps role fits because it builds on your version control skills while addressing your curiosity about automation and observability.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you use AI to understand code and visualize architectures, supporting your interest in Terraform and infrastructure management."
+              },
+              {
+                "course_id": 168,
+                "explanation": "You will learn to create CI/CD pipelines on AWS, which connects to your curiosity about automation tools like Jenkins and Pulumi."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course covers Terraform and data center management, directly addressing your interest in infrastructure as code and monitoring systems."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "devops",
+          "role": "Full Stack Developer",
+          "total_s": 14.465272583,
+          "prompt_tokens": 980,
+          "output_tokens": 211,
+          "prefill_tok_s": 308.0781550268138,
+          "decode_tok_s": 0.22335633678128722,
+          "flags": [
+            "misattributed:infrastructure"
+          ],
+          "output": {
+            "role_explanation": "You have Linux and Bash skills, which fit Full Stack well. Your curiosity about Terraform aligns with the role's infrastructure needs. This path builds on your existing knowledge while addressing what you want to learn.",
+            "courses": [
+              {
+                "course_id": 326,
+                "explanation": "This course teaches Infrastructure as Code and automation using Terraform, directly addressing your curiosity about Terraform and infrastructure management."
+              },
+              {
+                "course_id": 305,
+                "explanation": "You will build a Node.js backend and host it on AWS, covering deployment and monitoring skills needed for the Full Stack role."
+              },
+              {
+                "course_id": 168,
+                "explanation": "This course sets up CI/CD pipelines using AWS tools, helping you automate the development cycle which is crucial for a Full Stack Developer."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "devops",
+          "role": "QA Engineer",
+          "total_s": 12.534685417,
+          "prompt_tokens": 1136,
+          "output_tokens": 230,
+          "prefill_tok_s": 334.94851640805456,
+          "decode_tok_s": 25.481932589652367,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know Git and want to learn monitoring. This QA Engineer role fits because you already cover VCS basics but need to bridge that with testing fundamentals and automation tools like TestProject.",
+            "courses": [
+              {
+                "course_id": 404,
+                "explanation": "This course teaches TestProject automation for web, mobile, and API apps. It covers concepts you haven't learned yet, helping you automate tests beyond your current Git knowledge."
+              },
+              {
+                "course_id": 235,
+                "explanation": "This crash course builds your core QA foundation. It teaches manual testing mindsets, black/white box testing, and JIRA usage, addressing the fundamental concepts you currently lack."
+              },
+              {
+                "course_id": 170,
+                "explanation": "Using ChatGPT for DevOps helps you understand code and visualize architectures. It supports your curiosity about monitoring by aiding in automated documentation and bug resolution workflows."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "android",
+          "role": "Android Developer",
+          "total_s": 10.461939083,
+          "prompt_tokens": 975,
+          "output_tokens": 205,
+          "prefill_tok_s": 312.9505685750125,
+          "decode_tok_s": 28.435524597977167,
+          "flags": [
+            "misattributed:navigation components"
+          ],
+          "output": {
+            "role_explanation": "You know Kotlin and Java, which are perfect for Android development. You are curious about Jetpack Compose and navigation components, making this role a great fit.",
+            "courses": [
+              {
+                "course_id": 197,
+                "explanation": "This course covers basics of Kotlin, OOP, and Gradle. It helps you build your first Hello World app while learning the Android activity lifecycle."
+              },
+              {
+                "course_id": 2,
+                "explanation": "You will learn Java fundamentals, IDE setup, debugging, and APK creation. It also covers fragments, intents, and data storage like SQLite."
+              },
+              {
+                "course_id": 118,
+                "explanation": "This course focuses on creating real Android applications from the ground up, specifically covering the activity lifecycle and Gradle usage."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "android",
+          "role": "Backend Developer",
+          "total_s": 11.448968167,
+          "prompt_tokens": 881,
+          "output_tokens": 234,
+          "prefill_tok_s": 331.89499610842756,
+          "decode_tok_s": 27.202625030065292,
+          "flags": [
+            "misattributed:monolithic apps"
+          ],
+          "output": {
+            "role_explanation": "You know Java, which fits the Backend Developer role. You are curious about mobile app architecture (monolithic apps). This role builds on your Java foundation while addressing your interest in large-scale application structures.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course covers HTML, CSS, and web fundamentals. It helps you understand how browsers, domains, and hosting work, which is essential for building backend services that serve web content."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course teaches data center management and AI tools. It covers concepts like ACID properties, sharding, and replication, helping you manage the infrastructure where your Java backend runs."
+              },
+              {
+                "course_id": 66,
+                "explanation": "This SQL Foundations course teaches database design and queries. It covers normalization and transactions, which are critical for designing efficient data storage layers for your backend applications."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "game",
+          "role": "Game Developer",
+          "total_s": 10.1460275,
+          "prompt_tokens": 892,
+          "output_tokens": 213,
+          "prefill_tok_s": 651.2122988597214,
+          "decode_tok_s": 24.382752899801883,
+          "flags": [],
+          "output": {
+            "role_explanation": "You have Unity and linear algebra knowledge, plus curiosity about shaders and physics. This role fits because it builds on your math foundation while exploring rendering techniques you are interested in.",
+            "courses": [
+              {
+                "course_id": 81,
+                "explanation": "This course covers concepts like linear transformation and affine space that support your interest in shaders and lighting. It helps you implement different lighting algorithms."
+              },
+              {
+                "course_id": 151,
+                "explanation": "You will learn vector and geometry basics here, which are essential for game physics. The course also covers center of mass to help with force calculations."
+              },
+              {
+                "course_id": 415,
+                "explanation": "This course teaches matrix operations and splines needed for map generation. It uses recursion to create 3D dungeons, building on your linear algebra background."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "game",
+          "role": "Backend Developer",
+          "total_s": 11.078186708,
+          "prompt_tokens": 823,
+          "output_tokens": 208,
+          "prefill_tok_s": 347.3542620958841,
+          "decode_tok_s": 24.28505044985721,
+          "flags": [
+            "misattributed:cpp"
+          ],
+          "output": {
+            "role_explanation": "You have studied C++, which matches the cpp concept. This role fits because backend development often requires strong programming foundations like C++.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course covers concepts you haven't learned yet, including HTML, CSS, and how the internet works. It helps you understand the fundamental building blocks of web development."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course teaches database concepts like sharding strategies and ACID properties. These are essential for backend roles but are currently missing from your knowledge."
+              },
+              {
+                "course_id": 66,
+                "explanation": "You will learn SQL commands and database design here. This fills the gap in your understanding of document and key-value databases needed for backend work."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "blockchain",
+          "role": "Blockchain Developer",
+          "total_s": 11.890832458,
+          "prompt_tokens": 1233,
+          "output_tokens": 206,
+          "prefill_tok_s": 332.168990772006,
+          "decode_tok_s": 25.358090708106218,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know JavaScript, which fits the role's foundation. Your curiosity about Solidity, smart contracts, and Ethereum shows strong interest in this field. This combination makes Blockchain Developer a great fit.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you progress by covering unit tests, integration tests, code coverage, hybrid smart contracts, and Huobi Eco Chain concepts."
+              },
+              {
+                "course_id": 130,
+                "explanation": "It builds your foundation by teaching blockchain structure, basic operations, decentralization, why it matters, and what blockchain is."
+              },
+              {
+                "course_id": 250,
+                "explanation": "This course covers decentralization vs trust, basic operations, blockchain structure, why it matters, and what blockchain is."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "blockchain",
+          "role": "Full Stack Developer",
+          "total_s": 10.922453625,
+          "prompt_tokens": 824,
+          "output_tokens": 219,
+          "prefill_tok_s": 676.7878204475342,
+          "decode_tok_s": 22.687604735928712,
+          "flags": [],
+          "output": {
+            "role_explanation": "You have JavaScript knowledge, which is the foundation for a Full Stack Developer role. This path requires expanding your skills to cover frontend basics and backend deployment tools.",
+            "courses": [
+              {
+                "course_id": 326,
+                "explanation": "This course teaches infrastructure as code and CI/CD pipelines on AWS. It helps you automate deployments and understand continuous integration and delivery processes."
+              },
+              {
+                "course_id": 305,
+                "explanation": "You will build a Node.js backend app hosted on AWS with auto-scaling. This covers CLI apps, EC2, S3, deployment, and monitoring to complete your backend setup."
+              },
+              {
+                "course_id": 168,
+                "explanation": "This course guides you in creating a CI/CD pipeline using AWS CodePipeline and Elastic Beanstalk. It reinforces continuous integration concepts for Node.js applications."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "blockchain",
+          "role": "Backend Developer",
+          "total_s": 9.772890166,
+          "prompt_tokens": 844,
+          "output_tokens": 195,
+          "prefill_tok_s": 569.417682712911,
+          "decode_tok_s": 23.68039481897249,
+          "flags": [
+            "invented_curiosity"
+          ],
+          "output": {
+            "role_explanation": "You have shown interest in JavaScript, which is a core skill for Backend Development. This role leverages your existing knowledge to build server-side applications.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course covers concepts you haven't learned yet, including HTML and CSS. It helps you understand the fundamental building blocks of web development."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course teaches database management concepts like sharding strategies and ACID properties, which are essential for designing robust backend systems."
+              },
+              {
+                "course_id": 66,
+                "explanation": "You will learn SQL commands and database design logic. This builds your ability to structure data effectively within backend applications."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "qa",
+          "role": "QA Engineer",
+          "total_s": 14.280236834,
+          "prompt_tokens": 1414,
+          "output_tokens": 245,
+          "prefill_tok_s": 348.2780924212815,
+          "decode_tok_s": 24.547361679624668,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know Selenium and manual testing well, which fits QA Engineer needs. You are curious about test automation tools like Cypress and frameworks, aligning with this role's focus on expanding beyond basic testing.",
+            "courses": [
+              {
+                "course_id": 404,
+                "explanation": "This course helps you progress by teaching TestProject for automating web, mobile, and API applications. It covers concepts like qtest, test rail, and test link that you haven't mastered yet."
+              },
+              {
+                "course_id": 235,
+                "explanation": "This course builds your foundation in QA by covering tester mindset, white box testing, and gray box testing. It also addresses test prioritization and database testing skills needed for the role."
+              },
+              {
+                "course_id": 170,
+                "explanation": "While focused on DevOps, this course covers youtrack and qa wolf concepts. It enhances your efficiency with AI tools, supporting bug resolution and documentation tasks relevant to a QA Engineer."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "qa",
+          "role": "Frontend Developer",
+          "total_s": 11.523397917,
+          "prompt_tokens": 887,
+          "output_tokens": 231,
+          "prefill_tok_s": 644.3200679913849,
+          "decode_tok_s": 23.040201461127786,
+          "flags": [
+            "misattributed:playwright"
+          ],
+          "output": {
+            "role_explanation": "You know Selenium (playwright) and are curious about Cypress, showing interest in testing. This Frontend Developer role builds on your automation knowledge while introducing React, Next.js, and modern web fundamentals to expand your skillset.",
+            "courses": [
+              {
+                "course_id": 418,
+                "explanation": "This course helps you build full-stack React apps using Next.js features like data fetching and server components, directly addressing the 'forms and validations' concept needed for frontend roles."
+              },
+              {
+                "course_id": 214,
+                "explanation": "You will learn the fundamental building blocks of web development, covering essential concepts like HTTP, browsers, domains, and hosting to understand how websites function."
+              },
+              {
+                "course_id": 360,
+                "explanation": "This course teaches you to build a React SPA using JavaScript, focusing on responsive design and tools like webpack and rollup to create modern web applications."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "qa",
+          "role": "Backend Developer",
+          "total_s": 11.016705625,
+          "prompt_tokens": 846,
+          "output_tokens": 231,
+          "prefill_tok_s": 643.266761053011,
+          "decode_tok_s": 24.333701639533185,
+          "flags": [],
+          "output": {
+            "role_explanation": "You have Java knowledge and like manual testing, which aligns with Backend Development. However, you still need to cover foundational web concepts like HTTP, browsers, DNS, and HTML/CSS before progressing.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course covers what is http, browsers, domain names, hosting, and css. It helps you understand the fundamental building blocks of web development required for backend roles."
+              },
+              {
+                "course_id": 371,
+                "explanation": "While this course covers column databases and ACID properties, it focuses on AI collaboration rather than your immediate need to learn how the internet works or HTML/CSS."
+              },
+              {
+                "course_id": 66,
+                "explanation": "This SQL Foundations course covers document databases, key value databases, transactions, and database normalization. It builds your database design skills but does not address your missing web concepts."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "ux",
+          "role": "UX Designer",
+          "total_s": 12.800866334,
+          "prompt_tokens": 1219,
+          "output_tokens": 242,
+          "prefill_tok_s": 393.2740142340029,
+          "decode_tok_s": 25.87186031077022,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know Figma, user research, and wireframing well. You are curious about prototyping. This UX Designer role builds on your design and research skills while introducing behavioral science concepts to create more effective user experiences.",
+            "courses": [
+              {
+                "course_id": 424,
+                "explanation": "This course covers dual process theory, nudge theory, and behavior design. It helps you apply these psychological principles to your existing Figma and wireframing skills for better UX."
+              },
+              {
+                "course_id": 390,
+                "explanation": "This course covers dual process theory, nudge theory, and helping users think about their actions. It connects your prototyping interest with practical UI development using .NET MAUI."
+              },
+              {
+                "course_id": 197,
+                "explanation": "This course covers nudge theory, behavior design, and behavioral science. It expands your interface skills to Android, teaching you how to manage user states for smoother experiences."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "ux",
+          "role": "QA Engineer",
+          "total_s": 11.220677167,
+          "prompt_tokens": 968,
+          "output_tokens": 222,
+          "prefill_tok_s": 592.485956001797,
+          "decode_tok_s": 23.37302676906439,
+          "flags": [
+            "misattributed:uat"
+          ],
+          "output": {
+            "role_explanation": "You have User research experience matching UAT, and you're curious about Accessibility. This QA Engineer role bridges your background with these interests by covering core testing fundamentals and automation.",
+            "courses": [
+              {
+                "course_id": 404,
+                "explanation": "This course teaches TestProject automation for Web, Mobile, and API apps, directly addressing the 'qtest' concept you haven't covered yet."
+              },
+              {
+                "course_id": 235,
+                "explanation": "This manual testing crash course builds foundational skills in QA concepts, tester mindset, and various testing types (white/gray/black box), which are currently missing from your roadmap."
+              },
+              {
+                "course_id": 170,
+                "explanation": "While this course covers DevOps tools like YouTrack, it primarily enhances efficiency with AI rather than directly teaching the specific QA concepts you still need to learn."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "ux",
+          "role": "Frontend Developer",
+          "total_s": 10.137910833,
+          "prompt_tokens": 832,
+          "output_tokens": 198,
+          "prefill_tok_s": 576.3205672324352,
+          "decode_tok_s": 23.08281753803131,
+          "flags": [],
+          "output": {
+            "role_explanation": "You are interested in accessibility, which is a core requirement for Frontend Developers. This role helps you build inclusive web experiences that work for everyone.",
+            "courses": [
+              {
+                "course_id": 418,
+                "explanation": "This course teaches Next.js features like server and client components, helping you implement accessibility patterns within modern React applications."
+              },
+              {
+                "course_id": 214,
+                "explanation": "It covers the basics of HTML and CSS, including semantic markup, which is essential for writing accessible code that screen readers can interpret correctly."
+              },
+              {
+                "course_id": 360,
+                "explanation": "You will learn to build responsive web applications using React JS. Responsive design ensures your content remains accessible across different devices and screen sizes."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "fullstack",
+          "role": "Full Stack Developer",
+          "total_s": 11.880319834,
+          "prompt_tokens": 871,
+          "output_tokens": 240,
+          "prefill_tok_s": 664.2911837653642,
+          "decode_tok_s": 22.89584774261251,
+          "flags": [
+            "misattributed:npm"
+          ],
+          "output": {
+            "role_explanation": "You know React, Node.js, and npm, which aligns well with the Full Stack Developer role. This path builds on your frontend and backend skills while introducing essential DevOps practices.",
+            "courses": [
+              {
+                "course_id": 326,
+                "explanation": "This course teaches infrastructure as code and automation using AWS CloudFormation. It covers deployment strategies and CI/CD pipelines, helping you automate your Node.js backend releases."
+              },
+              {
+                "course_id": 305,
+                "explanation": "You will build a complete Node.js backend app hosted on AWS with auto-scaling. This course covers CLI apps, EC2, S3, and monitoring, extending your existing Node.js knowledge."
+              },
+              {
+                "course_id": 168,
+                "explanation": "This course sets up CI/CD pipelines using AWS CodePipeline, Elastic Beanstalk, and GitHub Actions. It focuses on building, testing, and delivering code automatically for your Node.js applications."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "fullstack",
+          "role": "Frontend Developer",
+          "total_s": 10.75247225,
+          "prompt_tokens": 1073,
+          "output_tokens": 210,
+          "prefill_tok_s": 354.9313292227897,
+          "decode_tok_s": 27.78125043408204,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know React, Node.js, and Express, plus Vue and Angular. You're curious about GraphQL. This Frontend Developer role leverages your JavaScript framework experience while filling gaps in web fundamentals.",
+            "courses": [
+              {
+                "course_id": 418,
+                "explanation": "This course builds on your React knowledge by teaching Next.js features like SSR and server components, helping you progress toward full-stack capabilities."
+              },
+              {
+                "course_id": 214,
+                "explanation": "Since you haven't covered HTTP basics or how browsers work yet, this course fills those foundational gaps needed for modern web development."
+              },
+              {
+                "course_id": 360,
+                "explanation": "This course deepens your React skills with SPA building and Tailwind CSS, addressing concepts like responsive design you haven't mastered yet."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "fullstack",
+          "role": "Backend Developer",
+          "total_s": 10.310902875,
+          "prompt_tokens": 966,
+          "output_tokens": 202,
+          "prefill_tok_s": 351.84642886801606,
+          "decode_tok_s": 27.04019256900704,
+          "flags": [
+            "misattributed:javascript",
+            "misattributed:javascript"
+          ],
+          "output": {
+            "role_explanation": "You know MongoDB, Node.js, and Express, which aligns with Backend Developer needs. Your curiosity about GraphQL complements your JavaScript skills to build modern APIs.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course covers HTTP, browsers, domains, hosting, and CSS. These fundamentals are essential for understanding how backend services interact with the web."
+              },
+              {
+                "course_id": 10,
+                "explanation": "You will learn advanced SQL querying on PostgreSQL and MSSQL. This helps you manage relational data efficiently, complementing your MongoDB knowledge."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course covers database concepts like sharding and replication. It also introduces AI tools to help you manage infrastructure effectively."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-single-fact",
+          "role": "AI Data Scientist",
+          "total_s": 9.249893125,
+          "prompt_tokens": 916,
+          "output_tokens": 231,
+          "prefill_tok_s": 530.794482287052,
+          "decode_tok_s": 30.98085383233162,
+          "flags": [],
+          "output": {
+            "role_explanation": "You have SQL experience, which is a strong foundation for data manipulation. This role leverages your ability to query and structure data while introducing advanced statistical and mathematical concepts needed for AI modeling.",
+            "courses": [
+              {
+                "course_id": 417,
+                "explanation": "This course builds Python fundamentals using AI prompts, covering prerequisites like statistics CLT and probability sampling. It strengthens your programming base to handle data analysis tasks."
+              },
+              {
+                "course_id": 435,
+                "explanation": "You will learn to use ChatGPT for exploratory analysis and regression models. This course covers linear algebra, calculus, hypothesis testing, and probability sampling to deepen your statistical understanding."
+              },
+              {
+                "course_id": 182,
+                "explanation": "This project-based course applies machine learning algorithms to real-world data. It reinforces calculus, hypothesis testing, regression fitting, and data visualization skills essential for building robust AI models."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-single-fact",
+          "role": "Backend Developer",
+          "total_s": 8.455971875,
+          "prompt_tokens": 823,
+          "output_tokens": 213,
+          "prefill_tok_s": 761.9298024722447,
+          "decode_tok_s": 29.644978419012425,
+          "flags": [],
+          "output": {
+            "role_explanation": "You have SQL knowledge, which aligns with the backend developer role's need for database skills. This foundation supports building robust server-side applications.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course covers HTTP, browsers, domains, and hosting. These concepts explain how data reaches your backend servers, a critical part of the internet workflow."
+              },
+              {
+                "course_id": 371,
+                "explanation": "You will learn about column databases, ACID properties, and sharding strategies. This expands your SQL knowledge to include advanced data management techniques required for backend systems."
+              },
+              {
+                "course_id": 66,
+                "explanation": "This course deepens your SQL skills by teaching schema design, aggregations, and normalization. It helps you structure databases effectively, a core backend competency."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-curious-only",
+          "role": "AI Data Scientist",
+          "total_s": 9.124068583,
+          "prompt_tokens": 923,
+          "output_tokens": 223,
+          "prefill_tok_s": 719.8705324936143,
+          "decode_tok_s": 29.699036885537915,
+          "flags": [],
+          "output": {
+            "role_explanation": "You are curious about machine learning, which aligns with the AI Data Scientist role. This path requires mastering advanced math and statistics concepts you haven't covered yet to build and deploy models effectively.",
+            "courses": [
+              {
+                "course_id": 417,
+                "explanation": "This course helps by covering Python fundamentals, which is a prerequisite for handling data. It builds your programming foundation needed to work with statistical concepts later."
+              },
+              {
+                "course_id": 435,
+                "explanation": "It addresses your need for math and stats by covering linear algebra, calculus, hypothesis testing, and probability sampling. These are core requirements for building ML models."
+              },
+              {
+                "course_id": 182,
+                "explanation": "This project-based course covers regression, time-series fitting, and data analysis visualization. It applies the math concepts you are learning to real-world model performance analysis."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-curious-only",
+          "role": "DevOps Engineer",
+          "total_s": 10.80975825,
+          "prompt_tokens": 889,
+          "output_tokens": 265,
+          "prefill_tok_s": 682.4198962629644,
+          "decode_tok_s": 28.42090045134535,
+          "flags": [
+            "misattributed:aws",
+            "misattributed:google cloud"
+          ],
+          "output": {
+            "role_explanation": "You are curious about cloud computing, specifically AWS and Google Cloud. This role fits because it leverages your interest in these platforms while addressing the infrastructure management skills required for a DevOps Engineer.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you progress by teaching how to use AI tools for code understanding and architecture visualization. It covers concepts like Bitbucket, domain keys, Cloudflare, GCP functions, and Ansible, enhancing your efficiency with automation."
+              },
+              {
+                "course_id": 168,
+                "explanation": "This course builds on your cloud interest by teaching you to create CI/CD pipelines on AWS. It covers AWS Lambda, GCP functions, Pulumi, Chef, and GitLab CI, directly applying your curiosity about cloud platforms."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course advances your data center management skills by introducing AI collaboration tools and Docker Compose. It covers Digital Ocean, Vultr, Terraform, Chef, and Azure DevOps services to support continuous improvement."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-misattribution",
+          "role": "DevOps Engineer",
+          "total_s": 9.585266834,
+          "prompt_tokens": 1091,
+          "output_tokens": 210,
+          "prefill_tok_s": 386.6749885078492,
+          "decode_tok_s": 32.350160603142555,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know Docker and want to learn Kubernetes, CI/CD, and service mesh tools. This DevOps role fits because it builds on your container skills while addressing your curiosity about orchestration and automation.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you use AI to understand code and visualize architectures, supporting your goal of mastering infrastructure as code for Kubernetes environments."
+              },
+              {
+                "course_id": 168,
+                "explanation": "You will learn to build CI/CD pipelines on AWS, which is essential for automating the deployment processes required in modern Kubernetes setups."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course introduces Docker Compose and data center management, giving you practical experience with container orchestration before moving to Kubernetes."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-misattribution",
+          "role": "Backend Developer",
+          "total_s": 10.361548791,
+          "prompt_tokens": 880,
+          "output_tokens": 245,
+          "prefill_tok_s": 791.0091028968012,
+          "decode_tok_s": 26.730036127007605,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know Docker, which fits the Backend Developer role's containerization needs. Your curiosity about Kubernetes aligns with orchestration requirements. This path builds on your existing skills while addressing gaps in web fundamentals.",
+            "courses": [
+              {
+                "course_id": 214,
+                "explanation": "This course covers HTTP, browsers, domains, and hosting—concepts you haven't learned yet. It provides the foundational web knowledge needed to understand how backend services interact with clients."
+              },
+              {
+                "course_id": 371,
+                "explanation": "While this course focuses on databases (ACID, sharding), it introduces AI tools for developers. This supports a modern Backend Developer's workflow by integrating new development practices alongside your Docker knowledge."
+              },
+              {
+                "course_id": 66,
+                "explanation": "This SQL Foundations course teaches database design and queries. It addresses the 'document' and 'key value' database concepts in your roadmap, giving you the data management skills essential for backend development."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-disliked-heavy",
+          "role": "AI Data Scientist",
+          "total_s": 8.2049755,
+          "prompt_tokens": 892,
+          "output_tokens": 198,
+          "prefill_tok_s": 627.5887155046073,
+          "decode_tok_s": 29.712517883784436,
+          "flags": [],
+          "output": {
+            "role_explanation": "You have Python knowledge, which is the foundation for an AI Data Scientist role. This role requires advanced mathematical and statistical skills you haven't covered yet.",
+            "courses": [
+              {
+                "course_id": 435,
+                "explanation": "This course helps you progress by covering linear algebra, calculus, statistics, and hypothesis testing, which are essential for building ML models."
+              },
+              {
+                "course_id": 182,
+                "explanation": "It builds on your Python skills to teach data analysis, feature engineering, and model performance evaluation through practical projects."
+              },
+              {
+                "course_id": 225,
+                "explanation": "This course covers ab testing, ratio metrics, and econometrics prerequisites, helping you understand how to visualize data effectively in dashboards."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-disliked-heavy",
+          "role": "Blockchain Developer",
+          "total_s": 9.188628542,
+          "prompt_tokens": 949,
+          "output_tokens": 209,
+          "prefill_tok_s": 390.58512862556836,
+          "decode_tok_s": 32.03006719111176,
+          "flags": [
+            "invented_curiosity"
+          ],
+          "output": {
+            "role_explanation": "You liked Python, which supports your interest in Blockchain Development. While you know JavaScript (though disliked), the recommended courses will build your foundational blockchain knowledge from scratch.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps by teaching unit and integration tests, code coverage, and hybrid smart contracts. These skills are essential for writing reliable blockchain applications."
+              },
+              {
+                "course_id": 130,
+                "explanation": "You will learn the basics of blockchain operations, structure, decentralization, and why blockchain matters. This builds the core theoretical foundation needed for the role."
+              },
+              {
+                "course_id": 250,
+                "explanation": "This course covers decentralization vs trust and basic blockchain operations. It helps you understand the underlying mechanics required for a Blockchain Developer."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-disliked-heavy",
+          "role": "DevOps Engineer",
+          "total_s": 9.24856475,
+          "prompt_tokens": 907,
+          "output_tokens": 212,
+          "prefill_tok_s": 395.97511163267484,
+          "decode_tok_s": 30.686839500157703,
+          "flags": [],
+          "output": {
+            "role_explanation": "You liked Python, which aligns with the DevOps Engineer role's need for scripting and automation. Your knowledge of JavaScript provides a foundation for understanding modern development workflows, making this role a strong fit.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you apply AI tools to automate documentation and understand code, supporting your goal of becoming efficient in DevOps practices."
+              },
+              {
+                "course_id": 168,
+                "explanation": "You will learn to build CI/CD pipelines on AWS using Python-like concepts, directly addressing the continuous integration and delivery requirements of the role."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course introduces infrastructure management tools like Terraform and Docker Compose, which are essential for managing data centers and cloud environments."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-abbreviations",
+          "role": "DevOps Engineer",
+          "total_s": 9.128188666,
+          "prompt_tokens": 997,
+          "output_tokens": 216,
+          "prefill_tok_s": 684.2686835549027,
+          "decode_tok_s": 28.452856185960492,
+          "flags": [
+            "misattributed:argo cd",
+            "misattributed:jenkins"
+          ],
+          "output": {
+            "role_explanation": "You are curious about CI/CD tools like Jenkins, GitLab, and Argo CD. This role fits because it leverages your interest in automating deployment pipelines while addressing the infrastructure management skills required for DevOps.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you apply AI to understand code and visualize architectures, supporting your goal of mastering efficient CI/CD workflows."
+              },
+              {
+                "course_id": 168,
+                "explanation": "It directly addresses your interest in GitLab CI by teaching you how to build, test, and deliver code on AWS using CodePipeline."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course covers Azure DevOps services and Terraform, expanding your knowledge of infrastructure tools beyond the specific CI/CD systems you mentioned."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-abbreviations",
+          "role": "Full Stack Developer",
+          "total_s": 8.8368375,
+          "prompt_tokens": 885,
+          "output_tokens": 217,
+          "prefill_tok_s": 798.1428973398844,
+          "decode_tok_s": 29.60409098524052,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know REST APIs and are curious about CI/CD, making you a strong candidate for Full Stack Developer. This role bridges your API knowledge with your interest in automation to build complete applications.",
+            "courses": [
+              {
+                "course_id": 326,
+                "explanation": "This course helps you progress by teaching infrastructure as code and automating pipelines, directly addressing your curiosity about CI/CD while covering deployment concepts."
+              },
+              {
+                "course_id": 305,
+                "explanation": "You will learn to create a Node.js backend and host it on AWS, filling gaps in your knowledge of JavaScript, CLI apps, and deployment strategies."
+              },
+              {
+                "course_id": 168,
+                "explanation": "This course builds on your CI/CD interest by guiding you through creating pipelines with CodePipeline and Elastic Beanstalk for Node.js applications."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-abbreviations",
+          "role": "QA Engineer",
+          "total_s": 8.375844916,
+          "prompt_tokens": 1075,
+          "output_tokens": 196,
+          "prefill_tok_s": 602.1680289668029,
+          "decode_tok_s": 30.19637658887248,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know REST APIs and are curious about CI/CD tools. This QA Engineer role leverages your API knowledge while building essential testing fundamentals and automation skills you currently lack.",
+            "courses": [
+              {
+                "course_id": 404,
+                "explanation": "This course teaches TestProject automation for web apps, directly applying your REST API knowledge to automate testing workflows."
+              },
+              {
+                "course_id": 235,
+                "explanation": "You will gain core QA concepts like black and white box testing, plus practical JIRA experience for bug tracking and task management."
+              },
+              {
+                "course_id": 170,
+                "explanation": "Learn to use AI for code understanding and automated documentation, enhancing efficiency in your future DevOps and QA tasks."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "qwen3.5:4b / cpu": {
+      "summary": {
+        "cases": 15,
+        "errors": 0,
+        "median_s": 33.6,
+        "p90_s": 47.3,
+        "prompt_tokens": 975,
+        "output_tokens": 201,
+        "prefill_tok_s": 62.0,
+        "decode_tok_s": 10.8,
+        "clean_pct": 73,
+        "flags": [
+          "misattributed"
+        ],
+        "load_s": 3.9,
+        "contention": {
+          "idle_ms": 79.86541700665839,
+          "during_llm_ms": 20254.044582979986
+        }
+      },
+      "runs": [
+        {
+          "profile": "backend-java",
+          "role": "DevOps Engineer",
+          "total_s": 24.582656625,
+          "prompt_tokens": 1043,
+          "output_tokens": 249,
+          "prefill_tok_s": 5281.707971682348,
+          "decode_tok_s": 10.216522159636565,
+          "flags": [
+            "misattributed:argo cd"
+          ],
+          "output": {
+            "role_explanation": "You are curious about Kubernetes, Docker, and CI/CD tools like Argo CD. This role fits because it builds on your interest in container orchestration and automation while introducing essential gaps like Python, Go, and process monitoring.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you apply AI to understand code and visualize architectures. It covers Bitbucket and Ansible, which support the automation skills needed for your interest in Kubernetes and CI/CD."
+              },
+              {
+                "course_id": 168,
+                "explanation": "This course teaches you to build CI/CD pipelines on AWS using tools like CodePipeline. It covers Pulumi and GitLab CI, directly addressing your curiosity about deployment automation and cloud infrastructure."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course introduces Docker Compose and data center management. It covers Terraform and Azure DevOps, providing foundational knowledge for managing the containerized environments you are interested in."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "frontend",
+          "role": "Full Stack Developer",
+          "total_s": 34.277147959,
+          "prompt_tokens": 927,
+          "output_tokens": 205,
+          "prefill_tok_s": 60.55942404917295,
+          "decode_tok_s": 10.828974935043318,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know HTML, CSS, and JavaScript while curious about React. This Full Stack Developer role builds on your frontend foundation to handle backend logic and deployment.",
+            "courses": [
+              {
+                "course_id": 326,
+                "explanation": "This course teaches infrastructure as code and CI/CD pipelines on AWS, helping you automate deployments and manage serverless applications."
+              },
+              {
+                "course_id": 305,
+                "explanation": "You will learn to build a Node.js backend app and host it on AWS, covering auto-scaling containers, S3, and monitoring."
+              },
+              {
+                "course_id": 168,
+                "explanation": "This course guides you in creating CI/CD pipelines using AWS CodePipeline and Elastic Beanstalk to build, test, and deliver Node.js code."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "data-science",
+          "role": "AI Data Scientist",
+          "total_s": 34.184461125,
+          "prompt_tokens": 973,
+          "output_tokens": 199,
+          "prefill_tok_s": 62.02515378158374,
+          "decode_tok_s": 10.782718044710675,
+          "flags": [],
+          "output": {
+            "role_explanation": "You have strong foundations in Python, statistics, and data analysis with Pandas. This role leverages your existing skills in exploratory data analysis while introducing advanced mathematical concepts needed for AI modeling.",
+            "courses": [
+              {
+                "course_id": 435,
+                "explanation": "This course helps you progress by covering hypothesis testing and probability sampling, which are currently missing from your knowledge base."
+              },
+              {
+                "course_id": 182,
+                "explanation": "It addresses your gaps in linear algebra, differential calculus, regression, and CI/CD deployment, essential for building ML models."
+              },
+              {
+                "course_id": 225,
+                "explanation": "This course covers ratio metrics and econometrics prerequisites, helping you understand key data visualization and analysis concepts."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "devops",
+          "role": "DevOps Engineer",
+          "total_s": 40.851661167,
+          "prompt_tokens": 1286,
+          "output_tokens": 201,
+          "prefill_tok_s": 58.367916853586216,
+          "decode_tok_s": 10.70345673726688,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know Git and want to learn Terraform, monitoring, and infrastructure tools. This DevOps role fits because you have version control experience and are curious about automation and observability.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you use AI for code understanding and architecture visualization, supporting your interest in efficient DevOps practices."
+              },
+              {
+                "course_id": 168,
+                "explanation": "You will learn to build CI/CD pipelines on AWS, which aligns with your curiosity about automation tools like Terraform and Jenkins."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course covers data center management and Terraform, directly addressing your interest in infrastructure as code and cloud operations."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "android",
+          "role": "Android Developer",
+          "total_s": 33.566735459,
+          "prompt_tokens": 975,
+          "output_tokens": 195,
+          "prefill_tok_s": 62.754239145399254,
+          "decode_tok_s": 10.839441961069616,
+          "flags": [
+            "misattributed:navigation components"
+          ],
+          "output": {
+            "role_explanation": "You know Kotlin and Java, which are perfect for Android development. You are curious about Jetpack Compose and navigation components, making this role a great fit.",
+            "courses": [
+              {
+                "course_id": 197,
+                "explanation": "This course covers basics of Kotlin, OOP, and Gradle, helping you build your first Android app using the tools you already know."
+              },
+              {
+                "course_id": 2,
+                "explanation": "It teaches Java fundamentals, IDE setup, debugging, and APK creation, giving you a solid overview of Android application development."
+              },
+              {
+                "course_id": 118,
+                "explanation": "This course focuses on creating real working applications quickly, covering the activity lifecycle and essential programming concepts."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "game",
+          "role": "Game Developer",
+          "total_s": 47.300803917,
+          "prompt_tokens": 892,
+          "output_tokens": 209,
+          "prefill_tok_s": 42.49726507230776,
+          "decode_tok_s": 7.954602588244993,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know Unity and linear algebra, which fits the Game Developer role. You are curious about shaders and game physics, areas this role covers well.",
+            "courses": [
+              {
+                "course_id": 81,
+                "explanation": "This course covers concepts like linear transformation and affine space that you haven't learned yet. It helps you master lighting techniques relevant to your interest in shaders."
+              },
+              {
+                "course_id": 151,
+                "explanation": "This course teaches vector, geometry, and center of mass, directly addressing the game physics concepts you are curious about while filling knowledge gaps."
+              },
+              {
+                "course_id": 415,
+                "explanation": "You will learn matrix and affine space here. This supports your interest in game physics by teaching algorithms for 3D space division and dungeon map creation."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "blockchain",
+          "role": "Blockchain Developer",
+          "total_s": 54.893342292,
+          "prompt_tokens": 1233,
+          "output_tokens": 194,
+          "prefill_tok_s": 40.28212121011151,
+          "decode_tok_s": 8.006386950744831,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know JavaScript, which fits the role's foundation. Your curiosity about Solidity, smart contracts, and Ethereum shows strong interest in blockchain development.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you progress by covering unit tests, integration tests, code coverage, hybrid smart contracts, and Huobi Eco Chain concepts."
+              },
+              {
+                "course_id": 130,
+                "explanation": "It builds your foundation by teaching blockchain structure, basic operations, decentralization, why it matters, and what blockchain is."
+              },
+              {
+                "course_id": 250,
+                "explanation": "This course covers additional foundational concepts including decentralization vs trust, basic operations, and why blockchain matters."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "qa",
+          "role": "QA Engineer",
+          "total_s": 77.655925416,
+          "prompt_tokens": 1414,
+          "output_tokens": 215,
+          "prefill_tok_s": 27.91829613888385,
+          "decode_tok_s": 0.22374194131479075,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know Selenium and manual testing well, which fits QA Engineer. You are curious about test automation tools like Cypress and frameworks, aligning with this role's focus on expanding beyond basic testing.",
+            "courses": [
+              {
+                "course_id": 404,
+                "explanation": "This course helps you progress by teaching TestProject for automating web, mobile, and API applications, addressing concepts like qtest and test rail."
+              },
+              {
+                "course_id": 235,
+                "explanation": "It builds your foundation in manual testing concepts, tester mindset, and white/gray box testing while covering test prioritization and JIRA usage."
+              },
+              {
+                "course_id": 170,
+                "explanation": "This course enhances efficiency using AI for code understanding, architecture visualization, and bug resolution, supporting tools like ghost inspector and qa wolf."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "ux",
+          "role": "UX Designer",
+          "total_s": 35.52242125,
+          "prompt_tokens": 1219,
+          "output_tokens": 227,
+          "prefill_tok_s": 64.30371525660769,
+          "decode_tok_s": 13.72164915363115,
+          "flags": [
+            "misattributed:adobe xd"
+          ],
+          "output": {
+            "role_explanation": "You know Figma, user personas, and research methods like the action funnel. You are curious about prototyping with tools like Adobe XD. This UX Designer role builds on your design and research foundation while introducing behavioral science concepts.",
+            "courses": [
+              {
+                "course_id": 424,
+                "explanation": "This course covers dual process theory, nudge theory, and behavior design. It helps you apply these psychological principles to software modeling and documentation."
+              },
+              {
+                "course_id": 390,
+                "explanation": "This course covers dual process theory, nudge theory, and helping users think about their actions. It connects your prototyping interest to building functional mobile interfaces."
+              },
+              {
+                "course_id": 197,
+                "explanation": "This course covers nudge theory, behavior design, and behavioral science. It teaches you how to create intuitive Android interfaces that guide user behavior effectively."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "fullstack",
+          "role": "Full Stack Developer",
+          "total_s": 30.346985166,
+          "prompt_tokens": 871,
+          "output_tokens": 226,
+          "prefill_tok_s": 0.9026410119468382,
+          "decode_tok_s": 13.107547894458024,
+          "flags": [],
+          "output": {
+            "role_explanation": "You have React and Node.js experience, which aligns with the Frontend and Backend aspects of Full Stack Development. This role leverages your current skills to build complete web applications.",
+            "courses": [
+              {
+                "course_id": 326,
+                "explanation": "This course teaches deployment, CI/CD, and automation using Terraform and Infrastructure as Code. It helps you automate the release process for your Node.js backend."
+              },
+              {
+                "course_id": 305,
+                "explanation": "You will learn to create a Node.js backend app and host it on AWS EC2 and S3. This builds on your existing Node.js knowledge by adding cloud hosting skills."
+              },
+              {
+                "course_id": 168,
+                "explanation": "This course covers CI/CD pipelines using CodePipeline and Elastic Beanstalk for Node.js. It reinforces continuous integration concepts essential for full-stack delivery."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-single-fact",
+          "role": "AI Data Scientist",
+          "total_s": 25.132188583,
+          "prompt_tokens": 916,
+          "output_tokens": 202,
+          "prefill_tok_s": 106.26191241280665,
+          "decode_tok_s": 0.20774361186799434,
+          "flags": [],
+          "output": {
+            "role_explanation": "You have SQL experience, which is a key foundation for data analysis. This role leverages your ability to query and manage data while introducing advanced statistical and machine learning concepts.",
+            "courses": [
+              {
+                "course_id": 417,
+                "explanation": "This course builds Python fundamentals using AI prompts, covering prerequisites needed before tackling complex statistical topics like the Central Limit Theorem."
+              },
+              {
+                "course_id": 435,
+                "explanation": "You will learn to use ChatGPT for data exploration and building regression models, addressing concepts like hypothesis testing and probability sampling."
+              },
+              {
+                "course_id": 182,
+                "explanation": "This project-based course applies machine learning algorithms to real-world problems, focusing on linear algebra, calculus, and time-series analysis."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-curious-only",
+          "role": "AI Data Scientist",
+          "total_s": 29.720307917,
+          "prompt_tokens": 923,
+          "output_tokens": 190,
+          "prefill_tok_s": 64.09659906084246,
+          "decode_tok_s": 12.464372395561188,
+          "flags": [],
+          "output": {
+            "role_explanation": "You are curious about machine learning, which aligns with the AI Data Scientist role. This path requires mastering advanced math and statistics concepts you haven't covered yet to build and deploy models effectively.",
+            "courses": [
+              {
+                "course_id": 417,
+                "explanation": "This course builds your Python fundamentals using prompts, covering prerequisites needed for data science tasks."
+              },
+              {
+                "course_id": 435,
+                "explanation": "It helps you apply linear algebra and calculus to build regression models and perform hypothesis testing with AI assistance."
+              },
+              {
+                "course_id": 182,
+                "explanation": "This project-based course applies your skills to time-series analysis and feature engineering, focusing on model performance evaluation."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-misattribution",
+          "role": "DevOps Engineer",
+          "total_s": 32.032322208,
+          "prompt_tokens": 1091,
+          "output_tokens": 198,
+          "prefill_tok_s": 65.53814899963014,
+          "decode_tok_s": 12.896350274252613,
+          "flags": [],
+          "output": {
+            "role_explanation": "You know Docker and want to learn Kubernetes, CI/CD, and service mesh tools. This role fits because your existing container knowledge provides a strong foundation for managing complex cloud-native systems.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you use AI to understand code and visualize architectures, supporting the infrastructure design needed for Kubernetes roles."
+              },
+              {
+                "course_id": 168,
+                "explanation": "It teaches you to build CI/CD pipelines on AWS, which is essential for automating deployments in a Kubernetes environment."
+              },
+              {
+                "course_id": 371,
+                "explanation": "You will learn Docker Compose and data center management, reinforcing your container skills while introducing infrastructure automation tools."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-disliked-heavy",
+          "role": "AI Data Scientist",
+          "total_s": 25.393075208,
+          "prompt_tokens": 892,
+          "output_tokens": 201,
+          "prefill_tok_s": 0.9232339976953471,
+          "decode_tok_s": 12.331929149938036,
+          "flags": [],
+          "output": {
+            "role_explanation": "You have Python knowledge, which is the foundation for an AI Data Scientist role. This role requires advanced math and statistics skills you haven't covered yet.",
+            "courses": [
+              {
+                "course_id": 435,
+                "explanation": "This course covers linear algebra, calculus, and statistics concepts needed for your role. It helps you build ML models using AI tools."
+              },
+              {
+                "course_id": 182,
+                "explanation": "This project-based course teaches data analysis, feature engineering, and model performance evaluation using Python. It covers regression and time-series fitting."
+              },
+              {
+                "course_id": 225,
+                "explanation": "This course helps you visualize data effectively in Power BI dashboards. It covers ratio metrics and ab testing principles for better reporting."
+              }
+            ]
+          }
+        },
+        {
+          "profile": "edge-abbreviations",
+          "role": "DevOps Engineer",
+          "total_s": 30.658384791,
+          "prompt_tokens": 997,
+          "output_tokens": 201,
+          "prefill_tok_s": 66.96668457818377,
+          "decode_tok_s": 0.20270021289976492,
+          "flags": [
+            "misattributed:argo cd",
+            "misattributed:jenkins"
+          ],
+          "output": {
+            "role_explanation": "You are curious about CI/CD tools like Jenkins, GitLab, and Argo CD. This role fits because it requires mastering these automation pipelines to build, test, and deploy software reliably.",
+            "courses": [
+              {
+                "course_id": 170,
+                "explanation": "This course helps you use AI to understand code and visualize architectures, supporting your interest in efficient DevOps practices."
+              },
+              {
+                "course_id": 168,
+                "explanation": "It directly addresses your curiosity about CI/CD by teaching you to build pipelines on AWS using GitLab CI."
+              },
+              {
+                "course_id": 371,
+                "explanation": "This course covers Azure DevOps services and Terraform, expanding your knowledge of infrastructure management beyond just CI/CD tools."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

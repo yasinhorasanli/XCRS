@@ -1,0 +1,25 @@
+# VM-B (24 vCPU, 32 GB): the explanation and matching LLM only (ADR-0020, ADR-0034). Ollama has no
+# authentication, so it listens only on VM-B's private address, and firewalld allows port 11434 from VM-A only.
+# Host networking on purpose: a published Docker port would bypass firewalld (deploy/README.md).
+#
+#   cd deploy/vm-b && cp .env.example .env && docker compose up -d
+#   docker compose exec ollama ollama pull qwen3.5:4b
+name: xcrs-llm
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      OLLAMA_HOST: "${XCRS_PRIVATE_IP:?set XCRS_PRIVATE_IP}:11434"
+      OLLAMA_KEEP_ALIVE: "24h"
+      OLLAMA_NUM_PARALLEL: "1"     # one generation at a time on CPU (ADR-0020 benchmark)
+      # The app uses the OpenAI-compatible API, which can't set a context per request; Ollama's default (4096)
+      # truncates a CV import (catalog list + CV + answer, ADR-0045). 16k also covers everything else.
+      OLLAMA_CONTEXT_LENGTH: "16384"
+    volumes:
+      - ollama_llm:/root/.ollama
+
+volumes:
+  ollama_llm:

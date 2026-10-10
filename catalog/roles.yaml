@@ -1,0 +1,397 @@
+# Career roles, levels and common paths between them (ADR-0027).
+#
+# A role is a kind of work (Backend Engineer), not a seniority. Seniority is a level on one shared
+# ladder; each role's roadmap (roadmaps/<role>.yaml) says what each level adds. Moving up a level
+# inside a role is implied; any role can move to any other (see common_paths below).
+#
+# onet: the O*NET-SOC occupation the role belongs to. O*NET occupations are broader than market
+# titles (DevOps, SRE and mobile all sit under 15-1252/15-1299.08), so several roles share one.
+# esco: the closest ESCO occupation (URI), found with the ESCO API and chosen by hand (2026-10-02);
+# null where ESCO has no close occupation. ESCO © European Union, reused under the ESCO terms.
+#
+# also_called: other market titles for the same job, so search and job-title matching find the role; results list
+# them as titles to search for (ADR-0044).
+# title_skills: languages and frameworks that job ads put in the title ("Java Backend Engineer"); the learner's
+# strongest one makes a title for them (ADR-0044). They must be in the role's roadmap.
+# A title can list `adds`, the skills it asks for on top of the role (Product Engineer = Full-Stack +
+# product analytics, experiments...). The validator measures it: when the role covers less than 80% of
+# the title, the title is a different job and must become a role of its own (ADR-0027).
+
+levels:
+  entry:
+    name: Entry
+    typical_years: "0-2"
+    scope: Delivers well-defined tasks with guidance; learns the team's stack and practices.
+  mid:
+    name: Mid-level
+    typical_years: "2-5"
+    scope: Owns features end to end without close supervision; reviews peers' work.
+  senior:
+    name: Senior
+    typical_years: "5+"
+    scope: Owns systems, makes design trade-offs, mentors others and handles the hard incidents.
+  staff:
+    name: Staff / Principal
+    typical_years: "8+"
+    scope: Sets technical direction across teams; solves problems no single team owns.
+
+families:
+  product-engineering: Product engineering
+  quality-engineering: Quality engineering
+  infrastructure: Infrastructure and reliability
+  data-ai: Data and AI
+  security: Security
+  web3: Web3
+  customer-engineering: Customer-facing engineering
+  leadership: Architecture and leadership
+
+roles:
+  frontend-engineer:
+    name: Frontend Engineer
+    family: product-engineering
+    summary: "Builds the user-facing parts of web applications: interfaces, interactivity, accessibility and performance in the browser."
+    onet: 15-1254.00
+    esco: http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c  # user interface developer
+    levels: [entry, mid, senior, staff]
+    also_called: [Frontend Developer, UI Developer]
+    title_skills: [typescript, javascript, react, vue, angular, nextjs, nuxt]  # ADR-0044
+  backend-engineer:
+    name: Backend Engineer
+    family: product-engineering
+    summary: "Builds the server side of applications: APIs, business logic, data storage and integrations."
+    onet: 15-1252.00
+    esco: http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1  # software developer
+    levels: [entry, mid, senior, staff]
+    also_called: [Backend Developer, Software Engineer (Backend), API Developer]
+    title_skills: [java, python, go, csharp, javascript, spring-boot, django, fastapi, aspnet-core, nodejs]  # ADR-0044
+  full-stack-engineer:
+    name: Full-Stack Engineer
+    family: product-engineering
+    summary: Builds features across front end and back end, from the database to the screen.
+    onet: 15-1254.00
+    esco: http://data.europa.eu/esco/occupation/c40a2919-48a9-40ea-b506-1f34f693496d  # web developer
+    levels: [entry, mid, senior, staff]
+    also_called:
+      - title: Product Engineer
+        adds: [product-thinking:2, statistics:2, product-analytics:2, ab-testing:2, feature-flags:2, user-research:1]
+      - Full-Stack Developer
+      - Full Stack Web Developer
+      - Software Engineer (Full-Stack)
+    title_skills: [typescript, javascript, react, vue, nextjs, nuxt, nodejs]  # ADR-0044
+  android-engineer:
+    name: Android Engineer
+    family: product-engineering
+    summary: Builds native Android apps in Kotlin.
+    onet: 15-1252.00
+    esco: http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c  # mobile application developer
+    levels: [entry, mid, senior, staff]
+    also_called: [Android Developer, Android Software Engineer, Mobile Developer (Android)]
+    title_skills: [kotlin]  # ADR-0044
+  ios-engineer:
+    name: iOS Engineer
+    family: product-engineering
+    summary: Builds native apps for iPhone and iPad in Swift.
+    onet: 15-1252.00
+    esco: http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c  # mobile application developer
+    levels: [entry, mid, senior, staff]
+    also_called: [iOS Developer, iOS Software Engineer, Mobile Developer (iOS)]
+    title_skills: [swift, swiftui]  # ADR-0044
+  game-developer:
+    name: Game Developer
+    family: product-engineering
+    summary: "Programs games: gameplay, engines, graphics and performance."
+    onet: 15-1255.01
+    esco: http://data.europa.eu/esco/occupation/9ebaf3f0-0be0-47b7-b2b1-b3b04130fa81  # digital games developer
+    levels: [entry, mid, senior, staff]
+    also_called: [Game Programmer, Gameplay Programmer, Game Engineer]
+    title_skills: [csharp, cpp, unity, unreal-engine]  # ADR-0044
+  embedded-software-engineer:
+    name: Embedded Software Engineer
+    family: product-engineering
+    summary: Writes software for devices and microcontrollers that interacts directly with hardware.
+    onet: 15-1252.00
+    esco: http://data.europa.eu/esco/occupation/57af9090-55b4-4911-b2d0-86db01c00b02  # embedded systems software developer
+    levels: [entry, mid, senior, staff]
+    also_called: [Embedded Systems Engineer, Firmware Engineer, Embedded Developer]
+    title_skills: [cpp, c, embedded-linux]  # ADR-0044
+  qa-automation-engineer:
+    name: QA Automation Engineer
+    family: quality-engineering
+    summary: Ensures software quality through test strategy and automated tests across UI, API and performance (also called SDET).
+    onet: 15-1253.00
+    esco: http://data.europa.eu/esco/occupation/106f79e4-6264-45f1-9e7a-297435cd684b  # software tester
+    levels: [entry, mid, senior, staff]
+    also_called: [Test Automation Engineer, Software Development Engineer in Test (SDET), QA Engineer]
+    title_skills: [python, java, typescript, javascript]  # ADR-0044
+  devops-engineer:
+    name: DevOps Engineer
+    family: infrastructure
+    summary: Automates how software is built, tested, deployed and run, bridging development and operations.
+    onet: 15-1299.08
+    esco: http://data.europa.eu/esco/occupation/9e2e6e1e-363b-4e1b-a673-7bc0f7343300  # ICT system administrator; ESCO has no DevOps occupation
+    levels: [entry, mid, senior, staff]
+    also_called: [Build and Release Engineer, CI/CD Engineer]
+    title_skills: [aws, azure, gcp, kubernetes]  # ADR-0044
+  cloud-engineer:
+    name: Cloud Engineer
+    family: infrastructure
+    summary: Designs, builds and operates infrastructure on cloud platforms.
+    onet: 15-1299.08
+    esco: http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae  # ICT system architect; no cloud occupation in ESCO
+    levels: [entry, mid, senior, staff]
+    also_called: [Cloud Infrastructure Engineer, Cloud Systems Engineer, Cloud Operations Engineer]
+    title_skills: [aws, azure, gcp]  # ADR-0044
+  site-reliability-engineer:
+    name: Site Reliability Engineer
+    family: infrastructure
+    summary: "Keeps production systems reliable with software engineering: SLOs, automation, incident response and capacity."
+    onet: 15-1299.08
+    esco: http://data.europa.eu/esco/occupation/9e2e6e1e-363b-4e1b-a673-7bc0f7343300  # ICT system administrator; no SRE occupation in ESCO
+    levels: [mid, senior, staff]
+    also_called: [SRE, Production Engineer, Reliability Engineer]
+    title_skills: [kubernetes, aws, azure, gcp]  # ADR-0044
+  ai-reliability-engineer:
+    name: AI Reliability Engineer
+    family: infrastructure
+    summary: "Keeps AI features dependable in production: evaluations, guardrails, quality and drift monitoring, and AI incident response."
+    onet: 15-1299.08
+    esco: null  # no close ESCO occupation (checked 2026-10-02)
+    levels: [mid, senior, staff]
+  platform-engineer:
+    name: Platform Engineer
+    family: infrastructure
+    summary: Builds internal platforms and golden paths so product teams can ship and run services on their own.
+    onet: 15-1299.08
+    esco: http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135  # ICT system developer
+    levels: [mid, senior, staff]
+    also_called: [Internal Developer Platform Engineer, Infrastructure Platform Engineer]
+    title_skills: [kubernetes, aws, azure, gcp]  # ADR-0044
+  data-analyst:
+    name: Data Analyst
+    family: data-ai
+    summary: Turns data into answers and dashboards that guide business decisions.
+    onet: 15-2051.01
+    esco: http://data.europa.eu/esco/occupation/d3edb8f8-3a06-47a0-8fb9-9b212c006aa2  # data analyst
+    levels: [entry, mid, senior, staff]
+    also_called: [Business Intelligence Analyst, Reporting Analyst]
+    title_skills: [sql, python, r]  # ADR-0044
+  analytics-engineer:
+    name: Analytics Engineer
+    family: data-ai
+    summary: Turns raw warehouse data into tested, documented data models and metrics that analysts and the business can trust.
+    onet: 15-1243.01
+    esco: http://data.europa.eu/esco/occupation/1562c7a3-c7d9-419d-b9b6-db26610bcf84  # data warehouse designer
+    levels: [entry, mid, senior, staff]
+    also_called: [Business Intelligence Engineer, Analytics Developer]
+  data-engineer:
+    name: Data Engineer
+    family: data-ai
+    summary: Builds the pipelines, warehouses and data models that make data reliable and usable.
+    onet: 15-1243.00
+    esco: http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67  # database integrator
+    levels: [entry, mid, senior, staff]
+    also_called: [Big Data Engineer, ETL Developer, Data Pipeline Engineer, Data Integration Engineer]
+    title_skills: [python, spark, snowflake]  # ADR-0044
+  data-scientist:
+    name: Data Scientist
+    family: data-ai
+    summary: Uses statistics and machine learning to explain data, run experiments and build predictive models.
+    onet: 15-2051.00
+    esco: http://data.europa.eu/esco/occupation/258e46f9-0075-4a2e-adae-1ff0477e0f30  # data scientist
+    levels: [entry, mid, senior, staff]
+    also_called: [Decision Scientist, Product Data Scientist]
+    title_skills: [python, r]  # ADR-0044
+  machine-learning-engineer:
+    name: Machine Learning Engineer
+    family: data-ai
+    summary: Builds, trains and ships machine learning models into production systems.
+    onet: 15-2051.00
+    esco: http://data.europa.eu/esco/occupation/35553663-deab-4d9a-bf22-15c1625d28e8  # ICT intelligent systems designer
+    levels: [entry, mid, senior, staff]
+    also_called: [ML Engineer, Machine Learning Developer, Deep Learning Engineer]
+    title_skills: [pytorch, tensorflow]  # ADR-0044
+  applied-scientist:
+    name: Applied Scientist
+    family: data-ai
+    summary: "Researches and builds new models for products: frames the problem, runs experiments, adapts published research and hands working models to engineering."
+    onet: 15-1221.00
+    esco: http://data.europa.eu/esco/occupation/e3229e40-f571-4b26-baca-29edc8fe313e  # computer scientist
+    levels: [entry, mid, senior, staff]
+    also_called: [Research Engineer, Research Scientist, Machine Learning Scientist]
+  mlops-engineer:
+    name: MLOps Engineer
+    family: data-ai
+    summary: Runs the infrastructure and pipelines that train, deploy and monitor ML models.
+    onet: 15-1299.08
+    esco: null  # no close ESCO occupation (checked 2026-10-02)
+    levels: [mid, senior, staff]
+    also_called: [ML Platform Engineer, Machine Learning Operations Engineer]
+  ai-platform-engineer:
+    name: AI Platform Engineer
+    family: data-ai
+    summary: "Builds the shared platform that serves models to product teams: LLM serving, GPU capacity, vector stores and evaluation services."
+    onet: 15-1299.08
+    esco: null  # no close ESCO occupation (checked 2026-10-02)
+    levels: [mid, senior, staff]
+    also_called: [AI Infrastructure Engineer, LLM Infrastructure Engineer]
+  ai-engineer:
+    name: AI Engineer
+    family: data-ai
+    summary: "Builds products on large language models: prompting, retrieval, agents, evaluation and guardrails."
+    onet: 15-1252.00
+    esco: http://data.europa.eu/esco/occupation/35553663-deab-4d9a-bf22-15c1625d28e8  # ICT intelligent systems designer
+    levels: [entry, mid, senior, staff]
+    also_called: [Generative AI Engineer, LLM Engineer, AI Application Developer]
+    title_skills: [python]  # ADR-0044
+  security-engineer:
+    name: Security Engineer
+    family: security
+    summary: "Protects applications, cloud and infrastructure: secure design, detection, response and compliance."
+    onet: 15-1299.05
+    esco: http://data.europa.eu/esco/occupation/0464b062-cea6-4164-b10d-956c61956ae7  # ICT security administrator
+    levels: [entry, mid, senior, staff]
+    also_called: [Cybersecurity Engineer, Information Security Engineer]
+  penetration-tester:
+    name: Penetration Tester
+    family: security
+    summary: Finds and demonstrates vulnerabilities through authorized attacks on applications and networks.
+    onet: 15-1299.04
+    esco: http://data.europa.eu/esco/occupation/76ef0a87-6afe-4560-b5d0-9a086abe45c5  # ethical hacker
+    levels: [entry, mid, senior, staff]
+    also_called: [Ethical Hacker, Offensive Security Engineer]
+  blockchain-engineer:
+    name: Blockchain Engineer
+    family: web3
+    summary: Builds smart contracts and decentralized applications.
+    onet: 15-1299.07
+    esco: http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1  # software developer; no blockchain occupation in ESCO
+    levels: [entry, mid, senior, staff]
+    also_called: [Blockchain Developer, Smart Contract Developer, Web3 Developer]
+    title_skills: [solidity, ethereum]  # ADR-0044
+  forward-deployed-engineer:
+    name: Forward-Deployed Engineer
+    family: customer-engineering
+    summary: Works inside customers' environments to build and ship production solutions on the company's platform, today often AI agents and integrations.
+    onet: 15-1252.00  # O*NET has no FDE occupation; it is software development done at the customer
+    esco: http://data.europa.eu/esco/occupation/bd9d395a-d587-45c6-8d72-ceef226df9e1  # ICT system integration consultant
+    levels: [entry, mid, senior, staff]
+    also_called: [Forward Deployed Software Engineer]
+  solutions-engineer:
+    name: Solutions Engineer
+    family: customer-engineering
+    summary: "Wins and enables customers around the sale: technical discovery, tailored demos, proofs of concept and solution designs."
+    onet: 41-9031.00
+    esco: http://data.europa.eu/esco/occupation/16605833-c196-48d7-a6f5-bbdebdc353df  # ICT presales engineer
+    levels: [entry, mid, senior, staff]
+    also_called: [Sales Engineer, Pre-Sales Engineer, Customer Engineer]
+  developer-advocate:
+    name: Developer Advocate
+    family: customer-engineering
+    summary: Helps developers succeed with a platform through content, talks, sample code and community, and brings their feedback back to the product.
+    onet: 15-1252.00  # no DevRel occupation in O*NET; the closest is software development
+    esco: null  # no close ESCO occupation (checked 2026-10-02)
+    levels: [mid, senior, staff]
+    also_called: [Developer Relations Engineer, Developer Evangelist]
+  software-architect:
+    name: Software Architect
+    family: leadership
+    summary: "Shapes the structure of systems across teams: architecture, technology choices and long-term trade-offs. Usually reached after years as a senior engineer."
+    onet: 15-1299.08
+    esco: http://data.europa.eu/esco/occupation/d0aa0792-4345-474b-9365-686cf4869d2e  # software architect
+    levels: [senior, staff]
+    also_called: [Application Architect, Technical Architect]
+  engineering-manager:
+    name: Engineering Manager
+    family: leadership
+    summary: "Leads an engineering team: people, delivery and process. The management track, entered from a senior engineering role."
+    onet: 11-3021.00
+    esco: http://data.europa.eu/esco/occupation/f31f487b-4ce2-40f3-90e8-7d0011b4ef1d  # software manager
+    levels: [senior, staff]
+
+# Moving between roles. ANY move is possible: `xcrs catalog moves ROLE@LEVEL` ranks every other role by
+# how much of its requirements someone already covers (skills weighted by how distinctive they are) and
+# estimates the level they would start at. The paths below are the COMMON ones, moves people really make,
+# kept as evidence about the real world (not a whitelist). kind: broaden (adjacent stack) · specialize
+# (narrower, deeper) · pivot (different field) · lead (architecture or management track); typical_years is
+# total experience when the move is common. The validator warns when a common path is far apart.
+    also_called: [Software Engineering Manager, Software Development Manager]
+common_paths:
+  - {from: frontend-engineer@mid, to: full-stack-engineer@mid, kind: broaden}
+  - {from: backend-engineer@mid, to: full-stack-engineer@mid, kind: broaden}
+  - {from: full-stack-engineer@mid, to: backend-engineer@mid, kind: specialize}
+  - {from: full-stack-engineer@mid, to: frontend-engineer@mid, kind: specialize}
+  - {from: android-engineer@mid, to: ios-engineer@mid, kind: broaden}
+  - {from: ios-engineer@mid, to: android-engineer@mid, kind: broaden}
+  - {from: frontend-engineer@mid, to: android-engineer@entry, kind: pivot}
+  - {from: backend-engineer@mid, to: data-engineer@mid, kind: pivot}
+  - {from: backend-engineer@mid, to: devops-engineer@mid, kind: pivot}
+  - {from: backend-engineer@mid, to: ai-engineer@mid, kind: specialize}
+  - {from: full-stack-engineer@mid, to: ai-engineer@mid, kind: specialize}
+  - {from: backend-engineer@mid, to: blockchain-engineer@mid, kind: pivot}
+  - {from: backend-engineer@senior, to: platform-engineer@senior, kind: specialize, typical_years: "5+"}
+  - {from: backend-engineer@senior, to: site-reliability-engineer@senior, kind: specialize, typical_years: "5+"}
+  - {from: backend-engineer@senior, to: security-engineer@mid, kind: pivot, typical_years: "5+"}
+  - {from: qa-automation-engineer@mid, to: backend-engineer@entry, kind: pivot}
+  - {from: qa-automation-engineer@mid, to: devops-engineer@entry, kind: pivot}
+  - {from: devops-engineer@mid, to: site-reliability-engineer@mid, kind: specialize}
+  - {from: devops-engineer@mid, to: platform-engineer@mid, kind: specialize}
+  - {from: devops-engineer@mid, to: cloud-engineer@mid, kind: broaden}
+  - {from: cloud-engineer@mid, to: devops-engineer@mid, kind: broaden}
+  - {from: devops-engineer@mid, to: mlops-engineer@mid, kind: specialize}
+  - {from: devops-engineer@senior, to: security-engineer@mid, kind: pivot, typical_years: "5+"}
+  - {from: cloud-engineer@senior, to: security-engineer@mid, kind: pivot, typical_years: "5+"}
+  - {from: site-reliability-engineer@senior, to: platform-engineer@senior, kind: broaden}
+  - {from: data-analyst@mid, to: data-scientist@entry, kind: pivot}
+  - {from: data-analyst@mid, to: data-engineer@entry, kind: pivot}
+  - {from: data-engineer@mid, to: machine-learning-engineer@mid, kind: pivot}
+  - {from: data-scientist@mid, to: machine-learning-engineer@mid, kind: specialize}
+  - {from: machine-learning-engineer@mid, to: mlops-engineer@mid, kind: specialize}
+  - {from: machine-learning-engineer@mid, to: ai-engineer@mid, kind: broaden}
+  - {from: security-engineer@mid, to: penetration-tester@mid, kind: specialize}
+  - {from: penetration-tester@mid, to: security-engineer@mid, kind: broaden}
+  - {from: data-analyst@mid, to: analytics-engineer@mid, kind: specialize}
+  - {from: analytics-engineer@mid, to: data-engineer@mid, kind: broaden}
+  - {from: data-engineer@mid, to: analytics-engineer@mid, kind: specialize}
+  - {from: data-scientist@mid, to: applied-scientist@mid, kind: specialize}
+  - {from: machine-learning-engineer@mid, to: applied-scientist@mid, kind: pivot}
+  - {from: applied-scientist@mid, to: machine-learning-engineer@mid, kind: broaden}
+  - {from: backend-engineer@mid, to: forward-deployed-engineer@mid, kind: broaden}
+  - {from: full-stack-engineer@mid, to: forward-deployed-engineer@mid, kind: broaden}
+  - {from: ai-engineer@mid, to: forward-deployed-engineer@mid, kind: broaden}
+  - {from: forward-deployed-engineer@mid, to: ai-engineer@mid, kind: specialize}
+  - {from: backend-engineer@mid, to: solutions-engineer@mid, kind: pivot}
+  - {from: full-stack-engineer@mid, to: solutions-engineer@mid, kind: pivot}
+  - {from: solutions-engineer@mid, to: forward-deployed-engineer@mid, kind: pivot}
+  - {from: forward-deployed-engineer@senior, to: solutions-engineer@senior, kind: broaden}
+  - {from: frontend-engineer@mid, to: developer-advocate@mid, kind: pivot}
+  - {from: full-stack-engineer@mid, to: developer-advocate@mid, kind: pivot}
+  - {from: backend-engineer@mid, to: developer-advocate@mid, kind: pivot}
+  - {from: site-reliability-engineer@mid, to: ai-reliability-engineer@mid, kind: specialize}
+  - {from: ai-engineer@mid, to: ai-reliability-engineer@mid, kind: specialize}
+  - {from: mlops-engineer@mid, to: ai-platform-engineer@mid, kind: specialize}
+  - {from: platform-engineer@mid, to: ai-platform-engineer@mid, kind: specialize}
+  - {from: backend-engineer@senior, to: software-architect@senior, kind: lead, typical_years: "8+"}
+  - {from: full-stack-engineer@senior, to: software-architect@senior, kind: lead, typical_years: "8+"}
+  - {from: platform-engineer@senior, to: software-architect@senior, kind: lead, typical_years: "8+"}
+  - {from: data-engineer@senior, to: software-architect@senior, kind: lead, typical_years: "8+"}
+  - {from: backend-engineer@senior, to: engineering-manager@senior, kind: lead, typical_years: "6+"}
+  - {from: frontend-engineer@senior, to: engineering-manager@senior, kind: lead, typical_years: "6+"}
+  - {from: full-stack-engineer@senior, to: engineering-manager@senior, kind: lead, typical_years: "6+"}
+  - {from: android-engineer@senior, to: engineering-manager@senior, kind: lead, typical_years: "6+"}
+  - {from: ios-engineer@senior, to: engineering-manager@senior, kind: lead, typical_years: "6+"}
+  - {from: data-engineer@senior, to: engineering-manager@senior, kind: lead, typical_years: "6+"}
+  - {from: devops-engineer@senior, to: engineering-manager@senior, kind: lead, typical_years: "6+"}
+
+# The research-2024 roles (roadmap.sh), kept as a separate legacy catalog until the new catalog
+# proves better; mapped to the closest new role for comparison.
+legacy_roles:
+  ai-data-scientist: data-scientist
+  android: android-engineer
+  backend: backend-engineer
+  blockchain: blockchain-engineer
+  devops: devops-engineer
+  frontend: frontend-engineer
+  full-stack: full-stack-engineer
+  game-developer: game-developer
+  qa: qa-automation-engineer
+  ux-design: null  # a design role, outside the software-engineering scope of the new catalog

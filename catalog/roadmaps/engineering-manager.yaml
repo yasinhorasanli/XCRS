@@ -1,0 +1,18 @@
+# Roadmap for engineering-manager (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: engineering-manager
+levels:
+  senior:
+    title: Engineering Manager
+    summary: "Leads a team: people, delivery and process. Entered from a senior engineering role; this level lists the whole profile."
+    stages:
+      - name: Engineering background
+        skills: [programming-fundamentals:3, git:2, code-review:3, computer-networking:2, operating-systems:1, concurrency:2, distributed-systems:2, sql:2, relational-databases:2, database-design:2, data-structures:1, caching:2, system-design:2, testing-fundamentals:2, ci-cd:1, linux:1, observability:1, incident-management:1]
+      - name: Leading people and delivery
+        skills: [agile-scrum:2, mentoring:3, people-management:2, hiring:2, stakeholder-communication:3, project-planning:3, technical-writing:2, product-thinking:2, engineering-processes:2, technical-leadership:2]
+  staff:
+    title: Senior Engineering Manager
+    summary: "Leads several teams or managers; owns organization, strategy and budget."
+    stages:
+      - name: Leading an organization
+        skills: [people-management:4, hiring:3, engineering-processes:3, stakeholder-communication:4, product-thinking:3, project-planning:4, cloud-fundamentals:2, finops:1]

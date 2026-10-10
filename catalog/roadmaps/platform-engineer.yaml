@@ -1,0 +1,29 @@
+# Roadmap for platform-engineer (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: platform-engineer
+levels:
+  mid:
+    summary: "Builds and runs the shared platform product teams deploy on. Usually entered from DevOps or back-end work."
+    stages:
+      - name: Engineering foundations
+        skills: [programming-fundamentals:2, "go|python:2", linux:2, git:2, computer-networking:2, http:2, rest-api-design:1, data-structures:2, sql:2, relational-databases:2, operating-systems:1]
+      - name: Platform building blocks
+        skills: [docker:2, kubernetes:2, helm:2, ci-cd:2, github-actions:2, cloud-fundamentals:2, infrastructure-as-code:2, terraform:2, "aws|azure|gcp:2"]
+      - name: Operations
+        skills: [observability:2, prometheus-grafana:1, identity-access-management:1, secrets-management:1]
+  senior:
+    summary: "Designs the platform as a product: golden paths, self-service, security and cost."
+    stages:
+      - name: Platform as a product
+        skills: [internal-developer-platforms:2, gitops:2, kubernetes:3, service-mesh:1, product-thinking:2, finops:1]
+      - name: Security
+        skills: [security-fundamentals:2, vulnerability-management:1, devsecops:1]
+      - name: Leadership
+        skills: [mentoring:2, technical-writing:2]
+  staff:
+    summary: "Sets platform strategy for the engineering organization."
+    stages:
+      - name: Systems thinking
+        skills: [caching:2, database-design:2, concurrency:2, distributed-systems:2, system-design:2, cloud-networking:2]
+      - name: Direction
+        skills: [internal-developer-platforms:3, cloud-architecture:2, architecture-decision-records:2, agile-scrum:2, engineering-processes:2, technical-leadership:3, stakeholder-communication:3]

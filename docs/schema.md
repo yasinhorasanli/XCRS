@@ -1,0 +1,267 @@
+# Database schema
+
+The PostgreSQL + pgvector schema, consolidated from ADRs [0003](adr/0003-postgresql-pgvector-primary-store.md) and [0008](adr/0008-embedding-tables-per-entity.md)–[0013](adr/0013-user-activity-hybrid-then-normalized.md). This is the blueprint for the initial Alembic migration. When a decision changes, the ADR changes first and this document follows. The new catalog lives in its own `catalog` schema ([below](#catalog-v2-schema-catalog-adr-0028)).
+
+> **Removed on 2026-10-02 (migration 0010, [ADR-0039](adr/0039-retire-the-classic-engine.md)):** the classic engine's tables: `roles`, `roadmap_nodes`, `courses`, `node_embeddings`, `course_embeddings`, `concept_course_matches`, `recommendation_requests`, `recommended_roles`, `recommended_courses`, `feedback`. Their sections below are kept as history. In `public` today: `embedding_models` (the model registry, used by `catalog.skill_embeddings`), the engine v2 activity (`recommendations_v2`, `explanations_v2`, `feedback_v2`) and the accounts (`users`, `user_identities`, `boards`; migration 0012, [ADR-0043](adr/0043-accounts-with-social-sign-in-in-the-nuxt-server.md)).
+
+## Overview
+
+```mermaid
+erDiagram
+    roles ||--o{ roadmap_nodes : contains
+    roadmap_nodes ||--o{ roadmap_nodes : "parent of"
+    roadmap_nodes ||--o{ node_embeddings : "embedded as"
+    courses ||--o{ course_embeddings : "embedded as"
+    embedding_models ||--o{ node_embeddings : produces
+    embedding_models ||--o{ course_embeddings : produces
+    embedding_models ||--o{ concept_course_matches : "scored by"
+    roadmap_nodes ||--o{ concept_course_matches : "concept"
+    courses ||--o{ concept_course_matches : "matched course"
+    embedding_models ||--o{ recommendation_requests : "used by"
+    recommendation_requests ||--o{ recommended_roles : shows
+    recommended_roles ||--o{ recommended_courses : includes
+    roles ||--o{ recommended_roles : ""
+    courses ||--o{ recommended_courses : ""
+    recommendation_requests ||--o{ feedback : receives
+```
+
+Three groups of tables:
+- **Catalog:** `roles`, `roadmap_nodes`, `courses`. What we recommend from.
+- **Vectors:** `embedding_models`, `node_embeddings`, `course_embeddings`, `concept_course_matches`. Model-specific data; several models can coexist.
+- **Activity:** `recommendation_requests`, `recommended_roles`, `recommended_courses`, `feedback`. What users asked for, what they were shown, and what they thought of it.
+
+## Conventions
+
+- **Extension:** `CREATE EXTENSION vector`. UUIDs come from the built-in `gen_random_uuid()`.
+- **Timestamps** are `timestamptz`, default `now()`.
+- **Status-like columns** are `text` with a `CHECK` constraint rather than Postgres `ENUM` types. That makes them easier to extend in a migration.
+- **Surrogate keys** are `bigint GENERATED ALWAYS AS IDENTITY`; small lookup tables use `smallint`. Natural keys are kept as `UNIQUE` constraints.
+- **Deleting** a catalog entity cascades to its embeddings and matches. Activity rows reference the catalog **without** cascade, so history isn't silently deleted.
+
+## Catalog
+
+### `roles`
+| Column | Type | Notes |
+|---|---|---|
+| `id` | smallint PK | The prototype's ids 1–10 are kept for comparison |
+| `slug` | text UNIQUE NOT NULL | `backend`, `ai-data-scientist`, … (roadmap.sh file name) |
+| `name` | text NOT NULL | "Backend Developer" |
+| `created_at` | timestamptz | |
+
+Replaces the role list hardcoded in 3 places.
+
+### `roadmap_nodes`
+| Column | Type | Notes |
+|---|---|---|
+| `id` | bigint PK | |
+| `role_id` | smallint NOT NULL → `roles` | |
+| `parent_id` | bigint NULL → `roadmap_nodes` | NULL = top-level topic of the role |
+| `type` | text NOT NULL, CHECK in (`topic`, `concept`) | |
+| `name` | text NOT NULL | |
+| `content` | text NOT NULL | Markdown content; this is what gets embedded for concepts |
+| `position` | int NOT NULL | Order among siblings |
+| `sequence` | int NOT NULL | Global depth-first order within the role (see open point 2) |
+| `legacy_id` | bigint UNIQUE NULL | The prototype's digit-encoded id (e.g. `60203`), for comparing prototype vs new |
+| `source` | text NOT NULL | `roadmap.sh`; later also generated roadmaps (ADR-0004) |
+| `source_version` | text NULL | Roadmap version or commit it came from |
+| `content_hash` | text NOT NULL | Detects changed content, so only changed nodes are re-embedded |
+| `created_at`, `updated_at` | timestamptz | |
+
+Index: `(role_id, sequence)`, `(parent_id)`.
+Enforced in code, not by constraints: a child has the same `role_id` as its parent; only `concept` nodes get embeddings and matches.
+
+### `courses`
+| Column | Type | Notes |
+|---|---|---|
+| `id` | bigint PK | |
+| `source` | text NOT NULL | `udemy`; other platforms later |
+| `source_id` | text NOT NULL | The platform's own id (Udemy `366280`) |
+| `title`, `url`, `headline` | text | |
+| `description`, `what_you_learn` | text | |
+| `category` | text | "Development,Programming Languages,Java" |
+| `language` | text | |
+| `is_paid` | boolean | |
+| `price` | numeric NULL | The prototype stored strings like "Free" |
+| `rating` | real NULL | |
+| `embed_text` | text NOT NULL | The exact text that gets embedded (prototype: `concat_text`) |
+| `content_hash` | text NOT NULL | Hash of `embed_text` |
+| `is_active` | boolean NOT NULL DEFAULT true | Replaces the hardcoded exclusion of course `2602800` (see open point 1) |
+| `fetched_at`, `created_at`, `updated_at` | timestamptz | |
+
+Constraint: `UNIQUE (source, source_id)`.
+
+## Vectors
+
+### `embedding_models` (registry)
+| Column | Type | Notes |
+|---|---|---|
+| `id` | smallint PK | |
+| `name` | text UNIQUE NOT NULL | Exact model tag, e.g. `qwen3-embedding:0.6b` |
+| `runtime` | text NOT NULL | `ollama` |
+| `quantization` | text NOT NULL | Pinned, so vectors are reproducible across machines (ADR-0007) |
+| `dimensions` | int NOT NULL CHECK > 0 | Defines this model's vector size and its index cast |
+| `query_prefix` | text NULL | Instruction or prefix for queries (models differ; ADR-0006) |
+| `document_prefix` | text NULL | Prefix for documents |
+| `status` | text NOT NULL, CHECK in (`candidate`, `active`, `retired`) | |
+| `sim_mean`, `sim_std` | real NULL | Threshold statistics (ADR-0009) |
+| `stats_computed_at` | timestamptz NULL | |
+| `created_at` | timestamptz | |
+
+Constraint: **at most one active model**, via `CREATE UNIQUE INDEX ... ON embedding_models ((true)) WHERE status = 'active'`.
+
+### `course_embeddings`, `node_embeddings`
+| Column | Type | Notes |
+|---|---|---|
+| `course_id` / `node_id` | bigint → `courses` / `roadmap_nodes`, ON DELETE CASCADE | |
+| `model_id` | smallint → `embedding_models` | |
+| `embedding` | `vector` (**untyped**) NOT NULL | Size is checked against `embedding_models.dimensions` in code |
+| `content_hash` | text NOT NULL | Hash of the text at embedding time; a mismatch means the vector is stale |
+| `created_at` | timestamptz | |
+
+Primary key: `(course_id, model_id)` / `(node_id, model_id)`.
+
+Indexes (created by one Alembic migration per model; ADR-0009, ADR-0010):
+```sql
+-- course side: needed by ingestion (nearest courses for a new or changed concept)
+CREATE INDEX CONCURRENTLY course_emb_m1_hnsw ON course_embeddings
+  USING hnsw ((embedding::vector(1024)) vector_cosine_ops) WHERE model_id = 1;
+-- node side: none for now; the request path uses an exact threshold scan
+```
+Dimensions over 2,000 use `halfvec(n)` / `halfvec_cosine_ops` instead.
+
+### `concept_course_matches`
+| Column | Type | Notes |
+|---|---|---|
+| `model_id` | smallint → `embedding_models` | |
+| `concept_id` | bigint → `roadmap_nodes`, ON DELETE CASCADE | |
+| `course_id` | bigint → `courses`, ON DELETE CASCADE | |
+| `similarity` | real NOT NULL | |
+| `rank` | smallint NOT NULL, CHECK between 1 and 20 | 1 = best course for this concept |
+
+Primary key: `(model_id, concept_id, course_id)`. Unique: `(model_id, concept_id, rank)`. Index: `(model_id, course_id)`, used when a course changes and its rows must be recomputed.
+
+## Activity
+
+### `recommendation_requests`
+| Column | Type | Notes |
+|---|---|---|
+| `id` | uuid PK DEFAULT `gen_random_uuid()` | |
+| `created_at` | timestamptz | |
+| `model_id` | smallint → `embedding_models` | |
+| `algorithm_version` | text NOT NULL | |
+| `threshold_used` | real NOT NULL | Reproducibility (ADR-0013) |
+| `input` | jsonb NOT NULL | **Transitional**; normalized after the input redesign |
+| `status` | text NOT NULL, CHECK in (`ok`, `insufficient_input`, `error`) | |
+| `latency_ms` | int NULL | |
+| `error` | text NULL | |
+
+Index: `(created_at)`.
+
+### `recommended_roles`
+`request_id` uuid → `recommendation_requests` ON DELETE CASCADE · `rank` smallint · `role_id` → `roles` · `score` real · `explanation` text · `prompt_version` text NULL (which prompt produced the role's explanations; ADR-0019) · `next_concept_ids` bigint[] (the uncovered concepts shown, in learning order).
+
+**Explanation job columns** (ADR-0018; the rows are the queue): `explanation_status` text NOT NULL DEFAULT `pending`, CHECK in (`pending`, `done`, `failed`, `disabled`) · `explanation_input` jsonb NULL (exactly the facts the LLM gets) · `explanation_ms` int NULL · `explanation_attempts` smallint NOT NULL DEFAULT 0 (a job gives up after 3) · `explained_at` timestamptz NULL. Partial index `(request_id) WHERE explanation_status = 'pending'` for the startup re-queue.
+Primary key: `(request_id, rank)`. Unique: `(request_id, role_id)`.
+
+### `recommended_courses`
+`request_id` · `role_id` · `rank` smallint · `course_id` → `courses` · `similarity` real · `explanation` text · `concept_ids` bigint[] (the concepts the course was picked for).
+Primary key: `(request_id, role_id, rank)`. Foreign key: `(request_id, role_id)` → `recommended_roles (request_id, role_id)` ON DELETE CASCADE.
+
+### `feedback`
+`id` bigint PK · `request_id` → `recommendation_requests` ON DELETE CASCADE · `role_id` NULL · `course_id` NULL · `rating` smallint NULL (format decided with the frontend) · `comment` text NULL · `created_at`.
+Both target columns NULL means feedback on the request as a whole (what the Google Form collected).
+
+## Catalog v2 (schema `catalog`, ADR-0028)
+
+Loaded from `catalog/*.yaml` by `xcrs catalog import` (migration `0005`). The YAML is the source of truth; the database is a projection of it that the engine and future tables can join against.
+
+```mermaid
+erDiagram
+    families ||--o{ roles : groups
+    roles ||--o{ role_titles : "also called"
+    role_titles ||--o{ role_title_skills : adds
+    roles ||--o{ role_levels : "has level"
+    levels ||--o{ role_levels : ""
+    role_levels ||--o{ roadmap_stages : "roadmap of"
+    roadmap_stages ||--o{ roadmap_items : requires
+    skills ||--o{ roadmap_items : "option"
+    skills ||--o{ skill_prerequisites : "requires"
+    skills ||--o{ skill_prerequisites : "option"
+    role_levels ||--o{ common_paths : "from / to"
+```
+
+| Table | Key | What it holds |
+|---|---|---|
+| `levels` | `id` smallint = ladder position (1 entry … 4 staff), `slug` UNIQUE | name, typical years, scope |
+| `families` | `id`, `slug` UNIQUE | role families |
+| `skills` | `id` int, `slug` UNIQUE | name, `kind` (CHECK), description, `onet` text[] (O\*NET names), created/updated |
+| `skill_prerequisites` | (`skill_id`, `group_no`, `option_skill_id`) | `min_level` 1–4. Rows sharing `group_no` are alternatives (OR); groups are all required (AND) |
+| `roles` | `id` smallint, `slug` UNIQUE | name, family, summary, `onet_code` (CHECK format), `esco_uri` (filled by the taxonomy import) |
+| `role_titles` | `id`, `title` UNIQUE | other market titles of a role (`also_called`) |
+| `role_title_skills` | (`title_id`, `item_no`, `option_skill_id`) | the skills a title adds on top of its role |
+| `role_levels` | (`role_id`, `level_id`) | the levels a role has; level title (e.g. "Principal Scientist") and summary |
+| `roadmap_stages` | `id`; UNIQUE (`role_id`, `level_id`, `position`) | stage name, `optional` |
+| `roadmap_items` | (`stage_id`, `item_no`, `option_skill_id`) | `min_level`; rows sharing `item_no` are one requirement with alternatives (`python\|go:2`) |
+| `common_paths` | `id`; UNIQUE (from role/level, to role/level) | `kind` (CHECK), typical years |
+| `legacy_roles` | `legacy_slug` | research role → new role (NULL = no counterpart) |
+| `imports` | `id` | git commit, dirty flag, SHA-256 of the YAML, validation stats, what changed |
+
+**Import rules:**
+- One transaction, and only a catalog that passes `xcrs catalog validate`. It's skipped when the YAML checksum equals the last import's; `--force` imports anyway.
+- **Entities** (levels, families, skills, roles, role levels) are upserted by natural key, so their ids stay stable for future references (resources, activity). Rows whose values didn't change aren't touched.
+- **Parts** (prerequisites, titles, stages, items, common paths, legacy map) are replaced on every import: nothing outside the catalog refers to them.
+- **Entities removed from the YAML are deleted.** If something outside the catalog still refers to one, the delete fails and the whole import rolls back, rather than silently losing data.
+- Each import records what was added, updated and removed (`imports.changes`).
+
+**Skill matching (migration `0006`, ADR-0030):**
+
+| Table | Key | What it holds |
+|---|---|---|
+| `skill_embeddings` | (`skill_id`, `model_id` → `public.embedding_models`) | the skill's vector for one model, from "name: description"; `content_hash` re-embeds changed skills (`xcrs catalog embed`). No vector index at 257 skills |
+| `phrase_matches` | (`phrase_key`, `catalog_checksum`, `prompt_version`, `llm_model`) | cache of the LLM step: `skills` kept after confirmation, `picked` = what the LLM answered, `llm_ms`. Derived data; a new import, prompt or model asks again |
+
+**Engine v2 activity (migration `0007`, ADR-0031), in `public`:** `recommendations_v2` (`id` uuid, `created_at`, `catalog_checksum`, `algorithm_version`, `status` CHECK ok/insufficient_input, `input` jsonb = chips, `result` jsonb = matched chips and roles with levels and gaps) and `feedback_v2` (→ `recommendations_v2` ON DELETE CASCADE, `role` slug, `resource_id`, `rating` −1/1, `comment`). JSONB first, normalized once the format settles (ADR-0013).
+
+**Title skills (migration `0013`, ADR-0044):** `catalog.roles.title_skills` text[]: the skill slugs job ads put in the role's title, in `roles.yaml` order; market titles are `catalog.role_titles` (from `also_called`).
+
+**Accounts (migration `0012`, ADR-0043), in `public`:**
+
+| Table | Key | Columns |
+|---|---|---|
+| `users` | `id` uuid | `display_name`, `email` (only when a provider verified it; lower-case, UNIQUE: links providers), `created_at`, `last_sign_in_at`, `sessions_valid_after` (NULL = never; session cookies from before it are rejected) |
+| `user_identities` | (`provider`, `subject`) | `provider` CHECK github/google/linkedin, `subject` = the provider's user id, `user_id` → `users` ON DELETE CASCADE, `email`, `created_at`, `last_sign_in_at` |
+| `boards` | `id`; UNIQUE `user_id` | the saved board: `input` jsonb (chips and experience, as a recommendation request), `updated_at`; one per user for now |
+
+`recommendations_v2.user_id` → `users` ON DELETE CASCADE (NULL for anonymous results; partial index on (`user_id`, `created_at`)). Deleting a user removes their identities, board and results, and through the existing cascades the feedback and explanations on those results. No provider tokens or profile pictures are stored; the session lives in the browser's sealed cookie.
+
+**Learning resources (migration `0008`, ADR-0026, ADR-0032, ADR-0033):**
+
+| Table | Key | What it holds |
+|---|---|---|
+| `ingest.runs` | `id` | one ingestion run: source, start/finish, status (CHECK), stats, error |
+| `ingest.raw_records` | `id`; UNIQUE (`source`, `external_id`, `content_hash`) | what a source returned, as received (JSONB); a new version only when the content changes |
+| `catalog.learning_resources` | `id`; UNIQUE (`source`, `external_id`), UNIQUE `url` | normalized resource: `type` (course, video, playlist, docs, tutorial, book), provider, title, description, language, `level`, duration, `is_free`, price + currency, `quality` (JSONB), fetch and link-check times, `last_status`, `is_active` |
+| `catalog.resource_skills` | (`resource_id`, `skill_id`, `relation`) | `relation` teaches/requires, `level` 1–4, `confidence`, `tagged_by` curated/llm/reviewed |
+| `catalog.resource_sections` | `id`; UNIQUE (`resource_id`, `position`) | a long video's chapter or a playlist's video (ADR-0046, migration 0014): `title`, `url` (the part's link), `start_seconds` (chapters), `duration_seconds`, `tagged_at`; replaced when the resource's sections change, deleted with it |
+| `catalog.resource_section_skills` | (`section_id`, `skill_id`) | skills a section covers, a subset of its resource's, with the embedding `confidence` |
+
+Curated resources (`catalog/resources.yaml`) are loaded by `xcrs catalog import` (source `curated`; they win over an adapter's row for the same URL; removed ones are deactivated). Adapters (`xcrs resources ingest freecodecamp|youtube`) write raw records and resources; `xcrs resources tag` adds LLM tags; `xcrs resources check-links` records link status. Series links (resource → resource) come when a source has real series.
+
+## Size today
+
+| Table | Rows (1 model) |
+|---|---|
+| catalog.skills / skill_prerequisites | 257 / 358 |
+| catalog.roles / role_levels / role_titles | 30 / 110 / 11 |
+| catalog.roadmap_stages / roadmap_items | 247 / 1,412 (rows per option) |
+| catalog.common_paths | 65 |
+| catalog.learning_resources / resource_skills | 374 stored (254 curated, 76 freeCodeCamp, 44 YouTube), 371 with skill tags (3 freeCodeCamp courses match no catalog skill) / 590 |
+
+Vector storage is ~5 MB at 1,024 dimensions. The whole database is tiny; the design targets growth, not the current size.
+
+## Notes from consolidating (resolved 2026-09-28)
+
+1. **Hardcoded course exclusion.** `recommend_courses` always removes course `2602800` (*SAP Overview*, `backend/src/recom.py` on `main`). It was a quick patch: the course was recommended to many students where it wasn't relevant. The root cause is **thin item text producing vague embeddings**, and the real fixes are richer roadmap descriptions and enriched user input. `courses.is_active` remains as a manual switch, not the fix.
+2. **Roadmap order encodes learning order.** The prototype ordered concepts by their digit-encoded ids (`util.equalize_digits`) to follow the **arrows of the real roadmaps**: prerequisites and increasing difficulty. `sequence` preserves that order at import. With our own roadmaps, prerequisites may later become explicit graph edges (a DAG rather than a tree); that will be a future ADR.
+3. **Topic embeddings.** Not used today, because of how roadmap.sh roadmaps are structured. The schema can embed any node type, so topics can be embedded if a new roadmap structure makes them meaningful.
+4. **Query vs document prefixes** are per-model settings stored in the registry. This fixes the prototype's embedding of user queries as documents.

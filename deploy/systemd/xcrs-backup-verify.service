@@ -1,0 +1,11 @@
+# VM-B: restore the newest copied backup into a throwaway container and compare row counts (ADR-0036).
+[Unit]
+Description=XCRS weekly backup restore test
+Wants=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/xcrs
+Environment=XCRS_BACKUP_DIR=/srv/xcrs-backups
+ExecStart=/opt/xcrs/scripts/db-verify-backup.sh

@@ -1,25 +1,4 @@
 .vscode/
-backend/src/test.py
-backend/src/test.ipynb
-backend/user_inputs/*
-
-embedding-generation/api_keys/*
-embedding-generation/src/test.ipynb
-embedding-generation/data/palm_emb/*
-embedding-generation/data/google_emb/*
-embedding-generation/data/voyage_emb/*
-embedding-generation/data/openai_emb/*
-embedding-generation/data/mistral_emb/*
-embedding-generation/data/cohere_emb/*
-embedding-generation/data/test_data/
-
-
-backend/charts/
-backend/statistical_tests/
-backend/src/thesis_graphs.ipynb
-backend/src/topic.ipynb
-backend/src/histogram.ipynb
-
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -177,3 +156,32 @@ cython_debug/
 # Claude files
 CLAUDE.md
 .claude/
+
+# Private, never-committed working notes (modernization plan, interview stories)
+/untracked/
+
+# macOS Finder metadata
+.DS_Store
+
+# Editor swap files
+*.swp
+*.swo
+
+# Downloaded taxonomy releases (O*NET, ESCO); fetched by command, not committed
+/data/taxonomy/raw/
+
+# Database backups (scripts/db-backup.sh); never committed
+/backups/
+
+# Filled-in VM inventory (hosts, users, addresses); the template is deploy/inventory.example.yaml
+deploy/*.local.yaml
+
+# Terraform (infra/): providers, local state and saved plans stay local; .terraform.lock.hcl is committed
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+
+# Terraform variable values can hold personal data (e.g. the alert email); the .example files are committed
+terraform.tfvars

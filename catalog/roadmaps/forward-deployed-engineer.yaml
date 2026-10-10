@@ -1,0 +1,36 @@
+# Roadmap for forward-deployed-engineer (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: forward-deployed-engineer
+levels:
+  entry:
+    summary: "Builds customer-specific features, integrations and AI workflows on the company's platform, alongside a senior FDE."
+    stages:
+      - name: Engineering foundations
+        skills: [programming-fundamentals:2, python:2, git:2, debugging:2, linux:1, computer-networking:2, http:2, rest-api-design:2, sql:2, testing-fundamentals:1, data-structures:2, operating-systems:1, relational-databases:2]
+      - name: Building for customers
+        skills: [llm-fundamentals:1, prompt-engineering:1, stakeholder-communication:1, customer-discovery:1, technical-writing:1]
+  mid:
+    summary: "Owns a customer deployment end to end: discovery, integration with their systems, AI workflows and hand-over."
+    stages:
+      - name: Integration
+        skills: [linux:2, docker:2, authentication-authorization:2, enterprise-integration:2, etl-pipelines:1, cloud-fundamentals:1]
+      - name: AI solutions
+        skills: [llm-fundamentals:2, prompt-engineering:2, embeddings-vector-search:2, rag:2, ai-agents:2, mcp:2, llm-evaluation:1]
+      - name: With the customer
+        skills: [customer-discovery:2, technical-demos:2, stakeholder-communication:2]
+  senior:
+    summary: "Leads complex deployments, designs solutions across customers' systems and turns patterns from the field into product."
+    stages:
+      - name: System design
+        skills: [caching:2, database-design:2, concurrency:2, distributed-systems:2, system-design:2]
+      - name: Production AI
+        skills: [llm-evaluation:2, ai-guardrails:2, observability:1, security-fundamentals:1, cloud-fundamentals:2]
+      - name: Field to product
+        skills: [solution-design:3, customer-discovery:3, product-thinking:2, mentoring:2]
+  staff:
+    summary: "Sets how the company deploys at its largest customers and shapes the platform from what the field learns."
+    stages:
+      - name: Direction
+        skills: [solution-design:4, architecture-decision-records:2, product-thinking:3, technical-leadership:3, stakeholder-communication:3]
+      - name: Depth and influence
+        skills: [agile-scrum:2, architecture-decision-records:3, mentoring:3, engineering-processes:2, system-design:3, customer-discovery:4]

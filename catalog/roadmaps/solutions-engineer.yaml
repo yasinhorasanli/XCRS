@@ -1,0 +1,32 @@
+# Roadmap for solutions-engineer (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: solutions-engineer
+levels:
+  entry:
+    summary: "Supports deals with demos, technical answers and simple proofs of concept, guided by senior solutions engineers."
+    stages:
+      - name: Technical foundations
+        skills: [programming-fundamentals:1, "python|javascript:1", computer-networking:1, linux:1, http:2, rest-api-design:1, sql:1, cloud-fundamentals:1]
+      - name: Customer work
+        skills: [stakeholder-communication:2, customer-discovery:1, presales:1, technical-demos:1, public-speaking:1, technical-writing:1]
+  mid:
+    summary: "Owns the technical side of deals: discovery, tailored demos, proofs of concept and security reviews."
+    stages:
+      - name: Proofs of concept
+        skills: [programming-fundamentals:2, "python|javascript:2", operating-systems:1, git:1, rest-api-design:2, authentication-authorization:1, enterprise-integration:1]
+      - name: Winning deals
+        skills: [customer-discovery:2, technical-demos:2, presales:2, solution-design:1, security-fundamentals:1, technical-writing:2]
+  senior:
+    summary: "Leads strategic deals and complex solution designs, and coaches other solutions engineers."
+    stages:
+      - name: Solution design
+        skills: [solution-design:2, enterprise-integration:2, cloud-fundamentals:2, "aws|azure|gcp:1", security-fundamentals:2, security-compliance:1]
+      - name: Leadership
+        skills: [presales:3, technical-demos:3, public-speaking:2, mentoring:2, product-thinking:2]
+  staff:
+    summary: "Shapes technical sales strategy and field enablement across regions, and carries customer needs into the roadmap."
+    stages:
+      - name: Direction
+        skills: [solution-design:3, presales:4, technical-leadership:2, product-thinking:3, stakeholder-communication:4]
+      - name: Depth and influence
+        skills: [agile-scrum:2, technical-leadership:3, mentoring:3, engineering-processes:2, technical-demos:4, solution-design:4]

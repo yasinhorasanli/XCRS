@@ -1,0 +1,32 @@
+# Roadmap for embedded-software-engineer (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: embedded-software-engineer
+levels:
+  entry:
+    summary: "Writes and debugs firmware for microcontrollers, under guidance."
+    stages:
+      - name: Foundations
+        skills: [programming-fundamentals:2, c:2, digital-electronics:1, computer-architecture:1, git:2, debugging:2, linux:1, oop:2, computer-networking:1]
+      - name: Microcontrollers
+        skills: [microcontrollers:2, communication-protocols:1]
+  mid:
+    summary: "Owns firmware components: real-time behaviour, drivers, protocols and testing."
+    stages:
+      - name: Real-time systems
+        skills: [operating-systems:1, concurrency:2, rtos:2, communication-protocols:2, hardware-debugging:2, c:3, cpp:2]
+      - name: Linux and quality
+        skills: [linux:2, embedded-linux:1, testing-fundamentals:1, unit-testing:1, code-review:1]
+  senior:
+    summary: "Designs device software architecture, performance and security, and mentors others."
+    stages:
+      - name: Design
+        skills: [embedded-linux:2, profiling:2, design-patterns:2, security-fundamentals:1]
+      - name: Leadership
+        skills: [mentoring:2, technical-writing:2]
+  staff:
+    summary: "Sets embedded direction across products and hardware generations."
+    stages:
+      - name: Direction
+        skills: [c:4, computer-architecture:3, technical-leadership:3, stakeholder-communication:2]
+      - name: Depth and influence
+        skills: [agile-scrum:2, stakeholder-communication:3, mentoring:3, engineering-processes:2, product-thinking:3, computer-architecture:4]

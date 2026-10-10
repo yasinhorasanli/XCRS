@@ -1,0 +1,36 @@
+# Roadmap for applied-scientist (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: applied-scientist
+levels:
+  entry:
+    summary: "Runs experiments and trains models on well-scoped problems, under a senior scientist. Often hired after a master's or PhD."
+    stages:
+      - name: Mathematical foundations
+        skills: [linear-algebra:2, calculus:2, statistics:2, programming-fundamentals:2, python:2]
+      - name: Machine learning
+        skills: [numpy:2, pandas:1, jupyter:2, git:1, machine-learning-fundamentals:2, model-evaluation:2, deep-learning:2, pytorch:2, research-methods:1]
+  mid:
+    summary: "Owns research problems end to end: framing, experiments, models and the hand-off to engineering."
+    stages:
+      - name: Modelling
+        skills: [ml-optimization:2, transformers:2, "nlp|computer-vision:2", fine-tuning:2, feature-engineering:2, experiment-tracking:2]
+      - name: Research practice
+        skills: [research-methods:2, technical-writing:2, ab-testing:1, sql:1, git:2]
+      - name: Good to know
+        optional: true
+        skills: [reinforcement-learning:1, distributed-training:1]
+  senior:
+    summary: "Leads research directions for a product area, designs large experiments and mentors scientists."
+    stages:
+      - name: Scale
+        skills: [distributed-training:2, statistics:3, llm-fundamentals:2, prompt-engineering:2, llm-evaluation:2]
+      - name: Research leadership
+        skills: [research-methods:3, mentoring:2, product-thinking:2, stakeholder-communication:2]
+  staff:
+    title: Principal Scientist
+    summary: "Sets the scientific agenda across teams and connects research to products."
+    stages:
+      - name: Direction
+        skills: [research-methods:4, technical-writing:3, product-thinking:3, technical-leadership:3, stakeholder-communication:3]
+      - name: Depth and influence
+        skills: [agile-scrum:2, mentoring:3, engineering-processes:2, statistics:4, technical-writing:4]

@@ -1,0 +1,30 @@
+# Roadmap for analytics-engineer (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: analytics-engineer
+levels:
+  entry:
+    summary: "Builds and tests data models in the warehouse with SQL and dbt, under guidance."
+    stages:
+      - name: Analysis foundations
+        skills: [sql:2, spreadsheets:1, statistics:1, git:1, data-modeling:1, data-visualization:1, bi-tools:1]
+      - name: Modelling with dbt
+        skills: [data-modeling:2, dbt:2, data-warehousing:1, data-quality:1, stakeholder-communication:1]
+  mid:
+    summary: "Owns a domain's data models, tests and metric definitions; makes the warehouse the trusted source."
+    stages:
+      - name: Modelling at scale
+        skills: [sql:3, dbt:3, data-quality:2, data-warehousing:2, snowflake:1, git:2, ci-cd:1, programming-fundamentals:1, python:1]
+      - name: Metrics
+        skills: [semantic-layer:2, product-analytics:1, product-thinking:1, stakeholder-communication:2]
+  senior:
+    summary: "Designs the modelling layer and metric definitions across domains, and mentors analysts and engineers."
+    stages:
+      - name: Data platform
+        skills: [data-modeling:3, semantic-layer:3, data-governance:2, python:2, etl-pipelines:1, airflow:1]
+      - name: Leadership
+        skills: [mentoring:2, technical-writing:2, product-thinking:2, stakeholder-communication:3]
+  staff:
+    summary: "Sets analytics engineering standards and the metrics strategy across the company."
+    stages:
+      - name: Direction
+        skills: [data-modeling:4, semantic-layer:4, data-governance:3, technical-leadership:3, project-planning:2]

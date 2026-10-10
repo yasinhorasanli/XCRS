@@ -1,0 +1,32 @@
+# Roadmap for qa-automation-engineer (ADR-0027, ADR-0028). Levels are cumulative: each adds to the ones before.
+# Skills are 'skill:proficiency' (1 basic, 2 working, 3 advanced, 4 expert); 'a|b:2' means one of them.
+role: qa-automation-engineer
+levels:
+  entry:
+    summary: "Tests features manually and automates UI and API checks, under guidance."
+    stages:
+      - name: Testing foundations
+        skills: [programming-fundamentals:2, "python|java|javascript|typescript:2", javascript:2, testing-fundamentals:2, manual-testing:2, test-planning:1, git:2, sql:1, agile-scrum:1, operating-systems:1]
+      - name: Automation
+        skills: [test-automation:2, e2e-testing:2, selenium:1, computer-networking:1, http:2, api-testing:1]
+  mid:
+    summary: "Owns automated suites and CI integration across UI, API and performance."
+    stages:
+      - name: Automation at scale
+        skills: [api-testing:2, performance-testing:1, unit-testing:2, integration-testing:2, test-planning:2]
+      - name: Pipelines
+        skills: [ci-cd:2, linux:2, docker:1]
+  senior:
+    summary: "Designs the test strategy for a product and mentors testers and developers."
+    stages:
+      - name: Strategy
+        skills: [test-planning:3, test-strategy:2, performance-testing:2, observability:1, security-fundamentals:1, web-security:1]
+      - name: Leadership
+        skills: [mentoring:2, technical-writing:2, stakeholder-communication:2]
+  staff:
+    summary: "Sets quality strategy and engineering practices across teams."
+    stages:
+      - name: Direction
+        skills: [test-strategy:3, agile-scrum:2, engineering-processes:2, technical-leadership:3, stakeholder-communication:3]
+      - name: Depth and influence
+        skills: [mentoring:3, product-thinking:3, test-planning:4, test-strategy:4]

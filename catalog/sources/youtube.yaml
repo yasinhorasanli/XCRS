@@ -1,0 +1,406 @@
+# YouTube playlists to ingest (ADR-0033): playlist ids (the `list=` part of a playlist URL), reviewed like the
+# rest of the catalog. `skill` is the catalog skill the decider approved the playlist for: ingestion always tags
+# it (tagged_by "reviewed"); the LLM may add more skills. Ingested with `uv run xcrs resources ingest youtube` once XCRS_YOUTUBE_API_KEY is set;
+# the data must be refreshed within 30 days (`xcrs resources expire` deletes what wasn't).
+# Single long videos (ADR-0046) are listed under `videos:` the same way ({id: the `v=` part of the URL, skill}).
+# Approved by the decider (2026-10-02) from the discovery shortlist.
+playlists:
+  - {id: PL-osiE80TeTuRUfjRe54Eea17-YfnOOAx, skill: git}  # Git: Corey Schafer
+  - {id: PLBlnK6fEyqRgMCUAG0XRw78UA8qnv6jEx, skill: computer-networking}  # Computer networking: Neso Academy
+  - {id: PLBlnK6fEyqRiVhbXDGLXDk_OQAeuVcp2O, skill: operating-systems}  # Operating systems: Neso Academy
+  - {id: PLWKjhJtqVAbnqBxcdjVGgT3uVR10bzTEB, skill: python}  # Python: freeCodeCamp.org
+  - {id: PLNcg_FV9n7qZY_2eAtUzEUulNjTJREhQe, skill: sql}  # SQL: Data with Baraa
+  - {id: PLS1QulWo1RIb9WVQGJ_vh-RQusbZgO_As, skill: linux}  # Linux and the command line: Bash Terminal
+  - {id: PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4, skill: concurrency}  # Concurrency: Jakob Jenkov
+  - {id: PLOspHqNVtKAC-_ZAGresP-i0okHe5FjcJ, skill: cloud-fundamentals}  # Cloud fundamentals: IBM Technology
+  - {id: PLdo5W4Nhv31bbKJzrsKfMpo_grxuLl8LU, skill: data-structures}  # Data structures: Jenny's Lectures CS IT
+  - {id: PLdpzxOOAlwvJUIfwmmVDoPYqXXUNbdBmb, skill: observability}  # Observability: Abhishek.Veeramalla
+  - {id: PLsyeobzWxl7ps4Z1C4VMtvZEx5-PgyoYI, skill: rest-api-design}  # REST API design: Restful Web Service
+  - {id: PLUDwpEzHYYLseflPNg0bUKfLmAbO2JnE9, skill: testing-fundamentals}  # Testing fundamentals: SDET- QA
+  - {id: PLy7NrYWoggjzfAHlUusx2wuDwfCrmJYcs, skill: docker}  # Docker and containers: TechWorld with Nana
+  - {id: PLeKd45zvjcDFUEv_ohr_HdUFe97RItdiB, skill: distributed-systems}  # Distributed systems: Martin Kleppmann
+  - {id: PLBlnK6fEyqRjEKl1Yg00jHTbfOPqIfJrs, skill: relational-databases}  # Relational databases: Chapter 2
+  - {id: PLahhVEj9XNTc3cKjd28NUDFPrV4QcfxH5, skill: security-fundamentals}  # Security fundamentals: Microsoft Learn
+  - {id: PL1y1iaEtjSYiiSGVlL1cHsXN_kvJOOhu-, skill: web-security}  # Web security: Feross
+  - {id: PLdpzxOOAlwvLNOxX0RfndiYSt1Le9azze, skill: aws}  # AWS: Abhishek.Veeramalla
+  - {id: PLIivdWyY5sqKh1gDR0WpP9iIOY00IE0xL, skill: gcp}  # Google Cloud: Google Cloud Tech
+  - {id: PLahhVEj9XNTd6H2vpsvm_kBSMsMw9EMUL, skill: azure}  # Microsoft Azure: Microsoft Learn
+  - {id: PLTjRvDozrdlxEIuOBZkMAK5uiqp8rHUax, skill: javascript}  # JavaScript: Programming with Mosh
+  - {id: PLy7NrYWoggjziYQIDorlXjTvvwweTYoNC, skill: kubernetes}  # Kubernetes: TechWorld with Nana
+  - {id: PLS1QulWo1RIYmaxcEqw5JhK3b-6rgdWO_, skill: shell-scripting}  # Shell scripting: ProgrammingKnowledge
+  - {id: PLOspHqNVtKAA_5N3pI49wkH4WsTkeZ_iQ, skill: cloud-networking}  # Cloud networking: IBM Technology
+  - {id: PLrhzvIcii6GNjpARdnO4ueTUAVR9eMBpc, skill: design-patterns}  # Design patterns: Christopher Okhravi
+  - {id: PLy7NrYWoggjzmPAyfDQgthSgx6VEVlS0-, skill: infrastructure-as-code}  # Infrastructure as code: TechWorld with Nana
+  - {id: PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab, skill: linear-algebra}  # Linear algebra: 3Blue1Brown
+  - {id: PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF, skill: machine-learning-fundamentals}  # Machine learning fundamentals: StatQuest with Josh Starmer
+  - {id: PLy4OcwImJzBLWhUqduwLs30YHiDpX4Xp7, skill: data-modeling}  # Data modeling for analytics: Kahan Data Solutions
+  - {id: PL4cUxeGkcC9gC88BEo9czgyS72A3doDeM, skill: go}  # Go: Net Ninja
+  - {id: PLahhVEj9XNTf6lWUbZLBNULQ7uVqM5Sad, skill: identity-access-management}  # Identity and access management: Microsoft Learn
+  - {id: PL4cUxeGkcC9gUgr39Q_yD6v-bSyMwKPUI, skill: typescript}  # TypeScript: Net Ninja
+  - {id: PLlOuZAcnp6h4aJROJUb45z_y3hxo-MAnK, skill: data-warehousing}  # Data warehousing: nullQueries
+  - {id: PLyicRj904Z9_50dH2eD5prLZ8b9A-fdgt, skill: internal-developer-platforms}  # Internal developer platforms: DevOps & AI Toolkit
+  - {id: PL-osiE80TeTsWmV9i9c58mdDCSskIFdDS, skill: pandas}  # pandas: Corey Schafer
+  - {id: PL79i7SgJCJ9hf7JgG3S-3lOpsk2QCpWkD, skill: airflow}  # Apache Airflow: Data with Marc
+  - {id: PLA1qgQLL41SRsHMtsb4up5fTytDeHV_yJ, skill: cryptography-basics}  # Applied cryptography: Cryptography 101
+  - {id: PLPV2KyIb3jR4CtEelGPsmPzlvP7ISPYzR, skill: csharp}  # C#: Brackeys
+  - {id: PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr, skill: calculus}  # Calculus: 3Blue1Brown
+  - {id: PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16, skill: computer-vision}  # Computer vision: Stanford Online
+  - {id: PLUl4u3cNGP60YyhMjYmXuVmX562QcClSp, skill: deep-learning}  # Deep learning: MIT OpenCourseWare
+  - {id: PLIUOU7oqGTLhlWpTz4NnuT3FekouIVlqc, skill: embeddings-vector-search}  # Embeddings and vector search: James Briggs
+  - {id: PLWKjhJtqVAbnSe1qUNMG7AbPmjIG54u88, skill: html}  # HTML: freeCodeCamp.org
+  - {id: PLsyeobzWxl7pe_IiTfNyr55kwJPWbgxB5, skill: java}  # Java: Telusko
+
+  # Approved by the decider (2026-10-03), second batch from discovery on VM-A.
+  - {id: PLoROMvodv4rOaMFbaqxPDoLWjDaRAdP9D, skill: nlp}  # Natural language processing: Stanford Online
+  - {id: PLC3y8-rFHvwh8shCMHFA5kWxD9PaPwxaY, skill: nodejs}  # Node.js: Codevolution
+  - {id: PLS1QulWo1RIa-sDLWbP01sEnlm_Bxmvqs, skill: postgresql}  # PostgreSQL: ProgrammingKnowledge
+  - {id: PLCC34OHNcOtpcgR9LEYSdi9r7XIbpkpK1, skill: pytorch}  # PyTorch: John Elder
+  - {id: PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d, skill: react}  # React: Net Ninja
+  - {id: PLjiHFwhbHYlHSpAflJwjsKAyMaMhASm0F, skill: ui-ux-basics}  # UI/UX basics for engineers: DesignWithArash
+  - {id: PLy4OcwImJzBLJzLYxpxaPUmCWp8j1esvT, skill: dbt}  # dbt: Kahan Data Solutions
+  - {id: PL5oyXP-xEiGCqYGIHZ-njGaf6pxDikdVv, skill: active-directory}  # Active Directory and identity: Office365Concepts
+  - {id: PLBlnK6fEyqRhoF3cPp0mgOZPuXeu84nAd, skill: algorithms}  # Algorithms and complexity: Neso Academy
+  - {id: PLa7VYi0yPIH0KbnJQcMv5N9iW8HkZHztH, skill: kafka}  # Apache Kafka: Confluent
+  - {id: PLUaB-1hjhk8HqnmK0gQhfmIdCbxwoAoys, skill: bi-tools}  # BI tools (Power BI, Tableau, Looker): Alex The Analyst
+  - {id: PLyuRouwmQCjm3dOz4ea90ZqMRaicX07fo, skill: browser-devtools}  # Browser developer tools: Steve Griffith
+  - {id: PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb, skill: cpp}  # C++: The Cherno
+  - {id: PL0Zuz27SZ-6Mx9fd9elt80G1bPcySmWit, skill: css}  # CSS: Dave Gray
+  - {id: PLlOuZAcnp6h5Yknv2X7dzyx9fXSkFcSEx, skill: data-architecture}  # Data architecture: nullQueries
+  - {id: PLYpjLpq5ZDGtR5nMKGDCa031hx1jVuHXn, skill: domain-driven-design}  # Domain-driven design: Milan Jovanović
+  - {id: PL-osiE80TeTsak-c-QsVeg0YYG_0TeyXI, skill: fastapi}  # FastAPI: Corey Schafer
+  - {id: PLI9W87-Dqn7j_x6QtR6sUjycJR7nQLBqT, skill: frontend-architecture}  # Front-end architecture: Front-End Engineer
+  - {id: PLahhVEj9XNTd5N_seZDoRXVIn6N1qAp-_, skill: github-actions}  # GitHub Actions: Microsoft Learn
+  - {id: PLqq-6Pq4lTTZSKAFG6aCDVDP86Qx4lNas, skill: microservices}  # Microservices: Java Brains
+  - {id: PLBlnK6fEyqRgJU3EsOYDTW7m6SUmW6kII, skill: network-security}  # Network security: Neso Academy
+  - {id: PLC3y8-rFHvwhIEc4I4YsRz5C7GOBnxSJY, skill: nextjs}  # Next.js: Codevolution
+  - {id: PL4cUxeGkcC9haQlqdCQyYmL_27TesCGPC, skill: nuxt}  # Nuxt: Net Ninja
+  - {id: PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1, skill: vue}  # Vue.js: Net Ninja
+  - {id: PLcQVY5V2UY4LNmObS0gqNVyNdVfXnHwu8, skill: scikit-learn}  # scikit-learn: Ryan & Matt Data Science
+  - {id: PLp_RsiLZjwQQ7CxVhnM4G8i5veEClNPfX, skill: aspnet-core}  # ASP.NET Core: Programentor
+  - {id: PLT98CRl2KxKEUHie1m24-wkyHpEsa4Y70, skill: ansible}  # Ansible: Learn Linux TV
+  - {id: PL7_h0bRfL52qWoCcS18nXcT1s-5rSa1yp, skill: spark}  # Apache Spark: Bryan Cafferky
+  - {id: PLUl4u3cNGP63UUkfL0onkxF6MYgVa04Fn, skill: blockchain-fundamentals}  # Blockchain fundamentals: MIT OpenCourseWare
+  - {id: PLBlnK6fEyqRgLLlzdgiTUKULKJPYc0A4q, skill: computer-architecture}  # Computer architecture: Neso Academy
+  - {id: PLjrTIwaNiTwn39tg3sR_bPBWGHoznv47D, skill: defi-protocols}  # DeFi protocols: Finematics
+  - {id: PLowKtXNTBypETld5oX1ZMI-LYoA2LWi8D, skill: digital-electronics}  # Digital electronics: Ben Eater
+  - {id: PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p, skill: django}  # Django: Corey Schafer
+  - {id: PLEBQazB0HUyTpoJoZecRK6PpDG31Y7RPB, skill: embedded-linux}  # Embedded Linux: DigiKey
+  - {id: PLgwJf8NK-2e6ZEGXc-LrrgDom6jzu7e1L, skill: communication-protocols}  # Embedded communication protocols: Engineering Funda
+  - {id: PLZHnYvH1qtOZT788gxa0i-wC2IZ47jTe-, skill: gpu-infrastructure}  # GPU infrastructure: NVIDIA
+  - {id: PLy7NrYWoggjw_LIiDK1LXdNN82uYuuuiC, skill: jenkins}  # Jenkins: TechWorld with Nana
+  - {id: PLQkwcJG4YTCSpJ2NLhDTHhi6XBNfk9WiC, skill: jetpack-compose}  # Jetpack Compose: Philipp Lackner
+  - {id: PLsyeobzWxl7rooJFZhc3qPLwVROovGCfh, skill: kotlin}  # Kotlin: Telusko
+  - {id: PLQkwcJG4YTCQcFEPuYGuv54nYai_lwil_, skill: kotlin-coroutines}  # Kotlin coroutines and Flow: Philipp Lackner
+  - {id: PLeo1K3hjS3uu0N_0W6giDXzZIcB07Ng_F, skill: llm-frameworks}  # LLM frameworks: codebasics
+  - {id: PLZPZq0r_RZOMskz6MdsMOgxzheIyjo-BZ, skill: mysql}  # MySQL: Bro Code
+  - {id: PLkDaE6sCZn6Hn0vK8co82zjQtt3T2Nkqc, skill: ml-optimization}  # Optimization for machine learning: DeepLearningAI
+  - {id: PLlVtbbG169nFq_hR7FcMYg32xsSAObuq8, skill: powershell}  # PowerShell: John Savill's Technical Training
+  - {id: PLS1QulWo1RIYZZxQdap7Sd0ARKFI-XVsd, skill: redis}  # Redis: ProgrammingKnowledge
+  - {id: PLUDwpEzHYYLtQzEEEldbjPAR-gnStv4sR, skill: selenium}  # Selenium: SDET- QA
+  - {id: PLsaDw3p1XpJiGHPnA8gZH6gO2gQYz3JH1, skill: shaders}  # Shader programming: Daniel Ilett
+  - {id: PLsyeobzWxl7qbKoSgR5ub6jolI8-ocxCF, skill: spring-boot}  # Spring Boot: Telusko
+  # Approved by the decider (2026-10-05), third batch from discovery on VM-A.
+  - {id: PLa7VYi0yPIH3ulxsOf5g43_QiB-HOg5_Y, skill: stream-processing}  # Stream processing: Confluent
+  - {id: PLwvDm4VfkdpiLvzZFJI6rVIBtdolrJBVB, skill: swift}  # Swift: Swiftful Thinking
+  - {id: PLwvDm4Vfkdphr2Dl4sY4rS9PLzPdyi8PM, skill: swift-concurrency}  # Swift concurrency: Swiftful Thinking
+  - {id: PL8seg1JPkqgHyWCBHwXGmfysQpEQTfC3z, skill: swiftui}  # SwiftUI: Sean Allen
+  - {id: PL0Zuz27SZ-6M8znNpim8dRiICRrP5HPft, skill: tailwind-css}  # Tailwind CSS: Dave Gray
+  - {id: PLeo1K3hjS3uu7CxAacxVndI4bE_o3BDtO, skill: tensorflow}  # TensorFlow: codebasics
+  - {id: PL0eyrZgxdwhwQZ9zPUC7TnJ-S0KxqGlrN, skill: unity}  # Unity: Dani Krossing
+  - {id: PLZlv_N0_O1gZTBUZfQy0Am9ucvXpOV6Ii, skill: unreal-engine}  # Unreal Engine: Unreal Engine
+  - {id: PLS5SEs8ZftgVn38FOhXvLc0PoX_0hnJO9, skill: web3-libraries}  # Web3 libraries: Dapp University
+  - {id: PLlxmoA0rQ-LyHW9voBdNo4gEEIh0SjG-q, skill: dart}  # Dart: Smartherd
+  - {id: PL4cUxeGkcC9jLYyp2Aoh6hcWuxFDX6PBJ, skill: flutter}  # Flutter: Net Ninja
+  - {id: PL4cUxeGkcC9iK6Qhn-QLcXCXPQUov1U7f, skill: graphql}  # GraphQL: Net Ninja
+  - {id: PL4cUxeGkcC9h77dJ-QJlwGlZlTd4ecZOA, skill: mongodb}  # MongoDB: Net Ninja
+  - {id: PL0eyrZgxdwhwBToawjm9faF1ixePexft-, skill: php}  # PHP: Dani Krossing
+  - {id: PLC3y8-rFHvwhiQJD1di4eRVN30WWCXkg1, skill: react-native}  # React Native: Codevolution
+  - {id: PL4cUxeGkcC9g6m_6Sld9Q4jzqdqHd2HiD, skill: regular-expressions}  # Regular expressions: Net Ninja
+  - {id: PLoROMvodv4rPwxE0ONYRa_itZFdaKCylL, skill: reinforcement-learning}  # Reinforcement learning: Stanford Online
+  - {id: PLai5B987bZ9CoVR-QEIN9foz4QCJ0H2Y8, skill: rust}  # Rust: Let's Get Rusty
+  - {id: PLdmhb1dVRHYt2ZriWmvSGc-8_D2x28g34, skill: stakeholder-communication}  # Stakeholder communication: Adriana Girdler
+  - {id: PLFGoYjJG_fqpRV_dz6XMyESob_6fgv1Ej, skill: agile-scrum}  # Agile and Scrum: Naveen AutomationLabs
+  - {id: PLy7NrYWoggjzSIlwxeBbcgfAdYoxCIrM2, skill: ci-cd}  # CI/CD: TechWorld with Nana
+  - {id: PL4cUxeGkcC9iyuClsf48SSgsJPBStHo7F, skill: unit-testing}  # Unit testing: Net Ninja
+  - {id: PLMCXHnjXnTnvo6alSjVkgxV-VH6EPyvoX, skill: system-design}  # System design: Gaurav Sen
+  - {id: PLCVhBqLDKoOOZqKt74QI4pbDUnXSQo0nf, skill: threat-modeling}  # Threat modeling: Adam Shostack
+  - {id: PLY1Fi4XflWSvgsaD9eXng6N5kxcMtcxGK, skill: ab-testing}  # A/B testing and experimentation: Emma Ding
+  - {id: PLBgogxgQVM9sGgpcBVYatuq67aGjW8wYJ, skill: cloud-security}  # Cloud security: Google Cloud
+  - {id: PLQ6Buerc008ed-F9OksF7ek37wR3y916p, skill: e2e-testing}  # End-to-end testing: Playwright
+  - {id: PLZoTAELRMXVPwYGE2PXD3x0bfKnR0cJjN, skill: feature-engineering}  # Feature engineering: Krish Naik
+  - {id: PLlrxD0HtieHgKcRjd5-8DT9TbwdlDO-OC, skill: ai-agents}  # AI agents and tool use: Microsoft Developer
+  - {id: PLWKjhJtqVAblvI1i46ScbKV2jH1gdL7VQ, skill: exploratory-data-analysis}  # Exploratory data analysis: freeCodeCamp.org
+  - {id: PLrLEqwuz-mRIEtuUEN8sse2XyksKNN4Om, skill: fine-tuning}  # Fine-tuning models: AI Anytime
+  - {id: PLnNg6KqJ3HGjH1qaJ50FoUmXPGnXbQZu7, skill: mobile-testing}  # Mobile testing: CodeStudio
+  - {id: PLiObSxAItudJIHyZ91bhNHBn649BYz_MV, skill: public-speaking}  # Public speaking: Alexander Lyon
+  - {id: PL4cUxeGkcC9g9Vh9MAA-XKnfJsWZnPZFw, skill: responsive-design}  # Responsive design: Net Ninja
+  - {id: PLIUOU7oqGTLhpLgjtp60Ls3GWjwmKaIEi, skill: rag}  # Retrieval-augmented generation: James Briggs
+  # Approved by the decider (2026-10-05), fourth batch: the last skills searched.
+  - {id: PLUDwpEzHYYLuW9XEvFEJk2kqsk6HqscI4, skill: api-testing}  # API testing: SDET- QA
+  - {id: PLXDU_eVOJTx6vqOWJSWH87Zb5-riiG63A, skill: design-systems}  # Design systems: Figma
+  - {id: PLt9cUwGw6CYEmxx_3z1d-uT9zdEd58yOq, skill: exploit-development}  # Exploit development: Guided Hacking
+  - {id: PL78XDi0TS4lG4wvgfyGECmB8XiJLCgfFD, skill: game-optimization}  # Game performance optimization: Ben Cloward
+  - {id: PLQ7x7oTdExNIcM1lhKw1KdBeAq_VYD6fX, skill: manual-testing}  # Manual and exploratory testing: SoftwaretestingbyMKT
+  - {id: PL6PplMTH29SHgRPDufZhfMRoFwRAIrzOp, skill: microcontrollers}  # Microcontroller programming: BuildYourCNC
+  - {id: PLFGoYjJG_fqoum_IoPpbLN3AwWIWtr6hq, skill: performance-testing}  # Performance and load testing: Naveen AutomationLabs
+  - {id: PLI5YfMzCfRtaPvDYj3MaMhIAgpsyZ0Wmn, skill: product-analytics}  # Product analytics: Google Analytics
+  - {id: PLjWEV7pmvSa4yvhzNsCjOJovOn1LLyBXB, skill: security-incident-response}  # Security incident response: BlackPerl
+  - {id: PLKXasCp8iWpiySfAM-pJtJluJDn9-cIri, skill: smart-contract-security}  # Smart contract security: JohnnyTime
+  - {id: PL9ooVrP1hQOFP9H8Y15DVGCA6GavhgJ8a, skill: test-automation}  # Test automation: edureka!
+  - {id: PLwLLcwQlnXByqD3a13UPeT4SMhc3rdZ8q, skill: tdd}  # Test-driven development: Modern Software Engineering
+  - {id: PLJOFJ3Ok_idtiMTz8fAiF1ElcKJM7Rncj, skill: user-research}  # User research: NNgroup
+
+# Single long videos (ADR-0046): approved by the decider from the screened shortlists, like playlists
+# (98 on 2026-10-07, 31 on 2026-10-08, 20 + 10 on 2026-10-10).
+videos:
+  - {id: KZe0C0Qq4p0, skill: ab-testing}  # Data Science Essentials – Crash Course in A/B Testing with C: freeCodeCamp.org
+  - {id: e2nkq3h1P68, skill: accessibility}  # Learn Accessibility - Full a11y Tutorial: freeCodeCamp.org
+  - {id: 85-bp7XxWDQ, skill: active-directory}  # Learn Microsoft Active Directory (ADDS) in 30mins: Andy Malone MVP
+  - {id: SyIN_YMfoQs, skill: agile-scrum}  # Scrum Master Full Course / Scrum Master Certifications Train: Simplilearn
+  - {id: jGg_1h0qzaM, skill: ai-agents}  # LangGraph Complete Course for Beginners – Complex AI Agents : freeCodeCamp.org
+  - {id: agEPmYdbQLs, skill: ai-guardrails}  # AI Safety – Full Course by Safe.AI Founder on Machine Learni: freeCodeCamp.org
+  - {id: K9AnJ9_ZAXE, skill: airflow}  # Airflow Tutorial for Beginners - Full Course in 2 Hours 2022: coder2j
+  - {id: fW_OS3LGB9Q, skill: algorithms}  # Algorithms in Python – Full Course for Beginners: freeCodeCamp.org
+  - {id: fis26HvvDII, skill: android-sdk}  # Android Development for Beginners - Full Course: freeCodeCamp.org
+  - {id: 3dHNOWTI7H8, skill: angular}  # Angular Crash Course: Traversy Media
+  - {id: goclfp6a2IQ, skill: ansible}  # Ansible 101 - Episode 1 - Introduction to Ansible: Jeff Geerling
+  - {id: YYe0FdfdgDU, skill: api-security}  # OWASP API Security Top 10 Course – Secure Your Web Apps: freeCodeCamp.org
+  - {id: VywxIQ2ZXw4, skill: api-testing}  # Postman Beginner's Course - API Testing: freeCodeCamp.org
+  - {id: 9vkkJ4tC4SQ, skill: app-store-release}  # iOS App Store Submission Tutorial: freeCodeCamp.org
+  - {id: RWXKysImabs, skill: aspnet-core}  # ASP.NET Core MVC Course for Beginners (.NET 9): freeCodeCamp.org
+  - {id: NhDYbskXRgc, skill: aws}  # AWS Certified Cloud Practitioner Certification Course (CLF-C: freeCodeCamp.org
+  - {id: 5abffC-K40c, skill: azure}  # Microsoft Azure Fundamentals Certification Course (AZ-900) U: freeCodeCamp.org
+  - {id: I0vQ_VLZTWg, skill: bi-tools}  # Learn Power BI in Under 3 Hours / Formatting, Visualizations: Alex The Analyst
+  - {id: PaPN51Mm5qQ, skill: c}  # Learn C Programming and OOP with Dr. Chuck [feat. classic bo: freeCodeCamp.org
+  - {id: HfACrKJ_Y2w, skill: calculus}  # Calculus 1 - Full College Course: freeCodeCamp.org
+  - {id: LK0oDLQE4S8, skill: chaos-engineering}  # Introduction to Cloud Native Chaos Engineering: Kunal Kushwaha
+  - {id: qP8kir2GUgo, skill: ci-cd}  # GitLab CI CD Tutorial for Beginners [Crash Course]: TechWorld with Nana
+  - {id: 626BcUO84og, skill: clean-code}  # JavaScript Clean Code Course – Fix Code Smells & Refactor: freeCodeCamp.org
+  - {id: IPvYjXCsTg8, skill: computer-networking}  # Computer Networking Full Course - OSI Model Deep Dive with R: Kunal Kushwaha
+  - {id: P4Z8_qe2Cu0, skill: computer-vision}  # OpenCV Python Course - Learn Computer Vision and AI: freeCodeCamp.org
+  - {id: WldMTtUWqTg, skill: concurrency}  # Java Concurrency & Multithreading Complete Course in 2 Hours: Riddhi Dutta
+  - {id: ZzaPdXTrSb8, skill: cpp}  # C++ Tutorial for Beginners - Learn C++ in 1 Hour: Programming with Mosh
+  - {id: kb_scuDUHls, skill: cryptography-basics}  # Cryptography for Beginners - Full Python Course (SHA-256, AE: freeCodeCamp.org
+  - {id: YrtFtdTTfv0, skill: csharp}  # Learn C Programming – Full Course with Mini-Projects: freeCodeCamp.org
+  - {id: OXGznpKZ_sA, skill: css}  # CSS Tutorial – Full Course for Beginners: freeCodeCamp.org
+  - {id: CzRQ9mnmh44, skill: dart}  # The Complete Dart & Flutter Developer Course / Full Tutorial: Rivaan Ranawat
+  - {id: 76fcelayw00, skill: data-governance}  # Data Privacy Fundamentals  Master Class: Prabh Nair
+  - {id: K7C1sWKQU-o, skill: data-modeling}  # Data Modeling Masterclass For Data Engineers: Ansh Lamba
+  - {id: RBSGKlAvoiM, skill: data-structures}  # Data Structures Easy to Advanced Course - Full Tutorial from: freeCodeCamp.org
+  - {id: _8V5o2UHG0E, skill: data-visualization}  # Data Visualization with D3.js - Full Tutorial Course: freeCodeCamp.org
+  - {id: 9GVqKuTVANE, skill: data-warehousing}  # SQL Data Warehouse from Scratch | Full Hands-On Data Enginee: Data with Baraa
+  - {id: 26ls5lNiijk, skill: database-design}  # Relational Database Design – Full Course: freeCodeCamp.org
+  - {id: B8uwFmVt4sU, skill: dbt}  # [Data Build Tool] DBT - The Ultimate Guide / With CI/CD: Ansh Lamba
+  - {id: VyWAvY2CF9c, skill: deep-learning}  # Deep Learning Crash Course for Beginners: freeCodeCamp.org
+  - {id: rylaiB2uH2A, skill: design-patterns}  # Master Design Patterns & SOLID Principles in C - Full OOP C: freeCodeCamp.org
+  - {id: RYDiDpW2VkM, skill: design-systems}  # Create a Design System with Figma - Full Course: freeCodeCamp.org
+  - {id: gLJdrXPn0ns, skill: devsecops}  # DevSecOps Tutorial for Beginners | CI Pipeline with GitHub A: TechWorld with Nana
+  - {id: toUSzwR0EV8, skill: distributed-training}  # Distributed Data Parallel (DDP) with PyTorch: complete tutor: Umar Jamil
+  - {id: t10QcFx7d5k, skill: django}  # Django Project – Code a CRM App Tutorial: freeCodeCamp.org
+  - {id: pg19Z8LL06w, skill: docker}  # Docker Crash Course for Absolute Beginners [NEW]: TechWorld with Nana
+  - {id: iSiyDHobXHA, skill: embedded-linux}  # Linux Device Drivers Development Course for Beginners: freeCodeCamp.org
+  - {id: JEBDfGqrAUA, skill: embeddings-vector-search}  # Vector Search RAG Tutorial – Combine Your Data with LLMs wit: freeCodeCamp.org
+  - {id: PHsC_t0j1dU, skill: etl-pipelines}  # Data Engineering Course for Beginners: freeCodeCamp.org
+  - {id: Zr6fnhvJKlw, skill: event-driven-architecture}  # Event Driven Architecture on AWS – Course for Beginners: freeCodeCamp.org
+  - {id: 6cJ5Ji8zSDg, skill: exploratory-data-analysis}  # SQL Exploratory Data Analysis (EDA) Project / Full Hands-On : Data with Baraa
+  - {id: rkPIftzu1pQ, skill: fastapi}  # API integration Course – Modern Python with FastAPI: freeCodeCamp.org
+  - {id: fHFOANOHwh8, skill: feature-engineering}  # Complete Exploratory Data Analysis And Feature Engineering I: Krish Naik
+  - {id: iOdFUJiB0Zc, skill: fine-tuning}  # Fine Tuning LLM Models – Generative AI Course: freeCodeCamp.org
+  - {id: VPvVD8t02U8, skill: flutter}  # Flutter Course for Beginners – 37-hour Cross Platform App De: freeCodeCamp.org
+  - {id: IiIgm_yaoOA, skill: functional-programming}  # Functional Programming with Elixir – Full Course: freeCodeCamp.org
+  - {id: 3lBYVSplAuo, skill: game-physics}  # The Ultimate Guide for Physics in Game Development!: Will Hess
+  - {id: jpno8FSqpc8, skill: gcp}  # Google Cloud Associate Cloud Engineer Course - Pass the Exam: freeCodeCamp.org
+  - {id: mAFoROnOfHs, skill: git}  # Git & GitHub Crash Course for Beginners [2026]: freeCodeCamp.org
+  - {id: R8_veQiYBjI, skill: github-actions}  # GitHub Actions Tutorial - Basic Concepts and CI/CD Pipeline : TechWorld with Nana
+  - {id: MeU5_k9ssrs, skill: gitops}  # ArgoCD Tutorial for Beginners | GitOps CD for Kubernetes: TechWorld with Nana
+  - {id: un6ZyFkqFKo, skill: go}  # Go Programming – Golang Course with Bonus Projects: freeCodeCamp.org
+  - {id: hBzUokVYQkI, skill: gpu-infrastructure}  # AI Infrastructure Explained (GPUs, vLLM, and LLM-D): KodeKloud
+  - {id: 5199E50O7SI, skill: graphql}  # GraphQL Course for Beginners: freeCodeCamp.org
+  - {id: Yw4rkaTc0f8, skill: grpc}  # gRPC Crash Course - Modes, Examples, Pros & Cons and more: Hussein Nasser
+  - {id: kUMe1FH4CHE, skill: html}  # Learn HTML – Full Tutorial for Beginners: freeCodeCamp.org
+  - {id: 2JYT5f2isg4, skill: http}  # Full HTTP Networking Course – Fetch and REST APIs in JavaScr: freeCodeCamp.org
+  - {id: EtEb40LE5zQ, skill: infrastructure-as-code}  # Infrastructure as Code - Crash Course: freeCodeCamp.org
+  - {id: A74TOX803D0, skill: java}  # Java Programming for Beginners – Full Course: freeCodeCamp.org
+  - {id: PkZNo7MFNFg, skill: javascript}  # Learn JavaScript - Full Course for Beginners: freeCodeCamp.org
+  - {id: f4idgaq2VqA, skill: jenkins}  # Jenkins Tutorial – How to Deploy a Test Server with Docker +: freeCodeCamp.org
+  - {id: bo_LP6QOUio, skill: jetpack-compose}  # Android Programming Course - Kotlin, Jetpack Compose UI, Gra: freeCodeCamp.org
+  - {id: HW29067qVWk, skill: jupyter}  # Jupyter Notebook Tutorial: Introduction, Setup, and Walkthro: Corey Schafer
+  - {id: R873BlNVUB4, skill: kafka}  # Apache Kafka Crash Course: Hussein Nasser
+  - {id: EExSSotojVI, skill: kotlin}  # Learn Kotlin Programming – Full Course for Beginners: freeCodeCamp.org
+  - {id: X48VuDVv0do, skill: kubernetes}  # Kubernetes Tutorial for Beginners [FULL COURSE in 4 Hours]: TechWorld with Nana
+  - {id: JnTa9XtvmfI, skill: linear-algebra}  # Linear Algebra - Full College Course: freeCodeCamp.org
+  - {id: sWbUDq4S6Y8, skill: linux}  # Introduction to Linux – Full Course for Beginners: freeCodeCamp.org
+  - {id: bcCFTk_uwUw, skill: llm-frameworks}  # Build LLM based Apps using LangChain Crash Course / Large La: Keerti Purswani
+  - {id: i_LwzRVP7bg, skill: machine-learning-fundamentals}  # Machine Learning for Everybody – Full Course: freeCodeCamp.org
+  - {id: GuTcle5edjk, skill: mcp}  # you need to learn MCP RIGHT NOW!! (Model Context Protocol): NetworkChuck
+  - {id: nFxjaVmFj5E, skill: message-brokers}  # RabbitMQ Tutorial - Message Queues and Distributed Systems: Amigoscode
+  - {id: BLrHTHUjPuw, skill: microcontrollers}  # Arduino MASTERCLASS / Full Programming Workshop in 90 Minute: Programming Electronics Academy
+  - {id: nDCCwyS0_MQ, skill: mobile-testing}  # The Ultimate Guide to Android Testing (Unit Tests, UI Tests,: Philipp Lackner
+  - {id: cgc3dSEAel0, skill: model-monitoring}  # Evidently AI Tutorial-Open Source ML Models Monitoring and O: Krish Naik
+  - {id: Www6cTUymCY, skill: mongodb}  # MongoDB Tutorial For Beginners / Full Course: Amigoscode
+  - {id: 7glCsF9fv3s, skill: multiplayer-networking}  # Learn Unity Multiplayer (FREE Complete Course, Netcode for G: Code Monkey
+  - {id: ER8oKX5myE0, skill: mysql}  # MySQL Database - Full Course: freeCodeCamp.org
+  - {id: KjY94sAKLlw, skill: nextjs}  # Next.js React Framework Course – Build and Deploy a Full Sta: freeCodeCamp.org
+  - {id: M7SWr5xObkA, skill: nlp}  # Complete Natural Language Processing (NLP) Tutorial in Pytho: Keith Galli
+  - {id: Oe421EPjeBE, skill: nodejs}  # Node.js and Express.js - Full Course: freeCodeCamp.org
+  - {id: xh4gy1lbL2k, skill: nosql-databases}  # NoSQL Database Tutorial – Full Course for Beginners: freeCodeCamp.org
+  - {id: VXU4LSAQDSc, skill: numpy}  # Learn NumPy in 1 hour! 🔢: Bro Code
+  - {id: fTPCKnZZ2dk, skill: nuxt}  # Nuxt 3 — Course for Beginners: freeCodeCamp.org
+  - {id: iLRZi0Gu8Go, skill: oop}  # Python Object Oriented Programming (OOP) - Full Course for B: freeCodeCamp.org
+  - {id: r8UvWSX3KA8, skill: opentelemetry}  # OpenTelemetry Course - Understand Software Performance: freeCodeCamp.org
+  - {id: yK1uBHPdp30, skill: operating-systems}  # Operating Systems Course for Beginners: freeCodeCamp.org
+  - {id: gtjxAH8uaP0, skill: pandas}  # Pandas & Python for Data Analysis by Example – Full Course f: freeCodeCamp.org
+  - {id: 3Kq1MIfTWCE, skill: penetration-testing}  # Full Ethical Hacking Course - Network Penetration Testing fo: freeCodeCamp.org
+  - {id: Gz57tS1a47g, skill: performance-testing}  # Master Apache JMeter Full Course / Complete Performance Test: Testing Funda by Zeeshan Asghar
+  - {id: BUCiSSyIGGU, skill: php}  # PHP For Beginners | 3+ Hour Crash Course: Traversy Media
+  - {id: SpfIwlAYaKk, skill: postgresql}  # PostgreSQL Tutorial for Beginners: freeCodeCamp.org
+  - {id: UVUd9_k9C6A, skill: powershell}  # PowerShell For Beginners Full Course / PowerShell Beginner t: Nerd's lesson
+  - {id: N-Igkw7__z0, skill: product-analytics}  # Analytics for Product Managers Masterclass / Metrics - KPIs : HelloPM
+  - {id: zOjov-2OZ0E, skill: programming-fundamentals}  # Introduction to Programming and Computer Science - Full Cour: freeCodeCamp.org
+  - {id: 7gW5pSM6dlU, skill: prometheus-grafana}  # Prometheus Tutorial | Monitoring with Prometheus And Grafana: edureka!
+  - {id: _ZvnD73m40o, skill: prompt-engineering}  # Prompt Engineering Tutorial – Master ChatGPT and LLM Respons: freeCodeCamp.org
+  - {id: MXKkXXYUxBc, skill: public-speaking}  # Public Speaking for Beginners – Free Full Course / Speak wit: David JP Phillips
+  - {id: nLRL_NcnK-4, skill: python}  # Harvard CS50’s Introduction to Programming with Python – Ful: freeCodeCamp.org
+  - {id: K5KVEU3aaeQ, skill: python}  # Python Full Course for Beginners: Programming with Mosh
+  - {id: Z_ikDlimN6A, skill: pytorch}  # Learn PyTorch for deep learning in a day. Literally.: Daniel Bourke
+  - {id: ZYdXI1GteDE, skill: r}  # R Programming Crash Course: Traversy Media
+  - {id: SqcY0GlETPk, skill: react}  # React Tutorial for Beginners: Programming with Mosh
+  - {id: obH0Po_RdWk, skill: react-native}  # React Native Course – Android and iOS App Development: freeCodeCamp.org
+  - {id: V7FPk4J10KI, skill: redis}  # Redis In-Memory Database Crash Course: Hussein Nasser
+  - {id: sa-TUpSx1JA, skill: regular-expressions}  # Regular Expressions (Regex) Tutorial: How to Match Any Patte: Corey Schafer
+  - {id: vufTSJbzKGU, skill: reinforcement-learning}  # Python Reinforcement Learning using Gymnasium – Full Course: freeCodeCamp.org
+  - {id: pPqazMTzNOM, skill: relational-databases}  # Databases In-Depth – Complete Course: freeCodeCamp.org
+  - {id: nv7MOoHMM2k, skill: research-methods}  # Introduction to research methods and methodologies: University of Liverpool Online Centre for Student Success
+  - {id: srvUrASNj0s, skill: responsive-design}  # Introduction To Responsive Web Design - HTML & CSS Tutorial: freeCodeCamp.org
+  - {id: qbLc5a9jdXo, skill: rest-api-design}  # REST API Crash Course - Introduction + Full Python API Tutor: Caleb Curry
+  - {id: BpPEoZW5IiY, skill: rust}  # Learn Rust Programming - Complete Course 🦀: freeCodeCamp.org
+  - {id: hDKCxebp88A, skill: scikit-learn}  # Machine Learning with Python and Scikit-Learn – Full Course: freeCodeCamp.org
+  - {id: MTnQW9MxnRI, skill: secrets-management}  # Secret Store CSI Driver Tutorial / Kubernetes Secrets / AWS : KodeKloud
+  - {id: LLKza5oULAA, skill: security-compliance}  # Microsoft Security Compliance and Identity (SC-900) - Full C: freeCodeCamp.org
+  - {id: QQliGCtqD2w, skill: selenium}  # Java Testing with Selenium Course: freeCodeCamp.org
+  - {id: 5rG-YgTHMC8, skill: serverless}  # AWS Serverless with AWS Lambda, API Gateway & EventBridge / : Digital Cloud Training
+  - {id: s3I1kKKfjtQ, skill: service-mesh}  # Consul Service Mesh Tutorial for Beginners [Crash Course]: TechWorld with Nana
+  - {id: kfM-yu0iQBk, skill: shaders}  # Shader Basics, Blending & Textures • Shaders for Game Devs [: Freya Holmér
+  - {id: PNhq_4d-5ek, skill: shell-scripting}  # Bash Scripting Tutorial for Beginners: TechWorld with Nana
+  - {id: LbR5cqqaFVk, skill: siem}  # Splunk SIEM Crash Course / Free Spunk Training for Security : Rajneesh Gupta
+  - {id: mP3QbYURT9k, skill: snowflake}  # Learn Snowflake in 2 Hours/ High Paying Skills / Step by Ste: Data Engineer Academy
+  - {id: umepbfKp5rI, skill: solidity}  # Learn Solidity, Blockchain Development, & Smart Contracts | : Patrick Collins
+  - {id: FNJze2Ea780, skill: spark}  # Apache Spark - The Ultimate Guide [From ZERO To PRO]: Ansh Lamba
+  - {id: 31KTdfRH6nY, skill: spring-boot}  # Building web applications in Java with Spring Boot 3 – Tutor: freeCodeCamp.org
+  - {id: 7S_tz1z_5bA, skill: sql}  # SQL Course for Beginners [Full Course]: Programming with Mosh
+  - {id: -bEzt5ISACA, skill: state-management}  # React State Management – Intermediate JavaScript Course: freeCodeCamp.org
+  - {id: xxpc-HPKN28, skill: statistics}  # Statistics - A Full University Course on Data Science Basics: freeCodeCamp.org
+  - {id: 8Xg7E9shq0U, skill: swift}  # Swift Programming Tutorial – Full Course for Beginners: freeCodeCamp.org
+  - {id: -VC3hIEL7eQ, skill: swiftui}  # SwiftUI Course for Beginners – Create an iOS App from Scratc: freeCodeCamp.org
+  - {id: m8Icp_Cid5o, skill: system-design}  # System Design for Beginners Course: freeCodeCamp.org
+  - {id: ft30zcMlFao, skill: tailwind-css}  # Learn Tailwind CSS – Course for Beginners: freeCodeCamp.org
+  - {id: eAPmXQ0dC7Q, skill: tdd}  # TDD Full Course (Learn Test Driven Development with Python): Wes Doyle
+  - {id: vT5pcc30Ffw, skill: technical-writing}  # Technical Writing Course for Beginners: freeCodeCamp.org
+  - {id: tpCFfeUEGs8, skill: tensorflow}  # Learn TensorFlow and Deep Learning fundamentals with Python : Daniel Bourke
+  - {id: SPcwo0Gq9T8, skill: terraform}  # HashiCorp Terraform Associate Certification Course (003) - P: freeCodeCamp.org
+  - {id: zp5Jh2FIpF0, skill: test-automation}  # Postman API Test Automation for Beginners: freeCodeCamp.org
+  - {id: sO8eGL6SFsA, skill: testing-fundamentals}  # Software Testing Full Course In 10 Hours | Software Testing : edureka!
+  - {id: zxQyTK8quyY, skill: transformers}  # Transformer Neural Networks, ChatGPT's foundation, Clearly E: StatQuest with Josh Starmer
+  - {id: 30LWjhZzg50, skill: typescript}  # Learn TypeScript – Full Tutorial: freeCodeCamp.org
+  - {id: c9Wg6Cb_YlU, skill: ui-ux-basics}  # UI / UX Design Tutorial – Wireframe, Mockup & Design in Figm: freeCodeCamp.org
+  - {id: zuKbR4Q428o, skill: unit-testing}  # JavaScript Unit Testing Tutorial for Beginners: Programming with Mosh
+  - {id: gB1F9G0JXOo, skill: unity}  # Learn Unity - Beginner's Game Development Tutorial: freeCodeCamp.org
+  - {id: 6UlU_FsicK8, skill: unreal-engine}  # Unreal Engine 5 – Full Course for Beginners: freeCodeCamp.org
+  - {id: R7urbI0iqb0, skill: user-research}  # 10 Years of UX Product Research Experience in 4.5 hours - Ul: Kevin Liang / Zero to UX
+  - {id: mHxLXzYjQRE, skill: vector-databases}  # Production RAG with LangChain & Vector Databases – Full Cour: freeCodeCamp.org
+  - {id: VeNfHj6MhgA, skill: vue}  # Vue.js Crash Course: Traversy Media
+  - {id: Qzj35vO7x5Y, skill: vulnerability-management}  # Practical Vulnerability Management using Qualys / Free Cours: Rajneesh Gupta
+  - {id: F5KJVuii0Yw, skill: web-security}  # Web App Vulnerabilities - DevSecOps Course for Beginners: freeCodeCamp.org
+  - {id: QxsqVuwWrZs, skill: windows-server}  # Learn Windows Server 2022 in Just 30 Mins: Andy Malone MVP
+
+# Channels whose playlists rank first in `xcrs resources youtube-discover` (exact channel titles).
+trusted_channels:
+  - freeCodeCamp.org
+  - Google for Developers
+  - Google Cloud Tech
+  - Microsoft Developer
+  - Microsoft Learn
+  - Amazon Web Services
+  - IBM Technology
+  - MIT OpenCourseWare
+  - Stanford Online
+  - CS50
+  - Fireship
+  - Traversy Media
+  - Programming with Mosh
+  - Corey Schafer
+  - TechWorld with Nana
+  - NetworkChuck
+  - The Net Ninja
+  - Net Ninja  # its title since 2025
+  - Hussein Nasser
+  - Kunal Kushwaha
+  - Docker
+  - Kubernetes
+  - Hugging Face
+  - DeepLearningAI
+  - 3Blue1Brown
+  - StatQuest with Josh Starmer
+  - Sentdex
+  - Andrej Karpathy
+  - Computerphile
+  - OWASP Foundation
+  - John Hammond
+  - Patrick Collins
+  - Brackeys
+  - GDC
+  - GDC Festival of Gaming  # GDC's title in 2026
+
+# Trusted channels whose new uploads and playlists discovery reads every day (ADR-0046): 1 quota unit per 50
+# uploads instead of 100 per search. Ids from the channel's page (youtube.com/channel/UC…); names for reading.
+watch_channels:
+  - {id: UC8butISFwT-Wl7EV0hUK0BQ, name: freeCodeCamp.org}
+  - {id: UC_x5XG1OV2P6uZZ5FSM9Ttw, name: Google for Developers}
+  - {id: UCJS9pqu9BzkAMNTmzNMNhvg, name: Google Cloud Tech}
+  - {id: UCsMica-v34Irf9KVTh6xx-g, name: Microsoft Developer}
+  - {id: UCFs5990vNpA2C2ijzgiJ59Q, name: Microsoft Learn}
+  - {id: UCd6MoB9NC6uYN2grvUNT-Zg, name: Amazon Web Services}
+  - {id: UCKWaEZ-_VweaEx1j62do_vQ, name: IBM Technology}
+  - {id: UCEBb1b_L6zDS3xTUrIALZOw, name: MIT OpenCourseWare}
+  - {id: UCBa5G_ESCn8Yd4vw5U-gIcg, name: Stanford Online}
+  - {id: UCcabW7890RKJzL968QWEykA, name: CS50}
+  - {id: UCsBjURrPoezykLs9EqgamOA, name: Fireship}
+  - {id: UC29ju8bIPH5as8OGnQzwJyA, name: Traversy Media}
+  - {id: UCWv7vMbMWH4-V0ZXdmDpPBA, name: Programming with Mosh}
+  - {id: UCCezIgC97PvUuR4_gbFUs5g, name: Corey Schafer}
+  - {id: UCdngmbVKX1Tgre699-XLlUA, name: TechWorld with Nana}
+  - {id: UC9x0AN7BWHpCDHSm9NiJFJQ, name: NetworkChuck}
+  - {id: UCW5YeuERMmlnqo4oq8vwUpg, name: Net Ninja}
+  - {id: UC_ML5xP23TOWKUcc-oAE_Eg, name: Hussein Nasser}
+  - {id: UCBGOUQHNNtNGcGzVq5rIXjw, name: Kunal Kushwaha}
+  - {id: UC76AVf2JkrwjxNKMuPpscHQ, name: Docker}
+  - {id: UCZ2bu0qutTOM0tHYa_jkIwg, name: Kubernetes}
+  - {id: UCHlNU7kIZhRgSbhHvFoy72w, name: Hugging Face}
+  - {id: UCcIXc5mJsHVYTZR1maL5l9w, name: DeepLearningAI}
+  - {id: UCYO_jab_esuFRV4b17AJtAw, name: 3Blue1Brown}
+  - {id: UCtYLUTtgS3k1Fg4y5tAhLbw, name: StatQuest with Josh Starmer}
+  - {id: UCfzlCWGWYyIQ0aLC5w48gBQ, name: Sentdex}
+  - {id: UCXUPKJO5MZQN11PqgIvyuvQ, name: Andrej Karpathy}
+  - {id: UC9-y-6csu5WGm29I7JiwpnA, name: Computerphile}
+  - {id: UCe8j61ABYDuPTdtjItD2veA, name: OWASP Foundation}
+  - {id: UCVeW9qkBjo3zosnqUbG7CFw, name: John Hammond}
+  - {id: UCn-3f8tw_E1jZvhuHatROwA, name: Patrick Collins}
+  - {id: UCYbK_tjZ2OrIZFBvU6CCMiA, name: Brackeys}
+  - {id: UC0JB7TSe49lg56u6qH8y_MQ, name: GDC Festival of Gaming}
+
+# Channels never proposed (e.g. English titles over another spoken language; English only for now, ADR-0026).
+blocked_channels:
+  - Elzero Web School
+  # teach mostly in Hindi under English titles (screening of 2026-10-03)
+  - WsCube Tech
+  - WsCube Tech 2.0
+  - Gate Smashers
+  - 5 Minutes Engineering
+  - KnowledgeGATE by Sanchit Sir
+  - Education 4u
+  - CampusX
+  - Aj_Ai
+  - Code Step By Step
+  - Saumya Singh
+  - Abhishek Sharma
+  - College Wallah
