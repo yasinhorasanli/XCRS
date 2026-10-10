@@ -4,6 +4,7 @@
 - **Date:** 2026-10-10
 - **Decider:** Muhammed Yasin Horasanli
 - **Builds on:** [ADR-0042](0042-aws-demo-copy-on-one-ec2-instance.md) (the AWS demo copy)
+- **Note (2026-10-10, correction):** the first instance replacement after this ADR failed halfway: CloudFront refuses to update a VPC origin that a distribution uses (`CannotUpdateEntityWhileInUse`), and the code updated it in place, so the distribution kept pointing at the terminated instance and the demo was down until the repair. The VPC origin is now replaced together with the instance (`replace_triggered_by`), the new one created before the old one is deleted (`create_before_destroy`) and named after the instance, so a replacement keeps the site up. The trade-off this ADR already named (a replaced instance means a replaced VPC origin) now holds in the code.
 
 ## Context
 
