@@ -5,7 +5,7 @@ AWS runs a disposable demo/staging copy of XCRS; the two VMs stay its real home 
 | Stack | What it holds | Cost |
 |---|---|---|
 | `bootstrap/` | The S3 bucket `xcrs-tfstate-d6b0fd` (eu-central-1) that holds the Terraform state of every stack, its own included | ~$0 (a few KB) |
-| `demo/` | VPC (one public subnet, no NAT), a security group with no inbound rules, the instance role, and one EC2 t4g.small (Amazon Linux 2023, arm64, 20 GB gp3) that cloud-init turns into the demo copy (`deploy/aws/compose.yaml`) | $0 in the t4g trial (until 31 Dec 2026); after it ~$12/month for the instance + ~$3.65 public IPv4 + ~$1.90 disk if always on |
+| `demo/` | VPC (one public subnet, no NAT), a security group whose only inbound rule admits CloudFront's VPC origin, the instance role, and one EC2 t4g.small (Amazon Linux 2023, arm64, 20 GB gp3) that cloud-init turns into the demo copy (`deploy/aws/compose.yaml`), and a CloudFront distribution in front (ADR-0047) | $0 in the t4g trial (until 31 Dec 2026); after it ~$12/month for the instance + ~$3.65 public IPv4 + ~$1.90 disk if always on |
 
 ## Account and credentials
 
@@ -81,11 +81,24 @@ The catalog is imported and embedded on every first boot. Both models are on VM-
    The key expires after 90 days; repeat this step before the next apply after that.
 4. **Session Manager plugin** for shells on the instance: `brew install --cask session-manager-plugin`.
 
+**Public access (ADR-0047):** `terraform output site` is the CloudFront address (`https://d….cloudfront.net`).
+- CloudFront reaches the instance through a **VPC origin**: a CloudFront-managed network interface in our VPC that connects to Caddy on the instance's private address, port 80. The instance's one inbound rule admits only CloudFront's service security group.
+- Pages and `/api` are never cached; `/_nuxt/*` (content-hashed build files) is.
+- `/dev` answers 404 through CloudFront: Caddy refuses requests marked with `X-Amz-Cf-Id`.
+- A first apply, or a replaced instance, takes ~15 minutes extra while the VPC origin deploys.
+- A request may run at most 60 seconds at the edge, which matters for typed phrases that need the LLM on VM-B.
+
 **Everyday:**
 - `terraform apply` → `terraform output shell` gives a shell (no SSH) → `sudo tail -f /var/log/cloud-init-output.log` shows the first boot → the site opens at `https://xcrs-aws.<tailnet>.ts.net` from a tailnet device.
 - `terraform destroy` when idle. Everything goes except the state bucket, and the next apply rebuilds the same thing.
 - A newer Amazon Linux image: `terraform apply -replace=aws_instance.demo`.
 - Any change to the first-boot script replaces the instance (`user_data_replace_on_change`).
+
+## Backlog
+
+- **Auto-stop at $20 a month:** an AWS Budgets *action* (`aws_budgets_budget_action`, type "run SSM document: stop EC2 instances") that stops `xcrs-demo` when the month's cost, credits excluded, reaches $20. It needs an IAM role that Budgets can assume. The first two action-enabled budgets are free. Budget data refreshes a few times a day, so the stop follows the cost with a delay of hours.
+- **Nightly stop** (EventBridge Scheduler) and **S3 backups**: steps 6 and 8 of the AWS plan (ADR-0042).
+- **GitHub Actions OIDC** (plan on PR, apply on approval): step 7.
 
 ## Rebuilding the state bucket from nothing
 
