@@ -54,6 +54,7 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0048](0048-budget-action-stops-the-demo-instance-at-20-dollars.md) | A budget action stops the AWS demo instance when the month's actual spend (credits excluded) reaches $20 | Accepted | 2026-10-10 |
 | [0049](0049-one-trunk-main-with-protection.md) | One trunk: `modernization` merges into `main` (research version kept at the tag `research-prototype`); `main` is the only long-lived branch, protected by a ruleset | Accepted | 2026-10-10 |
 | [0050](0050-sessions-end-with-the-endpoint-overload-fails-fast.md) | Database sessions end with the endpoint (`scope="function"`), and overload fails fast (a 2 s wait for a connection, pool 10 + 10) instead of wedging the API | Accepted | 2026-10-11 |
+| [0051](0051-xcrs-app-through-a-cloudflare-tunnel-as-code.md) | xcrs.app reaches production through a Cloudflare Tunnel managed with Terraform (Funnel off, tailnet-only `serve` stays); the AWS copy is aws.xcrs.app (noindex) | Accepted | 2026-10-11 |
 
 ## Upcoming decisions
 
@@ -62,6 +63,5 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 - (Later) Roadmap visualization
 - LLM tracing: Langfuse (cloud, then self-hosted on the LLM VM) or LangSmith; see ADR-0019
 - Chat/agent feature (LangGraph)
-- The domain name (bought later; then a Cloudflare Tunnel, ADR-0040)
 - First real deployment to the VMs (checklist in `deploy/README.md`); push-based CD once there are users (ADR-0034)
 - AWS phase steps (ADR-0042): account safety, Terraform bootstrap, network + EC2, arm64 images, CloudFront, S3 backups, OIDC, cost write-up

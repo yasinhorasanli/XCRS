@@ -41,5 +41,15 @@
 		header X-Amz-Cf-Id *
 	}
 	respond @via_cloudfront_dev 404
+	# Behind Cloudflare (xcrs.app through the tunnel, ADR-0051), likewise: Cloudflare adds Cf-Ray to every request
+	# it forwards, and visitors can't remove it.
+	@via_cloudflare_dev {
+		path /dev /dev/* /api/v2/dev /api/v2/dev/*
+		header Cf-Ray *
+	}
+	respond @via_cloudflare_dev 404
+	# www.xcrs.app comes through the same tunnel: one address for the site (ADR-0051).
+	@www host www.xcrs.app
+	redir @www https://xcrs.app{uri} permanent
 	reverse_proxy web:3000
 }

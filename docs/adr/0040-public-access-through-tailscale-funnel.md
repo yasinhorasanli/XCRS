@@ -4,6 +4,7 @@
 - **Date:** 2026-10-02
 - **Decider:** Muhammed Yasin Horasanli
 - **Note (2026-10-03):** dev tools (the `/dev/profiles` test page and `/api/v2/dev`) are reachable on localhost and the tailnet only: Caddy serves `/dev` only to requests that carry the tailnet user (`Tailscale-User-Login`; public Funnel requests carry `Tailscale-Funnel-Request: ?1` instead) and answers 404 otherwise; the API also needs `XCRS_DEV_TOOLS=true`. A first version blocked on the Funnel header but never loaded: Caddy's single-file mount kept the pre-`git pull` file until a restart, which `deploy.sh` now does.
+- **Note (2026-10-11):** the domain arrived: production is public at https://xcrs.app through a Cloudflare Tunnel, Funnel is off, and VM-A keeps a tailnet-only address via `tailscale serve` ([ADR-0051](0051-xcrs-app-through-a-cloudflare-tunnel-as-code.md)).
 
 ## Context
 

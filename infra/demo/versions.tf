@@ -6,6 +6,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 6.67"
     }
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 5.26"
+    }
   }
 }
 
@@ -21,3 +25,6 @@ provider "aws" {
     }
   }
 }
+
+# CLOUDFLARE_API_TOKEN from the environment, for the demo's DNS records in the xcrs.app zone (infra/README.md).
+provider "cloudflare" {}
