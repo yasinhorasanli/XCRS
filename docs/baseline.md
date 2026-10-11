@@ -215,3 +215,26 @@ One EC2 t4g.small (Graviton arm64, 2 vCPU, 2 GB, Amazon Linux 2023) in eu-centra
 | While stopped | public IPv4 released; CloudFront answers 504 |
 | `start-instances` → site healthy through CloudFront | 25 s (running after 17 s); private address unchanged |
 
+## Load test of production VM-A (2026-10-11, launch plan step 3, ADR-0050)
+
+k6 2.3.0 on VM-B → VM-A over the tailnet (Caddy, then the web server and the API, as in production), constant arrival rate per level, 45 s per level, stopped at p95 > 5 s or > 5% errors. LLM and rate limits off for the test (`loadtest/README.md`). VM-A: 8 vCPU Xeon E5-2690 v4, one API process, one web process.
+
+**Before the fix (main at 32e4699):** browse clean up to 20 visitors/s (60 req/s, p95 124 ms); at 40/s p95 30.5 s with 6% errors, then **the API stayed down until restarted by hand**: all pooled DB connections stuck (see the [incident](incidents/2026-10-11-api-wedged-under-overload.md)).
+
+**After the fix (1230b2f):**
+
+| Scenario (one visitor =) | Clean up to | p95 there | First failing level | Healthy again after the overload |
+|---|---|---|---|---|
+| browse (home page + skill search + groups) | 20 visitors/s (60 req/s) | 144 ms | 40/s: 10.7% errors, p95 8.4 s | 19 s |
+| recommend (4–8 catalog skills) | 10/s | 144 ms | 20/s: 37% errors, p95 4.7 s | 3 s |
+| match (two new typed phrases, similarity) | 2/s (5/s: p95 4.2 s, no errors) | 420 ms | 10/s: 41% errors | 2 s |
+
+What runs out first (peak CPU at the failing level; VM-A has 800%):
+- browse: web server 157%, API 120%, VM-A still 53% idle → the single web and API processes;
+- recommend: API 150%, VM-A 74% idle → role scoring in the single API process (~120 ms each);
+- match: the embedding model 766%, VM-A **0% idle** → embedding typed phrases on CPU.
+
+**LLM probe (production settings, LLM on):** five people typing a new phrase at the same moment got answers after 11, 21, 31, 41 and 52 s: one at a time on VM-B, about 10 s per phrase. A sixth would pass CloudFront's 60 s limit on the AWS demo.
+
+**On the reproduction stack (laptop, API only):** 33 visitors/s served before the fix (250/s asked) → 250/s cleanly after it (p95 22–42 ms).
+

@@ -82,8 +82,18 @@ The first load test of production found that a burst of traffic made the API **s
 - [ ] A watchdog that restarts the API when its health check fails (option D).
 - [ ] Check whether typed-word matching holds a connection while it waits for the LLM on VM-B.
 - [ ] Throughput: more API and web processes, cache the skill groups (they change only with the catalog), a shared rate-limit store.
-- [ ] Re-run the load test on VM-A after deploying the fix (results below).
+- [x] Re-run the load test on VM-A after deploying the fix (results below).
 
 ## Results on VM-A after the fix
 
-To be filled in after the deploy and the re-run.
+Deployed as 1230b2f; the same test again (numbers in [`baseline.md`](../baseline.md#load-test-of-production-vm-a-2026-10-11-launch-plan-step-3-adr-0050)):
+
+| Scenario | Clean up to | At the first failing level | Healthy again after |
+|---|---|---|---|
+| browse | 20 visitors/s (60 req/s), p95 144 ms | 40/s: 10.7% errors | **19 s** (before: down until restarted) |
+| recommend | 10/s, p95 144 ms | 20/s: 37% errors | **3 s** |
+| match (similarity) | 2/s, p95 420 ms | 10/s: 41% errors | **2 s** |
+
+- **The fix delivered what it was for:** after every overload, production recovered by itself within seconds.
+- **It didn't raise VM-A's capacity for browsing.** There the next limits are the single web and API processes (157% and 120% CPU, VM-A half idle). For recommendations it's role scoring in the one API process, and for typed phrases it's the embedding model, which takes all 8 cores.
+- Those are the throughput follow-ups, and they are now measured.
