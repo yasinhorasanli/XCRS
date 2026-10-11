@@ -12,8 +12,12 @@ output "first_boot_log" {
 }
 
 output "site" {
-  description = "Public, through CloudFront (ADR-0047)."
-  value       = "https://${aws_cloudfront_distribution.demo.domain_name}"
+  description = "Public, through CloudFront (ADR-0047, ADR-0051)."
+  value       = "https://${var.public_hostname}"
+}
+
+output "site_cloudfront" {
+  value = "https://${aws_cloudfront_distribution.demo.domain_name}"
 }
 
 output "site_tailnet" {

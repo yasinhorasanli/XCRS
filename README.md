@@ -2,7 +2,7 @@
 
 XCRS recommends **career roles** and **free learning resources** based on what you have already learned and what you are curious about, and explains **why** it recommends each one, in plain language built from your own input.
 
-> **Status:** XCRS runs self-hosted on two VMs, with a demo copy on AWS. The original 2024 research prototype is preserved at the tag [`research-prototype`](https://github.com/yasinhorasanli/XCRS/tree/research-prototype) and in the [Zenodo release](#research-origin--citation).
+> **Live at [xcrs.app](https://xcrs.app).** XCRS runs self-hosted on two VMs; the same app also runs on AWS at [aws.xcrs.app](https://aws.xcrs.app). The original 2024 research prototype is preserved at the tag [`research-prototype`](https://github.com/yasinhorasanli/XCRS/tree/research-prototype) and in the [Zenodo release](#research-origin--citation).
 
 | Tell it what you know | See roles, your level, what to learn and why |
 |---|---|

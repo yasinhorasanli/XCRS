@@ -26,6 +26,18 @@ variable "root_volume_gb" {
   default = 20
 }
 
+variable "zone" {
+  description = "The Cloudflare zone that holds the demo's name."
+  type        = string
+  default     = "xcrs.app"
+}
+
+variable "public_hostname" {
+  description = "The demo's public name (ADR-0051): the same app as xcrs.app, on AWS."
+  type        = string
+  default     = "aws.xcrs.app"
+}
+
 variable "tailscale_auth_key_parameter" {
   description = "SSM SecureString holding the Tailscale auth key; created by hand so the key never enters Terraform state."
   type        = string

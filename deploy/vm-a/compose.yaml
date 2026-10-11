@@ -1,5 +1,6 @@
 # VM-A (8 GB): Caddy (the only entry point), web, API, PostgreSQL and the embedding model (ADR-0014,
-# ADR-0020, ADR-0034). Caddy listens on localhost only; Tailscale Funnel publishes it (ADR-0040). Images come from GHCR, pinned by XCRS_IMAGE_TAG in .env (see .env.example).
+# ADR-0020, ADR-0034). Caddy listens on localhost only; the public reaches it through a Cloudflare Tunnel
+# (cloudflared below, ADR-0051), the tailnet through `tailscale serve`. Images come from GHCR, pinned by XCRS_IMAGE_TAG in .env (see .env.example).
 #
 #   cd deploy/vm-a && cp .env.example .env && $EDITOR .env
 #   ../deploy.sh <image tag>                  # backup, pull, migrate, restart, smoke test
@@ -21,6 +22,18 @@ services:
       - caddy_data:/data
       - caddy_config:/config
     depends_on: [web]
+
+  cloudflared:
+    # The public entrance (ADR-0040, ADR-0051): a Cloudflare Tunnel that this container opens from the inside, so
+    # VM-A needs no open ports. xcrs.app's routes and DNS are in infra/cloudflare. Enabled with
+    # COMPOSE_PROFILES=tunnel and XCRS_TUNNEL_TOKEN (`terraform output -raw tunnel_token`) in .env.
+    image: cloudflare/cloudflared:2026.9.3
+    profiles: [tunnel]
+    restart: unless-stopped
+    command: ["tunnel", "--no-autoupdate", "run"]
+    environment:
+      TUNNEL_TOKEN: ${XCRS_TUNNEL_TOKEN:-}
+    depends_on: [caddy]
 
   web:
     image: ghcr.io/${XCRS_IMAGE_OWNER:-yasinhorasanli}/xcrs-web:${XCRS_IMAGE_TAG:?set XCRS_IMAGE_TAG}

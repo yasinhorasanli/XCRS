@@ -1,10 +1,11 @@
 # Deploying XCRS to the two VMs
 
-How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036, ADR-0040), and the checklist for the first one. The VMs run **Oracle Linux 10** (SELinux enforcing) on a private network of a server someone else owns; they are managed over **Tailscale**, and the site is published with **Tailscale Funnel**.
+How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036, ADR-0040, ADR-0051), and the checklist for the first one. The VMs run **Oracle Linux 10** (SELinux enforcing) on a private network of a server someone else owns; they are managed over **Tailscale**, and the site is public at **https://xcrs.app** through a **Cloudflare Tunnel** (until 2026-10-11: Tailscale Funnel).
 
 ```
- Visitors ──HTTPS──► Tailscale Funnel (https://xcrs-a.<tailnet>.ts.net)
-                         │ tailscaled on VM-A → 127.0.0.1:8080
+ Visitors ──HTTPS──► Cloudflare (https://xcrs.app) ──tunnel──► cloudflared on VM-A → caddy:80
+ Your tailnet devices ──HTTPS──► tailscale serve (https://xcrs-a.<tailnet>.ts.net) → 127.0.0.1:8080
+                         │
 ┌──────────── VM-A (8 vCPU, 8 GB) ─────────▼───────────────┐          ┌──── VM-B (24 vCPU, 32 GB) ────┐
 │ caddy ─► web (Nuxt) ─► api (FastAPI) ─► postgres          │ private  │ ollama (host network,         │
 │                           └──► ollama-embed (0.6B)        │ ───────► │  192.168.99.171:11434)        │
@@ -51,11 +52,13 @@ How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036, ADR-0
 2. Pick an image tag (a commit SHA from the GHCR packages page, or `main`) and run `/opt/xcrs/deploy/deploy.sh <tag>`.
 3. Resources from the adapters: `docker compose -f deploy/vm-a/compose.yaml run --rm api xcrs resources ingest freecodecamp`, `… ingest youtube`, `… tag`.
 4. Backups: `sudo ssh-keygen -t ed25519 -f /root/.ssh/id_ed25519 -N ""`, give its public key to VM-B (above), then `sudo cp deploy/systemd/xcrs-backup.* /etc/systemd/system/ && sudo systemctl enable --now xcrs-backup.timer`.
-5. Publish: `sudo tailscale funnel --bg 8080`. The first time, Tailscale prints a link to allow Funnel (and HTTPS certificates) for the tailnet; open it while signed in as the tailnet admin. Check `tailscale funnel status`, then open `https://xcrs-a.<tailnet>.ts.net`.
+5. Publish:
+   - **Public (ADR-0051):** apply `infra/cloudflare` (the tunnel, its routes and the DNS records; `infra/README.md`), then put the tunnel's token in `.env` with `COMPOSE_PROFILES=tunnel` and `XCRS_TUNNEL_TOKEN=<terraform output -raw tunnel_token>`, and deploy: the `cloudflared` container connects, and https://xcrs.app answers.
+   - **Tailnet only:** `sudo tailscale serve --bg 8080` gives your tailnet devices `https://xcrs-a.<tailnet>.ts.net` (the dev tools live there). The first time, Tailscale prints a link to allow HTTPS certificates for the tailnet; open it while signed in as the tailnet admin.
 6. **Restrict the YouTube API key** to the VMs' egress address: Google Cloud console → *Credentials* → the key → *Application restrictions* → *IP addresses* (the shared NAT IPv4 and the VMs' IPv6 addresses; see the inventory). Do this once discovery runs on VM-A, or the Mac's calls stop working.
 7. **YouTube job** (daily at 11:30, after the quota resets: refresh and ingest the approved playlists, expire data older than 30 days, tag new resources, discover candidates): `sudo install -d -o 10001 -g 10001 /srv/xcrs-discovery`, copy `catalog/sources/youtube-candidates.yaml` there (it carries the skills already searched), then `sudo cp deploy/systemd/xcrs-youtube-discover.* /etc/systemd/system/ && sudo systemctl enable --now xcrs-youtube-discover.timer`. On the Mac, `scripts/youtube-candidates-pull.sh` copies the results into the repo for review.
 8. **Measure on the VMs:** the explainer benchmark against VM-B (ADR-0020), and the matching latency (ADR-0030).
-9. **Accounts (ADR-0043, optional):** in `.env` set `XCRS_PUBLIC_URL` (the Funnel address), `XCRS_INTERNAL_SECRET` and `NUXT_SESSION_PASSWORD` (`openssl rand -hex 32` each), then register the OAuth apps with these callback URLs and set their ids and secrets:
+9. **Accounts (ADR-0043, optional):** in `.env` set `XCRS_PUBLIC_URL` (`https://xcrs.app`), `XCRS_INTERNAL_SECRET` and `NUXT_SESSION_PASSWORD` (`openssl rand -hex 32` each), then register the OAuth apps with these callback URLs and set their ids and secrets:
    - **GitHub:** Settings → Developer settings → OAuth Apps → New; callback `<XCRS_PUBLIC_URL>/auth/github`.
    - **Google:** Cloud console → Google Auth Platform → Clients → Web application; redirect URI `<XCRS_PUBLIC_URL>/auth/google`; scopes openid, email, profile. Google may ask to verify the domain for the consent screen; if it won't accept the `ts.net` address, Google waits for the bought domain.
    - **LinkedIn:** Developer portal → Create app → Products → *Sign In with LinkedIn using OpenID Connect*; Auth → redirect URL `<XCRS_PUBLIC_URL>/auth/linkedin`.
@@ -70,7 +73,8 @@ How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036, ADR-0
 | Logs | `docker compose -f deploy/vm-a/compose.yaml logs -f api` |
 | Admin command | `docker compose -f deploy/vm-a/compose.yaml run --rm api xcrs <command>` (e.g. `resources ingest freecodecamp`, `resources tag`, `resources check-links`) |
 | Backup now | `COMPOSE_FILE=deploy/vm-a/compose.yaml scripts/db-backup.sh && scripts/db-verify-backup.sh` |
-| Funnel on / off / status | `sudo tailscale funnel --bg 8080` / `sudo tailscale funnel --https=443 off` / `tailscale funnel status` |
+| Public entrance (tunnel) | `docker compose -f deploy/vm-a/compose.yaml logs -f cloudflared`; routes and DNS in `infra/cloudflare` |
+| Tailnet address on / off / status | `sudo tailscale serve --bg 8080` / `sudo tailscale serve --https=443 off` / `tailscale serve status` |
 | YouTube job: run now / results | `sudo systemctl start xcrs-youtube-discover` / `scripts/youtube-candidates-pull.sh` (on the Mac) |
 | Test profiles (tailnet only) | `http://xcrs-a.<tailnet>.ts.net/dev/profiles` with `XCRS_DEV_TOOLS=true` in `.env`; public requests get 404 from Caddy |
 | VM facts (read-only) | `ssh xcrs-a 'bash -s' < scripts/vm-facts.sh` |
@@ -81,5 +85,6 @@ How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036, ADR-0
 - At most 12 new phrases per request go to the LLM (`XCRS_MATCH_LLM_MAX_NEW`).
 - Request bodies are capped at 64 KB in Caddy, except `/api/v2/cv-imports` (CV uploads, ADR-0045): 3 MB. The API itself refuses PDFs over 2 MB or 5 pages.
 - CV imports (ADR-0045): signed-in users only, 5 a day each (`XCRS_CV_PER_DAY`), one running and at most 3 waiting (`XCRS_CV_MAX_WAITING`); `XCRS_CV_IMPORT_ENABLED=false` turns them off. VM-B's Ollama needs `OLLAMA_CONTEXT_LENGTH=16384` (in `deploy/vm-b/compose.yaml`; recreate the container after pulling). **After deploying, reload Caddy** (`docker compose -p xcrs-vm-a exec caddy caddy reload --config /etc/caddy/Caddyfile`) so the upload limit applies.
-- Behind Funnel, the visitor's address comes from `X-Forwarded-For`: Caddy trusts private ranges, and the API takes the rightmost entry that isn't a trusted proxy.
+- Behind Cloudflare, the visitor's address comes from `X-Forwarded-For`: Cloudflare sets it, `cloudflared` reaches Caddy from the compose network (a private address), Caddy trusts private ranges, and the API takes the rightmost entry that isn't a trusted proxy.
+- Dev tools answer only on the tailnet address: Caddy returns 404 for `/dev` when a request carries Cloudflare's `Cf-Ray` (or CloudFront's `X-Amz-Cf-Id`), which visitors can't remove.
 

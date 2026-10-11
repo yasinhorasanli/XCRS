@@ -5,7 +5,8 @@ AWS runs a disposable demo/staging copy of XCRS; the two VMs stay its real home 
 | Stack | What it holds | Cost |
 |---|---|---|
 | `bootstrap/` | The S3 bucket `xcrs-tfstate-d6b0fd` (eu-central-1) that holds the Terraform state of every stack, its own included | ~$0 (a few KB) |
-| `demo/` | VPC (one public subnet, no NAT), a security group whose only inbound rule admits CloudFront's VPC origin, the instance role, and one EC2 t4g.small (Amazon Linux 2023, arm64, 20 GB gp3) that cloud-init turns into the demo copy (`deploy/aws/compose.yaml`), and a CloudFront distribution in front (ADR-0047) | ~$5.55/month during the t4g trial (until 31 Dec 2026: public IPv4 + disk, paid from Free-plan credits); ~$19.57/month always-on after it ($14.02 instance, $3.65 IPv4, $1.90 disk); stops itself at $20 (ADR-0048) |
+| `cloudflare/` | Production's public entrance (ADR-0051): the tunnel `xcrs-vm-a` and its routes (`xcrs.app`, `www` → Caddy on VM-A), and the two proxied DNS records. Needs `CLOUDFLARE_API_TOKEN` | $0 (Cloudflare free plan) |
+| `demo/` | VPC (one public subnet, no NAT), a security group whose only inbound rule admits CloudFront's VPC origin, the instance role, and one EC2 t4g.small (Amazon Linux 2023, arm64, 20 GB gp3) that cloud-init turns into the demo copy (`deploy/aws/compose.yaml`), and a CloudFront distribution in front at `aws.xcrs.app` (ADR-0047, ADR-0051) | ~$5.55/month during the t4g trial (until 31 Dec 2026: public IPv4 + disk, paid from Free-plan credits); ~$19.57/month always-on after it ($14.02 instance, $3.65 IPv4, $1.90 disk); stops itself at $20 (ADR-0048) |
 
 ## Account and credentials
 
@@ -25,6 +26,14 @@ AWS runs a disposable demo/staging copy of XCRS; the two VMs stay its real home 
   ```
 
   The code never names a profile; the environment chooses (`AWS_PROFILE=xcrs-tf` locally, GitHub OIDC in CI later).
+- **Cloudflare** (stacks `cloudflare/` and `demo/`): an API token `terraform-xcrs` limited to the `xcrs.app` zone (DNS: Edit, Zone: Read) and the account's tunnels (Cloudflare Tunnel: Edit), no expiry (the decider's choice; rotate it if it leaks). It lives in the macOS Keychain and goes into the environment only for a run:
+
+  ```bash
+  security add-generic-password -a xcrs -s cloudflare-api-token -w         # store it once (prompts for it)
+  export CLOUDFLARE_API_TOKEN=$(security find-generic-password -a xcrs -s cloudflare-api-token -w)
+  ```
+
+  `cloudflare/terraform.tfvars` (gitignored) holds the Cloudflare account id. Records made by hand in the zone (`_dmarc`, later email forwarding) are not in Terraform and stay untouched.
 
 ## Running a stack
 
@@ -82,7 +91,7 @@ The catalog is imported and embedded on every first boot. Both models are on VM-
 4. **Session Manager plugin** for shells on the instance: `brew install --cask session-manager-plugin`.
 5. **Alert email:** `cp terraform.tfvars.example terraform.tfvars` in `infra/demo` and put your address in it (gitignored).
 
-**Public access (ADR-0047):** `terraform output site` is the CloudFront address (`https://d….cloudfront.net`).
+**Public access (ADR-0047, ADR-0051):** `terraform output site` is `https://aws.xcrs.app` (an ACM certificate from `us-east-1`, validated through a record in the `xcrs.app` zone; a DNS-only CNAME to CloudFront; `X-Robots-Tag: noindex`, so search engines send people to xcrs.app). The `*.cloudfront.net` name keeps working (`terraform output site_cloudfront`).
 - CloudFront reaches the instance through a **VPC origin**: a CloudFront-managed network interface in our VPC that connects to Caddy on the instance's private address, port 80. The instance's one inbound rule admits only CloudFront's service security group.
 - Pages and `/api` are never cached; `/_nuxt/*` (content-hashed build files) is.
 - `/dev` answers 404 through CloudFront: Caddy refuses requests marked with `X-Amz-Cf-Id`.

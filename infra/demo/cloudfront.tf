@@ -67,7 +67,8 @@ data "aws_cloudfront_origin_request_policy" "all_viewer_except_host" {
 
 resource "aws_cloudfront_distribution" "demo" {
   enabled         = true
-  comment         = "XCRS demo copy (ADR-0042, ADR-0047)"
+  comment         = "XCRS demo copy (ADR-0042, ADR-0047, ADR-0051)"
+  aliases         = [var.public_hostname]
   price_class     = "PriceClass_100" # North America and Europe edges: the cheapest class
   http_version    = "http2and3"
   is_ipv6_enabled = true
@@ -85,24 +86,26 @@ resource "aws_cloudfront_distribution" "demo" {
 
   # Pages and /api: never cached; all methods (the app POSTs); everything the visitor sent except Host.
   default_cache_behavior {
-    target_origin_id         = "xcrs-demo-instance"
-    viewer_protocol_policy   = "redirect-to-https"
-    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
-    cached_methods           = ["GET", "HEAD"]
-    cache_policy_id          = data.aws_cloudfront_cache_policy.disabled.id
-    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.all_viewer_except_host.id
-    compress                 = true
+    target_origin_id           = "xcrs-demo-instance"
+    viewer_protocol_policy     = "redirect-to-https"
+    allowed_methods            = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods             = ["GET", "HEAD"]
+    cache_policy_id            = data.aws_cloudfront_cache_policy.disabled.id
+    origin_request_policy_id   = data.aws_cloudfront_origin_request_policy.all_viewer_except_host.id
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.noindex.id
+    compress                   = true
   }
 
   # Nuxt's build files carry a content hash in their names, so a cached copy can never be stale.
   ordered_cache_behavior {
-    path_pattern           = "/_nuxt/*"
-    target_origin_id       = "xcrs-demo-instance"
-    viewer_protocol_policy = "redirect-to-https"
-    allowed_methods        = ["GET", "HEAD"]
-    cached_methods         = ["GET", "HEAD"]
-    cache_policy_id        = data.aws_cloudfront_cache_policy.optimized.id
-    compress               = true
+    path_pattern               = "/_nuxt/*"
+    target_origin_id           = "xcrs-demo-instance"
+    viewer_protocol_policy     = "redirect-to-https"
+    allowed_methods            = ["GET", "HEAD"]
+    cached_methods             = ["GET", "HEAD"]
+    cache_policy_id            = data.aws_cloudfront_cache_policy.optimized.id
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.noindex.id
+    compress                   = true
   }
 
   restrictions {
@@ -111,9 +114,11 @@ resource "aws_cloudfront_distribution" "demo" {
     }
   }
 
-  # The free *.cloudfront.net certificate until there is a domain (ADR-0040, ADR-0047).
+  # aws.xcrs.app's certificate (domain.tf); the *.cloudfront.net name keeps working too.
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn      = aws_acm_certificate_validation.public.certificate_arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 
   depends_on = [aws_vpc_security_group_ingress_rule.cloudfront_http]
