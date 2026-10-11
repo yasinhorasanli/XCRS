@@ -84,7 +84,7 @@ def get_session():
 
 
 @router.get("/profiles", response_model=list[DevProfile])
-def profiles(session: Session = Depends(get_session)) -> list[DevProfile]:
+def profiles(session: Session = Depends(get_session, scope="function")) -> list[DevProfile]:
     """The test profiles, with skill names for the board."""
     names = catalog_store.skill_display_names(session, [c.skill for p in load_profiles() for c in p.chips])
     return [
@@ -94,7 +94,7 @@ def profiles(session: Session = Depends(get_session)) -> list[DevProfile]:
 
 
 @router.get("/profiles/preview", response_model=list[DevPreview])
-def preview(session: Session = Depends(get_session)) -> list[DevPreview]:
+def preview(session: Session = Depends(get_session, scope="function")) -> list[DevPreview]:
     """The top five roles per profile, scored in memory (milliseconds; nothing stored, no LLM)."""
     snapshot = catalog_store.load_snapshot(session)
     out = []

@@ -80,7 +80,9 @@ def resolve(request: Request, session: Session) -> User | Literal[False] | None:
     return user
 
 
-def optional_user(request: Request, response: Response, session: Session = Depends(get_session)) -> User | None:
+def optional_user(
+    request: Request, response: Response, session: Session = Depends(get_session, scope="function")
+) -> User | None:
     """For endpoints that work signed in or not: a rejected session counts as anonymous (and is cleared)."""
     user = resolve(request, session)
     if user is False:
@@ -89,7 +91,7 @@ def optional_user(request: Request, response: Response, session: Session = Depen
     return user
 
 
-def required_user(request: Request, session: Session = Depends(get_session)) -> User:
+def required_user(request: Request, session: Session = Depends(get_session, scope="function")) -> User:
     if not accounts_on():
         raise HTTPException(404, "accounts are not enabled")
     user = resolve(request, session)

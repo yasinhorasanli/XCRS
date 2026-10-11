@@ -10,6 +10,11 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="XCRS_", env_file=REPO_ROOT / ".env", extra="ignore")
 
     database_url: str = "postgresql+psycopg://xcrs:xcrs@localhost:5432/xcrs"
+    # Connection pool (ADR-0050): a request waits at most db_pool_timeout seconds for a connection, so overload
+    # fails fast instead of queuing worker threads behind requests that still hold connections.
+    db_pool_size: int = 10
+    db_max_overflow: int = 10
+    db_pool_timeout: float = 2
     embedding_base_url: str = "http://localhost:11434/v1"
     embedding_model: str = "qwen3-embedding:0.6b"
     embedding_batch_size: int = 32
