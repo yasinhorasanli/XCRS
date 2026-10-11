@@ -75,7 +75,7 @@ class ResultSummaryV2(BaseModel):
     roles: list[ResultRoleV2]
 
 
-def get_accounts(session: Session = Depends(get_session)) -> AccountService:
+def get_accounts(session: Session = Depends(get_session, scope="function")) -> AccountService:
     return AccountService(session)
 
 

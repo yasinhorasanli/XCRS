@@ -185,3 +185,6 @@ crash.log
 
 # Terraform variable values can hold personal data (e.g. the alert email); the .example files are committed
 terraform.tfvars
+
+# Load-test output (loadtest/run.sh)
+loadtest/results/

@@ -71,18 +71,20 @@ app.include_router(accounts.internal)
 app.include_router(cv_imports.router)
 
 
-def get_skill_matcher(session: Session = Depends(get_session)) -> SkillMatcher:
+def get_skill_matcher(session: Session = Depends(get_session, scope="function")) -> SkillMatcher:
     return build_matcher(session)
 
 
 def get_service_v2(
-    request: Request, session: Session = Depends(get_session), matcher: SkillMatcher = Depends(get_skill_matcher)
+    request: Request,
+    session: Session = Depends(get_session, scope="function"),
+    matcher: SkillMatcher = Depends(get_skill_matcher),
 ) -> RecommendationServiceV2:
     return RecommendationServiceV2(session, matcher, getattr(request.app.state, "explanations_v2", None))
 
 
 @app.get("/api/v2/health")
-def health(session: Session = Depends(get_session)) -> dict:
+def health(session: Session = Depends(get_session, scope="function")) -> dict:
     session.execute(select(1))
     return {"status": "ok"}
 
@@ -92,7 +94,7 @@ def health(session: Session = Depends(get_session)) -> dict:
 def match_skills(
     body: SkillMatchRequestV2,
     matcher: SkillMatcher = Depends(get_skill_matcher),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_session, scope="function"),
 ) -> SkillMatchResponseV2:
     """Catalog skills for typed phrases (ADR-0030). Clients call it as each chip is added, so the LLM step
     (seconds on a CPU, once per phrase) is usually done before "Recommend"."""
@@ -181,7 +183,7 @@ def create_feedback_v2(
 def search_skills_v2(
     q: str = Query(min_length=1, max_length=100),
     limit: int = Query(default=20, ge=1, le=50),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_session, scope="function"),
 ) -> SkillSearchV2:
     """Catalog skills for the board's picker."""
     return SkillSearchV2(
@@ -190,7 +192,7 @@ def search_skills_v2(
 
 
 @app.get("/api/v2/skills/groups", response_model=SkillGroupsV2)
-def skill_groups_v2(session: Session = Depends(get_session)) -> SkillGroupsV2:
+def skill_groups_v2(session: Session = Depends(get_session, scope="function")) -> SkillGroupsV2:
     """Suggested skills per role family, for a quick start on the board."""
     return SkillGroupsV2(
         groups=[

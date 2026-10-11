@@ -53,6 +53,7 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0047](0047-cloudfront-in-front-of-the-aws-demo-copy.md) | CloudFront in front of the AWS demo copy: a VPC origin (no public path to the instance), pay-as-you-go free tier, only Nuxt build files cached | Accepted | 2026-10-10 |
 | [0048](0048-budget-action-stops-the-demo-instance-at-20-dollars.md) | A budget action stops the AWS demo instance when the month's actual spend (credits excluded) reaches $20 | Accepted | 2026-10-10 |
 | [0049](0049-one-trunk-main-with-protection.md) | One trunk: `modernization` merges into `main` (research version kept at the tag `research-prototype`); `main` is the only long-lived branch, protected by a ruleset | Accepted | 2026-10-10 |
+| [0050](0050-sessions-end-with-the-endpoint-overload-fails-fast.md) | Database sessions end with the endpoint (`scope="function"`), and overload fails fast (a 2 s wait for a connection, pool 10 + 10) instead of wedging the API | Accepted | 2026-10-11 |
 
 ## Upcoming decisions
 
