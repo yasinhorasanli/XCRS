@@ -117,6 +117,15 @@ def test_known_skills_imply_their_prerequisites(snapshot):
     assert with_prerequisites({"python": 4}, snapshot.prerequisites)["programming-fundamentals"] == 2
 
 
+def test_class_based_languages_show_oop(snapshot):
+    """ADR-0028 note: Java isn't learned after OOP (no prerequisite), but knowing it shows OOP, at most working."""
+    implied = lambda have: with_prerequisites(have, snapshot.prerequisites, snapshot.implications)  # noqa: E731
+    assert implied({"java": 4})["oop"] == 2 and implied({"java": 1})["oop"] == 1
+    assert implied({"kotlin": 3})["oop"] == 2 and "oop" not in implied({"python": 4})  # OOP is optional in Python
+    backend = {r.role: r for r in score_roles(snapshot, [Mention("java", L, 4), Mention("kubernetes", L)])}
+    assert not any("oop" in g.options for g in backend["backend-engineer"].gaps)
+
+
 def test_a_skill_mentioned_twice_keeps_its_best_rating_and_the_more_telling_category():
     have, category = learner_skills([Mention("sql", N, 2), Mention("sql", L, 3), Mention("sql", C)])
     assert have == {"sql": 3} and category == {"sql": L}

@@ -54,6 +54,15 @@ def _check_skills(cat: Catalog, report: Report) -> None:
                     report.errors.append(f"skill {skill.id}: requires itself")
                 elif option not in cat.skills:
                     report.errors.append(f"skill {skill.id}: requires unknown skill {option!r}")
+        for imp in skill.implies:
+            if len(imp.options) > 1:
+                report.errors.append(f"skill {skill.id}: implies a choice ({imp}); name one skill")
+            elif imp.options[0] == skill.id:
+                report.errors.append(f"skill {skill.id}: implies itself")
+            elif imp.options[0] not in cat.skills:
+                report.errors.append(f"skill {skill.id}: implies unknown skill {imp.options[0]!r}")
+            elif any(imp.options[0] in r.options for r in skill.requires):
+                report.errors.append(f"skill {skill.id}: {imp.options[0]} is both required and implied")
     names = Counter(s.name.lower() for s in cat.skills.values())
     report.errors += [f"skill name {n!r} is used by {c} skills" for n, c in names.items() if c > 1]
 

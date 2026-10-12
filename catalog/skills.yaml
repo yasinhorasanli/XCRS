@@ -149,23 +149,27 @@ skills:
     kind: language
     description: Statically typed JVM language widely used for enterprise back ends.
     requires: [programming-fundamentals:1]
+    implies: [oop:2]  # class-based: knowing it shows object-oriented programming
     onet: [Oracle Java]
   kotlin:
     name: Kotlin
     kind: language
     description: Modern JVM language and the main language for Android.
     requires: [programming-fundamentals:1]
+    implies: [oop:2]  # class-based: knowing it shows object-oriented programming
   swift:
     name: Swift
     kind: language
     description: Apple's language for iOS, iPadOS and macOS apps.
     requires: [programming-fundamentals:1]
+    implies: [oop:2]  # class-based: knowing it shows object-oriented programming
     onet: [Swift]
   csharp:
     name: C#
     kind: language
     description: .NET language for back ends, desktop apps and Unity games.
     requires: [programming-fundamentals:1]
+    implies: [oop:2]  # class-based: knowing it shows object-oriented programming
     onet: [C#]
   go:
     name: Go
@@ -201,6 +205,7 @@ skills:
     kind: language
     description: Language used by Flutter for cross-platform apps.
     requires: [programming-fundamentals:1]
+    implies: [oop:2]  # class-based: knowing it shows object-oriented programming
   r:
     name: R
     kind: language

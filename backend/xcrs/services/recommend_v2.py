@@ -19,16 +19,18 @@ from xcrs.domain.role_scoring import (
     Mention,
     ResourceRef,
     RoleScore,
+    learner_skills,
     recommendable,
     score_roles,
     section_for,
     suggest_resources,
+    with_prerequisites,
 )
 from xcrs.explain.v2 import build_facts
 from xcrs.repository import catalog_store
 from xcrs.services.skill_matching import SkillMatcher
 
-ALGORITHM_VERSION = "v3.5"
+ALGORITHM_VERSION = "v3.6"
 
 
 def section_out(ref: ResourceRef, hits: list[str], prerequisites: dict) -> dict | None:
@@ -165,6 +167,8 @@ class RecommendationServiceV2:
     def _role(snapshot, r: RoleScore, category: dict[str, Category], known: set[str], mentions: list[Mention]) -> dict:
         role = snapshot.roles[r.role]
         relevant = known | {o for q in role.requirements[role.levels[-1]] for o in q.options} | set(role.optional)
+        # What the learner has, implied skills included: resources don't teach again what they know (ADR-0038 note).
+        levels = with_prerequisites(learner_skills(mentions)[0], snapshot.prerequisites, snapshot.implications)
         names = snapshot.skill_names
 
         def level(lv: str | None) -> dict | None:
@@ -220,6 +224,6 @@ class RecommendationServiceV2:
                     "duration_minutes": ref.duration_minutes,
                     "section": section_out(ref, hits, snapshot.prerequisites),
                 }
-                for ref, hits in suggest_resources(snapshot, r.gaps, relevant, known=known)
+                for ref, hits in suggest_resources(snapshot, r.gaps, relevant, known=known, levels=levels)
             ],
         }

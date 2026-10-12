@@ -41,6 +41,14 @@ def test_the_database_holds_the_same_requirements_as_the_yaml(session):
             assert catalog_store.role_requirements(session, role.id, level) == expected, f"{role.id}@{level}"
 
 
+def test_implies_links_reach_the_engine_through_the_database(session):
+    """ADR-0028 note: `implies` is imported (catalog.skill_implications, migration 0016) and loaded back."""
+    cat = model.load_catalog()
+    run_import(session, cat)
+    expected = {s.id: [(i.options[0], i.level) for i in s.implies] for s in cat.skills.values() if s.implies}
+    assert expected and catalog_store.load_snapshot(session).implications == expected
+
+
 def test_reimporting_the_same_catalog_changes_nothing(session):
     cat = model.load_catalog()
     run_import(session, cat)
