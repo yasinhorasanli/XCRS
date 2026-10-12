@@ -56,6 +56,7 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0050](0050-sessions-end-with-the-endpoint-overload-fails-fast.md) | Database sessions end with the endpoint (`scope="function"`), and overload fails fast (a 2 s wait for a connection, pool 10 + 10) instead of wedging the API | Accepted | 2026-10-11 |
 | [0051](0051-xcrs-app-through-a-cloudflare-tunnel-as-code.md) | xcrs.app reaches production through a Cloudflare Tunnel managed with Terraform (Funnel off, tailnet-only `serve` stays); the AWS copy is aws.xcrs.app (noindex) | Accepted | 2026-10-11 |
 | [0052](0052-show-only-roles-the-board-gives-evidence-for.md) | Show only the roles the board gives evidence for (0 to 3, an evidence gate), show interest as a share of the role, and drop the explanation's next step | Accepted | 2026-10-12 |
+| [0053](0053-apache-2-0-code-and-cc-by-4-0-catalog.md) | The code is licensed under Apache-2.0 and the catalog data under CC BY 4.0 (was GPL-3.0-or-later, carried over from the research prototype) | Accepted | 2026-10-12 |
 
 ## Upcoming decisions
 

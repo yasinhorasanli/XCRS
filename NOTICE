@@ -1,0 +1,10 @@
+XCRS (Explainable Course Recommendation System)
+Copyright 2024-2026 Muhammed Yasin Horasanlı
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+The catalog data in catalog/ is licensed separately under CC BY 4.0 (see catalog/LICENSE).
+
+The catalog uses information from the O*NET 31.0 Database by the U.S. Department of Labor,
+Employment and Training Administration (USDOL/ETA), under CC BY 4.0. The catalog modifies and adds to that
+information; USDOL/ETA has not approved, endorsed, or tested these modifications. It also uses the ESCO
+classification of the European Commission.

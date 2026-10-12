@@ -67,6 +67,10 @@ CI proves the files are consistent; the review is about whether they are **true*
 5. **Resources:** is it the best free resource for that skill, and does it really get a learner to the proficiency listed?
 6. **Common paths:** is it a move people really make? Do `moves` and `bridge` show a believable distance and gap?
 
+## License
+
+The catalog (the YAML files in this folder) is licensed under [CC BY 4.0](LICENSE): reuse, change and share it, also commercially, as long as you credit "XCRS catalog" with a link to https://github.com/yasinhorasanli/XCRS, link the license and say what you changed. It is separate from the code license (Apache-2.0, ADR-0053). Not covered: the third-party data below (it keeps its own terms) and the titles of the linked courses and videos (they belong to their owners; YouTube data is also subject to YouTube's Terms of Service).
+
 ## Sources and attribution
 
 Roles map to O\*NET-SOC occupations; skills list matching O\*NET technology examples (`onet:`) as evidence of employer demand. ESCO references are added by the taxonomy import.
