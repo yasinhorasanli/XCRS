@@ -259,3 +259,7 @@ Engine v3.3 → v3.4 (same night): a broad 29-skill board got no role (its mean 
 applies only to weak evidence. Labeled profiles: 53/53 kept, 82% of shown roles expected or accepted (v3.3: 83%);
 gate boards (`eval/gate_boards.yaml`, thin + broad) 9/10 → 10/10; broad boards merged from three profiles with no
 role shown: 4/1500 → 0/1500.
+
+Engine v3.4 → v3.5 (resources, ADR-0038 note): over the labeled profiles' 106 shown roles, resources repeating a
+gap another one covers 68 of 318 → 0, resources only for gaps the learner partly has 70 → 0, roles with a video
+87% → 84%.

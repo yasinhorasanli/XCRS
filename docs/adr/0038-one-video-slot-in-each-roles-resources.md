@@ -51,3 +51,23 @@ Measured on the 53 learner profiles (159 role results, 477 picks): 125 (79%) sho
 - Learner feedback on resources (`feedback_v2.resource_id`) shows videos rated below other types, or the reverse.
 - Learners can set a format preference (video, reading, course).
 - A quality signal exists for non-video resources, making Option C possible.
+
+## Note (2026-10-12, engine v3.5): new gaps first, and the video slot doesn't repeat a gap
+
+The decider enjoyed Python (rated 4) and OpenShift and got two Python beginner courses in every role. Python implies
+programming fundamentals only at the basic level its prerequisite asks for, every role they got asks for working
+fundamentals first, the only resources for fundamentals are beginner courses (the learner's language preferred:
+Python), and the video slot then took a second one for the same gap ("even for a gap already covered").
+
+**Changed (decided by the decider):** resources go first to gaps the learner has none of, then to gaps they partly
+have (listed below the level asked, or implied by a skill they know); the video slot takes a gap that is new to the
+learner, shown on the result (the first 8) and not covered by another resource. Over the labeled profiles' shown
+roles (106, database resources):
+
+| | Roles with a video | Resources repeating a covered gap | Resources only for partly-had gaps |
+|---|---|---|---|
+| v3.4 | 87% | 68 of 318 | 70 |
+| v3.5 | 84% | 0 | 0 |
+
+Still open (a scoring question for the decider): knowing a language well implies programming fundamentals at basic
+only, so "Programming fundamentals · working (you: basic)" stays in the gaps of a Python expert.

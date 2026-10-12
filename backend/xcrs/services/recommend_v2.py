@@ -28,7 +28,7 @@ from xcrs.explain.v2 import build_facts
 from xcrs.repository import catalog_store
 from xcrs.services.skill_matching import SkillMatcher
 
-ALGORITHM_VERSION = "v3.4"
+ALGORITHM_VERSION = "v3.5"
 
 
 def section_out(ref: ResourceRef, hits: list[str], prerequisites: dict) -> dict | None:

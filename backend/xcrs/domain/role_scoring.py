@@ -435,7 +435,7 @@ TYPE_PREFERENCE = {"course": 3, "tutorial": 2, "docs": 2, "playlist": 2, "video"
 
 
 VIDEO_TYPES = {"video", "playlist"}
-VIDEO_GAPS = 3  # the video slot is for the first gaps only
+VIDEO_GAPS = 8  # the video slot is for the gaps a result shows (recommend_v2.GAPS_SHOWN)
 
 
 def suggest_resources(
@@ -452,8 +452,12 @@ def suggest_resources(
     the proficiency asked.
 
         One slot is kept for a video (ADR-0038): if none of the others is a video or playlist and one teaches
-        one of the first gaps and nothing beyond the gaps and the learner's skills, it takes the last slot,
-    even for a gap already covered."""
+        a shown gap that is new to the learner and not covered yet, and nothing beyond the gaps and the learner's
+    skills, it takes the last slot.
+
+    Gaps the learner has none of come first, then those they partly have (listed below the level asked, or implied
+    by a skill they know): someone who knows Python well gets Shell scripting and Git, not a second beginner course
+    for the programming fundamentals that Python implies at basic level (engine v3.5, ADR-0038 note)."""
 
     def options(gap: Gap) -> tuple[str, ...]:
         """A choice ("Go or Python") follows what the learner already has: Python material for a Python learner."""
@@ -461,6 +465,7 @@ def suggest_resources(
         return mine or gap.options
 
     need = {o: g.need for g in gaps for o in options(g)}
+    order = [g for g in gaps if g.have == 0] + [g for g in gaps if g.have > 0]  # roadmap order within each
     chosen: list[tuple[ResourceRef, list[str]]] = []
     covered: set[str] = set()
 
@@ -493,7 +498,7 @@ def suggest_resources(
         )
 
     def fill(until: int) -> None:
-        for gap in gaps:
+        for gap in order:
             if len(chosen) >= until:
                 return
             if any(o in covered for o in gap.options):
@@ -510,7 +515,10 @@ def suggest_resources(
     fill(limit - 1 if limit > 1 else limit)
     if len(chosen) < limit and not any(r.type in VIDEO_TYPES for r, _ in chosen):
         taken = {c.id for c, _ in chosen}
+        # A gap the learner has none of, that no other resource covers, among those the result shows.
         for gap in gaps[:VIDEO_GAPS]:
+            if gap.have > 0 or any(o in covered for o in gap.options):
+                continue
             videos = [
                 r
                 for o in options(gap)
@@ -519,7 +527,7 @@ def suggest_resources(
             ]
             if videos:
                 best = max(videos, key=lambda r: rank(r, gap))
-                hits = [s for s, _ in best.teaches if s in need]
+                hits = [s for s, _ in best.teaches if s in need and s not in covered]
                 covered.update(hits)
                 chosen.append((best, hits))
                 break
