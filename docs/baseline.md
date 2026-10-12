@@ -241,7 +241,7 @@ What runs out first (peak CPU at the failing level; VM-A has 800%):
 
 ## Which roles are shown (2026-10-12, ADR-0052)
 
-Engine v3.2 → v3.3 on the 53 labeled profiles and 9 thin boards (`eval/bench_role_gate.py`, `eval/thin_boards.yaml`):
+Engine v3.2 → v3.3 on the 53 labeled profiles and 9 thin boards (`eval/bench_role_gate.py`, `eval/gate_boards.yaml`):
 
 | | Expected role kept | Roles shown (0/1/2/3) | Shown roles expected or accepted | Thin boards right |
 |---|---|---|---|---|
@@ -254,3 +254,8 @@ the share of the board); the labeled profiles' expected roles 1–60%, median 25
 Explanations, prompt explain-role-v2.1 → v2.2 (no next step, no resources sent), qwen3.5:4b on the Mac GPU, 53 cases
 (`eval/bench_explainer.py`): prompt 671 → 542 tokens, output 88 → 70 tokens, median 2.2 → 2.1 s per role, clean
 (no automatic flag) 96% → 100%.
+
+Engine v3.3 → v3.4 (same night): a broad 29-skill board got no role (its mean score was high). The lift test now
+applies only to weak evidence. Labeled profiles: 53/53 kept, 82% of shown roles expected or accepted (v3.3: 83%);
+gate boards (`eval/gate_boards.yaml`, thin + broad) 9/10 → 10/10; broad boards merged from three profiles with no
+role shown: 4/1500 → 0/1500.

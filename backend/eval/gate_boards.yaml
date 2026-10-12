@@ -1,0 +1,47 @@
+# Boards for the role gate (ADR-0052): thin or one-sided ones, and broad ones. Which roles may be shown, if any.
+# Same board format as learner_profiles.yaml, plus an optional `experience`. `may_show: []` means no role should be
+# shown; otherwise at least one role must be shown and every role shown must be in the list.
+#
+# Used by tests/test_role_scoring.py and eval/bench_role_gate.py. Thin boards added 2026-10-12 after the decider
+# tried "Python, enjoyed" (50% interest, three near-tied roles) and "SQL, didn't enjoy" (three zero-score roles);
+# the broad board the same night, when a 29-skill board got no role at all (engine v3.3, fixed in v3.4).
+
+boards:
+  - id: one-generic-language
+    liked: [python]
+    may_show: []
+  - id: one-generic-language-expert
+    liked: [python:4]
+    may_show: []
+  - id: one-generic-tool
+    liked: [git]
+    may_show: []
+  - id: only-a-dislike
+    disliked: [sql]
+    may_show: []
+  - id: only-dislikes
+    disliked: [javascript, react]
+    may_show: []
+  - id: only-generic-neutral
+    neutral: [git:2, linux:2]
+    may_show: []
+  - id: generic-like-and-a-dislike
+    liked: [python]
+    disliked: [sql]
+    may_show: []
+  - id: one-distinctive-skill
+    liked: [spreadsheets]
+    may_show: [data-analyst, analytics-engineer]
+  - id: curious-about-one-field
+    curious: [machine-learning-fundamentals]
+    may_show: [data-scientist, machine-learning-engineer, applied-scientist]
+
+  # Broad: many skills touch many roles, so every role scores something and the mean is high; the strongest roles
+  # still have plenty of evidence. The decider's own board on xcrs.app, 2026-10-12 (v3.3 showed no role).
+  - id: broad-experienced-ai-backend
+    experience: 5-10
+    liked: [python:3, django:2, rest-api-design:2, postgresql:3, data-structures:2, ai-agents:3, computer-vision:3, llm-evaluation:2, numpy, spreadsheets, scikit-learn, pandas]
+    neutral: [docker:2, kafka:3, distributed-systems:3, observability:3, java:3, spring-boot:3, ci-cd:2, llm-fundamentals:2, machine-learning-fundamentals:1, typescript:1, vue:1, opentelemetry:3, blockchain-fundamentals]
+    disliked: [etl-pipelines, airflow, spark]
+    curious: [kubernetes, cloud-fundamentals, orm, game-design-basics, game-physics, computer-graphics, shaders]
+    may_show: [ai-engineer, machine-learning-engineer, backend-engineer, ai-reliability-engineer, forward-deployed-engineer, data-scientist, applied-scientist]

@@ -112,3 +112,23 @@ changed with the prompt). On VM-B's CPU (about 12 tokens/s) the shorter answer s
   result without changing the board.
 - The catalog grows well past 30 roles (the lift is relative to the mean of all roles, which changes with the count).
 - The explanation-quality evaluation (launch plan) shows the shorter prompt lost something learners valued.
+
+## Note (2026-10-12, engine v3.4): the lift test applies only to weak evidence
+
+The same night, the decider's own broad board (29 skills across AI, backend and data, 5–10 years) got **no role**.
+Its strongest roles had plenty of evidence (9.7–11.4, coverage 43–54%, senior level), but a board that touches many
+roles raises every role's score and so the mean: AI Engineer reached only 1.83× the mean, under the 2.0 bar. The
+calibration set had only focused profiles, the risk this ADR named. Broad boards made by merging three labeled
+profiles (with 5–10 years) reproduce it: v3.3 showed nothing for 4 of 1,500.
+
+**Fix:** the lift test now applies only to roles with weak evidence (below `STRONG_EVIDENCE` 4.0); strong evidence
+speaks for itself, and near-ties come from thin boards. Measured with `eval/bench_role_gate.py`:
+
+| | Expected role kept | Shown (0/1/2/3) | Shown roles expected or accepted | Gate boards right | Merged boards with no role |
+|---|---|---|---|---|---|
+| v3.3 | 53/53 | 0/18/18/17 | 83% | 9/10 | 4/1500 |
+| v3.4 | 53/53 | 0/17/19/17 | 82% | 10/10 | 0/1500 |
+
+Any strong-evidence value from 2 to 6 gives the same picture. `eval/thin_boards.yaml` became `eval/gate_boards.yaml`
+(thin and broad boards; the decider's board is one of them), and a test checks 300 merged boards. The "no role"
+page names widely used skills as the reason only when they are all the board has.

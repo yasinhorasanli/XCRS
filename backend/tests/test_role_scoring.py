@@ -1,6 +1,8 @@
 """Engine v2 role scoring (ADR-0031) on the real catalog: ranking, levels, gaps, implied prerequisites,
 the calibrated weights still doing what the calibration measured, and which roles are shown (ADR-0052)."""
 
+import itertools
+import random
 from pathlib import Path
 
 import pytest
@@ -35,13 +37,15 @@ def board(entry: dict) -> list[Mention]:
     return mentions
 
 
-THIN = yaml.safe_load((EVAL / "thin_boards.yaml").read_text())["boards"]
+BOARDS = yaml.safe_load((EVAL / "gate_boards.yaml").read_text())["boards"]
 
 
-@pytest.mark.parametrize("entry", THIN, ids=[b["id"] for b in THIN])
+@pytest.mark.parametrize("entry", BOARDS, ids=[b["id"] for b in BOARDS])
 def test_a_board_shows_only_roles_it_gives_evidence_for(snapshot, entry):
-    """ADR-0052: "Python" alone or a board of dislikes singles out no role; one telling skill shows its roles."""
-    shown = [r.role for r in recommendable(score_roles(snapshot, board(entry)))]
+    """ADR-0052: "Python" alone or a board of dislikes singles out no role; one telling skill shows its roles;
+    a broad board still shows its strongest roles."""
+    ranked = score_roles(snapshot, board(entry), experience=entry.get("experience"))
+    shown = [r.role for r in recommendable(ranked)]
     if entry["may_show"]:
         assert shown and set(shown) <= set(entry["may_show"])
     else:
@@ -57,6 +61,22 @@ def test_the_gate_keeps_every_labeled_profile_s_expected_role(snapshot):
         if p["expect"][0] not in {r.role for r in recommendable(score_roles(snapshot, board(p)))}
     ]
     assert missing == []
+
+
+def test_a_broad_board_always_shows_a_role(snapshot):
+    """Engine v3.4: three labeled learners on one board (and 5-10 years) touch many roles and lift the mean score;
+    the gate must still show their strongest roles. v3.3 showed none for 4 of 1,500 such boards."""
+    profiles = yaml.safe_load((EVAL / "learner_profiles.yaml").read_text())["profiles"]
+    rng = random.Random(7)
+    empty = []
+    for trio in rng.sample(list(itertools.combinations(profiles, 3)), 300):
+        mentions = {}
+        for p in trio:
+            for m in board(p):
+                mentions.setdefault(m.skill, m)
+        if not recommendable(score_roles(snapshot, list(mentions.values()), experience="5-10")):
+            empty.append([p["id"] for p in trio])
+    assert empty == []
 
 
 def test_interest_shown_is_the_share_of_the_role_not_of_the_board(snapshot):
