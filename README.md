@@ -105,4 +105,7 @@ XCRS started as an academic research project: five embedding providers compared 
 
 ## License
 
-[GPL-3.0-or-later](LICENSE.md)
+- Code: [Apache-2.0](LICENSE) (see [`NOTICE`](NOTICE)).
+- Catalog data (`catalog/`): [CC BY 4.0](catalog/LICENSE); credit "XCRS catalog" with a link to this repository.
+- Third-party content keeps its own terms: O\*NET and ESCO data (see [`catalog/README.md`](catalog/README.md)), the linked courses, and YouTube titles and metadata (YouTube Terms of Service).
+- Versions up to the tag `research-prototype` (and the Zenodo release) were published under GPL-3.0-or-later and stay so. The license changed in [ADR-0053](docs/adr/0053-apache-2-0-code-and-cc-by-4-0-catalog.md).
