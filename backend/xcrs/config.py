@@ -50,7 +50,7 @@ class Settings(BaseSettings):
     internal_secret: str | None = None
     # CV import (ADR-0045): signed-in users only; one import at a time, kept in memory, nothing stored.
     cv_import_enabled: bool = True
-    cv_shape: str = "compact"  # short answer (ADR-0045); "found", "pick" and "phrases" are kept for the benchmark
+    cv_shape: str = "compact"  # short answer (ADR-0045); "candidates", "found", "pick", "phrases": benchmark only
     cv_max_pdf_bytes: int = 2 * 1024 * 1024
     cv_max_pages: int = 5
     cv_max_chars: int = 20_000

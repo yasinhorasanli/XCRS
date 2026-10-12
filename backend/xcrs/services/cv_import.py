@@ -14,7 +14,7 @@ import threading
 import time
 import uuid
 from collections import deque
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field
 from datetime import date
 from typing import Literal, Protocol
@@ -29,11 +29,42 @@ log = logging.getLogger(__name__)
 EXAMPLE_CHARS = 140
 MAX_EXAMPLES = 3
 
+# The "candidates" prompt (cv-extract-5, benchmark only; ADR-0045 "Latency follow-up 2") lists only the skills this
+# CV could show, not all 259: on the 24 evaluation CVs, these settings keep 95% of the expected skills in the list with
+# a median of 49. Practices are described in prose more often than named, so they are always offered.
+CANDIDATE_TOP = 5  # closest skills per line
+CANDIDATE_FLOOR = 0.45  # cosine similarity a line must reach to a skill
+CANDIDATE_MIN_WORDS = 3  # lines shorter than this (dates, headings) aren't embedded
+CV_PRACTICES = (
+    "mentoring code-review agile-scrum testing-fundamentals unit-testing integration-testing ci-cd debugging "
+    "technical-writing stakeholder-communication incident-management system-design project-planning hiring "
+    "people-management technical-leadership public-speaking research-methods clean-code tdd"
+)
+
+
+def candidate_lines(text: str) -> list[str]:
+    """The lines of a CV worth comparing with the catalog: a few words at least."""
+    return [line.strip() for line in text.split("\n") if len(line.split()) >= CANDIDATE_MIN_WORDS]
+
+
+def candidate_skills(
+    scanned: Iterable[str], similarities: Iterable[dict[str, float]], names: dict[str, str]
+) -> list[tuple[str, str]]:
+    """The (id, name) pairs a "candidates" prompt offers: the skills the scan found, the closest skills to each
+    line (`similarities`, one dict per line), and the common practices; in catalog order."""
+    chosen = set(scanned) | set(CV_PRACTICES.split())
+    for sims in similarities:
+        top = sorted(sims.items(), key=lambda kv: -kv[1])[:CANDIDATE_TOP]
+        chosen |= {skill for skill, value in top if value >= CANDIDATE_FLOOR}
+    return [(sid, name) for sid, name in names.items() if sid in chosen]
+
 
 class Extractor(Protocol):
     shape: Shape
 
-    def extract(self, cv_text: str, found: list[str] | None = None) -> CvExtraction: ...
+    def extract(
+        self, cv_text: str, found: list[str] | None = None, candidates: list[tuple[str, str]] | None = None
+    ) -> CvExtraction: ...
 
 
 class PhraseMatcher(Protocol):
@@ -83,11 +114,13 @@ class CvImporter:
         confirm: Callable[[str, str], bool] | None = None,
         today: date | None = None,
         check_evidence: bool = True,
+        similar: Callable[[list[str]], list[dict[str, float]]] | None = None,
     ):
         """`matcher` resolves phrases (shape "phrases"); `confirm(evidence, skill)` checks a picked id (shape
         "pick"; None keeps every pick)."""
         self.index, self.names, self.extractor, self.matcher, self.confirm = index, names, extractor, matcher, confirm
         self.today, self.check_evidence = today, check_evidence
+        self.similar = similar  # lines -> per-line similarity to every skill (shape "candidates")
 
     def run(self, text: str, hidden: list[str] | None = None) -> ImportResult:
         today_d = self.today or date.today()
@@ -104,6 +137,10 @@ class CvImporter:
         started = time.perf_counter()
         if self.extractor.shape == "found":  # the model only says where the scanned skills were used
             extraction = self.extractor.extract(clean, found=sorted(scanned))
+        elif self.extractor.shape == "candidates":  # the prompt lists only the skills this CV could show
+            lines = candidate_lines(clean)
+            sims = self.similar(lines) if self.similar and lines else []
+            extraction = self.extractor.extract(clean, candidates=candidate_skills(scanned, sims, self.names))
         else:
             extraction = self.extractor.extract(clean)
         llm_ms = int((time.perf_counter() - started) * 1000)

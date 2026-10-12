@@ -5,6 +5,7 @@
 - **Decider:** Muhammed Yasin Horasanli
 - **Note (2026-10-05, evening):** the Phase-1 benchmark chose the "pick" shape (decision 2.4); results below. Built while the decider was away, under their instruction to proceed; to be reviewed.
 - **Note (2026-10-06):** VM-B missed the latency target, so the decider chose option 1 (a shorter answer), and options 1 and 2 together if 1 was not enough. The shorter answer, "compact", is now in use; option 2 was tried and rejected. See "Latency follow-up" below.
+- **Note (2026-10-12):** markitdown and a shorter prompt were measured as ways to speed imports up; neither is adopted. A PDF reader bug found on a real CV was fixed. See "Latency follow-up 2" below.
 
 ## Context
 
@@ -193,6 +194,22 @@ Results are in `eval/results/cv-import-20261006-0013-*`. The rows on the Mac's C
 - **Option 2, "found" (rejected):** the scan's finds were given in the request, and the answer only named, per job, which of them it used. 4B then misplaced them and sometimes never closed its JSON. Precision fell to 0.78 and recall to 0.72, and the median answer was longer. The code is kept only so the benchmark can be reproduced (`XCRS_CV_SHAPE=found`).
 - **Default:** `XCRS_CV_SHAPE=compact`.
 
+## Latency follow-up 2 (2026-10-12: a shorter prompt, measured and not adopted)
+
+The idea was that fewer prompt tokens make imports faster. markitdown was suggested first; the catalog listing in the prompt turned out to be the bigger target.
+
+- **markitdown:** on the synthetic CVs its text was 3% *longer* than ours. It also passed the hidden injection lines through (it has no hidden-text check), and it uses pdfminer, which spliced LinkedIn's sidebar into a paragraph (see "PDF library"). Not used for PDFs; it remains an option for Word files (see "Revisit when").
+- **"candidates" (cv-extract-5):** the prompt lists only the skills this CV could show, not all 259. The list is the catalog scan, plus the five skills closest to each line of three or more words (cosine ≥ 0.45), plus 20 practices CVs describe in prose. It kept 95% of the expected skills, with a median of 49 skills per CV (`services/cv_import.candidate_skills`).
+  - **Quality**, measured on 24 CVs: 18 earlier ones plus 6 new long ones, 2–3 pages with publications, many positions and a Turkish profile. Compact scored precision 0.962, recall 0.797 and F1 0.872; candidates scored 0.967, 0.825 and 0.890. Band exact was 24/24 for both.
+  - **Prompt:** on the Mac GPU, the median prompt fell from 2,585 to 1,110 tokens. On four real CVs (two of the author's own and two public resumes, kept privately and reported only as numbers) it fell by 1,100 to 1,600 tokens.
+  - **Speed on VM-B (4B, CPU), the reason it isn't adopted:**
+    - VM-B reads a cold prompt at 116 tokens/s, and writes the answer at about 115 s per 1,000 tokens.
+    - Compact's 2,100-token catalog part is identical for every CV, so Ollama keeps it cached. A 2,700-token compact prompt took 4.4 s to read, even after an unrelated prompt in between, and the model stays loaded for 24 hours (`OLLAMA_KEEP_ALIVE`).
+    - The shortlist differs per CV, so its tokens are read fresh each time. On the four real CVs the two shapes ran 31–91 s against 35–83 s, depending mostly on how long each answer came out.
+  - **Kept for the benchmark** (`XCRS_CV_SHAPE=candidates`, `--shapes candidates`), like "pick" and "found".
+- **Reader fix:** a Google Docs resume placed every word in a text object of its own. pypdf then broke the line after each word, and the spaces ended up on lines of their own. The model still saw the words, but multi-word catalog names didn't match (the scan found 23 skills instead of 28), and the stray line breaks cost 743 prompt tokens. A break between two pieces on the same baseline, the second just to the right of the first, is now dropped. pypdf's order is kept, so columns stay apart. Only that file's text changed among the 28 PDFs checked (24 synthetic, 4 real). Test: `test_words_placed_one_by_one_are_read_as_lines_and_columns_stay_apart`.
+- **Next lever:** the answer. At about 115 s per 1,000 answer tokens on VM-B, a typical 550–700-token answer is 60–80 s of an import. Candidates: drop the per-skill quote (the evidence check could use the scan's line or the job text instead), or have jobs list their skills instead of skills listing their jobs. Each must be measured on the set first.
+
 ## Trade-offs accepted
 
 - **An import holds the CPU LLM for 1–3 minutes,** delaying other people's explanations and new-phrase matching. Mitigated by signed-in only, one at a time, a short queue and a quota.
@@ -203,7 +220,7 @@ Results are in `eval/results/cv-import-20261006-0013-*`. The rows on the Mac's C
 - **In-memory jobs are lost on a restart,** and a missed final poll loses the result; the learner imports again.
 - **The LLM sometimes ties skills from the summary to the current job,** which overstates their years and level. On the Turkish LinkedIn case, four side-project skills got 2.6 years. The learner sees the years and evidence and can change the level. Follow-ups: a prompt revision measured on the set, or a section-aware guard. A guard based on text position fails on LinkedIn, because the headline repeats the title and employer.
 - **An instruction sentence that wraps onto a second line** in the PDF is removed only up to the line break; the tail ("as expert level.") reaches the LLM. It is harmless on its own.
-- **The synthetic evaluation set was written by Claude,** the same author as the prompt. One real LinkedIn export was checked for layout only; real CVs (with consent) should extend the set later.
+- **The synthetic evaluation set was written by Claude,** the same author as the prompt. One real LinkedIn export was checked for layout only; real CVs (with consent) should extend the set later. (2026-10-12: four real CVs are now used privately for reading, size and timing checks, without labels. They found the reader bug in "Latency follow-up 2".)
 
 ## Revisit when
 
