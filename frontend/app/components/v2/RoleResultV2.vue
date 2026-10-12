@@ -90,15 +90,16 @@ const gapMenu = (g: Gap) => [
   ],
 ]
 
-/** The level bar (2026-10-12): reached levels full, the next one partly (how much of what it adds is on the board),
- * later ones empty. Results before engine v3.7 have no progress: reached levels full, the rest empty. */
-const reachedIndex = computed(() => (props.role.level ? props.role.levels.findIndex((l) => l.id === props.role.level!.id) : -1))
-const targetIndex = computed(() => props.role.levels.findIndex((l) => l.id === props.role.target_level.id))
+/** The level bar (2026-10-12): reached levels full, the next one partly (the share of what it adds that the board
+ * shows; none above the level the years in software allow), later ones empty. Results before engine v3.7 have no
+ * progress: reached levels full, the rest empty. */
 function progress(i: number): number {
   const lv = props.role.levels[i]!
   if (lv.progress != null) return lv.progress
   return i <= reachedIndex.value ? 1 : 0
 }
+const reachedIndex = computed(() => (props.role.level ? props.role.levels.findIndex((l) => l.id === props.role.level!.id) : -1))
+const targetIndex = computed(() => props.role.levels.findIndex((l) => l.id === props.role.target_level.id))
 /** Skills of a reached level the learner didn't list, for the review under that level ("basics"). */
 const reviewOf = (levelId: string) =>
   (props.role.basics ?? []).filter((g) => (g.level ?? props.role.level?.id) === levelId)
@@ -107,6 +108,8 @@ const openReview = ref<string | null>(null)
 /** The next level is where the recommendations start: a tap on it scrolls to "Start learning" (or the skills to
  * learn when there are no resources) and frames it for a moment. */
 const isNext = (i: number) => i === targetIndex.value && i !== reachedIndex.value
+/** The next level is where the recommendations start. */
+const nextHint = (i: number) => `Your next level. Tap to see what to learn for ${levelName(props.role.levels[i]!.id, props.role.levels[i]!.title)}.`
 const learnRef = ref<HTMLElement>()
 const gapsRef = ref<HTMLElement>()
 function goToLearning() {
@@ -191,17 +194,18 @@ async function send(rating: 1 | -1) {
               :type="isNext(i) ? 'button' : undefined"
               class="block w-full rounded-md text-left"
               :class="isNext(i) ? 'group cursor-pointer' : ''"
-              :title="isNext(i) ? `What to learn for ${levelName(lv.id, lv.title)}` : undefined"
+              :title="isNext(i) ? nextHint(i) : undefined"
               @click="isNext(i) && goToLearning()"
             >
+            <!-- The level you're at is the marked one; the next level is quieter (it reads as "where to go"). -->
             <span
               class="flex items-center gap-0.5 truncate text-[11px]"
-              :class="i === reachedIndex ? 'font-semibold text-default' : isNext(i) ? 'font-medium text-emerald-700 group-hover:underline dark:text-emerald-300' : 'text-dimmed'"
-            >{{ levelName(lv.id, lv.title) }}<UIcon v-if="isNext(i)" name="i-heroicons-arrow-down-20-solid" class="h-3 w-3 shrink-0 print:hidden" /></span>
+              :class="i === reachedIndex ? 'font-semibold text-emerald-700 dark:text-emerald-300' : isNext(i) ? 'text-muted group-hover:text-default group-hover:underline' : 'text-dimmed'"
+            ><UIcon v-if="i === reachedIndex" name="i-heroicons-check-circle-20-solid" class="h-3.5 w-3.5 shrink-0" />{{ levelName(lv.id, lv.title) }}<span v-if="isNext(i)" class="ml-0.5 inline-flex items-center text-[10px] text-dimmed group-hover:text-default print:hidden">· next<UIcon name="i-heroicons-arrow-down-20-solid" class="h-3 w-3" /></span></span>
             <span
               class="liquid-track mt-1"
               role="img"
-              :aria-label="i <= reachedIndex ? 'reached' : i === targetIndex ? 'next level, partly shown' : 'later'"
+              :aria-label="i <= reachedIndex ? 'reached' : isNext(i) ? 'next level, partly shown' : 'later'"
             >
               <span
                 v-if="progress(i) > 0"

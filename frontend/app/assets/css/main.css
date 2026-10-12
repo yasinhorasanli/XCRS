@@ -5,6 +5,12 @@
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
+/* A short page (results while loading) has no scrollbar, a long one has: keep its space, so the page and the
+   header logo don't shift sideways between them. */
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   @apply bg-slate-50 dark:bg-slate-950 text-default antialiased;
 }
@@ -82,6 +88,7 @@ body {
   border-radius: 9999px;
   background: linear-gradient(to bottom, rgb(255 255 255 / 0.7), rgb(255 255 255 / 0));
 }
+
 /* A level in progress: the liquid moves slowly. */
 .liquid-fill.flowing::before {
   content: "";

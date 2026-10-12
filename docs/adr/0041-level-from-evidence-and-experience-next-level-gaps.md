@@ -61,3 +61,17 @@ The decider's 15 test profiles (`/dev/profiles`, from a CS student to a staff pl
 
 - Learner feedback (thumbs on roles) shows levels felt wrong, or a larger labeled set disagrees with the thresholds.
 - Accounts exist: progress ("I took this course") and the learner's own corrections become better evidence than self-reported experience.
+
+## Note (2026-10-12, engine v3.8): a raise counts only above the level below
+
+A computer science student (working C, basic Linux, an operating systems course) showed 20% of Embedded Software
+Engineer's mid level in the new level bar. Most of it came from skills mid *raises*: mid asks advanced C where entry
+asked working C, and the evidence gave working C two thirds of that raise, although it is exactly what entry asked.
+Level evidence now counts proficiency steps: a raise counts only for the part above what the level below asked, and
+weighs by the size of the raise. The student's mid evidence is 7% (operating systems, new at mid). The stricter
+evidence lowers the bar for reaching a level from 0.45 to 0.40, measured on the labeled profiles:
+
+| Evidence, bar | Levels right | Too high | Too low |
+|---|---|---|---|
+| v3.7 (raises credited from zero), 0.45 | 31/53 | 5 | 17 |
+| v3.8 (raises above the level below), 0.40 | 34/53 | 3 | 16 |

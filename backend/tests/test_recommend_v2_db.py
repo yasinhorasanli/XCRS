@@ -74,6 +74,43 @@ def test_reached_levels_are_full_and_missing_skills_are_grouped_by_level(client)
     assert role["basics"] and {b["level"] for b in role["basics"]} <= {"entry", "mid"}
 
 
+def test_a_student_shows_little_of_mid_and_part_of_an_entry_not_reached_yet(client):
+    """The level bar for the computer science student example: Embedded is reached at entry and shows only a little
+    of mid (operating systems; working C and basic Linux are entry's, not partly mid's: engine v3.8), and Game
+    Developer (entry not reached yet) shows part of entry, not zero."""
+    liked = ["programming-fundamentals", "data-structures", "algorithms", "oop", "java", "python"]
+    neutral = {
+        "c": 2,
+        "sql": 2,
+        "relational-databases": 2,
+        "operating-systems": 2,
+        "computer-architecture": 1,
+        "git": 1,
+        "linux": 1,
+        "testing-fundamentals": 1,
+        "statistics": 1,
+    }
+    chips = [{"category": "liked", "skill": s, "proficiency": 2} for s in liked]
+    chips += [{"category": "neutral", "skill": s, "proficiency": p} for s, p in neutral.items()]
+    chips += [
+        {"category": "disliked", "skill": "digital-electronics", "proficiency": 1},
+        {"category": "disliked", "skill": "calculus", "proficiency": 2},
+    ]
+    chips += [
+        {"category": "curious", "skill": s}
+        for s in ("machine-learning-fundamentals", "computer-networking", "computer-graphics", "llm-fundamentals")
+    ]
+    roles = {
+        r["id"]: r
+        for r in client.post("/api/v2/recommendations", json={"chips": chips, "experience": "student"}).json()["roles"]
+    }
+    embedded = {lv["id"]: lv["progress"] for lv in roles["embedded-software-engineer"]["levels"]}
+    assert roles["embedded-software-engineer"]["level"]["id"] == "entry"
+    assert embedded["entry"] == 1.0 and 0 < embedded["mid"] < 0.1 and embedded["senior"] == embedded["staff"] == 0.0
+    game = roles["game-developer"]
+    assert game["level"] is None and 0 < game["levels"][0]["progress"] < 1
+
+
 def test_a_board_that_singles_out_no_role_says_why(client):
     """ADR-0052: "Python" alone is recognised but used by most roles, so no role is shown, with a hint."""
     body = client.post("/api/v2/recommendations", json={"chips": [{"category": "liked", "skill": "python"}]}).json()

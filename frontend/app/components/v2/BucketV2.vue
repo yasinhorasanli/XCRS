@@ -5,7 +5,11 @@ import type { Category } from '~/types/apiV2'
 import type { SkillSuggestion } from '~/types/apiV2'
 
 const props = defineProps<{ category: Category }>()
-const { active, byCategory, add, remove, rate, onBoard } = useBoardV2()
+const { active, byCategory, add, remove, rate, onBoard, stopAttract } = useBoardV2()
+const choose = () => {
+  stopAttract()
+  active.value = props.category
+}
 const api = useXcrsApiV2()
 const toast = useToast()
 
@@ -84,7 +88,7 @@ function onKeydown(event: KeyboardEvent) {
     :class="isActive ? `ring-2 ${meta.ring}` : 'ring-default'"
     :aria-label="meta.title"
   >
-    <button type="button" class="flex items-start gap-2.5 rounded-lg p-1 text-left" :aria-pressed="isActive" @click="active = category">
+    <button type="button" class="flex items-start gap-2.5 rounded-lg p-1 text-left" :aria-pressed="isActive" @click="choose">
       <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg" :class="meta.chip">
         <UIcon :name="meta.icon" class="h-4 w-4" />
       </span>
@@ -116,7 +120,7 @@ function onKeydown(event: KeyboardEvent) {
         role="combobox"
         :aria-expanded="open && options.length > 0"
         autocomplete="off"
-        @focus="active = category"
+        @focus="choose"
         @keydown="onKeydown"
         @blur="onBlur"
       >

@@ -15,7 +15,6 @@ from sqlalchemy.orm import Session
 from xcrs.db.models import CareerRole, ExplanationV2, FeedbackV2, RecommendationV2
 from xcrs.domain.job_titles import market_titles, title_for
 from xcrs.domain.role_scoring import (
-    LEVEL_EVIDENCE,
     Category,
     Gap,
     Mention,
@@ -34,7 +33,7 @@ from xcrs.explain.v2 import build_facts
 from xcrs.repository import catalog_store
 from xcrs.services.skill_matching import SkillMatcher
 
-ALGORITHM_VERSION = "v3.7"
+ALGORITHM_VERSION = "v3.8"
 
 
 def section_out(ref: ResourceRef, hits: list[str], prerequisites: dict) -> dict | None:
@@ -107,7 +106,10 @@ class RecommendationServiceV2:
         status = "ok" if roles else "no_clear_match" if mentions else "insufficient_input"
         category = {m.skill: m.category for m in mentions}
         known = {m.skill for m in mentions}
-        result = {"matched": echo, "roles": [self._role(snapshot, r, category, known, mentions) for r in roles]}
+        result = {
+            "matched": echo,
+            "roles": [self._role(snapshot, r, category, known, mentions) for r in roles],
+        }
         if status == "no_clear_match":
             result["no_match"] = self._no_match(snapshot, mentions)
         row = RecommendationV2(
@@ -168,14 +170,21 @@ class RecommendationServiceV2:
         return {"positive": len(positive), "roles_total": total, "broad": sorted(broad, key=lambda b: -b["roles"])}
 
     @staticmethod
-    def _role(snapshot, r: RoleScore, category: dict[str, Category], known: set[str], mentions: list[Mention]) -> dict:
+    def _role(
+        snapshot,
+        r: RoleScore,
+        category: dict[str, Category],
+        known: set[str],
+        mentions: list[Mention],
+    ) -> dict:
         role = snapshot.roles[r.role]
         relevant = known | {o for q in role.requirements[role.levels[-1]] for o in q.options} | set(role.optional)
         # What the learner has, implied skills included: resources don't teach again what they know (ADR-0038 note).
         have = with_prerequisites(learner_skills(mentions)[0], snapshot.prerequisites, snapshot.implications)
         names = snapshot.skill_names
         # The level bar (2026-10-12): levels reached are full; the next one fills with the share of what it adds
-        # that the board shows, full at LEVEL_EVIDENCE (where it would count as reached); later ones are empty.
+        # that the board shows (level_evidence: a raise counts only above what the level below asked); later
+        # ones are empty.
         evidence = level_evidence(role, have, snapshot.weights)
         reached = role.levels.index(r.level) if r.level else -1
         target = role.levels.index(r.target_level)
@@ -186,7 +195,7 @@ class RecommendationServiceV2:
             if lv is None:
                 return None
             i = role.levels.index(lv)
-            progress = 1.0 if i <= reached else min(1.0, evidence[lv] / LEVEL_EVIDENCE) if i == target else 0.0
+            progress = 1.0 if i <= reached else min(1.0, evidence[lv]) if i == target else 0.0
             return {
                 "id": lv,
                 "title": role.titles.get(lv),

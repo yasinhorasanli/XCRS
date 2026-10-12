@@ -236,6 +236,11 @@ resources:
   - {url: https://www.deeplearningbook.org/, title: "Deep Learning", provider: Goodfellow, Bengio and Courville, type: book, level: advanced, free: true, teaches: [ml-optimization:3, deep-learning:3, research-methods:1]}
   - {url: https://web.stanford.edu/class/cs197/, title: "CS197: Computer Science Research", provider: Stanford University, type: course, level: advanced, free: true, teaches: [research-methods:2]}
 
+  # GPU programming and quantum computing (2026-10-12): skills in no roadmap yet, so learners can name them.
+  - {url: https://developer.nvidia.com/blog/even-easier-introduction-cuda/, title: "An Even Easier Introduction to CUDA", provider: NVIDIA, type: tutorial, level: beginner, free: true, teaches: [cuda:1]}
+  - {url: https://docs.nvidia.com/cuda/cuda-programming-guide/, title: "CUDA Programming Guide", provider: NVIDIA, type: docs, level: intermediate, free: true, teaches: [cuda:2]}
+  - {url: https://quantum.cloud.ibm.com/learning/en/courses/basics-of-quantum-information, title: "Basics of quantum information", provider: IBM Quantum, type: course, level: beginner, free: true, teaches: [quantum-computing:2]}
+
   # --- Security -----------------------------------------------------------------------------------------
   - {url: https://www.freecodecamp.org/learn/information-security, title: "Information Security", provider: freeCodeCamp, type: course, level: beginner, free: true, teaches: [security-fundamentals:2, web-security:1]}
   - {url: https://owasp.org/projects/top-ten, title: "OWASP Top Ten", provider: OWASP, type: docs, level: beginner, free: true, teaches: [web-security:2, secure-coding:1]}

@@ -62,7 +62,7 @@ useHead({ title: 'Privacy · XCRS' })
           <p class="mt-2">
             Only cookies the site needs: when you sign in, an encrypted session cookie (for 30 days) and, during the
             sign-in itself, short-lived cookies that protect it. No cookies are set if you don't sign in.
-            Your colour-mode choice is stored only in your browser (localStorage) and is not sent to us.
+            Your colour-mode choice and the board you are filling in are stored only in your browser (localStorage), so a reload keeps them; the board is sent to us only when you ask for recommendations, and signing out or "Clear all" removes it.
           </p>
         </section>
 

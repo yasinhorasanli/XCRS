@@ -27,6 +27,10 @@ export function useAccount() {
 
   async function signOut() {
     await session.clear()
+    // A shared computer shouldn't keep the board after signing out: the copy in this browser and the one on screen.
+    forgetLocalBoard()
+    useBoardV2().clear()
+    useBoardV2().experience.value = null
     await navigateTo('/')
   }
 

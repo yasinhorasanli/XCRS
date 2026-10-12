@@ -31,7 +31,8 @@ from enum import StrEnum
 
 LADDER = ("entry", "mid", "senior", "staff")
 STARTING_COVERAGE = 0.55  # entry barrier (roles that start above entry)
-LEVEL_EVIDENCE = 0.45  # a level counts as reached when this much of what it adds is on the board (ADR-0041)
+LEVEL_EVIDENCE = 0.40  # a level counts as reached when this much of what it adds is on the board (ADR-0041;
+# 0.45 until 2026-10-12, when raises began to count only above the level below: 31 -> 34 of 53 levels right)
 IMPLIED_CAP = 2  # knowing a skill at working level or above implies its prerequisites at working level at least
 LIFT_EVIDENCE = 0.25  # experience lifts the level only with at least this much evidence for the role at that level
 
@@ -323,8 +324,23 @@ def level_additions(role: RoleSnapshot) -> dict[str, list[Requirement]]:
 
 
 def level_evidence(role: RoleSnapshot, have: dict[str, int], weights: dict[str, float]) -> dict[str, float]:
-    """How much of what each level adds is on the board, level by level."""
-    return {lv: _coverage(added, have, weights) for lv, added in level_additions(role).items()}
+    """How much of what each level adds is on the board, level by level, in proficiency steps: a skill a level
+    raises (C from working to advanced) counts only for the part above what the level below asked, so working C
+    is evidence for entry, not partly for mid (ADR-0041 note, 2026-10-12)."""
+    out, before = {}, {}
+    for lv in role.levels:
+        total = met = 0.0
+        for r in role.requirements[lv]:
+            prev = before.get(r.options, 0)
+            if prev >= r.level:
+                continue
+            w = max(weights.get(o, 1.0) for o in r.options)
+            h = max(have.get(o, 0) for o in r.options)
+            total += w * (r.level - prev)
+            met += w * min(max(h - prev, 0), r.level - prev)
+        out[lv] = met / total if total else 0.0
+        before = {r.options: r.level for r in role.requirements[lv]}
+    return out
 
 
 def reached_level(
