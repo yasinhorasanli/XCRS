@@ -271,3 +271,6 @@ Engine v3.5 → v3.6 (ADR-0028 and ADR-0038 notes): `implies` links (class-based
 don't re-teach what the learner knows. Labeled profiles: top-1 52/53 and levels 31/53 unchanged; gate 53/53 kept,
 82% precision, 0/1500 merged boards empty; resources that also teach something the learner already has 42 → 26 of
 324; 88% of shown roles with a video.
+
+Engine v3.7 → v3.8 (ADR-0041 note): level evidence counts a raise only above the level below; the bar for reaching
+a level 0.45 → 0.40. Labeled profiles: levels right 31 → 34 of 53, estimated too high 5 → 3, too low 17 → 16.

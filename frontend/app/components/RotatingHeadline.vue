@@ -77,11 +77,15 @@ function schedule() {
   timer = setTimeout(turn, props.interval)
 }
 
+// Each turn starts here; the home page moves the selected box in step with it (attract mode, useBoardV2).
+const emit = defineEmits<{ turn: [] }>()
+
 async function turn() {
   timer = undefined
   const el = prism.value
   if (stopped || !el || document.hidden) return
   const next = (index.value + 1) % props.words.length
+  emit('turn')
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   try {
     if (reduce) {

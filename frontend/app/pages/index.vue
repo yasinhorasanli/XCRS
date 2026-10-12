@@ -1,13 +1,23 @@
 <script setup lang="ts">
 import { CATEGORIES } from '~/composables/categories'
+import { EXAMPLES } from '~/composables/useBoardV2'
 import { EXPERIENCE_OPTIONS } from '~/composables/useXcrsApiV2'
 
-const { total, pending, clear, fillExample, asInput, experience } = useBoardV2()
+const { total, pending, clear, fillExample, asInput, experience, attract, startAttract, stopAttract, attractStep } = useBoardV2()
+// Attract mode: the selected box follows the headline's flips until the visitor does anything on the board.
+const turns = useState('headline-turns', () => 0)
+watch(turns, attractStep)
+watch(total, (n) => n && stopAttract())
 const api = useXcrsApiV2()
 const toast = useToast()
 const submitting = ref(false)
-const { restore } = useSavedBoard() // signed in: the saved board comes back (ADR-0043)
-onMounted(restore)
+const { restore, restoreLocal } = useSavedBoard() // signed in: the saved board comes back (ADR-0043)
+onMounted(async () => {
+  await restore()
+  restoreLocal() // a reload (or a visit without an account) keeps the board this browser has
+  startAttract()
+})
+onBeforeUnmount(() => (attract.value = false))
 
 useHead({ title: 'XCRS · Which software career fits you?' })
 
@@ -65,7 +75,9 @@ async function submit() {
           </div>
         </div>
         <div class="mt-4 flex flex-wrap items-center gap-2">
-          <UButton color="neutral" variant="soft" icon="i-heroicons-sparkles" label="Try an example" @click="fillExample()" />
+          <UDropdownMenu :items="[EXAMPLES.map((e) => ({ label: e.label, onSelect: () => fillExample(e.id) }))]">
+            <UButton color="neutral" variant="soft" icon="i-heroicons-sparkles" trailing-icon="i-heroicons-chevron-down-20-solid" label="Try an example" />
+          </UDropdownMenu>
           <CvImport />
           <UButton v-if="total" color="neutral" variant="ghost" icon="i-heroicons-trash" label="Clear all" @click="clear()" />
           <div class="ml-auto flex items-center gap-3">

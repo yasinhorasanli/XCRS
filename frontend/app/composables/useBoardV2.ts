@@ -1,4 +1,4 @@
-import { CATEGORY_META } from '~/composables/categories'
+import { CATEGORIES, CATEGORY_META } from '~/composables/categories'
 import type { Category } from '~/types/apiV2'
 import type { ChipInput, Experience, RecommendationV2, SkillRef } from '~/types/apiV2'
 
@@ -13,14 +13,56 @@ export interface Chip {
   match: { status: 'picked' | 'pending' | 'done' | 'error'; skills: SkillRef[]; method?: string }
 }
 
-export const EXAMPLE_CHIPS: { label: string; category: Category; skill?: string; proficiency?: number }[] = [
-  { label: 'Python', category: 'liked', skill: 'python', proficiency: 3 },
-  { label: 'building REST APIs with Django', category: 'liked', proficiency: 2 },
-  { label: 'PostgreSQL', category: 'liked', skill: 'postgresql', proficiency: 2 },
-  { label: 'Docker', category: 'neutral', skill: 'docker', proficiency: 2 },
-  { label: 'CSS', category: 'disliked', skill: 'css', proficiency: 1 },
-  { label: 'Kubernetes', category: 'curious', skill: 'kubernetes' },
-  { label: 'data pipelines', category: 'curious' },
+type ExampleChip = { label: string; category: Category; skill?: string; proficiency?: number }
+
+/** "Try an example" boards: a working developer, and a computer science / engineering student who has taken the
+ * core courses but none of the electives yet (2026-10-12). */
+export const EXAMPLES: { id: string; label: string; experience: Experience | null; chips: ExampleChip[] }[] = [
+  {
+    id: 'developer',
+    label: 'A backend developer',
+    experience: null,
+    chips: [
+      { label: 'Python', category: 'liked', skill: 'python', proficiency: 3 },
+      { label: 'building REST APIs with Django', category: 'liked', proficiency: 2 },
+      { label: 'PostgreSQL', category: 'liked', skill: 'postgresql', proficiency: 2 },
+      { label: 'Docker', category: 'neutral', skill: 'docker', proficiency: 2 },
+      { label: 'CSS', category: 'disliked', skill: 'css', proficiency: 1 },
+      { label: 'Kubernetes', category: 'curious', skill: 'kubernetes' },
+      { label: 'data pipelines', category: 'curious' },
+    ],
+  },
+  {
+    id: 'cs-student',
+    label: 'A computer science student',
+    experience: 'student',
+    chips: [
+      // Core courses taken
+      { label: 'Programming fundamentals', category: 'liked', skill: 'programming-fundamentals', proficiency: 2 },
+      { label: 'Data structures', category: 'liked', skill: 'data-structures', proficiency: 2 },
+      { label: 'Algorithms and complexity', category: 'liked', skill: 'algorithms', proficiency: 2 },
+      { label: 'Object-oriented programming', category: 'liked', skill: 'oop', proficiency: 2 },
+      { label: 'Java', category: 'liked', skill: 'java', proficiency: 2 },
+      { label: 'Python', category: 'liked', skill: 'python', proficiency: 2 },
+      { label: 'C', category: 'neutral', skill: 'c', proficiency: 2 },
+      { label: 'SQL', category: 'neutral', skill: 'sql', proficiency: 2 },
+      { label: 'Relational databases', category: 'neutral', skill: 'relational-databases', proficiency: 2 },
+      { label: 'Operating systems', category: 'neutral', skill: 'operating-systems', proficiency: 2 },
+      { label: 'Computer architecture', category: 'neutral', skill: 'computer-architecture', proficiency: 1 },
+      { label: 'Git', category: 'neutral', skill: 'git', proficiency: 1 },
+      { label: 'Linux and the command line', category: 'neutral', skill: 'linux', proficiency: 1 },
+      { label: 'Testing fundamentals', category: 'neutral', skill: 'testing-fundamentals', proficiency: 1 },
+      { label: 'Statistics and probability', category: 'neutral', skill: 'statistics', proficiency: 1 },
+      { label: 'Digital electronics', category: 'disliked', skill: 'digital-electronics', proficiency: 1 },
+      { label: 'Calculus', category: 'disliked', skill: 'calculus', proficiency: 2 },
+      // Electives not taken yet
+      { label: 'Machine learning fundamentals', category: 'curious', skill: 'machine-learning-fundamentals' },
+      { label: 'Computer networking', category: 'curious', skill: 'computer-networking' },
+      { label: 'Computer graphics and rendering', category: 'curious', skill: 'computer-graphics' },
+      { label: 'LLM fundamentals', category: 'curious', skill: 'llm-fundamentals' },
+      { label: 'Quantum computing', category: 'curious', skill: 'quantum-computing' },
+    ],
+  },
 ]
 
 /**
@@ -31,6 +73,9 @@ export function useBoardV2() {
   const chips = useState<Chip[]>('board-v2', () => [])
   const active = useState<Category>('board-v2-active', () => 'liked')
   const experience = useState<Experience | null>('board-v2-experience', () => null) // optional (ADR-0041)
+  // Attract mode (2026-10-12): on the home page the selected box moves with the headline's flips until the visitor
+  // does anything on the board; it starts again on the next visit or reload.
+  const attract = useState('board-attract', () => false)
   const api = useXcrsApiV2()
   const toast = useToast()
 
@@ -140,9 +185,24 @@ export function useBoardV2() {
     experience.value = null
   }
 
-  function fillExample() {
+  /** Starts with an empty board on the home page (every visit), unless the visitor prefers reduced motion. */
+  function startAttract() {
+    if (!chips.value.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) attract.value = true
+  }
+  /** Any interaction with the board ends it for this visit. */
+  function stopAttract() {
+    attract.value = false
+  }
+  /** One step: the next box, in board order. */
+  function attractStep() {
+    if (attract.value) active.value = CATEGORIES[(CATEGORIES.indexOf(active.value) + 1) % CATEGORIES.length]!
+  }
+
+  function fillExample(id: string = EXAMPLES[0]!.id) {
+    const example = EXAMPLES.find((e) => e.id === id) ?? EXAMPLES[0]!
     clear()
-    for (const c of EXAMPLE_CHIPS) add(c.label, c.category, c.skill ? { id: c.skill, name: c.label } : undefined, c.proficiency)
+    for (const c of example.chips) add(c.label, c.category, c.skill ? { id: c.skill, name: c.label } : undefined, c.proficiency)
+    experience.value = example.experience
   }
 
   const asInput = (): ChipInput[] =>
@@ -167,5 +227,24 @@ export function useBoardV2() {
   const onBoard = (skill: { id: string; name: string }) =>
     chips.value.some((c) => skillsOf(c).includes(skill.id) || c.key === skill.name.trim().toLowerCase())
 
-  return { chips, active, experience, total, pending, byCategory, add, remove, rate, clear, fillExample, fromResult, asInput, onBoard }
+  return {
+    chips,
+    active,
+    experience,
+    total,
+    pending,
+    byCategory,
+    add,
+    remove,
+    rate,
+    clear,
+    fillExample,
+    fromResult,
+    asInput,
+    onBoard,
+    attract,
+    startAttract,
+    stopAttract,
+    attractStep,
+  }
 }

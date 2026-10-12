@@ -805,6 +805,17 @@ skills:
     kind: practice
     description: Releasing behind flags, gradual rollouts and kill switches (LaunchDarkly, Unleash, OpenFeature).
     requires: [ci-cd:1]
+  cuda:
+    name: CUDA and GPU programming
+    kind: platform
+    description: Writing parallel GPU code with CUDA kernels, threads, blocks and memory management.
+    requires: ["c|cpp:2", concurrency:1]
+    onet: [CUDA]
+  quantum-computing:
+    name: Quantum computing
+    kind: concept
+    description: Qubits, superposition, entanglement, quantum gates and circuits, and algorithms such as Grover's and Shor's.
+    requires: [linear-algebra:2]
   gpu-infrastructure:
     name: GPU infrastructure
     kind: platform
