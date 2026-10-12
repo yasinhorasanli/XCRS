@@ -36,7 +36,7 @@ from xcrs.domain.cv_profile import scan
 from xcrs.domain.skill_matching import LexicalIndex
 from xcrs.embeddings import embedder_for
 from xcrs.matching.prompts import QUERY_INSTRUCTION
-from xcrs.services.cv_import import CvImporter
+from xcrs.services.cv_import import CvImporter, candidate_lines, candidate_skills
 from xcrs.services.skill_matching import CONFIRM_FLOOR, DatabaseMatchStore, build_matcher, lexical_index, skill_names
 
 CASES = EVAL_DIR / "cv_import" / "cases.yaml"
@@ -85,7 +85,7 @@ class CachedExtractor:
     def __init__(self, shape: str, extraction: CvExtraction):
         self.shape, self._extraction = shape, extraction
 
-    def extract(self, cv_text: str, found: list[str] | None = None) -> CvExtraction:
+    def extract(self, cv_text: str, found=None, candidates=None) -> CvExtraction:
         return self._extraction
 
 
@@ -127,6 +127,10 @@ def run(args) -> dict:
     store = DatabaseMatchStore(session, model_row)
     embedder = embedder_for(model_row, query_prefix=QUERY_INSTRUCTION)
     matcher = build_matcher(session)
+
+    def similar(lines: list[str]) -> list[dict[str, float]]:  # shape "candidates": each line against the catalog
+        return [matcher.store.similarities(v) for v in matcher.embedder.embed_query(lines)] if lines else []
+
     cache = Cache(CACHE)
     client = httpx.Client(timeout=1800)
 
@@ -180,11 +184,17 @@ def run(args) -> dict:
                 text, hidden = texts[case["id"]]
                 clean, _ = remove_instructions(text)
                 found = sorted(scan(index, clean)) if shape == "found" else None
-                schema = answer_model(shape, list(names), found).model_json_schema()
+                ids = list(names)
+                if shape == "candidates":  # the prompt lists only this CV's likely skills (as the importer does)
+                    offered = candidate_skills(scan(index, clean), similar(candidate_lines(clean)), names)
+                    system, ids = system_prompt(shape, offered), [sid for sid, _ in offered]
+                    found = ids  # part of the cache key: a different list is a different prompt
+                schema = answer_model(shape, ids, None if shape == "candidates" else found).model_json_schema()
                 key = cache.key(model, device, shape, prompt_version(shape), clean, *(found or []))
                 if key not in cache.data:
                     print(f"  {model} {device} {shape} {case['id']} ...", flush=True)
-                    cache.data[key] = chat(client, model, system, user_message(clean, found), schema, threads)
+                    user = user_message(clean, None if shape == "candidates" else found)
+                    cache.data[key] = chat(client, model, system, user, schema, threads)
                     cache.save()
                 answer = cache.data[key]
                 latency.append(
@@ -204,13 +214,14 @@ def run(args) -> dict:
                 **({} if shape == "found" else {"no scan": {"index": LexicalIndex()}}),
                 "no evidence check": {"check_evidence": False},
             }
-            if shape in ("pick", "compact", "found"):
+            if shape in ("pick", "compact", "found", "candidates"):
                 variants["no similarity check"] = {"confirm": None}
             for variant, overrides in variants.items():
                 rows = []
                 for case in scored_cases:
                     text, hidden = texts[case["id"]]
-                    kw = {"index": index, "matcher": matcher, "confirm": confirm, "today": today} | overrides
+                    kw = {"index": index, "matcher": matcher, "confirm": confirm, "today": today, "similar": similar}
+                    kw |= overrides
                     importer = CvImporter(names=names, extractor=CachedExtractor(shape, answers[case["id"]]), **kw)
                     result = importer.run(text, hidden)
                     found = {s.skill for s in result.suggestions}
@@ -246,10 +257,12 @@ def run(args) -> dict:
         for model, device, threads in plans:
             for shape in args.shapes:
                 found = sorted(scan(index, clean)) if shape == "found" else None
-                schema = answer_model(shape, list(names), found).model_json_schema()
-                a = chat(
-                    client, model, system_prompt(shape, names.items()), user_message(clean, found), schema, threads
-                )
+                offered = list(names.items())
+                if shape == "candidates":
+                    offered = candidate_skills(scan(index, clean), similar(candidate_lines(clean)), names)
+                ids = [sid for sid, _ in offered]
+                schema = answer_model(shape, ids, found).model_json_schema()
+                a = chat(client, model, system_prompt(shape, offered), user_message(clean, found), schema, threads)
                 timings.append(
                     {
                         "model": model,
@@ -347,7 +360,7 @@ def summarize(results: dict) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--models", nargs="*", default=["qwen3.5:9b"])
-    parser.add_argument("--shapes", nargs="*", default=["phrases", "pick", "compact", "found"])
+    parser.add_argument("--shapes", nargs="*", default=["phrases", "pick", "compact", "found", "candidates"])
     parser.add_argument("--cpu-model", default=None)
     parser.add_argument("--threads", type=int, default=12)
     parser.add_argument("--only", nargs="*", default=None)

@@ -741,3 +741,361 @@ cases:
         - school: Marmara Üniversitesi
           degree: İstatistik
           years: 2020 - 2024
+
+  # --- Long CVs (2026-10-12): real CVs run 2,700-6,000 characters over 1-3 pages, the cases above 600-2,000. These
+  # imitate the shapes seen in real ones: senior LinkedIn exports with many positions, dense two-page resumes, a
+  # research CV with publications (much text, few skills). Used to measure prompt size and speed, and quality.
+
+  - id: long-li-en-backend-staff
+    layout: linkedin
+    ui: en
+    band: 10+
+    expect: [java, spring-boot, kafka, event-driven-architecture, postgresql, redis, caching, grpc, kubernetes, aws,
+      helm, opentelemetry, prometheus-grafana, architecture-decision-records, mentoring, incident-management,
+      microservices, domain-driven-design, rest-api-design, integration-testing, github-actions, ci-cd, mysql,
+      message-brokers, docker, jenkins, unit-testing, code-review, php, javascript, linux, git, distributed-systems]
+    accept: [system-design, technical-leadership, relational-databases, database-design, observability,
+      cloud-fundamentals, cloud-architecture, testing-fundamentals, sql, technical-writing, html,
+      stakeholder-communication, infrastructure-as-code, architecture-patterns, sre-practices, hiring]
+    cv:
+      name: Marta Novak
+      headline: Staff Software Engineer at Ledgerly | Distributed systems, Java, Kafka
+      location: Ljubljana, Slovenia
+      contact: marta.novak@example.com
+      top_skills: [Distributed Systems, Spring Boot, Apache Kafka]
+      languages: [Slovenian (Native or Bilingual), English (Full Professional), German (Limited Working)]
+      certifications: [AWS Certified Solutions Architect – Associate, Certified Kubernetes Application Developer (CKAD)]
+      summary: >-
+        Backend engineer with thirteen years of experience, the last seven in payments. I design services that
+        move money correctly under load: idempotent APIs, event-driven workflows and ledgers that can be audited.
+        I care about clear architecture decisions written down for the next engineer, calm incident handling and
+        growing the people around me. Currently leading the ledger platform team at Ledgerly.
+      jobs:
+        - employer: Ledgerly
+          title: Staff Software Engineer
+          start: 2022-01
+          end: null
+          location: Ljubljana, Slovenia
+          text: |
+            - Led the design of the payment ledger platform in Java 17 and Spring Boot, processing 40 million entries a day.
+            - Moved settlement to an event-driven architecture on Kafka, with exactly-once processing and replayable topics.
+            - PostgreSQL partitioning and Redis caching cut p99 latency of balance reads from 180 ms to 25 ms.
+            - Internal services talk gRPC; public APIs are REST with OpenAPI contracts and idempotency keys.
+            - Runs on Kubernetes (EKS) on AWS, deployed with Helm; tracing with OpenTelemetry, dashboards in Prometheus and Grafana.
+            - Introduced architecture decision records for the platform and wrote 30 of the first 40.
+            - Mentor six engineers; lead incident reviews and the on-call rotation for the ledger.
+        - employer: Ledgerly
+          title: Senior Software Engineer
+          start: 2019-04
+          end: 2021-12
+          location: Ljubljana, Slovenia
+          text: |
+            - Split the payments monolith into twelve microservices along domain-driven design boundaries.
+            - Designed the REST APIs for merchants and partners; versioning and deprecation policy.
+            - Integration testing with Testcontainers; CI/CD with GitHub Actions, from 40-minute to 9-minute pipelines.
+        - employer: Cargonet
+          title: Software Engineer
+          start: 2015-06
+          end: 2019-03
+          location: Zagreb, Croatia
+          text: |
+            - Shipment tracking services in Java and Spring on MySQL, with RabbitMQ between services.
+            - Containerised the services with Docker and built the Jenkins pipelines that deployed them.
+            - Unit testing with JUnit and Mockito; took part in code reviews for a team of eight.
+        - employer: Webcraft Agency
+          title: Junior Web Developer
+          start: 2013-09
+          end: 2015-05
+          location: Ljubljana
+          text: |
+            Websites in PHP and JavaScript on MySQL, deployed to Linux servers; version control with Git.
+      education:
+        - school: University of Ljubljana
+          degree: Master of Science - MS, Computer and Information Science
+          years: 2011 - 2013
+        - school: University of Ljubljana
+          degree: Bachelor of Science - BS, Computer Science
+          years: 2008 - 2011
+      sections:
+        - title: Honors-Awards
+          text: |
+            Ledgerly Engineering Excellence Award (2023)
+            Best talk, Java Days Ljubljana (2021)
+        - title: Publications
+          text: |
+            Moving a payments ledger to event sourcing (Ledgerly engineering blog, 2023)
+            Idempotency keys in practice (Java Days Ljubljana, 2021)
+
+  - id: long-classic-en-fullstack
+    layout: classic
+    ui: en
+    band: 5-10
+    expect: [typescript, react, nextjs, nodejs, graphql, postgresql, orm, tailwind-css, design-systems, e2e-testing,
+      unit-testing, accessibility, web-performance, feature-flags, serverless, aws, docker, github-actions, ci-cd, vue,
+      nuxt, mongodb, redis, rest-api-design, authentication-authorization, frontend-testing, agile-scrum, php, html,
+      css, javascript, responsive-design, git]
+    accept: [frontend-architecture, state-management, testing-fundamentals, relational-databases, nosql-databases,
+      caching, frontend-build-tools, browser-devtools, test-automation, ui-ux-basics, dom, http, sql,
+      cloud-fundamentals, code-review, mentoring, web-security, product-thinking]
+    cv:
+      name: Liam Ortega
+      headline: Senior Full-Stack Engineer
+      location: Lisbon, Portugal
+      contact: liam.ortega@example.com
+      summary: >-
+        Full-stack engineer with nine years of building web products end to end, from database schema to the last
+        pixel. Most at home in TypeScript, React and Node.js; I like fast pages, accessible interfaces and tests
+        that let a team ship on Fridays. Looking for a product team where engineers talk to users.
+      jobs:
+        - employer: Brightdesk
+          title: Senior Full-Stack Engineer
+          start: 2022-02
+          end: null
+          text: |
+            - Rebuilt the customer dashboard in TypeScript with React and Next.js; Node.js GraphQL API on PostgreSQL with Prisma.
+            - Led the design system: 60 components in Tailwind CSS, documented in Storybook, used by four teams.
+            - End-to-end tests with Playwright and unit tests with Vitest; flaky test rate under 1%.
+            - Accessibility audits against WCAG 2.2 AA; fixed keyboard navigation and contrast across the product.
+            - Web performance: Largest Contentful Paint from 3.8 s to 1.6 s (image pipeline, code splitting, caching).
+            - Feature flags for gradual rollouts; serverless jobs on AWS Lambda; Docker for local development.
+            - CI/CD in GitHub Actions with preview deployments for every pull request.
+        - employer: Shopwave
+          title: Full-Stack Developer
+          start: 2019-05
+          end: 2022-01
+          text: |
+            - Storefront in Vue and Nuxt with server-side rendering; Express REST APIs on Node.js.
+            - MongoDB for the catalog, Redis for sessions and carts; JWT authentication and role-based authorization.
+            - Jest unit tests and Cypress component tests; two-week sprints in Scrum.
+        - employer: Freelance
+          title: Web Developer
+          start: 2017-03
+          end: 2019-04
+          text: |
+            Responsive websites for small businesses in HTML, CSS and JavaScript; WordPress themes and plugins in PHP.
+      projects: |
+        - Open-source maintainer of a small React date-range picker (1,200 GitHub stars), written in TypeScript.
+        - A VS Code extension that previews Tailwind CSS classes, built with Node.js.
+      education:
+        - school: University of Lisbon
+          degree: B.Sc. Computer Science and Engineering
+          years: 2013 - 2017
+      skills_line: TypeScript, JavaScript, React, Next.js, Vue, Nuxt, Node.js, GraphQL, REST, PostgreSQL, MongoDB, Redis, Prisma, Tailwind CSS, Playwright, Vitest, Jest, Cypress, Docker, AWS Lambda, GitHub Actions, Git
+
+  - id: long-classic-en-ml-research
+    layout: classic
+    ui: en
+    band: 5-10
+    expect: [pytorch, transformers, distributed-training, rag, llm-evaluation, fine-tuning, vector-databases,
+      experiment-tracking, nlp, computer-vision, python, numpy, scikit-learn, jupyter, statistics, research-methods,
+      deep-learning, machine-learning-fundamentals, public-speaking]
+    accept: [llm-fundamentals, embeddings-vector-search, gpu-infrastructure, model-evaluation, technical-writing,
+      linear-algebra, calculus, mentoring, cuda, feature-engineering, data-cleaning, prompt-engineering, ml-pipelines,
+      git, linux, pandas, data-visualization, llm-frameworks, model-serving, docker]
+    cv:
+      name: Hana Petrović
+      headline: Machine Learning Research Scientist (PhD)
+      location: Zurich, Switzerland
+      contact: hana.petrovic@example.com
+      summary: >-
+        Research scientist working on language models for long documents: retrieval, evaluation and efficient
+        fine-tuning. PhD in natural language processing with a minor in computer vision. I enjoy turning a paper
+        idea into a system that real users can rely on, and measuring honestly whether it works.
+      jobs:
+        - employer: Lumina AI
+          title: Research Scientist
+          start: 2022-09
+          end: null
+          text: |
+            - Train and fine-tune transformer models in PyTorch (LoRA and full fine-tuning), with distributed training on 64 GPUs.
+            - Built retrieval-augmented generation (RAG) for legal documents on a vector database; recall@10 up from 0.61 to 0.83.
+            - Designed the LLM evaluation suite (faithfulness, citation accuracy, human ratings) used for every release.
+            - Experiment tracking in Weights & Biases; supervise two research interns.
+        - employer: ETH Zurich
+          title: Doctoral Researcher, NLP group
+          start: 2018-09
+          end: 2022-08
+          text: |
+            - Thesis on cross-document reasoning; models in PyTorch, analysis in Python with NumPy, scikit-learn and Jupyter.
+            - Side project in computer vision: layout detection for scanned contracts.
+            - Teaching assistant for Introduction to Machine Learning and Deep Learning (three semesters).
+            - Statistical testing and careful experimental design across all published work.
+      education:
+        - school: ETH Zurich
+          degree: Ph.D. Computer Science (natural language processing)
+          years: 2018 - 2022
+        - school: University of Belgrade
+          degree: M.Sc. Software Engineering
+          years: 2016 - 2018
+      sections:
+        - title: Publications
+          text: |
+            Petrović H., Meier L. Reasoning across documents with sparse memory. ACL 2022.
+            Petrović H., Rossi F., Meier L. When retrieval hurts: an analysis of long-document QA. EMNLP 2021.
+            Petrović H., Meier L. Contract layout as a signal for clause classification. ICDAR 2021.
+            Rossi F., Petrović H. A benchmark for citation faithfulness in generated answers. NAACL 2023.
+            Petrović H., Chen Y., Rossi F. Efficient fine-tuning for long contexts. Findings of ACL 2024.
+            Meier L., Petrović H. Teaching assistants for ML courses: lessons from three years. EAAI 2022.
+        - title: Talks
+          text: |
+            Evaluating RAG systems you can trust. Swiss Machine Learning Days 2024 (invited talk).
+            Long documents, short attention. PyData Zurich 2023.
+        - title: Awards
+          text: |
+            ETH Medal for an outstanding doctoral thesis (2023).
+            Best paper honourable mention, EMNLP 2021.
+
+  - id: long-li-tr-data-mid
+    layout: linkedin
+    ui: tr
+    band: 5-10
+    expect: [python, sql, etl-pipelines, airflow, postgresql, gcp, bi-tools, pandas, data-cleaning, ab-testing,
+      spreadsheets, statistics, r, data-visualization]
+    accept: [data-warehousing, exploratory-data-analysis, relational-databases, data-quality, product-analytics,
+      data-modeling, stakeholder-communication, git]
+    cv:
+      name: Burak Yıldız
+      headline: Veri Mühendisi | Python, SQL, Airflow
+      location: İstanbul, Türkiye
+      contact: burak.yildiz@example.com
+      top_skills: [ETL, Apache Airflow, Power BI]
+      languages: [Türkçe (Ana dil), İngilizce (Profesyonel çalışma yetkinliği)]
+      certifications: [Google Data Analytics Professional Certificate]
+      summary: >-
+        Lojistik ve perakende alanlarında beş yılı aşkın deneyime sahip veri mühendisiyim. Dağınık operasyon
+        verisini güvenilir tablolara ve karar vericilerin her sabah baktığı panolara dönüştürmeyi seviyorum.
+      jobs:
+        - employer: Anadolu Lojistik
+          title: Veri Mühendisi
+          start: 2023-01
+          end: null
+          location: İstanbul
+          text: |
+            Python ve SQL ile ETL hatları kurdum; Airflow ile günlük ve saatlik akışların orkestrasyonu.
+            Kaynak sistemler PostgreSQL, hedef Google Cloud üzerinde BigQuery.
+            Teslimat performansı için Power BI panoları; pandas ile veri temizleme ve kalite kontrolleri.
+            Fiyatlandırma denemeleri için A/B test analizleri.
+        - employer: Kuzey Perakende
+          title: Veri Analisti
+          start: 2021-02
+          end: 2022-12
+          location: İstanbul
+          text: |
+            Excel ve Power BI ile haftalık satış raporları, SQL sorguları ile mağaza bazlı analizler.
+            İstatistiksel analiz ve R ile talep tahmini için regresyon modelleri; grafiklerle yönetime sunumlar.
+      education:
+        - school: İstanbul Teknik Üniversitesi
+          degree: Lisans, İstatistik
+          years: 2016 - 2020
+
+  - id: long-classic-en-devops-sre
+    layout: classic
+    ui: en
+    band: 10+
+    expect: [kubernetes, terraform, helm, gitops, prometheus-grafana, opentelemetry, incident-management, sre-practices,
+      chaos-engineering, capacity-planning, finops, secrets-management, service-mesh, ansible, jenkins, docker, linux,
+      shell-scripting, aws, gcp, python, postgresql, windows-server, active-directory, powershell, computer-networking]
+    accept: [infrastructure-as-code, observability, ci-cd, cloud-fundamentals, cloud-networking, devsecops,
+      cloud-security, identity-access-management, security-fundamentals, internal-developer-platforms, git,
+      relational-databases, operating-systems, mentoring, technical-writing, go]
+    cv:
+      name: Owen Mbeki
+      headline: Site Reliability Engineer
+      location: Cape Town, South Africa
+      contact: owen.mbeki@example.com
+      summary: >-
+        Site reliability engineer with ten years in operations, from racking servers to running Kubernetes for a
+        payments company. I like boring, well-observed systems, clear runbooks and on-call rotations people don't
+        dread. Strong on Kubernetes, Terraform and incident response.
+      jobs:
+        - employer: Cloudnest
+          title: Senior Site Reliability Engineer
+          start: 2021-03
+          end: null
+          text: |
+            - Run 14 Kubernetes clusters on EKS and GKE; everything in Terraform and Helm, delivered with Argo CD (GitOps).
+            - Monitoring with Prometheus and Grafana, traces with OpenTelemetry; defined SLOs and error budgets for 40 services.
+            - Incident commander in the on-call rotation; blameless postmortems; monthly chaos experiments.
+            - Capacity planning for peak season and FinOps work that cut the cloud bill by 23%.
+            - Secrets in HashiCorp Vault; Istio service mesh for mTLS between services.
+        - employer: Hostlab
+          title: DevOps Engineer
+          start: 2018-01
+          end: 2021-02
+          text: |
+            - Configuration management with Ansible for 300 Linux servers (Ubuntu and RHEL); Bash scripting everywhere.
+            - Jenkins pipelines and Docker images for 20 teams; first workloads on AWS.
+            - Python automation for backups and certificate renewal; PostgreSQL operations and failover drills.
+        - employer: Coastal Insurance
+          title: Systems Administrator
+          start: 2016-06
+          end: 2017-12
+          text: |
+            Windows Server and Active Directory administration, PowerShell scripts, office networking and VPNs.
+      education:
+        - school: University of Cape Town
+          degree: B.Sc. Computer Science
+          years: 2012 - 2015
+      skills_line: Kubernetes, Terraform, Helm, Argo CD, Prometheus, Grafana, OpenTelemetry, Vault, Istio, Ansible, Jenkins, Docker, Linux, Bash, Python, AWS, GCP, PostgreSQL, PowerShell
+      sections:
+        - title: Certifications
+          text: |
+            Certified Kubernetes Administrator (CKA), 2022
+            HashiCorp Certified: Terraform Associate, 2021
+
+  - id: long-li-en-mobile-senior
+    layout: linkedin
+    ui: en
+    band: 5-10
+    expect: [swift, swiftui, swift-concurrency, mobile-data-persistence, mobile-architecture, mobile-testing,
+      app-store-release, accessibility, profiling, ci-cd, mentoring, ios-sdk, kotlin, jetpack-compose, android-sdk,
+      react-native, rest-api-design, graphql, java]
+    accept: [product-analytics, unit-testing, kotlin-coroutines, testing-fundamentals, git, design-patterns, oop,
+      javascript, typescript, code-review, ui-ux-basics, feature-flags, web-performance, test-automation]
+    cv:
+      name: Priya Raman
+      headline: Senior iOS Engineer at Fitpulse
+      location: Bengaluru, India
+      contact: priya.raman@example.com
+      top_skills: [SwiftUI, Swift Concurrency, Mobile Architecture]
+      languages: [English (Full Professional), Tamil (Native or Bilingual), Hindi (Professional Working)]
+      certifications: [Apple Developer Academy Graduate]
+      summary: >-
+        Mobile engineer with nine years on iOS and Android, now leading iOS at a fitness app with two million
+        users. I enjoy fast, accessible apps, a modular codebase that new joiners understand in a week, and
+        release trains that never slip.
+      jobs:
+        - employer: Fitpulse
+          title: Senior iOS Engineer
+          start: 2021-06
+          end: null
+          location: Bengaluru, India
+          text: |
+            - Rewrote the workout flows in SwiftUI with Swift concurrency (async/await, actors).
+            - Offline-first storage with Core Data and background sync; modular architecture in 18 Swift packages.
+            - XCTest unit and UI tests, snapshot tests; weekly App Store releases through fastlane in CI.
+            - VoiceOver and Dynamic Type support across the app; launch time cut by 40% after profiling with Instruments.
+            - Mentor three iOS engineers and run the mobile guild.
+        - employer: Travelly
+          title: Mobile Engineer
+          start: 2018-04
+          end: 2021-05
+          location: Bengaluru, India
+          text: |
+            - iOS app in UIKit and Android app in Kotlin with Jetpack Compose for the new booking flow.
+            - Prototyped a React Native version of the trip planner; REST and GraphQL APIs with the backend team.
+        - employer: Appforge
+          title: Android Developer Intern
+          start: 2017-07
+          end: 2017-09
+          location: Chennai, India
+          text: |
+            Built a small Android app in Java for the company's event check-ins.
+      education:
+        - school: Anna University
+          degree: Bachelor of Engineering - BE, Computer Science
+          years: 2013 - 2017
+      sections:
+        - title: Honors-Awards
+          text: |
+            Apple Design Award finalist, team Fitpulse (2024)

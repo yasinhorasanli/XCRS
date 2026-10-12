@@ -88,7 +88,9 @@ def run_import(text: str, hidden: list[str]) -> ImportResult:
             settings.llm_base_url,
             settings.llm_model,
             names,
-            shape=settings.cv_shape if settings.cv_shape in ("found", "compact", "pick", "phrases") else "found",  # type: ignore[arg-type]
+            shape=settings.cv_shape
+            if settings.cv_shape in ("found", "compact", "pick", "phrases", "candidates")
+            else "found",  # type: ignore[arg-type]
             timeout_s=settings.cv_llm_timeout_s,
             max_tokens=settings.cv_llm_max_tokens,
             disable_thinking=settings.llm_disable_thinking,
@@ -100,7 +102,12 @@ def run_import(text: str, hidden: list[str]) -> ImportResult:
             vector = matcher.embedder.embed_query([evidence])[0]
             return matcher.store.similarities(vector).get(skill, 0.0) >= CONFIRM_FLOOR
 
-        importer = CvImporter(lexical_index(session), dict(names), extractor, matcher=matcher, confirm=confirm)
+        def similar(lines: list[str]) -> list[dict[str, float]]:  # shape "candidates": each line against the catalog
+            return [matcher.store.similarities(v) for v in matcher.embedder.embed_query(lines)]
+
+        importer = CvImporter(
+            lexical_index(session), dict(names), extractor, matcher=matcher, confirm=confirm, similar=similar
+        )
         return importer.run(text, hidden)
     finally:
         session.close()

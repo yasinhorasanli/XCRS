@@ -5,6 +5,11 @@ layout analysis spliced the sidebar into a paragraph). Parsing runs in a child p
 limit, because a malformed or deliberately heavy PDF can take minutes or gigabytes; the child gets the bytes on
 stdin and answers JSON on stdout.
 
+Some PDFs place every glyph on its own (Google Docs exports seen in the wild): pypdf then breaks the line after
+each one, and the spaces end up on lines of their own. A break between two pieces on the same baseline, the second
+just to the right of the first, is therefore dropped (keeping a space if one came between them); pypdf's order is
+kept, so columns stay whole.
+
 Hidden text is a known trick for screening software; it is returned separately and never reaches the LLM. Text
 counts as hidden when its colour is (nearly) the colour painted beneath it (white paper unless a filled rectangle
 lies under it: LinkedIn's own sidebar is white text on a dark panel), when it is rendered invisibly, when it is
@@ -20,6 +25,8 @@ from dataclasses import dataclass, field
 
 MIN_VISIBLE_PT = 2.0
 MIN_CONTRAST = 0.1  # luminance difference between text and what lies beneath it
+SAME_BASELINE = 0.3  # of the text height: pieces this close vertically are on one line
+MAX_ADVANCE = 1.0  # of the text height per character of the previous piece: further right is another column
 PAINT_OPS = {b"f", b"F", b"f*", b"B", b"B*", b"b", b"b*"}
 
 
@@ -96,6 +103,8 @@ def read_pdf(data: bytes, max_pages: int) -> PdfText:
         stack: list[dict] = []
         pending: list[tuple[float, float, float, float]] = []  # rectangles in the current path
         painted: list[tuple[float, float, float, float, float]] = []  # x0, y0, x1, y1, luminance; paint order
+        last: dict = {}  # x, y, height and characters of the last visible piece on this page
+        gap: list[str] = []  # whitespace pypdf gave since then
 
         def before(op, args, cm, tm, state=state, stack=stack, pending=pending, painted=painted):
             if op == b"q":
@@ -118,24 +127,38 @@ def read_pdf(data: bytes, max_pages: int) -> PdfText:
             elif op in (b"n", b"S", b"s"):
                 pending.clear()
 
-        def text(t, cm, tm, font, size, state=state, painted=painted, box=(left, bottom, right, top)):
+        def text(
+            t, cm, tm, font, size, state=state, painted=painted, box=(left, bottom, right, top), last=last, gap=gap
+        ):
             if not t.strip():
-                visible.append(t)
+                gap.append(t)
                 return
             m = _multiply(list(tm), list(cm))
             scale = math.sqrt(abs(m[0] * m[3] - m[1] * m[2]))
             x, y = m[4], m[5]
+            height = (size or 0) * scale
+            same_line = bool(last) and (
+                abs(y - last["y"]) <= SAME_BASELINE * last["height"]
+                and 0 <= x - last["x"] <= MAX_ADVANCE * last["height"] * (last["chars"] + 1)
+            )
+            space = "".join(gap)
+            visible.append((" " if " " in space else "") if same_line and "\n" in space else space)
+            gap.clear()
             outside = not (box[0] - 5 <= x <= box[2] + 5 and box[1] - 5 <= y <= box[3] + 5)
             beneath = next((r[4] for r in reversed(painted) if r[0] <= x <= r[2] and r[1] <= y <= r[3]), 1.0)
             same_colour = abs(state["fill"] - beneath) < MIN_CONTRAST
             if same_colour or state["invisible"] or (size or 0) * scale < MIN_VISIBLE_PT or outside:
                 hidden.append(t.strip())
                 visible.append("\n")
+                last.clear()
             else:
                 visible.append(t)
+                last.update(x=x, y=y, height=height, chars=len(t.rstrip("\n")))
+                if t.endswith("\n"):
+                    last.clear()
 
         page.extract_text(visitor_operand_before=before, visitor_text=text)
-        visible.append("\n")
+        visible.extend([*gap, "\n"])
     return PdfText("".join(visible), pages, [h for h in hidden if h])
 
 

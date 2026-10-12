@@ -32,6 +32,36 @@ def blank_pdf(pages: int) -> bytes:
     return out.getvalue()
 
 
+def placed_pdf(lines: list[list[tuple[float, str]]]) -> bytes:
+    """A page laid out as Google Docs exports it: a flipped, scaled coordinate system and every word in a text
+    object of its own. `lines`: per line, (x, word) pairs."""
+    from pypdf.generic import DecodedStreamObject, DictionaryObject, NameObject
+
+    ops = ["1 0 0 -1 0 842 cm", "q", "0.75 0 0 0.75 43 30 cm"]
+    for row, pieces in enumerate(lines):
+        for x, word in pieces:
+            ops.append(f"BT /F1 18 Tf 1 0 0 -1 0 0 Tm {x} {-18 - 30 * row} Td ({word}) Tj ET")
+    ops.append("Q")
+    writer = PdfWriter()
+    page = writer.add_blank_page(595, 842)
+    font = DictionaryObject(
+        {
+            NameObject("/Type"): NameObject("/Font"),
+            NameObject("/Subtype"): NameObject("/Type1"),
+            NameObject("/BaseFont"): NameObject("/Helvetica"),
+        }
+    )
+    page[NameObject("/Resources")] = DictionaryObject(
+        {NameObject("/Font"): DictionaryObject({NameObject("/F1"): writer._add_object(font)})}
+    )
+    stream = DecodedStreamObject()
+    stream.set_data("\n".join(ops).encode())
+    page[NameObject("/Contents")] = writer._add_object(stream)
+    out = io.BytesIO()
+    writer.write(out)
+    return out.getvalue()
+
+
 # --- PDF text ------------------------------------------------------------------------------------------------
 
 
@@ -47,6 +77,14 @@ def test_a_linkedin_style_export_keeps_its_columns_and_its_white_on_dark_sidebar
     assert pdf.hidden == []  # the sidebar is white text on a dark panel: visible
     assert "Top Skills\nApache Airflow\ndbt\nData Modeling" in normalize_text(pdf.text)  # "ﬂ" ligature undone
     assert "pipelines for payments and e-commerce. I like turning messy event data into" in pdf.text.replace("\n", " ")
+
+
+def test_words_placed_one_by_one_are_read_as_lines_and_columns_stay_apart():
+    words = [(0, "Built"), (50, " "), (60, "RAG"), (90, " "), (100, "pipelines"), (500, "2021")]
+    pdf = pdf_text(placed_pdf([words, [(0, "GitHub"), (60, " "), (70, "Actions")]]))
+    lines = normalize_text(pdf.text).split("\n")
+    assert lines[:2] == ["Built RAG pipelines", "2021"]  # the date far to the right stays on its own line
+    assert lines[2] == "GitHub Actions"
 
 
 @pytest.mark.parametrize(

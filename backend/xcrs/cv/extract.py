@@ -2,6 +2,10 @@
 timeline and the skills, each with the jobs it was used in and a short quote from the text as evidence.
 
 Answer shapes, compared by eval/bench_cv_import.py:
+- "candidates" (prompt cv-extract-5): "compact", but the prompt lists only the skills this CV could show (the
+  catalog scan, the skills closest to each line by embedding, and practices CVs describe in prose; see
+  xcrs.services.cv_import.candidate_skills), about 50 instead of 259. Measured 2026-10-12 and not adopted: on VM-B,
+  Ollama caches compact's fixed catalog listing, while a per-CV list is read fresh each time (ADR-0045).
 - "found" (in use, prompt cv-extract-4): "compact", plus the skills the catalog scan already found are given in
   the request; for those the answer only names, per job, which ones it used (bare ids), and it lists in full only
   the skills the scan missed. The given ids are a closed set in the schema, so they can't add skills.
@@ -24,7 +28,8 @@ from pydantic import BaseModel, Field, create_model
 CV_PROMPT_VERSION = "cv-extract-1"  # "phrases" and "pick"
 CV_PROMPT_VERSION_2 = "cv-extract-3"  # "compact" (cv-extract-2 listed fewer skills and jobs; in git history)
 CV_PROMPT_VERSION_4 = "cv-extract-4"  # "found"
-Shape = Literal["phrases", "pick", "compact", "found"]
+CV_PROMPT_VERSION_5 = "cv-extract-5"  # "candidates"
+Shape = Literal["phrases", "pick", "compact", "found", "candidates"]
 MAX_SKILLS = 60
 
 SYSTEM = """\
@@ -193,7 +198,7 @@ def answer_model(shape: Shape, skill_ids: list[str], found: list[str] | None = N
             skills=(list[skill], Field(default_factory=list)),
         )
     ids = Literal[tuple(skill_ids)]  # type: ignore[valid-type]
-    if shape == "compact":
+    if shape in ("compact", "candidates"):
         skill = create_model("CompactPickedSkill", __base__=CompactSkill, id=(ids, ...))
         return create_model(
             "CompactPickAnswer", __base__=CompactAnswer, skills=(list[skill], Field(default_factory=list))
@@ -206,17 +211,19 @@ def parse_answer(shape: Shape, content: str) -> CvExtraction:
     """An answer (JSON text) as a CvExtraction, whatever its shape."""
     if shape == "found":
         return FoundAnswer.model_validate_json(content).to_extraction()
-    if shape == "compact":
+    if shape in ("compact", "candidates"):
         return CompactAnswer.model_validate_json(content).to_extraction()
     return CvExtraction.model_validate_json(content)
 
 
 def prompt_version(shape: Shape) -> str:
-    return {"found": CV_PROMPT_VERSION_4, "compact": CV_PROMPT_VERSION_2}.get(shape, CV_PROMPT_VERSION)
+    return {"found": CV_PROMPT_VERSION_4, "compact": CV_PROMPT_VERSION_2, "candidates": CV_PROMPT_VERSION_5}.get(
+        shape, CV_PROMPT_VERSION
+    )
 
 
 def system_prompt(shape: Shape, skills: Iterable[tuple[str, str]]) -> str:
-    if shape in ("compact", "found"):
+    if shape in ("compact", "found", "candidates"):
         listing = "\n".join(f"{sid}: {name}" for sid, name in skills)
         return (FOUND_SYSTEM if shape == "found" else COMPACT_SYSTEM).format(catalog=listing)
     catalog = ""
@@ -257,12 +264,21 @@ class CvExtractor:
             use_responses_api=False,
         )
 
-    def extract(self, cv_text: str, found: list[str] | None = None) -> CvExtraction:
-        """`found`: for "found", the skill ids the catalog scan found in the text (they shape the schema)."""
+    def extract(
+        self, cv_text: str, found: list[str] | None = None, candidates: list[tuple[str, str]] | None = None
+    ) -> CvExtraction:
+        """`found`: for "found", the skill ids the catalog scan found in the text (they shape the schema).
+        `candidates`: for "candidates", the (id, name) pairs the prompt lists and the answer may use."""
         found = sorted(found or []) if self.shape == "found" else None
-        schema = answer_model(self.shape, self._ids, found)
+        system, ids = self._system, self._ids
+        if self.shape == "candidates":
+            candidates = candidates or []
+            system, ids = system_prompt(self.shape, candidates), [sid for sid, _ in candidates]
+        if not ids:  # nothing to choose from (a CV with no recognisable skill): the answer has jobs only
+            ids = self._ids
+        schema = answer_model(self.shape, ids, found)
         chain = PROMPT | self._llm.with_structured_output(schema, method="json_schema")
-        out = chain.invoke({"system": self._system, "user": user_message(cv_text, found)})
+        out = chain.invoke({"system": system, "user": user_message(cv_text, found)})
         extraction = parse_answer(self.shape, out.model_dump_json())
         extraction.skills = extraction.skills[:MAX_SKILLS]
         return extraction

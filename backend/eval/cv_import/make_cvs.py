@@ -163,6 +163,8 @@ def linkedin(case: dict, today: tuple[int, int]) -> str:
         main.append(f"<h2>{w['education']}</h2>")
         for ed in cv["education"]:
             main.append(f'<p class="company">{esc(ed["school"])}</p><p>{esc(ed["degree"])} · ({esc(ed["years"])})</p>')
+    for section in cv.get("sections") or []:  # e.g. Publications, Honors-Awards (long CVs)
+        main += [f"<h2>{esc(section['title'])}</h2>", text_block(section["text"])]
     main.append(hidden_html(case))
     return (
         f"<style>{CSS_LINKEDIN}{HIDDEN_CSS}</style><div class='wrap'><aside>{''.join(side)}</aside>"
@@ -195,6 +197,8 @@ def classic(case: dict, today: tuple[int, int]) -> str:
         out += [f"<p>{esc(ed['school'])}, {esc(ed['degree'])} ({esc(ed['years'])})</p>" for ed in cv["education"]]
     if cv.get("skills_line"):
         out += [f"<h2>{w['skills']}</h2>", f"<p>{esc(cv['skills_line'])}</p>"]
+    for section in cv.get("sections") or []:  # e.g. Publications, Talks (long CVs)
+        out += [f"<h2>{esc(section['title'])}</h2>", text_block(section["text"])]
     out.append(hidden_html(case))
     return f"<style>{CSS_CLASSIC}{HIDDEN_CSS}</style>{''.join(out)}"
 
