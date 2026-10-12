@@ -1,16 +1,33 @@
-# XCRS — Explainable Course Recommendation System
+<p align="center">
+  <a href="https://xcrs.app"><img src="docs/images/brand/xcrs-wordmark.png" alt="XCRS" width="380"></a>
+</p>
+
+<h1 align="center">Explainable Career · Course · Concept Recommendation System</h1>
+
+<p align="center"><b>Find the software career that fits you, and what to learn next.</b><br>
+<a href="https://xcrs.app">xcrs.app</a></p>
 
 XCRS recommends **career roles** and **free learning resources** based on what you have already learned and what you are curious about, and explains **why** it recommends each one, in plain language built from your own input.
 
 > **Live at [xcrs.app](https://xcrs.app).** XCRS runs self-hosted on two VMs; the same app also runs on AWS at [aws.xcrs.app](https://aws.xcrs.app). The original 2024 research prototype is preserved at the tag [`research-prototype`](https://github.com/yasinhorasanli/XCRS/tree/research-prototype) and in the [Zenodo release](#research-origin--citation).
 
-| Tell it what you know | See roles, your level, what to learn and why |
-|---|---|
-| ![Skill board: catalog skills and your own words in four boxes, with a 1–4 rating and quick-start suggestions](docs/images/home.png) | ![Results: a role with its explanation, first step, level estimate, free resources and the skills to learn next](docs/images/results.png) |
+**Tell it what you know:** skills from the catalog or in your own words, in four boxes, with an optional 1–4 rating.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/home-dark.png">
+  <img src="docs/images/home.png" alt="The skill board: four boxes (enjoyed, neutral, didn't enjoy, curious) holding catalog skills and your own words with 1–4 ratings, quick-start suggestions by field, and the example menu">
+</picture>
+
+**See roles, your level, what to learn and why:** an explanation built from your own input, your place on the role's level ladder, job titles to search for, free resources, and the skills that lead to the next level.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/results-dark.png">
+  <img src="docs/images/results.png" alt="Results: Backend Engineer at entry level, with its explanation, the level bar, interest, the skills it is based on, job titles to search on LinkedIn, three free resources and the skills to learn for mid-level">
+</picture>
 
 ## How it works
 
-You sort skills into four boxes (search the catalog, click a suggestion, or type your own words), optionally rating how well you know each one (1–4):
+You sort skills into four boxes (search the catalog, click a suggestion, type your own words, or import them from your CV), optionally rating how well you know each one (1–4):
 
 | Box | Meaning | Weight |
 |---|---|---|
@@ -22,20 +39,23 @@ You sort skills into four boxes (search the catalog, click a suggestion, or type
 XCRS then:
 
 1. **Reads your words as catalog skills.** Picked chips are exact; typed text goes through a name lookup, then a local LLM picks from the catalog and embedding similarity confirms the pick ([ADR-0030](docs/adr/0030-skill-matching-lookup-llm-pick-confirmed-by-similarity.md)).
-2. **Scores 30 career roles** as a blend of interest (how much of what you enjoy or are curious about the role relies on) and coverage (how much of the role you already have), with an estimated starting level and the gaps to the next one in learning order ([ADR-0031](docs/adr/0031-engine-v2-role-scoring-calibrated-blend.md)).
-3. **Suggests free resources** for each role's first gaps: curated documentation and courses, freeCodeCamp courses, and one approved YouTube playlist ([ADR-0033](docs/adr/0033-first-learning-resource-sources.md), [ADR-0038](docs/adr/0038-one-video-slot-in-each-roles-resources.md)).
+2. **Scores 30 career roles** as a blend of interest (how much of what you enjoy or are curious about the role relies on) and coverage (how much of the role you already have), with an estimated level on the role's entry → staff ladder and the gaps to the next one in learning order ([ADR-0031](docs/adr/0031-engine-v2-role-scoring-calibrated-blend.md)). It shows up to three roles, and only those your board gives real evidence for ([ADR-0052](docs/adr/0052-show-only-roles-the-board-gives-evidence-for.md)), with the job titles to search for ([ADR-0044](docs/adr/0044-job-titles-per-role-and-one-for-the-learner.md)).
+3. **Suggests free resources** for each role's first gaps: curated documentation and courses, freeCodeCamp courses, and one approved YouTube playlist or long video, linked to the right chapter ([ADR-0033](docs/adr/0033-first-learning-resource-sources.md), [ADR-0038](docs/adr/0038-one-video-slot-in-each-roles-resources.md), [ADR-0046](docs/adr/0046-youtube-long-videos-sections-and-channel-discovery.md)).
 4. **Explains** each role with a local LLM, given only the facts the engine used. The result returns at once; explanations arrive in the background ([ADR-0037](docs/adr/0037-engine-v2-becomes-the-main-site-with-grounded-explanations.md)).
 
-The catalog (257 skills, 30 roles on an entry → staff ladder, roadmaps per role and level, 254 curated resources) is YAML in [`catalog/`](catalog), reviewed as pull requests and checked against O*NET and ESCO. Adapters add freeCodeCamp courses and approved YouTube playlists; 371 resources in all are tagged with skills.
+Without an account nothing is stored in your browser beyond the board itself, and no cookies are set. Signing in (GitHub, Google or LinkedIn) keeps your board and results across devices ([ADR-0043](docs/adr/0043-accounts-with-social-sign-in-in-the-nuxt-server.md)), and lets you **import skills from a CV or LinkedIn PDF**. The file is read for visible text only, one local LLM call suggests skills with years and levels, and you review every suggestion before it reaches the board. Nothing from the file is stored ([ADR-0045](docs/adr/0045-skills-from-a-cv-or-linkedin-pdf.md)).
+
+The catalog (259 skills, 30 roles on an entry → staff ladder, roadmaps per role and level, 257 curated resources) is YAML in [`catalog/`](catalog), reviewed as pull requests and checked against O*NET and ESCO. Adapters add freeCodeCamp courses and approved YouTube playlists and videos; over 450 resources in all are tagged with skills.
 
 ## Architecture
 
 ```
-Browser ──► Caddy ──► Nuxt 4 (skill board, results; proxies /api/v2/**)
-                           │
-                           ▼
+Browser ──► Cloudflare Tunnel ──► Caddy ──► Nuxt 4 (skill board, results, sign-in; proxies /api/v2/**)
+                                                │
+                                                ▼
                  FastAPI /api/v2  ──  api/ → services/ → pure domain/ + adapters
                    ├─ skill matching ──► Ollama  qwen3-embedding:0.6b + the LLM
+                   ├─ CV import (visible PDF text, one LLM call, in-memory jobs) ──► Ollama
                    ├─ explanations (background worker, LangChain) ──► Ollama  qwen3.5:9b (GPU) / 4b (CPU)
                    └─ repository ──► PostgreSQL + pgvector (catalog schema, ingest schema, activity, job queue)
 ```
@@ -43,9 +63,10 @@ Browser ──► Caddy ──► Nuxt 4 (skill board, results; proxies /api/v2/
 | Folder | Stack | Purpose |
 |---|---|---|
 | [`backend/`](backend) | Python 3.13, FastAPI, SQLAlchemy, Alembic, LangChain, uv | API, engine, explanation worker, admin CLI (`xcrs`), evaluation tools (`eval/`) |
-| [`frontend/`](frontend) | Nuxt 4, Nuxt UI 4, Tailwind 4 | Skill board and results pages |
+| [`frontend/`](frontend) | Nuxt 4, Nuxt UI 4, Tailwind 4 | Skill board, results, accounts (social sign-in in the Nuxt server), CV import |
 | [`catalog/`](catalog) | YAML | Skills graph, career roles with levels and paths between them, roadmaps, curated resources |
 | [`deploy/`](deploy) | Compose, Caddy, systemd | The two-VM deployment, backups |
+| [`infra/`](infra) | Terraform | The AWS copy and the Cloudflare setup, as code |
 | [`docs/`](docs) | Markdown | [Decision records](docs/adr/README.md), [architecture](docs/architecture.md), [schema](docs/schema.md), [measurements](docs/baseline.md) |
 
 ## Run it locally
@@ -89,11 +110,11 @@ Backups stay on the machine that made them; `scripts/db-offsite-copy.sh` copies 
 
 **Deployment** to the two VMs (images from GHCR, Caddy, a deploy script with backup and smoke test): see [deploy/README.md](deploy/README.md).
 
-**CI** (GitHub Actions) runs Ruff, the migrations (up, down, up), the tests, the frontend type check and build, and both image builds on every push. **Evaluation** (`backend/eval/`): `bench_skill_matching.py` (349 labeled phrases), `bench_role_scoring.py` (53 learner profiles) and `bench_explainer.py` (explanation speed and grounding per model and device).
+**CI** (GitHub Actions) runs Ruff, the migrations (up, down, up), the tests, the frontend type check and build, and both image builds on every push. **Evaluation** (`backend/eval/`): `bench_skill_matching.py` (349 labeled phrases), `bench_role_scoring.py` (53 learner profiles), `bench_role_gate.py` (which roles to show), `bench_cv_import.py` (labeled synthetic CVs: skills found, experience band, speed) and `bench_explainer.py` (explanation speed and grounding per model and device).
 
 ## Research origin & citation
 
-XCRS started as an academic research project: five embedding providers compared side by side, `gpt-4o` explanations, and a user study. That prototype is preserved at the tag [`research-prototype`](https://github.com/yasinhorasanli/XCRS/tree/research-prototype) (`Zenodo-v1.0` is the archived release), and the replication package (code, data, the user-study protocol, questions and responses) is archived on Zenodo:
+XCRS began as a master's thesis at Boğaziçi University and was published at ISD 2025 ([paper](https://doi.org/10.62036/ISD.2025.133)). The research prototype compared five embedding providers side by side, with `gpt-4o` explanations and a user study. That prototype is preserved at the tag [`research-prototype`](https://github.com/yasinhorasanli/XCRS/tree/research-prototype) (`Zenodo-v1.0` is the archived release), and the replication package (code, data, the user-study protocol, questions and responses) is archived on Zenodo:
 
 [![DOI](https://zenodo.org/badge/783277216.svg)](https://doi.org/10.5281/zenodo.14291086)
 
