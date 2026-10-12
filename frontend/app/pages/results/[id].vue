@@ -114,6 +114,8 @@ const noMatchReason = computed(() => {
   if (!nm) return ''
   if (!nm.positive) return "You only told us what you didn't enjoy, which rules roles out but doesn't point to one."
   const broad = nm.broad.map((b) => b.name)
+  // Blame the widely used skills only when they are all there is; otherwise they aren't the reason.
+  if (broad.length < nm.positive) return "Your skills don't single out one role yet."
   if (broad.length === 1) {
     return `${broad[0]} is used by ${nm.broad[0]!.roles} of ${nm.roles_total} roles, so on its own it doesn't point to one.`
   }

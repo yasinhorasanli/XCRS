@@ -39,6 +39,7 @@ LIFT_EVIDENCE = 0.25  # experience lifts the level only with at least this much 
 SHOW_AT_MOST = 3
 MIN_EVIDENCE = 1.0  # category weight x distinctiveness x reliance, summed over the board's skills the role uses
 MIN_LIFT = 2.0  # a role's score against the mean of all roles: ahead of the field, not one of many near-ties
+STRONG_EVIDENCE = 4.0  # ...a test for weak evidence only: a broad board raises every role's score, and so the mean
 TAIL = 0.5  # a role's score against the first role shown: no weak tail just to fill three places
 
 # Self-reported experience (ADR-0041): (lowest, highest) level it suggests. The highest caps the skill evidence
@@ -409,18 +410,21 @@ def score_roles(
 
 
 def recommendable(ranked: list[RoleScore], limit: int = SHOW_AT_MOST) -> list[RoleScore]:
-    """The roles worth showing (ADR-0052), best first: positive score, enough evidence, clearly ahead of the mean
-    of all roles, and not far behind the first one shown. Can be empty: "Python" alone is used by most roles and
-    singles none out; a board of dislikes points nowhere."""
+    """The roles worth showing (ADR-0052), best first: positive score, enough evidence, not far behind the first
+    one shown, and, unless the evidence is strong, clearly ahead of the mean of all roles. Can be empty: "Python"
+    alone is used by most roles and singles none out; a board of dislikes points nowhere. A broad board (many skills
+    across many roles) lifts the mean itself, so its strongest roles pass on their evidence (engine v3.4)."""
     if not ranked:
         return []
     mean = sum(r.score for r in ranked) / len(ranked)
     shown: list[RoleScore] = []
     for r in ranked:  # best first
-        if r.score <= 0 or (mean > 0 and r.score < MIN_LIFT * mean) or (shown and r.score < TAIL * shown[0].score):
+        if r.score <= 0 or (shown and r.score < TAIL * shown[0].score):
             break  # every role after this one scores lower still
         if r.evidence < MIN_EVIDENCE:
             continue
+        if r.evidence < STRONG_EVIDENCE and mean > 0 and r.score < MIN_LIFT * mean:
+            continue  # weak evidence and close to the field: a near-tie, not a recommendation
         shown.append(r)
         if len(shown) == limit:
             break
