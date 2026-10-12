@@ -55,6 +55,7 @@ Significant design decisions for XCRS, one per file. The format is explained in 
 | [0049](0049-one-trunk-main-with-protection.md) | One trunk: `modernization` merges into `main` (research version kept at the tag `research-prototype`); `main` is the only long-lived branch, protected by a ruleset | Accepted | 2026-10-10 |
 | [0050](0050-sessions-end-with-the-endpoint-overload-fails-fast.md) | Database sessions end with the endpoint (`scope="function"`), and overload fails fast (a 2 s wait for a connection, pool 10 + 10) instead of wedging the API | Accepted | 2026-10-11 |
 | [0051](0051-xcrs-app-through-a-cloudflare-tunnel-as-code.md) | xcrs.app reaches production through a Cloudflare Tunnel managed with Terraform (Funnel off, tailnet-only `serve` stays); the AWS copy is aws.xcrs.app (noindex) | Accepted | 2026-10-11 |
+| [0052](0052-show-only-roles-the-board-gives-evidence-for.md) | Show only the roles the board gives evidence for (0 to 3, an evidence gate), show interest as a share of the role, and drop the explanation's next step | Accepted | 2026-10-12 |
 
 ## Upcoming decisions
 

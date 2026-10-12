@@ -198,7 +198,7 @@ onBeforeUnmount(stopWaiting)
           </template>
           <UTextarea v-else v-model="pasted" :rows="10" :maxlength="20000" placeholder="Paste the text of your CV (useful for scanned PDFs and Word files)" class="w-full" />
           <p v-if="error" class="text-sm text-error" role="alert">{{ error }}</p>
-          <p class="text-xs text-muted">
+          <p class="text-xs text-muted hyphens-auto sm:text-justify">
             Your file is read on our own server by our own language model. Nothing from it is stored: only the skills you
             add to your board are kept. <NuxtLink to="/privacy" class="underline">Privacy</NuxtLink>
           </p>

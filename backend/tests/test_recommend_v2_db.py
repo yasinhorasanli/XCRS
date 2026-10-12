@@ -16,6 +16,7 @@ def test_a_recommendation_is_made_stored_and_read_back(client):
     assert body["status"] == "ok" and body["catalog_version"] == "test-v2"
     assert [m["method"] for m in body["matched"]] == ["picked", "lookup", "lookup", "picked", "lookup"]
     first = body["roles"][0]
+    assert 0 < first["interest_in_role"] <= 1
     assert first["id"] == "backend-engineer" and first["target_level"]["id"] == "entry"
     assert first["title_for_you"] == "Java Backend Engineer (Spring Boot)"  # ADR-0044
     assert first["job_titles"][:2] == ["Backend Engineer", "Backend Developer"]
@@ -32,6 +33,14 @@ def test_a_recommendation_is_made_stored_and_read_back(client):
 def test_input_that_matches_no_skill_is_reported(client):
     body = client.post("/api/v2/recommendations", json={"chips": [{"category": "liked", "text": "knitting"}]}).json()
     assert body["status"] == "insufficient_input" and body["roles"] == []
+
+
+def test_a_board_that_singles_out_no_role_says_why(client):
+    """ADR-0052: "Python" alone is recognised but used by most roles, so no role is shown, with a hint."""
+    body = client.post("/api/v2/recommendations", json={"chips": [{"category": "liked", "skill": "python"}]}).json()
+    assert body["status"] == "no_clear_match" and body["roles"] == []
+    assert body["no_match"]["positive"] == 1 and body["no_match"]["broad"][0]["id"] == "python"
+    assert body["no_match"]["broad"][0]["roles"] >= body["no_match"]["roles_total"] / 2
 
 
 def test_health_answers_and_the_classic_api_is_gone(client):

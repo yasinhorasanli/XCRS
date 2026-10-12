@@ -131,6 +131,7 @@ def _response_v2(row, session: Session, user: User | None = None) -> Recommendat
         catalog_version=row.catalog_checksum[:12],
         matched=row.result["matched"],
         roles=roles,
+        no_match=row.result.get("no_match"),
         experience=row.input.get("experience"),
         saved=user is not None and row.user_id == user.id,
         can_save=accounts_on() and row.user_id is None and claimable(row.created_at, session),

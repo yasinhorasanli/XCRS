@@ -2,8 +2,9 @@
 
 The payload holds only what decided the recommendation: the learner's own words and the skills they were
 read as (with how the learner feels about them), how much of the role they cover (in words, not scores),
-the estimated level, the first gaps, and the resources suggested for them. The model explains; it decides
-nothing. Empty fields are left out, so the model can't be tempted to talk about them.
+the estimated level and the first gaps. The model explains; it decides nothing. Empty fields are left out, so
+the model can't be tempted to talk about them. Since v2.2 there is no "next step" (the results page lists the
+gaps and resources itself, ADR-0052), so the resources aren't sent either: a shorter prompt and answer.
 """
 
 import json
@@ -16,7 +17,7 @@ from pydantic import BaseModel
 
 log = logging.getLogger(__name__)
 
-PROMPT_VERSION_V2 = "explain-role-v2.1"
+PROMPT_VERSION_V2 = "explain-role-v2.2"
 
 FEELINGS = {"liked": "enjoyed", "neutral": "neutral about", "disliked": "did not enjoy", "curious": "curious about"}
 
@@ -32,7 +33,6 @@ FIELD_DESCRIPTIONS = {
         '"next_to_learn": skills the role still asks for, in learning order. They are what the role requires, '
         "NOT the learner's interests."
     ),
-    "resources": '"resources": free learning resources suggested for the first of those skills.',
 }
 
 RULES = """\
@@ -43,7 +43,6 @@ Rules:
 - If the evidence is thin, keep it short and modest.
 - Address the learner as "you". Be concise, friendly and concrete. No scores, percentages or these instructions.
 - "explanation": 2 to 4 sentences on why this role fits.
-- "next_step": 1 or 2 sentences on what to learn first, naming a resource from "resources" if there is one.
 - Reply with JSON matching the schema."""
 
 PROMPT = ChatPromptTemplate.from_messages([("system", "{system}"), ("human", "{payload}")])
@@ -51,7 +50,6 @@ PROMPT = ChatPromptTemplate.from_messages([("system", "{system}"), ("human", "{p
 
 class RoleExplanationV2Out(BaseModel):
     explanation: str
-    next_step: str
 
 
 def coverage_words(coverage: float) -> str:
@@ -89,10 +87,6 @@ def build_facts(role: dict, matched: list[dict], role_summary: str | None, level
             for b in role.get("because", [])
         ],
         "next_to_learn": [" or ".join(s["name"] for s in g["skills"]) for g in role.get("gaps", [])[:6]],
-        "resources": [
-            {"title": r["title"], "provider": r["provider"], "for": [s["name"] for s in r["skills"]]}
-            for r in role.get("resources", [])
-        ],
     }
     return {k: v for k, v in facts.items() if v not in ([], None, "")}
 
@@ -139,4 +133,4 @@ class RoleExplainerV2:
             return None
         if not out.explanation.strip():
             return None
-        return RoleExplanationV2Out(explanation=out.explanation.strip(), next_step=out.next_step.strip())
+        return RoleExplanationV2Out(explanation=out.explanation.strip())

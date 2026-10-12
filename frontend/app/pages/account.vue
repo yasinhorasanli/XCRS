@@ -50,7 +50,7 @@ const when = (iso: string) => new Date(iso).toLocaleString(undefined, { dateStyl
 const roleLine = (r: ResultSummary) =>
   r.roles.length
     ? r.roles.map((role) => (role.level ? `${role.name} (${LEVEL_NAMES[role.level] ?? role.level})` : role.name)).join(' · ')
-    : 'No skills recognised'
+    : r.status === 'no_clear_match' ? 'No role stood out' : 'No skills recognised'
 
 async function removeResult(id: string) {
   try {
@@ -93,7 +93,7 @@ async function deleteAccount() {
 </script>
 
 <template>
-  <div class="mx-auto max-w-3xl px-4 pb-16 pt-8">
+  <div class="page-width pb-16 pt-8">
     <h1 class="text-2xl font-bold tracking-tight">Your account</h1>
 
     <div v-if="loading" class="mt-6 grid gap-3">
@@ -121,7 +121,8 @@ async function deleteAccount() {
         <p v-if="!skillGroups.length" class="mt-3 text-sm text-muted">
           No saved board yet. The board you use while signed in is kept here.
         </p>
-        <div v-else class="mt-3 grid gap-3">
+        <!-- Laid out like the board's four boxes. -->
+        <div v-else class="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           <div v-for="g in skillGroups" :key="g.category" class="rounded-2xl p-4 ring-1 ring-inset" :class="[CATEGORY_META[g.category].soft, CATEGORY_META[g.category].border]">
             <h3 class="flex items-center gap-2 text-sm font-semibold">
               <UIcon :name="CATEGORY_META[g.category].icon" class="h-4 w-4" />

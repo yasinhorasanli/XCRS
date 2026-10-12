@@ -20,7 +20,7 @@ export const CATEGORY_META: Record<Category, {
   liked: {
     short: 'Enjoyed',
     title: 'I enjoyed',
-    hint: 'Courses, subjects or tools you studied and liked',
+    hint: "Skills you've used and liked",
     icon: 'i-heroicons-heart',
     chip: 'bg-emerald-50 text-emerald-800 ring-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-200 dark:ring-emerald-800',
     text: 'text-emerald-800 dark:text-emerald-200',
@@ -33,7 +33,7 @@ export const CATEGORY_META: Record<Category, {
   neutral: {
     short: 'Neutral',
     title: 'Neutral about',
-    hint: 'Things you studied without strong feelings',
+    hint: "Skills you've used, no strong feelings",
     icon: 'i-heroicons-minus-circle',
     chip: 'bg-slate-100 text-slate-700 ring-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:ring-slate-700',
     text: 'text-slate-700 dark:text-slate-200',
@@ -46,7 +46,7 @@ export const CATEGORY_META: Record<Category, {
   disliked: {
     short: 'Disliked',
     title: "Didn't enjoy",
-    hint: 'Things you studied and would rather avoid',
+    hint: "Skills you'd rather avoid",
     icon: 'i-heroicons-hand-thumb-down',
     chip: 'bg-rose-50 text-rose-800 ring-rose-200 dark:bg-rose-950/40 dark:text-rose-200 dark:ring-rose-800',
     text: 'text-rose-800 dark:text-rose-200',
@@ -59,7 +59,7 @@ export const CATEGORY_META: Record<Category, {
   curious: {
     short: 'Curious',
     title: 'Curious about',
-    hint: 'Things you want to learn next',
+    hint: 'Skills you want to learn next',
     icon: 'i-heroicons-light-bulb',
     chip: 'bg-violet-50 text-violet-800 ring-violet-200 dark:bg-violet-950/40 dark:text-violet-200 dark:ring-violet-800',
     text: 'text-violet-800 dark:text-violet-200',

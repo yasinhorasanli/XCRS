@@ -10,11 +10,9 @@ const menu = computed(() => [
 
 <template>
   <header class="sticky top-0 z-30 border-b border-default bg-default/85 backdrop-blur">
-    <div class="mx-auto flex h-14 max-w-7xl items-center justify-between px-4">
-      <NuxtLink to="/" class="flex items-center gap-2.5" aria-label="XCRS home">
-        <span class="grid h-8 w-8 place-items-center rounded-lg bg-indigo-600 dark:bg-indigo-700 text-sm font-bold text-white shadow-xs">X</span>
-        <span class="font-semibold tracking-tight">XCRS</span>
-        <span class="hidden text-sm text-dimmed md:inline">Explainable course recommendations</span>
+    <div class="page-width flex h-14 items-center justify-between sm:h-16">
+      <NuxtLink to="/" class="flex shrink-0 items-center" aria-label="XCRS home">
+        <img src="/xcrs-logo.webp" alt="" width="766" height="240" class="h-7 w-auto sm:h-10">
       </NuxtLink>
       <div class="flex items-center gap-1">
       <UButton

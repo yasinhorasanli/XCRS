@@ -38,8 +38,25 @@ function sectionLabel(section: ResourceSection): string {
 }
 
 const gapOnBoard = (g: Gap) => g.skills.some((s) => onBoard(s))
-const CURIOUS_PILL =
-  'ml-1 inline-flex items-center gap-0.5 rounded-full bg-violet-50 dark:bg-violet-950/40 px-2 py-0.5 text-xs font-medium text-violet-700 dark:text-violet-200 ring-1 ring-inset ring-violet-200 dark:ring-violet-800 transition hover:bg-violet-100 dark:hover:bg-violet-950/40'
+// "Add to Curious about": the Curious box's light bulb, in its colour.
+const CURIOUS_BUTTON =
+  'ml-1 grid h-6 w-6 place-items-center rounded-full bg-violet-50 dark:bg-violet-950/40 text-violet-700 dark:text-violet-200 ring-1 ring-inset ring-violet-200 dark:ring-violet-800 transition hover:bg-violet-100 dark:hover:bg-violet-900/50'
+const CURIOUS_ICON = CATEGORY_META.curious.icon
+
+/** An icon per resource type; YouTube videos and playlists get YouTube's own mark (in its red). */
+const TYPE_ICONS: Record<string, string> = {
+  course: 'i-heroicons-academic-cap',
+  tutorial: 'i-heroicons-command-line',
+  docs: 'i-heroicons-document-text',
+  book: 'i-heroicons-book-open',
+  video: 'i-heroicons-play-circle',
+  playlist: 'i-heroicons-queue-list',
+}
+const isYouTube = (url: string) => /^https:\/\/(www\.|m\.)?(youtube\.com|youtu\.be)\//.test(url)
+function typeIcon(type: string, url: string): { name: string; class: string } {
+  if ((type === 'video' || type === 'playlist') && isYouTube(url)) return { name: 'i-simple-icons-youtube', class: 'text-[#FF0000]' }
+  return { name: TYPE_ICONS[type] ?? 'i-heroicons-link', class: '' }
+}
 
 
 /** A basic the learner can confirm: into any box, at the level the role assumes (curious has no level). */
@@ -50,7 +67,7 @@ function basicMenu(g: Gap) {
       icon: CATEGORY_META[category].icon,
       onSelect: () => emit('add', [{ skill, category, proficiency: category === 'curious' ? undefined : g.need }]),
     }))
-  const heading = (name: string) => ({ type: 'label' as const, label: `Add ${name} to your board as` })
+  const heading = (name: string) => ({ type: 'label' as const, label: g.skills.length > 1 ? `Add ${name} as` : 'Add it to your board as' })
   return g.skills.map((s) => [heading(s.name), ...into(s)])
 }
 
@@ -70,6 +87,9 @@ function addAllBasics() {
 }
 
 const levelName = (id: string, title?: string | null) => title ?? LEVEL_NAMES[id] ?? id
+// What the learner sees (ADR-0052): the share of the role's skills they enjoy or are curious about; results made
+// before engine v3.3 only have the ranking interest (a share of the learner's input).
+const interestShown = computed(() => props.role.interest_in_role ?? props.role.interest)
 const pct = (x: number) => `${Math.round(Math.max(0, Math.min(1, x)) * 100)}%`
 const stages = computed(() => {
   const out: { stage: string; gaps: RoleResult['gaps'] }[] = []
@@ -102,7 +122,6 @@ async function send(rating: 1 | -1) {
         <p class="text-sm text-muted">
           <template v-if="role.level">Estimated level: <span class="font-medium text-default">{{ levelName(role.level.id, role.level.title) }}</span></template>
           <template v-else>Start at <span class="font-medium text-default">{{ levelName(role.target_level.id, role.target_level.title) }}</span></template>
-          <span class="text-dimmed"> · an estimate from your input</span>
         </p>
       </div>
       <div class="flex items-center gap-1 print:hidden" aria-label="Was this role a good suggestion?">
@@ -115,19 +134,16 @@ async function send(rating: 1 | -1) {
       <UIcon name="i-heroicons-arrow-path" class="h-4 w-4 animate-spin" />
       Writing an explanation for you…
     </div>
-    <div v-else-if="role.explanation" class="mt-3 space-y-2 text-[15px] leading-relaxed text-default" aria-live="polite">
+    <!-- A readable line length, now that the cards are as wide as the page. -->
+    <div v-else-if="role.explanation" class="mt-3 max-w-4xl space-y-2 text-[15px] leading-relaxed text-default" aria-live="polite">
       <p>{{ role.explanation }}</p>
-      <p v-if="role.next_step" class="rounded-lg bg-indigo-50/60 dark:bg-indigo-950/40 px-3 py-2 text-sm text-default">
-        <span class="font-medium text-indigo-700 dark:text-indigo-200">First step:</span> {{ role.next_step }}
-      </p>
-      <p class="text-[11px] text-dimmed">Written by a local language model from the facts below; it can be imperfect.</p>
     </div>
 
     <div class="mt-4 grid gap-3 sm:grid-cols-2">
       <div>
-        <div class="flex justify-between text-xs text-muted"><span>Interest</span><span class="tabular-nums">{{ pct(role.interest) }}</span></div>
-        <div class="mt-1 h-2 rounded-full bg-elevated"><div class="h-2 rounded-full bg-violet-500 dark:bg-violet-400" :style="{ width: pct(role.interest) }" /></div>
-        <p class="mt-1 text-[11px] text-dimmed">How much of what you enjoy or are curious about this role uses</p>
+        <div class="flex justify-between text-xs text-muted"><span>Interest</span><span class="tabular-nums">{{ pct(interestShown) }}</span></div>
+        <div class="mt-1 h-2 rounded-full bg-elevated"><div class="h-2 rounded-full bg-violet-500 dark:bg-violet-400" :style="{ width: pct(interestShown) }" /></div>
+        <p class="mt-1 text-[11px] text-dimmed">Of the role's skills, the share you enjoy or are curious about</p>
       </div>
       <div>
         <div class="flex justify-between text-xs text-muted"><span>What you already have</span><span class="tabular-nums">{{ pct(role.coverage) }}</span></div>
@@ -158,7 +174,10 @@ async function send(rating: 1 | -1) {
     </div>
 
     <div v-if="titles.length" class="mt-4">
-      <h3 class="text-xs font-medium uppercase tracking-wide text-muted">Job titles to search for</h3>
+      <h3 class="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-muted">
+        Job titles to search on
+        <span class="inline-flex items-center gap-1 normal-case tracking-normal text-[#0A66C2] dark:text-sky-300"><UIcon name="i-simple-icons-linkedin" class="h-3.5 w-3.5" />LinkedIn</span>
+      </h3>
       <ul class="mt-1.5 flex flex-wrap gap-1.5">
         <li v-for="(t, i) in titles" :key="t">
           <a
@@ -175,7 +194,6 @@ async function send(rating: 1 | -1) {
           </a>
         </li>
       </ul>
-      <p v-if="role.title_for_you" class="mt-1 text-[11px] text-dimmed">The first one comes from your strongest skills for this role; each opens a LinkedIn Jobs search.</p>
     </div>
 
     <div v-if="role.resources?.length" class="mt-4">
@@ -185,7 +203,9 @@ async function send(rating: 1 | -1) {
           <!-- The whole card opens the resource (a stretched link); a section link sits above it. -->
           <div class="relative flex h-full flex-col rounded-xl p-3 ring-1 ring-inset ring-default transition hover:-translate-y-px hover:ring-indigo-300 dark:hover:ring-indigo-800">
             <span class="flex items-center gap-1.5 text-[11px] text-muted">
-              <span class="rounded bg-elevated px-1.5 py-0.5 capitalize">{{ res.type }}</span>
+              <span class="inline-flex items-center gap-1 rounded bg-elevated px-1.5 py-0.5 capitalize">
+                <UIcon :name="typeIcon(res.type, res.url).name" class="h-3.5 w-3.5" :class="typeIcon(res.type, res.url).class" />{{ res.type }}
+              </span>
               <span v-if="res.free" class="rounded bg-emerald-50 dark:bg-emerald-950/40 px-1.5 py-0.5 text-emerald-700 dark:text-emerald-200">Free</span>
               <span v-if="res.duration_minutes" class="shrink-0 tabular-nums">{{ duration(res.duration_minutes) }}</span>
               <span class="truncate">{{ res.provider }}</span>
@@ -213,8 +233,9 @@ async function send(rating: 1 | -1) {
         <template v-if="role.level?.id === role.target_level.id">Still to cover at {{ levelName(role.target_level.id, role.target_level.title) }}</template>
         <template v-else>To reach {{ levelName(role.target_level.id, role.target_level.title) }}</template>: {{ role.gaps_total }} {{ role.gaps_total === 1 ? 'skill' : 'skills' }} to learn<span v-if="role.gaps_total > role.gaps.length">, first {{ role.gaps.length }}</span>
       </h3>
-      <p class="mt-1 text-xs text-muted print:hidden">
-        Want to learn one? <span class="font-medium text-violet-700 dark:text-violet-200">+ Curious</span> puts it on your board under “Curious about”, then you can update your results.
+      <p v-if="rank === 1" class="mt-1 flex flex-wrap items-center gap-x-1 text-xs text-muted print:hidden">
+        Tap <UIcon :name="CURIOUS_ICON" class="h-4 w-4 text-violet-600 dark:text-violet-300" aria-label="the light bulb" /> to add a skill to
+        “Curious about” on your board, then update your results.
       </p>
       <div v-for="s in stages" :key="s.stage" class="mt-2">
         <p class="text-xs text-dimmed">{{ s.stage }}</p>
@@ -228,15 +249,21 @@ async function send(rating: 1 | -1) {
             <button
               v-else-if="g.skills.length === 1"
               type="button"
-              :class="[CURIOUS_PILL, 'print:hidden']"
+              :class="[CURIOUS_BUTTON, 'print:hidden']"
               :aria-label="`Add ${g.skills[0]!.name} to Curious about`"
+              :title="`Add ${g.skills[0]!.name} to “Curious about”`"
               @click="emit('add', [{ skill: g.skills[0]!, category: 'curious' }])"
             >
-              <UIcon name="i-heroicons-plus-20-solid" class="h-3.5 w-3.5" />Curious
+              <UIcon :name="CURIOUS_ICON" class="h-3.5 w-3.5" />
             </button>
             <UDropdownMenu v-else :items="gapMenu(g)">
-              <button type="button" :class="[CURIOUS_PILL, 'print:hidden']" :aria-label="`Add one of ${g.skills.map((x) => x.name).join(', ')} to Curious about`">
-                <UIcon name="i-heroicons-plus-20-solid" class="h-3.5 w-3.5" />Curious
+              <button
+                type="button"
+                :class="[CURIOUS_BUTTON, 'print:hidden']"
+                :aria-label="`Add one of ${g.skills.map((x) => x.name).join(', ')} to Curious about`"
+                title="Add one to “Curious about”"
+              >
+                <UIcon :name="CURIOUS_ICON" class="h-3.5 w-3.5" />
               </button>
             </UDropdownMenu>
           </li>

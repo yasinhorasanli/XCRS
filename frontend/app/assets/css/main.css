@@ -9,6 +9,14 @@ body {
   @apply bg-slate-50 dark:bg-slate-950 text-default antialiased;
 }
 
+/* One width for the header and every page, so the logo and the bar's buttons never move between pages. */
+@utility page-width {
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--container-7xl);
+  padding-inline: --spacing(4);
+}
+
 /* Small labels and placeholders need AA contrast too, including on tinted panels. */
 :root, .light {
   --ui-text-dimmed: var(--color-slate-600);
