@@ -59,6 +59,9 @@ class Skill:
     description: str
     requires: tuple[Requirement, ...] = ()
     onet: tuple[str, ...] = ()
+    # What knowing this skill shows (ADR-0028 note, 2026-10-12): Java at working level shows OOP at working level.
+    # Not a prerequisite: OOP is learned through Java, not before it. One skill per entry, no choices.
+    implies: tuple[Requirement, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -181,6 +184,7 @@ def _skill(skill_id: str, raw: dict) -> Skill:
             description=raw["description"],
             requires=tuple(Requirement.parse(r) for r in raw.get("requires") or ()),
             onet=tuple(raw.get("onet") or ()),
+            implies=tuple(Requirement.parse(r) for r in raw.get("implies") or ()),
         )
     except KeyError as exc:
         raise CatalogError(f"skills.yaml: skill {skill_id!r} lacks {exc}") from exc

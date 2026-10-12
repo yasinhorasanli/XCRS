@@ -13,6 +13,7 @@ The reviewed source of truth for what XCRS recommends ([ADR-0025](../docs/adr/00
 - **Proficiency** 1–4: 1 basic (knows what it is, follows guides) · 2 working (uses it on routine work) · 3 advanced (designs with it, solves hard problems, guides others) · 4 expert (sets direction).
 - **`skill:2`**: that skill at working proficiency. **`a|b|c:2`**: any one of them (a choice, e.g. one back-end language).
 - **Prerequisites** (`requires` in `skills.yaml`): every entry must hold; an entry with `|` is satisfied by any of its options.
+- **Implies** (`implies` in `skills.yaml`): what knowing a skill shows, without being learned before it. `java: implies: [oop:2]` means Java known at working level or above shows OOP at working level (at basic level, OOP at basic). One skill per entry, no choices; never both required and implied. Used for what a skill teaches along the way (class-based languages → OOP), not for related skills.
 - **Roadmap levels are cumulative.** `senior` lists only what it adds or raises over `mid`. A role may start above `entry` (Site Reliability Engineer starts at `mid`; Software Architect at `senior`), and then its first level lists the whole profile.
 - **Stages** order a level's skills. Skills in one stage may depend on each other; a later stage may depend on earlier ones. A stage marked `optional: true` is "good to know": it must meet its own prerequisites but never counts as one.
 
@@ -62,6 +63,7 @@ CI proves the files are consistent; the review is about whether they are **true*
 2. **Levels:** would a hiring manager agree with what each level adds? Is anything missing that every job ad asks for, or is anything niche presented as required? Use `path` to read a whole roadmap.
 3. **Proficiency:** is `working` vs `advanced` right for that level?
 4. **Prerequisites:** is it truly required first, or just related? (Only real prerequisites belong in `requires`.)
+   **Implies:** does knowing it really show the other skill (you can't use Java without classes), or is it only common? Only the first belongs in `implies`.
 5. **Resources:** is it the best free resource for that skill, and does it really get a learner to the proficiency listed?
 6. **Common paths:** is it a move people really make? Do `moves` and `bridge` show a believable distance and gap?
 

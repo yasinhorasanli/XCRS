@@ -139,6 +139,25 @@ def test_prerequisite_cycles_are_reported(tmp_path):
     assert any("prerequisite cycle" in e for e in errors(make(tmp_path, skills=skills)))
 
 
+def test_implies_names_one_known_skill_that_isnt_also_required(tmp_path):
+    """ADR-0028 note: `implies` says what knowing a skill shows; it is not a prerequisite and not a choice."""
+    ok = SKILLS.replace(
+        "python: {name: Python, kind: language, description: x, requires: [basics:1]}",
+        "python: {name: Python, kind: language, description: x, requires: [basics:1], implies: [docker:1]}",
+    )
+    cat = model.load_catalog(make(tmp_path, skills=ok))
+    assert cat.skills["python"].implies == (Requirement(("docker",), 1),) and validate.validate(cat).errors == []
+    for implies, message in [
+        ("[go|docker:1]", "python: implies a choice (go|docker:1); name one skill"),
+        ("[python:1]", "python: implies itself"),
+        ("[terraform:1]", "python: implies unknown skill 'terraform'"),
+        ("[basics:2]", "python: basics is both required and implied"),
+    ]:
+        bad = ok.replace("implies: [docker:1]", f"implies: {implies}")
+        (tmp_path / "skills.yaml").write_text(bad)
+        assert f"skill {message}" in errors(tmp_path), implies
+
+
 def test_unknown_references_and_missing_roadmaps_are_reported(tmp_path):
     path = make(tmp_path, dev_mid="docker:2, terraform:1")
     (path / "roadmaps" / "ops.yaml").unlink()

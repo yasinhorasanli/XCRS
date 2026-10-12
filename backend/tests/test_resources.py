@@ -164,6 +164,26 @@ def test_gaps_the_learner_partly_has_get_resources_after_new_ones():
     assert picked[:2] == ["bash", "git"] and picked.count("pyvideo") + picked.count("pycourse") <= 1
 
 
+def test_resources_dont_teach_again_what_the_learner_knows():
+    """ADR-0038 note (engine v3.6): for an OOP gap, a Java expert gets a design resource, not "Learn Java";
+    a Java beginner still gets "Learn Java" (its Java part is new to them)."""
+    snap = snapshot_from_catalog(model.load_catalog())
+    snap.teaching = {}
+    snap.languages = frozenset({"java"})
+    for r in [
+        ResourceRef("learnjava", "Learn Java", "u1", "Oracle", "docs", None, True, True, (("java", 2), ("oop", 2))),
+        ResourceRef(
+            "patterns", "Design Patterns", "u2", "P", "tutorial", None, True, True, (("design-patterns", 2), ("oop", 2))
+        ),
+    ]:
+        for skill, _ in r.teaches:
+            snap.teaching.setdefault(skill, []).append(r)
+    gaps = [Gap(("oop",), 2, 0, "Programming foundations")]
+    pick = lambda levels: suggest_resources(snap, gaps, known={"java"}, levels=levels)[0][0].id  # noqa: E731
+    assert pick({"java": 4}) == "patterns"
+    assert pick({"java": 1}) == "learnjava"
+
+
 @pytest.fixture
 def session():
     s = new_session()

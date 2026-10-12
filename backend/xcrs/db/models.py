@@ -122,6 +122,23 @@ class SkillPrerequisite(Base):
     min_level: Mapped[int] = mapped_column(SmallInteger)
 
 
+class SkillImplication(Base):
+    """What knowing a skill shows (ADR-0028 note): knowing `skill_id` at level L shows `implied_skill_id` at
+    min(L, max_level). Not a prerequisite."""
+
+    __tablename__ = "skill_implications"
+    __table_args__ = (
+        CheckConstraint("max_level BETWEEN 1 AND 4", name="skill_implications_max_level_check"),
+        CheckConstraint("skill_id <> implied_skill_id", name="skill_implications_not_self"),
+        Index("skill_implications_implied_idx", "implied_skill_id"),
+        {"schema": CATALOG},
+    )
+
+    skill_id: Mapped[int] = mapped_column(ForeignKey("catalog.skills.id", ondelete="CASCADE"), primary_key=True)
+    implied_skill_id: Mapped[int] = mapped_column(ForeignKey("catalog.skills.id", ondelete="CASCADE"), primary_key=True)
+    max_level: Mapped[int] = mapped_column(SmallInteger)
+
+
 class CareerRole(Base):
     __tablename__ = "roles"
     __table_args__ = ({"schema": CATALOG},)

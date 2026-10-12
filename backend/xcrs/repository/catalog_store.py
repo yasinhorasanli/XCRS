@@ -33,6 +33,7 @@ from xcrs.db.models import (
     RoleTitle,
     RoleTitleSkill,
     Skill,
+    SkillImplication,
     SkillPrerequisite,
 )
 from xcrs.domain.role_scoring import CatalogSnapshot, ResourceRef, RoleSnapshot, SectionRef
@@ -156,7 +157,7 @@ def import_catalog(
     session.execute(delete(role_levels).where(tuple_(role_levels.c.role_id, role_levels.c.level_id).not_in(keep)))
 
     # Parts: replaced as a whole.
-    for model in (SkillPrerequisite, RoleTitle, RoadmapStage, CommonPath, LegacyRoleMap):
+    for model in (SkillPrerequisite, SkillImplication, RoleTitle, RoadmapStage, CommonPath, LegacyRoleMap):
         session.execute(delete(model))
     prerequisites = [
         row
@@ -165,6 +166,13 @@ def import_catalog(
     ]
     if prerequisites:
         session.execute(insert(SkillPrerequisite), prerequisites)
+    implications = [
+        {"skill_id": skill_ids[s.id], "implied_skill_id": skill_ids[i.options[0]], "max_level": i.level}
+        for s in cat.skills.values()
+        for i in s.implies
+    ]
+    if implications:
+        session.execute(insert(SkillImplication), implications)
 
     titles = [(r, a) for r in cat.roles.values() for a in r.also_called]
     if titles:
@@ -229,6 +237,7 @@ def import_catalog(
     track("families", *family_changes, _remove_absent(session, families, "slug", cat.families))
     changes["parts"] = {
         "skill_prerequisites": len(prerequisites),
+        "skill_implications": len(implications),
         "role_titles": len(titles),
         "roadmap_stages": len(stage_ids),
         "roadmap_items": len(items),
@@ -382,6 +391,9 @@ def load_snapshot(session: Session) -> CatalogSnapshot:
     for row in session.execute(select(SkillPrerequisite)).scalars():
         group = prerequisites.setdefault(skills[row.skill_id], {}).setdefault(row.group_no, ([], row.min_level))
         group[0].append(skills[row.option_skill_id])
+    implications: dict[str, list[tuple[str, int]]] = {}
+    for row in session.execute(select(SkillImplication)).scalars():
+        implications.setdefault(skills[row.skill_id], []).append((skills[row.implied_skill_id], row.max_level))
     level_slugs = dict(session.execute(select(Level.id, Level.slug)).all())
     items: dict[int, dict[int, tuple[list[str], int]]] = {}
     for row in session.execute(select(RoadmapItem)).scalars():
@@ -458,6 +470,7 @@ def load_snapshot(session: Session) -> CatalogSnapshot:
         skill_names=names,
         resources=resources,
         prerequisites={s: [(tuple(o), lv) for _, (o, lv) in sorted(g.items())] for s, g in prerequisites.items()},
+        implications=implications,
         languages=frozenset(session.scalars(select(Skill.slug).where(Skill.kind == "language"))),
     )
     _snapshots.clear()

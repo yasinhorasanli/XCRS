@@ -247,6 +247,10 @@ erDiagram
 
 Curated resources (`catalog/resources.yaml`) are loaded by `xcrs catalog import` (source `curated`; they win over an adapter's row for the same URL; removed ones are deactivated). Adapters (`xcrs resources ingest freecodecamp|youtube`) write raw records and resources; `xcrs resources tag` adds LLM tags; `xcrs resources check-links` records link status. Series links (resource → resource) come when a source has real series.
 
+**`catalog.skill_implications`** (migration 0016, ADR-0028 note): `skill_id`, `implied_skill_id` (both → `catalog.skills`
+ON DELETE CASCADE, PK together, CHECK not equal), `max_level` smallint 1–4. From `implies` in `skills.yaml`, replaced on every
+import: knowing `skill_id` at level L shows `implied_skill_id` at min(L, `max_level`).
+
 ## Size today
 
 | Table | Rows (1 model) |

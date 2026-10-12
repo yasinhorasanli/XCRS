@@ -266,3 +266,8 @@ gap another one covers 68 of 318 → 0, resources only for gaps the learner part
 Also v3.5 (ADR-0031 note): a skill known at working level or above implies its prerequisites at working level;
 labeled profiles: top-1 52/53 and levels 31/53 unchanged, fundamentals wrongly left as a gap 13 → 6; with the resource
 change, 108 shown roles, 88% with a video.
+
+Engine v3.5 → v3.6 (ADR-0028 and ADR-0038 notes): `implies` links (class-based languages → OOP) and resources that
+don't re-teach what the learner knows. Labeled profiles: top-1 52/53 and levels 31/53 unchanged; gate 53/53 kept,
+82% precision, 0/1500 merged boards empty; resources that also teach something the learner already has 42 → 26 of
+324; 88% of shown roles with a video.

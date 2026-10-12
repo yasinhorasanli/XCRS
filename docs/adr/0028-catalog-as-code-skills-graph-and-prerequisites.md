@@ -58,3 +58,14 @@
 - Another maintainer without Git access needs to edit the catalog → admin UI.
 - The graph grows to thousands of skills → generate parts (e.g. from taxonomy imports) instead of hand-editing one file.
 - Learners need finer levels than four.
+
+## Note (2026-10-12): `implies`, what knowing a skill shows
+
+A learner who rated Java 4 got "Object-oriented programming · working" as a gap and "Learn Java" as its resource:
+`requires` holds real prerequisites only, and OOP isn't one for Java (it is learned through Java), so nothing said
+that knowing Java shows OOP. Decided by the decider: a second link, `implies` in `skills.yaml`, one skill per entry,
+never both required and implied (validated). Knowing a skill at level L shows each implied skill at min(L, the level
+given). First use: the class-based languages Java, Kotlin, C#, Swift and Dart imply `oop:2`; Python, JavaScript,
+TypeScript, C++ and PHP don't (OOP is optional there). Stored in `catalog.skill_implications` (migration 0016),
+followed by the engine with the prerequisites (engine v3.6). Labeled profiles: top-1 52/53 and levels 31/53
+unchanged; OOP left as a gap for the expected role in 4 profiles. Roadmap reviews may add more links of this kind.

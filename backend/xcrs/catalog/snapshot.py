@@ -59,6 +59,7 @@ def snapshot_from_catalog(cat: Catalog) -> CatalogSnapshot:
         roles=roles,
         skill_names={s.id: s.name for s in cat.skills.values()},
         prerequisites={s.id: [(r.options, r.level) for r in s.requires] for s in cat.skills.values()},
+        implications={s.id: [(r.options[0], r.level) for r in s.implies] for s in cat.skills.values() if s.implies},
         languages=frozenset(s.id for s in cat.skills.values() if s.kind == "language"),
         resources=[
             ResourceRef(

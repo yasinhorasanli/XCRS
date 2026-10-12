@@ -72,3 +72,8 @@ roles (106, database resources):
 Also in v3.5 (decided by the decider, ADR-0031 note): knowing a skill at working level or above implies its
 prerequisites at working level, so a Python expert no longer has "Programming fundamentals · working (you: basic)"
 in their gaps. With both changes, 108 shown roles: 88% with a video, no repeated or partly-had-only resources.
+
+**Engine v3.6 (same day):** resources don't teach again what the learner already has: a resource whose other skills
+the learner has at least at the level it teaches them ranks below one that doesn't ("Learn Java" is beginner
+material for a Java expert who needs OOP; a Java beginner still gets it). Labeled profiles: resources that also teach
+something the learner already has at that level 42 → 26 of 324 (the rest are gaps whose every resource overlaps).

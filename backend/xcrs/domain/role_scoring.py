@@ -190,6 +190,7 @@ class CatalogSnapshot:
     roles: dict[str, RoleSnapshot]
     skill_names: dict[str, str]
     prerequisites: dict[str, list[tuple[tuple[str, ...], int]]] = field(default_factory=dict)  # skill -> requires
+    implications: dict[str, list[tuple[str, int]]] = field(default_factory=dict)  # skill -> what knowing it shows
     weights: dict[str, float] = field(default_factory=dict)  # distinctiveness per skill
     resources: list[ResourceRef] = field(default_factory=list)
     languages: frozenset[str] = frozenset()  # skills of kind "language" (resource choice, ADR-0038)
@@ -243,16 +244,28 @@ class RoleScore:
     interest_in_role: float = 0.0  # share of the role's skills (distinctiveness x reliance) enjoyed or curious
 
 
-def with_prerequisites(have: dict[str, int], prerequisites: dict[str, list[tuple[tuple[str, ...], int]]]):
+def with_prerequisites(
+    have: dict[str, int],
+    prerequisites: dict[str, list[tuple[tuple[str, ...], int]]],
+    implications: dict[str, list[tuple[str, int]]] | None = None,
+):
     """Knowing a skill implies its prerequisites at the proficiency they ask for (Django:2 needs Python:2),
     recursively, and at working level when the skill is known at working level or above (engine v3.5): Python asks
     only basic programming fundamentals of a beginner, but someone who knows Python well has them at working level.
     Not higher: expert Python doesn't make expert fundamentals (that cost level accuracy on the labeled profiles).
-    A choice ("python|go:2") implies nothing unless the learner named one of its options."""
+    A choice ("python|go:2") implies nothing unless the learner named one of its options.
+
+    `implications` (the catalog's `implies`, ADR-0028 note) say what knowing a skill shows without being its
+    prerequisite: Java known at working level shows OOP at working level; at basic level, OOP at basic."""
     implied = dict(have)
     stack = list(have)
     while stack:
         skill = stack.pop()
+        for target, level in (implications or {}).get(skill, ()):
+            want = min(implied[skill], level)
+            if implied.get(target, 0) < want:
+                implied[target] = want
+                stack.append(target)
         for options, level in prerequisites.get(skill, ()):
             if len(options) == 1:
                 target = options[0]
@@ -348,7 +361,7 @@ def score_roles(
     """Every role, best first."""
     mentions = list(mentions)
     have, category = learner_skills(mentions)
-    have = with_prerequisites(have, snapshot.prerequisites)
+    have = with_prerequisites(have, snapshot.prerequisites, snapshot.implications)
     attention = sum(abs(weights.of(c)) * snapshot.weights.get(s, 1.0) for s, c in category.items()) or 1.0
     results = []
     for role in snapshot.roles.values():
@@ -449,12 +462,14 @@ def suggest_resources(
     relevant: set[str] | None = None,
     limit: int = 3,
     known: set[str] | None = None,
+    levels: dict[str, int] | None = None,
 ) -> list[tuple[ResourceRef, list[str]]]:
     """Up to `limit` resources for the earliest gaps, in roadmap order, each with the gap skills it covers.
         Prefers resources that are curated, free, cover several gaps at once, stay on topic (teach nothing
         outside `relevant`: the role's skills and the learner's), teach few skills that are neither a gap nor in
-    `known` (the learner's: a Python learner gets Python material, not Java, where both fit the role), and reach
-    the proficiency asked.
+    `known` (the learner's: a Python learner gets Python material, not Java, where both fit the role), don't teach
+    again what the learner already has (`levels`: no "Learn Java" for a Java expert), and reach the proficiency
+    asked.
 
         One slot is kept for a video (ADR-0038): if none of the others is a video or playlist and one teaches
         a shown gap that is new to the learner and not covered yet, and nothing beyond the gaps and the learner's
@@ -483,6 +498,13 @@ def suggest_resources(
             return 0
         return sum(1 for s, _ in r.teaches if s in snapshot.languages and s not in need and s not in known)
 
+    def redundant(r: ResourceRef) -> int:
+        """Skills it teaches, besides the gaps, that the learner already has at least as well as it teaches them
+        (`levels`, implied ones included): "Learn Java" is beginner material for a Java expert who needs OOP."""
+        if not levels:
+            return 0
+        return sum(1 for s, lv in r.teaches if s not in need and levels.get(s, 0) >= lv)
+
     def extras(r: ResourceRef) -> int:
         return sum(1 for s, _ in r.teaches if known is not None and s not in need and s not in known)
 
@@ -493,6 +515,7 @@ def suggest_resources(
         return (
             -other_languages(r),
             -off_topic(r),
+            -redundant(r),
             r.curated,
             r.free,
             len(gaps_hit),
