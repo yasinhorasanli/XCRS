@@ -202,8 +202,11 @@ def session():
 
 
 def test_curated_import_loads_resources_and_tags(session):
+    # Curated resources removed from the YAML stay as inactive rows (an import deactivates them), so count active ones.
     curated = session.scalar(
-        select(text("count(*)")).select_from(LearningResource).where(LearningResource.source == "curated")
+        select(text("count(*)"))
+        .select_from(LearningResource)
+        .where(LearningResource.source == "curated", LearningResource.is_active)
     )
     assert curated == len(model.load_catalog().resources)
     tags = session.scalar(

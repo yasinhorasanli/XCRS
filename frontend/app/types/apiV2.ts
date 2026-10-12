@@ -35,7 +35,9 @@ export interface ChipInput {
 export interface Level {
   id: string
   title: string | null
-  coverage: number
+  coverage: number // cumulative share of everything up to this level (no longer shown)
+  evidence?: number // what this level adds, met (reached at 0.45); engine v3.7+
+  progress?: number // the level bar: 1 reached, the next level partly, later 0; engine v3.7+
 }
 
 export interface Gap {
@@ -43,6 +45,7 @@ export interface Gap {
   need: number
   have: number
   stage: string
+  level?: string | null // the level that asks for it at this proficiency (engine v3.7+)
 }
 
 export interface ResourceSection {

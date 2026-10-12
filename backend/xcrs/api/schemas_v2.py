@@ -69,7 +69,9 @@ class SkillRefV2(BaseModel):
 class LevelV2(BaseModel):
     id: str
     title: str | None
-    coverage: float
+    coverage: float  # cumulative: the share of everything up to this level the board meets
+    evidence: float | None = None  # what this level adds, met (the level is reached at 0.45); results since v3.7
+    progress: float | None = None  # the level bar: 1 = reached, the next level partly, later ones 0; since v3.7
 
 
 class GapV2(BaseModel):
@@ -77,6 +79,7 @@ class GapV2(BaseModel):
     need: int
     have: int
     stage: str
+    level: str | None = None  # the level that asks for it at this proficiency (results since v3.7)
 
 
 class BecauseV2(SkillRefV2):
