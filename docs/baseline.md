@@ -259,3 +259,10 @@ Engine v3.3 → v3.4 (same night): a broad 29-skill board got no role (its mean 
 applies only to weak evidence. Labeled profiles: 53/53 kept, 82% of shown roles expected or accepted (v3.3: 83%);
 gate boards (`eval/gate_boards.yaml`, thin + broad) 9/10 → 10/10; broad boards merged from three profiles with no
 role shown: 4/1500 → 0/1500.
+
+Engine v3.4 → v3.5 (resources, ADR-0038 note): over the labeled profiles' 106 shown roles, resources repeating a
+gap another one covers 68 of 318 → 0, resources only for gaps the learner partly has 70 → 0, roles with a video
+87% → 84%.
+Also v3.5 (ADR-0031 note): a skill known at working level or above implies its prerequisites at working level;
+labeled profiles: top-1 52/53 and levels 31/53 unchanged, fundamentals wrongly left as a gap 13 → 6; with the resource
+change, 108 shown roles, 88% with a video.

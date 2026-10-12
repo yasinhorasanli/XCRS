@@ -102,11 +102,15 @@ def test_suggestions_prefer_curated_free_on_topic_resources_for_the_earliest_gap
     picked = suggest_resources(snap, gaps, relevant={"oop", "git", "java"})
     assert [(r.id, hits) for r, hits in picked] == [("java", ["oop"]), ("git", ["git"])]
 
+    # The video slot takes a gap no other resource covers (engine v3.5): an OOP video doesn't repeat Java OOP...
     video = ResourceRef("yt", "OOP playlist", "u6", "YouTube · X", "playlist", None, True, False, (("oop", 2),))
     snap.teaching["oop"].append(video)
     picked = suggest_resources(snap, gaps, relevant={"oop", "git", "java"})
-    assert [(r.id, hits) for r, hits in picked] == [("java", ["oop"]), ("git", ["git"]), ("yt", ["oop"])]
-    assert [r.id for r, _ in suggest_resources(snap, gaps, relevant={"oop", "git", "java"}, limit=2)] == ["java", "yt"]
+    assert [(r.id, hits) for r, hits in picked] == [("java", ["oop"]), ("git", ["git"])]
+    # ...a Git video does, in the slot kept for it.
+    git_video = ResourceRef("ytg", "Git playlist", "u8", "YouTube · Z", "playlist", None, True, False, (("git", 2),))
+    snap.teaching["git"].append(git_video)
+    assert [r.id for r, _ in suggest_resources(snap, gaps, relevant={"oop", "git", "java"}, limit=2)] == ["java", "ytg"]
 
     # The learner's language comes before "curated": a Python learner gets Python OOP, not Java OOP.
     snap.languages = frozenset({"java", "python", "cpp"})
@@ -114,6 +118,50 @@ def test_suggestions_prefer_curated_free_on_topic_resources_for_the_earliest_gap
     snap.teaching["oop"].append(py)
     picked = suggest_resources(snap, gaps, relevant={"oop", "git", "java", "python"}, known={"python"})
     assert picked[0][0].id == "py"
+
+
+def test_gaps_the_learner_partly_has_get_resources_after_new_ones():
+    """Engine v3.5: knowing Python implies programming fundamentals only at basic level, so a role asking for working
+    fundamentals lists them first; a Python learner should still get resources for what is new to them (Shell
+    scripting, Git) before a beginner course, and no second course for the same gap in the video slot."""
+    snap = snapshot_from_catalog(model.load_catalog())
+    snap.teaching = {}
+    snap.languages = frozenset({"python", "c"})
+    for r in [
+        ResourceRef(
+            "pycourse",
+            "Python course",
+            "u1",
+            "P",
+            "course",
+            None,
+            True,
+            True,
+            (("python", 2), ("programming-fundamentals", 2)),
+        ),
+        ResourceRef(
+            "pyvideo",
+            "Python for beginners",
+            "u2",
+            "YouTube · M",
+            "video",
+            None,
+            True,
+            False,
+            (("python", 1), ("programming-fundamentals", 2)),
+        ),
+        ResourceRef("bash", "Bash manual", "u3", "P", "docs", None, True, True, (("shell-scripting", 3),)),
+        ResourceRef("git", "Pro Git", "u4", "P", "book", None, True, True, (("git", 3),)),
+    ]:
+        for skill, _ in r.teaches:
+            snap.teaching.setdefault(skill, []).append(r)
+    gaps = [
+        Gap(("programming-fundamentals",), 2, 1, "Systems foundations"),  # implied at basic by Python
+        Gap(("shell-scripting",), 2, 0, "Systems foundations"),
+        Gap(("git",), 2, 0, "Systems foundations"),
+    ]
+    picked = [r.id for r, _ in suggest_resources(snap, gaps, known={"python", "programming-fundamentals"})]
+    assert picked[:2] == ["bash", "git"] and picked.count("pyvideo") + picked.count("pycourse") <= 1
 
 
 @pytest.fixture
