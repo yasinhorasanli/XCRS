@@ -69,5 +69,6 @@ roles (106, database resources):
 | v3.4 | 87% | 68 of 318 | 70 |
 | v3.5 | 84% | 0 | 0 |
 
-Still open (a scoring question for the decider): knowing a language well implies programming fundamentals at basic
-only, so "Programming fundamentals · working (you: basic)" stays in the gaps of a Python expert.
+Also in v3.5 (decided by the decider, ADR-0031 note): knowing a skill at working level or above implies its
+prerequisites at working level, so a Python expert no longer has "Programming fundamentals · working (you: basic)"
+in their gaps. With both changes, 108 shown roles: 88% with a video, no repeated or partly-had-only resources.

@@ -112,6 +112,9 @@ def test_known_skills_imply_their_prerequisites(snapshot):
     assert have["python"] >= 2  # Django requires Python at working level
     choice = with_prerequisites({"docker": 2}, snapshot.prerequisites)
     assert "python" not in choice and "go" not in choice  # "python|go:2" implies neither, unless named
+    # Python asks basic fundamentals of a beginner; knowing it well implies working fundamentals, not expert ones.
+    assert with_prerequisites({"python": 1}, snapshot.prerequisites)["programming-fundamentals"] == 1
+    assert with_prerequisites({"python": 4}, snapshot.prerequisites)["programming-fundamentals"] == 2
 
 
 def test_a_skill_mentioned_twice_keeps_its_best_rating_and_the_more_telling_category():

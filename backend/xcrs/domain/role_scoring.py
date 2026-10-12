@@ -32,6 +32,7 @@ from enum import StrEnum
 LADDER = ("entry", "mid", "senior", "staff")
 STARTING_COVERAGE = 0.55  # entry barrier (roles that start above entry)
 LEVEL_EVIDENCE = 0.45  # a level counts as reached when this much of what it adds is on the board (ADR-0041)
+IMPLIED_CAP = 2  # knowing a skill at working level or above implies its prerequisites at working level at least
 LIFT_EVIDENCE = 0.25  # experience lifts the level only with at least this much evidence for the role at that level
 
 # Which roles to show (ADR-0052), calibrated with eval/bench_role_gate.py: every labeled profile keeps its expected
@@ -244,7 +245,10 @@ class RoleScore:
 
 def with_prerequisites(have: dict[str, int], prerequisites: dict[str, list[tuple[tuple[str, ...], int]]]):
     """Knowing a skill implies its prerequisites at the proficiency they ask for (Django:2 needs Python:2),
-    recursively. A choice ("python|go:2") implies nothing unless the learner named one of its options."""
+    recursively, and at working level when the skill is known at working level or above (engine v3.5): Python asks
+    only basic programming fundamentals of a beginner, but someone who knows Python well has them at working level.
+    Not higher: expert Python doesn't make expert fundamentals (that cost level accuracy on the labeled profiles).
+    A choice ("python|go:2") implies nothing unless the learner named one of its options."""
     implied = dict(have)
     stack = list(have)
     while stack:
@@ -257,8 +261,9 @@ def with_prerequisites(have: dict[str, int], prerequisites: dict[str, list[tuple
                 if not named:
                     continue
                 target = max(named, key=lambda o: have[o])
-            if implied.get(target, 0) < level:
-                implied[target] = level
+            want = max(level, min(implied[skill], IMPLIED_CAP))
+            if implied.get(target, 0) < want:
+                implied[target] = want
                 stack.append(target)
     return implied
 

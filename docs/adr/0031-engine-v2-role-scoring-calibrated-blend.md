@@ -84,3 +84,13 @@ The decider chose **S2**.
 - Real feedback disagrees with the profiles' labels → add those cases and re-calibrate.
 - The catalog changes substantially (roles added or merged) → re-run `eval/bench_role_scoring.py`. The test `test_the_calibrated_weights_keep_their_accuracy_on_the_profiles` fails below 90% top-1.
 - Learners rate proficiency most of the time → re-measure the level bar; a higher bar may then pay off.
+
+## Note (2026-10-12, engine v3.5): prerequisites implied at working level
+
+"Known skills imply their prerequisites" implied them only at the level the prerequisite asks for: Python asks basic
+programming fundamentals, so a learner who rated Python 4 still had "Programming fundamentals · working (you: basic)"
+first in every role's gaps (and, until the ADR-0038 note, two Python beginner courses for it). Now a skill known at
+working level or above implies its prerequisites at working level at least (`IMPLIED_CAP` 2). On the labeled
+profiles: top-1 52/53 and levels 31/53 unchanged; the expected role's gaps list fundamentals for 6 profiles instead
+of 13. Implying the same level as the skill (expert Python → expert fundamentals) was measured too and cost one level
+estimate (30/53), so the cap stays at working.
