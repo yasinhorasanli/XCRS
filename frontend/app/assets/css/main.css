@@ -47,6 +47,71 @@ body {
   }
 }
 
+/* Results bars (level, interest): glossy liquid pills, like the letters of the logo. `--c` is the fill colour. */
+.liquid-track {
+  position: relative;
+  display: block;
+  height: 0.75rem;
+  border-radius: 9999px;
+  background: var(--ui-bg-elevated);
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.18);
+  overflow: hidden;
+}
+.liquid-fill {
+  position: relative;
+  display: block;
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--c) 55%, white) 0%,
+    var(--c) 55%,
+    color-mix(in srgb, var(--c) 78%, black) 100%
+  );
+  box-shadow:
+    inset 0 -1px 1px rgb(0 0 0 / 0.18),
+    0 0 6px color-mix(in srgb, var(--c) 45%, transparent);
+  overflow: hidden;
+}
+/* The glare across the top of the liquid. */
+.liquid-fill::after {
+  content: "";
+  position: absolute;
+  inset: 1px 0.35rem auto;
+  height: 38%;
+  border-radius: 9999px;
+  background: linear-gradient(to bottom, rgb(255 255 255 / 0.7), rgb(255 255 255 / 0));
+}
+/* A level in progress: the liquid moves slowly. */
+.liquid-fill.flowing::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 20%, rgb(255 255 255 / 0.35) 45%, transparent 70%);
+  background-size: 220% 100%;
+  animation: liquid-flow 2.8s ease-in-out infinite;
+}
+@keyframes liquid-flow {
+  from { background-position: 120% 0; }
+  to { background-position: -120% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .liquid-fill.flowing::before { animation: none; }
+}
+
+/* "Start learning" after a tap on the next level: a frame that fades out. */
+.flash-frame {
+  border-radius: 0.9rem;
+  animation: flash-frame 2.2s ease-out;
+}
+@keyframes flash-frame {
+  0%, 45% { outline: 3px solid var(--color-emerald-400); outline-offset: 6px; }
+  100% { outline: 3px solid transparent; outline-offset: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flash-frame { animation-duration: 0.01s; outline: 3px solid var(--color-emerald-400); outline-offset: 6px; }
+}
+
 /* Explanations arriving in the background: a soft shimmer instead of a spinner. */
 .shimmer {
   background: linear-gradient(90deg, rgb(226 232 240) 0%, rgb(241 245 249) 50%, rgb(226 232 240) 100%);

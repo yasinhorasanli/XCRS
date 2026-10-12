@@ -100,7 +100,9 @@ resources:
   - {url: https://www.rabbitmq.com/tutorials, title: "RabbitMQ tutorials", provider: RabbitMQ, type: tutorial, level: beginner, free: true, teaches: [message-brokers:2]}
   - {url: https://kafka.apache.org/documentation/, title: "Apache Kafka documentation", provider: Apache Software Foundation, type: docs, level: intermediate, free: true, teaches: [kafka:2, event-driven-architecture:1]}
   - {url: https://github.com/donnemartin/system-design-primer, title: "The System Design Primer", provider: Donne Martin (GitHub), type: tutorial, level: intermediate, free: true, teaches: [system-design:2, distributed-systems:1, caching:2]}
-  - {url: https://pdos.csail.mit.edu/6.824/, title: "Distributed Systems (6.5840)", provider: MIT, type: course, level: advanced, free: true, teaches: [distributed-systems:3]}
+  # Cambridge, not MIT 6.5840 (2026-10-12, decider): MIT's page is a live class site without recorded lectures;
+  # this one has the 8 recorded lectures, full notes with exercises and the slides, all public.
+  - {url: https://www.cl.cam.ac.uk/teaching/2122/ConcDisSys/materials.html, title: "Distributed Systems (Cambridge, Martin Kleppmann): videos, notes and slides", provider: University of Cambridge, type: course, level: intermediate, free: true, teaches: [distributed-systems:2]}
   - {url: https://microservices.io/patterns/, title: "Microservice patterns", provider: microservices.io, type: docs, level: intermediate, free: true, teaches: [microservices:2, architecture-patterns:2]}
   - {url: https://martinfowler.com/articles/201701-event-driven.html, title: "What do you mean by \"Event-Driven\"?", provider: martinfowler.com, type: tutorial, level: intermediate, free: true, teaches: [event-driven-architecture:2]}
   - {url: https://martinfowler.com/bliki/DomainDrivenDesign.html, title: "Domain Driven Design", provider: martinfowler.com, type: tutorial, level: intermediate, free: true, teaches: [domain-driven-design:1]}

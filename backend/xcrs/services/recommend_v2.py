@@ -15,11 +15,15 @@ from sqlalchemy.orm import Session
 from xcrs.db.models import CareerRole, ExplanationV2, FeedbackV2, RecommendationV2
 from xcrs.domain.job_titles import market_titles, title_for
 from xcrs.domain.role_scoring import (
+    LEVEL_EVIDENCE,
     Category,
+    Gap,
     Mention,
     ResourceRef,
     RoleScore,
     learner_skills,
+    level_additions,
+    level_evidence,
     recommendable,
     score_roles,
     section_for,
@@ -30,7 +34,7 @@ from xcrs.explain.v2 import build_facts
 from xcrs.repository import catalog_store
 from xcrs.services.skill_matching import SkillMatcher
 
-ALGORITHM_VERSION = "v3.6"
+ALGORITHM_VERSION = "v3.7"
 
 
 def section_out(ref: ResourceRef, hits: list[str], prerequisites: dict) -> dict | None:
@@ -168,13 +172,37 @@ class RecommendationServiceV2:
         role = snapshot.roles[r.role]
         relevant = known | {o for q in role.requirements[role.levels[-1]] for o in q.options} | set(role.optional)
         # What the learner has, implied skills included: resources don't teach again what they know (ADR-0038 note).
-        levels = with_prerequisites(learner_skills(mentions)[0], snapshot.prerequisites, snapshot.implications)
+        have = with_prerequisites(learner_skills(mentions)[0], snapshot.prerequisites, snapshot.implications)
         names = snapshot.skill_names
+        # The level bar (2026-10-12): levels reached are full; the next one fills with the share of what it adds
+        # that the board shows, full at LEVEL_EVIDENCE (where it would count as reached); later ones are empty.
+        evidence = level_evidence(role, have, snapshot.weights)
+        reached = role.levels.index(r.level) if r.level else -1
+        target = role.levels.index(r.target_level)
+        # The level that asks for each requirement at its proficiency: missing skills are reviewed per level.
+        asked_at = {(q.options, q.level): lv for lv, added in level_additions(role).items() for q in added}
 
         def level(lv: str | None) -> dict | None:
             if lv is None:
                 return None
-            return {"id": lv, "title": role.titles.get(lv), "coverage": round(r.level_coverage[lv], 3)}
+            i = role.levels.index(lv)
+            progress = 1.0 if i <= reached else min(1.0, evidence[lv] / LEVEL_EVIDENCE) if i == target else 0.0
+            return {
+                "id": lv,
+                "title": role.titles.get(lv),
+                "coverage": round(r.level_coverage[lv], 3),
+                "evidence": round(evidence[lv], 3),
+                "progress": round(progress, 3),
+            }
+
+        def gap(g: Gap) -> dict:
+            return {
+                "skills": [{"id": o, "name": names[o]} for o in g.options],
+                "need": g.need,
+                "have": g.have,
+                "stage": g.stage,
+                "level": asked_at.get((g.options, g.need)),
+            }
 
         return {
             "id": role.id,
@@ -191,25 +219,9 @@ class RecommendationServiceV2:
             "target_level": level(r.target_level),
             "levels": [level(lv) for lv in role.levels],
             "because": [{"id": s, "name": names[s], "category": category[s].value} for s in r.because[:6]],
-            "gaps": [
-                {
-                    "skills": [{"id": o, "name": names[o]} for o in g.options],
-                    "need": g.need,
-                    "have": g.have,
-                    "stage": g.stage,
-                }
-                for g in r.gaps[:GAPS_SHOWN]
-            ],
+            "gaps": [gap(g) for g in r.gaps[:GAPS_SHOWN]],
             "gaps_total": len(r.gaps),
-            "basics": [
-                {
-                    "skills": [{"id": o, "name": names[o]} for o in g.options],
-                    "need": g.need,
-                    "have": g.have,
-                    "stage": g.stage,
-                }
-                for g in r.basics
-            ],
+            "basics": [gap(g) for g in r.basics],
             "resources": [
                 {
                     "id": ref.id,
@@ -224,6 +236,6 @@ class RecommendationServiceV2:
                     "duration_minutes": ref.duration_minutes,
                     "section": section_out(ref, hits, snapshot.prerequisites),
                 }
-                for ref, hits in suggest_resources(snapshot, r.gaps, relevant, known=known, levels=levels)
+                for ref, hits in suggest_resources(snapshot, r.gaps, relevant, known=known, levels=have)
             ],
         }

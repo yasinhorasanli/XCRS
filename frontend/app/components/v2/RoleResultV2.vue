@@ -59,15 +59,26 @@ function typeIcon(type: string, url: string): { name: string; class: string } {
 }
 
 
+/** The answers to "Do you know it?", in the learner's words, mapped to the board's boxes. */
+const KNOW_ANSWERS: Record<Category, string> = {
+  liked: 'Yes, and I enjoyed it',
+  neutral: 'Yes, no strong feelings',
+  disliked: "Yes, but I didn't enjoy it",
+  curious: 'No, but I want to learn it',
+}
+/** Level colours (2026-10-12): emerald getting darker as the level rises. */
+const LEVEL_COLOURS = ['#6ee7b7', '#34d399', '#10b981', '#059669']
+const levelColour = (i: number) => LEVEL_COLOURS[Math.min(i + (4 - props.role.levels.length), 3)]!
+
 /** A basic the learner can confirm: into any box, at the level the role assumes (curious has no level). */
 function basicMenu(g: Gap) {
   const into = (skill: SkillRef) =>
     CATEGORIES.map((category) => ({
-      label: CATEGORY_META[category].short,
+      label: KNOW_ANSWERS[category],
       icon: CATEGORY_META[category].icon,
       onSelect: () => emit('add', [{ skill, category, proficiency: category === 'curious' ? undefined : g.need }]),
     }))
-  const heading = (name: string) => ({ type: 'label' as const, label: g.skills.length > 1 ? `Add ${name} as` : 'Add it to your board as' })
+  const heading = (name: string) => ({ type: 'label' as const, label: `Do you know ${name}?` })
   return g.skills.map((s) => [heading(s.name), ...into(s)])
 }
 
@@ -79,8 +90,38 @@ const gapMenu = (g: Gap) => [
   ],
 ]
 
-function addAllBasics() {
-  const items = (props.role.basics ?? [])
+/** The level bar (2026-10-12): reached levels full, the next one partly (how much of what it adds is on the board),
+ * later ones empty. Results before engine v3.7 have no progress: reached levels full, the rest empty. */
+const reachedIndex = computed(() => (props.role.level ? props.role.levels.findIndex((l) => l.id === props.role.level!.id) : -1))
+const targetIndex = computed(() => props.role.levels.findIndex((l) => l.id === props.role.target_level.id))
+function progress(i: number): number {
+  const lv = props.role.levels[i]!
+  if (lv.progress != null) return lv.progress
+  return i <= reachedIndex.value ? 1 : 0
+}
+/** Skills of a reached level the learner didn't list, for the review under that level ("basics"). */
+const reviewOf = (levelId: string) =>
+  (props.role.basics ?? []).filter((g) => (g.level ?? props.role.level?.id) === levelId)
+const openReview = ref<string | null>(null)
+
+/** The next level is where the recommendations start: a tap on it scrolls to "Start learning" (or the skills to
+ * learn when there are no resources) and frames it for a moment. */
+const isNext = (i: number) => i === targetIndex.value && i !== reachedIndex.value
+const learnRef = ref<HTMLElement>()
+const gapsRef = ref<HTMLElement>()
+function goToLearning() {
+  const el = learnRef.value ?? gapsRef.value
+  if (!el) return
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' })
+  el.classList.remove('flash-frame')
+  void el.offsetWidth // restart the animation on a second tap
+  el.classList.add('flash-frame')
+}
+const toggleReview = (id: string) => (openReview.value = openReview.value === id ? null : id)
+
+function addAllBasics(levelId: string) {
+  const items = reviewOf(levelId)
     .filter((g) => !gapOnBoard(g))
     .map((g) => ({ skill: g.skills[0]!, category: 'neutral' as Category, proficiency: g.need }))
   if (items.length) emit('add', items)
@@ -139,30 +180,96 @@ async function send(rating: 1 | -1) {
       <p>{{ role.explanation }}</p>
     </div>
 
-    <div class="mt-4 grid gap-3 sm:grid-cols-2">
+    <div class="mt-4 grid gap-x-6 gap-y-4 sm:grid-cols-2">
+      <!-- The level bar: one segment per level of the role. Same three rows as Interest, so the bars line up. -->
       <div>
-        <div class="flex justify-between text-xs text-muted"><span>Interest</span><span class="tabular-nums">{{ pct(interestShown) }}</span></div>
-        <div class="mt-1 h-2 rounded-full bg-elevated"><div class="h-2 rounded-full bg-violet-500 dark:bg-violet-400" :style="{ width: pct(interestShown) }" /></div>
-        <p class="mt-1 text-[11px] text-dimmed">Of the role's skills, the share you enjoy or are curious about</p>
+        <p class="text-xs text-muted">Your level in this role</p>
+        <ol class="mt-1 grid gap-1" :style="{ gridTemplateColumns: `repeat(${role.levels.length}, minmax(0, 1fr))` }" aria-label="Levels">
+          <li v-for="(lv, i) in role.levels" :key="lv.id" class="min-w-0">
+            <component
+              :is="isNext(i) ? 'button' : 'div'"
+              :type="isNext(i) ? 'button' : undefined"
+              class="block w-full rounded-md text-left"
+              :class="isNext(i) ? 'group cursor-pointer' : ''"
+              :title="isNext(i) ? `What to learn for ${levelName(lv.id, lv.title)}` : undefined"
+              @click="isNext(i) && goToLearning()"
+            >
+            <span
+              class="flex items-center gap-0.5 truncate text-[11px]"
+              :class="i === reachedIndex ? 'font-semibold text-default' : isNext(i) ? 'font-medium text-emerald-700 group-hover:underline dark:text-emerald-300' : 'text-dimmed'"
+            >{{ levelName(lv.id, lv.title) }}<UIcon v-if="isNext(i)" name="i-heroicons-arrow-down-20-solid" class="h-3 w-3 shrink-0 print:hidden" /></span>
+            <span
+              class="liquid-track mt-1"
+              role="img"
+              :aria-label="i <= reachedIndex ? 'reached' : i === targetIndex ? 'next level, partly shown' : 'later'"
+            >
+              <span
+                v-if="progress(i) > 0"
+                class="liquid-fill"
+                :class="i > reachedIndex ? 'flowing opacity-80' : ''"
+                :style="{ width: `${Math.max(8, Math.round(progress(i) * 100))}%`, '--c': levelColour(i) }"
+              />
+            </span>
+            </component>
+            <!-- Easy to spot: the skills this level assumes that the board doesn't show. -->
+            <button
+              v-if="i <= reachedIndex && reviewOf(lv.id).length"
+              type="button"
+              class="mt-1.5 inline-flex max-w-full items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[11px] font-medium text-amber-800 ring-1 ring-inset ring-amber-200 transition hover:bg-amber-100 dark:bg-amber-950/40 dark:text-amber-200 dark:ring-amber-800 dark:hover:bg-amber-900/50 print:hidden"
+              :class="openReview === lv.id ? 'ring-2 ring-amber-400 dark:ring-amber-500' : ''"
+              :aria-expanded="openReview === lv.id"
+              :title="`Skills ${levelName(lv.id, lv.title)} assumes that aren't on your board`"
+              @click="toggleReview(lv.id)"
+            >
+              <UIcon name="i-heroicons-clipboard-document-check" class="h-3.5 w-3.5 shrink-0" />
+              <span class="truncate">{{ reviewOf(lv.id).length }} to check</span>
+              <UIcon :name="openReview === lv.id ? 'i-heroicons-chevron-up-20-solid' : 'i-heroicons-chevron-down-20-solid'" class="h-3.5 w-3.5 shrink-0" />
+            </button>
+          </li>
+        </ol>
       </div>
-      <div>
-        <div class="flex justify-between text-xs text-muted"><span>What you already have</span><span class="tabular-nums">{{ pct(role.coverage) }}</span></div>
-        <div class="mt-1 h-2 rounded-full bg-elevated"><div class="h-2 rounded-full bg-emerald-500 dark:bg-emerald-400" :style="{ width: pct(role.coverage) }" /></div>
-        <p class="mt-1 text-[11px] text-dimmed">Of the role's skills, across its levels</p>
+      <!-- On phones Interest comes first, so the level bar sits right above its review. -->
+      <div class="order-first sm:order-none">
+        <p class="text-xs text-muted">Interest</p>
+        <p class="mt-1 truncate text-[11px] text-dimmed">
+          <span class="font-semibold tabular-nums text-violet-700 dark:text-violet-300">{{ pct(interestShown) }}</span>
+          of the role's skills you enjoy or are curious about
+        </p>
+        <span class="liquid-track mt-1" role="img" :aria-label="`Interest ${pct(interestShown)}`">
+          <span v-if="interestShown > 0" class="liquid-fill" :style="{ width: `max(0.75rem, ${pct(interestShown)})`, '--c': '#8b5cf6' }" />
+        </span>
       </div>
     </div>
 
-    <ol class="mt-4 flex flex-wrap gap-2 text-xs" aria-label="Coverage per level">
-      <li
-        v-for="lv in role.levels"
-        :key="lv.id"
-        class="flex items-center gap-2 rounded-lg px-2.5 py-1 ring-1 ring-inset"
-        :class="role.level?.id === lv.id ? 'bg-indigo-50 dark:bg-indigo-950/40 ring-indigo-300 dark:ring-indigo-800' : 'ring-default'"
+    <!-- Review of a reached level: its skills you didn't list. Open by "Review" (on paper, all of them). -->
+    <template v-for="(lv, i) in role.levels" :key="`review-${lv.id}`">
+      <div
+        v-if="i <= reachedIndex && reviewOf(lv.id).length"
+        class="mt-3 rounded-xl bg-muted/60 px-3 py-2.5 text-sm ring-1 ring-inset ring-default"
+        :class="openReview === lv.id ? '' : 'hidden print:block'"
       >
-        <span>{{ levelName(lv.id, lv.title) }}</span>
-        <span class="tabular-nums text-muted">{{ pct(lv.coverage) }}</span>
-      </li>
-    </ol>
+        <p class="text-xs text-muted">
+          <span class="font-medium text-default">{{ levelName(lv.id, lv.title) }}</span> assumes these skills, but they
+          aren't on your board. Do you know them? <span class="print:hidden">Tap one to answer, or
+          <button type="button" class="font-medium text-indigo-600 dark:text-indigo-300 hover:underline" @click="addAllBasics(lv.id)">I know all of these</button>.</span>
+        </p>
+        <ul class="mt-2 flex flex-wrap gap-1.5">
+          <li v-for="g in reviewOf(lv.id)" :key="g.skills.map((x) => x.id).join('|')">
+            <span v-if="gapOnBoard(g)" class="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs text-dimmed ring-1 ring-inset ring-default">
+              <UIcon name="i-heroicons-check-20-solid" class="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-300" />
+              {{ g.skills.map((x) => x.name).join(' or ') }}
+            </span>
+            <UDropdownMenu v-else :items="basicMenu(g)">
+              <button type="button" class="inline-flex items-center gap-1 rounded-lg bg-default px-2.5 py-1 text-xs text-toned ring-1 ring-inset ring-default transition hover:bg-muted hover:ring-indigo-300 dark:hover:ring-indigo-800">
+                {{ g.skills.map((x) => x.name).join(' or ') }}
+                <span class="text-dimmed">· {{ PROFICIENCY_NAMES[g.need]?.toLowerCase() }}</span>
+                <UIcon name="i-heroicons-plus-20-solid" class="h-3.5 w-3.5 text-dimmed print:hidden" />
+              </button>
+            </UDropdownMenu>
+          </li>
+        </ul>
+      </div>
+    </template>
 
     <div v-if="role.because.length" class="mt-4">
       <h3 class="text-xs font-medium uppercase tracking-wide text-muted">Because of</h3>
@@ -196,7 +303,7 @@ async function send(rating: 1 | -1) {
       </ul>
     </div>
 
-    <div v-if="role.resources?.length" class="mt-4">
+    <div v-if="role.resources?.length" ref="learnRef" class="mt-4">
       <h3 class="text-xs font-medium uppercase tracking-wide text-muted">Start learning</h3>
       <ul class="mt-1.5 grid gap-2 sm:grid-cols-3">
         <li v-for="res in role.resources" :key="res.id">
@@ -228,7 +335,7 @@ async function send(rating: 1 | -1) {
       </ul>
     </div>
 
-    <div v-if="role.gaps.length" class="mt-4">
+    <div v-if="role.gaps.length" ref="gapsRef" class="mt-4">
       <h3 class="text-xs font-medium uppercase tracking-wide text-muted">
         <template v-if="role.level?.id === role.target_level.id">Still to cover at {{ levelName(role.target_level.id, role.target_level.title) }}</template>
         <template v-else>To reach {{ levelName(role.target_level.id, role.target_level.title) }}</template>: {{ role.gaps_total }} {{ role.gaps_total === 1 ? 'skill' : 'skills' }} to learn<span v-if="role.gaps_total > role.gaps.length">, first {{ role.gaps.length }}</span>
@@ -271,29 +378,5 @@ async function send(rating: 1 | -1) {
       </div>
     </div>
 
-    <details v-if="role.basics?.length" class="mt-3 text-sm">
-      <summary class="cursor-pointer text-muted hover:text-default">
-        Assumed at your level: {{ role.basics.length }} {{ role.basics.length === 1 ? 'basic' : 'basics' }} you didn't list. Worth a quick check
-      </summary>
-      <p class="mt-2 text-xs text-muted print:hidden">
-        Click one to put it on your board, or
-        <button type="button" class="font-medium text-indigo-600 dark:text-indigo-300 hover:underline" @click="addAllBasics">add all as Neutral</button>.
-      </p>
-      <ul class="mt-2 flex flex-wrap gap-1.5">
-        <li v-for="g in role.basics" :key="g.skills.map((x) => x.id).join('|')">
-          <span v-if="gapOnBoard(g)" class="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs text-dimmed ring-1 ring-inset ring-default">
-            <UIcon name="i-heroicons-check-20-solid" class="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-300" />
-            {{ g.skills.map((x) => x.name).join(' or ') }}
-          </span>
-          <UDropdownMenu v-else :items="basicMenu(g)">
-            <button type="button" class="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs text-toned ring-1 ring-inset ring-default transition hover:bg-muted hover:ring-indigo-300 dark:hover:ring-indigo-800">
-              {{ g.skills.map((x) => x.name).join(' or ') }}
-              <span class="text-dimmed">· {{ PROFICIENCY_NAMES[g.need]?.toLowerCase() }}</span>
-              <UIcon name="i-heroicons-plus-20-solid" class="h-3.5 w-3.5 text-dimmed print:hidden" />
-            </button>
-          </UDropdownMenu>
-        </li>
-      </ul>
-    </details>
   </article>
 </template>
