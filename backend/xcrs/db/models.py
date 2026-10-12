@@ -315,7 +315,9 @@ class Board(Base):
 class RecommendationV2(Base):
     __tablename__ = "recommendations_v2"
     __table_args__ = (
-        CheckConstraint("status IN ('ok', 'insufficient_input')", name="recommendations_v2_status_check"),
+        CheckConstraint(
+            "status IN ('ok', 'insufficient_input', 'no_clear_match')", name="recommendations_v2_status_check"
+        ),
         Index("recommendations_v2_created_idx", "created_at"),
         Index("recommendations_v2_user_idx", "user_id", "created_at", postgresql_where=text("user_id IS NOT NULL")),
     )

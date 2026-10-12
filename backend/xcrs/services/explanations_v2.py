@@ -61,7 +61,7 @@ def save(session: Session, recommendation_id: uuid.UUID, role: str, out: RoleExp
         .values(
             status=status,
             explanation=out.explanation if out else None,
-            next_step=out.next_step if out else None,
+            next_step=None,  # not written since explain-role-v2.2 (ADR-0052); older rows keep theirs
             prompt_version=PROMPT_VERSION_V2 if out else None,
             ms=ms,
             explained_at=datetime.now(UTC),

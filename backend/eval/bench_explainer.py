@@ -34,11 +34,11 @@ from sqlalchemy import select
 
 from xcrs.db.models import CareerRole
 from xcrs.db.session import new_session
-from xcrs.domain.role_scoring import score_roles
+from xcrs.domain.role_scoring import recommendable, score_roles
 from xcrs.explain.v2 import PROMPT_VERSION_V2 as PROMPT_VERSION
 from xcrs.explain.v2 import RoleExplanationV2Out, build_facts, system_prompt
 from xcrs.repository import catalog_store
-from xcrs.services.recommend_v2 import LEVEL_NAMES, ROLES_SHOWN, RecommendationServiceV2
+from xcrs.services.recommend_v2 import LEVEL_NAMES, RecommendationServiceV2
 
 NS = 1e9
 EMBED_MODEL = "qwen3-embedding:0.6b"
@@ -62,8 +62,8 @@ def build_cases(max_roles: int) -> list[tuple[str, str, dict, int]]:
             }
             for m in mentions
         ]
-        for rank, score in enumerate(score_roles(snapshot, mentions)[: min(max_roles, ROLES_SHOWN)]):
-            role = RecommendationServiceV2._role(snapshot, score, category, set(category))
+        for rank, score in enumerate(recommendable(score_roles(snapshot, mentions))[:max_roles]):
+            role = RecommendationServiceV2._role(snapshot, score, category, set(category), mentions)
             facts = build_facts(role, matched, summaries.get(role["id"]), LEVEL_NAMES)
             cases.append((profile["id"], role["id"], facts, rank))
     return cases

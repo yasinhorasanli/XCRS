@@ -52,7 +52,7 @@ def test_facts_keep_the_learners_words_and_feelings_and_drop_empty_fields():
 
 class FakeExplainer:
     def explain(self, facts):
-        return RoleExplanationV2Out(explanation=f"{facts['role']} fits.", next_step="Start with the basics.")
+        return RoleExplanationV2Out(explanation=f"{facts['role']} fits.")
 
 
 class Queue:
@@ -99,7 +99,8 @@ def test_a_recommendation_queues_one_job_per_role_and_the_worker_writes_them(ses
     row = service.recommend(
         [Chip(Category.LIKED, skill="python", proficiency=3), Chip(Category.CURIOUS, text="Airflow")]
     )
-    assert len(jobs.jobs) == len(row.result["roles"]) == 3
+    # Two roles stand out for this board (ADR-0052: no third role just to fill the list).
+    assert len(jobs.jobs) == len(row.result["roles"]) == 2
 
     app.dependency_overrides[get_service_v2] = lambda: service
     try:
@@ -112,11 +113,11 @@ def test_a_recommendation_queues_one_job_per_role_and_the_worker_writes_them(ses
             yield s
 
         worker = ExplanationWorkerV2(FakeExplainer(), same_session)
-        assert [worker.process(*job) for job in jobs.jobs] == ["done"] * 3
+        assert [worker.process(*job) for job in jobs.jobs] == ["done"] * 2
         assert worker.process(*jobs.jobs[0]) is None  # already done: nothing to do
         after = client.get(f"/api/v2/recommendations/{row.id}").json()
     finally:
         app.dependency_overrides.clear()
     first = after["roles"][0]
     assert first["explanation_status"] == "done" and first["explanation"] == f"{first['name']} fits."
-    assert first["next_step"] == "Start with the basics."
+    assert first["next_step"] is None  # not written since explain-role-v2.2

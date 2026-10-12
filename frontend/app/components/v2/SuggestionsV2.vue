@@ -16,7 +16,7 @@ const placed = (id: string) => chips.value.find((c) => c.skill === id)?.category
   <aside class="rounded-2xl bg-default p-4 shadow-xs ring-1 ring-default" aria-label="Suggested skills">
     <h2 class="font-semibold">Quick start</h2>
     <p class="mt-0.5 text-xs text-muted">
-      Skills each career family starts with. Click to add to
+      Starter skills for each field. Tap one to add it to
       <span class="font-medium" :class="CATEGORY_META[active].text">“{{ CATEGORY_META[active].title }}”</span>.
     </p>
     <div class="mt-3 flex flex-wrap gap-1">

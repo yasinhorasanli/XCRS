@@ -59,7 +59,7 @@ const summary = computed(() => {
 </script>
 
 <template>
-  <div class="mx-auto max-w-6xl px-4 py-8">
+  <div class="page-width py-8">
     <div class="flex flex-wrap items-end justify-between gap-3">
       <div>
         <p class="text-xs font-medium uppercase tracking-wide text-amber-700 dark:text-amber-200">Dev tools · only on localhost and the tailnet</p>

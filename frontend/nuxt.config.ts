@@ -5,12 +5,18 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
   // Follow the device by default; remember explicit choices in localStorage, never a cookie.
-  // Fonts load through @nuxt/fonts (Inter, main.css).
+  // Fonts load through @nuxt/fonts (Inter, main.css); 800 for the home headline.
+  fonts: { defaults: { weights: [400, 500, 600, 700, 800] } },
   colorMode: { preference: 'system', fallback: 'light', storage: 'localStorage' },
   app: {
     head: {
       title: 'XCRS · Explainable course recommendations',
       htmlAttrs: { lang: 'en' },
+      link: [
+        { rel: 'icon', href: '/favicon.ico', sizes: '48x48' },
+        { rel: 'icon', type: 'image/png', href: '/icon-192.png', sizes: '192x192' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+      ],
       meta: [
         {
           name: 'description',

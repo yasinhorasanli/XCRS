@@ -1,0 +1,1069 @@
+{
+  "date": "2026-10-12T02:25:31",
+  "host": "MacBook-Pro.local",
+  "gate": {
+    "min_evidence": 1.0,
+    "min_lift": 2.0,
+    "tail": 0.5
+  },
+  "always_top_3": {
+    "expected_kept": "53/53",
+    "shown_0_1_2_3": [
+      0,
+      0,
+      0,
+      53
+    ],
+    "precision": 0.61,
+    "thin_right": "1/9",
+    "thin_wrong": [
+      {
+        "board": "one-generic-language",
+        "shown": [
+          "solutions-engineer",
+          "cloud-engineer",
+          "qa-automation-engineer"
+        ]
+      },
+      {
+        "board": "one-generic-language-expert",
+        "shown": [
+          "cloud-engineer",
+          "qa-automation-engineer",
+          "solutions-engineer"
+        ]
+      },
+      {
+        "board": "one-generic-tool",
+        "shown": [
+          "analytics-engineer",
+          "cloud-engineer",
+          "embedded-software-engineer"
+        ]
+      },
+      {
+        "board": "only-a-dislike",
+        "shown": [
+          "frontend-engineer",
+          "game-developer",
+          "embedded-software-engineer"
+        ]
+      },
+      {
+        "board": "only-dislikes",
+        "shown": [
+          "cloud-engineer",
+          "embedded-software-engineer",
+          "security-engineer"
+        ]
+      },
+      {
+        "board": "only-generic-neutral",
+        "shown": [
+          "cloud-engineer",
+          "security-engineer",
+          "embedded-software-engineer"
+        ]
+      },
+      {
+        "board": "generic-like-and-a-dislike",
+        "shown": [
+          "security-engineer",
+          "penetration-tester",
+          "solutions-engineer"
+        ]
+      },
+      {
+        "board": "one-distinctive-skill",
+        "shown": [
+          "data-analyst",
+          "analytics-engineer",
+          "frontend-engineer"
+        ]
+      }
+    ]
+  },
+  "gate_defaults": {
+    "expected_kept": "53/53",
+    "shown_0_1_2_3": [
+      0,
+      18,
+      18,
+      17
+    ],
+    "precision": 0.829,
+    "thin_right": "9/9",
+    "thin_wrong": []
+  },
+  "sweep": [
+    {
+      "min_evidence": 0.0,
+      "min_lift": 1.5,
+      "tail": 0.4,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        11,
+        12,
+        30
+      ],
+      "precision": 0.76,
+      "thin_right": "4/9",
+      "thin_wrong": [
+        {
+          "board": "one-generic-language",
+          "shown": [
+            "solutions-engineer",
+            "cloud-engineer",
+            "qa-automation-engineer"
+          ]
+        },
+        {
+          "board": "one-generic-language-expert",
+          "shown": [
+            "cloud-engineer",
+            "qa-automation-engineer",
+            "solutions-engineer"
+          ]
+        },
+        {
+          "board": "only-dislikes",
+          "shown": [
+            "cloud-engineer",
+            "embedded-software-engineer",
+            "security-engineer"
+          ]
+        },
+        {
+          "board": "only-generic-neutral",
+          "shown": [
+            "cloud-engineer",
+            "security-engineer",
+            "embedded-software-engineer"
+          ]
+        },
+        {
+          "board": "generic-like-and-a-dislike",
+          "shown": [
+            "security-engineer",
+            "penetration-tester",
+            "solutions-engineer"
+          ]
+        }
+      ]
+    },
+    {
+      "min_evidence": 0.0,
+      "min_lift": 1.5,
+      "tail": 0.5,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        17,
+        18,
+        18
+      ],
+      "precision": 0.813,
+      "thin_right": "4/9",
+      "thin_wrong": [
+        {
+          "board": "one-generic-language",
+          "shown": [
+            "solutions-engineer",
+            "cloud-engineer",
+            "qa-automation-engineer"
+          ]
+        },
+        {
+          "board": "one-generic-language-expert",
+          "shown": [
+            "cloud-engineer",
+            "qa-automation-engineer",
+            "solutions-engineer"
+          ]
+        },
+        {
+          "board": "only-dislikes",
+          "shown": [
+            "cloud-engineer",
+            "embedded-software-engineer",
+            "security-engineer"
+          ]
+        },
+        {
+          "board": "only-generic-neutral",
+          "shown": [
+            "cloud-engineer",
+            "security-engineer",
+            "embedded-software-engineer"
+          ]
+        },
+        {
+          "board": "generic-like-and-a-dislike",
+          "shown": [
+            "security-engineer",
+            "penetration-tester",
+            "solutions-engineer"
+          ]
+        }
+      ]
+    },
+    {
+      "min_evidence": 0.0,
+      "min_lift": 1.5,
+      "tail": 0.6,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        23,
+        21,
+        9
+      ],
+      "precision": 0.837,
+      "thin_right": "4/9",
+      "thin_wrong": [
+        {
+          "board": "one-generic-language",
+          "shown": [
+            "solutions-engineer",
+            "cloud-engineer",
+            "qa-automation-engineer"
+          ]
+        },
+        {
+          "board": "one-generic-language-expert",
+          "shown": [
+            "cloud-engineer",
+            "qa-automation-engineer",
+            "solutions-engineer"
+          ]
+        },
+        {
+          "board": "only-dislikes",
+          "shown": [
+            "cloud-engineer",
+            "embedded-software-engineer",
+            "security-engineer"
+          ]
+        },
+        {
+          "board": "only-generic-neutral",
+          "shown": [
+            "cloud-engineer",
+            "security-engineer",
+            "embedded-software-engineer"
+          ]
+        },
+        {
+          "board": "generic-like-and-a-dislike",
+          "shown": [
+            "security-engineer",
+            "penetration-tester",
+            "solutions-engineer"
+          ]
+        }
+      ]
+    },
+    {
+      "min_evidence": 0.0,
+      "min_lift": 2.0,
+      "tail": 0.4,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        12,
+        15,
+        26
+      ],
+      "precision": 0.792,
+      "thin_right": "7/9",
+      "thin_wrong": [
+        {
+          "board": "only-dislikes",
+          "shown": [
+            "cloud-engineer",
+            "embedded-software-engineer",
+            "security-engineer"
+          ]
+        },
+        {
+          "board": "generic-like-and-a-dislike",
+          "shown": [
+            "security-engineer",
+            "penetration-tester",
+            "solutions-engineer"
+          ]
+        }
+      ]
+    },
+    {
+      "min_evidence": 0.0,
+      "min_lift": 2.0,
+      "tail": 0.5,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        18,
+        18,
+        17
+      ],
+      "precision": 0.829,
+      "thin_right": "7/9",
+      "thin_wrong": [
+        {
+          "board": "only-dislikes",
+          "shown": [
+            "cloud-engineer",
+            "embedded-software-engineer",
+            "security-engineer"
+          ]
+        },
+        {
+          "board": "generic-like-and-a-dislike",
+          "shown": [
+            "security-engineer",
+            "penetration-tester",
+            "solutions-engineer"
+          ]
+        }
+      ]
+    },
+    {
+      "min_evidence": 0.0,
+      "min_lift": 2.0,
+      "tail": 0.6,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        23,
+        22,
+        8
+      ],
+      "precision": 0.846,
+      "thin_right": "7/9",
+      "thin_wrong": [
+        {
+          "board": "only-dislikes",
+          "shown": [
+            "cloud-engineer",
+            "embedded-software-engineer",
+            "security-engineer"
+          ]
+        },
+        {
+          "board": "generic-like-and-a-dislike",
+          "shown": [
+            "security-engineer",
+            "penetration-tester",
+            "solutions-engineer"
+          ]
+        }
+      ]
+    },
+    {
+      "min_evidence": 0.0,
+      "min_lift": 2.5,
+      "tail": 0.4,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        14,
+        21,
+        18
+      ],
+      "precision": 0.818,
+      "thin_right": "7/9",
+      "thin_wrong": [
+        {
+          "board": "only-dislikes",
+          "shown": [
+            "cloud-engineer",
+            "embedded-software-engineer",
+            "security-engineer"
+          ]
+        },
+        {
+          "board": "generic-like-and-a-dislike",
+          "shown": [
+            "security-engineer",
+            "penetration-tester"
+          ]
+        }
+      ]
+    },
+    {
+      "min_evidence": 0.0,
+      "min_lift": 2.5,
+      "tail": 0.5,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        19,
+        20,
+        14
+      ],
+      "precision": 0.851,
+      "thin_right": "7/9",
+      "thin_wrong": [
+        {
+          "board": "only-dislikes",
+          "shown": [
+            "cloud-engineer",
+            "embedded-software-engineer",
+            "security-engineer"
+          ]
+        },
+        {
+          "board": "generic-like-and-a-dislike",
+          "shown": [
+            "security-engineer",
+            "penetration-tester"
+          ]
+        }
+      ]
+    },
+    {
+      "min_evidence": 0.0,
+      "min_lift": 2.5,
+      "tail": 0.6,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        24,
+        22,
+        7
+      ],
+      "precision": 0.854,
+      "thin_right": "7/9",
+      "thin_wrong": [
+        {
+          "board": "only-dislikes",
+          "shown": [
+            "cloud-engineer",
+            "embedded-software-engineer",
+            "security-engineer"
+          ]
+        },
+        {
+          "board": "generic-like-and-a-dislike",
+          "shown": [
+            "security-engineer",
+            "penetration-tester"
+          ]
+        }
+      ]
+    },
+    {
+      "min_evidence": 0.0,
+      "min_lift": 3.0,
+      "tail": 0.4,
+      "expected_kept": "51/53",
+      "shown_0_1_2_3": [
+        1,
+        19,
+        24,
+        9
+      ],
+      "precision": 0.872,
+      "thin_right": "8/9",
+      "thin_wrong": [
+        {
+          "board": "only-dislikes",
+          "shown": [
+            "cloud-engineer",
+            "embedded-software-engineer",
+            "security-engineer"
+          ]
+        }
+      ]
+    },
+    {
+      "min_evidence": 0.0,
+      "min_lift": 3.0,
+      "tail": 0.5,
+      "expected_kept": "51/53",
+      "shown_0_1_2_3": [
+        1,
+        23,
+        22,
+        7
+      ],
+      "precision": 0.898,
+      "thin_right": "8/9",
+      "thin_wrong": [
+        {
+          "board": "only-dislikes",
+          "shown": [
+            "cloud-engineer",
+            "embedded-software-engineer",
+            "security-engineer"
+          ]
+        }
+      ]
+    },
+    {
+      "min_evidence": 0.0,
+      "min_lift": 3.0,
+      "tail": 0.6,
+      "expected_kept": "51/53",
+      "shown_0_1_2_3": [
+        1,
+        27,
+        22,
+        3
+      ],
+      "precision": 0.887,
+      "thin_right": "8/9",
+      "thin_wrong": [
+        {
+          "board": "only-dislikes",
+          "shown": [
+            "cloud-engineer",
+            "embedded-software-engineer",
+            "security-engineer"
+          ]
+        }
+      ]
+    },
+    {
+      "min_evidence": 0.8,
+      "min_lift": 1.5,
+      "tail": 0.4,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        11,
+        12,
+        30
+      ],
+      "precision": 0.76,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 0.8,
+      "min_lift": 1.5,
+      "tail": 0.5,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        17,
+        18,
+        18
+      ],
+      "precision": 0.813,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 0.8,
+      "min_lift": 1.5,
+      "tail": 0.6,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        23,
+        21,
+        9
+      ],
+      "precision": 0.837,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 0.8,
+      "min_lift": 2.0,
+      "tail": 0.4,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        12,
+        15,
+        26
+      ],
+      "precision": 0.792,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 0.8,
+      "min_lift": 2.0,
+      "tail": 0.5,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        18,
+        18,
+        17
+      ],
+      "precision": 0.829,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 0.8,
+      "min_lift": 2.0,
+      "tail": 0.6,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        23,
+        22,
+        8
+      ],
+      "precision": 0.846,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 0.8,
+      "min_lift": 2.5,
+      "tail": 0.4,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        14,
+        21,
+        18
+      ],
+      "precision": 0.818,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 0.8,
+      "min_lift": 2.5,
+      "tail": 0.5,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        19,
+        20,
+        14
+      ],
+      "precision": 0.851,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 0.8,
+      "min_lift": 2.5,
+      "tail": 0.6,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        24,
+        22,
+        7
+      ],
+      "precision": 0.854,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 0.8,
+      "min_lift": 3.0,
+      "tail": 0.4,
+      "expected_kept": "51/53",
+      "shown_0_1_2_3": [
+        1,
+        19,
+        24,
+        9
+      ],
+      "precision": 0.872,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 0.8,
+      "min_lift": 3.0,
+      "tail": 0.5,
+      "expected_kept": "51/53",
+      "shown_0_1_2_3": [
+        1,
+        23,
+        22,
+        7
+      ],
+      "precision": 0.898,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 0.8,
+      "min_lift": 3.0,
+      "tail": 0.6,
+      "expected_kept": "51/53",
+      "shown_0_1_2_3": [
+        1,
+        27,
+        22,
+        3
+      ],
+      "precision": 0.887,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.0,
+      "min_lift": 1.5,
+      "tail": 0.4,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        11,
+        12,
+        30
+      ],
+      "precision": 0.76,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.0,
+      "min_lift": 1.5,
+      "tail": 0.5,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        17,
+        18,
+        18
+      ],
+      "precision": 0.813,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.0,
+      "min_lift": 1.5,
+      "tail": 0.6,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        23,
+        21,
+        9
+      ],
+      "precision": 0.837,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.0,
+      "min_lift": 2.0,
+      "tail": 0.4,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        12,
+        15,
+        26
+      ],
+      "precision": 0.792,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.0,
+      "min_lift": 2.0,
+      "tail": 0.5,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        18,
+        18,
+        17
+      ],
+      "precision": 0.829,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.0,
+      "min_lift": 2.0,
+      "tail": 0.6,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        23,
+        22,
+        8
+      ],
+      "precision": 0.846,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.0,
+      "min_lift": 2.5,
+      "tail": 0.4,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        14,
+        21,
+        18
+      ],
+      "precision": 0.818,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.0,
+      "min_lift": 2.5,
+      "tail": 0.5,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        19,
+        20,
+        14
+      ],
+      "precision": 0.851,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.0,
+      "min_lift": 2.5,
+      "tail": 0.6,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        24,
+        22,
+        7
+      ],
+      "precision": 0.854,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.0,
+      "min_lift": 3.0,
+      "tail": 0.4,
+      "expected_kept": "51/53",
+      "shown_0_1_2_3": [
+        1,
+        19,
+        24,
+        9
+      ],
+      "precision": 0.872,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.0,
+      "min_lift": 3.0,
+      "tail": 0.5,
+      "expected_kept": "51/53",
+      "shown_0_1_2_3": [
+        1,
+        23,
+        22,
+        7
+      ],
+      "precision": 0.898,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.0,
+      "min_lift": 3.0,
+      "tail": 0.6,
+      "expected_kept": "51/53",
+      "shown_0_1_2_3": [
+        1,
+        27,
+        22,
+        3
+      ],
+      "precision": 0.887,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.5,
+      "min_lift": 1.5,
+      "tail": 0.4,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        11,
+        12,
+        30
+      ],
+      "precision": 0.76,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.5,
+      "min_lift": 1.5,
+      "tail": 0.5,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        17,
+        18,
+        18
+      ],
+      "precision": 0.813,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.5,
+      "min_lift": 1.5,
+      "tail": 0.6,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        23,
+        21,
+        9
+      ],
+      "precision": 0.837,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.5,
+      "min_lift": 2.0,
+      "tail": 0.4,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        12,
+        15,
+        26
+      ],
+      "precision": 0.792,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.5,
+      "min_lift": 2.0,
+      "tail": 0.5,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        18,
+        18,
+        17
+      ],
+      "precision": 0.829,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.5,
+      "min_lift": 2.0,
+      "tail": 0.6,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        23,
+        22,
+        8
+      ],
+      "precision": 0.846,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.5,
+      "min_lift": 2.5,
+      "tail": 0.4,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        14,
+        21,
+        18
+      ],
+      "precision": 0.818,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.5,
+      "min_lift": 2.5,
+      "tail": 0.5,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        19,
+        20,
+        14
+      ],
+      "precision": 0.851,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.5,
+      "min_lift": 2.5,
+      "tail": 0.6,
+      "expected_kept": "53/53",
+      "shown_0_1_2_3": [
+        0,
+        24,
+        22,
+        7
+      ],
+      "precision": 0.854,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.5,
+      "min_lift": 3.0,
+      "tail": 0.4,
+      "expected_kept": "51/53",
+      "shown_0_1_2_3": [
+        1,
+        19,
+        24,
+        9
+      ],
+      "precision": 0.872,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.5,
+      "min_lift": 3.0,
+      "tail": 0.5,
+      "expected_kept": "51/53",
+      "shown_0_1_2_3": [
+        1,
+        23,
+        22,
+        7
+      ],
+      "precision": 0.898,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    },
+    {
+      "min_evidence": 1.5,
+      "min_lift": 3.0,
+      "tail": 0.6,
+      "expected_kept": "51/53",
+      "shown_0_1_2_3": [
+        1,
+        27,
+        22,
+        3
+      ],
+      "precision": 0.887,
+      "thin_right": "9/9",
+      "thin_wrong": []
+    }
+  ]
+}

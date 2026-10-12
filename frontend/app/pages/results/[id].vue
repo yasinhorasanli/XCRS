@@ -108,6 +108,22 @@ const answerGroups = computed(() =>
 )
 const unrecognised = computed(() => data.value?.matched.filter((m) => m.method !== 'picked' && !m.skills.length).length ?? 0)
 
+/** No role stood out (ADR-0052): say why, in the learner's terms. */
+const noMatchReason = computed(() => {
+  const nm = data.value?.no_match
+  if (!nm) return ''
+  if (!nm.positive) return "You only told us what you didn't enjoy, which rules roles out but doesn't point to one."
+  const broad = nm.broad.map((b) => b.name)
+  if (broad.length === 1) {
+    return `${broad[0]} is used by ${nm.broad[0]!.roles} of ${nm.roles_total} roles, so on its own it doesn't point to one.`
+  }
+  if (broad.length > 1) {
+    const list = `${broad.slice(0, -1).join(', ')} and ${broad.at(-1)}`
+    return `${list} are used by most of the ${nm.roles_total} roles, so on their own they don't point to one.`
+  }
+  return "Your skills don't single out one role yet."
+})
+
 /** Back to the board with these answers (also works when the link was shared). */
 function edit() {
   if (data.value && !chips.value.length) fromResult(data.value)
@@ -168,13 +184,15 @@ async function update() {
 </script>
 
 <template>
-  <div class="mx-auto max-w-5xl px-4 pb-16 pt-8">
+  <div class="page-width pb-16 pt-8">
+    <!-- The PDF has no site header: the wordmark heads its first page instead. -->
+    <img src="/xcrs-logo.webp" alt="XCRS" width="766" height="240" class="mb-4 hidden h-12 w-auto print:block">
     <div class="flex flex-wrap items-center gap-3">
-      <h1 class="text-2xl font-bold tracking-tight">Your roles</h1>
+      <h1 class="text-2xl font-bold tracking-tight">{{ data && !data.roles.length ? 'Your results' : 'Your roles' }}</h1>
       <div class="ml-auto flex flex-wrap items-center gap-2 print:hidden">
         <UBadge v-if="data?.saved" color="primary" variant="soft" size="lg" icon="i-heroicons-bookmark-solid" label="Saved to your account" />
         <UButton v-else-if="accounts && data?.can_save" color="primary" variant="soft" :loading="saving" icon="i-heroicons-bookmark" label="Save to my account" @click="save" />
-        <UTooltip v-if="data && !error" :text="pdfReady ? 'Save these results as a PDF' : 'Available when the explanations are ready'">
+        <UTooltip v-if="data?.roles.length && !error" :text="pdfReady ? 'Save these results as a PDF' : 'Available when the explanations are ready'">
           <span>
             <!-- A disabled button gets no mouse events; without them the tooltip on its wrapper never opens. -->
             <UButton color="neutral" variant="soft" icon="i-heroicons-arrow-down-tray" label="Download PDF" class="disabled:pointer-events-none" :disabled="!pdfReady" @click="downloadPdf" />
@@ -184,6 +202,9 @@ async function update() {
       </div>
     </div>
 
+    <p v-if="data?.roles.length" class="mt-1 text-xs text-muted">
+      Levels are estimates from your input. Explanations are written by a local language model and can be imperfect.
+    </p>
     <p v-if="data" class="hidden text-xs text-muted print:block">
       XCRS · {{ createdOn }} · <ClientOnly><a :href="resultUrl" class="break-all">{{ resultUrl }}</a></ClientOnly>
     </p>
@@ -198,6 +219,15 @@ async function update() {
         title="We couldn't recognise any skills"
         description="Try naming tools, languages or topics (for example “SQL”, “React”, “testing”), or pick them from the suggestions."
       />
+      <section v-if="data.status === 'no_clear_match'" class="mt-6 rounded-2xl bg-default p-5 shadow-xs ring-1 ring-default">
+        <h2 class="flex items-center gap-2 text-lg font-semibold">
+          <UIcon name="i-heroicons-magnifying-glass" class="h-5 w-5 text-muted" />
+          No role stands out yet
+        </h2>
+        <p class="mt-2 text-toned">{{ noMatchReason }}</p>
+        <p class="mt-1 text-toned">Add a few more skills you enjoyed or want to learn, and we'll look again.</p>
+        <UButton class="mt-4" icon="i-heroicons-pencil-square" label="Back to the board" @click="edit" />
+      </section>
       <div class="mt-6 grid gap-5">
         <V2RoleResultV2
           v-for="(r, i) in data.roles"

@@ -15,6 +15,10 @@ For each role:
 - **level**: the highest level whose own additions, and every lower level's, are at least
   STARTING_COVERAGE met (the bar of `xcrs catalog moves`); None means "start at the role's first level".
 - **gaps**: what the next level asks for that the learner doesn't have yet, in roadmap order.
+- **shown** (ADR-0052): at most three roles, and only those the board gives real evidence for and that stand
+  clearly ahead of the field (`recommendable`); a board that points nowhere gets no role. `interest` ranks
+  roles but is a share of the learner's input (one skill puts all of it on every role using that skill), so
+  what the learner sees is `interest_in_role`: the share of the role's skills they enjoy or are curious about.
 
 Known skills imply their prerequisites (the skills graph, ADR-0028): someone who knows Django knows Python
 at working level, even if they didn't list it. Learners name about ten skills, not the forty a level asks for.
@@ -29,6 +33,13 @@ LADDER = ("entry", "mid", "senior", "staff")
 STARTING_COVERAGE = 0.55  # entry barrier (roles that start above entry)
 LEVEL_EVIDENCE = 0.45  # a level counts as reached when this much of what it adds is on the board (ADR-0041)
 LIFT_EVIDENCE = 0.25  # experience lifts the level only with at least this much evidence for the role at that level
+
+# Which roles to show (ADR-0052), calibrated with eval/bench_role_gate.py: every labeled profile keeps its expected
+# role and boards that point nowhere get none; the three values sit in a flat region of the results.
+SHOW_AT_MOST = 3
+MIN_EVIDENCE = 1.0  # category weight x distinctiveness x reliance, summed over the board's skills the role uses
+MIN_LIFT = 2.0  # a role's score against the mean of all roles: ahead of the field, not one of many near-ties
+TAIL = 0.5  # a role's score against the first role shown: no weak tail just to fill three places
 
 # Self-reported experience (ADR-0041): (lowest, highest) level it suggests. The highest caps the skill evidence
 # (a student isn't staff); the lowest lifts it, but only where the learner shows some of that level's skills,
@@ -226,6 +237,8 @@ class RoleScore:
     gaps: list[Gap]  # what the target level adds and the learner doesn't show yet, in learning order
     because: list[str]  # the learner's skills that count most for this role, strongest first
     basics: list[Gap] = field(default_factory=list)  # unlisted skills of the levels reached (assumed, to check)
+    evidence: float = 0.0  # how much the board says about this role, not relative to the board's size
+    interest_in_role: float = 0.0  # share of the role's skills (distinctiveness x reliance) enjoyed or curious
 
 
 def with_prerequisites(have: dict[str, int], prerequisites: dict[str, list[tuple[tuple[str, ...], int]]]):
@@ -345,6 +358,12 @@ def score_roles(
             s: weights.of(c) * snapshot.weights.get(s, 1.0) * reliance[s] for s, c in category.items() if s in reliance
         }
         interest = sum(contributions.values()) / attention
+        mass = sum(snapshot.weights.get(s, 1.0) * v for s, v in reliance.items()) or 1.0
+        enjoyed = (Category.LIKED, Category.CURIOUS)
+        interest_in_role = (
+            sum(snapshot.weights.get(s, 1.0) * v for s, v in reliance.items() if category.get(s) in enjoyed) / mass
+        )
+        evidence = sum(max(v, 0.0) for v in contributions.values())
         level = reached_level(role, have, snapshot.weights, experience)
         target = (
             role.levels[0] if level is None else role.levels[min(role.levels.index(level) + 1, len(role.levels) - 1)]
@@ -371,9 +390,41 @@ def score_roles(
             role, level_coverage[role.levels[0]]
         )
         results.append(
-            RoleScore(role.id, score, interest, coverage, level_coverage, level, target, gaps, because, basics)
+            RoleScore(
+                role.id,
+                score,
+                interest,
+                coverage,
+                level_coverage,
+                level,
+                target,
+                gaps,
+                because,
+                basics,
+                evidence,
+                interest_in_role,
+            )
         )
     return sorted(results, key=lambda r: -r.score)
+
+
+def recommendable(ranked: list[RoleScore], limit: int = SHOW_AT_MOST) -> list[RoleScore]:
+    """The roles worth showing (ADR-0052), best first: positive score, enough evidence, clearly ahead of the mean
+    of all roles, and not far behind the first one shown. Can be empty: "Python" alone is used by most roles and
+    singles none out; a board of dislikes points nowhere."""
+    if not ranked:
+        return []
+    mean = sum(r.score for r in ranked) / len(ranked)
+    shown: list[RoleScore] = []
+    for r in ranked:  # best first
+        if r.score <= 0 or (mean > 0 and r.score < MIN_LIFT * mean) or (shown and r.score < TAIL * shown[0].score):
+            break  # every role after this one scores lower still
+        if r.evidence < MIN_EVIDENCE:
+            continue
+        shown.append(r)
+        if len(shown) == limit:
+            break
+    return shown
 
 
 TYPE_PREFERENCE = {"course": 3, "tutorial": 2, "docs": 2, "playlist": 2, "video": 1, "book": 1}

@@ -1,0 +1,713 @@
+{
+  "date": "2026-10-11T23:29:09.391116+00:00",
+  "host": "MacBook-Pro.local",
+  "threads": 14,
+  "prompt_version": "explain-role-v2.2",
+  "runs": {
+    "qwen3.5:4b / gpu": {
+      "summary": {
+        "cases": 53,
+        "errors": 0,
+        "median_s": 2.1,
+        "p90_s": 2.5,
+        "prompt_tokens": 542,
+        "output_tokens": 70,
+        "decode_tok_s": 58.6,
+        "clean_pct": 100,
+        "flags": [],
+        "load_s": 2.4
+      },
+      "runs": [
+        {
+          "profile": "frontend-react-mid",
+          "role": "frontend-engineer",
+          "total_s": 1.522447125,
+          "prompt_tokens": 543,
+          "output_tokens": 88,
+          "prompt_eval_s": 0.048708,
+          "decode_tok_s": 59.892914191830194,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you already enjoy working with CSS, TypeScript, responsive design, and front-end testing, which are core parts of building user-facing web interfaces. Your curiosity about web accessibility and performance shows a strong interest in the specific challenges this role addresses. While you have some foundational skills, learning HTTP, API design, and modern frameworks like Next.js will help you build complete applications."
+          }
+        },
+        {
+          "profile": "backend-java-mid",
+          "role": "backend-engineer",
+          "total_s": 1.764861542,
+          "prompt_tokens": 531,
+          "output_tokens": 60,
+          "prompt_eval_s": 0.721167,
+          "decode_tok_s": 58.63486311691205,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of Spring Boot, Java, PostgreSQL, and unit testing shows a strong foundation in building server-side logic. Your curiosity about microservices and Apache Kafka indicates an interest in the distributed systems often found in backend engineering."
+          }
+        },
+        {
+          "profile": "fullstack-js",
+          "role": "full-stack-engineer",
+          "total_s": 2.131632084,
+          "prompt_tokens": 534,
+          "output_tokens": 84,
+          "prompt_eval_s": 0.708923,
+          "decode_tok_s": 59.22545792207481,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy working with React, Node.js, HTML, CSS, and TypeScript, which form the core of building features from database to screen. While you are curious about Next.js, your strong foundation in these technologies positions you well for entry-level work where you can apply what you know while learning the remaining gaps like authentication and database design."
+          }
+        },
+        {
+          "profile": "android-kotlin",
+          "role": "android-engineer",
+          "total_s": 1.779784916,
+          "prompt_tokens": 539,
+          "output_tokens": 62,
+          "prompt_eval_s": 0.708112,
+          "decode_tok_s": 59.140610673678914,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy working with Kotlin, the Android SDK, Jetpack Compose, and mobile app architecture. While you are curious about mobile testing, your strong foundation in these core areas positions you well to start building native Android apps."
+          }
+        },
+        {
+          "profile": "ios-swift",
+          "role": "ios-engineer",
+          "total_s": 1.86526475,
+          "prompt_tokens": 532,
+          "output_tokens": 68,
+          "prompt_eval_s": 0.706035,
+          "decode_tok_s": 59.6767101984865,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy working with Swift, SwiftUI, and the iOS SDK, which are core to building native apps. While you are curious about mobile app architecture, your strong foundation in Swift concurrency and data storage makes you a good starting point for this entry-level position."
+          }
+        },
+        {
+          "profile": "game-unity",
+          "role": "game-developer",
+          "total_s": 2.082568583,
+          "prompt_tokens": 533,
+          "output_tokens": 79,
+          "prompt_eval_s": 0.712705,
+          "decode_tok_s": 58.623345745651854,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of game math, physics, and Unity shows a strong foundation in core development concepts. Your curiosity about shader programming and multiplayer networking indicates interest in the specific technical areas this role covers. While you have some experience, there are several critical skills like performance tuning and testing fundamentals that you will need to learn next."
+          }
+        },
+        {
+          "profile": "embedded-c",
+          "role": "embedded-software-engineer",
+          "total_s": 2.314404458,
+          "prompt_tokens": 536,
+          "output_tokens": 92,
+          "prompt_eval_s": 0.720165,
+          "decode_tok_s": 58.4666733606771,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of C, microcontroller programming, real-time operating systems, communication protocols, and hardware debugging aligns directly with the core tasks of writing software for devices that interact with hardware. While you already have much of what is needed, the role requires you to deepen your knowledge in Embedded Linux and performance tuning while developing skills in design patterns, security, mentoring, and technical writing."
+          }
+        },
+        {
+          "profile": "qa-automation",
+          "role": "qa-automation-engineer",
+          "total_s": 2.404719708,
+          "prompt_tokens": 548,
+          "output_tokens": 94,
+          "prompt_eval_s": 0.775478,
+          "decode_tok_s": 58.55176567832532,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy working with Java, Selenium, API testing, and end-to-end tests, which form a strong foundation. While you are curious about performance testing, your existing skills in automation and test execution mean you can start immediately as an entry-level engineer. The path forward involves deepening your knowledge in unit and integration testing, planning, and CI/CD pipelines to fully master the role."
+          }
+        },
+        {
+          "profile": "devops-mid",
+          "role": "devops-engineer",
+          "total_s": 1.729800833,
+          "prompt_tokens": 539,
+          "output_tokens": 59,
+          "prompt_eval_s": 0.704543,
+          "decode_tok_s": 59.06372976441581,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of Terraform, GitHub Actions, Docker, and shell scripting shows a strong foundation in automation and infrastructure. Your curiosity about Kubernetes and Observability indicates readiness to deepen these skills into the full DevOps workflow."
+          }
+        },
+        {
+          "profile": "cloud-aws",
+          "role": "cloud-engineer",
+          "total_s": 1.870997375,
+          "prompt_tokens": 534,
+          "output_tokens": 66,
+          "prompt_eval_s": 0.724908,
+          "decode_tok_s": 58.881991567385086,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of AWS, Terraform, and serverless concepts shows a strong foundation in cloud operations. While you are curious about cloud architecture, your positive experience with identity management and networking suggests you are ready to move from design to building and operating infrastructure."
+          }
+        },
+        {
+          "profile": "sre",
+          "role": "site-reliability-engineer",
+          "total_s": 2.078710625,
+          "prompt_tokens": 551,
+          "output_tokens": 76,
+          "prompt_eval_s": 0.773666,
+          "decode_tok_s": 59.45777637304435,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of SRE practices, incident management, Prometheus/Grafana, and Kubernetes aligns directly with the core responsibilities of keeping production systems reliable. While you are curious about capacity planning and chaos engineering, your existing comfort with monitoring tools and operational workflows provides a strong foundation for this mid-level position."
+          }
+        },
+        {
+          "profile": "ai-reliability",
+          "role": "ai-reliability-engineer",
+          "total_s": 2.219258959,
+          "prompt_tokens": 557,
+          "output_tokens": 74,
+          "prompt_eval_s": 0.825935,
+          "decode_tok_s": 59.60133152596322,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of SRE practices, AI safety, LLM evaluation, and incident management aligns directly with the core responsibilities of keeping AI features dependable. While you are curious about model monitoring and serving, the role builds on your existing strengths in these areas while guiding you through the necessary fundamentals."
+          }
+        },
+        {
+          "profile": "platform",
+          "role": "platform-engineer",
+          "total_s": 2.156228916,
+          "prompt_tokens": 542,
+          "output_tokens": 80,
+          "prompt_eval_s": 0.732945,
+          "decode_tok_s": 57.88029342414751,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of internal developer platforms, Kubernetes, GitOps, Helm, and Terraform aligns directly with building the golden paths product teams need. While you are curious about service mesh, the role requires mastering it along with product thinking, FinOps, security fundamentals, and vulnerability management to move from mid-level to senior."
+          }
+        },
+        {
+          "profile": "data-analyst",
+          "role": "data-analyst",
+          "total_s": 2.194268125,
+          "prompt_tokens": 553,
+          "output_tokens": 83,
+          "prompt_eval_s": 0.737198,
+          "decode_tok_s": 59.08188179352662,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of statistics, spreadsheets, and BI tools shows a strong foundation for turning data into business answers. Your curiosity about A/B testing and pandas suggests you are ready to deepen those skills with Python and data cleaning. You will start at an entry level by building on what you already know while learning the specific tools needed for analysis."
+          }
+        },
+        {
+          "profile": "analytics-eng",
+          "role": "analytics-engineer",
+          "total_s": 2.099477417,
+          "prompt_tokens": 554,
+          "output_tokens": 74,
+          "prompt_eval_s": 0.747453,
+          "decode_tok_s": 58.88714437934144,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy data warehousing, SQL, dbt, and data quality testing, which form the core of an Analytics Engineer's work. While you are curious about semantic layers, your strong foundation in modeling and testing suggests you could quickly apply those concepts to build trusted metrics for the business."
+          }
+        },
+        {
+          "profile": "data-engineer",
+          "role": "data-engineer",
+          "total_s": 1.981161375,
+          "prompt_tokens": 548,
+          "output_tokens": 71,
+          "prompt_eval_s": 0.72722,
+          "decode_tok_s": 59.01519433454135,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you already enjoy working with ETL/ELT pipelines, data warehousing, and Apache Airflow, which are core components of building reliable data systems. While you are curious about stream processing and Kafka, your existing comfort with pipeline construction makes this a strong next step for you."
+          }
+        },
+        {
+          "profile": "data-scientist",
+          "role": "data-scientist",
+          "total_s": 2.020493333,
+          "prompt_tokens": 551,
+          "output_tokens": 69,
+          "prompt_eval_s": 0.724399,
+          "decode_tok_s": 59.28476793879749,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of machine learning fundamentals, statistics, and exploratory data analysis aligns directly with the core tasks of building predictive models. While you are curious about deep learning, your solid grasp of experimentation and scikit-learn provides a strong foundation to start contributing immediately."
+          }
+        },
+        {
+          "profile": "ml-engineer",
+          "role": "machine-learning-engineer",
+          "total_s": 1.999947833,
+          "prompt_tokens": 537,
+          "output_tokens": 66,
+          "prompt_eval_s": 0.724059,
+          "decode_tok_s": 56.58935931413697,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy working with PyTorch, deep learning, and model serving, which are core parts of building production ML systems. While you have some experience with pipelines, the recommendation accounts for your curiosity about transformers and monitoring as areas to develop further."
+          }
+        },
+        {
+          "profile": "applied-scientist",
+          "role": "applied-scientist",
+          "total_s": 2.325607542,
+          "prompt_tokens": 558,
+          "output_tokens": 87,
+          "prompt_eval_s": 0.729217,
+          "decode_tok_s": 56.51240512249226,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of research methods, optimization, deep learning, PyTorch, and transformer models aligns well with the core work of building new models for products. While you have a solid foundation in these areas, the role requires expanding your focus to specific domains like computer vision or natural language processing and mastering practical skills such as feature engineering and A/B testing."
+          }
+        },
+        {
+          "profile": "mlops",
+          "role": "mlops-engineer",
+          "total_s": 1.965254667,
+          "prompt_tokens": 539,
+          "output_tokens": 68,
+          "prompt_eval_s": 0.709002,
+          "decode_tok_s": 57.223643463040254,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of ML pipelines, model serving, and experiment tracking aligns directly with the core responsibilities of running infrastructure for training and deployment. Your positive experience with Kubernetes and Docker shows you have a strong foundation in the containerization skills required to manage these systems effectively."
+          }
+        },
+        {
+          "profile": "ai-platform",
+          "role": "ai-platform-engineer",
+          "total_s": 2.103722417,
+          "prompt_tokens": 554,
+          "output_tokens": 77,
+          "prompt_eval_s": 0.717397,
+          "decode_tok_s": 57.7426089460549,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of GPU infrastructure, LLM serving, vector databases, and Kubernetes aligns directly with building the shared platform that serves models to product teams. While you are curious about LLM evaluation and cloud cost management, these areas are core responsibilities for an AI Platform Engineer who manages GPU capacity and evaluation services."
+          }
+        },
+        {
+          "profile": "ai-engineer",
+          "role": "ai-engineer",
+          "total_s": 2.471659292,
+          "prompt_tokens": 564,
+          "output_tokens": 93,
+          "prompt_eval_s": 0.772283,
+          "decode_tok_s": 57.923101788329056,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of LLM frameworks, FastAPI, and retrieval-augmented generation shows a strong foundation in building with large models. Your curiosity about AI agents and evaluation indicates a natural interest in the core responsibilities of an AI Engineer. While you have covered some key areas, the role requires you to deepen your knowledge in safety, serving, and mathematical fundamentals to reach this mid-level position."
+          }
+        },
+        {
+          "profile": "security-eng",
+          "role": "security-engineer",
+          "total_s": 2.473669209,
+          "prompt_tokens": 545,
+          "output_tokens": 97,
+          "prompt_eval_s": 0.722357,
+          "decode_tok_s": 58.82245926393092,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of cloud security, threat modeling, SIEM monitoring, and network security aligns directly with the core responsibilities of protecting applications and infrastructure. While you are curious about incident response and DevSecOps, these areas are central to the job's detection and compliance needs. The recommended path focuses on deepening your expertise in these enjoyed topics while systematically learning the remaining critical skills like API security and identity management."
+          }
+        },
+        {
+          "profile": "pentester",
+          "role": "penetration-tester",
+          "total_s": 2.2891915,
+          "prompt_tokens": 543,
+          "output_tokens": 85,
+          "prompt_eval_s": 0.755157,
+          "decode_tok_s": 58.13547892007534,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of penetration testing, exploit development, and security tools aligns directly with its core mission. While you are curious about Active Directory and network security, these areas are central to the job's requirements. The recommendation assumes a senior level based on your stated experience, though it requires you to learn new skills like technical leadership and stakeholder communication."
+          }
+        },
+        {
+          "profile": "blockchain",
+          "role": "blockchain-engineer",
+          "total_s": 2.052875291,
+          "prompt_tokens": 542,
+          "output_tokens": 70,
+          "prompt_eval_s": 0.760755,
+          "decode_tok_s": 58.027816877473434,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy working with Solidity, Ethereum, and smart contract development tools, which form the core of this job. While you are curious about security and DeFi, your strong foundation in the EVM and Web3 libraries positions you well to start building decentralized applications."
+          }
+        },
+        {
+          "profile": "fde",
+          "role": "forward-deployed-engineer",
+          "total_s": 2.033649458,
+          "prompt_tokens": 567,
+          "output_tokens": 69,
+          "prompt_eval_s": 0.781417,
+          "decode_tok_s": 59.271425331748176,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you enjoyed working on technical discovery, enterprise integration, retrieval-augmented generation, AI agents, and tool use. While you are curious about solution design and the Model Context Protocol, your positive experience with these areas suggests a strong foundation for building production solutions inside customer environments."
+          }
+        },
+        {
+          "profile": "solutions-eng",
+          "role": "solutions-engineer",
+          "total_s": 1.994448833,
+          "prompt_tokens": 555,
+          "output_tokens": 69,
+          "prompt_eval_s": 0.745277,
+          "decode_tok_s": 58.35855155766587,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy the core activities of technical discovery, demos, proofs of concept, and stakeholder communication. Your interest in solution design suggests a natural fit for designing tailored customer solutions, while your comfort with public speaking aligns well with winning and enabling customers around sales."
+          }
+        },
+        {
+          "profile": "devrel",
+          "role": "developer-advocate",
+          "total_s": 2.136467667,
+          "prompt_tokens": 550,
+          "output_tokens": 71,
+          "prompt_eval_s": 0.775498,
+          "decode_tok_s": 58.01767496210465,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of developer content, community building, public speaking, and technical writing aligns directly with the core responsibilities of a Developer Advocate. While you are curious about developer experience (DX), this position allows you to apply those interests while learning the necessary product thinking and leadership skills."
+          }
+        },
+        {
+          "profile": "architect-senior",
+          "role": "software-architect",
+          "total_s": 2.448820083,
+          "prompt_tokens": 555,
+          "output_tokens": 68,
+          "prompt_eval_s": 0.782604,
+          "decode_tok_s": 58.78264597978569,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your strong enjoyment of domain-driven design, microservices, and system design shows a natural aptitude for shaping large-scale structures. While you have covered the core architectural patterns and decision-making processes, the path to senior architect involves mastering cloud-specific challenges and data governance."
+          }
+        },
+        {
+          "profile": "eng-manager",
+          "role": "engineering-manager",
+          "total_s": 3.300974542,
+          "prompt_tokens": 563,
+          "output_tokens": 66,
+          "prompt_eval_s": 0.794632,
+          "decode_tok_s": 59.4128925976937,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of people management, hiring, mentoring, and stakeholder communication aligns directly with the core responsibilities of leading an engineering team. Your existing comfort with project planning and engineering processes provides a strong foundation for managing delivery and process within this management track."
+          }
+        },
+        {
+          "profile": "student-web",
+          "role": "frontend-engineer",
+          "total_s": 2.716137584,
+          "prompt_tokens": 475,
+          "output_tokens": 80,
+          "prompt_eval_s": 0.621881,
+          "decode_tok_s": 57.52937234016542,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you already enjoy working with HTML, CSS, and JavaScript, which are core to building user-facing web interfaces. While you are only curious about React, the combination of your existing interests in styling and scripting provides a strong foundation for starting at an entry level. The recommendation focuses on expanding your current skills into full-stack frontend development."
+          }
+        },
+        {
+          "profile": "student-data",
+          "role": "data-analyst",
+          "total_s": 1.7892375,
+          "prompt_tokens": 486,
+          "output_tokens": 66,
+          "prompt_eval_s": 0.654674,
+          "decode_tok_s": 58.48595805316196,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy working with statistics, spreadsheets, and Python, which are foundational for turning data into actionable answers. While you are only curious about SQL, the recommendation assumes you will build on your existing strengths in probability and coding to guide business decisions."
+          }
+        },
+        {
+          "profile": "student-security",
+          "role": "penetration-tester",
+          "total_s": 1.762452334,
+          "prompt_tokens": 488,
+          "output_tokens": 64,
+          "prompt_eval_s": 0.673604,
+          "decode_tok_s": 59.123658054628415,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of Linux, command lines, and computer networking provides a strong foundation for authorized attacks. Your curiosity about penetration testing and web security indicates a clear interest in this field, even though you haven't covered much of the required material yet."
+          }
+        },
+        {
+          "profile": "student-games",
+          "role": "game-developer",
+          "total_s": 1.597547875,
+          "prompt_tokens": 484,
+          "output_tokens": 53,
+          "prompt_eval_s": 0.68329,
+          "decode_tok_s": 58.487792604494516,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you already enjoy game math and C++, which are core to building gameplay and engines. Your curiosity about computer graphics and the Unreal Engine shows interest in the graphics and performance aspects of programming games."
+          }
+        },
+        {
+          "profile": "student-mobile",
+          "role": "android-engineer",
+          "total_s": 1.694602792,
+          "prompt_tokens": 451,
+          "output_tokens": 61,
+          "prompt_eval_s": 0.622689,
+          "decode_tok_s": 57.2646282962365,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you already enjoy Kotlin and are curious about Android SDK and Jetpack Compose, even though you haven't covered much of the required material yet. You would likely start at an entry level position to build native Android apps in Kotlin."
+          }
+        },
+        {
+          "profile": "backend-to-data",
+          "role": "data-engineer",
+          "total_s": 1.867243208,
+          "prompt_tokens": 540,
+          "output_tokens": 64,
+          "prompt_eval_s": 0.757635,
+          "decode_tok_s": 57.96361153149824,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you already enjoy working with SQL and are curious about key technologies like Apache Spark, stream processing, and data warehousing. While you have little direct experience yet, these interests suggest a strong foundation for building the pipelines and models that make data reliable."
+          }
+        },
+        {
+          "profile": "analyst-to-ds",
+          "role": "data-scientist",
+          "total_s": 3.218606667,
+          "prompt_tokens": 542,
+          "output_tokens": 68,
+          "prompt_eval_s": 0.78139,
+          "decode_tok_s": 58.5636910283009,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy working with statistics, probability, and SQL, plus you have hands-on experience with A/B testing. While you are only curious about machine learning fundamentals and feature engineering, the core statistical foundation you love is a strong starting point for building predictive models."
+          }
+        },
+        {
+          "profile": "frontend-to-mobile",
+          "role": "frontend-engineer",
+          "total_s": 1.823708542,
+          "prompt_tokens": 505,
+          "output_tokens": 62,
+          "prompt_eval_s": 0.712263,
+          "decode_tok_s": 58.661792060977994,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you already enjoy working with JavaScript, React, and TypeScript, which are core to building user-facing interfaces. While you have a neutral stance on CSS, your interest in React Native suggests an affinity for interactive applications that this position covers well."
+          }
+        },
+        {
+          "profile": "qa-to-devops",
+          "role": "devops-engineer",
+          "total_s": 1.833954041,
+          "prompt_tokens": 550,
+          "output_tokens": 61,
+          "prompt_eval_s": 0.778033,
+          "decode_tok_s": 58.4390265399402,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you already enjoy working with Shell scripting and CI/CD, which are core parts of DevOps. Your curiosity about Terraform, Kubernetes, and Infrastructure as code shows a strong interest in the automation and infrastructure aspects of this field."
+          }
+        },
+        {
+          "profile": "likes-backend-hates-frontend",
+          "role": "ai-engineer",
+          "total_s": 2.380102625,
+          "prompt_tokens": 510,
+          "output_tokens": 66,
+          "prompt_eval_s": 0.714638,
+          "decode_tok_s": 57.55385645719388,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of Python, FastAPI, and relational databases aligns well with building products on large language models. While you have a neutral feel for Docker, the core skills you loved provide a strong foundation for starting at an entry level in AI engineering."
+          }
+        },
+        {
+          "profile": "llm-curious-backend",
+          "role": "ai-engineer",
+          "total_s": 2.345331958,
+          "prompt_tokens": 552,
+          "output_tokens": 93,
+          "prompt_eval_s": 0.758844,
+          "decode_tok_s": 58.793035870073716,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you have already enjoyed working with FastAPI and REST API design, which are core to building AI products. Your curiosity about retrieval-augmented generation, AI agents, prompt engineering, and LLM fundamentals shows a strong interest in the specific tasks an AI Engineer performs. While you haven't covered much of the role yet, these existing interests provide a solid foundation for starting at the entry level."
+          }
+        },
+        {
+          "profile": "backend-dev-curious-k8s",
+          "role": "backend-engineer",
+          "total_s": 2.530490209,
+          "prompt_tokens": 555,
+          "output_tokens": 98,
+          "prompt_eval_s": 0.760032,
+          "decode_tok_s": 57.64251523703425,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of Microservices, PostgreSQL, Go, and REST API design aligns directly with the core responsibilities of building server-side applications. While you are curious about Kubernetes, your strong grasp of backend concepts like gRPC and data storage suggests you are ready to start at an entry level. The recommended learning path will help you solidify foundational skills like debugging and object-oriented programming before diving into specific web service frameworks."
+          }
+        },
+        {
+          "profile": "fullstack-leaning-backend",
+          "role": "backend-engineer",
+          "total_s": 2.007025875,
+          "prompt_tokens": 485,
+          "output_tokens": 76,
+          "prompt_eval_s": 0.672912,
+          "decode_tok_s": 57.17010966129719,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of Python, PostgreSQL, Django, and REST API design shows a strong foundation in building server-side applications. While you have covered some key aspects, mastering programming fundamentals, data structures, object-oriented programming, Git, Linux command lines, and debugging will help you grow into this entry-level position."
+          }
+        },
+        {
+          "profile": "frontend-dev-who-does-some-api",
+          "role": "frontend-engineer",
+          "total_s": 1.896821416,
+          "prompt_tokens": 515,
+          "output_tokens": 67,
+          "prompt_eval_s": 0.725609,
+          "decode_tok_s": 57.483788713615766,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of Design systems, CSS, TypeScript, and React aligns directly with building user-facing web interfaces. While you have a neutral stance on REST API design, the core skills you love cover the foundational aspects of creating accessible and performant browser experiences."
+          }
+        },
+        {
+          "profile": "ds-vs-mle-deploying",
+          "role": "machine-learning-engineer",
+          "total_s": 2.499754209,
+          "prompt_tokens": 543,
+          "output_tokens": 101,
+          "prompt_eval_s": 0.767081,
+          "decode_tok_s": 58.44565797948152,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of scikit-learn, ML pipelines, model serving, pandas, and Docker aligns directly with building and deploying production systems. While you are curious about model monitoring, the combination of your practical experience with data manipulation and deployment tools makes this a strong next step. You will likely start at a mid-level position where you can apply what you already know while focusing on advanced topics like transformer models and fine-tuning."
+          }
+        },
+        {
+          "profile": "ds-vs-applied-research",
+          "role": "applied-scientist",
+          "total_s": 2.737302708,
+          "prompt_tokens": 558,
+          "output_tokens": 62,
+          "prompt_eval_s": 0.797932,
+          "decode_tok_s": 60.355317595522024,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of research methods, statistics, and deep learning aligns well with the core work of building new models. While you are curious about optimization and transformer models, those are exactly the areas this role requires you to master next."
+          }
+        },
+        {
+          "profile": "sre-vs-platform",
+          "role": "site-reliability-engineer",
+          "total_s": 1.955102375,
+          "prompt_tokens": 549,
+          "output_tokens": 64,
+          "prompt_eval_s": 0.775477,
+          "decode_tok_s": 57.76924076775321,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because you already enjoy SRE practices, incident management, Prometheus/Grafana, and observability. While your experience with Kubernetes and Terraform is neutral, the core skills you love align directly with keeping production systems reliable through automation and incident response."
+          }
+        },
+        {
+          "profile": "devops-vs-cloud",
+          "role": "cloud-engineer",
+          "total_s": 2.879470708,
+          "prompt_tokens": 539,
+          "output_tokens": 64,
+          "prompt_eval_s": 0.778685,
+          "decode_tok_s": 56.07438968721881,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of Microsoft Azure, identity management, cloud networking, and fundamentals shows a strong foundation in the core areas. Your neutral experience with Docker and CI/CD indicates you are ready to build on this base without needing to start from scratch."
+          }
+        },
+        {
+          "profile": "analyst-vs-analytics-eng",
+          "role": "data-analyst",
+          "total_s": 10.065708459,
+          "prompt_tokens": 544,
+          "output_tokens": 95,
+          "prompt_eval_s": 0.996403,
+          "decode_tok_s": 46.193576369894814,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of BI tools, data visualization, SQL, and stakeholder communication aligns directly with the core responsibilities of turning data into actionable answers. While you have a neutral stance on data modeling and dbt, your strong foundation in visualizing and communicating data positions you well for entry-level work. The recommended path focuses on building practical coding skills to enhance your ability to clean and analyze datasets independently."
+          }
+        },
+        {
+          "profile": "security-vs-pentest",
+          "role": "security-engineer",
+          "total_s": 2.436430416,
+          "prompt_tokens": 495,
+          "output_tokens": 95,
+          "prompt_eval_s": 0.758199,
+          "decode_tok_s": 57.63790171342314,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of cloud security, SIEM monitoring, incident response, and vulnerability management aligns directly with the core responsibilities of protecting applications and infrastructure. You already have a strong foundation in these areas, positioning you well for mid-level work in detection and compliance. To advance further, you will need to focus on threat modeling, API security, DevSecOps practices, applied cryptography, and identity management."
+          }
+        },
+        {
+          "profile": "senior-backend-lukewarm",
+          "role": "backend-engineer",
+          "total_s": 1.905185,
+          "prompt_tokens": 532,
+          "output_tokens": 64,
+          "prompt_eval_s": 0.822494,
+          "decode_tok_s": 59.43944884771056,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you have neutral familiarity with core Java technologies like Spring Boot, Microservices, and System design, which are central to Backend Engineering. Additionally, your enjoyment of mentoring and technical writing suggests a strong fit for the collaborative and documentation aspects of this position."
+          }
+        },
+        {
+          "profile": "competent-but-dislikes-it",
+          "role": "data-scientist",
+          "total_s": 2.054326209,
+          "prompt_tokens": 481,
+          "output_tokens": 76,
+          "prompt_eval_s": 0.727769,
+          "decode_tok_s": 58.59947260474656,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits because you already enjoy working with Python and pandas, and you are curious about machine learning and deep learning. However, since you have only a little experience in these areas yet, starting at an entry level allows you to build the necessary foundation in statistics, programming fundamentals, and data cleaning before tackling complex predictive models."
+          }
+        },
+        {
+          "profile": "ai-eng-vs-fde",
+          "role": "ai-engineer",
+          "total_s": 2.106102083,
+          "prompt_tokens": 558,
+          "output_tokens": 73,
+          "prompt_eval_s": 0.86348,
+          "decode_tok_s": 58.97660244680189,
+          "flags": [],
+          "output": {
+            "explanation": "This role fits you because your enjoyment of retrieval-augmented generation, AI agents, LLM frameworks, prompt engineering, and Python aligns directly with building products on large language models. While you feel neutral about stakeholder communication, the core skills you loved cover a significant portion of what an AI Engineer does."
+          }
+        }
+      ]
+    }
+  }
+}

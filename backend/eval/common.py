@@ -37,13 +37,11 @@ def grounding_flags(facts: dict, out: RoleExplanationV2Out) -> list[str]:
         for s in sentences(out.explanation):
             if ENJOY_WORDS.search(s) and not re.search(r"\bnot\b|n't", s) and b["user_said"].lower() in s.lower():
                 flags.append(f"disliked_as_enjoyed:{b['user_said']}")
-    # A resource is named in quotes that isn't among the suggested ones.
-    titles = {r["title"].lower() for r in facts.get("resources", [])}
-    for quoted in re.findall(r"[\"“]([^\"”]{6,})[\"”]", out.next_step):
-        if titles and not any(quoted.lower() in t or t in quoted.lower() for t in titles):
-            flags.append("unknown_resource")
-    if len(sentences(out.explanation)) > 5 or words(out.explanation) > 110 or words(out.next_step) > 60:
-        flags.append("too_long")  # limits are 4 sentences / 2 sentences, with slack
-    if META_WORDS.search(f"{out.explanation} {out.next_step}"):
+    # Since explain-role-v2.2 no resources are sent: a quoted title is one the model made up.
+    if re.search(r"[\"“][^\"”]{6,}[\"”]", out.explanation):
+        flags.append("quoted_title")
+    if len(sentences(out.explanation)) > 5 or words(out.explanation) > 110:
+        flags.append("too_long")  # the limit is 4 sentences, with slack
+    if META_WORDS.search(out.explanation):
         flags.append("mentions_internals")
     return flags

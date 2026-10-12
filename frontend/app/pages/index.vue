@@ -30,26 +30,25 @@ async function submit() {
 </script>
 
 <template>
-  <div class="mx-auto max-w-7xl px-4 pb-16 pt-8 sm:pt-12">
-    <section class="max-w-3xl">
-      <p class="flex items-center gap-2 text-sm font-medium text-indigo-600 dark:text-indigo-300">
-        Career roles, your level, and what to learn next
-      </p>
-      <h1 class="mt-2 text-3xl font-bold tracking-tight text-highlighted sm:text-4xl">Which of 30 software careers fits you, and where would you start?</h1>
-      <p class="mt-3 text-toned">
-        Add skills you know (and how well), what you didn't enjoy, and what you're curious about. XCRS compares them with
-        the roadmaps of 30 roles, from entry to staff level, and shows the skills that would take you to the next level.
+  <div class="page-width pb-16 pt-8 sm:pt-12">
+    <!-- Full width, so the text lines up with the boxes below. -->
+    <section>
+      <h1 class="text-3xl font-bold tracking-tight text-highlighted sm:text-4xl">Find the software career that fits you</h1>
+      <p class="mt-3 text-toned hyphens-auto sm:text-justify">
+        Put the skills you know, and the ones you want to learn, into the four boxes. XCRS compares them with career
+        roadmaps and recommends roles, your level in each, and what to learn next.
       </p>
     </section>
 
-    <div class="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_23rem]">
+    <div class="mt-8">
       <div>
-        <div class="grid gap-4 sm:grid-cols-2">
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <V2BucketV2 v-for="c in CATEGORIES" :key="c" :category="c" />
         </div>
-        <div class="mt-5 flex flex-wrap items-center gap-2 rounded-2xl bg-default px-3 py-2.5 shadow-xs ring-1 ring-default">
-          <span class="mr-1 text-sm font-medium">Years in software</span>
-          <span class="mr-2 text-xs text-muted">(optional; improves the level estimate)</span>
+        <!-- Quick start sits with the board it fills, under the boxes. -->
+        <V2SuggestionsV2 class="mt-4" />
+        <div class="mt-4 flex flex-wrap items-center gap-2 rounded-2xl bg-default px-3 py-2.5 shadow-xs ring-1 ring-default">
+          <span class="mr-1 text-sm font-medium">Years in software <span class="font-normal text-muted">(optional)</span></span>
           <div class="flex flex-wrap gap-1.5" role="radiogroup" aria-label="Years in software">
             <button
               v-for="o in EXPERIENCE_OPTIONS"
@@ -78,12 +77,9 @@ async function submit() {
           </div>
         </div>
         <p class="mt-3 text-xs text-muted">
-          Tip: rate how well you know a skill with the dots; it makes the level estimate much better. Your own words work
-          too ("building REST APIs with Django"); we show which skills we read them as.
+          Tip: tap the dots on a skill to say how well you know it; it sharpens the level estimate. Your own words work
+          too, like “building REST APIs with Django”.
         </p>
-      </div>
-      <div class="lg:sticky lg:top-20 lg:self-start">
-        <V2SuggestionsV2 />
       </div>
     </div>
   </div>

@@ -19,6 +19,7 @@ from xcrs.domain.role_scoring import (
     Mention,
     ResourceRef,
     RoleScore,
+    recommendable,
     score_roles,
     section_for,
     suggest_resources,
@@ -27,7 +28,7 @@ from xcrs.explain.v2 import build_facts
 from xcrs.repository import catalog_store
 from xcrs.services.skill_matching import SkillMatcher
 
-ALGORITHM_VERSION = "v3.2"
+ALGORITHM_VERSION = "v3.3"
 
 
 def section_out(ref: ResourceRef, hits: list[str], prerequisites: dict) -> dict | None:
@@ -46,8 +47,8 @@ LEVEL_NAMES = {
     "senior": "senior level",
     "staff": "staff level",
 }  # bump when scoring, weights or matching change (results stay comparable)
-ROLES_SHOWN = 3
 GAPS_SHOWN = 8
+BROAD_SHARE = 0.5  # a skill most roles use doesn't single one out (the hint when no role is shown)
 
 
 @dataclass(frozen=True)
@@ -96,11 +97,13 @@ class RecommendationServiceV2:
         # One feeling per skill: when two chips read as the same skill, the later chip wins (the board does the
         # same; this guards other clients).
         mentions = list({m.skill: m for m in mentions}.values())
-        status = "ok" if mentions else "insufficient_input"
-        roles = score_roles(snapshot, mentions, experience=experience)[:ROLES_SHOWN] if mentions else []
+        roles = recommendable(score_roles(snapshot, mentions, experience=experience)) if mentions else []
+        status = "ok" if roles else "no_clear_match" if mentions else "insufficient_input"
         category = {m.skill: m.category for m in mentions}
         known = {m.skill for m in mentions}
         result = {"matched": echo, "roles": [self._role(snapshot, r, category, known, mentions) for r in roles]}
+        if status == "no_clear_match":
+            result["no_match"] = self._no_match(snapshot, mentions)
         row = RecommendationV2(
             catalog_checksum=catalog_store.last_import_checksum(self.session) or "none",
             algorithm_version=ALGORITHM_VERSION,
@@ -146,6 +149,19 @@ class RecommendationServiceV2:
         self.session.commit()
 
     @staticmethod
+    def _no_match(snapshot, mentions: list[Mention]) -> dict:
+        """Why no role was shown (ADR-0052): whether the board says anything positive, and which of its skills
+        most roles use (so they can't single one out)."""
+        positive = [m for m in mentions if m.category != Category.DISLIKED]
+        total = len(snapshot.roles)
+        broad = []
+        for m in positive:
+            using = sum(1 for rid in snapshot.roles if m.skill in snapshot.reliance(rid))
+            if using >= BROAD_SHARE * total:
+                broad.append({"id": m.skill, "name": snapshot.skill_names[m.skill], "roles": using})
+        return {"positive": len(positive), "roles_total": total, "broad": sorted(broad, key=lambda b: -b["roles"])}
+
+    @staticmethod
     def _role(snapshot, r: RoleScore, category: dict[str, Category], known: set[str], mentions: list[Mention]) -> dict:
         role = snapshot.roles[r.role]
         relevant = known | {o for q in role.requirements[role.levels[-1]] for o in q.options} | set(role.optional)
@@ -165,6 +181,7 @@ class RecommendationServiceV2:
             "job_titles": market_titles(role),
             "score": round(r.score, 4),
             "interest": round(r.interest, 3),
+            "interest_in_role": round(r.interest_in_role, 3),
             "coverage": round(r.coverage, 3),
             "level": level(r.level),
             "target_level": level(r.target_level),

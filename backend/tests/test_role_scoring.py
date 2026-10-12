@@ -1,5 +1,5 @@
 """Engine v2 role scoring (ADR-0031) on the real catalog: ranking, levels, gaps, implied prerequisites,
-and the calibrated weights still doing what the calibration measured."""
+the calibrated weights still doing what the calibration measured, and which roles are shown (ADR-0052)."""
 
 from pathlib import Path
 
@@ -8,7 +8,7 @@ import yaml
 
 from xcrs.catalog import model
 from xcrs.catalog.snapshot import snapshot_from_catalog
-from xcrs.domain.role_scoring import Category, Mention, learner_skills, score_roles, with_prerequisites
+from xcrs.domain.role_scoring import Category, Mention, learner_skills, recommendable, score_roles, with_prerequisites
 
 L, N, D, C = Category.LIKED, Category.NEUTRAL, Category.DISLIKED, Category.CURIOUS
 
@@ -20,6 +20,53 @@ def snapshot():
 
 def top(snapshot, mentions, n=1):
     return [r.role for r in score_roles(snapshot, mentions)[:n]]
+
+
+EVAL = Path(__file__).parents[1] / "eval"
+
+
+def board(entry: dict) -> list[Mention]:
+    """A board in the learner_profiles.yaml format ("skill" or "skill:proficiency" per category)."""
+    mentions = []
+    for c in (L, N, D, C):
+        for chip in entry.get(c.value, []):
+            skill, _, level = str(chip).partition(":")
+            mentions.append(Mention(skill, c, int(level) if level else None))
+    return mentions
+
+
+THIN = yaml.safe_load((EVAL / "thin_boards.yaml").read_text())["boards"]
+
+
+@pytest.mark.parametrize("entry", THIN, ids=[b["id"] for b in THIN])
+def test_a_board_shows_only_roles_it_gives_evidence_for(snapshot, entry):
+    """ADR-0052: "Python" alone or a board of dislikes singles out no role; one telling skill shows its roles."""
+    shown = [r.role for r in recommendable(score_roles(snapshot, board(entry)))]
+    if entry["may_show"]:
+        assert shown and set(shown) <= set(entry["may_show"])
+    else:
+        assert shown == []
+
+
+def test_the_gate_keeps_every_labeled_profile_s_expected_role(snapshot):
+    """ADR-0052 calibration: the gate drops weak and near-tied roles, never the role a profile expects."""
+    profiles = yaml.safe_load((EVAL / "learner_profiles.yaml").read_text())["profiles"]
+    missing = [
+        p["id"]
+        for p in profiles
+        if p["expect"][0] not in {r.role for r in recommendable(score_roles(snapshot, board(p)))}
+    ]
+    assert missing == []
+
+
+def test_interest_shown_is_the_share_of_the_role_not_of_the_board(snapshot):
+    """One generic skill is the whole board but a small part of any role (ADR-0052); `interest` (for ranking)
+    reads 50% there, which is what learners found misleading."""
+    python = {r.role: r for r in score_roles(snapshot, [Mention("python", L)])}["backend-engineer"]
+    assert python.interest == pytest.approx(0.5) and python.interest_in_role < 0.05
+    frontend = [Mention(s, L, 3) for s in ("html", "css", "javascript", "react", "typescript")]
+    shown = {r.role: r for r in score_roles(snapshot, frontend)}["frontend-engineer"]
+    assert shown.interest_in_role > 5 * python.interest_in_role
 
 
 def test_a_backend_profile_ranks_backend_first(snapshot):

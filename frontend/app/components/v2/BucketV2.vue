@@ -94,16 +94,14 @@ function onKeydown(event: KeyboardEvent) {
           <span v-if="chips.length" class="text-xs tabular-nums text-dimmed">{{ chips.length }}</span>
           <span v-if="isActive" class="ml-auto rounded-full bg-slate-900 dark:bg-slate-700 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white">Selected</span>
         </span>
-        <span class="block text-xs text-muted">
-          {{ meta.hint }}<template v-if="category !== 'curious'">. Dots: how well you know it (optional)</template>
-        </span>
+        <span class="block text-xs text-muted">{{ meta.hint }}</span>
       </span>
     </button>
 
     <div class="mt-2 flex flex-1 flex-wrap content-start gap-1.5 px-1">
       <V2ChipV2 v-for="c in chips" :key="c.key" :chip="c" @remove="remove(c.key)" @rate="(n) => rate(c.key, n)" />
       <p v-if="!chips.length" class="w-full rounded-xl border border-dashed border-default px-3 py-4 text-center text-xs text-dimmed">
-        Search the catalog or type your own words
+        Nothing here yet
       </p>
     </div>
 

@@ -238,3 +238,19 @@ What runs out first (peak CPU at the failing level; VM-A has 800%):
 
 **On the reproduction stack (laptop, API only):** 33 visitors/s served before the fix (250/s asked) → 250/s cleanly after it (p95 22–42 ms).
 
+
+## Which roles are shown (2026-10-12, ADR-0052)
+
+Engine v3.2 → v3.3 on the 53 labeled profiles and 9 thin boards (`eval/bench_role_gate.py`, `eval/thin_boards.yaml`):
+
+| | Expected role kept | Roles shown (0/1/2/3) | Shown roles expected or accepted | Thin boards right |
+|---|---|---|---|---|
+| v3.2: always the top three | 53/53 | 0/0/0/53 | 61% | 1/9 |
+| v3.3: evidence gate | 53/53 | 0/18/18/17 | 83% | 9/9 |
+
+Interest as shown (share of the role's skills enjoyed or curious): "Python" alone 2% for Backend Engineer (was 50%,
+the share of the board); the labeled profiles' expected roles 1–60%, median 25%.
+
+Explanations, prompt explain-role-v2.1 → v2.2 (no next step, no resources sent), qwen3.5:4b on the Mac GPU, 53 cases
+(`eval/bench_explainer.py`): prompt 671 → 542 tokens, output 88 → 70 tokens, median 2.2 → 2.1 s per role, clean
+(no automatic flag) 96% → 100%.

@@ -113,7 +113,8 @@ class RoleV2(BaseModel):
     title_for_you: str | None = None  # built from the learner's strongest title skills (ADR-0044)
     job_titles: list[str] = []  # the role's name and other market titles, to search job ads for
     score: float
-    interest: float
+    interest: float  # ranks roles: the share of the learner's input on this role
+    interest_in_role: float | None = None  # shown: share of the role's skills enjoyed or curious (ADR-0052; v3.3+)
     coverage: float
     level: LevelV2 | None  # None: start at the role's first level
     target_level: LevelV2
@@ -125,7 +126,7 @@ class RoleV2(BaseModel):
     resources: list[ResourceV2] = []
     explanation_status: Literal["pending", "done", "failed", "disabled"] = "disabled"
     explanation: str | None = None  # written by the local LLM in the background (ADR-0037)
-    next_step: str | None = None
+    next_step: str | None = None  # results explained before prompt explain-role-v2.2 only
 
 
 class MatchedChipV2(BaseModel):
@@ -136,14 +137,27 @@ class MatchedChipV2(BaseModel):
     skills: list[SkillRefV2]
 
 
+class BroadSkillV2(SkillRefV2):
+    roles: int  # how many roles use it
+
+
+class NoMatchV2(BaseModel):
+    """Why no role was shown (ADR-0052)."""
+
+    positive: int  # skills on the board that aren't "didn't enjoy"
+    roles_total: int
+    broad: list[BroadSkillV2]  # of those, the ones most roles use
+
+
 class RecommendationResponseV2(BaseModel):
     id: str
     created_at: str
-    status: Literal["ok", "insufficient_input"]
+    status: Literal["ok", "insufficient_input", "no_clear_match"]
     algorithm_version: str
     catalog_version: str
     matched: list[MatchedChipV2]
     roles: list[RoleV2]
+    no_match: NoMatchV2 | None = None  # status "no_clear_match" only
     experience: Experience | None = None  # as given on the board (ADR-0041)
     saved: bool = False  # in the signed-in viewer's account (ADR-0043)
     can_save: bool = False  # anonymous and recent: "Save to my account" can attach it

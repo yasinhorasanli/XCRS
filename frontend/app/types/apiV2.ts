@@ -73,7 +73,8 @@ export interface RoleResult {
   title_for_you?: string | null // from the learner's strongest title skills (ADR-0044)
   job_titles?: string[] // the role's name and other market titles
   score: number
-  interest: number
+  interest: number // ranks roles: the share of the learner's input on this role
+  interest_in_role?: number | null // shown: share of the role's skills enjoyed or curious (ADR-0052; engine v3.3+)
   coverage: number
   level: Level | null
   target_level: Level
@@ -85,7 +86,7 @@ export interface RoleResult {
   resources: Resource[]
   explanation_status: 'pending' | 'done' | 'failed' | 'disabled'
   explanation: string | null // written by the local LLM in the background
-  next_step: string | null
+  next_step: string | null // results explained before prompt explain-role-v2.2 only (no longer shown)
 }
 
 export interface MatchedChip {
@@ -96,14 +97,24 @@ export interface MatchedChip {
   skills: SkillRef[]
 }
 
+/** Why no role was shown (ADR-0052). */
+export interface NoMatch {
+  positive: number // skills on the board that aren't "didn't enjoy"
+  roles_total: number
+  broad: (SkillRef & { roles: number })[] // of those, the ones most roles use
+}
+
+export type ResultStatus = 'ok' | 'insufficient_input' | 'no_clear_match'
+
 export interface RecommendationV2 {
   id: string
   created_at: string
-  status: 'ok' | 'insufficient_input'
+  status: ResultStatus
   algorithm_version: string
   catalog_version: string
   matched: MatchedChip[]
   roles: RoleResult[]
+  no_match?: NoMatch | null
   experience?: Experience | null
   saved?: boolean // in the signed-in viewer's account (ADR-0043)
   can_save?: boolean // anonymous and recent: "Save to my account" can attach it
@@ -139,7 +150,7 @@ export interface SavedBoard {
 export interface ResultSummary {
   id: string
   created_at: string
-  status: 'ok' | 'insufficient_input'
+  status: ResultStatus
   roles: { id: string; name: string; level: string | null }[]
 }
 
