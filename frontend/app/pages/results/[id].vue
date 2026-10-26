@@ -14,7 +14,10 @@ const { chips, add, fromResult, asInput, experience } = useBoardV2()
 const { enabled: accounts, loggedIn, signInPath } = useAccount()
 const toast = useToast()
 
-const { data, error } = await useAsyncData(`recommendation-v2-${id}`, () => api.recommendation(id))
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+const { data, error } = await useAsyncData(`recommendation-v2-${id}`, () =>
+  UUID.test(id) ? api.recommendation(id) : Promise.reject(createError({ statusCode: 404, statusMessage: 'Not Found' })),
+)
 if (error.value && import.meta.server) {
   const event = useRequestEvent()
   if (event) setResponseStatus(event, 404)
@@ -79,14 +82,26 @@ onBeforeUnmount(() => {
 })
 const downloadPdf = () => window.print()
 
-/** Keep an anonymous result in the account (ADR-0043); signed out, sign in first and come back to save it. */
+/** Keep an anonymous result in the account (ADR-0043); signed out, sign in first and come back to save it. Coming
+ * back (`?save=1`) saves only if this tab's own Save click left its one-time marker: a link from someone else must
+ * not save their result to your account (security audit 2026-10-26). The server keeps a saved board that isn't
+ * empty, so after the user's own Save this page puts the result's board on the board, and autosave keeps it. */
+const SAVE_MARKER = 'xcrs-save-after-sign-in'
 const saving = ref(false)
 async function save() {
-  if (!loggedIn.value) return navigateTo(signInPath(`/results/${id}?save=1`))
+  if (!loggedIn.value) {
+    try {
+      sessionStorage.setItem(SAVE_MARKER, id)
+    } catch {
+      // storage blocked: the user clicks Save again after signing in
+    }
+    return navigateTo(signInPath(`/results/${id}?save=1`))
+  }
   saving.value = true
   try {
     await api.saveResult(id)
     data.value = await api.recommendation(id)
+    if (!chips.value.length) fromResult(data.value)
     toast.add({ title: 'Saved to your account', icon: 'i-heroicons-bookmark', actions: [{ label: 'My account', to: '/account', color: 'neutral', variant: 'outline' }] })
   } catch (e) {
     toast.add({ title: 'Could not save these results', description: apiError(e).message, color: 'error', icon: 'i-heroicons-exclamation-triangle' })
@@ -95,7 +110,15 @@ async function save() {
   }
 }
 onMounted(() => {
-  if (route.query.save && loggedIn.value && data.value?.can_save) save()
+  if (!route.query.save) return
+  let mine = false
+  try {
+    mine = sessionStorage.getItem(SAVE_MARKER) === id
+    sessionStorage.removeItem(SAVE_MARKER)
+  } catch {
+    // storage blocked: nothing to finish
+  }
+  if (mine && loggedIn.value && data.value?.can_save) save()
 })
 
 useHead(() => ({ title: data.value?.roles[0] ? `${data.value.roles[0].name} and more · XCRS` : 'Your results · XCRS' }))

@@ -33,3 +33,13 @@
 
 - Real users → a shorter interval or continuous WAL archiving, and an off-provider copy.
 - The AWS phase → copy to S3 with lifecycle rules.
+
+## Note (2026-10-26, security audit run 1): retention by age, and copies VM-A can't remove
+
+Two findings of the audit (`#13`, `#14`) changed decision 1:
+
+- **Retention by age, the same on both VMs** (the decider chose this over 14 dumps on VM-B or a 30-day privacy promise): `scripts/db-prune-backups.sh` deletes dumps older than 13 days by the UTC time in their names and always keeps the newest 3. It runs at least daily (after each backup on VM-A, hourly on VM-B), so no dump reaches the 14 days the privacy page promises. Counting dumps had let VM-B keep 30 (about a month), and missed nights or extra deploy dumps change what a count means.
+- **VM-B prunes its own copies.** `db-offsite-copy.sh` only sends new files over rsync; it ran its retention as a shell command on VM-B, which needed a key that could run anything there. The key is now a dedicated one (`/root/.ssh/xcrs-backup`), and VM-B limits it with `restrict,from="<VM-A>",command="rrsync -wo -no-del /srv/xcrs-backups"`: no shell, writes only, no deletes.
+- **Copies are locked.** `xcrs-backup-prune.timer` (hourly) first hands every complete copy to root, read-only (`scripts/db-lock-backups.sh`), in a root-owned sticky directory, so someone with root on VM-A can't replace or delete them either.
+
+Trade-offs accepted: if no new dump arrives for two weeks, the newest 3 stay longer than 14 days (better than having no backup; the privacy page says so since this change); a new copy can still be replaced from VM-A for up to an hour, until the timer locks it; if VM-B is down, its copies age past the limit until it runs again.

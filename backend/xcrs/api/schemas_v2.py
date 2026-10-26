@@ -169,7 +169,7 @@ class RecommendationResponseV2(BaseModel):
 class FeedbackV2Request(BaseModel):
     role: str | None = Field(default=None, max_length=80)
     rating: Literal[-1, 1] | None = None
-    comment: str | None = Field(default=None, max_length=2000)
+    comment: str | None = Field(default=None, max_length=500)  # the UI sends none
 
 
 class SkillSuggestionV2(SkillRefV2):

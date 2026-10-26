@@ -42,3 +42,9 @@
 
 - More than one API process, or real users → Redis-backed limits, maybe per-account quotas.
 - `429`s show up for legitimate use in the logs → raise the limits.
+
+## Note (2026-10-26, security audit run 1): every write is limited, and IPv6 by /64
+
+- **Feedback** (`POST /api/v2/recommendations/{id}/feedback`) had no limit and added a row per request; it now uses the `light` bucket and is one vote per role, which a later vote replaces (migration 0017); `role` must be one of the result's roles (or absent), so a result holds at most four rows; comments are capped at 500 characters. The dev profile run uses `heavy`. `tests/test_limits.py` fails if a POST, PUT, PATCH or DELETE under `/api` has no limit.
+- **IPv6 clients share a bucket per /64** (`limits.client_key`), since one host usually has the whole prefix to rotate through; IPv4 stays per address (IPv4-mapped addresses count as IPv4).
+- Unchanged: the bucket map is still cleared at 50,000 keys.

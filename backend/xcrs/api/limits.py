@@ -70,6 +70,20 @@ def client_ip(request: Request, trusted: list) -> str:
     return hops[0] if hops else peer
 
 
+def client_key(address: str) -> str:
+    """The bucket an address counts against: IPv6 by its /64 (one host usually has the whole prefix to rotate
+    through), IPv4 as it is."""
+    try:
+        ip = ipaddress.ip_address(address)
+    except ValueError:
+        return address
+    if isinstance(ip, ipaddress.IPv6Address):
+        if ip.ipv4_mapped:
+            return str(ip.ipv4_mapped)
+        return str(ipaddress.IPv6Network((int(ip) >> 64 << 64, 64)))
+    return str(ip)
+
+
 class Limiter:
     def __init__(self):
         settings = get_settings()
@@ -83,7 +97,7 @@ class Limiter:
     def check(self, request: Request, kind: str) -> None:
         if not self.enabled:
             return
-        wait = self.buckets[kind].take(client_ip(request, self.trusted))
+        wait = self.buckets[kind].take(client_key(client_ip(request, self.trusted)))
         if wait:
             raise HTTPException(
                 429,

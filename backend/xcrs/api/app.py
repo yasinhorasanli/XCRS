@@ -15,7 +15,7 @@ from sqlalchemy.orm import Session
 from xcrs.api import accounts, cv_imports, dev
 from xcrs.api.deps import get_session
 from xcrs.api.identity import accounts_on, optional_user
-from xcrs.api.limits import heavy
+from xcrs.api.limits import heavy, light
 from xcrs.api.schemas_v2 import (
     FeedbackV2Request,
     MatchedSkillV2,
@@ -170,12 +170,16 @@ def get_recommendation_v2(
     return _response_v2(row, service.session, user)
 
 
-@app.post("/api/v2/recommendations/{recommendation_id}/feedback", status_code=201)
+@app.post("/api/v2/recommendations/{recommendation_id}/feedback", status_code=201, dependencies=[Depends(light)])
 def create_feedback_v2(
     recommendation_id: uuid.UUID, body: FeedbackV2Request, service: RecommendationServiceV2 = Depends(get_service_v2)
 ) -> dict:
-    if service.get(recommendation_id) is None:
+    row = service.get(recommendation_id)
+    if row is None:
         raise HTTPException(404, "recommendation not found")
+    # One vote per shown role (migration 0017); any other string would add a row each time.
+    if body.role is not None and body.role not in {r["id"] for r in row.result.get("roles", [])}:
+        raise HTTPException(422, "role is not one of this result's roles")
     service.feedback(recommendation_id, body.role, body.rating, body.comment)
     return {"status": "saved"}
 
@@ -203,7 +207,7 @@ def skill_groups_v2(session: Session = Depends(get_session, scope="function")) -
     )
 
 
-@app.post("/api/v2/dev/profiles/{profile_id}/run", dependencies=[Depends(dev.dev_tools_on)])
+@app.post("/api/v2/dev/profiles/{profile_id}/run", dependencies=[Depends(dev.dev_tools_on), Depends(heavy)])
 def run_dev_profile(profile_id: str, service: RecommendationServiceV2 = Depends(get_service_v2)) -> dict:
     """A real, stored recommendation for a test profile (marked `test`), with explanations, for the results page."""
     profile = next((p for p in dev.load_profiles() if p.id == profile_id), None)

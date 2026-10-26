@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { PROVIDER_META } from '~/composables/useXcrsApiV2'
+import { safeNext } from '#shared/utils/next'
 
 const route = useRoute()
 const { providers, devSignIn, enabled, loggedIn } = useAccount()
 
-const next = computed(() => {
-  const n = route.query.next
-  return typeof n === 'string' && n.startsWith('/') && !n.startsWith('//') ? n : '/account'
-})
+const next = computed(() => safeNext(route.query.next) ?? '/account')
 const href = (provider: string, extra = '') => `/auth/${provider}?next=${encodeURIComponent(next.value)}${extra}`
 const failed = computed(() => {
   const p = route.query.error

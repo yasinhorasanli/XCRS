@@ -7,7 +7,7 @@ import type { Me, ResultSummary, SavedBoard } from '~/types/apiV2'
 
 const api = useXcrsApiV2()
 const toast = useToast()
-const { loggedIn, clear: forgetSession, signInPath, signOut } = useAccount()
+const { loggedIn, sessionEnded, signInPath, signOut } = useAccount()
 
 const me = ref<Me | null>(null)
 const results = ref<ResultSummary[]>([])
@@ -26,7 +26,7 @@ const busy = ref(false)
 useHead({ title: 'Your account · XCRS' })
 
 async function ended() {
-  await forgetSession()
+  await sessionEnded()
   await navigateTo(signInPath('/account'))
 }
 
@@ -66,7 +66,7 @@ async function signOutEverywhere() {
   busy.value = true
   try {
     await api.signOutEverywhere()
-    await forgetSession()
+    await sessionEnded()
     toast.add({ title: 'Signed out on all devices', icon: 'i-heroicons-check' })
     await navigateTo('/')
   } catch {
@@ -80,7 +80,7 @@ async function deleteAccount() {
   busy.value = true
   try {
     await api.deleteAccount()
-    await forgetSession()
+    await sessionEnded()
     confirmDelete.value = false
     toast.add({ title: 'Your account and its data were deleted', icon: 'i-heroicons-check' })
     await navigateTo('/')

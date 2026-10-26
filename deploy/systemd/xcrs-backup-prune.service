@@ -1,0 +1,9 @@
+# VM-B: protect and prune the backup copies VM-A sends (ADR-0036, note of 2026-10-26): complete copies become
+# root's and read-only, then dumps past the retention are deleted. Install: see deploy/README.md.
+[Unit]
+Description=XCRS backup copies: lock and prune
+
+[Service]
+Type=oneshot
+ExecStart=/opt/xcrs/scripts/db-lock-backups.sh /srv/xcrs-backups
+ExecStart=/opt/xcrs/scripts/db-prune-backups.sh /srv/xcrs-backups

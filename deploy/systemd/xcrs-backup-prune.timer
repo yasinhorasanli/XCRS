@@ -1,0 +1,9 @@
+[Unit]
+Description=Hourly lock and prune of XCRS backup copies (ADR-0036)
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+
+[Install]
+WantedBy=timers.target

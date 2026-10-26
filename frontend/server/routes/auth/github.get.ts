@@ -1,6 +1,6 @@
 // Sign in with GitHub (ADR-0043). GitHub's public profile email has no verified flag, so the verified primary
 // email is read from /user/emails (scope user:email).
-import { completeSignIn, rememberNext, redirectUrl, signInFailed } from '../../utils/accounts'
+import { completeSignIn, redirectUrl, signInFailed, signInRoute } from '../../utils/accounts'
 
 interface GitHubEmail {
   email: string
@@ -26,7 +26,4 @@ const oauth = defineOAuthGitHubEventHandler({
   onError: (event, error) => signInFailed(event, 'github', error),
 })
 
-export default defineEventHandler((event) => {
-  rememberNext(event)
-  return oauth(event)
-})
+export default signInRoute('github', oauth)

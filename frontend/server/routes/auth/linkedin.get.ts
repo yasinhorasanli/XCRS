@@ -1,6 +1,6 @@
 // Sign in with LinkedIn (ADR-0043): the "Sign In with LinkedIn using OpenID Connect" product returns only sub,
 // name, email (with email_verified), picture and locale; positions and skills need a partner program.
-import { completeSignIn, rememberNext, redirectUrl, signInFailed } from '../../utils/accounts'
+import { completeSignIn, redirectUrl, signInFailed, signInRoute } from '../../utils/accounts'
 
 const oauth = defineOAuthLinkedInEventHandler({
   config: { scope: ['openid', 'profile', 'email'], redirectURL: redirectUrl('linkedin') },
@@ -15,7 +15,4 @@ const oauth = defineOAuthLinkedInEventHandler({
   onError: (event, error) => signInFailed(event, 'linkedin', error),
 })
 
-export default defineEventHandler((event) => {
-  rememberNext(event)
-  return oauth(event)
-})
+export default signInRoute('linkedin', oauth)

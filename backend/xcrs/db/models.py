@@ -351,7 +351,9 @@ class RecommendationV2(Base):
 
 class FeedbackV2(Base):
     __tablename__ = "feedback_v2"
-    __table_args__ = (Index("feedback_v2_recommendation_idx", "recommendation_id"),)
+    __table_args__ = (
+        Index("feedback_v2_one_per_role_idx", "recommendation_id", text("coalesce(role, '')"), unique=True),
+    )
 
     id: Mapped[int] = mapped_column(BigInteger, Identity(always=True), primary_key=True)
     recommendation_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey("recommendations_v2.id", ondelete="CASCADE"))

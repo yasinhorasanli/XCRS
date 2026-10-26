@@ -28,10 +28,10 @@ export function useXcrsApiV2() {
     recommend: (chips: ChipInput[], experience?: Experience | null) =>
       $fetch<RecommendationV2>('/api/v2/recommendations', { method: 'POST', body: { chips, ...(experience ? { experience } : {}) } }),
 
-    recommendation: (id: string) => $fetch<RecommendationV2>(`/api/v2/recommendations/${id}`),
+    recommendation: (id: string) => $fetch<RecommendationV2>(`/api/v2/recommendations/${encodeURIComponent(id)}`),
 
     feedback: (id: string, body: { role?: string; rating: 1 | -1 }) =>
-      $fetch(`/api/v2/recommendations/${id}/feedback`, { method: 'POST', body }),
+      $fetch(`/api/v2/recommendations/${encodeURIComponent(id)}/feedback`, { method: 'POST', body }),
 
     // Accounts (ADR-0043); all need a signed-in user except `providers`.
     providers: () => $fetch<{ providers: Provider[]; dev: boolean }>('/api/auth/providers'),
@@ -40,14 +40,14 @@ export function useXcrsApiV2() {
     saveBoard: (chips: ChipInput[], experience?: Experience | null) =>
       $fetch('/api/v2/me/board', { method: 'PUT', body: { chips, ...(experience ? { experience } : {}) } }),
     results: () => $fetch<ResultSummary[]>('/api/v2/me/results'),
-    saveResult: (id: string) => $fetch<ResultSummary>(`/api/v2/me/results/${id}`, { method: 'POST' }),
-    deleteResult: (id: string) => $fetch(`/api/v2/me/results/${id}`, { method: 'DELETE' }),
+    saveResult: (id: string) => $fetch<ResultSummary>(`/api/v2/me/results/${encodeURIComponent(id)}`, { method: 'POST' }),
+    deleteResult: (id: string) => $fetch(`/api/v2/me/results/${encodeURIComponent(id)}`, { method: 'DELETE' }),
     signOutEverywhere: () => $fetch('/api/v2/me/sign-out-everywhere', { method: 'POST' }),
     deleteAccount: () => $fetch('/api/v2/me', { method: 'DELETE' }),
 
     // CV import (ADR-0045), signed in only: a PDF (field "file") or pasted text (field "text").
     cvImport: (body: FormData) => $fetch<CvImportStatus>('/api/v2/cv-imports', { method: 'POST', body }),
-    cvImportStatus: (id: string) => $fetch<CvImportStatus>(`/api/v2/cv-imports/${id}`),
+    cvImportStatus: (id: string) => $fetch<CvImportStatus>(`/api/v2/cv-imports/${encodeURIComponent(id)}`),
   }
 }
 

@@ -22,13 +22,14 @@ INSTRUCTION_PATTERNS = [
     r"\b(list|add|include|mark|rate)\s+(all|every)\s+(the\s+)?skills?\b",
     r"\bönceki\s+(tüm\s+)?(talimat|komut|yönerge)",
     r"\b(talimatları|komutları|yönergeleri)\s+(yok\s+say|görmezden\s+gel|unut|dikkate\s+alma)",
-    r"\byapay\s+zek[aâ]\s*(olarak|asistanı|modeli)?\s*[,:]?\s*(bu\s+aday|lütfen|şunu)",
+    # Each optional part takes its own trailing spaces: `\s*X?\s*Y?\s*` backtracks cubically on a long run of spaces.
+    r"\byapay\s+zek[aâ]\s*(?:(?:olarak|asistanı|modeli)\s*)?(?:[,:]\s*)?(?:bu\s+aday|lütfen|şunu)",
     r"\bsistem\s+(istemi|komutu|promptu)\b",
 ]
 _INSTRUCTION = re.compile("|".join(f"(?:{p})" for p in INSTRUCTION_PATTERNS), re.IGNORECASE)
 _SENTENCE = re.compile(r"(?<=[.!?])\s+")
 _FOOTER = re.compile(r"^\s*(page|sayfa)\s+\d+\s*(of|/)\s*\d+\s*$", re.IGNORECASE)
-_SPACES = re.compile(r"[ \t\u00a0\u2000-\u200b]+")  # spaces, no-break and typographic spaces
+_SPACES = re.compile(r"(?:[^\S\n]|\u200b)+")  # every kind of space (U+001F and U+1680 too), and zero-width ones
 
 
 def normalize_text(text: str) -> str:

@@ -64,3 +64,11 @@ Constraints:
 - An account needs more than these three providers, roles (admin), or organizations: consider a self-hosted identity server (option C).
 - The API runs as a separate public service (mobile app, other clients): give it its own token validation (OIDC access tokens) instead of trusting a proxy header.
 - Someone reports a result claimed by another person: add a claim token.
+
+## Note (2026-10-26, security audit run 1): sign-in and claiming fixes
+
+- **OAuth state is required.** nuxt-auth-utils 0.5.30 accepted a callback with neither the `state` query nor its cookie, so a link carrying someone else's code signed the visitor in to that account. The provider routes now go through `signInRoute` (`server/utils/accounts.ts`), which refuses a callback unless a non-empty `state` equals the state cookie; nuxt-auth-utils is at 0.5.32, which fixes it upstream too. A failure the library doesn't pass to `onError` (provider or API unreachable, a used or expired code) and a cancelled consent (`?error=`, which Google's and LinkedIn's handlers ignored, sending the user back to the consent screen) now end on `/sign-in?error=<provider>` instead of a 500 page.
+- **`next` is read the way a browser reads it** (`shared/utils/next.ts`, used by the server and `/sign-in`): no control characters or backslashes, and the parsed URL must stay on this site. `/<TAB>/evil.example` had passed, and browsers drop the tab.
+- **`?save=1` saves only after this tab's own Save click** (a one-time marker in sessionStorage). A crafted link used to make a signed-in visitor claim someone else's result.
+- **A claim no longer replaces a saved board that isn't empty**; after the user's own Save the results page puts the result's board on the board, and autosave saves it (the decider's choice over leaving the server as it was or asking first). The claim is one conditional UPDATE, so of two accounts claiming at once only the first gets it.
+- **Every way a session ends clears this browser's board** (`useAccount().sessionEnded`: signing out here or everywhere, deleting the account, a 401 on the account page). The local copy also records whose it is, so one left by a session that ended elsewhere isn't shown to the next person.

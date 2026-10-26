@@ -6,8 +6,10 @@ import type { Category, Experience, SkillRef } from '~/types/apiV2'
  * later (`useBoardAutosave`, set up once in app.vue).
  *
  * Every board, signed in or not, also has a copy in this browser's localStorage (2026-10-12), so a reload doesn't
- * lose it; it stays on the device and goes nowhere until the visitor asks for recommendations. Signing out clears
- * it (`forgetLocalBoard`).
+ * lose it; it stays on the device and goes nowhere until the visitor asks for recommendations. Every way a session
+ * ends clears it (`forgetLocalBoard`, from `useAccount().sessionEnded`); a copy made while signed in also records
+ * whose it is, so one left by a session that ended elsewhere (signed out on all devices, expired) is not handed to
+ * the next person on this browser.
  */
 
 const SAVE_DELAY_MS = 1000
@@ -16,6 +18,7 @@ const LOCAL_KEY = 'xcrs-board'
 type LocalBoard = {
   chips: { label: string; category: Category; skill?: string; proficiency?: number; skills?: SkillRef[]; method?: string }[]
   experience: Experience | null
+  owner?: string // the signed-in user's id when it was saved
 }
 
 /** Removes the browser's copy of the board (signing out, on a shared computer). */
@@ -32,7 +35,7 @@ let saving: Promise<void> | undefined
 
 export function useSavedBoard() {
   const { chips, experience, add } = useBoardV2()
-  const { loggedIn } = useUserSession()
+  const { loggedIn, user } = useUserSession()
   const api = useXcrsApiV2()
 
   async function restore() {
@@ -66,6 +69,7 @@ export function useSavedBoard() {
       return
     }
     if (!saved?.chips?.length) return
+    if (saved.owner && saved.owner !== user.value?.id) return forgetLocalBoard()
     for (const c of saved.chips) {
       const matched = !c.skill && c.skills ? { skills: c.skills, method: c.method } : undefined
       add(c.label, c.category, c.skill ? { id: c.skill, name: c.label } : undefined, c.proficiency, matched)
@@ -79,7 +83,7 @@ export function useSavedBoard() {
 /** Saves the board shortly after each change while someone is signed in. Call once, from app.vue. */
 export function useBoardAutosave() {
   const { chips, experience, asInput } = useBoardV2()
-  const { loggedIn } = useUserSession()
+  const { loggedIn, user } = useUserSession()
   const api = useXcrsApiV2()
 
   saveNow = async () => {
@@ -108,6 +112,7 @@ export function useBoardAutosave() {
             ...(!c.skill && c.match.status === 'done' ? { skills: c.match.skills, method: c.match.method } : {}),
           })),
           experience: experience.value,
+          ...(loggedIn.value && user.value?.id ? { owner: user.value.id } : {}),
         }
         localStorage.setItem(LOCAL_KEY, JSON.stringify(board))
       } catch {

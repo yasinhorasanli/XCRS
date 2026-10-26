@@ -72,7 +72,8 @@ useHead({ title: 'Privacy · XCRS' })
             On your <NuxtLink to="/account" class="text-indigo-600 dark:text-indigo-300 underline">account page</NuxtLink> you can download
             everything we keep about you (as JSON), delete single results, sign out on all devices, and delete your account.
             Deleting the account deletes your board, your results and the feedback on them, at once. Backups of the
-            database are kept for up to 14 days and then replaced, so deleted data leaves them within that time.
+            database are deleted after 14 days at the latest, so deleted data leaves them within that time. Only if backups
+            stop working are the last three kept longer, until new ones replace them.
           </p>
           <p class="mt-2">
             For any other question about your data (access, correction, objection), open an issue or contact the maintainer

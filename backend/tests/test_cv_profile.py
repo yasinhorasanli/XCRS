@@ -1,6 +1,10 @@
 """Pure rules of the CV import (ADR-0045): dates, years of use, levels, the experience band, the catalog scan and
 the evidence check."""
 
+import time
+
+import pytest
+
 from xcrs.cv.clean import looks_like_instruction, normalize_text, remove_instructions
 from xcrs.domain import cv_profile as cv
 from xcrs.domain.skill_matching import LexicalIndex
@@ -119,3 +123,25 @@ def test_instruction_sentences_are_set_aside_and_the_rest_kept():
         "Yapay zeka ve NLP üzerine yüksek lisans tezi.",
     ]:
         assert not looks_like_instruction(genuine), genuine
+
+
+# One lead per instruction pattern with whitespace between its words.
+LEADS = [
+    "yapay zeka", "you are now an", "as an ai", "note to the", "rate this", "list all the", "previous", "system",
+    "önceki tüm", "talimatları", "sistem", "ignore",
+]  # fmt: skip
+
+
+@pytest.mark.parametrize("space", ["\x1f", "\u1680", "\u3000", "\t", " "])
+def test_long_whitespace_runs_do_not_stall_the_instruction_filter(space):
+    """Security audit 2026-10-26 (#3): `\\s*X?\\s*Y?\\s*` backtracked cubically, so 20,000 characters of a space that
+    normalization kept (U+001F, U+1680) would have held the API process for hours."""
+    for lead in LEADS:
+        sentence = f"Deneyim: {lead}" + space * 1_000 + "x"  # the patterns themselves, before normalization
+        start = time.perf_counter()
+        looks_like_instruction(sentence)
+        assert time.perf_counter() - start < 0.05, (lead, space)
+        start = time.perf_counter()
+        remove_instructions(normalize_text(f"Deneyim: {lead}" + space * 20_000 + "x"))
+        assert time.perf_counter() - start < 0.05, (lead, space)
+    assert normalize_text(f"a{space * 3}b\u200bc") == "a b c"

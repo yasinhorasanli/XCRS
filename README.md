@@ -101,7 +101,7 @@ docker compose run --rm api alembic upgrade head
 **Backups** of PostgreSQL (the activity data can't be rebuilt; the catalog can):
 
 ```bash
-scripts/db-backup.sh                     # compressed dump + manifest (row counts, checksum) in backups/, keeps 14
+scripts/db-backup.sh                     # compressed dump + manifest (row counts, checksum) in backups/; older than 13 days pruned, newest 3 kept
 scripts/db-verify-backup.sh              # restores the newest dump into a throwaway container and compares
 scripts/db-restore.sh DUMP xcrs_copy     # restore into a new database (--replace to overwrite the live one)
 ```

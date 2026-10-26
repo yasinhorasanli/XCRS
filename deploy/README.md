@@ -44,14 +44,24 @@ How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036, ADR-0
    # test a new SSH session, then: sudo systemctl stop fw-rollback.timer
    ```
 2. `cd /opt/xcrs/deploy/vm-b && cp .env.example .env` (set `XCRS_PRIVATE_IP`), `docker compose up -d`, then `docker compose exec ollama ollama pull qwen3.5:4b` (and `qwen3.5:9b` for the benchmark).
-3. Backups target: `sudo useradd -m backup && sudo mkdir -p /srv/xcrs-backups && sudo chown backup /srv/xcrs-backups`; add VM-A root's backup public key to `~backup/.ssh/authorized_keys`.
-4. Weekly restore test: `sudo cp deploy/systemd/xcrs-backup-verify.* /etc/systemd/system/ && sudo systemctl enable --now xcrs-backup-verify.timer`.
+3. Backups target. VM-A's key may only write new files into the directory (`rrsync`, package `rsync-rrsync`). The directory is root's and sticky, so the copies that the timer below has locked can't be replaced or deleted from VM-A:
+   ```
+   sudo dnf -y install rsync rsync-rrsync
+   sudo useradd -m backup && sudo mkdir -p /srv/xcrs-backups
+   sudo chown root:backup /srv/xcrs-backups && sudo chmod 1770 /srv/xcrs-backups
+   sudo install -d -m 700 -o backup -g backup ~backup/.ssh
+   # one line, with VM-A's private IP and the public key from VM-A step 4:
+   echo 'restrict,from="<VM-A private IP>",command="rrsync -wo -no-del /srv/xcrs-backups" ssh-ed25519 AAAA… xcrs-backup' \
+     | sudo tee ~backup/.ssh/authorized_keys && sudo chown backup: ~backup/.ssh/authorized_keys && sudo chmod 600 ~backup/.ssh/authorized_keys
+   ```
+4. Timers: the weekly restore test, and the hourly lock and prune of the copies (`scripts/db-lock-backups.sh`, then `scripts/db-prune-backups.sh`: older than 13 days go, the newest 3 always stay):
+   `sudo cp deploy/systemd/xcrs-backup-verify.* deploy/systemd/xcrs-backup-prune.* /etc/systemd/system/ && sudo systemctl enable --now xcrs-backup-verify.timer xcrs-backup-prune.timer`.
 
 **VM-A (once)**
-1. `cd /opt/xcrs/deploy/vm-a && cp .env.example .env && chmod 600 .env`, then set `POSTGRES_PASSWORD`, `XCRS_LLM_BASE_URL=http://<VM-B private IP>:11434/v1`, `XCRS_LLM_MODEL`, `XCRS_YOUTUBE_API_KEY`, `XCRS_BACKUP_REMOTE=backup@<VM-B private IP>:/srv/xcrs-backups`.
+1. `cd /opt/xcrs/deploy/vm-a && cp .env.example .env && chmod 600 .env`, then set `POSTGRES_PASSWORD`, `XCRS_LLM_BASE_URL=http://<VM-B private IP>:11434/v1`, `XCRS_LLM_MODEL`, `XCRS_YOUTUBE_API_KEY`, `XCRS_BACKUP_REMOTE=backup@<VM-B private IP>:` (nothing after the colon: rrsync puts the files in its directory).
 2. Pick an image tag (a commit SHA from the GHCR packages page, or `main`) and run `/opt/xcrs/deploy/deploy.sh <tag>`.
 3. Resources from the adapters: `docker compose -f deploy/vm-a/compose.yaml run --rm api xcrs resources ingest freecodecamp`, `… ingest youtube`, `… tag`.
-4. Backups: `sudo ssh-keygen -t ed25519 -f /root/.ssh/id_ed25519 -N ""`, give its public key to VM-B (above), then `sudo cp deploy/systemd/xcrs-backup.* /etc/systemd/system/ && sudo systemctl enable --now xcrs-backup.timer`.
+4. Backups: a key for the copies only, `sudo ssh-keygen -t ed25519 -f /root/.ssh/xcrs-backup -N "" -C xcrs-backup` (`scripts/db-offsite-copy.sh` uses it; `XCRS_BACKUP_SSH` overrides), give its public key to VM-B (above), accept VM-B's host key once (`sudo ssh -i /root/.ssh/xcrs-backup backup@<VM-B private IP>`; rrsync then refuses the session, as it should), then `sudo cp deploy/systemd/xcrs-backup.* /etc/systemd/system/ && sudo systemctl enable --now xcrs-backup.timer`. Local dumps are pruned by the same rule as on VM-B (13 days, the newest 3 kept).
 5. Publish:
    - **Public (ADR-0051):** apply `infra/cloudflare` (the tunnel, its routes and the DNS records; `infra/README.md`), then put the tunnel's token in `.env` with `COMPOSE_PROFILES=tunnel` and `XCRS_TUNNEL_TOKEN=<terraform output -raw tunnel_token>`, and deploy: the `cloudflared` container connects, and https://xcrs.app answers.
    - **Tailnet only:** `sudo tailscale serve --bg 8080` gives your tailnet devices `https://xcrs-a.<tailnet>.ts.net` (the dev tools live there). The first time, Tailscale prints a link to allow HTTPS certificates for the tailnet; open it while signed in as the tailnet admin.
