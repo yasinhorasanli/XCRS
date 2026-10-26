@@ -3,7 +3,9 @@
 #
 #   scripts/db-backup.sh            # -> backups/xcrs-<UTC time>.dump + .manifest
 #
-# Old dumps are pruned by age afterwards (scripts/db-prune-backups.sh: KEEP_DAYS, KEEP_MIN).
+# Old dumps are pruned by age afterwards (scripts/db-prune-backups.sh: KEEP_DAYS, KEEP_MIN), also when this backup
+# fails: VM-A has no other prune, and the privacy page's 14 days must hold while backups don't work (security audit
+# run 2, 2026-10-27). A dump that didn't finish is removed.
 # The dump is pg_dump's custom format (compressed, restorable table by table with pg_restore).
 # The manifest records exact row counts, the Alembic revision, the git commit and a SHA-256, so a
 # restore can be checked (scripts/db-verify-backup.sh). Backups stay on this machine: copy them
@@ -23,6 +25,8 @@ MANIFEST="$BACKUP_DIR/xcrs-$STAMP.manifest"
 
 mkdir -p "$BACKUP_DIR"
 psql_q() { docker compose exec -T postgres psql -U "$USER_NAME" -d "$DB" -tAX -c "$1"; }
+finish() { rm -f "$DUMP.partial"; scripts/db-prune-backups.sh "$BACKUP_DIR"; }
+trap finish EXIT
 
 docker compose exec -T postgres pg_dump -U "$USER_NAME" -d "$DB" --format=custom --compress=9 > "$DUMP.partial"
 mv "$DUMP.partial" "$DUMP"   # a dump only gets its final name once it is complete
@@ -42,7 +46,5 @@ mv "$DUMP.partial" "$DUMP"   # a dump only gets its final name once it is comple
     echo "  $table: $(psql_q "SELECT count(*) FROM $table")"
   done
 } > "$MANIFEST"
-
-scripts/db-prune-backups.sh "$BACKUP_DIR"
 
 echo "Backup: $DUMP ($(du -h "$DUMP" | cut -f1)), manifest: $MANIFEST"

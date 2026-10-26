@@ -36,6 +36,7 @@ let saving: Promise<void> | undefined
 export function useSavedBoard() {
   const { chips, experience, add } = useBoardV2()
   const { loggedIn, user } = useUserSession()
+  const { sessionEnded } = useAccount()
   const api = useXcrsApiV2()
 
   async function restore() {
@@ -54,8 +55,11 @@ export function useSavedBoard() {
         }
         experience.value = board.experience ?? null
       }
-    } catch {
-      // the board just starts empty
+    } catch (e) {
+      // 401: the session ended elsewhere (signed out on all devices, account deleted). The cookie still named
+      // this user, so the local copy's owner would match: end the session here too, which also drops the copy
+      // (security audit run 2, 2026-10-27). Otherwise the board just starts empty.
+      if (apiError(e).status === 401) await sessionEnded()
     }
   }
 

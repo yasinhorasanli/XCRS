@@ -43,3 +43,10 @@ Two findings of the audit (`#13`, `#14`) changed decision 1:
 - **Copies are locked.** `xcrs-backup-prune.timer` (hourly) first hands every complete copy to root, read-only (`scripts/db-lock-backups.sh`), in a root-owned sticky directory, so someone with root on VM-A can't replace or delete them either.
 
 Trade-offs accepted: if no new dump arrives for two weeks, the newest 3 stay longer than 14 days (better than having no backup; the privacy page says so since this change); a new copy can still be replaced from VM-A for up to an hour, until the timer locks it; if VM-B is down, its copies age past the limit until it runs again.
+
+## Note (2026-10-27, security audit run 2): file names and types from VM-A, and failed backups
+
+- **The lock only touches plain files.** The names and file types in `/srv/xcrs-backups` come from VM-A, and `chown`/`chmod` follow symbolic links, so a link sent from VM-A pointed root's hourly lock at any file on VM-B (reproduced in an Oracle Linux 10 container: two root-only files became world-readable). `db-lock-backups.sh` now skips links and hard-linked files, uses `chown -h`, checks again once the entry is root's (the sticky directory then stops swaps), and refuses to run with `fs.protected_hardlinks` off. VM-B's key line adds rrsync's `-munge`, so a link VM-A sends points nowhere.
+- **Names dated in the future are pruned.** They held the newest-3 places, so every real copy could age out while they stayed.
+- **VM-A prunes even when the backup fails**, and removes the unfinished `.dump.partial`. The prune used to be the last step of a successful backup, so failed nights kept every old dump (VM-A has no prune timer).
+- **The restore test leaves nothing.** The pgvector image keeps its data in an anonymous volume, which `docker rm -f` left behind with the whole restored database in it, once per deploy and weekly on VM-B; `db-verify-backup.sh` now removes it (`-v`). Volumes left by earlier runs are removed by hand (deploy/README.md).

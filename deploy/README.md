@@ -44,14 +44,14 @@ How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036, ADR-0
    # test a new SSH session, then: sudo systemctl stop fw-rollback.timer
    ```
 2. `cd /opt/xcrs/deploy/vm-b && cp .env.example .env` (set `XCRS_PRIVATE_IP`), `docker compose up -d`, then `docker compose exec ollama ollama pull qwen3.5:4b` (and `qwen3.5:9b` for the benchmark).
-3. Backups target. VM-A's key may only write new files into the directory (`rrsync`, package `rsync-rrsync`). The directory is root's and sticky, so the copies that the timer below has locked can't be replaced or deleted from VM-A:
+3. Backups target. VM-A's key may only write new files into the directory (`rrsync`, package `rsync-rrsync`). The directory is root's and sticky, so the copies that the timer below has locked can't be replaced or deleted from VM-A. `-munge` turns any symbolic link VM-A sends into one that points nowhere (the lock script skips links anyway):
    ```
    sudo dnf -y install rsync rsync-rrsync
    sudo useradd -m backup && sudo mkdir -p /srv/xcrs-backups
    sudo chown root:backup /srv/xcrs-backups && sudo chmod 1770 /srv/xcrs-backups
    sudo install -d -m 700 -o backup -g backup ~backup/.ssh
    # one line, with VM-A's private IP and the public key from VM-A step 4:
-   echo 'restrict,from="<VM-A private IP>",command="rrsync -wo -no-del /srv/xcrs-backups" ssh-ed25519 AAAA… xcrs-backup' \
+   echo 'restrict,from="<VM-A private IP>",command="rrsync -wo -no-del -munge /srv/xcrs-backups" ssh-ed25519 AAAA… xcrs-backup' \
      | sudo tee ~backup/.ssh/authorized_keys && sudo chown backup: ~backup/.ssh/authorized_keys && sudo chmod 600 ~backup/.ssh/authorized_keys
    ```
 4. Timers: the weekly restore test, and the hourly lock and prune of the copies (`scripts/db-lock-backups.sh`, then `scripts/db-prune-backups.sh`: older than 13 days go, the newest 3 always stay):
@@ -89,6 +89,7 @@ How the self-hosted deployment works (ADR-0014, ADR-0020, ADR-0034–0036, ADR-0
 | Test profiles (tailnet only) | `http://xcrs-a.<tailnet>.ts.net/dev/profiles` with `XCRS_DEV_TOOLS=true` in `.env`; public requests get 404 from Caddy |
 | VM facts (read-only) | `ssh xcrs-a 'bash -s' < scripts/vm-facts.sh` |
 | Restore into a new database | `COMPOSE_FILE=deploy/vm-a/compose.yaml scripts/db-restore.sh backups/<dump> xcrs_restored` |
+| Restore-test leftovers (runs before 2026-10-27 left each restored database in an anonymous volume; both VMs) | list: `docker volume ls -qf dangling=true`; remove: `docker volume prune` (unused anonymous volumes only; named ones such as the database's stay) |
 
 **Limits** (ADR-0035):
 - Expensive endpoints allow 10 requests a minute per client IP, in bursts of 5. `XCRS_RATE_*` changes that.

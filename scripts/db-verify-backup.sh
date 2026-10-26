@@ -20,7 +20,9 @@ expected_sha="$(grep '^sha256:' "$MANIFEST" | cut -d' ' -f2)"
 actual_sha="$(sha256 "$DUMP" | cut -d' ' -f1)"
 [ "$expected_sha" = "$actual_sha" ] || { echo "CHECKSUM MISMATCH: $DUMP is damaged"; exit 1; }
 
-cleanup() { docker rm -f "$NAME" >/dev/null 2>&1 || true; }
+# -v: the image keeps its data in an anonymous volume, which `rm -f` alone leaves behind with the whole restored
+# database in it (security audit run 2, 2026-10-27).
+cleanup() { docker rm -f -v "$NAME" >/dev/null 2>&1 || true; }
 trap cleanup EXIT
 docker run -d --name "$NAME" -e POSTGRES_USER=xcrs -e POSTGRES_PASSWORD=verify -e POSTGRES_DB=xcrs "$IMAGE" >/dev/null
 until docker exec "$NAME" pg_isready -U xcrs -d xcrs >/dev/null 2>&1; do sleep 1; done
