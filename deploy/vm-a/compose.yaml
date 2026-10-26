@@ -27,7 +27,7 @@ services:
     # The public entrance (ADR-0040, ADR-0051): a Cloudflare Tunnel that this container opens from the inside, so
     # VM-A needs no open ports. xcrs.app's routes and DNS are in infra/cloudflare. Enabled with
     # COMPOSE_PROFILES=tunnel and XCRS_TUNNEL_TOKEN (`terraform output -raw tunnel_token`) in .env.
-    image: cloudflare/cloudflared:2026.9.3
+    image: cloudflare/cloudflared:2026.10.4
     profiles: [tunnel]
     restart: unless-stopped
     command: ["tunnel", "--no-autoupdate", "run"]
