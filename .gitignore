@@ -1,4 +1,7 @@
-.vscode/
+# VS Code: share only the project settings and recommended extensions
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

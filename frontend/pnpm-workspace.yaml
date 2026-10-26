@@ -17,11 +17,8 @@ overrides:
   "tar@<7.5.21": "^7.5.21"
   "vite@>=8.0.0 <8.0.16": "^8.0.16"
   "source-map-js@>=1.0.0 <1.2.2": "^1.2.2"
-  # simple-git is used only by @nuxt/devtools (switched off in nuxt.config.ts), whose latest stable release
-  # still asks for ^3.36.0; the fixes exist only in the next major (2026-10-10). simple-git 4.0.2 pins
-  # @simple-git/argv-parser to 2.0.0, still vulnerable, so that one is lifted to 2.0.1 as well.
-  "simple-git@<4.0.1": "^4.0.2"
-  "@simple-git/argv-parser@<2.0.1": "^2.0.1"
+  # (simple-git and @simple-git/argv-parser overrides removed 2026-10-26: @nuxt/devtools 3.4.4, with nuxt 4.6.2,
+  # no longer uses simple-git.)
 
 # Dependencies allowed to run install scripts (pnpm blocks them by default).
 allowBuilds:
@@ -37,13 +34,7 @@ allowBuilds:
 # - braces: deeply nested patterns exhaust the stack; the patch refuses nesting deeper than 100 levels.
 # pnpm audit can't see patches, so their advisories are ignored below. When an upstream release fixes one:
 # remove its patch, its ignore line, and (if it applies) add an override like the ones above.
-# - @nuxt/devtools (2026-10-11): not a security fix but a compatibility one. The simple-git override above moves
-#   it to 4.x, which has no default export; devtools 3.4.2 does `import Git from 'simple-git'` (loaded by `nuxt
-#   prepare` even with devtools off), so the patch imports the named `simpleGit` instead. When nuxt moves to a
-#   newer devtools this patch stops matching and install fails loudly: then drop the patch and the simple-git
-#   overrides if `pnpm why simple-git` shows the fix upstream (devtools 4 doesn't use simple-git at all).
 patchedDependencies:
-  '@nuxt/devtools@3.4.2': patches/@nuxt__devtools@3.4.2.patch
   braces@3.0.3: patches/braces@3.0.3.patch
   node-forge@1.4.0: patches/node-forge@1.4.0.patch
 
