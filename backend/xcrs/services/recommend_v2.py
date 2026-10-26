@@ -9,7 +9,8 @@ import uuid
 from dataclasses import dataclass
 from typing import Protocol
 
-from sqlalchemy import select
+from sqlalchemy import select, text
+from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
 
 from xcrs.db.models import CareerRole, ExplanationV2, FeedbackV2, RecommendationV2
@@ -153,7 +154,16 @@ class RecommendationServiceV2:
         return self.session.get(RecommendationV2, recommendation_id)
 
     def feedback(self, recommendation_id: uuid.UUID, role: str | None, rating: int | None, comment: str | None):
-        self.session.add(FeedbackV2(recommendation_id=recommendation_id, role=role, rating=rating, comment=comment))
+        """One vote per role (and one without a role), which a later one replaces (migration 0017)."""
+        values = {"recommendation_id": recommendation_id, "role": role, "rating": rating, "comment": comment}
+        self.session.execute(
+            insert(FeedbackV2)
+            .values(values)
+            .on_conflict_do_update(
+                index_elements=[FeedbackV2.recommendation_id, text("coalesce(role, '')")],
+                set_={"rating": rating, "comment": comment},
+            )
+        )
         self.session.commit()
 
     @staticmethod

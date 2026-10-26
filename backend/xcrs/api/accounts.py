@@ -167,7 +167,8 @@ def results(
 def save_result(
     recommendation_id: uuid.UUID, user: User = Depends(required_user), accounts: AccountService = Depends(get_accounts)
 ) -> ResultSummaryV2:
-    """Save an anonymous result (at most a day old) to the account; its board becomes the saved board."""
+    """Save an anonymous result (at most a day old) to the account; its board becomes the saved board if the account
+    has none."""
     try:
         return summary(accounts.claim(user, recommendation_id))
     except LookupError:

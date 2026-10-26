@@ -1,6 +1,8 @@
 """Engine v2 recommendations through the API, against the local database; rolled back (the `client`
 fixture is in conftest.py)."""
 
+from sqlalchemy import text
+
 
 def test_a_recommendation_is_made_stored_and_read_back(client):
     chips = [
@@ -135,3 +137,30 @@ def test_the_picker_finds_skills_and_suggests_per_family(client):
     assert found[0]["id"] == "postgresql"
     groups = client.get("/api/v2/skills/groups").json()["groups"]
     assert len(groups) == 8 and all(len(g["skills"]) == 12 for g in groups)
+
+
+def test_feedback_is_one_changeable_vote_per_role(client):
+    """Security audit 2026-10-26 (#1): every POST added a row, so one client could fill the disk."""
+    chips = [
+        {"category": "liked", "skill": "java", "proficiency": 3},
+        {"category": "liked", "skill": "postgresql", "proficiency": 3},
+        {"category": "curious", "skill": "kafka"},
+    ]
+    made = client.post("/api/v2/recommendations", json={"chips": chips}).json()
+    url = f"/api/v2/recommendations/{made['id']}/feedback"
+    first, second = (r["id"] for r in made["roles"][:2])
+    for rating in (1, -1, 1, -1):
+        assert client.post(url, json={"role": first, "rating": rating}).status_code == 201
+    assert client.post(url, json={"role": second, "rating": 1}).status_code == 201
+    assert client.post(url, json={}).status_code == 201
+    assert client.post(url, json={}).status_code == 201
+    # Only the result's own roles: any other string would make a new row each time.
+    shown = {r["id"] for r in made["roles"]}
+    assert client.post(url, json={"role": "not-a-role-1", "rating": 1}).status_code == 422
+    other = next(s for s in ("ios-engineer", "game-developer", "penetration-tester") if s not in shown)
+    assert client.post(url, json={"role": other, "rating": 1}).status_code == 422
+    rows = client.db.execute(
+        text("SELECT role, rating FROM feedback_v2 WHERE recommendation_id = :r"), {"r": made["id"]}
+    ).all()
+    assert sorted(rows, key=lambda r: r.role or "") == [(None, None), *sorted([(first, -1), (second, 1)])]
+    assert client.post(url, json={"role": first, "comment": "x" * 501}).status_code == 422

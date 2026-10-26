@@ -87,3 +87,42 @@ def test_only_the_first_new_phrases_of_a_request_go_to_the_llm():
     results = matcher.match(["snake language one", "snake language two", "snake language three"])
     assert Picker.calls == 2
     assert [r.method for r in results] == ["llm", "llm", "embedding"]
+
+
+def test_every_write_endpoint_has_a_rate_limit():
+    """Security audit 2026-10-26 (#1): feedback and the dev profile run had none. /internal/sign-in is for the
+    Nuxt server only (its secret), and limiting it would limit every visitor's sign-in behind one address."""
+    from fastapi.routing import APIRoute
+
+    from xcrs.api.app import app
+
+    def calls(dependant):
+        yield dependant.call
+        for d in dependant.dependencies:
+            yield from calls(d)
+
+    unlimited = [
+        (sorted(r.methods), r.path)
+        for r in app.routes
+        if isinstance(r, APIRoute)
+        and r.methods & {"POST", "PUT", "PATCH", "DELETE"}
+        and not r.path.startswith("/internal/")
+        and not {limits.heavy, limits.light} & set(calls(r.dependant))
+    ]
+    assert unlimited == []
+
+
+def test_ipv6_clients_share_a_bucket_per_64_prefix():
+    """Security audit 2026-10-26 (#18): one host usually has a whole /64 to rotate through."""
+    limiter = limits.Limiter()
+    limiter.enabled = True
+    limiter.buckets["heavy"] = limits.TokenBuckets(rate_per_minute=1, burst=1, clock=Clock())
+    limiter.check(request("2001:db8:1:2::1"), "heavy")
+    with pytest.raises(HTTPException):
+        limiter.check(request("2001:db8:1:2:ffff::9"), "heavy")
+    limiter.check(request("2001:db8:1:3::1"), "heavy")  # another /64
+    limiter.check(request("203.0.113.9"), "heavy")
+    with pytest.raises(HTTPException):
+        limiter.check(request("203.0.113.9"), "heavy")
+    limiter.check(request("203.0.113.10"), "heavy")  # IPv4 addresses stay one bucket each
+    assert limits.client_key("::ffff:203.0.113.9") == "203.0.113.9" and limits.client_key("unknown") == "unknown"

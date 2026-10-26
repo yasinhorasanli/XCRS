@@ -6,7 +6,7 @@ import uuid
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 
-from sqlalchemy import delete, func, select
+from sqlalchemy import delete, func, select, update
 from sqlalchemy.orm import Session
 
 from xcrs.db.models import Board, ExplanationV2, FeedbackV2, RecommendationV2, User, UserIdentity
@@ -115,19 +115,34 @@ class AccountService:
         )
 
     def claim(self, user: User, recommendation_id: uuid.UUID) -> RecommendationV2:
-        """Save an anonymous result to the account (and its board as the saved board)."""
-        row = self.session.get(RecommendationV2, recommendation_id)
+        """Save an anonymous result to the account; its board becomes the saved board only when that is empty
+        (the results page saves the board itself after the user's own Save click). The owner is set by one
+        conditional UPDATE, so of two accounts claiming at once only the first gets it."""
+        claimed = self.session.execute(
+            update(RecommendationV2)
+            .where(
+                RecommendationV2.id == recommendation_id,
+                RecommendationV2.user_id.is_(None),
+                RecommendationV2.created_at >= func.now() - CLAIM_WINDOW,
+            )
+            .values(user_id=user.id)
+            .execution_options(synchronize_session=False)
+        ).rowcount
+        row = self.session.get(RecommendationV2, recommendation_id, populate_existing=True)
         if row is None:
             raise LookupError(recommendation_id)
+        if claimed:
+            saved = self.board(user)
+            if saved is None or not saved.input.get("chips"):
+                self.save_board(user, board_input(row.input))
+            else:
+                self.session.commit()
+            return row
         if row.user_id == user.id:
             return row
         if row.user_id is not None:
             raise ClaimError("these results belong to another account")
-        if not claimable(row.created_at, self.session):
-            raise ClaimError("these results are too old to save; make them again while signed in")
-        row.user_id = user.id
-        self.save_board(user, board_input(row.input))
-        return row
+        raise ClaimError("these results are too old to save; make them again while signed in")
 
     def forget_result(self, user: User, recommendation_id: uuid.UUID) -> bool:
         """Delete one of the user's results (with its feedback and explanations)."""

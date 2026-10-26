@@ -119,6 +119,35 @@ def test_an_anonymous_result_can_be_saved_once_and_only_while_fresh(api):
     assert api.get(f"/api/v2/recommendations/{anonymous}").status_code == 404
 
 
+def test_a_claim_keeps_a_saved_board(api):
+    """Security audit 2026-10-26 (#19): a crafted link made the results page claim someone else's result, and the
+    claim replaced the saved board. A claim now fills only an empty board."""
+    ada = headers(sign_in(api, "1"))
+    mine = [{"category": "liked", "skill": "python"}]
+    assert api.put("/api/v2/me/board", json={"chips": mine}, headers=ada).status_code == 204
+    theirs = api.post("/api/v2/recommendations", json={"chips": CHIPS}).json()["id"]
+    assert api.post(f"/api/v2/me/results/{theirs}", headers=ada).status_code == 200
+    assert [c["skill"] for c in api.get("/api/v2/me/board", headers=ada).json()["board"]["chips"]] == ["python"]
+    assert theirs in [r["id"] for r in api.get("/api/v2/me/results", headers=ada).json()]
+
+
+def test_a_claim_does_not_take_a_result_that_was_saved_meanwhile(api):
+    """Security audit 2026-10-26 (#15): the owner check ran on the row as first read, so a claim racing another
+    account's would overwrite it. Here the other claim lands between the read and the write."""
+    from xcrs.db.models import RecommendationV2, User
+    from xcrs.services.accounts import AccountService, ClaimError
+
+    ada, bob = sign_in(api, "1"), sign_in(api, "2", email="bob@example.com", name="Bob")
+    made = uuid.UUID(api.post("/api/v2/recommendations", json={"chips": CHIPS}).json()["id"])
+    read = api.db.get_one(RecommendationV2, made)  # what a claim in progress has read
+    assert read.user_id is None
+    api.db.execute(text("UPDATE recommendations_v2 SET user_id = :u WHERE id = :id"), {"u": ada["user_id"], "id": made})
+    with pytest.raises(ClaimError):
+        AccountService(api.db).claim(api.db.get_one(User, uuid.UUID(bob["user_id"])), made)
+    owner = api.db.execute(text("SELECT user_id FROM recommendations_v2 WHERE id = :id"), {"id": made}).scalar()
+    assert str(owner) == ada["user_id"]
+
+
 def test_sign_out_everywhere_ends_older_sessions(api):
     first = sign_in(api)
     assert api.post("/api/v2/me/sign-out-everywhere", headers=headers(first)).status_code == 204
@@ -134,8 +163,10 @@ def test_sign_out_everywhere_ends_older_sessions(api):
 def test_export_and_delete_cover_everything_linked(api):
     signed = sign_in(api)
     user = headers(signed)
-    made = api.post("/api/v2/recommendations", json={"chips": CHIPS}, headers=user).json()["id"]
-    api.post(f"/api/v2/recommendations/{made}/feedback", json={"role": "backend-engineer", "rating": 1})
+    created = api.post("/api/v2/recommendations", json={"chips": CHIPS}, headers=user).json()
+    made = created["id"]
+    vote = api.post(f"/api/v2/recommendations/{made}/feedback", json={"role": created["roles"][0]["id"], "rating": 1})
+    assert vote.status_code == 201
     exported = api.get("/api/v2/me/export", headers=user)
     assert exported.headers["content-disposition"].startswith("attachment;")
     data = exported.json()

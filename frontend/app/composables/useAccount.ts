@@ -25,16 +25,20 @@ export function useAccount() {
   const signInPath = (next?: string) =>
     next && next !== '/' && !next.startsWith('/sign-in') ? `/sign-in?next=${encodeURIComponent(next)}` : '/sign-in'
 
-  async function signOut() {
+  /** The session is over (signed out here or on all devices, account deleted, or the server ended it): a shared
+   * computer shouldn't keep the board, neither the copy in this browser nor the one on screen. */
+  async function sessionEnded() {
     await session.clear()
-    // A shared computer shouldn't keep the board after signing out: the copy in this browser and the one on screen.
     forgetLocalBoard()
     useBoardV2().clear()
-    useBoardV2().experience.value = null
+  }
+
+  async function signOut() {
+    await sessionEnded()
     await navigateTo('/')
   }
 
-  return { ...session, providers, devSignIn, enabled, loadProviders, signInPath, signOut }
+  return { ...session, providers, devSignIn, enabled, loadProviders, signInPath, signOut, sessionEnded }
 }
 
 /** An API error's status and message (FastAPI's `detail`). */

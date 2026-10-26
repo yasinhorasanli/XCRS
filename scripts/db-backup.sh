@@ -2,8 +2,8 @@
 # Back up the XCRS PostgreSQL database (docker compose service "postgres").
 #
 #   scripts/db-backup.sh            # -> backups/xcrs-<UTC time>.dump + .manifest
-#   KEEP=30 scripts/db-backup.sh    # keep the newest 30 dumps (default 14)
 #
+# Old dumps are pruned by age afterwards (scripts/db-prune-backups.sh: KEEP_DAYS, KEEP_MIN).
 # The dump is pg_dump's custom format (compressed, restorable table by table with pg_restore).
 # The manifest records exact row counts, the Alembic revision, the git commit and a SHA-256, so a
 # restore can be checked (scripts/db-verify-backup.sh). Backups stay on this machine: copy them
@@ -15,7 +15,6 @@ sha256() { if command -v sha256sum >/dev/null; then sha256sum "$1"; else shasum 
 
 cd "$(dirname "$0")/.."
 BACKUP_DIR="${XCRS_BACKUP_DIR:-backups}"
-KEEP="${KEEP:-14}"
 DB="${POSTGRES_DB:-xcrs}"
 USER_NAME="${POSTGRES_USER:-xcrs}"
 STAMP="$(date -u +%Y%m%d-%H%M%S)"
@@ -44,9 +43,6 @@ mv "$DUMP.partial" "$DUMP"   # a dump only gets its final name once it is comple
   done
 } > "$MANIFEST"
 
-# Retention: delete the oldest dumps (and their manifests) beyond KEEP.
-ls -1t "$BACKUP_DIR"/xcrs-*.dump 2>/dev/null | tail -n +"$((KEEP + 1))" | while read -r old; do
-  rm -f "$old" "${old%.dump}.manifest"
-done
+scripts/db-prune-backups.sh "$BACKUP_DIR"
 
 echo "Backup: $DUMP ($(du -h "$DUMP" | cut -f1)), manifest: $MANIFEST"
