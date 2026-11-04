@@ -31,6 +31,7 @@ export default defineNuxtConfig({
     // Accounts (ADR-0043, nuxt-auth-utils): the sealed session cookie lasts 30 days; its password comes from
     // NUXT_SESSION_PASSWORD, the providers' apps from NUXT_OAUTH_{GITHUB,GOOGLE,LINKEDIN}_CLIENT_{ID,SECRET}.
     session: {
+      password: '', // the module's own default, spelled out for the type (nuxt 4.6.4); set at runtime by the env
       maxAge: 60 * 60 * 24 * 30,
       cookie: { sameSite: 'lax', httpOnly: true, secure: true },
     },
