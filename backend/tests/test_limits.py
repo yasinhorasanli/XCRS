@@ -72,6 +72,9 @@ def test_only_the_first_new_phrases_of_a_request_go_to_the_llm():
         def save(self, *args):
             pass
 
+        def release(self):
+            pass
+
     class Picker:
         prompt_version, model, calls = "p", "m", 0
 
@@ -126,3 +129,15 @@ def test_ipv6_clients_share_a_bucket_per_64_prefix():
         limiter.check(request("203.0.113.9"), "heavy")
     limiter.check(request("203.0.113.10"), "heavy")  # IPv4 addresses stay one bucket each
     assert limits.client_key("::ffff:203.0.113.9") == "203.0.113.9" and limits.client_key("unknown") == "unknown"
+
+
+def test_a_full_map_drops_its_least_recent_bucket_not_every_bucket():
+    # Clearing the whole map also reset the bucket of whoever had just filled it (security audit run 1, #18).
+    clock = [0.0]
+    buckets = limits.TokenBuckets(rate_per_minute=1, burst=1, clock=lambda: clock[0], max_keys=2)
+    assert buckets.take("busy") == 0 and buckets.take("busy") > 0  # exhausted
+    buckets.take("quiet")
+    buckets.take("busy")  # still refused; now the most recent
+    buckets.take("new")  # the map is full: "quiet" goes
+    assert buckets.take("busy") > 0
+    assert set(buckets._buckets) == {"busy", "new"}

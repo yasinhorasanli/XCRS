@@ -19,7 +19,7 @@ class MatchedSkillV2(BaseModel):
 class PhraseMatchV2(BaseModel):
     phrase: str
     skills: list[MatchedSkillV2]
-    method: Literal["lookup", "llm", "cache", "embedding", "none"]
+    method: Literal["lookup", "llm", "embedding", "none"]
 
 
 class SkillMatchResponseV2(BaseModel):

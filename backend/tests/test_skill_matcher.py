@@ -1,5 +1,7 @@
 """Skill matching service (ADR-0030): order of the layers, confirmation, cache and fallback, with fakes."""
 
+import threading
+
 import openai
 import pytest
 
@@ -28,6 +30,9 @@ class FakeStore:
     def save(self, key, picker, skills, picked, llm_ms):
         self.cache[key] = skills
         self.saved.append((key, skills, picked))
+
+    def release(self):
+        pass
 
 
 class FakePicker:
@@ -69,11 +74,12 @@ def test_llm_picks_are_kept_only_when_the_embedding_agrees(index):
     assert ("carpentry", [], ["git", "linux"]) in store.saved  # what the LLM said is kept for auditing
 
 
-def test_a_cached_answer_is_reused(index):
+def test_a_cached_answer_is_reused_and_reported_like_a_fresh_one(index):
+    # "llm", not "cache": a visible cache hit would tell anyone that someone typed the phrase before (2026-11-04).
     m, _, picker = matcher(index, {"Jira": {"agile-scrum": 0.6}}, {"Jira": ["agile-scrum"]})
     m.match(["Jira"])
     [again] = m.match(["  jira "])
-    assert (again.skills, again.method, picker.calls) == (["agile-scrum"], "cache", 1)
+    assert (again.skills, again.method, picker.calls) == (["agile-scrum"], "llm", 1)
 
 
 def test_named_parts_are_kept_next_to_the_llm_picks(index):
@@ -96,3 +102,16 @@ def test_without_the_llm_the_most_similar_skill_counts_if_similar_enough(index):
 def test_blank_input_matches_nothing(index):
     m, _, picker = matcher(index, {})
     assert m.match(["  ", "!!"])[0].method == "none" and picker.calls == 0
+
+
+def test_with_every_llm_slot_taken_a_phrase_is_matched_by_similarity(index):
+    # A few requests waiting on the one-at-a-time LLM is enough; the rest don't queue behind it (launch, #20).
+    sims = {"Jira": {"jenkins": FALLBACK_FLOOR + 0.01, "agile-scrum": CONFIRM_FLOOR + 0.01}}  # LLM and fallback differ
+    store, picker = FakeStore(sims), FakePicker({"Jira": ["agile-scrum"]})
+    m = SkillMatcher(index, store, FakeEmbedder(), picker, llm_slots=threading.BoundedSemaphore(1))
+    m.llm_slots.acquire()  # another request has the only slot
+    [r] = m.match(["Jira"])
+    assert (r.skills, r.method, picker.calls, store.saved) == (["jenkins"], "embedding", 0, [])
+    m.llm_slots.release()
+    [r] = m.match(["Jira"])
+    assert (r.skills, r.method, picker.calls) == (["agile-scrum"], "llm", 1)

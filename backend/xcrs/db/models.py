@@ -266,7 +266,8 @@ class SkillEmbedding(Base):
 
 
 class PhraseMatch(Base):
-    """What the LLM step decided for a normalized phrase (ADR-0030); derived data, safe to empty."""
+    """What the LLM step decided for a normalized phrase (ADR-0030); derived data, safe to empty. Deleted after
+    `phrase_cache_days` (services/skill_matching.py)."""
 
     __tablename__ = "phrase_matches"
     __table_args__ = ({"schema": CATALOG},)

@@ -39,7 +39,7 @@ from xcrs.services import explanations_v2
 from xcrs.services.accounts import AccountService, board_input, claimable
 from xcrs.services.explanations_v2 import ExplanationWorkerV2
 from xcrs.services.recommend_v2 import Chip, RecommendationServiceV2
-from xcrs.services.skill_matching import SkillMatcher, build_matcher
+from xcrs.services.skill_matching import PhraseCachePruner, SkillMatcher, build_matcher
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 log = logging.getLogger(__name__)
@@ -48,7 +48,9 @@ log = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """Explanations run in a background worker (ADR-0018, ADR-0037); roles left `pending` by a restart are
-    re-queued."""
+    re-queued. Typed phrases' cached matches are deleted after 30 days by another (PhraseCachePruner)."""
+    pruner = PhraseCachePruner(new_session)
+    pruner.start()
     worker = None
     if get_settings().llm_enabled:
         worker = ExplanationWorkerV2(get_explainer_v2(), new_session)
@@ -58,6 +60,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     yield
     if worker:
         worker.stop()
+    pruner.stop()
 
 
 app = FastAPI(

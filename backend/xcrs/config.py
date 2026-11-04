@@ -32,6 +32,10 @@ class Settings(BaseSettings):
     llm_max_tokens: int = 500
     # Skill matching (ADR-0030) uses the same LLM; a new phrase takes ~2 s on a GPU, ~5 s or more on a CPU VM.
     match_llm_timeout_s: float = 60.0
+    # At most this many requests wait for the LLM to match a phrase; others use similarity alone (skill_matching.py).
+    match_llm_slots: int = 2
+    # Cached LLM answers for typed phrases are deleted after this many days (privacy page; skill_matching.py).
+    phrase_cache_days: int = 30
     youtube_api_key: str | None = None  # XCRS_YOUTUBE_API_KEY; the YouTube adapter is off without it (ADR-0033)
     # Abuse protection (ADR-0035): per-client-IP token buckets; at most this many new phrases per request go
     # to the LLM, the rest use the embedding fallback.

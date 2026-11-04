@@ -17,7 +17,7 @@ export interface SkillGroup {
   skills: SkillSuggestion[]
 }
 
-export type MatchMethod = 'lookup' | 'llm' | 'cache' | 'embedding' | 'none'
+export type MatchMethod = 'lookup' | 'llm' | 'embedding' | 'none'
 
 export interface PhraseMatch {
   phrase: string

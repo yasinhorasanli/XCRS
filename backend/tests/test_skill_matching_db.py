@@ -1,17 +1,20 @@
 """Skill vectors, the phrase cache and the v2 match endpoint against the local database. Every test runs in
 a transaction that is rolled back."""
 
+import httpx
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import text
+from sqlalchemy import create_engine, text
 from sqlalchemy.exc import OperationalError, ProgrammingError
+from sqlalchemy.orm import Session
 
 from xcrs.api.app import app, get_session, get_skill_matcher
 from xcrs.catalog import model, validate
+from xcrs.config import get_settings
 from xcrs.db.models import EmbeddingModel, SkillEmbedding
 from xcrs.db.session import new_session
 from xcrs.repository import catalog_store, vectors
-from xcrs.services.skill_matching import DatabaseMatchStore, SkillMatcher, lexical_index
+from xcrs.services.skill_matching import DatabaseMatchStore, SkillMatcher, forget_old_phrases, lexical_index
 
 
 @pytest.fixture
@@ -65,6 +68,26 @@ def test_the_cache_is_keyed_by_catalog_version_prompt_and_model(session):
     assert store.cached("jira", Picker) is None
 
 
+def test_typed_phrases_are_forgotten_after_30_days(session):
+    # Typed words are kept for no one in particular, so deleting an account can't reach them: they go by age.
+    s, embedding_model = session
+    store = DatabaseMatchStore(s, embedding_model)
+
+    class Picker:
+        prompt_version, model = "pick-2", "m1"
+
+    store.save("kubernetes at acme", Picker, ["kubernetes"], ["kubernetes"], 900)
+    store.save("jira", Picker, ["agile-scrum"], ["agile-scrum"], 900)
+    s.execute(
+        text("UPDATE catalog.phrase_matches SET created_at = now() - interval '31 days' WHERE phrase_key = :k"),
+        {"k": "kubernetes at acme"},
+    )
+    assert store.cached("kubernetes at acme", Picker) is None  # past its time: never served, even before deletion
+    assert forget_old_phrases(s) == 1
+    keys = s.scalars(text("SELECT phrase_key FROM catalog.phrase_matches WHERE catalog_checksum = 'test-checksum'"))
+    assert list(keys) == ["jira"]
+
+
 def test_the_match_endpoint_names_the_skills(session):
     s, embedding_model = session
 
@@ -87,3 +110,38 @@ def test_the_match_endpoint_names_the_skills(session):
         "method": "lookup",
     }
     assert second["method"] == "embedding" and second["skills"][0]["id"] == "docker"
+
+
+def test_no_database_connection_is_held_while_the_llm_answers():
+    # The LLM answers one request at a time; a request holding its connection meanwhile let a few visitors use up
+    # the pool and stall the site (security audit run 1, #20). With a one-connection pool, the picker must still
+    # get a connection. It then fails, so the fallback runs and nothing is written.
+    engine = create_engine(get_settings().database_url, pool_size=1, max_overflow=0, pool_timeout=1)
+    got = []
+
+    class Picker:
+        prompt_version, model = "pick-2", "m1"
+
+        def pick(self, phrase):
+            with engine.connect() as connection:  # times out while the request still holds the only connection
+                got.append(connection.scalar(text("SELECT 1")))
+            raise httpx.ConnectError("the stub LLM is down")
+
+    try:
+        with Session(engine) as s:
+            try:
+                embedding_model = s.get(EmbeddingModel, 1)
+            except (OperationalError, ProgrammingError):
+                pytest.skip("needs the database at migration 0006 or later")
+            if embedding_model is None:
+                pytest.skip("embedding model 1 not registered")
+
+            class Embedder:
+                def embed_query(self, texts):
+                    return [[1.0] + [0.0] * (embedding_model.dimensions - 1)]
+
+            matcher = SkillMatcher(lexical_index(s), DatabaseMatchStore(s, embedding_model), Embedder(), Picker())
+            [result] = matcher.match(["zqvx plorbanic 4821"])
+        assert got == [1] and result.method in ("embedding", "none")
+    finally:
+        engine.dispose()
