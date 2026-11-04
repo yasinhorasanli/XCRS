@@ -33,7 +33,8 @@ useHead({ title: 'Privacy · XCRS' })
         <section>
           <h2 class="text-lg font-semibold text-highlighted">Words you type</h2>
           <p class="mt-2">
-            Skills you pick from the list stay in your browser until you ask for recommendations. Words you type in your
+            Without an account, skills you pick from the list stay in your browser until you ask for recommendations
+            (signed in, your board is saved to your account as you change it). Words you type in your
             own words are sent to us as you add them, so our language model can match them to skills. Its answer for each
             phrase is kept for 30 days, so the same words are matched at once next time. It records the phrase only, not
             who typed it, so it can't be linked to you or deleted with your account; it is deleted after 30 days, and
@@ -87,8 +88,10 @@ useHead({ title: 'Privacy · XCRS' })
             stop working are the last three kept longer, until new ones replace them.
           </p>
           <p class="mt-2">
-            For any other question about your data (access, correction, objection), open an issue or contact the maintainer
-            through the <a href="https://github.com/yasinhorasanli/XCRS" class="text-indigo-600 dark:text-indigo-300 underline" target="_blank" rel="noopener">project's GitHub page</a>.
+            For any other question about your data (access, correction, objection), write to
+            <a href="mailto:support@xcrs.app" class="text-indigo-600 dark:text-indigo-300 underline">support@xcrs.app</a>.
+            For anything about the code, open an issue on the
+            <a href="https://github.com/yasinhorasanli/XCRS" class="text-indigo-600 dark:text-indigo-300 underline" target="_blank" rel="noopener">project's GitHub page</a>.
           </p>
         </section>
 

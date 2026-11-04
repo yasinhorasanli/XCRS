@@ -52,3 +52,8 @@ The cache expires by age (`created_at`, `XCRS_PHRASE_CACHE_DAYS=30`) rather than
 
 - Explanations or matches wait longer than a minute at peak (VM-B's LLM is the bottleneck): two LLM slots on VM-B, a faster model, or the GPU.
 - The API runs as more than one process: the slots, the parse lock and the rate limits move to a shared store (ADR-0035).
+
+## Note (2026-11-05): the parser's limit applies after cleaning
+
+A short audit of the deployed change found that cutting the raw text at the limit + 1 lost the end of long CVs that fit once cleaned (spaces folded, empty lines and footers dropped): a test with six lines of padded text kept two. The child now hands back up to 5× the limit (`RAW_FACTOR`) and answers "too long" beyond it; the caller checks the limit on the cleaned text, as before PR #74. The same audit also checked and kept: ending the request's transaction before the LLM call (only reads come before it), the slot released on every path, the pruner's interval, the preview URL's fallback (unused where `XCRS_PUBLIC_URL` is set), and the CV lock's 15 s wait (it holds one API thread per waiting upload; uploads need an account and pass the heavy rate limit).
+
