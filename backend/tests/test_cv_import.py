@@ -74,10 +74,20 @@ def test_one_pdf_is_read_at_a_time():
     assert pdf_text(blank_pdf(1)).pages == 1  # the slot is free again
 
 
-def test_the_parser_hands_back_no_more_text_than_can_be_used():
-    # The parent refuses text over the limit anyway; the child stops there, so a crafted PDF can't flood the API.
-    pdf = pdf_text(placed_pdf([[(0, "x" * 60)] for _ in range(8)]), max_chars=100)
-    assert 100 < len(pdf.text) <= 101  # one over: the caller still says "too long"
+def test_text_that_fits_once_cleaned_is_read_whole():
+    # The limit applies to the cleaned text (spaces folded, footers dropped): a cut in the raw text lost the end of
+    # long CVs that fit once cleaned (short audit of PR #74, 2026-11-05).
+    lines = [[(0, f"job{i}" + " " * 40 + "end")] for i in range(6)]  # ~280 raw characters, ~60 once cleaned
+    pdf = pdf_text(placed_pdf(lines), max_chars=100)
+    assert normalize_text(pdf.text).count("end") == 6
+
+
+def test_the_parser_hands_back_no_more_text_than_could_be_used():
+    # Far beyond the limit (more than 5x, which cleaning can't bring under it) the child stops and says so, so a
+    # crafted PDF can't flood the API with its output.
+    with pytest.raises(CvInputError) as exc:
+        pdf_text(placed_pdf([[(0, "x" * 60)] for _ in range(12)]), max_chars=100)
+    assert exc.value.code == "too_long"
 
 
 def test_hidden_text_is_set_aside_and_the_visible_text_kept():

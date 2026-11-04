@@ -4,9 +4,11 @@ pypdf in plain mode keeps each column of LinkedIn's two-column export whole (mea
 layout analysis spliced the sidebar into a paragraph). Parsing runs in a child process with a time and memory
 limit, because a malformed or deliberately heavy PDF can take minutes or gigabytes; the child gets the bytes on
 stdin and answers JSON on stdout. One file is read at a time (`READING`): each child may use 512 MB, and VM-A has
-8 GB. The child hands back at most one character over the text limit (the caller then says "too long") and a
-bounded set of hidden pieces, so a crafted PDF can't flood the API process with its output (2026-11-04, security
-audit run 1).
+8 GB. The child hands back at most `RAW_FACTOR` times the text limit, which the caller then cleans and checks
+(cleaning folds spaces and drops footers, so the raw text of a CV that fits can be longer), and a bounded set of
+hidden pieces; beyond that it answers "too_long", so a crafted PDF can't flood the API process with its output
+(2026-11-04, security audit run 1; the factor since the short audit of 2026-11-05: a cut at the limit itself lost
+the end of long CVs).
 
 Some PDFs place every glyph on its own (Google Docs exports seen in the wild): pypdf then breaks the line after
 each one, and the spaces end up on lines of their own. A break between two pieces on the same baseline, the second
@@ -33,6 +35,7 @@ SAME_BASELINE = 0.3  # of the text height: pieces this close vertically are on o
 MAX_ADVANCE = 1.0  # of the text height per character of the previous piece: further right is another column
 PAINT_OPS = {b"f", b"F", b"f*", b"B", b"B*", b"b", b"b*"}
 MAX_HIDDEN = (100, 300)  # pieces, characters each: they are only counted and quoted as examples
+RAW_FACTOR = 5  # raw text handed back, in multiples of the limit on the cleaned text
 READING = threading.Lock()
 
 
@@ -216,8 +219,10 @@ def _child() -> None:
     pieces, chars = MAX_HIDDEN
     try:
         result = read_pdf(sys.stdin.buffer.read(), max_pages)
+        if len(result.text) > RAW_FACTOR * max_chars:
+            raise CvInputError("too_long")
         hidden = [h[:chars] for h in result.hidden[:pieces]]
-        out = {"text": result.text[: max_chars + 1], "pages": result.pages, "hidden": hidden}
+        out = {"text": result.text, "pages": result.pages, "hidden": hidden}
     except CvInputError as exc:
         out = {"error": exc.code}
     except Exception:  # any parser failure means the file can't be read
