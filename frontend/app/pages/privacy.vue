@@ -31,6 +31,17 @@ useHead({ title: 'Privacy · XCRS' })
         </section>
 
         <section>
+          <h2 class="text-lg font-semibold text-highlighted">Words you type</h2>
+          <p class="mt-2">
+            Skills you pick from the list stay in your browser until you ask for recommendations. Words you type in your
+            own words are sent to us as you add them, so our language model can match them to skills. Its answer for each
+            phrase is kept for 30 days, so the same words are matched at once next time. It records the phrase only, not
+            who typed it, so it can't be linked to you or deleted with your account; it is deleted after 30 days, and
+            leaves the backups within 14 days after that.
+          </p>
+        </section>
+
+        <section>
           <h2 class="text-lg font-semibold text-highlighted">With an account</h2>
           <p class="mt-2">You can sign in with GitHub, Google or LinkedIn. From them we keep:</p>
           <ul class="mt-2 list-disc space-y-1 pl-5">
@@ -62,7 +73,7 @@ useHead({ title: 'Privacy · XCRS' })
           <p class="mt-2">
             Only cookies the site needs: when you sign in, an encrypted session cookie (for 30 days) and, during the
             sign-in itself, short-lived cookies that protect it. No cookies are set if you don't sign in.
-            Your colour-mode choice and the board you are filling in are stored only in your browser (localStorage), so a reload keeps them; the board is sent to us only when you ask for recommendations, and signing out or "Clear all" removes it.
+            Your colour-mode choice and the board you are filling in are stored only in your browser (localStorage), so a reload keeps them; signing out or "Clear all" removes them.
           </p>
         </section>
 

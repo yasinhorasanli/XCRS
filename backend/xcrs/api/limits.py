@@ -9,6 +9,7 @@ import ipaddress
 import math
 import threading
 import time
+from collections import OrderedDict
 from dataclasses import dataclass
 
 from fastapi import HTTPException, Request
@@ -23,11 +24,13 @@ class Bucket:
 
 
 class TokenBuckets:
-    """`rate` tokens a minute, at most `burst` saved up; one bucket per key."""
+    """`rate` tokens a minute, at most `burst` saved up; one bucket per key. With `max_keys` buckets the least
+    recently used goes, which has most likely refilled anyway; clearing them all would also reset the bucket of
+    whoever filled the map (2026-11-04, security audit run 1)."""
 
     def __init__(self, rate_per_minute: float, burst: int, clock=time.monotonic, max_keys: int = 50_000):
         self.rate, self.burst, self.clock, self.max_keys = rate_per_minute / 60.0, burst, clock, max_keys
-        self._buckets: dict[str, Bucket] = {}
+        self._buckets: OrderedDict[str, Bucket] = OrderedDict()
         self._lock = threading.Lock()
 
     def take(self, key: str) -> float:
@@ -37,8 +40,10 @@ class TokenBuckets:
             bucket = self._buckets.get(key)
             if bucket is None:
                 if len(self._buckets) >= self.max_keys:  # don't let many addresses grow memory without bound
-                    self._buckets.clear()
+                    self._buckets.popitem(last=False)
                 bucket = self._buckets[key] = Bucket(float(self.burst), now)
+            else:
+                self._buckets.move_to_end(key)
             bucket.tokens = min(self.burst, bucket.tokens + (now - bucket.updated) * self.rate)
             bucket.updated = now
             if bucket.tokens >= 1:

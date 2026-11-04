@@ -28,6 +28,8 @@ services:
     restart: unless-stopped
     environment:
       XCRS_API_URL: http://api:8000
+      # The public address for link previews (og:image); CloudFront's requests reach Caddy on a private one.
+      XCRS_PUBLIC_URL: ${XCRS_PUBLIC_URL:-https://aws.xcrs.app}
     depends_on:
       api:
         condition: service_healthy

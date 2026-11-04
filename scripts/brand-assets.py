@@ -1,7 +1,8 @@
 """Build the web logo and icons from the brand originals (docs/images/brand/, transparent PNGs).
 
 usage (from the repo root): uv run --no-project --with pillow python scripts/brand-assets.py
-Writes frontend/public/: xcrs-logo.webp (wordmark), favicon.ico, icon-192.png, apple-touch-icon.png.
+Writes frontend/public/: xcrs-logo.webp (wordmark), favicon.ico, icon-192.png, apple-touch-icon.png,
+social-preview.jpg (the link-preview card, from social-preview.png).
 """
 
 from pathlib import Path
@@ -41,4 +42,6 @@ square(mark, 256, 0.0).save(PUBLIC / "favicon.ico", sizes=[(16, 16), (32, 32), (
 square(mark, 192, 0.04).save(PUBLIC / "icon-192.png", optimize=True)
 # iOS fills transparency with black: a white tile with some room around the mark.
 square(mark, 180, 0.12, (255, 255, 255, 255)).convert("RGB").save(PUBLIC / "apple-touch-icon.png", optimize=True)
+# Link previews (LinkedIn, X, chat apps; og:image in app.vue): the 1280×640 card as a JPEG, a third of the PNG's size.
+Image.open(BRAND / "social-preview.png").convert("RGB").save(PUBLIC / "social-preview.jpg", quality=88, optimize=True)
 print("wordmark", wordmark.size, "mark", mark.size)

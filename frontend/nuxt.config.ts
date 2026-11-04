@@ -10,7 +10,7 @@ export default defineNuxtConfig({
   colorMode: { preference: 'system', fallback: 'light', storage: 'localStorage' },
   app: {
     head: {
-      title: 'XCRS · Explainable course recommendations',
+      title: 'XCRS · Which software career fits you?',
       htmlAttrs: { lang: 'en' },
       link: [
         { rel: 'icon', href: '/favicon.ico', sizes: '48x48' },

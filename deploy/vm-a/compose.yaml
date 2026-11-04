@@ -41,7 +41,7 @@ services:
     environment:
       XCRS_API_URL: http://api:8000
       # Accounts (ADR-0043): all optional; without the secret and session password the site is anonymous only.
-      XCRS_PUBLIC_URL: ${XCRS_PUBLIC_URL:-}   # e.g. https://xcrs-a.<tailnet>.ts.net (OAuth redirect URLs)
+      XCRS_PUBLIC_URL: ${XCRS_PUBLIC_URL:-}   # e.g. https://xcrs.app (OAuth redirect URLs, link previews)
       XCRS_INTERNAL_SECRET: ${XCRS_INTERNAL_SECRET:-}
       NUXT_SESSION_PASSWORD: ${NUXT_SESSION_PASSWORD:-}
       NUXT_OAUTH_GITHUB_CLIENT_ID: ${NUXT_OAUTH_GITHUB_CLIENT_ID:-}

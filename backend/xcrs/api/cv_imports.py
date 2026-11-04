@@ -37,6 +37,7 @@ MESSAGES = {
     "too_long": "That's more text than we read (20,000 characters). Paste the most relevant part.",
     "empty": "There's too little text to find skills in.",
     "no_input": "Upload a PDF or paste the text of your CV.",
+    "busy": "We're reading another CV right now. Try again in a minute, or paste the text instead.",
 }
 
 
@@ -143,7 +144,7 @@ def read_input(file: UploadFile | None, text: str | None) -> tuple[str, list[str
         data = file.file.read(settings.cv_max_pdf_bytes + 1)
         if len(data) > settings.cv_max_pdf_bytes:
             raise CvInputError("too_large")
-        pdf = pdf_text(data, max_pages=settings.cv_max_pages)
+        pdf = pdf_text(data, max_pages=settings.cv_max_pages, max_chars=settings.cv_max_chars)
         visible = normalize_text(pdf.text)
         if len(visible) < MIN_CHARS_PER_PAGE * pdf.pages:
             raise CvInputError("scanned")
@@ -169,7 +170,7 @@ def create_cv_import(
     try:
         visible, hidden = read_input(file, text)
     except CvInputError as exc:
-        raise _refuse(exc.code, 413 if exc.code == "too_large" else 422) from exc
+        raise _refuse(exc.code, {"too_large": 413, "busy": 503}.get(exc.code, 422)) from exc
     try:
         job, position = jobs.submit(str(user.id), visible, hidden)
     except QuotaExceeded as exc:

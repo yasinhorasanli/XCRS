@@ -218,7 +218,7 @@ erDiagram
 | Table | Key | What it holds |
 |---|---|---|
 | `skill_embeddings` | (`skill_id`, `model_id` → `public.embedding_models`) | the skill's vector for one model, from "name: description"; `content_hash` re-embeds changed skills (`xcrs catalog embed`). No vector index at 257 skills |
-| `phrase_matches` | (`phrase_key`, `catalog_checksum`, `prompt_version`, `llm_model`) | cache of the LLM step: `skills` kept after confirmation, `picked` = what the LLM answered, `llm_ms`. Derived data; a new import, prompt or model asks again |
+| `phrase_matches` | (`phrase_key`, `catalog_checksum`, `prompt_version`, `llm_model`) | cache of the LLM step: `skills` kept after confirmation, `picked` = what the LLM answered, `llm_ms`. Derived data; a new import, prompt or model asks again. Rows are served and kept for 30 days from `created_at`, then deleted by the API (ADR-0054) |
 
 **Engine v2 activity (migration `0007`, ADR-0031), in `public`:** `recommendations_v2` (`id` uuid, `created_at`, `catalog_checksum`, `algorithm_version`, `status` CHECK ok/insufficient_input/no_clear_match (the last since migration 0015, ADR-0052), `input` jsonb = chips, `result` jsonb = matched chips and roles with levels and gaps) and `feedback_v2` (→ `recommendations_v2` ON DELETE CASCADE, `role` slug, `resource_id`, `rating` −1/1, `comment`; one row per result and role since migration 0017 (the API accepts only the result's own roles), a later vote replaces it: unique index on `(recommendation_id, coalesce(role, ''))`). JSONB first, normalized once the format settles (ADR-0013).
 

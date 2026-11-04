@@ -3,7 +3,10 @@
 pypdf in plain mode keeps each column of LinkedIn's two-column export whole (measured on a real export; pdfminer's
 layout analysis spliced the sidebar into a paragraph). Parsing runs in a child process with a time and memory
 limit, because a malformed or deliberately heavy PDF can take minutes or gigabytes; the child gets the bytes on
-stdin and answers JSON on stdout.
+stdin and answers JSON on stdout. One file is read at a time (`READING`): each child may use 512 MB, and VM-A has
+8 GB. The child hands back at most one character over the text limit (the caller then says "too long") and a
+bounded set of hidden pieces, so a crafted PDF can't flood the API process with its output (2026-11-04, security
+audit run 1).
 
 Some PDFs place every glyph on its own (Google Docs exports seen in the wild): pypdf then breaks the line after
 each one, and the spaces end up on lines of their own. A break between two pieces on the same baseline, the second
@@ -21,6 +24,7 @@ import json
 import math
 import subprocess
 import sys
+import threading
 from dataclasses import dataclass, field
 
 MIN_VISIBLE_PT = 2.0
@@ -28,6 +32,8 @@ MIN_CONTRAST = 0.1  # luminance difference between text and what lies beneath it
 SAME_BASELINE = 0.3  # of the text height: pieces this close vertically are on one line
 MAX_ADVANCE = 1.0  # of the text height per character of the previous piece: further right is another column
 PAINT_OPS = {b"f", b"F", b"f*", b"B", b"B*", b"b", b"b*"}
+MAX_HIDDEN = (100, 300)  # pieces, characters each: they are only counted and quoted as examples
+READING = threading.Lock()
 
 
 class CvInputError(Exception):
@@ -171,11 +177,21 @@ def _limit_memory(mb: int) -> None:
         pass
 
 
-def pdf_text(data: bytes, max_pages: int = 5, timeout_s: float = 10.0, memory_mb: int = 512) -> PdfText:
-    """Parse in a child process. Raises CvInputError."""
+def pdf_text(
+    data: bytes,
+    max_pages: int = 5,
+    timeout_s: float = 10.0,
+    memory_mb: int = 512,
+    max_chars: int = 20_000,
+    busy_wait_s: float = 15.0,
+) -> PdfText:
+    """Parse in a child process, one at a time. Raises CvInputError ("busy" if another file is still being read
+    after `busy_wait_s`)."""
+    if not READING.acquire(timeout=busy_wait_s):
+        raise CvInputError("busy")
     try:
         done = subprocess.run(
-            [sys.executable, "-m", "xcrs.cv.pdf_text", str(max_pages)],
+            [sys.executable, "-m", "xcrs.cv.pdf_text", str(max_pages), str(max_chars)],
             input=data,
             capture_output=True,
             timeout=timeout_s,
@@ -183,6 +199,8 @@ def pdf_text(data: bytes, max_pages: int = 5, timeout_s: float = 10.0, memory_mb
         )
     except subprocess.TimeoutExpired as exc:
         raise CvInputError("timeout") from exc
+    finally:
+        READING.release()
     try:
         out = json.loads(done.stdout)
     except json.JSONDecodeError as exc:
@@ -194,9 +212,12 @@ def pdf_text(data: bytes, max_pages: int = 5, timeout_s: float = 10.0, memory_mb
 
 def _child() -> None:
     max_pages = int(sys.argv[1]) if len(sys.argv) > 1 else 5
+    max_chars = int(sys.argv[2]) if len(sys.argv) > 2 else 20_000
+    pieces, chars = MAX_HIDDEN
     try:
         result = read_pdf(sys.stdin.buffer.read(), max_pages)
-        out = {"text": result.text, "pages": result.pages, "hidden": result.hidden}
+        hidden = [h[:chars] for h in result.hidden[:pieces]]
+        out = {"text": result.text[: max_chars + 1], "pages": result.pages, "hidden": hidden}
     except CvInputError as exc:
         out = {"error": exc.code}
     except Exception:  # any parser failure means the file can't be read

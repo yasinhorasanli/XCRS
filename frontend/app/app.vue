@@ -4,6 +4,25 @@ const { loadProviders } = useAccount()
 await callOnce('account-providers', loadProviders)
 // Signed in, the board is saved after every change, wherever it happens (board page, results page).
 if (import.meta.client) useBoardAutosave()
+
+// Link previews (LinkedIn, X, chat apps) read the server-rendered page and need absolute URLs. Behind Caddy this
+// server sees an internal address, so the public one comes from XCRS_PUBLIC_URL (as for the OAuth redirects);
+// without it (local dev) the request's own. Every page shares the one card: a result's roles stay out of previews.
+const siteUrl = useState('site-url', () =>
+  import.meta.server ? (process.env.XCRS_PUBLIC_URL || useRequestURL().origin).replace(/\/$/, '') : '',
+)
+useSeoMeta({
+  ogType: 'website',
+  ogSiteName: 'XCRS',
+  ogTitle: 'XCRS · Which software career fits you?',
+  ogDescription: 'Tell XCRS what you know and what you are curious about; get career roles and courses, with the reasons.',
+  ogUrl: () => `${siteUrl.value}${route.path}`,
+  ogImage: () => `${siteUrl.value}/social-preview.jpg`,
+  ogImageWidth: 1280,
+  ogImageHeight: 640,
+  ogImageAlt: 'XCRS: find the software career that fits you, and what to learn next',
+  twitterCard: 'summary_large_image',
+})
 </script>
 
 <template>

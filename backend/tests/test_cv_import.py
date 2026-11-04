@@ -13,6 +13,7 @@ from sqlalchemy.exc import ProgrammingError
 from xcrs.api import cv_imports, identity
 from xcrs.api.app import app
 from xcrs.config import get_settings
+from xcrs.cv import pdf_text as pdf_module
 from xcrs.cv.clean import normalize_text
 from xcrs.cv.extract import CvEducation, CvExtraction, CvJob, CvSkill
 from xcrs.cv.pdf_text import CvInputError, pdf_text
@@ -63,6 +64,20 @@ def placed_pdf(lines: list[list[tuple[float, str]]]) -> bytes:
 
 
 # --- PDF text ------------------------------------------------------------------------------------------------
+
+
+def test_one_pdf_is_read_at_a_time():
+    # Each parse may use 512 MB on an 8 GB VM: a second upload waits a little, then is asked to try again.
+    with pdf_module.READING, pytest.raises(CvInputError) as exc:
+        pdf_text(blank_pdf(1), busy_wait_s=0.1)
+    assert exc.value.code == "busy"
+    assert pdf_text(blank_pdf(1)).pages == 1  # the slot is free again
+
+
+def test_the_parser_hands_back_no_more_text_than_can_be_used():
+    # The parent refuses text over the limit anyway; the child stops there, so a crafted PDF can't flood the API.
+    pdf = pdf_text(placed_pdf([[(0, "x" * 60)] for _ in range(8)]), max_chars=100)
+    assert 100 < len(pdf.text) <= 101  # one over: the caller still says "too long"
 
 
 def test_hidden_text_is_set_aside_and_the_visible_text_kept():
