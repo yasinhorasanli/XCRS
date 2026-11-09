@@ -23,6 +23,11 @@ useSeoMeta({
   ogImageAlt: 'XCRS: find the software career that fits you, and what to learn next',
   twitterCard: 'summary_large_image',
 })
+// One address per page for search engines: `/privacy/` and `/?ref=…` are the same page as `/privacy` and `/`.
+// Built from XCRS_PUBLIC_URL like the link previews, never from the request's Host header.
+useHead({
+  link: [{ rel: 'canonical', href: () => `${siteUrl.value}${route.path.replace(/(.)\/+$/, '$1')}` }],
+})
 </script>
 
 <template>
