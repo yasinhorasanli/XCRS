@@ -25,6 +25,16 @@ export default defineNuxtConfig({
       ],
     },
   },
+  // Kept out of search results: pages that are personal or only lead elsewhere. A response header rather than a
+  // <meta> tag, so it also covers error pages, redirects and JSON. public/robots.txt and public/sitemap.xml list
+  // what should be found.
+  routeRules: {
+    '/sign-in/**': { headers: { 'x-robots-tag': 'noindex' } },
+    '/account/**': { headers: { 'x-robots-tag': 'noindex' } },
+    '/results/**': { headers: { 'x-robots-tag': 'noindex' } },
+    '/auth/**': { headers: { 'x-robots-tag': 'noindex' } },
+    '/api/**': { headers: { 'x-robots-tag': 'noindex' } },
+  },
   runtimeConfig: {
     // Default target of the /api/v2/** proxy; XCRS_API_URL overrides it at runtime (server/api/v2/[...path].ts).
     apiUrl: 'http://localhost:8000',

@@ -50,6 +50,7 @@ useHead({ title: 'Sign in · XCRS' })
           :key="p"
           :to="href(p)"
           external
+          rel="nofollow"
           size="lg"
           block
           color="neutral"

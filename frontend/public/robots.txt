@@ -1,0 +1,5 @@
+# The sign-in links only redirect to GitHub, Google and LinkedIn; there is nothing to crawl behind them.
+User-agent: *
+Disallow: /auth/
+
+Sitemap: https://xcrs.app/sitemap.xml
