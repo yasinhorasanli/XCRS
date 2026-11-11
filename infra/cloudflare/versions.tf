@@ -10,5 +10,6 @@ terraform {
 }
 
 # Credentials come from the environment: CLOUDFLARE_API_TOKEN, a token limited to the xcrs.app zone (DNS edit,
-# zone read) and the account's tunnels (edit), kept in the macOS Keychain (infra/README.md). Never in this code.
+# zone read, WAF edit for ratelimit.tf) and the account's tunnels (edit), kept in the macOS Keychain
+# (infra/README.md). Never in this code.
 provider "cloudflare" {}

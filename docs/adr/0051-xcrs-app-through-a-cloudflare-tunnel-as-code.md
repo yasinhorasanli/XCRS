@@ -72,3 +72,13 @@
 - CI runs Terraform (AWS step 7): the token moves to GitHub's encrypted secrets, scoped the same way.
 - Traffic or abuse calls for Cloudflare rules (rate limiting, WAF) at the edge.
 - LinkedIn sign-in arrives (after the company page), or the AWS copy should allow sign-in.
+
+## Note (2026-11-12): a rate-limit rule at the edge
+
+Before launch, the "rules at the edge" trigger was taken up as a flood guard, not a new decision: one rate-limiting
+rule (`infra/cloudflare/ratelimit.tf`, the free plan's one rule) answers 429 for 10 s to an IP that sends more than
+100 requests to `/api/` within 10 s, so a flood stops at Cloudflare instead of reaching VM-A. The API's per-IP limits
+(ADR-0035) stay the real ones; 100 leaves room for a class behind one shared address, each results page polling every
+2.5 s. It covers xcrs.app and www only: aws.xcrs.app is DNS-only and goes to CloudFront (AWS WAF would cost money,
+ADR-0048). The token gained "Zone WAF: Edit" for it. Bot Fight Mode stays off: it can block uptime monitors and the
+link-preview bots the launch posts rely on.

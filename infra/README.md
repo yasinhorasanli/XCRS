@@ -5,7 +5,7 @@ AWS runs a disposable demo/staging copy of XCRS; the two VMs stay its real home 
 | Stack | What it holds | Cost |
 |---|---|---|
 | `bootstrap/` | The S3 bucket `xcrs-tfstate-d6b0fd` (eu-central-1) that holds the Terraform state of every stack, its own included | ~$0 (a few KB) |
-| `cloudflare/` | Production's public entrance (ADR-0051): the tunnel `xcrs-vm-a` and its routes (`xcrs.app`, `www` → Caddy on VM-A), and the two proxied DNS records. Needs `CLOUDFLARE_API_TOKEN` | $0 (Cloudflare free plan) |
+| `cloudflare/` | Production's public entrance (ADR-0051): the tunnel `xcrs-vm-a` and its routes (`xcrs.app`, `www` → Caddy on VM-A), the two proxied DNS records, and a rate-limit rule on `/api/` (`ratelimit.tf`). Needs `CLOUDFLARE_API_TOKEN` | $0 (Cloudflare free plan) |
 | `demo/` | VPC (one public subnet, no NAT), a security group whose only inbound rule admits CloudFront's VPC origin, the instance role, and one EC2 t4g.small (Amazon Linux 2023, arm64, 20 GB gp3) that cloud-init turns into the demo copy (`deploy/aws/compose.yaml`), and a CloudFront distribution in front at `aws.xcrs.app` (ADR-0047, ADR-0051) | ~$5.55/month during the t4g trial (until 31 Dec 2026: public IPv4 + disk, paid from Free-plan credits); ~$19.57/month always-on after it ($14.02 instance, $3.65 IPv4, $1.90 disk); stops itself at $20 (ADR-0048) |
 
 ## Account and credentials
@@ -26,7 +26,7 @@ AWS runs a disposable demo/staging copy of XCRS; the two VMs stay its real home 
   ```
 
   The code never names a profile; the environment chooses (`AWS_PROFILE=xcrs-tf` locally, GitHub OIDC in CI later).
-- **Cloudflare** (stacks `cloudflare/` and `demo/`): an API token `terraform-xcrs` limited to the `xcrs.app` zone (DNS: Edit, Zone: Read) and the account's tunnels (Cloudflare Tunnel: Edit), no expiry (the decider's choice; rotate it if it leaks). It lives in the macOS Keychain and goes into the environment only for a run:
+- **Cloudflare** (stacks `cloudflare/` and `demo/`): an API token `terraform-xcrs` limited to the `xcrs.app` zone (DNS: Edit, Zone: Read, WAF: Edit for the rate-limit rule, added 2026-11-12) and the account's tunnels (Cloudflare Tunnel: Edit), no expiry (the decider's choice; rotate it if it leaks). It lives in the macOS Keychain and goes into the environment only for a run:
 
   ```bash
   security add-generic-password -a xcrs -s cloudflare-api-token -w         # store it once (prompts for it)
